@@ -3,7 +3,10 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="App.axaml" value="SaturnEdit.csproj" />
         <entry key="MainWindow.axaml" value="SaturnEdit.csproj" />
+        <entry key="VIews/MainView.axaml" value="SaturnEdit.csproj" />
+        <entry key="Views/MainView.axaml" value="SaturnEdit.csproj" />
       </map>
     </option>
   </component>

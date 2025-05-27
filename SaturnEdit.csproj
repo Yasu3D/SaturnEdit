@@ -10,12 +10,21 @@
 
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.0.6"/>
-        <PackageReference Include="Avalonia.Desktop" Version="11.0.6"/>
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.6"/>
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.6"/>
+        <PackageReference Include="Avalonia" Version="11.3.0" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.0" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.0" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.0" />
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.6"/>
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.0" />
+        <PackageReference Include="Dock.Avalonia" Version="11.3.0.2" />
+        <PackageReference Include="Dock.Controls.ProportionalStackPanel" Version="11.3.0.2" />
+        <PackageReference Include="Dock.Controls.Recycling" Version="11.3.0.2" />
+        <PackageReference Include="Dock.Controls.Recycling.Model" Version="11.3.0.2" />
+        <PackageReference Include="Dock.MarkupExtension" Version="11.3.0.2" />
+        <PackageReference Include="Dock.Model" Version="11.3.0.2" />
+        <PackageReference Include="Dock.Model.Avalonia" Version="11.3.0.2" />
+        <PackageReference Include="Dock.Serializer" Version="11.3.0.2" />
+        <PackageReference Include="Dock.Settings" Version="11.3.0.2" />
     </ItemGroup>
 
 
