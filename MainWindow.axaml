@@ -10,5 +10,5 @@
         x:Name="MainWindowView"
         RequestedThemeVariant="Dark"
         Title="SaturnEdit">
-  <views:MainView/>
+        <views:MainView/>
 </Window>

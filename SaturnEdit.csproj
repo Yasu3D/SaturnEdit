@@ -26,4 +26,25 @@
         <PackageReference Include="Dock.Serializer" Version="11.3.0.2" />
         <PackageReference Include="Dock.Settings" Version="11.3.0.2" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Views\ChartEditor\Panels\" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <EmbeddedResource Update="Assets\Lang\Resources.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Locales.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Compile Update="Assets\Lang\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
 </Project>

@@ -1,33 +1,36 @@
-using Avalonia.Collections;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using Dock.Model;
-using Dock.Model.Core;
-using Dock.Serializer;
+using Avalonia.Interactivity;
 
 namespace SaturnEdit.Views;
 
 public partial class MainView : UserControl
 {
-    private readonly DockSerializer serializer;
-    private readonly DockState dockState;
-
     public MainView()
     {
         InitializeComponent();
-
-        serializer = new(typeof(AvaloniaList<>));
-        dockState = new();
-
-        IDock? layout = Dock?.Layout;
-        if (layout != null)
-        {
-            dockState.Save(layout);
-        }
     }
-
-    private void InitializeComponent()
+    
+    private void EditorTabs_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        AvaloniaXamlLoader.Load(this);
+        if (sender is not RadioButton button) return;
+        if (button.IsChecked == false) return;
+
+        if (ChartEditorView != null)
+        {
+            ChartEditorView.IsEnabled = button.Name == "TabChartEditor";
+            ChartEditorView.IsVisible = button.Name == "TabChartEditor";
+        }
+        
+        if (StageEditorView != null)
+        {
+            StageEditorView.IsEnabled = button.Name == "TabStageEditor";
+            StageEditorView.IsVisible = button.Name == "TabStageEditor";
+        }
+        
+        if (ContentEditorView != null)
+        {
+            ContentEditorView.IsEnabled = button.Name == "TabContentEditor";
+            ContentEditorView.IsVisible = button.Name == "TabContentEditor";
+        }
     }
 }

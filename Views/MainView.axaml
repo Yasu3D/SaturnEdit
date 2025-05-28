@@ -2,103 +2,145 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:chartEditor="clr-namespace:SaturnEdit.Views.ChartEditor"
+             xmlns:stageEditor="clr-namespace:SaturnEdit.Views.StageEditor"
+             xmlns:contentEditor="clr-namespace:SaturnEdit.Views.ContentEditor"
+             xmlns:lang="clr-namespace:SaturnEdit.Assets.Lang"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              x:Class="SaturnEdit.Views.MainView"
              x:CompileBindings="True">
-  <Grid RowDefinitions="Auto,*">
-    
-    <DockControl x:Name="Dock" Grid.Row="1" InitializeLayout="True" InitializeFactory="True">
-      <DockControl.Factory>
-        <Factory />
-      </DockControl.Factory>
+    <!-- Separate Tab Bar from Explorer + Content -->
+    <Grid ColumnDefinitions="41, *">
 
-      <RootDock x:Name="Root" Id="Root" IsCollapsable="False" DefaultDockable="{Binding #MainLayout}">
+        <!-- Tab Bar -->
+        <Grid Column="0"
+              ColumnDefinitions="40, 1">
 
-        <!-- Windows -->
+            <!-- Tabs -->
+            <StackPanel Grid.Column="0"
+                        Background="{DynamicResource LightBrush}">
 
-        <RootDock.Windows>
-          <!--<DockWindow x:Name="DockWindow" Id="DockWindow" X="281" Y="233" Width="250" Height="400" Topmost="True">
-            <RootDock ActiveDockable="{Binding #ToolDock}" Window="{Binding #DockWindow}">
-              <ToolDock x:Name="ToolDock">
-                <Tool x:Name="ToolWindow" Id="ToolWindow" Title="Tool Window" x:DataType="Tool">
-                  <TextBlock Text="{Binding Title}"/>
-                </Tool>
-              </ToolDock>
-            </RootDock>
-          </DockWindow>-->
-        </RootDock.Windows>
+                <RadioButton Name="TabChartEditor"
+                             Classes="ToggleRadio"
+                             GroupName="EditorTabs"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Left"
+                             Width="30"
+                             Height="30"
+                             Margin="5,5,5,0"
+                             IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
+                             IsChecked="True"
+                             ToolTip.ShowDelay="0"
+                             ToolTip.HorizontalOffset="5"
+                             ToolTip.VerticalOffset="0"
+                             ToolTip.Placement="Right">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor}" />
+                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor_Description}"
+                                       Foreground="{DynamicResource AnnotationBrush}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <PathIcon Data="{DynamicResource IconHexagonSparkle}"
+                              Width="18"
+                              Height="18" />
+                </RadioButton>
+                
+                <RadioButton Name="TabStageEditor"
+                             Classes="ToggleRadio"
+                             GroupName="EditorTabs"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Left"
+                             Width="30"
+                             Height="30"
+                             Margin="5,5,5,0"
+                             IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
+                             IsChecked="False"
+                             ToolTip.ShowDelay="0"
+                             ToolTip.HorizontalOffset="5"
+                             ToolTip.VerticalOffset="0"
+                             ToolTip.Placement="Right">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor}" 
+                                       TextAlignment="Left"/>
+                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor_Description}"
+                                       TextAlignment="Left"
+                                       Foreground="{DynamicResource AnnotationBrush}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <PathIcon Data="{DynamicResource IconHexagonSparkle}"
+                              Width="18"
+                              Height="18" />
+                </RadioButton>
 
-        <ProportionalDock x:Name="MainLayout" Id="MainLayout" Orientation="Horizontal">
+                <RadioButton Name="TabContentEditor"
+                             Classes="ToggleRadio"
+                             GroupName="EditorTabs"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Left"
+                             Width="30"
+                             Height="30"
+                             Margin="5,5,5,0"
+                             IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
+                             IsChecked="False"
+                             ToolTip.ShowDelay="0"
+                             ToolTip.HorizontalOffset="5"
+                             ToolTip.VerticalOffset="0"
+                             ToolTip.Placement="Right">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor}" 
+                                       TextAlignment="Left"/>
+                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor_Description}"
+                                       TextAlignment="Left"
+                                       Foreground="{DynamicResource AnnotationBrush}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <PathIcon Data="{DynamicResource IconHexagonSparkle}"
+                              Width="18"
+                              Height="18" />
+                </RadioButton>
+                
+                <Rectangle Width="30"
+                           Height="1"
+                           Fill="{DynamicResource MenuBorderBrush}"
+                           Margin="5,8,5,3" />
+                
+                
+            </StackPanel>
 
-          <!-- Left Pane -->
+            <!-- Vertical Separator -->
+            <Rectangle Grid.Column="1"
+                       Fill="{DynamicResource MenuBorderBrushDark}" />
 
-          <ToolDock x:Name="LeftPane" Id="LeftPane" Proportion="0.25" Alignment="Left">
-            <Tool x:Name="SolutionExplorer" Id="SolutionExplorer" Title="Solution Explorer" x:DataType="Tool">
-              <TextBlock Text="{Binding Title}"/>
-            </Tool>
-          </ToolDock>
+        </Grid>
 
-          <ProportionalDockSplitter x:Name="LeftSplitter" Id="LeftSplitter" />
+        <!-- Separator -->
+        <TextBlock Grid.Column="1"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Right"
+                   Margin="5"
+                   Name="TextBlockVersion"
+                   Foreground="{DynamicResource MenuBorderBrush}" />
 
-          <!-- Top Pane -->
+        <!-- Content -->
+        <chartEditor:ChartEditorView Grid.Column="1" 
+                               Name="ChartEditorView"
+                               IsVisible="True"
+                               IsEnabled="True"/>
+        
+        <stageEditor:StageEditorView Grid.Column="1" 
+                               Name="StageEditorView"
+                               IsVisible="False"
+                               IsEnabled="False"/>
+        
+        <contentEditor:CosmeticsEditorView Grid.Column="1" 
+                               Name="ContentEditorView"
+                               IsVisible="False"
+                               IsEnabled="False"/>
 
-          <ProportionalDock x:Name="TopPane" Id="TopPane" Orientation="Vertical">
-
-            <!-- Right Pane -->
-
-            <ProportionalDock x:Name="RightPane" Id="RightPane" Orientation="Horizontal">
-
-              <!-- Documents Pane -->
-
-              <DocumentDock x:Name="DocumentsPane" Id="DocumentsPane" CanCreateDocument="True" ActiveDockable="Document1">
-                <DocumentDock.DocumentTemplate>
-                  <DocumentTemplate>
-                    <StackPanel x:DataType="Document">
-                      <TextBlock Text="Title"/>
-                      <TextBox Text="{Binding Title}"/>
-                      <TextBlock Text="Context"/>
-                      <TextBox Text="{Binding Context}" AcceptsReturn="True"/>
-                    </StackPanel>
-                  </DocumentTemplate>
-                </DocumentDock.DocumentTemplate>
-                <Document x:Name="Document1" Id="Document1" Title="Program.cs" Context="" x:DataType="Document">
-                  <TextBox Text="{Binding Context}" AcceptsReturn="True"/>
-                </Document>
-                <Document x:Name="Document2" Id="Document2" Title="App.axaml" Context="" x:DataType="Document">
-                  <TextBox Text="{Binding Context}" AcceptsReturn="True"/>
-                </Document>
-              </DocumentDock>
-
-              <ProportionalDockSplitter x:Name="RightSplitter" Id="RightSplitter" />
-
-              <!-- Properties Pane -->
-              <ToolDock x:Name="PropertiesPane" Id="PropertiesPane" Proportion="0.3" Alignment="Right">
-                <Tool x:Name="Properties" Id="Properties" Title="Properties" x:DataType="Tool">
-                  <TextBlock Text="{Binding Title}"/>
-                </Tool>
-              </ToolDock>
-
-            </ProportionalDock>
-
-            <ProportionalDockSplitter x:Name="BottomSplitter" Id="BottomSplitter" />
-
-            <!-- Bottom Pane -->
-
-            <ToolDock x:Name="BottomPane" Id="BottomPane" Proportion="0.3" Alignment="Bottom" ActiveDockable="Output">
-              <Tool x:Name="ErrorList" Id="ErrorList" Title="Error List" x:DataType="Tool">
-                <TextBlock Text="{Binding Title}"/>
-              </Tool>
-              <Tool x:Name="Output" Id="Output" Title="Output" x:DataType="Tool">
-                <TextBlock Text="{Binding Title}"/>
-              </Tool>
-            </ToolDock>
-
-          </ProportionalDock>
-
-        </ProportionalDock>
-      </RootDock>
-
-    </DockControl>
-
-  </Grid>
+    </Grid>
 </UserControl>
