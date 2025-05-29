@@ -29,6 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Dock.Avalonia\" />
       <Folder Include="Views\ChartEditor\Panels\" />
     </ItemGroup>
 

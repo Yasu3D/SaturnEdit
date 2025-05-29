@@ -4,8 +4,7 @@
              RequestedThemeVariant="Dark">
 
     <Application.Resources>
-        <ControlRecycling x:Key="ControlRecyclingKey"
-                          TryToUseIdAsKey="True" />
+        <ControlRecycling x:Key="ControlRecyclingKey" TryToUseIdAsKey="True" />
     </Application.Resources>
 
     <Application.Styles>

@@ -111,6 +111,7 @@
                 </Grid>
             </ControlTemplate>
         </Setter>
+        
         <Style Selector="^/template/ TextBlock#PART_Title">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="HorizontalAlignment" Value="Left" />
