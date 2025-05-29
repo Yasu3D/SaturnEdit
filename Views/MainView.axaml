@@ -11,16 +11,15 @@
              d:DesignHeight="450"
              x:Class="SaturnEdit.Views.MainView"
              x:CompileBindings="True">
-    <!-- Separate Tab Bar from Explorer + Content -->
-    <Grid ColumnDefinitions="41, *">
 
+    <Grid ColumnDefinitions="41, *">
         <!-- Tab Bar -->
         <Grid Column="0"
               ColumnDefinitions="40, 1">
 
             <!-- Tabs -->
-            <StackPanel Grid.Column="0"
-                        Background="{DynamicResource LightBrush}">
+            <StackPanel Grid.Column="0" 
+                        Background="{DynamicResource BackgroundPrimary}">
 
                 <RadioButton Name="TabChartEditor"
                              Classes="ToggleRadio"
@@ -47,7 +46,7 @@
                               Width="18"
                               Height="18" />
                 </RadioButton>
-                
+
                 <RadioButton Name="TabStageEditor"
                              Classes="ToggleRadio"
                              GroupName="EditorTabs"
@@ -64,8 +63,8 @@
                              ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor}" 
-                                       TextAlignment="Left"/>
+                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor}"
+                                       TextAlignment="Left" />
                             <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor_Description}"
                                        TextAlignment="Left"
                                        Foreground="{DynamicResource AnnotationBrush}" />
@@ -92,8 +91,8 @@
                              ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor}" 
-                                       TextAlignment="Left"/>
+                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor}"
+                                       TextAlignment="Left" />
                             <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor_Description}"
                                        TextAlignment="Left"
                                        Foreground="{DynamicResource AnnotationBrush}" />
@@ -103,18 +102,17 @@
                               Width="18"
                               Height="18" />
                 </RadioButton>
-                
+
                 <Rectangle Width="30"
                            Height="1"
                            Fill="{DynamicResource MenuBorderBrush}"
                            Margin="5,8,5,3" />
-                
-                
+
+
             </StackPanel>
 
-            <!-- Vertical Separator -->
-            <Rectangle Grid.Column="1"
-                       Fill="{DynamicResource MenuBorderBrushDark}" />
+            <!-- Separator -->
+            <Rectangle Grid.Column="1" Fill="{DynamicResource SeparatorSecondary}" />
 
         </Grid>
 
@@ -126,21 +124,40 @@
                    Name="TextBlockVersion"
                    Foreground="{DynamicResource MenuBorderBrush}" />
 
-        <!-- Content -->
-        <chartEditor:ChartEditorView Grid.Column="1" 
-                               Name="ChartEditorView"
-                               IsVisible="True"
-                               IsEnabled="True"/>
-        
-        <stageEditor:StageEditorView Grid.Column="1" 
-                               Name="StageEditorView"
-                               IsVisible="False"
-                               IsEnabled="False"/>
-        
-        <contentEditor:CosmeticsEditorView Grid.Column="1" 
-                               Name="ContentEditorView"
-                               IsVisible="False"
-                               IsEnabled="False"/>
+        <!-- Menu Bar & Content -->
+        <Grid Column="1">
+            
+            <Grid RowDefinitions="40, 1, *">
 
+                <Grid Grid.Row="0"
+                      ColumnDefinitions="*, 100"
+                      Background="{DynamicResource BackgroundPrimary}"
+                      IsHitTestVisible="False">
+                    
+                </Grid>
+                
+                <Rectangle Grid.Row="1" Fill="{DynamicResource SeparatorSecondary}" />
+                
+                <chartEditor:ChartEditorView Grid.Row="2"
+                                             Name="ChartEditorView"
+                                             IsVisible="True"
+                                             IsEnabled="True" />
+
+                <stageEditor:StageEditorView Grid.Row="2"
+                                             Name="StageEditorView"
+                                             IsVisible="False"
+                                             IsEnabled="False" />
+
+                <contentEditor:CosmeticsEditorView Grid.Row="2"
+                                                   Name="ContentEditorView"
+                                                   IsVisible="False"
+                                                   IsEnabled="False" />
+                
+            </Grid>
+            
+        </Grid>
+        
     </Grid>
+
+
 </UserControl>

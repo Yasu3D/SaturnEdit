@@ -6,21 +6,14 @@
     <Application.Resources>
         <ControlRecycling x:Key="ControlRecyclingKey"
                           TryToUseIdAsKey="True" />
-        <Color x:Key="RegionColor">Red</Color>
+        
     </Application.Resources>
 
     <Application.Styles>
-
         <FluentTheme />
-        <DockFluentTheme />
-        <StyleInclude Source="Styles/ThemeColors.axaml" />
+        <StyleInclude Source="Styles/ColorStyles.axaml" />
         <StyleInclude Source="Styles/ControlStyles.axaml" />
-
-        <Style Selector="DockControl">
-            <Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)"
-                    Value="{StaticResource ControlRecyclingKey}" />
-        </Style>
-
+        <StyleInclude Source="Styles/DockStyles.axaml" />
     </Application.Styles>
 
 </Application>
