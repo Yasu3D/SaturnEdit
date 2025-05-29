@@ -1,12 +1,11 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="SaturnEdit.App"
-             RequestedThemeVariant="Default">
+             RequestedThemeVariant="Dark">
 
     <Application.Resources>
         <ControlRecycling x:Key="ControlRecyclingKey"
                           TryToUseIdAsKey="True" />
-        
     </Application.Resources>
 
     <Application.Styles>
@@ -14,6 +13,7 @@
         <StyleInclude Source="Styles/ColorStyles.axaml" />
         <StyleInclude Source="Styles/ControlStyles.axaml" />
         <StyleInclude Source="Styles/DockStyles.axaml" />
+        <StyleInclude Source="Styles/IconStyles.axaml" />
     </Application.Styles>
 
 </Application>

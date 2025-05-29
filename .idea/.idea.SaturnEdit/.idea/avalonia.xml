@@ -11,6 +11,7 @@
         <entry key="Styles/Controls/ToolChromeControl.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Controls/ToolTabStripItem.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/DockStyles.axaml" value="SaturnEdit.csproj" />
+        <entry key="Styles/IconStyles.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/ThemeColors.axaml" value="SaturnEdit.csproj" />
         <entry key="VIews/MainView.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/ChartEditor/ChartEditorView.axaml" value="SaturnEdit.csproj" />

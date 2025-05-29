@@ -14,7 +14,6 @@
     <!-- Slider -->
 
     <Style Selector="DockControl">
-        <Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)"
-                Value="{StaticResource ControlRecyclingKey}" />
+        <Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
     </Style>
 </Styles>
