@@ -3,15 +3,15 @@
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="Controls/ProportionalStackPanelSplitter.axaml" />
+                <ResourceInclude Source="Controls/Dock/ProportionalStackPanelSplitter.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/DocumentTabStripItem.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/DocumentTabStrip.axaml" />
-                <ResourceInclude Source="Controls/ToolTabStripItem.axaml" />
-                <ResourceInclude Source="avares://Dock.Avalonia/Controls/ToolTabStrip.axaml" />
-                <ResourceInclude Source="Controls/DockTarget.axaml" />
+                <ResourceInclude Source="Controls/Dock/ToolTabStripItem.axaml" />
+                <ResourceInclude Source="Controls/Dock/ToolTabStrip.axaml" />
+                <ResourceInclude Source="Controls/Dock/DockTarget.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/DocumentControl.axaml" />
-                <ResourceInclude Source="Controls/ToolChromeControl.axaml" />
-                <ResourceInclude Source="Controls/ToolControl.axaml" />
+                <ResourceInclude Source="Controls/Dock/ToolChromeControl.axaml" />
+                <ResourceInclude Source="Controls/Dock/ToolControl.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/ToolPinItemControl.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/ToolPinnedControl.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/DockDockControl.axaml" />

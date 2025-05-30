@@ -10,6 +10,11 @@
     <!-- CheckBox -->
 
     <!-- TextBox -->
+    <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontWeight" Value="Light" />
+    </Style>
 
     <!-- Slider -->
 

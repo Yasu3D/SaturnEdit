@@ -1,0 +1,23 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTheme x:Key="{x:Type ProportionalStackPanelSplitter}"
+                  TargetType="ProportionalStackPanelSplitter">
+
+        <Setter Property="Thickness" Value="1"/>
+        <Setter Property="ClipToBounds" Value="False"/>
+        
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid Margin="-5">
+                    <Border Background="Transparent"/>
+                    <Border x:Name="PART_Separator" 
+                            Margin="5"
+                            Background="{DynamicResource SeparatorSecondary}"/>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+        
+    </ControlTheme>
+
+</ResourceDictionary>
