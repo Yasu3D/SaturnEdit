@@ -47,11 +47,20 @@
                       Width="10"
                       Height="10" />
         </Button>
-        <Button Name="ButtonMaximize" 
+        <Button Name="ButtonMaximize"
                 Classes="WindowChromeStandard">
-            <PathIcon Data="{DynamicResource IconMaximize}"
-                      Width="10"
-                      Height="10" />
+            <Grid>
+                <PathIcon Name="IconMaximize"
+                          Data="{DynamicResource IconMaximize}"
+                          IsVisible="True"
+                          Width="10"
+                          Height="10" />
+                <PathIcon Name="IconRestore"
+                          Data="{DynamicResource IconRestore}"
+                          IsVisible="False"
+                          Width="10"
+                          Height="10" />
+            </Grid>
         </Button>
         <Button Name="ButtonClose" 
                 Classes="WindowChromeClose">

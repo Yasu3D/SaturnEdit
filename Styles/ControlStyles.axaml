@@ -1,6 +1,11 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
+    <!-- Windows Maximized Margin Patch -->
+    <Style Selector="Window[WindowState=Maximized]">
+        <Setter Property="Padding" Value="{OnPlatform Default='0', Windows='8', x:TypeArguments=Thickness}" />
+    </Style>
+    
     <!-- Button -->
 
     <!-- ToggleButton -->
