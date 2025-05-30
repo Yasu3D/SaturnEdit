@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:views="clr-namespace:SaturnEdit.Views"
+        xmlns:controls="clr-namespace:SaturnEdit.Styles.Controls"
         mc:Ignorable="d"
         d:DesignWidth="800"
         d:DesignHeight="600"
@@ -12,5 +13,11 @@
         ExtendClientAreaChromeHints="NoChrome"
         ExtendClientAreaToDecorationsHint="True"
         Title="SaturnEdit">
-    <views:MainView />
+    <Grid>
+        <controls:WindowChrome Name="WindowChrome"
+                               ZIndex="99"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Top" />
+        <views:MainView />
+    </Grid>
 </Window>

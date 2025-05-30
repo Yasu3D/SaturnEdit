@@ -32,16 +32,18 @@
                     
                     <SolidColorBrush x:Key="BackgroundPrimary" Color="#2B2B2B" />
                     <SolidColorBrush x:Key="BackgroundSecondary" Color="#1C1C1C" />
+                    
                     <SolidColorBrush x:Key="SeparatorPrimary" Color="#454545" />
                     <SolidColorBrush x:Key="SeparatorSecondary" Color="#1C1C1C" />
+                    
                     <SolidColorBrush x:Key="ForegroundPrimary" Color="#EEEEEE" />
                     <SolidColorBrush x:Key="ForegroundSecondary" Color="#AAAAAA" />
                     <SolidColorBrush x:Key="ForegroundTertiary" Color="#808080" />
                     
-                    <SolidColorBrush x:Key="ButtonPrimary100%" Color="#4B4B4B" />
-                    <SolidColorBrush x:Key="ButtonPrimary50%" Color="#804B4B4B" />
-                    <SolidColorBrush x:Key="ButtonSecondary100%" Color="#181818" />
-                    <SolidColorBrush x:Key="ButtonSecondary50%" Color="#80181818" />
+                    <SolidColorBrush x:Key="ButtonPrimaryPressed" Color="#B3383838" />
+                    <SolidColorBrush x:Key="ButtonPrimaryPointerOver" Color="#FF383838" />
+                    <SolidColorBrush x:Key="ButtonSecondaryPressed" Color="#FF202020" />
+                    <SolidColorBrush x:Key="ButtonSecondaryPointerOver" Color="#80202020" />
                     
                     <!-- Legacy Dock Stuff, mostly overwritten by custom control themes. -->
                     <SolidColorBrush x:Key="DockApplicationAccentBrushLow" Color="#454545" /> <!-- Document Grip Selected -->

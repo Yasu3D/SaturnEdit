@@ -18,7 +18,7 @@
               ColumnDefinitions="40, 1">
 
             <!-- Tabs -->
-            <StackPanel Grid.Column="0" 
+            <StackPanel Grid.Column="0"
                         Background="{DynamicResource BackgroundPrimary}">
 
                 <RadioButton Name="TabChartEditor"
@@ -103,60 +103,34 @@
                               Height="18" />
                 </RadioButton>
 
-                <Rectangle Width="30"
-                           Height="1"
-                           Fill="{DynamicResource MenuBorderBrush}"
-                           Margin="5,8,5,3" />
+                <!--<Rectangle Height="1"
+                           HorizontalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Margin="5,8,5,3" />-->
 
 
             </StackPanel>
 
             <!-- Separator -->
-            <Rectangle Grid.Column="1" Fill="{DynamicResource SeparatorSecondary}" />
+            <Rectangle Grid.Column="1"
+                       Fill="{DynamicResource SeparatorSecondary}" />
 
         </Grid>
 
-        <!-- Separator -->
-        <TextBlock Grid.Column="1"
-                   VerticalAlignment="Bottom"
-                   HorizontalAlignment="Right"
-                   Margin="5"
-                   Name="TextBlockVersion"
-                   Foreground="{DynamicResource MenuBorderBrush}" />
-
-        <!-- Menu Bar & Content -->
+        <!-- Content -->
         <Grid Column="1">
-            
-            <Grid RowDefinitions="40, 1, *">
+            <chartEditor:ChartEditorView Name="ChartEditorView"
+                                         IsVisible="True"
+                                         IsEnabled="True" />
 
-                <Grid Grid.Row="0"
-                      ColumnDefinitions="*, 100"
-                      Background="{DynamicResource BackgroundPrimary}"
-                      IsHitTestVisible="False">
-                    
-                </Grid>
-                
-                <Rectangle Grid.Row="1" Fill="{DynamicResource SeparatorSecondary}" />
-                
-                <chartEditor:ChartEditorView Grid.Row="2"
-                                             Name="ChartEditorView"
-                                             IsVisible="True"
-                                             IsEnabled="True" />
+            <stageEditor:StageEditorView Name="StageEditorView"
+                                         IsVisible="False"
+                                         IsEnabled="False" />
 
-                <stageEditor:StageEditorView Grid.Row="2"
-                                             Name="StageEditorView"
-                                             IsVisible="False"
-                                             IsEnabled="False" />
-
-                <contentEditor:CosmeticsEditorView Grid.Row="2"
-                                                   Name="ContentEditorView"
-                                                   IsVisible="False"
-                                                   IsEnabled="False" />
-                
-            </Grid>
-            
+            <contentEditor:CosmeticsEditorView Name="ContentEditorView"
+                                               IsVisible="False"
+                                               IsEnabled="False" />
         </Grid>
-        
     </Grid>
 
 

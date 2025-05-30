@@ -97,15 +97,15 @@
         </Setter>
 
         <Style Selector="^:pointerover">
-            <Setter Property="Background" Value="{DynamicResource ButtonSecondary50%}" />
+            <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPointerOver}" />
         </Style>
 
         <Style Selector="^:pressed">
-            <Setter Property="Background" Value="{DynamicResource ButtonSecondary100%}" />
+            <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPressed}" />
         </Style>
 
         <Style Selector="^:selected">
-            <Setter Property="Background" Value="{DynamicResource ButtonSecondary100%} " />
+            <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPressed} " />
         </Style>
         
         <Style Selector="^:disabled">

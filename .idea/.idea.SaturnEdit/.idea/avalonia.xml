@@ -7,12 +7,15 @@
         <entry key="MainWindow.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/ColorStyles.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/ControlStyles.axaml" value="SaturnEdit.csproj" />
+        <entry key="Styles/Controls/Button.axaml" value="SaturnEdit.csproj" />
+        <entry key="Styles/Controls/Dock/ToolTabStrip.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Controls/DockTarget.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Controls/ProportionalStackPanelSplitter.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Controls/ToolChromeControl.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Controls/ToolControl.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Controls/ToolTabStrip.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Controls/ToolTabStripItem.axaml" value="SaturnEdit.csproj" />
+        <entry key="Styles/Controls/WindowChrome.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/DockStyles.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/IconStyles.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/ThemeColors.axaml" value="SaturnEdit.csproj" />

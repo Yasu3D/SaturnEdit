@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="141"
+             d:DesignHeight="40"
+             x:Class="SaturnEdit.Styles.Controls.WindowChrome">
+    <UserControl.Styles>
+        <Style Selector="Button.WindowChromeStandard">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="47"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        
+        <Style Selector="Button.WindowChromeStandard:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ButtonPrimaryPointerOver}"/>
+        </Style>
+        
+        <Style Selector="Button.WindowChromeStandard:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ButtonPrimaryPressed}"/>
+        </Style>
+        
+        <Style Selector="Button.WindowChromeClose">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="47"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        
+        <Style Selector="Button.WindowChromeClose:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#C42B1C"/>
+        </Style>
+        
+        <Style Selector="Button.WindowChromeClose:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#B32B1C"/>
+        </Style>
+    </UserControl.Styles>
+    
+    <StackPanel Orientation="Horizontal" Height="40">
+        <Button Name="ButtonMinimize" 
+                Classes="WindowChromeStandard">
+            <PathIcon Data="{DynamicResource IconMinimize}"
+                      Width="10"
+                      Height="10" />
+        </Button>
+        <Button Name="ButtonMaximize" 
+                Classes="WindowChromeStandard">
+            <PathIcon Data="{DynamicResource IconMaximize}"
+                      Width="10"
+                      Height="10" />
+        </Button>
+        <Button Name="ButtonClose" 
+                Classes="WindowChromeClose">
+            <PathIcon Data="{DynamicResource IconDismiss}"
+                      Width="10"
+                      Height="10" />
+        </Button>
+    </StackPanel>
+</UserControl>

@@ -2,25 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:SaturnEdit.Styles.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              x:Class="SaturnEdit.Views.ContentEditor.CosmeticsEditorView">
-    <Border x:Name="PART_TopSelector"
-                                    Grid.Row="0" 
-                                    Grid.Column="1"
-                                    Margin="5"
-                                    Width="40"
-                                    Height="40"
-                                    BorderThickness="1"
-                                    BorderBrush="{DynamicResource DockTargetPrimary}"
-                                    Background="Transparent"
-                                    CornerRadius="8">
-                                <Border Width="20"
-                                        Margin="-1"
-                                        HorizontalAlignment="Right"
-                                        CornerRadius="5,8,8,5"
-                                        IsHitTestVisible="False"
-                                        Background="{DynamicResource DockTargetSecondary}" />
-                            </Border>
+    <controls:WindowChrome/>
 </UserControl>

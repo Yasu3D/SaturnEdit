@@ -2,11 +2,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace SaturnEdit.Views;
+namespace SaturnEdit.Styles.Controls;
 
-public partial class CustomWindowButtons : UserControl
+public partial class WindowChrome : UserControl
 {
-    public CustomWindowButtons()
+    public WindowChrome()
     {
         InitializeComponent();
     }

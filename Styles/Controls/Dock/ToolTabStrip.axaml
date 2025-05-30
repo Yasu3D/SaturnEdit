@@ -23,7 +23,7 @@
         
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid RowDefinitions="1, Auto">
+                <Grid RowDefinitions="1, Auto" Name="PART_TabStrip">
                     <Rectangle Grid.Row="0"
                                Fill="{DynamicResource SeparatorPrimary}" />
                     
@@ -48,7 +48,7 @@
             </ItemsPanelTemplate>
         </Setter>
 
-        <Style Selector="^:singleitem /template/ ItemsPresenter#PART_ItemsPresenter">
+        <Style Selector="^:singleitem /template/ Grid#PART_TabStrip">
             <Setter Property="IsVisible" Value="False" />
         </Style>
 
