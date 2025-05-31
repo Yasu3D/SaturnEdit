@@ -8,44 +8,56 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     </PropertyGroup>
 
-
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.3.0" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.3.0" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.0" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.0" />
+        <PackageReference Include="Avalonia" Version="11.3.0"/>
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.0"/>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.0"/>
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.0"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.0" />
-        <PackageReference Include="Dock.Avalonia" Version="11.3.0.2" />
-        <PackageReference Include="Dock.Controls.ProportionalStackPanel" Version="11.3.0.2" />
-        <PackageReference Include="Dock.Controls.Recycling" Version="11.3.0.2" />
-        <PackageReference Include="Dock.Controls.Recycling.Model" Version="11.3.0.2" />
-        <PackageReference Include="Dock.MarkupExtension" Version="11.3.0.2" />
-        <PackageReference Include="Dock.Model" Version="11.3.0.2" />
-        <PackageReference Include="Dock.Model.Avalonia" Version="11.3.0.2" />
-        <PackageReference Include="Dock.Serializer" Version="11.3.0.2" />
-        <PackageReference Include="Dock.Settings" Version="11.3.0.2" />
-        <PackageReference Include="FluentIcons.Avalonia" Version="1.1.301" />
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.0"/>
+        <PackageReference Include="Dock.Avalonia" Version="11.3.0.2"/>
+        <PackageReference Include="Dock.Controls.ProportionalStackPanel" Version="11.3.0.2"/>
+        <PackageReference Include="Dock.Controls.Recycling" Version="11.3.0.2"/>
+        <PackageReference Include="Dock.Controls.Recycling.Model" Version="11.3.0.2"/>
+        <PackageReference Include="Dock.MarkupExtension" Version="11.3.0.2"/>
+        <PackageReference Include="Dock.Model" Version="11.3.0.2"/>
+        <PackageReference Include="Dock.Model.Avalonia" Version="11.3.0.2"/>
+        <PackageReference Include="Dock.Serializer" Version="11.3.0.2"/>
+        <PackageReference Include="Dock.Settings" Version="11.3.0.2"/>
+        <PackageReference Include="FluentIcons.Avalonia" Version="1.1.301"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Views\ChartEditor\Panels\" />
+        <Folder Include="Views\ChartEditor\Panels\"/>
     </ItemGroup>
 
-
     <ItemGroup>
-      <EmbeddedResource Update="Assets\Lang\Resources.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-        <LastGenOutput>Locales.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
+        <EmbeddedResource Update="Resources.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <PublicClass>true</PublicClass>
+            <!--<LastGenOutput>Lang\Resources.Designer.cs</LastGenOutput>-->
+            <!--<StronglyTypedFileName>$(IntermediateOutputPath)\Resources.Designer.cs</StronglyTypedFileName>-->
+            <StronglyTypedFileName>Lang\Resources.Designer.cs</StronglyTypedFileName>
+            <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+            <StronglyTypedNamespace>AvaloniaApp.Lang</StronglyTypedNamespace>
+            <StronglyTypedClassName>Resources</StronglyTypedClassName>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Assets\Lang\Resources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
-
     <ItemGroup>
-      <Compile Update="Assets\Lang\Resources.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>Resources.resx</DependentUpon>
-      </Compile>
+        <Compile Update="Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Assets\Lang\Resources.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
     </ItemGroup>
 </Project>

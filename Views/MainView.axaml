@@ -5,7 +5,6 @@
              xmlns:chartEditor="clr-namespace:SaturnEdit.Views.ChartEditor"
              xmlns:stageEditor="clr-namespace:SaturnEdit.Views.StageEditor"
              xmlns:contentEditor="clr-namespace:SaturnEdit.Views.ContentEditor"
-             xmlns:lang="clr-namespace:SaturnEdit.Assets.Lang"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
@@ -37,8 +36,8 @@
                              ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor}" />
-                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor_Description}"
+                            <TextBlock Text="" />
+                            <TextBlock Text=""
                                        Foreground="{DynamicResource AnnotationBrush}" />
                         </StackPanel>
                     </ToolTip.Tip>
@@ -63,9 +62,9 @@
                              ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor}"
+                            <TextBlock Text=""
                                        TextAlignment="Left" />
-                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor_Description}"
+                            <TextBlock Text=""
                                        TextAlignment="Left"
                                        Foreground="{DynamicResource AnnotationBrush}" />
                         </StackPanel>
@@ -91,9 +90,9 @@
                              ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor}"
+                            <TextBlock Text=""
                                        TextAlignment="Left" />
-                            <TextBlock Text="{x:Static lang:Resources.Tabs_ToolTip_ChartEditor_Description}"
+                            <TextBlock Text=""
                                        TextAlignment="Left"
                                        Foreground="{DynamicResource AnnotationBrush}" />
                         </StackPanel>

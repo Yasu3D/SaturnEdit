@@ -7,12 +7,40 @@
              d:DesignHeight="450"
              x:Class="SaturnEdit.Views.ChartEditor.ChartEditorView">
     <Grid RowDefinitions="40,1,*">
-
+        
+        <!-- Menu Bar Background -->
+        <Rectangle Grid.Row="0" 
+                   Fill="{DynamicResource BackgroundPrimary}"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   IsHitTestVisible="False" />
+        
         <!-- Menu Bar -->
-        <DockPanel Grid.Row="0"
-                   Background="{DynamicResource BackgroundPrimary}"
-                   IsHitTestVisible="False">
+        <DockPanel Grid.Row="0">
+            <Menu DockPanel.Dock="Left">
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock Text=""/>
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock Text=""/>
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock Text=""/>
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock Text=""/>
+                    </MenuItem.Header>
+                </MenuItem>
+            </Menu>
             
+            <Rectangle Fill="Transparent" IsHitTestVisible="False"/>
         </DockPanel>
         
         <!-- Separator -->

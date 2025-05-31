@@ -6,6 +6,8 @@
         <Setter Property="Padding" Value="{OnPlatform Default='0', Windows='8', x:TypeArguments=Thickness}" />
     </Style>
     
+    <!-- Menu -->
+    
     <!-- Button -->
 
     <!-- ToggleButton -->
@@ -26,4 +28,13 @@
     <Style Selector="DockControl">
         <Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
     </Style>
+    
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="Controls/MenuItem.axaml" />
+                <ResourceInclude Source="Controls/Menu.axaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
 </Styles>
