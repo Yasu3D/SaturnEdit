@@ -8,6 +8,7 @@ public partial class MainView : UserControl
     public MainView()
     {
         InitializeComponent();
+        App.SetLocale("en-US");
     }
     
     private void EditorTabs_OnIsCheckedChanged(object? sender, RoutedEventArgs e)

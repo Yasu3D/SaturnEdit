@@ -20,22 +20,32 @@
             <Menu DockPanel.Dock="Left">
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock Text=""/>
+                        <TextBlock Text="{DynamicResource ChartEditor.Menu.File}"/>
+                    </MenuItem.Header>
+                    
+                    <MenuItem Header="Child 1"/>
+                    <MenuItem Header="Child 2"/>
+                    <MenuItem Header="Child 3"/>
+                    <MenuItem Header="Child 4"/>
+                </MenuItem>
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock Text="{DynamicResource ChartEditor.Menu.Edit}"/>
                     </MenuItem.Header>
                 </MenuItem>
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock Text=""/>
+                        <TextBlock Text="{DynamicResource ChartEditor.Menu.View}"/>
                     </MenuItem.Header>
                 </MenuItem>
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock Text=""/>
+                        <TextBlock Text="{DynamicResource ChartEditor.Menu.Navigate}"/>
                     </MenuItem.Header>
                 </MenuItem>
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock Text=""/>
+                        <TextBlock Text="{DynamicResource ChartEditor.Menu.Select}"/>
                     </MenuItem.Header>
                 </MenuItem>
             </Menu>

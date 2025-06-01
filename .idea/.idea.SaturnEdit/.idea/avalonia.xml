@@ -18,6 +18,7 @@
         <entry key="Styles/Controls/ToolControl.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Controls/ToolTabStrip.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Controls/ToolTabStripItem.axaml" value="SaturnEdit.csproj" />
+        <entry key="Styles/Controls/ToolTip.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Controls/WindowChrome.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/DockStyles.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/IconStyles.axaml" value="SaturnEdit.csproj" />

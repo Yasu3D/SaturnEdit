@@ -1,4 +1,16 @@
+<!-- Auto-Generated with DynamicResourceLocaleGenerator.exe -->
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- Add Resources Here -->
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <system:String x:Key="Tabs.ToolTip.ChartEditor">Chart Editor</system:String>
+    <system:String x:Key="Tabs.ToolTip.ChartEditor.Description">Create and edit Charts.</system:String>
+    <system:String x:Key="Tabs.ToolTip.CosmeticsEditor">Cosmetics Editor</system:String>
+    <system:String x:Key="Tabs.ToolTip.CosmeticsEditor.Description">Create and edit Icons, Plates, Titles, etc.</system:String>
+    <system:String x:Key="Tabs.ToolTip.StageEditor">Stage Editor</system:String>
+    <system:String x:Key="Tabs.ToolTip.StageEditor.Description">Create and edit Stage-Up stages.</system:String>
+    <system:String x:Key="ChartEditor.Menu.File">File</system:String>
+    <system:String x:Key="ChartEditor.Menu.Edit">Edit</system:String>
+    <system:String x:Key="ChartEditor.Menu.View">View</system:String>
+    <system:String x:Key="ChartEditor.Menu.Select">Select</system:String>
+    <system:String x:Key="ChartEditor.Menu.Navigate">Navigate</system:String>
 </ResourceDictionary>

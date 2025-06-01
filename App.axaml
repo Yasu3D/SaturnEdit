@@ -9,8 +9,8 @@
 
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="Styles/ColorStyles.axaml" />
         <StyleInclude Source="Styles/ControlStyles.axaml" />
+        <StyleInclude Source="Styles/ColorStyles.axaml" />
         <StyleInclude Source="Styles/DockStyles.axaml" />
         <StyleInclude Source="Styles/IconStyles.axaml" />
     </Application.Styles>

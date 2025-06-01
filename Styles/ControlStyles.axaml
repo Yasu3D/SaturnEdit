@@ -18,7 +18,7 @@
 
     <!-- TextBox -->
     <Style Selector="TextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+        <Setter Property="FontFamily" Value="Consolas"/>
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontWeight" Value="Light" />
     </Style>
@@ -29,11 +29,13 @@
         <Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
     </Style>
     
+    <!-- Control Re-styles -->
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="Controls/MenuItem.axaml" />
                 <ResourceInclude Source="Controls/Menu.axaml"/>
+                <ResourceInclude Source="Controls/ToolTip.axaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>

@@ -26,9 +26,11 @@
         <PackageReference Include="Dock.Settings" Version="11.3.0.2"/>
         <PackageReference Include="FluentIcons.Avalonia" Version="1.1.301"/>
     </ItemGroup>
-
+    
     <ItemGroup>
-        <Folder Include="Views\ChartEditor\Panels\"/>
+        <AvaloniaResource Include="Assets\**"/>
+        <AvaloniaXaml Remove="Assets\Locales\en-US.axaml" />
+        <AvaloniaResource Include="Assets\Locales\en-US.axaml" />
     </ItemGroup>
 
     <ItemGroup>

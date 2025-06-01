@@ -36,9 +36,9 @@
                              ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="" />
-                            <TextBlock Text=""
-                                       Foreground="{DynamicResource AnnotationBrush}" />
+                            <TextBlock Text="{DynamicResource Tabs.ToolTip.ChartEditor}" />
+                            <TextBlock Text="{DynamicResource Tabs.ToolTip.ChartEditor.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                     <PathIcon Data="{DynamicResource IconHexagonSparkle}"
@@ -62,11 +62,9 @@
                              ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text=""
-                                       TextAlignment="Left" />
-                            <TextBlock Text=""
-                                       TextAlignment="Left"
-                                       Foreground="{DynamicResource AnnotationBrush}" />
+                            <TextBlock Text="{DynamicResource Tabs.ToolTip.StageEditor}" />
+                            <TextBlock Text="{DynamicResource Tabs.ToolTip.StageEditor.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                     <PathIcon Data="{DynamicResource IconHexagonSparkle}"
@@ -90,11 +88,9 @@
                              ToolTip.Placement="Right">
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text=""
-                                       TextAlignment="Left" />
-                            <TextBlock Text=""
-                                       TextAlignment="Left"
-                                       Foreground="{DynamicResource AnnotationBrush}" />
+                            <TextBlock Text="{DynamicResource Tabs.ToolTip.CosmeticsEditor}" />
+                            <TextBlock Text="{DynamicResource Tabs.ToolTip.CosmeticsEditor.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                     <PathIcon Data="{DynamicResource IconHexagonSparkle}"

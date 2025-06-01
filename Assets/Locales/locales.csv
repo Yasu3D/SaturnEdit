@@ -1,0 +1,12 @@
+key,en-US
+Tabs.ToolTip.ChartEditor,Chart Editor
+Tabs.ToolTip.ChartEditor.Description,Create and edit Charts.
+Tabs.ToolTip.CosmeticsEditor,Cosmetics Editor
+Tabs.ToolTip.CosmeticsEditor.Description,"Create and edit Icons, Plates, Titles, etc."
+Tabs.ToolTip.StageEditor,Stage Editor
+Tabs.ToolTip.StageEditor.Description,Create and edit Stage-Up stages.
+ChartEditor.Menu.File,File
+ChartEditor.Menu.Edit,Edit
+ChartEditor.Menu.View,View
+ChartEditor.Menu.Select,Select
+ChartEditor.Menu.Navigate,Navigate
