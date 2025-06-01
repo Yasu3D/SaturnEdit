@@ -23,26 +23,6 @@
     <x:Double x:Key="TabStripItemMinHeight">48</x:Double>
     <x:Double x:Key="TabStripItemPipeThickness">2</x:Double>
 
-    <ContextMenu x:Key="ToolTabStripItemContextMenu">
-        <MenuItem Command="{Binding Owner.Factory.FloatDockable}"
-                  CommandParameter="{Binding}"
-                  IsVisible="{Binding CanFloat}">
-            <MenuItem.Header>
-                <TextBlock Text="{DynamicResource Dock.ToolTabStrip.Flyout.Float}"/>
-            </MenuItem.Header>
-            <MenuItem.Icon>
-                <icon:FluentIcon Icon="ThumbLike"/>
-            </MenuItem.Icon>
-        </MenuItem>
-        <MenuItem Command="{Binding Owner.Factory.CloseDockable}"
-                  CommandParameter="{Binding}"
-                  IsVisible="{Binding CanClose}">
-            <MenuItem.Header>
-                <TextBlock Text="{DynamicResource Dock.ToolTabStrip.Flyout.Close}"/>
-            </MenuItem.Header>
-        </MenuItem>
-    </ContextMenu>
-
     <ControlTheme x:Key="{x:Type ToolTabStripItem}"
                   TargetType="ToolTabStripItem">
         

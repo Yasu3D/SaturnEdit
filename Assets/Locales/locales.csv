@@ -10,6 +10,3 @@ ChartEditor.Menu.Edit,Edit
 ChartEditor.Menu.View,View
 ChartEditor.Menu.Select,Select
 ChartEditor.Menu.Navigate,Navigate
-Dock.ToolTabStrip.Flyout.Float,Float1
-Dock.ToolTabStrip.Flyout.Dock,Dock2
-Dock.ToolTabStrip.Flyout.Close,Close3

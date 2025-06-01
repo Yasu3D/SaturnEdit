@@ -11,23 +11,6 @@
                            Height="400" />
     </Design.PreviewWith>
 
-    <MenuFlyout x:Key="ToolChromeControlContextMenu">
-        <MenuItem Command="{Binding Owner.Factory.FloatDockable}"
-                  CommandParameter="{Binding ActiveDockable}"
-                  IsVisible="{Binding ActiveDockable.CanFloat, FallbackValue=False}">
-            <MenuItem.Header>
-                <TextBlock Text="{DynamicResource Dock.ToolTabStrip.Flyout.Float}"/>
-            </MenuItem.Header>
-        </MenuItem>
-        <MenuItem Command="{Binding Owner.Factory.CloseDockable}"
-                  CommandParameter="{Binding ActiveDockable}"
-                  IsVisible="{Binding ActiveDockable.CanClose, FallbackValue=False}">
-            <MenuItem.Header>
-                <TextBlock Text="{DynamicResource Dock.ToolTabStrip.Flyout.Close}"/>
-            </MenuItem.Header>
-        </MenuItem>
-    </MenuFlyout>
-
     <ControlTheme x:Key="ChromeButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Padding" Value="5" />
         <Setter Property="Margin" Value="2" />

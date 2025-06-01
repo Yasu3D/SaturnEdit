@@ -35,11 +35,9 @@
                     
                     <SolidColorBrush x:Key="SeparatorPrimary" Color="#454545" />
                     <SolidColorBrush x:Key="SeparatorSecondary" Color="#1C1C1C" />
-                    
-                    <!--<SolidColorBrush x:Key="ForegroundPrimary" Color="#EEEEEE" />-->
-                    <!--<SolidColorBrush x:Key="ForegroundSecondary" Color="#AAAAAA" />-->
-                    <SolidColorBrush x:Key="ForegroundPrimary" Color="#FF00FF" />
-                    <SolidColorBrush x:Key="ForegroundSecondary" Color="#8000FF" />
+
+                    <SolidColorBrush x:Key="ForegroundPrimary" Color="#EEEEEE" />
+                    <SolidColorBrush x:Key="ForegroundSecondary" Color="#AAAAAA" />
                     <SolidColorBrush x:Key="ForegroundTertiary" Color="#808080" />
                     
                     <SolidColorBrush x:Key="ButtonPrimaryPressed" Color="#B3383838" />
