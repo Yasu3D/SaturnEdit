@@ -6,6 +6,16 @@ Tabs.ToolTip.CosmeticsEditor.Description,"Create and edit Icons, Plates, Titles,
 Tabs.ToolTip.StageEditor,Stage Editor
 Tabs.ToolTip.StageEditor.Description,Create and edit Stage-Up stages.
 ChartEditor.Menu.File,File
+ChartEditor.Menu.File.New,New
+ChartEditor.Menu.File.Open,Open...
+ChartEditor.Menu.File.Close,Close
+ChartEditor.Menu.File.Save,Save
+ChartEditor.Menu.File.SaveAs,Save As...
+ChartEditor.Menu.File.ReloadFromDisk,Reload from Disk
+ChartEditor.Menu.File.Export,Export
+ChartEditor.Menu.File.RenderAsImage,Render as Image...
+ChartEditor.Menu.File.Settings,Settings
+ChartEditor.Menu.File.Quit,Quit
 ChartEditor.Menu.Edit,Edit
 ChartEditor.Menu.View,View
 ChartEditor.Menu.Select,Select

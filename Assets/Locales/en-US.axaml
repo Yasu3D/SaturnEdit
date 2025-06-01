@@ -9,6 +9,16 @@
     <system:String x:Key="Tabs.ToolTip.StageEditor">Stage Editor</system:String>
     <system:String x:Key="Tabs.ToolTip.StageEditor.Description">Create and edit Stage-Up stages.</system:String>
     <system:String x:Key="ChartEditor.Menu.File">File</system:String>
+    <system:String x:Key="ChartEditor.Menu.File.New">New</system:String>
+    <system:String x:Key="ChartEditor.Menu.File.Open">Open...</system:String>
+    <system:String x:Key="ChartEditor.Menu.File.Close">Close</system:String>
+    <system:String x:Key="ChartEditor.Menu.File.Save">Save</system:String>
+    <system:String x:Key="ChartEditor.Menu.File.SaveAs">Save As...</system:String>
+    <system:String x:Key="ChartEditor.Menu.File.ReloadFromDisk">Reload from Disk</system:String>
+    <system:String x:Key="ChartEditor.Menu.File.Export">Export</system:String>
+    <system:String x:Key="ChartEditor.Menu.File.RenderAsImage">Render as Image...</system:String>
+    <system:String x:Key="ChartEditor.Menu.File.Settings">Settings</system:String>
+    <system:String x:Key="ChartEditor.Menu.File.Quit">Quit</system:String>
     <system:String x:Key="ChartEditor.Menu.Edit">Edit</system:String>
     <system:String x:Key="ChartEditor.Menu.View">View</system:String>
     <system:String x:Key="ChartEditor.Menu.Select">Select</system:String>

@@ -28,8 +28,6 @@
                 </ResourceDictionary>
                 
                 <ResourceDictionary x:Key="Dark">
-                    <SolidColorBrush x:Key="AccentColor" Color="#926BFF"/>
-                    
                     <SolidColorBrush x:Key="BackgroundPrimary" Color="#2B2B2B" />
                     <SolidColorBrush x:Key="BackgroundSecondary" Color="#1C1C1C" />
                     
@@ -40,10 +38,15 @@
                     <SolidColorBrush x:Key="ForegroundSecondary" Color="#AAAAAA" />
                     <SolidColorBrush x:Key="ForegroundTertiary" Color="#808080" />
                     
-                    <SolidColorBrush x:Key="ButtonPrimaryPressed" Color="#B3383838" />
-                    <SolidColorBrush x:Key="ButtonPrimaryPointerOver" Color="#FF383838" />
-                    <SolidColorBrush x:Key="ButtonSecondaryPressed" Color="#FF202020" />
-                    <SolidColorBrush x:Key="ButtonSecondaryPointerOver" Color="#80202020" />
+                    <SolidColorBrush x:Key="ButtonPrimaryPressed" Color="#0AFFFFFF" />
+                    <SolidColorBrush x:Key="ButtonPrimaryPointerOver" Color="#0FFFFFFF" />
+                    <SolidColorBrush x:Key="ButtonSecondaryPressed" Color="#40000000" />
+                    <SolidColorBrush x:Key="ButtonSecondaryPointerOver" Color="#26000000" />
+                    
+                    <SolidColorBrush x:Key="RadioButtonPrimaryPressed" Color="#0AFFFFFF" />
+                    <SolidColorBrush x:Key="RadioButtonPrimaryPointerOver" Color="#0FFFFFFF" />
+                    <SolidColorBrush x:Key="RadioButtonPrimaryDisabled" Color="#0A000000" />
+                    <SolidColorBrush x:Key="RadioButtonPrimaryChecked" Color="#40FFFFFF" />
                     
                     <!-- Legacy Dock Stuff, mostly overwritten by custom control themes. -->
                     <SolidColorBrush x:Key="DockApplicationAccentBrushLow" Color="#454545" /> <!-- Document Grip Selected -->
@@ -56,7 +59,35 @@
                     <SolidColorBrush x:Key="DockThemeBackgroundBrush" Color="Transparent" /> <!-- Window Background -->
                     <SolidColorBrush x:Key="DockThemeAccentBrush" Color="Transparent" /> <!-- Window Grip Selected -->
                     <SolidColorBrush x:Key="DockThemeForegroundBrush" Color="#D0D0D0" /> <!-- Document Text -->
+                    
                     <system:Double x:Key="DockFontSizeNormal">12</system:Double>
+
+                    <RadialGradientBrush x:Key="ChartEditorChromeGradient"
+                                         RadiusX="225"
+                                         RadiusY="225"
+                                         Center="200, 20"
+                                         GradientOrigin="200, 20">
+                        <GradientStop Color="#30926BFF" Offset="0.0"/>
+                        <GradientStop Color="#00926BFF" Offset="1.0"/>
+                    </RadialGradientBrush>
+                    
+                    <RadialGradientBrush x:Key="StageEditorChromeGradient"
+                                         RadiusX="225"
+                                         RadiusY="225"
+                                         Center="200, 20"
+                                         GradientOrigin="200, 20">
+                        <GradientStop Color="#30E46161" Offset="0.0"/>
+                        <GradientStop Color="#00E46161" Offset="1.0"/>
+                    </RadialGradientBrush>
+                    
+                    <RadialGradientBrush x:Key="CosmeticsEditorChromeGradient"
+                                         RadiusX="225"
+                                         RadiusY="225"
+                                         Center="200, 20"
+                                         GradientOrigin="200, 20">
+                        <GradientStop Color="#30269EBB" Offset="0.0"/>
+                        <GradientStop Color="#00269EBB" Offset="1.0"/>
+                    </RadialGradientBrush>
                 </ResourceDictionary>
                 
             </ResourceDictionary.ThemeDictionaries>

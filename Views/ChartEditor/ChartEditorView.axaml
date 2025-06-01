@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
@@ -13,7 +14,7 @@
                    Fill="{DynamicResource BackgroundPrimary}"
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
-                   IsHitTestVisible="False" />
+                   IsHitTestVisible="False"  />
         
         <!-- Menu Bar -->
         <DockPanel Grid.Row="0">
@@ -23,26 +24,105 @@
                         <TextBlock Text="{DynamicResource ChartEditor.Menu.File}"/>
                     </MenuItem.Header>
                     
-                    <MenuItem Header="Child 1"/>
-                    <MenuItem Header="Child 2"/>
-                    <MenuItem Header="Child 3"/>
-                    <MenuItem Header="Child 4"/>
+                    <MenuItem InputGesture="Ctrl + N">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.New}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="DocumentAdd"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem InputGesture="Ctrl + O">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Open}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Folder"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Close}"/>
+                        </MenuItem.Header>
+                    </MenuItem>
+
+                    <Separator/>
+                    
+                    <MenuItem InputGesture="Ctrl + S">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Save}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Save"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem InputGesture="Ctrl + Shift + S">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.SaveAs}"/>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.ReloadFromDisk}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowSync"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <Separator/>
+                    
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Export}"/>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.RenderAsImage}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ImageSparkle"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <Separator/>
+                    
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Settings}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Settings"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Quit}"/>
+                        </MenuItem.Header>
+                    </MenuItem>
                 </MenuItem>
+                
                 <MenuItem>
                     <MenuItem.Header>
                         <TextBlock Text="{DynamicResource ChartEditor.Menu.Edit}"/>
                     </MenuItem.Header>
                 </MenuItem>
+                
                 <MenuItem>
                     <MenuItem.Header>
                         <TextBlock Text="{DynamicResource ChartEditor.Menu.View}"/>
                     </MenuItem.Header>
                 </MenuItem>
+                
                 <MenuItem>
                     <MenuItem.Header>
                         <TextBlock Text="{DynamicResource ChartEditor.Menu.Navigate}"/>
                     </MenuItem.Header>
                 </MenuItem>
+                
                 <MenuItem>
                     <MenuItem.Header>
                         <TextBlock Text="{DynamicResource ChartEditor.Menu.Select}"/>
@@ -116,45 +196,7 @@
                         <ProportionalDock x:Name="RightPane"
                                           Id="RightPane"
                                           Orientation="Horizontal">
-
-                            <!-- Documents Pane -->
-
-                            <DocumentDock x:Name="DocumentsPane"
-                                          Id="DocumentsPane"
-                                          CanCreateDocument="True"
-                                          ActiveDockable="Document1">
-                                <DocumentDock.DocumentTemplate>
-                                    <DocumentTemplate>
-                                        <StackPanel x:DataType="Document">
-                                            <TextBlock Text="Title" />
-                                            <TextBox Text="{Binding Title}" />
-                                            <TextBlock Text="Context" />
-                                            <TextBox Text="{Binding Context}"
-                                                     AcceptsReturn="True" />
-                                        </StackPanel>
-                                    </DocumentTemplate>
-                                </DocumentDock.DocumentTemplate>
-                                <Document x:Name="Document1"
-                                          Id="Document1"
-                                          Title="Program.cs"
-                                          Context=""
-                                          x:DataType="Document">
-                                    <TextBox Text="{Binding Context}"
-                                             AcceptsReturn="True" />
-                                </Document>
-                                <Document x:Name="Document2"
-                                          Id="Document2"
-                                          Title="App.axaml"
-                                          Context=""
-                                          x:DataType="Document">
-                                    <TextBox Text="{Binding Context}"
-                                             AcceptsReturn="True" />
-                                </Document>
-                            </DocumentDock>
-
-                            <ProportionalDockSplitter x:Name="RightSplitter"
-                                                      Id="RightSplitter" />
-
+                            
                             <!-- Properties Pane -->
                             <ToolDock x:Name="PropertiesPane"
                                       Id="PropertiesPane"

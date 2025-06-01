@@ -45,7 +45,7 @@
                             <Border Background="{DynamicResource BackgroundPrimary}"
                                     BorderBrush="{DynamicResource SeparatorPrimary}"
                                     BorderThickness="1"
-                                    Padding="4,3"
+                                    Padding="0,3"
                                     MaxWidth="{DynamicResource FlyoutThemeMaxWidth}"
                                     MinHeight="{DynamicResource MenuFlyoutThemeMinHeight}"
                                     HorizontalAlignment="Stretch"

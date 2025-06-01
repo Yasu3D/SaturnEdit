@@ -5,6 +5,7 @@
              xmlns:chartEditor="clr-namespace:SaturnEdit.Views.ChartEditor"
              xmlns:stageEditor="clr-namespace:SaturnEdit.Views.StageEditor"
              xmlns:contentEditor="clr-namespace:SaturnEdit.Views.ContentEditor"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
@@ -41,9 +42,7 @@
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
-                    <PathIcon Data="{DynamicResource IconHexagonSparkle}"
-                              Width="18"
-                              Height="18" />
+                    <icon:FluentIcon Icon="GanttChart" FontSize="22"/>
                 </RadioButton>
 
                 <RadioButton Name="TabStageEditor"
@@ -67,9 +66,7 @@
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
-                    <PathIcon Data="{DynamicResource IconHexagonSparkle}"
-                              Width="18"
-                              Height="18" />
+                    <icon:FluentIcon Icon="Steps" FontSize="22"/>
                 </RadioButton>
 
                 <RadioButton Name="TabContentEditor"
@@ -93,9 +90,7 @@
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
-                    <PathIcon Data="{DynamicResource IconHexagonSparkle}"
-                              Width="18"
-                              Height="18" />
+                    <icon:FluentIcon Icon="PaintBrushSparkle" FontSize="22"/>
                 </RadioButton>
 
                 <!--<Rectangle Height="1"

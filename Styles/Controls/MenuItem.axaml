@@ -7,7 +7,7 @@
         <Border Height="200" Width="500" Background="{DynamicResource BackgroundPrimary}">
             <Menu VerticalAlignment="Top"> 
             <MenuItem Header="Item 1"/>
-            <MenuItem Header="Item 2">
+            <MenuItem Header="Item 2" IsSubMenuOpen="True">
                 <MenuItem InputGesture="Ctrl + S">
                     <MenuItem.Header>
                         <TextBlock Text="Child 1"/>
@@ -25,6 +25,7 @@
                             <TextBlock Text="Nested Child 1" />
                         </MenuItem.Header>
                     </MenuItem>
+                    <Separator/>
                     <MenuItem IsEnabled="False" InputGesture="Alt+F4">
                         <MenuItem.Header>
                             <TextBlock Text="Nested Child 2" />
@@ -48,41 +49,50 @@
 
     <conv:PlatformKeyGestureConverter x:Key="KeyGestureConverter" />
     <x:Double x:Key="MenuFlyoutSubItemPopupHorizontalOffset">-4</x:Double>
-    <Thickness x:Key="MenuIconPresenterMargin">0,0,12,0</Thickness>
-    <Thickness x:Key="MenuInputGestureTextMargin">24,0,0,0</Thickness>
 
     <ControlTheme x:Key="{x:Type MenuItem}" TargetType="MenuItem">
         <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
-        <Setter Property="Padding" Value="{DynamicResource MenuFlyoutItemThemePaddingNarrow}" />
-        <Setter Property="Margin" Value="0,1"/>
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="4,1"/>
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>
                     <Border Name="PART_LayoutRoot"
-                            Padding="5"
+                            Padding="0"
                             Background="Transparent"
-                            CornerRadius="4">
+                            CornerRadius="4"
+                            MinHeight="24">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIcon" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGT" /> <!-- IGT = Input Gesture Text -->
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemChevron" />
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemInputGestureText" /> <!-- IGT = Input Gesture Text -->
                             </Grid.ColumnDefinitions>
-
-                            <icon:FluentIcon x:Name="PART_ToggleIcon"
-                                             Grid.Column="0"
+                            
+                            <Viewbox Grid.Column="0"
+                                     Width="16"
+                                     Height="16"
+                                     Margin="7,4,5,4">
+                                <icon:FluentIcon x:Name="PART_ToggleIcon"
                                              IsVisible="False"
                                              Foreground="{TemplateBinding Foreground}"
-                                             Margin="{DynamicResource MenuIconPresenterMargin}"/>
-
-                            <ContentControl Grid.Column="0"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Stretch"/>
+                            </Viewbox>
+                            
+                            <Viewbox Grid.Column="0"
+                                     Width="16"
+                                     Height="16"
+                                     Margin="7,4,5,4">
+                                <ContentControl
                                             x:Name="PART_IconPresenter"
                                             IsVisible="False"
                                             Foreground="{TemplateBinding Foreground}"
                                             Content="{TemplateBinding Icon}"
-                                            Margin="{DynamicResource MenuIconPresenterMargin}" />
-
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"/>
+                            </Viewbox>
+                            
                             <ContentPresenter Name="PART_HeaderPresenter"
                                               Content="{TemplateBinding Header}"
                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
@@ -92,7 +102,7 @@
                                               Grid.Column="1" />
                             <TextBlock x:Name="PART_InputGestureText"
                                        Grid.Column="2"
-                                       Margin="{DynamicResource MenuInputGestureTextMargin}"
+                                       Margin="24,0,14,0"
                                        Text="{TemplateBinding InputGesture, Converter={StaticResource KeyGestureConverter}}"
                                        HorizontalAlignment="Right"
                                        VerticalAlignment="Center"
@@ -104,10 +114,10 @@
                                              Width="10"
                                              Height="10"
                                              Foreground="{DynamicResource ForegroundPrimary}"
-                                             Margin="24,0,0,0"
+                                             Margin="24,0,8,0"
                                              HorizontalAlignment="Right"
                                              VerticalAlignment="Center"
-                                             Grid.Column="3" />
+                                             Grid.Column="2" />
                         </Grid>
                     </Border>
                     <Popup Name="PART_Popup"
