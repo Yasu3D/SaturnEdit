@@ -13,4 +13,7 @@
     <system:String x:Key="ChartEditor.Menu.View">View</system:String>
     <system:String x:Key="ChartEditor.Menu.Select">Select</system:String>
     <system:String x:Key="ChartEditor.Menu.Navigate">Navigate</system:String>
+    <system:String x:Key="Dock.ToolTabStrip.Flyout.Float">Float1</system:String>
+    <system:String x:Key="Dock.ToolTabStrip.Flyout.Dock">Dock2</system:String>
+    <system:String x:Key="Dock.ToolTabStrip.Flyout.Close">Close3</system:String>
 </ResourceDictionary>

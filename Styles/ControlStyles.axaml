@@ -36,6 +36,7 @@
                 <ResourceInclude Source="Controls/MenuItem.axaml" />
                 <ResourceInclude Source="Controls/Menu.axaml"/>
                 <ResourceInclude Source="Controls/ToolTip.axaml"/>
+                <ResourceInclude Source="Controls/MenuFlyoutPresenter.axaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>

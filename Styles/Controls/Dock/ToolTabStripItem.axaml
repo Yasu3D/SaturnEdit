@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:core="using:Dock.Model.Core"
+                    xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                     x:DataType="core:IDockable"
                     x:CompileBindings="True">
     <Design.PreviewWith>
@@ -23,53 +24,38 @@
     <x:Double x:Key="TabStripItemPipeThickness">2</x:Double>
 
     <ContextMenu x:Key="ToolTabStripItemContextMenu">
-        <MenuItem Header="_Float"
-                  Command="{Binding Owner.Factory.FloatDockable}"
+        <MenuItem Command="{Binding Owner.Factory.FloatDockable}"
                   CommandParameter="{Binding}"
-                  IsVisible="{Binding CanFloat}" />
-        <MenuItem Header="_Dock"
-                  Command="{Binding Owner.Factory.PinDockable}"
-                  CommandParameter="{Binding}"
-                  IsEnabled="{Binding OriginalOwner, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
-                  IsVisible="{Binding CanPin, FallbackValue=False}" />
-        <MenuItem Header="_Auto Hide"
-                  Command="{Binding Owner.Factory.PinDockable}"
-                  CommandParameter="{Binding }"
-                  IsEnabled="{Binding OriginalOwner, Converter={x:Static ObjectConverters.IsNull}, FallbackValue=False}">
-            <MenuItem.IsVisible>
-                <MultiBinding Converter="{x:Static BoolConverters.And}">
-                    <Binding Path="CanPin"
-                             FallbackValue="{x:False}" />
-                    <Binding Path="$parent[HostWindow]"
-                             Converter="{x:Static ObjectConverters.IsNull}" />
-                </MultiBinding>
-            </MenuItem.IsVisible>
+                  IsVisible="{Binding CanFloat}">
+            <MenuItem.Header>
+                <TextBlock Text="{DynamicResource Dock.ToolTabStrip.Flyout.Float}"/>
+            </MenuItem.Header>
+            <MenuItem.Icon>
+                <icon:FluentIcon Icon="ThumbLike"/>
+            </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="_Close"
-                  Command="{Binding Owner.Factory.CloseDockable}"
+        <MenuItem Command="{Binding Owner.Factory.CloseDockable}"
                   CommandParameter="{Binding}"
-                  IsVisible="{Binding CanClose}" />
+                  IsVisible="{Binding CanClose}">
+            <MenuItem.Header>
+                <TextBlock Text="{DynamicResource Dock.ToolTabStrip.Flyout.Close}"/>
+            </MenuItem.Header>
+        </MenuItem>
     </ContextMenu>
 
     <ControlTheme x:Key="{x:Type ToolTabStripItem}"
                   TargetType="ToolTabStripItem">
-
-        <Setter Property="(TextElement.FontSize)" Value="{DynamicResource DockFontSizeNormal}" />
-        <Setter Property="FontWeight" Value="Normal" />
+        
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
         <Setter Property="Padding" Value="4,2" />
-
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid ColumnDefinitions="Auto, 1">
                     <Border Grid.Column="0"
                             Background="{TemplateBinding Background}"
-                            TextElement.FontFamily="{TemplateBinding FontFamily}"
-                            TextElement.FontSize="{TemplateBinding FontSize}"
-                            TextElement.FontWeight="{TemplateBinding FontWeight}"
                             Padding="{TemplateBinding Padding}"
                             ContextMenu="{DynamicResource ToolTabStripItemContextMenu}">
                         <DockableControl TrackingMode="Tab">

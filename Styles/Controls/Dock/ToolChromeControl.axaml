@@ -1,9 +1,10 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="using:Dock.Avalonia.Converters"
-                    xmlns:controls="using:Dock.Model.Controls"
+                    xmlns:dockControls="using:Dock.Model.Controls"
                     xmlns:ic="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                    x:DataType="controls:IToolDock"
+                    xmlns:controls="clr-namespace:SaturnEdit.Styles.Controls"
+                    x:DataType="dockControls:IToolDock"
                     x:CompileBindings="True">
     <Design.PreviewWith>
         <ToolChromeControl Width="300"
@@ -11,19 +12,20 @@
     </Design.PreviewWith>
 
     <MenuFlyout x:Key="ToolChromeControlContextMenu">
-        <MenuItem Header="_Float"
-                  Command="{Binding Owner.Factory.FloatDockable}"
+        <MenuItem Command="{Binding Owner.Factory.FloatDockable}"
                   CommandParameter="{Binding ActiveDockable}"
-                  IsVisible="{Binding ActiveDockable.CanFloat, FallbackValue=False}" />
-        <MenuItem Header="_Dock"
-                  Command="{Binding Owner.Factory.PinDockable}"
+                  IsVisible="{Binding ActiveDockable.CanFloat, FallbackValue=False}">
+            <MenuItem.Header>
+                <TextBlock Text="{DynamicResource Dock.ToolTabStrip.Flyout.Float}"/>
+            </MenuItem.Header>
+        </MenuItem>
+        <MenuItem Command="{Binding Owner.Factory.CloseDockable}"
                   CommandParameter="{Binding ActiveDockable}"
-                  IsEnabled="{Binding ActiveDockable.OriginalOwner, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
-                  IsVisible="{Binding ActiveDockable.CanPin, FallbackValue=False}" />
-        <MenuItem Header="_Close"
-                  Command="{Binding Owner.Factory.CloseDockable}"
-                  CommandParameter="{Binding ActiveDockable}"
-                  IsVisible="{Binding ActiveDockable.CanClose, FallbackValue=False}" />
+                  IsVisible="{Binding ActiveDockable.CanClose, FallbackValue=False}">
+            <MenuItem.Header>
+                <TextBlock Text="{DynamicResource Dock.ToolTabStrip.Flyout.Close}"/>
+            </MenuItem.Header>
+        </MenuItem>
     </MenuFlyout>
 
     <ControlTheme x:Key="ChromeButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -33,11 +35,19 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Width" Value="20" />
         <Setter Property="Height" Value="20" />
+        
+        <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ButtonPrimaryPointerOver}"/>
+        </Style>
+        
+        <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ButtonPrimaryPressed}"/>
+        </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type ToolChromeControl}" TargetType="ToolChromeControl">
 
-        <Setter Property="Background" Value="{DynamicResource Transparent}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}" />
         <Setter Property="BorderBrush" Value="{DynamicResource SeparatorSecondary}" />
         <Setter Property="BorderThickness" Value="0" />
@@ -52,10 +62,9 @@
                           Height="40"
                           Background="{DynamicResource BackgroundPrimary}"
                           Grid.Row="0">
-                        <Grid ColumnDefinitions="Auto,*,Auto"
-                              Margin="8">
-
-                            <Panel Grid.Column="0">
+                        <DockPanel>
+                            <Panel DockPanel.Dock="Left" 
+                                   Margin="8">
                                 <TextBlock x:Name="PART_Title"
                                            Text="{Binding ActiveDockable.Title, FallbackValue=TITLE}"
                                            FontSize="13"
@@ -63,39 +72,29 @@
                                            VerticalAlignment="Center" />
                             </Panel>
 
-                            <StackPanel Grid.Column="2"
-                                        HorizontalAlignment="Right"
-                                        Orientation="Horizontal">
-                                <Button x:Name="PART_MenuButton"
-                                        Theme="{StaticResource ChromeButton}"
-                                        Flyout="{StaticResource ToolChromeControlContextMenu}">
-                                    <Viewbox Width="16"
-                                             Height="16">
-                                        <ic:FluentIcon Icon="MoreVertical" Foreground="{TemplateBinding Foreground}"/>
-                                    </Viewbox>
-                                </Button>
-                                <Button x:Name="PART_MaximizeRestoreButton"
-                                        IsVisible="{TemplateBinding IsFloating}"
-                                        Theme="{StaticResource ChromeButton}">
-                                    <Viewbox Width="10"
-                                             Height="10">
-                                        <PathIcon x:Name="PART_MaximizeRestorePath" 
-                                                  Data="{DynamicResource IconMaximize}" 
-                                                  Foreground="{TemplateBinding Foreground}"/>
-                                    </Viewbox>
-                                </Button>
-                                <Button x:Name="PART_CloseButton"
-                                        Command="{Binding Owner.Factory.CloseDockable}"
-                                        CommandParameter="{Binding ActiveDockable}"
-                                        IsVisible="{Binding ActiveDockable.CanClose, FallbackValue=False}"
-                                        Theme="{StaticResource ChromeButton}">
-                                    <Viewbox Width="16"
-                                             Height="16">
-                                        <ic:FluentIcon Icon="Dismiss" Foreground="{TemplateBinding Foreground}"/>
-                                    </Viewbox>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
+                            <controls:WindowChrome x:Name="PART_WindowChrome"
+                                                   DockPanel.Dock="Right"
+                                                   HorizontalAlignment="Right"
+                                                   VerticalAlignment="Top"
+                                                   IsVisible="False"/>
+                            
+                            <Button x:Name="PART_CloseButton"
+                                    Margin="10"
+                                    DockPanel.Dock="Right"
+                                    Command="{Binding Owner.Factory.CloseDockable}"
+                                    CommandParameter="{Binding ActiveDockable}"
+                                    Theme="{StaticResource ChromeButton}">
+                                <Viewbox Width="16"
+                                         Height="16">
+                                    <ic:FluentIcon Icon="Dismiss" Foreground="{TemplateBinding Foreground}"/>
+                                </Viewbox>
+                            </Button>
+                            
+                            <!-- Hacky Solution -->
+                            <Button x:Name="PART_MaximizeRestoreButton"
+                                    IsEnabled="False"
+                                    IsVisible="False"/>
+                        </DockPanel>
                     </Grid>
                     <Rectangle Fill="{TemplateBinding BorderBrush}"
                                Height="1"
@@ -133,13 +132,13 @@
         <Style Selector="^:floating /template/ Grid#PART_Grip">
             <Setter Property="(DockProperties.IsDragArea)" Value="{Binding $parent[HostWindow].ToolChromeControlsWholeWindow, Mode=OneWay, Converter={x:Static BoolConverters.Not}}" />
         </Style>
-
-        <Style Selector="^/template/ PathIcon#PART_MaximizeRestorePath">
-            <Setter Property="Data" Value="{DynamicResource IconMaximize}" />
+        
+        <Style Selector="^:floating /template/ controls|WindowChrome#PART_WindowChrome">
+            <Setter Property="IsVisible" Value="True"/>
         </Style>
-
-        <Style Selector="^:maximized /template/ PathIcon#PART_MaximizeRestorePath">
-            <Setter Property="Data" Value="{DynamicResource IconRestore}" />
+        
+        <Style Selector="^:floating /template/ Button#PART_CloseButton">
+            <Setter Property="IsVisible" Value="False"/>
         </Style>
     </ControlTheme>
 
