@@ -65,9 +65,21 @@
           <DependentUpon>WindowChrome.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
-        <Compile Update="Views\SettingsWindow.axaml.cs">
-          <DependentUpon>Settings.axaml</DependentUpon>
+        <Compile Update="Views\Main\MainWindow.axaml.cs">
+          <DependentUpon>MainWindow.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="Views\Settings\SettingsWindow.axaml.cs">
+          <DependentUpon>SettingsWindow.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Main\ChartEditor\ChartEditorView.axaml" />
+      <AdditionalFiles Include="Views\Main\ChartEditor\Tabs\ChartView2D.axaml" />
+      <AdditionalFiles Include="Views\Main\ChartEditor\Tabs\ChartView3D.axaml" />
+      <AdditionalFiles Include="Views\Main\CosmeticsEditor\CosmeticsEditorView.axaml" />
+      <AdditionalFiles Include="Views\Main\StageEditor\StageEditorView.axaml" />
     </ItemGroup>
 </Project>

@@ -4,11 +4,11 @@ namespace SaturnEdit.Views.StageEditor;
 
 public partial class StageEditorView : UserControl
 {
-    private readonly MainView mainView;
+    private readonly MainWindow mainWindow;
     
-    public StageEditorView(MainView mainView)
+    public StageEditorView(MainWindow mainWindow)
     {
         InitializeComponent();
-        this.mainView = mainView;
+        this.mainWindow = mainWindow;
     }
 }

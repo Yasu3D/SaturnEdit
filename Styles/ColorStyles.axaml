@@ -34,7 +34,7 @@
                     <SolidColorBrush x:Key="SeparatorPrimary"   Color="#454545" />
                     <SolidColorBrush x:Key="SeparatorSecondary" Color="#1C1C1C" />
 
-                    <SolidColorBrush x:Key="ForegroundPrimary"   Color="#DEDEDE" />
+                    <SolidColorBrush x:Key="ForegroundPrimary"   Color="#ECECEC" />
                     <SolidColorBrush x:Key="ForegroundSecondary" Color="#AAAAAA" />
                     <SolidColorBrush x:Key="ForegroundTertiary"  Color="#808080" />
                     
@@ -48,11 +48,11 @@
                     <SolidColorBrush x:Key="ButtonSecondaryDisabled"    Color="#10FFFFFF" />
                     <SolidColorBrush x:Key="ButtonSecondaryChecked"     Color="#40000000" />
                     
-                    <SolidColorBrush x:Key="ButtonAccent"            Color="#FF926BFF" />
-                    <SolidColorBrush x:Key="ButtonAccentPressed"     Color="#99926BFF" />
-                    <SolidColorBrush x:Key="ButtonAccentPointerOver" Color="#CC926BFF" />
-                    <SolidColorBrush x:Key="ButtonAccentDisabled"    Color="#70926BFF" />
-                    <SolidColorBrush x:Key="ButtonAccentChecked"     Color="#FF926BFF" />
+                    <SolidColorBrush x:Key="ButtonAccent"            Color="#FF7B41E0" />
+                    <SolidColorBrush x:Key="ButtonAccentPressed"     Color="#997B41E0" />
+                    <SolidColorBrush x:Key="ButtonAccentPointerOver" Color="#CC7B41E0" />
+                    <SolidColorBrush x:Key="ButtonAccentDisabled"    Color="#707B41E0" />
+                    <SolidColorBrush x:Key="ButtonAccentChecked"     Color="#FF7B41E0" />
                     
                     <!-- Legacy Dock Stuff, mostly overwritten by custom control themes. -->
                     <SolidColorBrush x:Key="DockApplicationAccentBrushLow" Color="#454545" /> <!-- Document Grip Selected -->

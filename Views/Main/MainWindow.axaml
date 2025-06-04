@@ -1,0 +1,134 @@
+<Window x:Class="SaturnEdit.MainWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:views="clr-namespace:SaturnEdit.Views"
+        xmlns:controls="clr-namespace:SaturnEdit.Controls"
+        xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+        mc:Ignorable="d"
+        d:DesignWidth="800"
+        d:DesignHeight="600"
+        x:CompileBindings="True"
+        x:Name="MainWindowView"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaToDecorationsHint="True"
+        Title="{DynamicResource Window.Title.SaturnEdit}">
+    <Grid>
+        <controls:WindowChrome Name="WindowChrome"
+                               ZIndex="99"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Top" />
+        
+        <Grid ColumnDefinitions="41, *">
+            <!-- Tab Bar -->
+            <Grid Column="0"
+                  ColumnDefinitions="40, 1">
+
+                <!-- Tabs -->
+                <StackPanel Grid.Column="0"
+                            Background="{DynamicResource BackgroundPrimary}">
+
+                    <RadioButton Name="TabChartEditor"
+                                 Classes="SquareButton"
+                                 GroupName="EditorTabs"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Left"
+                                 Width="30"
+                                 Height="30"
+                                 Margin="5,5,5,0"
+                                 IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
+                                 IsChecked="True"
+                                 ToolTip.ShowDelay="0"
+                                 ToolTip.HorizontalOffset="5"
+                                 ToolTip.VerticalOffset="0"
+                                 ToolTip.Placement="Right">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource Tabs.ToolTip.ChartEditor}" />
+                                <TextBlock Text="{DynamicResource Tabs.ToolTip.ChartEditor.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="GanttChart" FontSize="22"/>
+                    </RadioButton>
+
+                    <RadioButton Name="TabStageEditor"
+                                 Classes="SquareButton"
+                                 GroupName="EditorTabs"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Left"
+                                 Width="30"
+                                 Height="30"
+                                 Margin="5,5,5,0"
+                                 IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
+                                 IsChecked="False"
+                                 ToolTip.ShowDelay="0"
+                                 ToolTip.HorizontalOffset="5"
+                                 ToolTip.VerticalOffset="0"
+                                 ToolTip.Placement="Right">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource Tabs.ToolTip.StageEditor}" />
+                                <TextBlock Text="{DynamicResource Tabs.ToolTip.StageEditor.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="Steps" FontSize="22"/>
+                    </RadioButton>
+
+                    <RadioButton Name="TabContentEditor"
+                                 Classes="SquareButton"
+                                 GroupName="EditorTabs"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Left"
+                                 Width="30"
+                                 Height="30"
+                                 Margin="5,5,5,0"
+                                 IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
+                                 IsChecked="False"
+                                 ToolTip.ShowDelay="0"
+                                 ToolTip.HorizontalOffset="5"
+                                 ToolTip.VerticalOffset="0"
+                                 ToolTip.Placement="Right">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource Tabs.ToolTip.CosmeticsEditor}" />
+                                <TextBlock Text="{DynamicResource Tabs.ToolTip.CosmeticsEditor.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="PaintBrushSparkle" FontSize="22"/>
+                    </RadioButton>
+
+                    <!--<Rectangle Height="1"
+                           HorizontalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Margin="5,8,5,3" />-->
+
+
+                </StackPanel>
+
+                <!-- Separator -->
+                <Rectangle Grid.Column="1"
+                           Fill="{DynamicResource SeparatorSecondary}" />
+
+            </Grid>
+
+            <!-- Content -->
+            <Grid Column="1">
+                <UserControl Name="ChartEditor"
+                             IsVisible="True"
+                             IsEnabled="True"/>
+            
+                <UserControl Name="StageEditor"
+                             IsVisible="False"
+                             IsEnabled="False"/>
+            
+                <UserControl Name="CosmeticsEditor"
+                             IsVisible="False"
+                             IsEnabled="False"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

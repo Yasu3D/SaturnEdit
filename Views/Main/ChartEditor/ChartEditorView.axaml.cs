@@ -10,15 +10,15 @@ namespace SaturnEdit.Views.ChartEditor;
 
 public partial class ChartEditorView : UserControl
 {
-    private readonly MainView mainView;
+    private readonly MainWindow mainWindow;
     private readonly DockSerializer serializer;
     private readonly DockState dockState;
     
-    public ChartEditorView(MainView mainView)
+    public ChartEditorView(MainWindow mainWindow)
     {
         InitializeComponent();
 
-        this.mainView = mainView;
+        this.mainWindow = mainWindow;
         serializer = new(typeof(AvaloniaList<>));
         dockState = new();
 
@@ -34,5 +34,5 @@ public partial class ChartEditorView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e) => mainView.ShowSettings();
+    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e) => mainWindow.ShowSettings();
 }
