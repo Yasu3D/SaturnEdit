@@ -29,7 +29,7 @@
     </Style>
     
     <!-- Buttons -->
-    <StyleInclude Source="Styles/Buttons.axaml"/>
+    <StyleInclude Source="Styles/ButtonStyles.axaml"/>
     
     <!-- Full Control Re-styles -->
     <Styles.Resources>

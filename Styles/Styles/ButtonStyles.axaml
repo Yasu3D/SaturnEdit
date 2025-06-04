@@ -261,8 +261,6 @@
                         </Button>
                     </StackPanel>
                     
-                        
-
                     <TextBlock Foreground="#80FFFFFF" Text="Text Button"
                                TextAlignment="Center"
                                Margin="5" />
@@ -288,17 +286,53 @@
 
         <Setter Property="Template">
             <ControlTemplate>
-                <ContentPresenter x:Name="PART_ContentPresenter"
-                                  Margin="0"
-                                  Background="{TemplateBinding Background}"
-                                  BorderBrush="{TemplateBinding BorderBrush}"
-                                  BorderThickness="{TemplateBinding BorderThickness}"
-                                  CornerRadius="{TemplateBinding CornerRadius}"
-                                  Content="{TemplateBinding Content}"
-                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                  RecognizesAccessKey="True"
-                                  HorizontalContentAlignment="Stretch"
-                                  VerticalContentAlignment="Stretch" />
+                <Grid>
+                    <ContentPresenter x:Name="PART_ContentPresenter"
+                                      Margin="0"
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="Transparent"
+                                      BorderThickness="0"
+                                      CornerRadius="{TemplateBinding CornerRadius}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      RecognizesAccessKey="True"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch" />
+                    <Border x:Name="PART_Border"
+                            IsHitTestVisible="False"
+                            Margin="0"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"/>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    
+    <!-- Standard Buttons -->
+    <Style Selector=":is(Button)">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid>
+                    <ContentPresenter x:Name="PART_ContentPresenter"
+                                      Margin="0"
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="Transparent"
+                                      BorderThickness="0"
+                                      CornerRadius="{TemplateBinding CornerRadius}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      RecognizesAccessKey="True"
+                                      HorizontalContentAlignment="Center"
+                                      VerticalContentAlignment="Center" />
+                    <Border x:Name="PART_Border"
+                            IsHitTestVisible="False"
+                            Margin="0"
+                            Background="Transparent"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"/>
+                </Grid>
             </ControlTemplate>
         </Setter>
     </Style>
@@ -322,26 +356,31 @@
             <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
             <Setter Property="CornerRadius" Value="7"/>
             
+            <!-- PointerOver -->
             <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background" Value="{DynamicResource ButtonPrimaryPointerOver}" />
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
             </Style>
             
+            <!-- Pressed -->
             <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background" Value="{DynamicResource ButtonPrimaryPressed}" />
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
             </Style>
 
+            <!-- Disabled -->
             <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
             </Style>
 
+            <!-- Checked -->
             <Style Selector="^:checked">
                 <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
                     <Setter Property="Background" Value="{DynamicResource ButtonPrimaryChecked}" />
                     <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
                 </Style>
             
+                <!-- Disabled while Checked -->
                 <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
                     <Setter Property="Background" Value="{DynamicResource ButtonPrimaryDisabled}" />
                     <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
@@ -351,78 +390,119 @@
         
         <!-- Outlined -->
         <Style Selector=":is(Button).Outlined">
-            <Setter Property="BorderBrush" Value="{DynamicResource SeparatorPrimary}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
             
-            <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPointerOver}" />
+            <Style Selector="^ /template/ Border#PART_Border">
                 <Setter Property="BorderBrush" Value="{DynamicResource SeparatorPrimary}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+            </Style>
+            
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
             </Style>
+            
+            <!-- PointerOver -->
+            <Style Selector="^:pointerover">
+                <Style Selector="^ /template/ Border#PART_Border">
+                    <Setter Property="BorderBrush" Value="{DynamicResource SeparatorPrimary}"/>
+                </Style>
+            
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPointerOver}" />
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                </Style>
+            </Style>
 
-            <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPressed}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ButtonAccentPressed}"/>
-                <Setter Property="BorderThickness" Value="2"/>
-                <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+            <!-- Pressed -->
+            <Style Selector="^:pressed">
+                <Style Selector="^ /template/ Border#PART_Border">
+                    <Setter Property="BorderBrush" Value="{DynamicResource ButtonAccentPressed}"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </Style>
+            
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPressed}" />
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                </Style>
             </Style>
             
             <!-- Override Pressed color for base Button. -->
-            <Style Selector="^Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="BorderBrush" Value="{DynamicResource ButtonAccent}"/>
-                <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+            <Style Selector="^Button:pressed">
+                <Style Selector="^ /template/ Border#PART_Border">
+                    <Setter Property="BorderBrush" Value="{DynamicResource ButtonAccent}"/>
+                </Style>
+            
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                </Style>
             </Style>
 
+            <!-- Disabled -->
             <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
             </Style>
 
+            <!-- Checked -->
             <Style Selector="^:checked">
-                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                
+                <Style Selector="^ /template/ Border#PART_Border">
                     <Setter Property="BorderThickness" Value="2"/>
                     <Setter Property="BorderBrush" Value="{DynamicResource ButtonAccent}"/>
+                </Style>
+            
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
                     <Setter Property="Background" Value="Transparent" />
                     <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
                 </Style>
+                
+                <!-- Disabled while Checked -->
+                <Style Selector="^:disabled">
+                    
+                    <Style Selector="^ /template/ Border#PART_Border">
+                        <Setter Property="BorderBrush" Value="{DynamicResource ButtonAccentDisabled}" />
+                    </Style>
             
-                <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-                    <Setter Property="Background" Value="{DynamicResource ButtonSecondaryDisabled}" />
-                    <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
-                    <Setter Property="BorderBrush" Value="{DynamicResource ButtonAccentDisabled}" />
+                    <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource ButtonSecondaryDisabled}" />
+                        <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
+                    </Style>
                 </Style>
             </Style>
         </Style>
         
         <!-- Accent -->
         <Style>
-            
+            <!-- Controls that inherit from Button -->
             <Style Selector=":is(Button).Accent">
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
                 <Setter Property="CornerRadius" Value="7"/>
             
+                <!-- PointerOver -->
                 <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
                     <Setter Property="Background" Value="{DynamicResource ButtonPrimaryPointerOver}" />
                     <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
                 </Style>
             
+                <!-- Pressed -->
                 <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
                     <Setter Property="Background" Value="{DynamicResource ButtonPrimaryPressed}" />
                     <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
                 </Style>
 
+                <!-- Disabled -->
                 <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
                     <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
                 </Style>
 
+                <!-- Checked -->
                 <Style Selector="^:checked">
                     <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
                         <Setter Property="Background" Value="{DynamicResource ButtonAccentChecked}" />
                         <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
                     </Style>
             
+                    <!-- Disabled while Checked -->
                     <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
                         <Setter Property="Background" Value="{DynamicResource ButtonPrimaryDisabled}" />
                         <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
@@ -430,6 +510,7 @@
                 </Style>
             </Style>
             
+            <!-- True Button -->
             <Style Selector="Button.Accent">
                 
                 <Setter Property="Background" Value="{DynamicResource ButtonAccent}" />
