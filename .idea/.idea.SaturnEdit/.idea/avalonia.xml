@@ -38,6 +38,7 @@
         <entry key="Views/CustomWindowButtons.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/MainView.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/SettingsView.axaml" value="SaturnEdit.csproj" />
+        <entry key="Views/SettingsWindow.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/StageEditor/StageEditorView.axaml" value="SaturnEdit.csproj" />
       </map>
     </option>

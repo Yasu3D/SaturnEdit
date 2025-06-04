@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         d:DesignWidth="900"
         d:DesignHeight="700"
-        x:Class="SaturnEdit.Views.SettingsView"
+        x:Class="SaturnEdit.Views.SettingsWindow"
         Width="900"
         Height="700"
         MinWidth="900"

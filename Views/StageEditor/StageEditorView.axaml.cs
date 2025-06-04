@@ -1,13 +1,14 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 
 namespace SaturnEdit.Views.StageEditor;
 
 public partial class StageEditorView : UserControl
 {
-    public StageEditorView()
+    private readonly MainView mainView;
+    
+    public StageEditorView(MainView mainView)
     {
         InitializeComponent();
+        this.mainView = mainView;
     }
 }

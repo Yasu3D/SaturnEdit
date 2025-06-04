@@ -65,7 +65,7 @@
           <DependentUpon>WindowChrome.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
-        <Compile Update="Views\SettingsView.axaml.cs">
+        <Compile Update="Views\SettingsWindow.axaml.cs">
           <DependentUpon>Settings.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>

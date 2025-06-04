@@ -109,17 +109,17 @@
 
         <!-- Content -->
         <Grid Column="1">
-            <chartEditor:ChartEditorView Name="ChartEditorView"
-                                         IsVisible="True"
-                                         IsEnabled="True" />
-
-            <stageEditor:StageEditorView Name="StageEditorView"
-                                         IsVisible="False"
-                                         IsEnabled="False" />
-
-            <contentEditor:CosmeticsEditorView Name="ContentEditorView"
-                                               IsVisible="False"
-                                               IsEnabled="False" />
+            <UserControl Name="ChartEditorView"
+                         IsVisible="True"
+                         IsEnabled="True"/>
+            
+            <UserControl Name="StageEditorView"
+                         IsVisible="False"
+                         IsEnabled="False"/>
+            
+            <UserControl Name="CosmeticsEditorView"
+                         IsVisible="False"
+                         IsEnabled="False"/>
         </Grid>
     </Grid>
 

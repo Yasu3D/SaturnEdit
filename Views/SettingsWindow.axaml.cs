@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace SaturnEdit.Views;
 
-public partial class SettingsView : Window
+public partial class SettingsWindow : Window
 {
-    public SettingsView()
+    public SettingsWindow()
     {
         InitializeComponent();
     }

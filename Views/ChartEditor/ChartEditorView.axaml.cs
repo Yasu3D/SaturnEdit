@@ -1,4 +1,3 @@
-using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -11,14 +10,15 @@ namespace SaturnEdit.Views.ChartEditor;
 
 public partial class ChartEditorView : UserControl
 {
-    private Window? settingsWindow;
+    private readonly MainView mainView;
     private readonly DockSerializer serializer;
     private readonly DockState dockState;
     
-    public ChartEditorView()
+    public ChartEditorView(MainView mainView)
     {
         InitializeComponent();
 
+        this.mainView = mainView;
         serializer = new(typeof(AvaloniaList<>));
         dockState = new();
 
@@ -34,12 +34,5 @@ public partial class ChartEditorView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (settingsWindow != null) return;
-        
-        settingsWindow = new SettingsView();
-        settingsWindow.Closed += (_, _) => settingsWindow = null;
-        settingsWindow.Show();
-    }
+    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e) => mainView.ShowSettings();
 }

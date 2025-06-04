@@ -15,6 +15,7 @@ public partial class App : Application
             desktop.MainWindow = new MainWindow();
         }
 
+        SetLocale("en-US");
         base.OnFrameworkInitializationCompleted();
     }
 
