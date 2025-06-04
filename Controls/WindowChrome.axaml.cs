@@ -4,7 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
-namespace SaturnEdit.Styles.Controls;
+namespace SaturnEdit.Controls;
 
 public partial class WindowChrome : UserControl
 {

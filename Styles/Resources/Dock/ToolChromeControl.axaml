@@ -3,7 +3,7 @@
                     xmlns:converters="using:Dock.Avalonia.Converters"
                     xmlns:dockControls="using:Dock.Model.Controls"
                     xmlns:ic="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                    xmlns:controls="clr-namespace:SaturnEdit.Styles.Controls"
+                    xmlns:controls="clr-namespace:SaturnEdit.Controls"
                     x:DataType="dockControls:IToolDock"
                     x:CompileBindings="True">
     <Design.PreviewWith>

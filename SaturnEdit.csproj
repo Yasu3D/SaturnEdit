@@ -61,5 +61,13 @@
           <AutoGen>True</AutoGen>
           <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
+        <Compile Update="Controls\WindowChrome.axaml.cs">
+          <DependentUpon>WindowChrome.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Views\SettingsView.axaml.cs">
+          <DependentUpon>Settings.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 </Project>

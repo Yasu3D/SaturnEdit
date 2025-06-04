@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:chartEditor="clr-namespace:SaturnEdit.Views.ChartEditor"
              xmlns:stageEditor="clr-namespace:SaturnEdit.Views.StageEditor"
-             xmlns:contentEditor="clr-namespace:SaturnEdit.Views.ContentEditor"
+             xmlns:contentEditor="clr-namespace:SaturnEdit.Views.CosmeticsEditor"
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
              d:DesignWidth="800"
@@ -22,7 +22,7 @@
                         Background="{DynamicResource BackgroundPrimary}">
 
                 <RadioButton Name="TabChartEditor"
-                             Classes="ToggleRadio"
+                             Classes="SquareButton"
                              GroupName="EditorTabs"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"
@@ -46,7 +46,7 @@
                 </RadioButton>
 
                 <RadioButton Name="TabStageEditor"
-                             Classes="ToggleRadio"
+                             Classes="SquareButton"
                              GroupName="EditorTabs"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"
@@ -70,7 +70,7 @@
                 </RadioButton>
 
                 <RadioButton Name="TabContentEditor"
-                             Classes="ToggleRadio"
+                             Classes="SquareButton"
                              GroupName="EditorTabs"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"

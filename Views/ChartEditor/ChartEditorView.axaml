@@ -16,6 +16,12 @@
                    VerticalAlignment="Stretch"
                    IsHitTestVisible="False"  />
         
+        <Rectangle Grid.Row="0" 
+                   Fill="{DynamicResource ChartEditorChromeGradient}"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   IsHitTestVisible="False"  />
+        
         <!-- Menu Bar -->
         <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Left">
@@ -89,7 +95,7 @@
                     
                     <Separator/>
                     
-                    <MenuItem>
+                    <MenuItem Name="MenuItemSettings" Click="MenuItemSettings_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Settings}"/>
                         </MenuItem.Header>

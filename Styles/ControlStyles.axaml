@@ -6,89 +6,39 @@
         <Setter Property="Padding" Value="{OnPlatform Default='0', Windows='8', x:TypeArguments=Thickness}" />
     </Style>
     
-    <!-- Menu -->
-    
-    <!-- Button -->
+    <!-- CheckBoxes -->
 
-    <!-- ToggleButton -->
-
-    <!-- RadioButton -->
-    <Style Selector="RadioButton.ToggleRadio">
-        <Setter Property="Width" Value="35" />
-        <Setter Property="Height" Value="35" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
-        <Setter Property="Padding" Value="6"/>
-            
-        <Setter Property="Template">
-            <ControlTemplate>
-                <ContentPresenter x:Name="PART_ContentPresenter"
-                                  Background="{TemplateBinding Background}"
-                                  CornerRadius="7"
-                                  Content="{TemplateBinding Content}"
-                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                  Padding="{TemplateBinding Padding}"
-                                  RecognizesAccessKey="True"
-                                  HorizontalContentAlignment="Stretch"
-                                  VerticalContentAlignment="Stretch" />
-            </ControlTemplate>
-        </Setter>
-
-        <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource RadioButtonPrimaryPointerOver}" />
-        </Style>
-
-        <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource RadioButtonPrimaryPressed}" />
-        </Style>
-
-        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
-        </Style>
-
-        <Style Selector="^:checked">
-            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource RadioButtonPrimaryChecked}" />
-            </Style>
-            
-            <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource RadioButtonPrimaryDisabled}" />
-                <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
-            </Style>
-        </Style>
-    </Style>
-
-    <!-- CheckBox -->
-
-    <!-- TextBox -->
+    <!-- TextBoxes -->
     <Style Selector="TextBlock">
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontWeight" Value="Light" />
     </Style>
 
-    <!-- Slider -->
+    <!-- Sliders -->
+    
 
-    <!-- Dock? -->
+    <!-- Docks? -->
     <Style Selector="DockControl">
         <Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
     </Style>
     
-    <!-- Separator -->
+    <!-- Separators -->
     <Style Selector="Separator">
         <Setter Property="Background" Value="{DynamicResource SeparatorPrimary}"/>
         <Setter Property="Margin" Value="0, 2" />
     </Style>
     
-    <!-- Control Re-styles -->
+    <!-- Buttons -->
+    <StyleInclude Source="Styles/Buttons.axaml"/>
+    
+    <!-- Full Control Re-styles -->
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="Controls/MenuItem.axaml" />
-                <ResourceInclude Source="Controls/Menu.axaml"/>
-                <ResourceInclude Source="Controls/ToolTip.axaml"/>
-                <ResourceInclude Source="Controls/MenuFlyoutPresenter.axaml"/>
+                <ResourceInclude Source="Resources/MenuItem.axaml" />
+                <ResourceInclude Source="Resources/Menu.axaml"/>
+                <ResourceInclude Source="Resources/ToolTip.axaml"/>
+                <ResourceInclude Source="Resources/MenuFlyoutPresenter.axaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>

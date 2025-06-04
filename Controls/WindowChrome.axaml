@@ -2,11 +2,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:SaturnEdit.Controls"
              mc:Ignorable="d"
              d:DesignWidth="141"
              d:DesignHeight="40"
-             x:Class="SaturnEdit.Styles.Controls.WindowChrome">
+             x:Class="SaturnEdit.Controls.WindowChrome">
     <UserControl.Styles>
+        <Style Selector="controls|WindowChrome.ShowCloseOnly Button.WindowChromeStandard">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        
         <Style Selector="Button.WindowChromeStandard">
             <Setter Property="Height" Value="40"/>
             <Setter Property="Width" Value="47"/>

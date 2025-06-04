@@ -2,6 +2,8 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <system:String x:Key="Window.Title.SaturnEdit">SaturnEdit</system:String>
+    <system:String x:Key="Window.Title.Settings">Settings</system:String>
     <system:String x:Key="Tabs.ToolTip.ChartEditor">Chart Editor</system:String>
     <system:String x:Key="Tabs.ToolTip.ChartEditor.Description">Create and edit Charts.</system:String>
     <system:String x:Key="Tabs.ToolTip.CosmeticsEditor">Cosmetics Editor</system:String>
@@ -23,4 +25,6 @@
     <system:String x:Key="ChartEditor.Menu.View">View</system:String>
     <system:String x:Key="ChartEditor.Menu.Select">Select</system:String>
     <system:String x:Key="ChartEditor.Menu.Navigate">Navigate</system:String>
+    <system:String x:Key="Settings.Footer.Save">Save</system:String>
+    <system:String x:Key="Settings.Footer.Cancel">Cancel</system:String>
 </ResourceDictionary>

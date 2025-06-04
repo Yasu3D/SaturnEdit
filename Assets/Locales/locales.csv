@@ -1,4 +1,6 @@
 key,en-US
+Window.Title.SaturnEdit,SaturnEdit
+Window.Title.Settings,Settings
 Tabs.ToolTip.ChartEditor,Chart Editor
 Tabs.ToolTip.ChartEditor.Description,Create and edit Charts.
 Tabs.ToolTip.CosmeticsEditor,Cosmetics Editor
@@ -20,3 +22,5 @@ ChartEditor.Menu.Edit,Edit
 ChartEditor.Menu.View,View
 ChartEditor.Menu.Select,Select
 ChartEditor.Menu.Navigate,Navigate
+Settings.Footer.Save,Save
+Settings.Footer.Cancel,Cancel
