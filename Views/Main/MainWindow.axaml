@@ -82,7 +82,7 @@
                             Background="{DynamicResource BackgroundPrimary}">
 
                     <RadioButton Name="TabChartEditor"
-                                 Classes="SquareButton"
+                                 Classes="Themed Square Standard"
                                  GroupName="EditorTabs"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Left"
@@ -104,7 +104,7 @@
                     </RadioButton>
 
                     <RadioButton Name="TabStageEditor"
-                                 Classes="SquareButton"
+                                 Classes="Themed Square Standard"
                                  GroupName="EditorTabs"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Left"
@@ -126,7 +126,7 @@
                     </RadioButton>
 
                     <RadioButton Name="TabContentEditor"
-                                 Classes="SquareButton"
+                                 Classes="Themed Square Standard"
                                  GroupName="EditorTabs"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Left"

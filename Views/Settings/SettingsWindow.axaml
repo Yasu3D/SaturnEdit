@@ -41,14 +41,14 @@
 
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Right">
-                    <Button Classes="Accent"
+                    <Button Classes="Themed AccentFull"
                             Height="28"
                             Margin="11,11,9,11"
                             Width="75">
                         <TextBlock Text="{DynamicResource Settings.Footer.Save}" />
                     </Button>
 
-                    <Button Classes="Outlined"
+                    <Button Classes="Themed Outlined"
                             Height="28"
                             Margin="9,11,11,11"
                             Width="75">
