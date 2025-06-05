@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Dock.Model.Controls;
 
 namespace SaturnEdit.Controls;
 
@@ -20,10 +21,9 @@ public partial class WindowChrome : UserControl
 
     private void Control_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
     {
-        if (VisualRoot is Window window)
-        {
-            window.Resized += Window_OnSizeChanged;
-        }
+        if (VisualRoot is not Window window) return;
+        
+        window.Resized += Window_OnSizeChanged;
     }
 
     public void ButtonMinimize_OnClick(object? sender, RoutedEventArgs e)
@@ -45,8 +45,16 @@ public partial class WindowChrome : UserControl
     
     public void ButtonClose_OnClick(object? sender, RoutedEventArgs e)
     {
-        if (VisualRoot is not Window window) return;
-        window.Close();
+        if (DataContext is IToolDock toolDock)
+        {
+            toolDock.Owner?.Factory?.CloseDockable(toolDock);
+            return;
+        }
+        
+        if (VisualRoot is Window window)
+        {
+            window.Close();
+        }
     }
     
     public async void Window_OnSizeChanged(object? sender, WindowResizedEventArgs e)
