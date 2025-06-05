@@ -31,6 +31,13 @@
     <!-- Buttons -->
     <StyleInclude Source="Styles/ButtonStyles.axaml"/>
     
+    <!-- ToolTip -->
+    <Style Selector="ToolTip">
+        <Setter Property="ShowDelay" Value="0"/>
+        <Setter Property="HorizontalOffset" Value="0"/>
+        <Setter Property="VerticalOffset" Value="0"/>
+    </Style>
+    
     <!-- Full Control Re-styles -->
     <Styles.Resources>
         <ResourceDictionary>

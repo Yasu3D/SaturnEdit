@@ -27,12 +27,12 @@
             <Menu DockPanel.Dock="Left">
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock Text="{DynamicResource ChartEditor.Menu.File}"/>
+                        <TextBlock Text="{DynamicResource Menu.File}"/>
                     </MenuItem.Header>
                     
                     <MenuItem InputGesture="Ctrl + N">
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.New}"/>
+                            <TextBlock Text="{DynamicResource Menu.File.New}"/>
                         </MenuItem.Header>
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="DocumentAdd"/>
@@ -40,7 +40,7 @@
                     </MenuItem>
                     <MenuItem InputGesture="Ctrl + O">
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Open}"/>
+                            <TextBlock Text="{DynamicResource Menu.File.Open}"/>
                         </MenuItem.Header>
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="Folder"/>
@@ -48,7 +48,7 @@
                     </MenuItem>
                     <MenuItem>
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Close}"/>
+                            <TextBlock Text="{DynamicResource Menu.File.Close}"/>
                         </MenuItem.Header>
                     </MenuItem>
 
@@ -56,7 +56,7 @@
                     
                     <MenuItem InputGesture="Ctrl + S">
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Save}"/>
+                            <TextBlock Text="{DynamicResource Menu.File.Save}"/>
                         </MenuItem.Header>
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="Save"/>
@@ -64,12 +64,12 @@
                     </MenuItem>
                     <MenuItem InputGesture="Ctrl + Shift + S">
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.SaveAs}"/>
+                            <TextBlock Text="{DynamicResource Menu.File.SaveAs}"/>
                         </MenuItem.Header>
                     </MenuItem>
                     <MenuItem>
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.ReloadFromDisk}"/>
+                            <TextBlock Text="{DynamicResource Menu.File.ReloadFromDisk}"/>
                         </MenuItem.Header>
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="ArrowSync"/>
@@ -80,13 +80,13 @@
                     
                     <MenuItem>
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Export}"/>
+                            <TextBlock Text="{DynamicResource Menu.File.Export}"/>
                         </MenuItem.Header>
                     </MenuItem>
                     
                     <MenuItem>
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.RenderAsImage}"/>
+                            <TextBlock Text="{DynamicResource Menu.File.RenderAsImage}"/>
                         </MenuItem.Header>
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="ImageSparkle"/>
@@ -95,9 +95,9 @@
                     
                     <Separator/>
                     
-                    <MenuItem Name="MenuItemSettings" Click="MenuItemSettings_OnClick">
+                    <MenuItem Name="MenuItemSettings" InputGesture="Ctrl+Alt+S" Click="MenuItemSettings_OnClick">
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Settings}"/>
+                            <TextBlock Text="{DynamicResource Menu.File.Settings}"/>
                         </MenuItem.Header>
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="Settings"/>
@@ -106,32 +106,32 @@
                     
                     <MenuItem>
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Quit}"/>
+                            <TextBlock Text="{DynamicResource Menu.File.Quit}"/>
                         </MenuItem.Header>
                     </MenuItem>
                 </MenuItem>
                 
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock Text="{DynamicResource ChartEditor.Menu.Edit}"/>
+                        <TextBlock Text="{DynamicResource Menu.Edit}"/>
                     </MenuItem.Header>
                 </MenuItem>
                 
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock Text="{DynamicResource ChartEditor.Menu.View}"/>
+                        <TextBlock Text="{DynamicResource Menu.View}"/>
                     </MenuItem.Header>
                 </MenuItem>
                 
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock Text="{DynamicResource ChartEditor.Menu.Navigate}"/>
+                        <TextBlock Text="{DynamicResource Menu.Navigate}"/>
                     </MenuItem.Header>
                 </MenuItem>
                 
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock Text="{DynamicResource ChartEditor.Menu.Select}"/>
+                        <TextBlock Text="{DynamicResource Menu.Select}"/>
                     </MenuItem.Header>
                 </MenuItem>
             </Menu>

@@ -34,5 +34,5 @@ public partial class ChartEditorView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e) => mainWindow.ShowSettings();
+    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e) => mainWindow.ShowSettingsWindow();
 }

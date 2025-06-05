@@ -1,3 +1,4 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using SaturnEdit.Views;
@@ -9,8 +10,6 @@ namespace SaturnEdit;
 
 public partial class MainWindow : Window
 {
-    public SettingsWindow? Settings;
-    
     public MainWindow()
     {
         InitializeComponent();
@@ -44,12 +43,28 @@ public partial class MainWindow : Window
         }
     }
 
-    public void ShowSettings()
+    private void ButtonSearch_OnClick(object? sender, RoutedEventArgs e)
     {
-        if (Settings != null) return;
         
-        Settings = new();
-        Settings.Closed += (_, _) => Settings = null;
-        Settings.Show();
+    }
+    
+    private void ButtonSettings_OnClick(object? sender, RoutedEventArgs e) => ShowSettingsWindow();
+
+    private void ButtonUpdate_OnClick(object? sender, RoutedEventArgs e)
+    {
+        
+    }
+    
+    public async void ShowSettingsWindow()
+    {
+        try
+        {
+            SettingsWindow settingsWindow = new();
+            await settingsWindow.ShowDialog(this);
+        }
+        catch (Exception e)
+        {
+            // ignored.
+        }
     }
 }

@@ -5,6 +5,7 @@
       <map>
         <entry key="App.axaml" value="SaturnEdit.csproj" />
         <entry key="Assets/Locales/en-US.axaml" value="SaturnEdit.csproj" />
+        <entry key="Controls/WindowChrome.axaml" value="SaturnEdit.csproj" />
         <entry key="MainWindow.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/ColorStyles.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/ControlStyles.axaml" value="SaturnEdit.csproj" />
@@ -37,6 +38,9 @@
         <entry key="Views/ChartEditor/Tabs/ChartView3D.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/CosmeticsEditor/CosmeticsEditorView.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/CustomWindowButtons.axaml" value="SaturnEdit.csproj" />
+        <entry key="Views/Main/ChartEditor/ChartEditorView.axaml" value="SaturnEdit.csproj" />
+        <entry key="Views/Main/ChartEditor/Tabs/Playback.axaml" value="SaturnEdit.csproj" />
+        <entry key="Views/Main/ChartEditor/Tabs/PlaybackView.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/Main/MainView.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/Main/MainWindow.axaml" value="SaturnEdit.csproj" />

@@ -13,12 +13,64 @@
         x:Name="MainWindowView"
         ExtendClientAreaChromeHints="NoChrome"
         ExtendClientAreaToDecorationsHint="True"
-        Title="{DynamicResource Window.Title.SaturnEdit}">
+        Title="{DynamicResource Main.Window.Title}">
     <Grid>
-        <controls:WindowChrome Name="WindowChrome"
-                               ZIndex="99"
-                               HorizontalAlignment="Right"
-                               VerticalAlignment="Top" />
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Height="40"
+                    ZIndex="99">
+            
+            <Button Name="ButtonUpdate"
+                    Classes="Themed Square Accent"
+                    Margin="5"
+                    Click="ButtonUpdate_OnClick"
+                    ToolTip.VerticalOffset="5"
+                    ToolTip.Placement="Bottom">
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Main.ToolTip.Update}" />
+                        <TextBlock Text="{DynamicResource Main.ToolTip.Update.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="ArrowDownload"/>
+            </Button>
+            
+            <Button Name="ButtonSearch"
+                    Classes="Themed Square Standard"
+                    Margin="5"
+                    Click="ButtonSearch_OnClick"
+                    ToolTip.VerticalOffset="5"
+                    ToolTip.Placement="Bottom">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Main.ToolTip.Search}" />
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Search"/>
+            </Button>
+            
+            <Button Name="ButtonSettings"
+                    Classes="Themed Square Standard"
+                    Margin="5"
+                    Click="ButtonSettings_OnClick"
+                    ToolTip.VerticalOffset="5"
+                    ToolTip.Placement="Bottom">
+                <ToolTip.Tip>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{DynamicResource Main.ToolTip.Settings}" />
+                        <TextBlock Text="Ctrl+Alt+S"
+                                   Margin="15,0,0,0"
+                                   HorizontalAlignment="Right"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Settings"/>
+            </Button>
+            
+            <controls:WindowChrome Name="WindowChrome"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Top" />
+        </StackPanel>
         
         <Grid ColumnDefinitions="41, *">
             <!-- Tab Bar -->
@@ -39,14 +91,12 @@
                                  Margin="5,5,5,0"
                                  IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
                                  IsChecked="True"
-                                 ToolTip.ShowDelay="0"
                                  ToolTip.HorizontalOffset="5"
-                                 ToolTip.VerticalOffset="0"
                                  ToolTip.Placement="Right">
                         <ToolTip.Tip>
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource Tabs.ToolTip.ChartEditor}" />
-                                <TextBlock Text="{DynamicResource Tabs.ToolTip.ChartEditor.Description}"
+                                <TextBlock Text="{DynamicResource Main.ToolTip.ChartEditor}" />
+                                <TextBlock Text="{DynamicResource Main.ToolTip.ChartEditor.Description}"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
                         </ToolTip.Tip>
@@ -63,14 +113,12 @@
                                  Margin="5,5,5,0"
                                  IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
                                  IsChecked="False"
-                                 ToolTip.ShowDelay="0"
                                  ToolTip.HorizontalOffset="5"
-                                 ToolTip.VerticalOffset="0"
                                  ToolTip.Placement="Right">
                         <ToolTip.Tip>
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource Tabs.ToolTip.StageEditor}" />
-                                <TextBlock Text="{DynamicResource Tabs.ToolTip.StageEditor.Description}"
+                                <TextBlock Text="{DynamicResource Main.ToolTip.StageEditor}" />
+                                <TextBlock Text="{DynamicResource Main.ToolTip.StageEditor.Description}"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
                         </ToolTip.Tip>
@@ -87,14 +135,12 @@
                                  Margin="5,5,5,0"
                                  IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
                                  IsChecked="False"
-                                 ToolTip.ShowDelay="0"
                                  ToolTip.HorizontalOffset="5"
-                                 ToolTip.VerticalOffset="0"
                                  ToolTip.Placement="Right">
                         <ToolTip.Tip>
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource Tabs.ToolTip.CosmeticsEditor}" />
-                                <TextBlock Text="{DynamicResource Tabs.ToolTip.CosmeticsEditor.Description}"
+                                <TextBlock Text="{DynamicResource Main.ToolTip.CosmeticsEditor}" />
+                                <TextBlock Text="{DynamicResource Main.ToolTip.CosmeticsEditor.Description}"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
                         </ToolTip.Tip>

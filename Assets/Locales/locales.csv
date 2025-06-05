@@ -1,26 +1,45 @@
 key,en-US
-Window.Title.SaturnEdit,SaturnEdit
-Window.Title.Settings,Settings
-Tabs.ToolTip.ChartEditor,Chart Editor
-Tabs.ToolTip.ChartEditor.Description,Create and edit Charts.
-Tabs.ToolTip.CosmeticsEditor,Cosmetics Editor
-Tabs.ToolTip.CosmeticsEditor.Description,"Create and edit Icons, Plates, Titles, etc."
-Tabs.ToolTip.StageEditor,Stage Editor
-Tabs.ToolTip.StageEditor.Description,Create and edit Stage-Up stages.
-ChartEditor.Menu.File,File
-ChartEditor.Menu.File.New,New
-ChartEditor.Menu.File.Open,Open...
-ChartEditor.Menu.File.Close,Close
-ChartEditor.Menu.File.Save,Save
-ChartEditor.Menu.File.SaveAs,Save As...
-ChartEditor.Menu.File.ReloadFromDisk,Reload from Disk
-ChartEditor.Menu.File.Export,Export
-ChartEditor.Menu.File.RenderAsImage,Render as Image...
-ChartEditor.Menu.File.Settings,Settings
-ChartEditor.Menu.File.Quit,Quit
-ChartEditor.Menu.Edit,Edit
-ChartEditor.Menu.View,View
-ChartEditor.Menu.Select,Select
-ChartEditor.Menu.Navigate,Navigate
+ChartEditor.Playback.ToolTip.Play,Play
+ChartEditor.Playback.ToolTip.Pause,Pause
+ChartEditor.Playback.ToolTip.Loop,Loop Playback
+ChartEditor.Playback.ToolTip.Loop.Description,Force playback to loop between set markers.
+ChartEditor.Playback.ToolTip.LoopStart,Set Loop Marker Start
+ChartEditor.Playback.ToolTip.LoopEnd,Set Loop Marker End
+ChartEditor.Playback.ToolTip.Metronome,Metronome
+ChartEditor.Playback.ToolTip.Metronome.Description,Toggle .
+ChartEditor.Playback.ToolTip.PlaybackSettings,Playback Settings
+ChartEditor.Playback.ToolTip.PlaybackSettings.Description,Adjust playback behavior.
+Main.Window.Title,SaturnEdit
+Main.ToolTip.Update,Update Available!
+Main.ToolTip.Update.Description,Click to download latest version.
+Main.ToolTip.Search,Search for Anything...
+Main.ToolTip.Settings,Open Settings...
+Main.ToolTip.ChartEditor,Chart Editor
+Main.ToolTip.ChartEditor.Description,Create and edit Charts.
+Main.ToolTip.CosmeticsEditor,Cosmetics Editor
+Main.ToolTip.CosmeticsEditor.Description,"Create and edit Icons, Plates, Titles, etc."
+Main.ToolTip.StageEditor,Stage Editor
+Main.ToolTip.StageEditor.Description,Create and edit Stage-Up stages.
+Menu.File,File
+Menu.File.New,New
+Menu.File.Open,Open...
+Menu.File.Close,Close
+Menu.File.Save,Save
+Menu.File.SaveAs,Save As...
+Menu.File.ReloadFromDisk,Reload from Disk
+Menu.File.Export,Export
+Menu.File.RenderAsImage,Render as Image...
+Menu.File.Settings,Settings...
+Menu.File.Quit,Quit
+Menu.Edit,Edit
+Menu.View,View
+Menu.Select,Select
+Menu.Navigate,Navigate
+Settings.Window.Title,Settings
 Settings.Footer.Save,Save
 Settings.Footer.Cancel,Cancel
+Settings.Playback.QuantizedPauseOff,Exact Pause
+Settings.Playback.QuantizedPauseNearest,Quantized Pause (Nearest)
+Settings.Playback.QuantizedPausePrevious,Quantized Pause (Previous)
+Settings.Playback.QuantizedPauseNext,Quantized Pause (Next)
+Settings.Playback.LoopToStart,Loop to Start

@@ -11,20 +11,20 @@
                                TextAlignment="Center" />
                     <StackPanel Orientation="Horizontal"
                                 Margin="5">
-                        <RadioButton Classes="SquareButton"
+                        <RadioButton Classes="Themed Square Standard"
                                      GroupName="Group1"
                                      Margin="5"
                                      IsChecked="True">
                             <icon:FluentIcon Icon="AlignLeft" FontSize="22" />
                         </RadioButton>
 
-                        <RadioButton Classes="SquareButton"
+                        <RadioButton Classes="Themed Square Standard"
                                      GroupName="Group1"
                                      Margin="5">
                             <icon:FluentIcon Icon="AlignCenterVertical" FontSize="22" />
                         </RadioButton>
 
-                        <RadioButton Classes="SquareButton"
+                        <RadioButton Classes="Themed Square Standard"
                                      GroupName="Group1"
                                      Margin="5">
                             <icon:FluentIcon Icon="AlignRight" FontSize="22" />
@@ -38,17 +38,17 @@
                                Margin="5" />
                     <StackPanel Orientation="Horizontal"
                                 Margin="5">
-                        <ToggleButton Classes="SquareButton"
+                        <ToggleButton Classes="Themed Square Standard"
                                       Margin="5">
                             <icon:FluentIcon Icon="Wifi1" FontSize="22" />
                         </ToggleButton>
                     
-                        <ToggleButton Classes="SquareButton"
+                        <ToggleButton Classes="Themed Square Standard"
                                       Margin="5">
                             <icon:FluentIcon Icon="Bluetooth" FontSize="22" />
                         </ToggleButton>
                     
-                        <ToggleButton Classes="SquareButton"
+                        <ToggleButton Classes="Themed Square Standard"
                                       Margin="5">
                             <icon:FluentIcon Icon="Power" FontSize="22" />
                         </ToggleButton>
@@ -61,17 +61,17 @@
                                Margin="5" />
                     <StackPanel Orientation="Horizontal"
                                 Margin="5">
-                        <Button Classes="SquareButton"
+                        <Button Classes="Themed Square Standard"
                                 Margin="5">
                             <icon:FluentIcon Icon="Cut" FontSize="22" />
                         </Button>
                     
-                        <Button Classes="SquareButton"
+                        <Button Classes="Themed Square Standard"
                                 Margin="5">
                             <icon:FluentIcon Icon="Copy" FontSize="22" />
                         </Button>
                     
-                        <Button Classes="SquareButton"
+                        <Button Classes="Themed Square Standard"
                                 Margin="5">
                             <icon:FluentIcon Icon="ClipboardPaste" FontSize="22" />
                         </Button>
@@ -82,7 +82,7 @@
                     <TextBlock Foreground="#80FFFFFF" Text="Text Button"
                                TextAlignment="Center"
                                Margin="5" />
-                    <Button Classes=""
+                    <Button Classes="Themed Standard"
                             Margin="10"
                             Height="28"
                             Width="73"
@@ -103,20 +103,20 @@
                                TextAlignment="Center" />
                     <StackPanel Orientation="Horizontal"
                                 Margin="5">
-                        <RadioButton Classes="SquareButton Outlined"
+                        <RadioButton Classes="Themed Square Outlined"
                                      GroupName="Group2"
                                      Margin="5"
                                      IsChecked="True">
                             <icon:FluentIcon Icon="AlignLeft" FontSize="22" />
                         </RadioButton>
 
-                        <RadioButton Classes="SquareButton Outlined"
+                        <RadioButton Classes="Themed Square Outlined"
                                      GroupName="Group2"
                                      Margin="5">
                             <icon:FluentIcon Icon="AlignCenterVertical" FontSize="22" />
                         </RadioButton>
 
-                        <RadioButton Classes="SquareButton Outlined"
+                        <RadioButton Classes="Themed Square Outlined"
                                      GroupName="Group2"
                                      Margin="5">
                             <icon:FluentIcon Icon="AlignRight" FontSize="22" />
@@ -130,17 +130,17 @@
                                Margin="5" />
                     <StackPanel Orientation="Horizontal"
                                 Margin="5">
-                        <ToggleButton Classes="SquareButton Outlined"
+                        <ToggleButton Classes="Themed Square Outlined"
                                       Margin="5">
                             <icon:FluentIcon Icon="Wifi1" FontSize="22" />
                         </ToggleButton>
                     
-                        <ToggleButton Classes="SquareButton Outlined"
+                        <ToggleButton Classes="Themed Square Outlined"
                                       Margin="5">
                             <icon:FluentIcon Icon="Bluetooth" FontSize="22" />
                         </ToggleButton>
                     
-                        <ToggleButton Classes="SquareButton Outlined"
+                        <ToggleButton Classes="Themed Square Outlined"
                                       Margin="5">
                             <icon:FluentIcon Icon="Power" FontSize="22" />
                         </ToggleButton>
@@ -153,17 +153,17 @@
                                Margin="5" />
                     <StackPanel Orientation="Horizontal"
                                 Margin="5">
-                        <Button Classes="SquareButton Outlined"
+                        <Button Classes="Themed Square Outlined"
                                 Margin="5">
                             <icon:FluentIcon Icon="Cut" FontSize="22" />
                         </Button>
                     
-                        <Button Classes="SquareButton Outlined"
+                        <Button Classes="Themed Square Outlined"
                                 Margin="5">
                             <icon:FluentIcon Icon="Copy" FontSize="22" />
                         </Button>
                     
-                        <Button Classes="SquareButton Outlined"
+                        <Button Classes="Themed Square Outlined"
                                 Margin="5">
                             <icon:FluentIcon Icon="ClipboardPaste" FontSize="22" />
                         </Button>
@@ -174,7 +174,7 @@
                     <TextBlock Foreground="#80FFFFFF" Text="Text Button"
                                TextAlignment="Center"
                                Margin="5" />
-                    <Button Classes="Outlined"
+                    <Button Classes="Themed Outlined"
                             Margin="10"
                             Height="28"
                             Width="73"
@@ -195,20 +195,20 @@
                                TextAlignment="Center" />
                     <StackPanel Orientation="Horizontal"
                                 Margin="5">
-                        <RadioButton Classes="SquareButton Accent"
+                        <RadioButton Classes="Themed Square Accent"
                                      GroupName="Group3"
                                      Margin="5"
                                      IsChecked="True">
                             <icon:FluentIcon Icon="AlignLeft" FontSize="22" />
                         </RadioButton>
 
-                        <RadioButton Classes="SquareButton Accent"
+                        <RadioButton Classes="Themed Square Accent"
                                      GroupName="Group3"
                                      Margin="5">
                             <icon:FluentIcon Icon="AlignCenterVertical" FontSize="22" />
                         </RadioButton>
 
-                        <RadioButton Classes="SquareButton Accent"
+                        <RadioButton Classes="Themed Square Accent"
                                      GroupName="Group3"
                                      Margin="5">
                             <icon:FluentIcon Icon="AlignRight" FontSize="22" />
@@ -222,17 +222,17 @@
                                Margin="5" />
                     <StackPanel Orientation="Horizontal"
                                 Margin="5">
-                        <ToggleButton Classes="SquareButton Accent"
+                        <ToggleButton Classes="Themed Square Accent"
                                       Margin="5">
                             <icon:FluentIcon Icon="Wifi1" FontSize="22" />
                         </ToggleButton>
                     
-                        <ToggleButton Classes="SquareButton Accent"
+                        <ToggleButton Classes="Themed Square Accent"
                                       Margin="5">
                             <icon:FluentIcon Icon="Bluetooth" FontSize="22" />
                         </ToggleButton>
                     
-                        <ToggleButton Classes="SquareButton Accent"
+                        <ToggleButton Classes="Themed Square Accent"
                                       Margin="5">
                             <icon:FluentIcon Icon="Power" FontSize="22" />
                         </ToggleButton>
@@ -245,17 +245,17 @@
                                Margin="5" />
                     <StackPanel Orientation="Horizontal"
                                 Margin="5">
-                        <Button Classes="SquareButton Accent"
+                        <Button Classes="Themed Square Accent"
                                 Margin="5">
                             <icon:FluentIcon Icon="Cut" FontSize="22" />
                         </Button>
                     
-                        <Button Classes="SquareButton Accent"
+                        <Button Classes="Themed Square Accent"
                                 Margin="5">
                             <icon:FluentIcon Icon="Copy" FontSize="22" />
                         </Button>
                     
-                        <Button Classes="SquareButton Accent"
+                        <Button Classes="Themed Square Accent"
                                 Margin="5">
                             <icon:FluentIcon Icon="ClipboardPaste" FontSize="22" />
                         </Button>
@@ -264,7 +264,97 @@
                     <TextBlock Foreground="#80FFFFFF" Text="Text Button"
                                TextAlignment="Center"
                                Margin="5" />
-                    <Button Classes="Accent"
+                    <Button Classes="Themed Accent"
+                            Margin="10"
+                            Height="28"
+                            Width="73"
+                            HorizontalAlignment="Center">
+                        <TextBlock Text="Button"
+                                   HorizontalAlignment="Center" />
+                    </Button>
+                </StackPanel>
+                
+                <Rectangle Fill="{DynamicResource SeparatorPrimary}"
+                           Width="1"
+                           VerticalAlignment="Stretch" 
+                           Margin="10"/>
+                
+                <StackPanel>
+                    <TextBlock Text="Accent Full" FontSize="20" Margin="10,0,0,20"/>
+                    <TextBlock Foreground="#80FFFFFF" Text="Square RadioButtons"
+                               TextAlignment="Center" />
+                    <StackPanel Orientation="Horizontal"
+                                Margin="5">
+                        <RadioButton Classes="Themed Square AccentFull"
+                                     GroupName="Group4"
+                                     Margin="5"
+                                     IsChecked="True">
+                            <icon:FluentIcon Icon="AlignLeft" FontSize="22" />
+                        </RadioButton>
+
+                        <RadioButton Classes="Themed Square AccentFull"
+                                     GroupName="Group4"
+                                     Margin="5">
+                            <icon:FluentIcon Icon="AlignCenterVertical" FontSize="22" />
+                        </RadioButton>
+
+                        <RadioButton Classes="Themed Square AccentFull"
+                                     GroupName="Group4"
+                                     Margin="5">
+                            <icon:FluentIcon Icon="AlignRight" FontSize="22" />
+                        </RadioButton>
+                    </StackPanel>
+
+                        
+
+                    <TextBlock Foreground="#80FFFFFF" Text="Square ToggleButtons"
+                               TextAlignment="Center"
+                               Margin="5" />
+                    <StackPanel Orientation="Horizontal"
+                                Margin="5">
+                        <ToggleButton Classes="Themed Square AccentFull"
+                                      Margin="5">
+                            <icon:FluentIcon Icon="Wifi1" FontSize="22" />
+                        </ToggleButton>
+                    
+                        <ToggleButton Classes="Themed Square AccentFull"
+                                      Margin="5">
+                            <icon:FluentIcon Icon="Bluetooth" FontSize="22" />
+                        </ToggleButton>
+                    
+                        <ToggleButton Classes="Themed Square AccentFull"
+                                      Margin="5">
+                            <icon:FluentIcon Icon="Power" FontSize="22" />
+                        </ToggleButton>
+                    </StackPanel>
+                
+                        
+
+                    <TextBlock Foreground="#80FFFFFF" Text="Square Buttons"
+                               TextAlignment="Center"
+                               Margin="5" />
+                    <StackPanel Orientation="Horizontal"
+                                Margin="5">
+                        <Button Classes="Themed Square AccentFull"
+                                Margin="5">
+                            <icon:FluentIcon Icon="Cut" FontSize="22" />
+                        </Button>
+                    
+                        <Button Classes="Themed Square AccentFull"
+                                Margin="5">
+                            <icon:FluentIcon Icon="Copy" FontSize="22" />
+                        </Button>
+                    
+                        <Button Classes="Themed Square AccentFull"
+                                Margin="5">
+                            <icon:FluentIcon Icon="ClipboardPaste" FontSize="22" />
+                        </Button>
+                    </StackPanel>
+                    
+                    <TextBlock Foreground="#80FFFFFF" Text="Text Button"
+                               TextAlignment="Center"
+                               Margin="5" />
+                    <Button Classes="Themed AccentFull"
                             Margin="10"
                             Height="28"
                             Width="73"
@@ -276,41 +366,20 @@
             </StackPanel>
         </Border>
     </Design.PreviewWith>
-
-    <!-- Square Buttons -->
-    <Style Selector=":is(Button).SquareButton">
-        <Setter Property="Width" Value="30" />
-        <Setter Property="Height" Value="30" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-
-        <Setter Property="Template">
-            <ControlTemplate>
-                <Grid>
-                    <ContentPresenter x:Name="PART_ContentPresenter"
-                                      Margin="0"
-                                      Background="{TemplateBinding Background}"
-                                      BorderBrush="Transparent"
-                                      BorderThickness="0"
-                                      CornerRadius="{TemplateBinding CornerRadius}"
-                                      Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      RecognizesAccessKey="True"
-                                      HorizontalContentAlignment="Stretch"
-                                      VerticalContentAlignment="Stretch" />
-                    <Border x:Name="PART_Border"
-                            IsHitTestVisible="False"
-                            Margin="0"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding CornerRadius}"/>
-                </Grid>
-            </ControlTemplate>
-        </Setter>
-    </Style>
     
-    <!-- Standard Buttons -->
-    <Style Selector=":is(Button)">
+    <!-- Themed Buttons -->
+    <Style Selector=":is(Button).Themed">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="ClipToBounds" Value="False"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="CornerRadius" Value="7"/>
+        
+        <!-- Overwrite "Squish" when pressing button -->
+        <Style Selector="^:pressed">
+            <Setter Property="RenderTransform" Value="scale(1)" />
+        </Style>
+        
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid>
@@ -337,24 +406,25 @@
         </Setter>
     </Style>
     
+    <!-- Square Buttons -->
+    <Style Selector=":is(Button).Square">
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+    </Style>
+    
     <!-- Color Themes -->
     <Style>
         <!-- Standard -->
-        <Style Selector=":is(Button)">
-            
-            <!-- Overwrite "Squish" when pressing button -->
-            <Style Selector="^:pressed">
-                <Setter Property="RenderTransform" Value="scale(1)" />
+        <Style Selector=":is(Button).Standard">
+            <Style Selector="^ /template/ Border#PART_Border">
+                <Setter Property="BorderBrush" Value="Transparent"/> 
+                <Setter Property="BorderThickness" Value="0"/>
             </Style>
             
-            <Setter Property="ClipToBounds" Value="False"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
-            <Setter Property="CornerRadius" Value="7"/>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+            </Style>
             
             <!-- PointerOver -->
             <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
@@ -501,6 +571,11 @@
                         <Setter Property="Background" Value="{DynamicResource ButtonAccentChecked}" />
                         <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
                     </Style>
+                    
+                    <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource ButtonAccentPressed}" />
+                        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                    </Style>
             
                     <!-- Disabled while Checked -->
                     <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
@@ -512,6 +587,87 @@
             
             <!-- True Button -->
             <Style Selector="Button.Accent">
+                
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                <Setter Property="CornerRadius" Value="7"/>
+            
+                <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="{DynamicResource ButtonPrimaryPointerOver}" />
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                </Style>
+                
+                <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="{DynamicResource ButtonAccent}" />
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                </Style>
+
+                <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
+                </Style>
+
+                <Style Selector="^:checked">
+                    <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource ButtonAccentChecked}" />
+                        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                    </Style>
+            
+                    <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource ButtonAccentDisabled}" />
+                        <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
+                    </Style>
+                </Style>
+            </Style>
+        </Style>
+        
+        <!-- AccentFull -->
+        <Style>
+            <!-- Controls that inherit from Button -->
+            <Style Selector=":is(Button).AccentFull">
+                <Setter Property="Background" Value="{DynamicResource ButtonAccentPressed}" />
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                <Setter Property="CornerRadius" Value="7"/>
+            
+                <!-- PointerOver -->
+                <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="{DynamicResource ButtonAccentPointerOver}" />
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                </Style>
+            
+                <!-- Pressed -->
+                <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="{DynamicResource ButtonAccentPressed}" />
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                </Style>
+
+                <!-- Disabled -->
+                <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="{DynamicResource ButtonAccentDisabled}"/>
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
+                </Style>
+
+                <!-- Checked -->
+                <Style Selector="^:checked">
+                    <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource ButtonAccentChecked}" />
+                        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                    </Style>
+                    
+                    <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource ButtonAccentPressed}" />
+                        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                    </Style>
+            
+                    <!-- Disabled while Checked -->
+                    <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource ButtonAccentDisabled}" />
+                        <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
+                    </Style>
+                </Style>
+            </Style>
+            
+            <!-- True Button -->
+            <Style Selector="Button.AccentFull">
                 
                 <Setter Property="Background" Value="{DynamicResource ButtonAccent}" />
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
