@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:tabs="clr-namespace:SaturnEdit.Views.Main.ChartEditor.Tabs"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
@@ -225,20 +226,13 @@
 
                         <ToolDock x:Name="BottomPane"
                                   Id="BottomPane"
-                                  Proportion="0.3"
-                                  Alignment="Bottom"
-                                  ActiveDockable="Output">
-                            <Tool x:Name="ErrorList"
-                                  Id="ErrorList"
-                                  Title="Error List"
+                                  Proportion="0.3" 
+                                  Alignment="Bottom">
+                            <Tool x:Name="Playback"
+                                  Id="Playback"
+                                  Title="Playback"
                                   x:DataType="Tool">
-                                <TextBlock Text="{Binding Title}" />
-                            </Tool>
-                            <Tool x:Name="Output"
-                                  Id="Output"
-                                  Title="Output"
-                                  x:DataType="Tool">
-                                <TextBlock Text="{Binding Title}" />
+                                <tabs:PlaybackView/>
                             </Tool>
                         </ToolDock>
 

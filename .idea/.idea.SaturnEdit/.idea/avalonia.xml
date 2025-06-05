@@ -28,6 +28,9 @@
         <entry key="Styles/DockStyles.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/IconStyles.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/ResourceDictionaries/Menu.axaml" value="SaturnEdit.csproj" />
+        <entry key="Styles/Resources/Dock/ToolChromeControl.axaml" value="SaturnEdit.csproj" />
+        <entry key="Styles/Resources/MenuFlyoutPresenter.axaml" value="SaturnEdit.csproj" />
+        <entry key="Styles/Resources/MenuItem.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Styles/ButtonStyles.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/Styles/Separators.axaml" value="SaturnEdit.csproj" />
         <entry key="Styles/ThemeColors.axaml" value="SaturnEdit.csproj" />

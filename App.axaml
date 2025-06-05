@@ -13,6 +13,12 @@
         <StyleInclude Source="Styles/ColorStyles.axaml" />
         <StyleInclude Source="Styles/DockStyles.axaml" />
         <StyleInclude Source="Styles/IconStyles.axaml" />
+        
+        <!-- Window -->
+        <Style Selector="Window">
+            <Setter Property="ExtendClientAreaChromeHints" Value="NoChrome"/>
+            <Setter Property="ExtendClientAreaToDecorationsHint" Value="True"/>
+        </Style>
     </Application.Styles>
 
 </Application>

@@ -38,6 +38,7 @@ Menu.Navigate,Navigate
 Settings.Window.Title,Settings
 Settings.Footer.Save,Save
 Settings.Footer.Cancel,Cancel
+Settings.Playback.QuantizedPause,Quantized Pause
 Settings.Playback.QuantizedPauseOff,Exact Pause
 Settings.Playback.QuantizedPauseNearest,Quantized Pause (Nearest)
 Settings.Playback.QuantizedPausePrevious,Quantized Pause (Previous)

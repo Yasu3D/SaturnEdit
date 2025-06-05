@@ -11,8 +11,6 @@
         d:DesignHeight="600"
         x:CompileBindings="True"
         x:Name="MainWindowView"
-        ExtendClientAreaChromeHints="NoChrome"
-        ExtendClientAreaToDecorationsHint="True"
         Title="{DynamicResource Main.Window.Title}">
     <Grid>
         <StackPanel Orientation="Horizontal"

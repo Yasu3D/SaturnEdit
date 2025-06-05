@@ -41,6 +41,7 @@
     <system:String x:Key="Settings.Window.Title">Settings</system:String>
     <system:String x:Key="Settings.Footer.Save">Save</system:String>
     <system:String x:Key="Settings.Footer.Cancel">Cancel</system:String>
+    <system:String x:Key="Settings.Playback.QuantizedPause">Quantized Pause</system:String>
     <system:String x:Key="Settings.Playback.QuantizedPauseOff">Exact Pause</system:String>
     <system:String x:Key="Settings.Playback.QuantizedPauseNearest">Quantized Pause (Nearest)</system:String>
     <system:String x:Key="Settings.Playback.QuantizedPausePrevious">Quantized Pause (Previous)</system:String>

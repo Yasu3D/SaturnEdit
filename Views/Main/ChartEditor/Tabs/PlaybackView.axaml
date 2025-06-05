@@ -5,8 +5,10 @@
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
              d:DesignWidth="800"
-             d:DesignHeight="400"
-             x:Class="SaturnEdit.Views.Main.ChartEditor.Tabs.PlaybackView">
+             d:DesignHeight="200"
+             x:Class="SaturnEdit.Views.Main.ChartEditor.Tabs.PlaybackView"
+             MinHeight="77"
+             MaxHeight="77">
     <Grid ColumnDefinitions="Auto,*"
           Height="77"
           Background="{DynamicResource BackgroundPrimary}">
@@ -125,32 +127,41 @@
                         <icon:FluentIcon Icon="Settings"/>
                         <Button.Flyout>
                             <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                                <MenuItem ToggleType="Radio" GroupName="QuantizePause" IsChecked="True">
+                                <MenuItem>
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseOff}"/>
+                                        <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPause}" />
                                     </MenuItem.Header>
+
+                                    <MenuItem ToggleType="Radio"
+                                              GroupName="QuantizePause"
+                                              IsChecked="True">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseOff}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem ToggleType="Radio"
+                                              GroupName="QuantizePause">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseNearest}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem ToggleType="Radio"
+                                              GroupName="QuantizePause">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPausePrevious}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem ToggleType="Radio"
+                                              GroupName="QuantizePause">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseNext}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
                                 </MenuItem>
-                                <MenuItem ToggleType="Radio" GroupName="QuantizePause">
+
+                                <MenuItem ToggleType="CheckBox" IsChecked="True">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseNearest}"/>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem ToggleType="Radio" GroupName="QuantizePause">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPausePrevious}"/>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem ToggleType="Radio" GroupName="QuantizePause">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseNext}"/>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                
-                                <Separator/>
-                                
-                                <MenuItem ToggleType="CheckBox">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource Settings.Playback.LoopToStart}"/>
+                                        <TextBlock Text="{DynamicResource Settings.Playback.LoopToStart}" />
                                     </MenuItem.Header>
                                 </MenuItem>
                             </MenuFlyout>

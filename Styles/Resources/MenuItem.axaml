@@ -74,10 +74,11 @@
                                      Height="16"
                                      Margin="7,4,5,4">
                                 <icon:FluentIcon x:Name="PART_ToggleIcon"
-                                             IsVisible="False"
-                                             Foreground="{TemplateBinding Foreground}"
-                                             HorizontalAlignment="Stretch"
-                                             VerticalAlignment="Stretch"/>
+                                                 Icon="Checkmark"
+                                                 IsVisible="False"
+                                                 Foreground="{TemplateBinding Foreground}"
+                                                 HorizontalAlignment="Stretch"
+                                                 VerticalAlignment="Stretch" />
                             </Viewbox>
                             
                             <Viewbox Grid.Column="0"
@@ -204,23 +205,19 @@
         </Style>
         
         <Style Selector="^:toggle /template/ icon|FluentIcon#PART_ToggleIcon">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Icon" Value="CheckboxUnchecked"/>
+            <Setter Property="IsVisible" Value="False" />
         </Style>
         
         <Style Selector="^:checked:toggle /template/ icon|FluentIcon#PART_ToggleIcon">
             <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Icon" Value="CheckboxChecked"/>
         </Style>
         
         <Style Selector="^:radio /template/ icon|FluentIcon#PART_ToggleIcon">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Icon" Value="CheckboxUnchecked"/>
+            <Setter Property="IsVisible" Value="False" />
         </Style>
         
         <Style Selector="^:checked:radio /template/ icon|FluentIcon#PART_ToggleIcon">
             <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Icon" Value="CheckboxIndeterminate"/>
         </Style>
     </ControlTheme>
     

@@ -11,8 +11,6 @@
         Height="700"
         MinWidth="900"
         MinHeight="700"
-        ExtendClientAreaChromeHints="NoChrome"
-        ExtendClientAreaToDecorationsHint="True"
         Title="{DynamicResource Settings.Window.Title}">
     <Grid>
         <controls:WindowChrome Name="WindowChrome"
