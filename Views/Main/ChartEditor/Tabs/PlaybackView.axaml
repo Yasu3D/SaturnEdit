@@ -17,10 +17,21 @@
               ColumnDefinitions="77,1,Auto,1">
 
             <!-- Play/Stop Button -->
-            <Button Classes="Themed Standard"
-                    CornerRadius="0">
+            <ToggleButton Classes="Themed Concave"
+                    CornerRadius="0"
+                    ToolTip.VerticalOffset="5"
+                    ToolTip.Placement="Top">
+                <ToolTip.Tip>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{DynamicResource ChartEditor.Playback.ToolTip.Play}" />
+                        <TextBlock Text="TODO: KEYBIND"
+                                   Margin="15,0,0,0"
+                                   HorizontalAlignment="Right"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
                 <icon:FluentIcon Icon="Play" FontSize="28"/>
-            </Button>
+            </ToggleButton>
             
             <Rectangle Grid.Column="1"
                        Width="1"

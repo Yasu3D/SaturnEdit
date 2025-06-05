@@ -8,7 +8,7 @@
              d:DesignWidth="800"
              d:DesignHeight="450"
              x:Class="SaturnEdit.Views.ChartEditor.ChartEditorView">
-    <Grid RowDefinitions="40,1,*">
+    <Grid RowDefinitions="40,1,*,75">
         
         <!-- Menu Bar Background -->
         <Rectangle Grid.Row="0" 
@@ -144,8 +144,8 @@
         <Rectangle Grid.Row="1" Fill="{DynamicResource SeparatorSecondary}"/>
         
         <!-- Content -->
-        <DockControl x:Name="Dock"
-                     Grid.Row="2"
+        <DockControl Grid.Row="2"
+                     x:Name="Dock"
                      InitializeLayout="True"
                      InitializeFactory="True">
             <DockControl.Factory>
@@ -228,11 +228,11 @@
                                   Id="BottomPane"
                                   Proportion="0.3" 
                                   Alignment="Bottom">
-                            <Tool x:Name="Playback"
-                                  Id="Playback"
-                                  Title="Playback"
+                            <Tool x:Name="Test"
+                                  Id="Test"
+                                  Title="Test"
                                   x:DataType="Tool">
-                                <tabs:PlaybackView/>
+                                <TextBlock Text="{Binding Title}" />
                             </Tool>
                         </ToolDock>
 
@@ -243,5 +243,7 @@
 
         </DockControl>
 
+        <tabs:PlaybackView Grid.Row="3"/>
+        
     </Grid>
 </UserControl>

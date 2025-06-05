@@ -98,6 +98,98 @@
                            Margin="10"/>
                 
                 <StackPanel>
+                    <TextBlock Text="Concave" FontSize="20" Margin="10,0,0,20"/>
+                    <TextBlock Foreground="#80FFFFFF" Text="Square RadioButtons"
+                               TextAlignment="Center" />
+                    <StackPanel Orientation="Horizontal"
+                                Margin="5">
+                        <RadioButton Classes="Themed Square Concave"
+                                     GroupName="Group5"
+                                     Margin="5"
+                                     IsChecked="True">
+                            <icon:FluentIcon Icon="AlignLeft" FontSize="22" />
+                        </RadioButton>
+
+                        <RadioButton Classes="Themed Square Concave"
+                                     GroupName="Group5"
+                                     Margin="5">
+                            <icon:FluentIcon Icon="AlignCenterVertical" FontSize="22" />
+                        </RadioButton>
+
+                        <RadioButton Classes="Themed Square Concave"
+                                     GroupName="Group5"
+                                     Margin="5">
+                            <icon:FluentIcon Icon="AlignRight" FontSize="22" />
+                        </RadioButton>
+                    </StackPanel>
+
+                        
+
+                    <TextBlock Foreground="#80FFFFFF" Text="Square ToggleButtons"
+                               TextAlignment="Center"
+                               Margin="5" />
+                    <StackPanel Orientation="Horizontal"
+                                Margin="5">
+                        <ToggleButton Classes="Themed Square Concave"
+                                      Margin="5">
+                            <icon:FluentIcon Icon="Wifi1" FontSize="22" />
+                        </ToggleButton>
+                    
+                        <ToggleButton Classes="Themed Square Concave"
+                                      Margin="5">
+                            <icon:FluentIcon Icon="Bluetooth" FontSize="22" />
+                        </ToggleButton>
+                    
+                        <ToggleButton Classes="Themed Square Concave"
+                                      Margin="5">
+                            <icon:FluentIcon Icon="Power" FontSize="22" />
+                        </ToggleButton>
+                    </StackPanel>
+                
+                        
+
+                    <TextBlock Foreground="#80FFFFFF" Text="Square Buttons"
+                               TextAlignment="Center"
+                               Margin="5" />
+                    <StackPanel Orientation="Horizontal"
+                                Margin="5">
+                        <Button Classes="Themed Square Concave"
+                                Margin="5">
+                            <icon:FluentIcon Icon="Cut" FontSize="22" />
+                        </Button>
+                    
+                        <Button Classes="Themed Square Concave"
+                                Margin="5">
+                            <icon:FluentIcon Icon="Copy" FontSize="22" />
+                        </Button>
+                    
+                        <Button Classes="Themed Square Concave"
+                                Margin="5">
+                            <icon:FluentIcon Icon="ClipboardPaste" FontSize="22" />
+                        </Button>
+                    </StackPanel>
+                    
+                        
+
+                    <TextBlock Foreground="#80FFFFFF" Text="Text Button"
+                               TextAlignment="Center"
+                               Margin="5" />
+                    <Button Classes="Themed Concave"
+                            Margin="10"
+                            Height="28"
+                            Width="73"
+                            HorizontalAlignment="Center">
+                        <TextBlock Text="Button"
+                                   HorizontalAlignment="Center" />
+                    </Button>
+                </StackPanel>
+
+                <Rectangle Fill="{DynamicResource SeparatorPrimary}"
+                           Width="1"
+                           VerticalAlignment="Stretch" 
+                           Margin="10"/>
+                
+                <StackPanel>
                     <TextBlock Text="Outlined" FontSize="20" Margin="10,0,0,20"/>
                     <TextBlock Foreground="#80FFFFFF" Text="Square RadioButtons"
                                TextAlignment="Center" />
@@ -453,6 +545,50 @@
                 <!-- Disabled while Checked -->
                 <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
                     <Setter Property="Background" Value="{DynamicResource ButtonPrimaryDisabled}" />
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
+                </Style>
+            </Style>
+        </Style>
+        
+        <!-- Concave -->
+        <Style Selector=":is(Button).Concave">
+            <Style Selector="^ /template/ Border#PART_Border">
+                <Setter Property="BorderBrush" Value="Transparent"/> 
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+            
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+            </Style>
+            
+            <!-- PointerOver -->
+            <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+            </Style>
+            
+            <!-- Pressed -->
+            <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPressed}" />
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+            </Style>
+
+            <!-- Disabled -->
+            <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
+            </Style>
+
+            <!-- Checked -->
+            <Style Selector="^:checked">
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="{DynamicResource ButtonSecondaryChecked}" />
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+                </Style>
+            
+                <!-- Disabled while Checked -->
+                <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="{DynamicResource ButtonSecondaryDisabled}" />
                     <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
                 </Style>
             </Style>

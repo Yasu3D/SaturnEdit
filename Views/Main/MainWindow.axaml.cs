@@ -55,6 +55,16 @@ public partial class MainWindow : Window
         
     }
     
+    private void ButtonUndo_OnClick(object? sender, RoutedEventArgs e)
+    {
+        
+    }
+    
+    private void ButtonRedo_OnClick(object? sender, RoutedEventArgs e)
+    {
+        
+    }
+    
     public async void ShowSettingsWindow()
     {
         try

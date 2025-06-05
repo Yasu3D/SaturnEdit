@@ -9,7 +9,7 @@
     <system:String x:Key="ChartEditor.Playback.ToolTip.LoopStart">Set Loop Marker Start</system:String>
     <system:String x:Key="ChartEditor.Playback.ToolTip.LoopEnd">Set Loop Marker End</system:String>
     <system:String x:Key="ChartEditor.Playback.ToolTip.Metronome">Metronome</system:String>
-    <system:String x:Key="ChartEditor.Playback.ToolTip.Metronome.Description">Toggle .</system:String>
+    <system:String x:Key="ChartEditor.Playback.ToolTip.Metronome.Description">Toggle metronome On/Off.</system:String>
     <system:String x:Key="ChartEditor.Playback.ToolTip.PlaybackSettings">Playback Settings</system:String>
     <system:String x:Key="ChartEditor.Playback.ToolTip.PlaybackSettings.Description">Adjust playback behavior.</system:String>
     <system:String x:Key="Main.Window.Title">SaturnEdit</system:String>
@@ -17,6 +17,8 @@
     <system:String x:Key="Main.ToolTip.Update.Description">Click to download latest version.</system:String>
     <system:String x:Key="Main.ToolTip.Search">Search for Anything...</system:String>
     <system:String x:Key="Main.ToolTip.Settings">Open Settings...</system:String>
+    <system:String x:Key="Main.ToolTip.Undo">Undo</system:String>
+    <system:String x:Key="Main.ToolTip.Redo">Redo</system:String>
     <system:String x:Key="Main.ToolTip.ChartEditor">Chart Editor</system:String>
     <system:String x:Key="Main.ToolTip.ChartEditor.Description">Create and edit Charts.</system:String>
     <system:String x:Key="Main.ToolTip.CosmeticsEditor">Cosmetics Editor</system:String>

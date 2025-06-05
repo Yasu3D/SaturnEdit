@@ -13,6 +13,7 @@
         x:Name="MainWindowView"
         Title="{DynamicResource Main.Window.Title}">
     <Grid>
+        <!-- Buttons and Chrome -->
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
@@ -20,7 +21,7 @@
                     ZIndex="99">
             
             <Button Name="ButtonUpdate"
-                    Classes="Themed Square Accent"
+                    Classes="Themed Square AccentFull"
                     Margin="5"
                     Click="ButtonUpdate_OnClick"
                     ToolTip.VerticalOffset="5"
@@ -56,7 +57,7 @@
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource Main.ToolTip.Settings}" />
-                        <TextBlock Text="Ctrl+Alt+S"
+                        <TextBlock Text="TODO: KEYBIND"
                                    Margin="15,0,0,0"
                                    HorizontalAlignment="Right"
                                    Foreground="{DynamicResource ForegroundSecondary}" />
@@ -64,12 +65,57 @@
                 </ToolTip.Tip>
                 <icon:FluentIcon Icon="Settings"/>
             </Button>
+
+            <Rectangle Fill="{DynamicResource SeparatorPrimary}"
+                       Width="1"
+                       VerticalAlignment="Stretch" 
+                       Margin="5,10"/>
+            
+            <Button Name="ButtonUndo"
+                    Classes="Themed Square Standard"
+                    Margin="5"
+                    Click="ButtonUndo_OnClick"
+                    ToolTip.VerticalOffset="5"
+                    ToolTip.Placement="Bottom">
+                <ToolTip.Tip>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{DynamicResource Main.ToolTip.Undo}" />
+                        <TextBlock Text="TODO: KEYBIND"
+                                   Margin="15,0,0,0"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="ArrowUndo"/>
+            </Button>
+            
+            <Button Name="ButtonRedo"
+                    Classes="Themed Square Standard"
+                    Margin="5"
+                    Click="ButtonRedo_OnClick"
+                    ToolTip.VerticalOffset="5"
+                    ToolTip.Placement="Bottom">
+                <ToolTip.Tip>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{DynamicResource Main.ToolTip.Redo}" />
+                        <TextBlock Text="TODO: KEYBIND"
+                                   Margin="15,0,0,0"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="ArrowRedo"/>
+            </Button>
+            
+            <Rectangle Fill="{DynamicResource SeparatorPrimary}"
+                       Width="1"
+                       VerticalAlignment="Stretch" 
+                       Margin="5,10"/>
             
             <controls:WindowChrome Name="WindowChrome"
                                    HorizontalAlignment="Right"
                                    VerticalAlignment="Top" />
         </StackPanel>
         
+        <!-- Tabs and Content -->
         <Grid ColumnDefinitions="41, *">
             <!-- Tab Bar -->
             <Grid Column="0"

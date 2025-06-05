@@ -6,7 +6,7 @@ ChartEditor.Playback.ToolTip.Loop.Description,Force playback to loop between set
 ChartEditor.Playback.ToolTip.LoopStart,Set Loop Marker Start
 ChartEditor.Playback.ToolTip.LoopEnd,Set Loop Marker End
 ChartEditor.Playback.ToolTip.Metronome,Metronome
-ChartEditor.Playback.ToolTip.Metronome.Description,Toggle .
+ChartEditor.Playback.ToolTip.Metronome.Description,Toggle metronome On/Off.
 ChartEditor.Playback.ToolTip.PlaybackSettings,Playback Settings
 ChartEditor.Playback.ToolTip.PlaybackSettings.Description,Adjust playback behavior.
 Main.Window.Title,SaturnEdit
@@ -14,6 +14,8 @@ Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.
 Main.ToolTip.Search,Search for Anything...
 Main.ToolTip.Settings,Open Settings...
+Main.ToolTip.Undo,Undo
+Main.ToolTip.Redo,Redo
 Main.ToolTip.ChartEditor,Chart Editor
 Main.ToolTip.ChartEditor.Description,Create and edit Charts.
 Main.ToolTip.CosmeticsEditor,Cosmetics Editor
