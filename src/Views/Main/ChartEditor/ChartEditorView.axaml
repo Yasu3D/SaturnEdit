@@ -209,11 +209,11 @@
                                       Id="PropertiesPane"
                                       Proportion="0.3"
                                       Alignment="Right">
-                                <Tool x:Name="Properties"
-                                      Id="Properties"
-                                      Title="Properties"
+                                <Tool x:Name="RenderTest"
+                                      Id="RenderTest"
+                                      Title="RenderTest"
                                       x:DataType="Tool">
-                                    <TextBlock Text="{Binding Title}" />
+                                    <tabs:ChartView3D/>
                                 </Tool>
                             </ToolDock>
 

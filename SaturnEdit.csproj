@@ -92,4 +92,8 @@
       <AdditionalFiles Include="src\Views\Main\MainWindow.axaml" />
       <AdditionalFiles Include="src\Views\Settings\SettingsWindow.axaml" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="src\Rendering\" />
+    </ItemGroup>
 </Project>
