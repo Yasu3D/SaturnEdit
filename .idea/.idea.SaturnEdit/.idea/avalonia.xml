@@ -42,6 +42,7 @@
         <entry key="Views/CosmeticsEditor/CosmeticsEditorView.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/CustomWindowButtons.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/Main/ChartEditor/ChartEditorView.axaml" value="SaturnEdit.csproj" />
+        <entry key="Views/Main/ChartEditor/Tabs/ChartView3D.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/Main/ChartEditor/Tabs/Playback.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/Main/ChartEditor/Tabs/PlaybackView.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml" value="SaturnEdit.csproj" />

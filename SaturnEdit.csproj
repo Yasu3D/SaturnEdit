@@ -11,6 +11,7 @@
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.3.0"/>
         <PackageReference Include="Avalonia.Desktop" Version="11.3.0"/>
+        <PackageReference Include="Avalonia.Skia" Version="11.3.0" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.0"/>
         <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.0"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
@@ -25,12 +26,15 @@
         <PackageReference Include="Dock.Serializer" Version="11.3.0.2"/>
         <PackageReference Include="Dock.Settings" Version="11.3.0.2"/>
         <PackageReference Include="FluentIcons.Avalonia" Version="1.1.301"/>
+        <PackageReference Include="SkiaSharp" Version="3.119.0" />
     </ItemGroup>
     
     <ItemGroup>
         <AvaloniaResource Include="Assets\**"/>
+        <AvaloniaResource Include="src\Assets\Locales\DynamicResourceLocaleGenerator.exe" />
+        <AvaloniaResource Include="src\Assets\Locales\en-US.axaml" />
+        <AvaloniaResource Include="src\Assets\Locales\locales.csv" />
         <AvaloniaXaml Remove="Assets\Locales\en-US.axaml" />
-        <AvaloniaResource Include="Assets\Locales\en-US.axaml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -61,25 +65,31 @@
           <AutoGen>True</AutoGen>
           <DependentUpon>Resources.resx</DependentUpon>
         </Compile>
-        <Compile Update="Controls\WindowChrome.axaml.cs">
-          <DependentUpon>WindowChrome.axaml</DependentUpon>
-          <SubType>Code</SubType>
-        </Compile>
-        <Compile Update="Views\Main\MainWindow.axaml.cs">
-          <DependentUpon>MainWindow.axaml</DependentUpon>
-          <SubType>Code</SubType>
-        </Compile>
-        <Compile Update="Views\Settings\SettingsWindow.axaml.cs">
-          <DependentUpon>SettingsWindow.axaml</DependentUpon>
+        <Compile Update="src\App.axaml.cs">
+          <DependentUpon>App.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Views\Main\ChartEditor\ChartEditorView.axaml" />
-      <AdditionalFiles Include="Views\Main\ChartEditor\Tabs\ChartView2D.axaml" />
-      <AdditionalFiles Include="Views\Main\ChartEditor\Tabs\ChartView3D.axaml" />
-      <AdditionalFiles Include="Views\Main\CosmeticsEditor\CosmeticsEditorView.axaml" />
-      <AdditionalFiles Include="Views\Main\StageEditor\StageEditorView.axaml" />
+      <AdditionalFiles Include="src\Controls\WindowChrome.axaml" />
+      <AdditionalFiles Include="src\Styles\ColorStyles.axaml" />
+      <AdditionalFiles Include="src\Styles\ControlStyles.axaml" />
+      <AdditionalFiles Include="src\Styles\DockStyles.axaml" />
+      <AdditionalFiles Include="src\Styles\IconStyles.axaml" />
+      <AdditionalFiles Include="src\Styles\Resources\Dock\DockTarget.axaml" />
+      <AdditionalFiles Include="src\Styles\Resources\Dock\ProportionalStackPanelSplitter.axaml" />
+      <AdditionalFiles Include="src\Styles\Resources\Dock\ToolChromeControl.axaml" />
+      <AdditionalFiles Include="src\Styles\Resources\Dock\ToolControl.axaml" />
+      <AdditionalFiles Include="src\Styles\Resources\Dock\ToolTabStrip.axaml" />
+      <AdditionalFiles Include="src\Styles\Resources\Dock\ToolTabStripItem.axaml" />
+      <AdditionalFiles Include="src\Styles\Resources\Menu.axaml" />
+      <AdditionalFiles Include="src\Styles\Resources\MenuFlyoutPresenter.axaml" />
+      <AdditionalFiles Include="src\Styles\Resources\MenuItem.axaml" />
+      <AdditionalFiles Include="src\Styles\Resources\ToolTip.axaml" />
+      <AdditionalFiles Include="src\Styles\Styles\ButtonStyles.axaml" />
+      <AdditionalFiles Include="src\Views\Main\ChartEditor\Tabs\PlaybackView.axaml" />
+      <AdditionalFiles Include="src\Views\Main\MainWindow.axaml" />
+      <AdditionalFiles Include="src\Views\Settings\SettingsWindow.axaml" />
     </ItemGroup>
 </Project>
