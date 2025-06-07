@@ -94,6 +94,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="lib\" />
       <Folder Include="src\Rendering\" />
     </ItemGroup>
 </Project>

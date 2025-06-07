@@ -54,6 +54,11 @@
         <entry key="Views/SettingsView.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/SettingsWindow.axaml" value="SaturnEdit.csproj" />
         <entry key="Views/StageEditor/StageEditorView.axaml" value="SaturnEdit.csproj" />
+        <entry key="src/App.axaml" value="SaturnEdit.csproj" />
+        <entry key="src/Controls/SkiaSharpCanvas.axaml" value="SaturnEdit.csproj" />
+        <entry key="src/Views/Main/ChartEditor/ChartEditorView.axaml" value="SaturnEdit.csproj" />
+        <entry key="src/Views/Main/ChartEditor/Tabs/ChartView2D.axaml" value="SaturnEdit.csproj" />
+        <entry key="src/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" value="SaturnEdit.csproj" />
       </map>
     </option>
   </component>
