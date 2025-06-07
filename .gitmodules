@@ -1,3 +1,6 @@
 [submodule "lib/SaturnView"]
 	path = lib/SaturnView
 	url = https://github.com/Yasu3D/SaturnView.git
+[submodule "lib/SaturnData"]
+	path = lib/SaturnData
+	url = https://github.com/Yasu3D/SaturnData.git
