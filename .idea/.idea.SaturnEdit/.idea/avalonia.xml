@@ -3,62 +3,10 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
-        <entry key="App.axaml" value="SaturnEdit.csproj" />
-        <entry key="Assets/Locales/en-US.axaml" value="SaturnEdit.csproj" />
-        <entry key="Controls/WindowChrome.axaml" value="SaturnEdit.csproj" />
-        <entry key="MainWindow.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/ColorStyles.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/ControlStyles.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/Button.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/Buttons.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/Dock/ToolChromeControl.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/Dock/ToolTabStrip.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/Dock/ToolTabStripItem.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/DockTarget.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/Menu.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/MenuFlyoutPresenter.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/MenuItem.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/ProportionalStackPanelSplitter.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/ToolChromeControl.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/ToolControl.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/ToolTabStrip.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/ToolTabStripItem.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/ToolTip.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Controls/WindowChrome.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/DockStyles.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/IconStyles.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/ResourceDictionaries/Menu.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Resources/Dock/ToolChromeControl.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Resources/MenuFlyoutPresenter.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Resources/MenuItem.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Styles/ButtonStyles.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/Styles/Separators.axaml" value="SaturnEdit.csproj" />
-        <entry key="Styles/ThemeColors.axaml" value="SaturnEdit.csproj" />
-        <entry key="VIews/MainView.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/ChartEditor/ChartEditorSettings.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/ChartEditor/ChartEditorView.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/ChartEditor/Tabs/ChartView2D.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/ChartEditor/Tabs/ChartView3D.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/CosmeticsEditor/CosmeticsEditorView.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/CustomWindowButtons.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/Main/ChartEditor/ChartEditorView.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/Main/ChartEditor/Tabs/ChartView3D.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/Main/ChartEditor/Tabs/Playback.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/Main/ChartEditor/Tabs/PlaybackView.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/Main/MainView.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/Main/MainWindow.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/Main/StageEditor/StageEditorView.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/MainView.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/Settings/SettingsWindow.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/SettingsView.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/SettingsWindow.axaml" value="SaturnEdit.csproj" />
-        <entry key="Views/StageEditor/StageEditorView.axaml" value="SaturnEdit.csproj" />
-        <entry key="src/App.axaml" value="SaturnEdit.csproj" />
-        <entry key="src/Controls/SkiaSharpCanvas.axaml" value="SaturnEdit.csproj" />
-        <entry key="src/Views/Main/ChartEditor/ChartEditorView.axaml" value="SaturnEdit.csproj" />
-        <entry key="src/Views/Main/ChartEditor/Tabs/ChartView2D.axaml" value="SaturnEdit.csproj" />
-        <entry key="src/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" value="SaturnEdit.csproj" />
+        <entry key="SaturnEdit/App.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Assets/Locales/en-US.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Controls/WindowChrome.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/MainWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
       </map>
     </option>
   </component>

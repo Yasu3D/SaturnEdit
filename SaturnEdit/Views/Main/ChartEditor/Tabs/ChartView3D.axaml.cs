@@ -1,5 +1,7 @@
 using System;
 using Avalonia.Controls;
+using SaturnData;
+using SaturnView;
 using SkiaSharp;
 
 namespace SaturnEdit.Views.Main.ChartEditor.Tabs;
