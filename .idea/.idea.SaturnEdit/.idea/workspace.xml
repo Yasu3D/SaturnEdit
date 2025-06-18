@@ -8,58 +8,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SaturnData" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnView" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/.gitignore" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Styles/Slider.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit.sln" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.manifest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/SaturnData" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/SaturnView" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Locales/DynamicResourceLocaleGenerator.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Locales/en-US.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Locales/locales.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controls/SkiaSharpCanvas.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controls/WindowChrome.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controls/WindowChrome.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/ColorStyles.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/ControlStyles.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/DockStyles.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/IconStyles.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/Resources/Dock/DockTarget.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/Resources/Dock/ProportionalStackPanelSplitter.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/Resources/Dock/ToolChromeControl.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/Resources/Dock/ToolControl.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/Resources/Dock/ToolTabStrip.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/Resources/Dock/ToolTabStripItem.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/Resources/Menu.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/Resources/MenuFlyoutPresenter.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/Resources/MenuItem.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/Resources/ToolTip.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Styles/Styles/ButtonStyles.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/ChartEditor/ChartEditorView.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/ChartEditor/ChartEditorView.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/ChartEditor/Tabs/ChartView2D.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/ChartEditor/Tabs/ChartView2D.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/ChartEditor/Tabs/ChartView3D.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/ChartEditor/Tabs/PlaybackView.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/MainWindow.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/MainWindow.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/StageEditor/StageEditorView.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Main/StageEditor/StageEditorView.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Settings/SettingsWindow.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Settings/SettingsWindow.axaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_plans.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/ColorStyles.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/ColorStyles.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/ControlStyles.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/ControlStyles.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnView" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnView" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,8 +34,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2b90705926ae4f10aa01bbe3f1025828c90908/dd/26fa1aa0/ValueType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1836e961bce6521928afb9d8a472c4cf9b66e31eb7aa1adcd153b1d310c8c0/DispatcherOperation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/59109b68aa8966a8b4c17bb8642684239e9598dc1f117d294c355534a932786/CastHelpers.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/80462644bd1cc7e0b229dc4f5752b48c01cb67b46ae563b1b5078cc2556b98/AvaloniaXamlLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bf532557e1d8544b48c54c27b05b69b5b6c73c44c5ecb71777b05059e9192cb/Layoutable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9953ccb43c29d78a4581a51c60cbc84c14eec77e91f9c3fdbc25c29e/SkiaApplicationExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SaturnData/SaturnData/Notation/Core/Chart.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SaturnData/SaturnData/Notation/Events/StopEffectEvent.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -91,14 +62,14 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "XThreadsFramesViewSplitterKey": "0.42280945",
+    "XThreadsFramesViewSplitterKey": "0.48941177",
     "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -135,13 +106,30 @@
       <option name="presentableId" value="Default" />
       <updated>1749292602685</updated>
       <workItem from="1749292603930" duration="447000" />
-      <workItem from="1749293240115" duration="916000" />
+      <workItem from="1749293240115" duration="17823000" />
+      <workItem from="1749366227187" duration="24000" />
+      <workItem from="1749366260963" duration="346000" />
+      <workItem from="1749374169103" duration="16724000" />
+      <workItem from="1749402369351" duration="98000" />
+      <workItem from="1749453621445" duration="35662000" />
+      <workItem from="1749538254809" duration="31094000" />
+      <workItem from="1749580813322" duration="2587000" />
+      <workItem from="1749662786994" duration="8037000" />
+      <workItem from="1749716230923" duration="26551000" />
+      <workItem from="1749820107022" duration="14264000" />
+      <workItem from="1749931846728" duration="6118000" />
+      <workItem from="1750002864844" duration="14988000" />
+      <workItem from="1750094517208" duration="16800000" />
+      <workItem from="1750171926989" duration="10269000" />
+      <workItem from="1750239763413" duration="6194000" />
+      <workItem from="1750252676201" duration="5811000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
@@ -163,5 +151,9 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

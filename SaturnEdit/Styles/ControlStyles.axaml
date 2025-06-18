@@ -15,7 +15,7 @@
     </Style>
 
     <!-- Sliders -->
-    
+    <StyleInclude Source="Styles/Slider.axaml"/>
 
     <!-- Docks? -->
     <Style Selector="DockControl">

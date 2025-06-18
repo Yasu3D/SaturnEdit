@@ -7,6 +7,16 @@
         <entry key="SaturnEdit/Assets/Locales/en-US.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Controls/WindowChrome.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/MainWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/ColorStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/ControlStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Resources/Menu.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Resources/Slider.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Styles/Slider.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Styles/SliderStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/MainWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
       </map>
     </option>
   </component>

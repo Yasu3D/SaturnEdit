@@ -54,6 +54,20 @@
                     <SolidColorBrush x:Key="ButtonAccentDisabled"    Color="#707B41E0" />
                     <SolidColorBrush x:Key="ButtonAccentChecked"     Color="#FF7B41E0" />
                     
+                    <SolidColorBrush x:Key="SliderWideTrackPrimary"               Color="#307B41E0" />
+                    <SolidColorBrush x:Key="SliderWideTrackPrimaryPressed"        Color="#407B41E0" />
+                    <SolidColorBrush x:Key="SliderWideTrackPrimaryPointerOver"    Color="#607B41E0" />
+                    <SolidColorBrush x:Key="SliderWideTrackPrimaryBorder"         Color="#AA7B41E0" />
+                    <SolidColorBrush x:Key="SliderWideTrackPrimaryDisabled"       Color="#40888888" />
+                    <SolidColorBrush x:Key="SliderWideTrackPrimaryBorderDisabled" Color="#40DDDDDD" />
+                    
+                    <SolidColorBrush x:Key="SliderWideTrackSecondary"             Color="#40000000" />
+                    
+                    <SolidColorBrush x:Key="SliderWideThumb"            Color="#AA7B41E0" />
+                    <SolidColorBrush x:Key="SliderWideThumbPressed"     Color="#607B41E0" />
+                    <SolidColorBrush x:Key="SliderWideThumbPointerOver" Color="#CC7B41E0" />
+                    <SolidColorBrush x:Key="SliderWideThumbDisabled"    Color="#40888888" />
+
                     <!-- Legacy Dock Stuff, mostly overwritten by custom control themes. -->
                     <SolidColorBrush x:Key="DockApplicationAccentBrushLow" Color="#454545" /> <!-- Document Grip Selected -->
                     <SolidColorBrush x:Key="DockApplicationAccentForegroundBrush" Color="#D0D0D0" /> <!-- Window Text -->
