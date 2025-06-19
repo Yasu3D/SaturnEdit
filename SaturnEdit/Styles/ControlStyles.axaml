@@ -16,7 +16,7 @@
 
     <!-- Sliders -->
     <StyleInclude Source="Styles/Slider.axaml"/>
-
+    
     <!-- Docks? -->
     <Style Selector="DockControl">
         <Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
@@ -42,6 +42,10 @@
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="Resources/ComboBoxItem.axaml"/>
+                <ResourceInclude Source="Resources/ComboBox.axaml"/>
+                <ResourceInclude Source="Resources/TextBox.axaml"/>
+                <ResourceInclude Source="Resources/Expander.axaml"/>
                 <ResourceInclude Source="Resources/MenuItem.axaml" />
                 <ResourceInclude Source="Resources/Menu.axaml"/>
                 <ResourceInclude Source="Resources/ToolTip.axaml"/>

@@ -9,6 +9,51 @@ ChartEditor.Playback.ToolTip.Metronome,Metronome
 ChartEditor.Playback.ToolTip.Metronome.Description,Toggle metronome On/Off.
 ChartEditor.Playback.ToolTip.PlaybackSettings,Playback Settings
 ChartEditor.Playback.ToolTip.PlaybackSettings.Description,Adjust playback behavior.
+ChartEditor.Playback.ToolTip.PlaybackSpeed,Playback Speed.
+ChartEditor.Playback.ToolTip.PlaybackSpeed.Description,Adjust playback speed in steps of 5%.
+ChartEditor.ChartProperties.Header.Song,Song
+ChartEditor.ChartProperties.Header.Chart,Chart
+ChartEditor.ChartProperties.Header.Display,Display
+ChartEditor.ChartProperties.Header.Media,Media
+ChartEditor.ChartProperties.Key.Revision,Revision
+ChartEditor.ChartProperties.Key.Title,Title
+ChartEditor.ChartProperties.Key.Reading,Reading
+ChartEditor.ChartProperties.Key.Artist,Artist
+ChartEditor.ChartProperties.Key.NotesDesigner,Notes Designer
+ChartEditor.ChartProperties.Key.BpmMessage,Bpm Message
+ChartEditor.ChartProperties.Key.Difficulty,Difficulty
+ChartEditor.ChartProperties.Key.Level,Level
+ChartEditor.ChartProperties.Key.Clear,Clear Threshold
+ChartEditor.ChartProperties.Key.PreviewBegin,Preview Begin
+ChartEditor.ChartProperties.Key.PreviewLength,Preview Length
+ChartEditor.ChartProperties.Key.Background,Background
+ChartEditor.ChartProperties.Key.Tutorial,Tutorial Mode
+ChartEditor.ChartProperties.Key.Jacket,Jacket
+ChartEditor.ChartProperties.Key.Audio,Audio
+ChartEditor.ChartProperties.Key.Video,Video
+ChartEditor.ChartProperties.Key.AudioOffset,Audio Offset
+ChartEditor.ChartProperties.Key.VideoOffset,Video Offset
+ChartEditor.ChartProperties.Difficulty.None,NONE
+ChartEditor.ChartProperties.Difficulty.Normal,NORMAL
+ChartEditor.ChartProperties.Difficulty.Hard,HARD
+ChartEditor.ChartProperties.Difficulty.Expert,EXPERT
+ChartEditor.ChartProperties.Difficulty.Inferno,INFERNO
+ChartEditor.ChartProperties.Difficulty.WorldsEnd,WORLD'S END
+ChartEditor.ChartProperties.BackgroundOption.Auto,Automatic Background
+ChartEditor.ChartProperties.BackgroundOption.Saturn,Saturn
+ChartEditor.ChartProperties.BackgroundOption.Version3,Version 3
+ChartEditor.ChartProperties.BackgroundOption.Version2,Version 2
+ChartEditor.ChartProperties.BackgroundOption.Version1,Version 1
+ChartEditor.ChartProperties.BackgroundOption.Boss,Boss
+ChartEditor.ChartProperties.BackgroundOption.StageUp,Stage Up
+ChartEditor.ChartProperties.BackgroundOption.WorldsEnd,World's End
+ChartEditor.ChartProperties.BackgroundOption.Jacket,Jacket
+ChartEditor.ChartProperties.ToolTip.AutoReading,Auto Reading
+ChartEditor.ChartProperties.ToolTip.AutoReading.Description,Automatically determine the reading based on the chart's title.
+ChartEditor.ChartProperties.ToolTip.AutoBpmMessage,Auto Bpm Message
+ChartEditor.ChartProperties.ToolTip.AutoBpmMessage.Description,Automatically determine the bpm message based on the chart's bpm change events.
+ChartEditor.ChartProperties.ToolTip.AutoClearThreshold,Auto Clear Threshold
+ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description,Automatically determine the clear threshold based on the chart's difficulty.
 Main.Window.Title,SaturnEdit
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.
@@ -37,6 +82,9 @@ Menu.Edit,Edit
 Menu.View,View
 Menu.Select,Select
 Menu.Navigate,Navigate
+Menu.Edit.Cut,Cut
+Menu.Edit.Copy,Copy
+Menu.Edit.Paste,Paste
 Settings.Window.Title,Settings
 Settings.Footer.Save,Save
 Settings.Footer.Cancel,Cancel
@@ -46,3 +94,5 @@ Settings.Playback.QuantizedPauseNearest,Quantized Pause (Nearest)
 Settings.Playback.QuantizedPausePrevious,Quantized Pause (Previous)
 Settings.Playback.QuantizedPauseNext,Quantized Pause (Next)
 Settings.Playback.LoopToStart,Loop to Start
+Generic.Enabled,Enabled
+Generic.Disabled,Disabled

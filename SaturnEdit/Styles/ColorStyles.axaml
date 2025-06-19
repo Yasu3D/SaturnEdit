@@ -40,7 +40,7 @@
                     
                     <SolidColorBrush x:Key="ButtonPrimaryPressed"     Color="#0AFFFFFF" />
                     <SolidColorBrush x:Key="ButtonPrimaryPointerOver" Color="#15FFFFFF" />
-                    <SolidColorBrush x:Key="ButtonPrimaryDisabled"    Color="#0A000000" />
+                    <SolidColorBrush x:Key="ButtonPrimaryDisabled"    Color="#1A000000" />
                     <SolidColorBrush x:Key="ButtonPrimaryChecked"     Color="#40FFFFFF" />
                     
                     <SolidColorBrush x:Key="ButtonSecondaryPressed"     Color="#40000000" />
@@ -67,6 +67,11 @@
                     <SolidColorBrush x:Key="SliderWideThumbPressed"     Color="#607B41E0" />
                     <SolidColorBrush x:Key="SliderWideThumbPointerOver" Color="#CC7B41E0" />
                     <SolidColorBrush x:Key="SliderWideThumbDisabled"    Color="#40888888" />
+                    
+                    <SolidColorBrush x:Key="TextBoxBackground"            Color="#40000000" />
+                    <SolidColorBrush x:Key="TextBoxBackgroundPointerOver" Color="#60000000" />
+                    <SolidColorBrush x:Key="TextBoxBackgroundFocused"     Color="#70000000" />
+                    <SolidColorBrush x:Key="TextBoxAccent"                Color="#FF7B41E0" />
 
                     <!-- Legacy Dock Stuff, mostly overwritten by custom control themes. -->
                     <SolidColorBrush x:Key="DockApplicationAccentBrushLow" Color="#454545" /> <!-- Document Grip Selected -->

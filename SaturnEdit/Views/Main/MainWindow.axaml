@@ -11,6 +11,7 @@
         d:DesignHeight="600"
         x:CompileBindings="True"
         x:Name="MainWindowView"
+        Focusable="True"
         Title="{DynamicResource Main.Window.Title}">
     <Grid>
         <!-- Buttons and Chrome -->

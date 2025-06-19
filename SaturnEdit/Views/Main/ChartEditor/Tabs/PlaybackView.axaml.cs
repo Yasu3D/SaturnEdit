@@ -31,6 +31,6 @@ public partial class PlaybackView : UserControl
     {
         if (sender is not Slider slider) return;
         
-        TextBlockPlaybackSpeed.Text = slider.Value.ToString(CultureInfo.InvariantCulture);
+        TextBlockPlaybackSpeed.Text = $"{slider.Value.ToString(CultureInfo.InvariantCulture)}%";
     }
 }

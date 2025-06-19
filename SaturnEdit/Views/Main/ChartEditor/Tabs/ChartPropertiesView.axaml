@@ -1,0 +1,321 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             mc:Ignorable="d"
+             d:DesignWidth="500"
+             d:DesignHeight="950"
+             x:Class="SaturnEdit.Views.Main.ChartEditor.Tabs.ChartPropertiesView">
+    <ScrollViewer Background="{DynamicResource BackgroundPrimary}">
+        <StackPanel>
+            <Expander HorizontalAlignment="Stretch"
+                      IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Header.Song}"
+                               FontWeight="Regular"
+                               Foreground="{DynamicResource ForegroundPrimary}" />
+                </Expander.Header>
+
+                <Grid ColumnDefinitions="*,20,1.5*,36"
+                      RowDefinitions="40,40,40,40">
+                    <Rectangle Grid.Row="0"
+                               Grid.Column="1"
+                               Grid.RowSpan="4"
+                               Width="1"
+                               HorizontalAlignment="Left"
+                               Fill="{DynamicResource SeparatorPrimary}" />
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Title}" />
+                    <TextBox Grid.Row="0"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="Title" />
+
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Reading}" />
+                    <TextBox Grid.Row="1"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Stretch"
+                             Text="TITLE" />
+                    <ToggleButton Grid.Row="1"
+                                  Grid.Column="3"
+                                  Classes="Themed Square Outlined"
+                                  HorizontalAlignment="Right">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoClearThreshold}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="LinkEdit"/>
+                    </ToggleButton>
+
+
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Artist}" />
+                    <TextBox Grid.Row="2"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="Artist" />
+                    
+                    <TextBlock Grid.Row="3"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.BpmMessage}" />
+                    <TextBox Grid.Row="3"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Stretch"
+                             Text="120" />
+                    <ToggleButton Grid.Row="3"
+                                  Grid.Column="3"
+                                  Classes="Themed Square Outlined"
+                                  HorizontalAlignment="Right">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoBpmMessage}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoBpmMessage.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="LinkEdit"/>
+                    </ToggleButton>
+                </Grid>
+            </Expander>
+
+            <Rectangle Fill="{DynamicResource SeparatorPrimary}"
+                       Height="1"
+                       Margin="10,0"/>
+            
+            <Expander HorizontalAlignment="Stretch"
+                      IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Header.Chart}"
+                               FontWeight="Regular"
+                               Foreground="{DynamicResource ForegroundPrimary}" />
+                </Expander.Header>
+
+                <Grid ColumnDefinitions="*,20,1.5*,36"
+                      RowDefinitions="40,40,40,40,40">
+                    <Rectangle Grid.Row="0"
+                               Grid.Column="1"
+                               Grid.RowSpan="5"
+                               Width="1"
+                               HorizontalAlignment="Left"
+                               Fill="{DynamicResource SeparatorPrimary}" />
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Revision}" />
+                    <TextBox Grid.Row="0"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="1.0.0" />
+                    
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.NotesDesigner}" />
+                    <TextBox Grid.Row="1"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="Notes Designer" />
+                    
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Difficulty}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="2"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Normal}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Hard}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Expert}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Inferno}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.WorldsEnd}"/>
+                    </ComboBox>
+                    
+                    <TextBlock Grid.Row="3"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Level}" />
+                    <TextBox Grid.Row="3"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="0.0" />
+                    
+                    <TextBlock Grid.Row="4"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Clear}" />
+                    <TextBox Grid.Row="4"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Stretch"
+                             Text="0.45" />
+                    <ToggleButton Grid.Row="4"
+                                  Grid.Column="3"
+                                  Classes="Themed Square Outlined"
+                                  HorizontalAlignment="Right">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoClearThreshold}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="LinkEdit"/>
+                    </ToggleButton>
+                    
+                </Grid>
+            </Expander>
+
+            <Rectangle Fill="{DynamicResource SeparatorPrimary}"
+                       Height="1"
+                       Margin="10,0"/>
+            
+            <Expander HorizontalAlignment="Stretch"
+                      IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Header.Display}"
+                               FontWeight="Regular"
+                               Foreground="{DynamicResource ForegroundPrimary}" />
+                </Expander.Header>
+
+                <Grid ColumnDefinitions="*,20,1.5*,36"
+                      RowDefinitions="40,40,40,40">
+                    <Rectangle Grid.Row="0"
+                               Grid.Column="1"
+                               Grid.RowSpan="4"
+                               Width="1"
+                               HorizontalAlignment="Left"
+                               Fill="{DynamicResource SeparatorPrimary}" />
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewBegin}" />
+                    <TextBox Grid.Row="0"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="0.0" />
+                    
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewLength}" />
+                    <TextBox Grid.Row="1"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="0.0" />
+                    
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Background}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="2"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Auto}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Saturn}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Version3}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Version2}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Version1}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Boss}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.StageUp}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.WorldsEnd}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Jacket}"/>
+                    </ComboBox>
+                    
+                    <TextBlock Grid.Row="3"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Tutorial}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="2"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="{DynamicResource Generic.Disabled}"/>
+                        <ComboBoxItem Content="{DynamicResource Generic.Enabled}"/>
+                    </ComboBox>
+                </Grid>
+            </Expander>
+
+            <Rectangle Fill="{DynamicResource SeparatorPrimary}"
+                       Height="1"
+                       Margin="10,0"/>
+            
+            <Expander HorizontalAlignment="Stretch"
+                      IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Header.Media}"
+                               FontWeight="Regular"
+                               Foreground="{DynamicResource ForegroundPrimary}" />
+                </Expander.Header>
+
+                <Grid ColumnDefinitions="*,20,1.5*,36"
+                      RowDefinitions="40,40,40,40,40">
+
+                    <Rectangle Grid.Row="0"
+                               Grid.Column="1"
+                               Grid.RowSpan="5"
+                               Width="1"
+                               HorizontalAlignment="Left"
+                               Fill="{DynamicResource SeparatorPrimary}" />
+                    
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Jacket}" />
+                    <TextBox Grid.Row="0"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="" />
+                    
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Audio}" />
+                    <TextBox Grid.Row="1"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="" />
+                    
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Video}" />
+                    <TextBox Grid.Row="2"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="" />
+                    
+                    <TextBlock Grid.Row="3"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.AudioOffset}" />
+                    <TextBox Grid.Row="3"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="0.000" />
+                    
+                    <TextBlock Grid.Row="4"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.VideoOffset}" />
+                    <TextBox Grid.Row="4"
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             Text="0.000" />
+                </Grid>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

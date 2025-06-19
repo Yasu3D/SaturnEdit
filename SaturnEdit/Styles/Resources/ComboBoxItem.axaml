@@ -1,0 +1,66 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:ClassModifier="internal">
+    <Design.PreviewWith>
+        <Border Padding="20" Background="{DynamicResource BackgroundPrimary}">
+            <StackPanel HorizontalAlignment="Stretch">
+                <ComboBoxItem>Item 1</ComboBoxItem>
+                <ComboBoxItem>Item 2 long</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">Item 3</ComboBoxItem>
+                <ComboBoxItem IsEnabled="False">Item 4</ComboBoxItem>
+                <ComboBoxItem IsSelected="True" IsEnabled="False">Item 5</ComboBoxItem>
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type ComboBoxItem}" TargetType="ComboBoxItem">
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="{DynamicResource ComboBoxItemThemePadding}" />
+        <Setter Property="Margin" Value="0,2"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter Name="PART_ContentPresenter"
+                                  Foreground="{TemplateBinding Foreground}"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  CornerRadius="{TemplateBinding CornerRadius}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  Content="{TemplateBinding Content}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Padding="{TemplateBinding Padding}" />
+            </ControlTemplate>
+        </Setter>
+
+        <!--  PointerOver state  -->
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ButtonPrimaryPointerOver}" />
+        </Style>
+
+        <!--  Disabled state  -->
+        <Style Selector="^:disabled /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ButtonPrimaryDisabled}" />
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}"/>
+        </Style>
+
+        <!--  Pressed state  -->
+        <Style Selector="^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ButtonPrimaryPressed}" />
+        </Style>
+
+        <!--  Selected state  -->
+        <Style Selector="^:selected">
+            <Style Selector="^ /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource ButtonAccentChecked}" />
+            </Style>
+            <!--  Selected Disabled state  -->
+            <Style Selector="^:disabled /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource ButtonAccentDisabled}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>
