@@ -1,0 +1,27 @@
+{
+  "scopeName": "source.sat",
+  "name": "SAT Format",
+  "fileTypes": ["sat"],
+  "patterns": [
+    {"include": "#key" },
+    {"include": "#comment" }
+  ],
+  "repository": {
+    "key": {
+      "patterns": [
+        {
+          "match": "^@[A-Z_]*",
+          "name": "storage.modifier"
+        }
+      ]
+    },
+    "comment": {
+      "patterns": [
+        {
+          "match": "^#.*",
+          "name": "comment.line"
+        }
+      ]
+    }
+  }
+}

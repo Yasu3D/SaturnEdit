@@ -181,11 +181,11 @@
                               Id="LeftPane"
                               Proportion="0.25"
                               Alignment="Left">
-                        <Tool x:Name="ChartProperties"
-                              Id="ChartProperties"
-                              Title="Chart Properties"
+                        <Tool x:Name="Inspector"
+                              Id="Inspector"
+                              Title="Inspector"
                               x:DataType="Tool">
-                            <tabs:ChartPropertiesView/>
+                            <tabs:InspectorView/>
                         </Tool>
                     </ToolDock>
 
@@ -209,11 +209,11 @@
                                       Id="PropertiesPane"
                                       Proportion="0.3"
                                       Alignment="Right">
-                                <Tool x:Name="RenderTest"
-                                      Id="RenderTest"
-                                      Title="RenderTest"
+                                <Tool x:Name="ChartViewTxt"
+                                      Id="ChartViewTxt"
+                                      Title="Chart View Text"
                                       x:DataType="Tool">
-                                    <tabs:ChartView3D/>
+                                    <tabs:ChartViewTxt/>
                                 </Tool>
                             </ToolDock>
 

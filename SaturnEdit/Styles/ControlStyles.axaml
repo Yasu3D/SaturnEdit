@@ -13,6 +13,11 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontWeight" Value="Light" />
     </Style>
+    
+    <Style Selector="SelectableTextBlock">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontWeight" Value="Light" />
+    </Style>
 
     <!-- Sliders -->
     <StyleInclude Source="Styles/Slider.axaml"/>
@@ -37,6 +42,9 @@
         <Setter Property="HorizontalOffset" Value="0"/>
         <Setter Property="VerticalOffset" Value="0"/>
     </Style>
+    
+    <!-- AvaloniaEdit -->
+    <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
     
     <!-- Full Control Re-styles -->
     <Styles.Resources>

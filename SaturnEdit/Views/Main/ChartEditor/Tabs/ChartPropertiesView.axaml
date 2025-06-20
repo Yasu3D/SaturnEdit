@@ -17,7 +17,7 @@
                                Foreground="{DynamicResource ForegroundPrimary}" />
                 </Expander.Header>
 
-                <Grid ColumnDefinitions="*,20,1.5*,36"
+                <Grid ColumnDefinitions="150,20,*,36"
                       RowDefinitions="40,40,40,40">
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
@@ -103,7 +103,7 @@
                                Foreground="{DynamicResource ForegroundPrimary}" />
                 </Expander.Header>
 
-                <Grid ColumnDefinitions="*,20,1.5*,36"
+                <Grid ColumnDefinitions="150,20,*,36"
                       RowDefinitions="40,40,40,40,40">
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
@@ -190,7 +190,7 @@
                                Foreground="{DynamicResource ForegroundPrimary}" />
                 </Expander.Header>
 
-                <Grid ColumnDefinitions="*,20,1.5*,36"
+                <Grid ColumnDefinitions="150,20,*,36"
                       RowDefinitions="40,40,40,40">
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
@@ -260,7 +260,7 @@
                                Foreground="{DynamicResource ForegroundPrimary}" />
                 </Expander.Header>
 
-                <Grid ColumnDefinitions="*,20,1.5*,36"
+                <Grid ColumnDefinitions="150,20,*,36"
                       RowDefinitions="40,40,40,40,40">
 
                     <Rectangle Grid.Row="0"

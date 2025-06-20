@@ -37,6 +37,7 @@
                     <SolidColorBrush x:Key="ForegroundPrimary"   Color="#ECEEF4" />
                     <SolidColorBrush x:Key="ForegroundSecondary" Color="#BBBBBB" />
                     <SolidColorBrush x:Key="ForegroundTertiary"  Color="#808080" />
+                    <SolidColorBrush x:Key="ForegroundError"     Color="#DD0000"/>
                     
                     <SolidColorBrush x:Key="ButtonPrimaryPressed"     Color="#0AFFFFFF" />
                     <SolidColorBrush x:Key="ButtonPrimaryPointerOver" Color="#15FFFFFF" />
@@ -72,6 +73,7 @@
                     <SolidColorBrush x:Key="TextBoxBackgroundPointerOver" Color="#60000000" />
                     <SolidColorBrush x:Key="TextBoxBackgroundFocused"     Color="#70000000" />
                     <SolidColorBrush x:Key="TextBoxAccent"                Color="#FF7B41E0" />
+                    
 
                     <!-- Legacy Dock Stuff, mostly overwritten by custom control themes. -->
                     <SolidColorBrush x:Key="DockApplicationAccentBrushLow" Color="#454545" /> <!-- Document Grip Selected -->
