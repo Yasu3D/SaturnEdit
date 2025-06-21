@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             d:DesignWidth="350"
+             d:DesignWidth="400"
              d:DesignHeight="450"
              x:Class="SaturnEdit.Views.Main.ChartEditor.Tabs.InspectorView">
     <ScrollViewer Background="{DynamicResource BackgroundPrimary}">
@@ -16,7 +16,8 @@
                 </Expander.Header>
 
                 <Grid ColumnDefinitions="120,20,*"
-                      RowDefinitions="40,40,40">
+                      RowDefinitions="30,30,30"
+                      RowSpacing="10">
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
                                Grid.RowSpan="3"
@@ -26,40 +27,46 @@
 
                     <TextBlock Grid.Column="0"
                                Grid.Row="0"
-                               Text="{DynamicResource ChartEditor.Inspector.Key.Timestamp}"
+                               Text="{DynamicResource ChartEditor.General.Timestamp}"
                                VerticalAlignment="Center" />
                     <Grid Grid.Column="2"
                           Grid.Row="0"
-                          ColumnDefinitions="*,10,*">
-                        <TextBox Grid.Column="0"
+                          ColumnDefinitions="*,15,*">
+                        <NumericUpDown Grid.Column="0"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Stretch"
-                                 Text="1" />
+                                 Minimum="0"
+                                 Value="1" 
+                                 FormatString="0"/>
 
-                        <TextBlock Grid.Column="1"
-                                   Text="."
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Margin="0,0,0,-10" />
+                        <Rectangle Grid.Column="1"
+                                   Fill="{DynamicResource SeparatorPrimary}"
+                                   Width="1"
+                                   Margin="0,5"
+                                   HorizontalAlignment="Center" />
 
-                        <TextBox Grid.Column="2"
+                        <NumericUpDown Grid.Column="2"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Stretch"
-                                 Text="480" />
+                                 Minimum="-1"
+                                 Maximum="1920"
+                                 Value="480" 
+                                 FormatString="0"/>
                     </Grid>
                     
                     <TextBlock Grid.Column="0"
                            Grid.Row="1"
-                           Text="{DynamicResource ChartEditor.Inspector.Key.Ticks}"
+                           Text="{DynamicResource ChartEditor.General.Ticks}"
                            VerticalAlignment="Center" />
-                    <TextBox Grid.Column="2"
+                    <NumericUpDown Grid.Column="2"
                          Grid.Row="1"
                          VerticalAlignment="Center"
-                         Text="2400" />
+                         Value="2400" 
+                         FormatString="0"/>
                     
                     <TextBlock Grid.Column="0"
                            Grid.Row="2"
-                           Text="{DynamicResource ChartEditor.Inspector.Key.Layer}"
+                           Text="{DynamicResource ChartEditor.General.Layer}"
                            VerticalAlignment="Center" />
                     <ComboBox Grid.Column="2"
                           Grid.Row="2"
@@ -83,7 +90,8 @@
                 </Expander.Header>
 
                 <Grid ColumnDefinitions="120,20,*"
-                      RowDefinitions="40,40">
+                      RowDefinitions="30,30"
+                      RowSpacing="10">
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
                                Grid.RowSpan="2"
@@ -94,7 +102,7 @@
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="Position" />
+                               Text="{DynamicResource ChartEditor.General.Position}" />
                     <TextBox Grid.Row="0"
                              Grid.Column="2"
                              VerticalAlignment="Center"
@@ -103,7 +111,7 @@
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="Size" />
+                               Text="{DynamicResource ChartEditor.General.Size}" />
                     <TextBox Grid.Row="1"
                              Grid.Column="2"
                              VerticalAlignment="Center"
@@ -123,7 +131,8 @@
                 </Expander.Header>
 
                 <Grid ColumnDefinitions="120,20,*"
-                      RowDefinitions="40,40">
+                      RowDefinitions="30,30"
+                      RowSpacing="10">
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
                                Grid.RowSpan="2"
@@ -134,27 +143,27 @@
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.Inspector.Key.BonusType}" />
+                               Text="{DynamicResource ChartEditor.General.BonusType}" />
                     <ComboBox Grid.Row="0"
                               Grid.Column="2"
                               SelectedIndex="0"
                               PlaceholderText="-">
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.BonusType.Normal}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.BonusType.Bonus}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.BonusType.R}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.BonusType.Value.Normal}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.BonusType.Value.Bonus}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.BonusType.Value.R}"/>
                     </ComboBox>
                     
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.Inspector.Key.JudgementType}" />
+                               Text="{DynamicResource ChartEditor.General.JudgementType}" />
                     <ComboBox Grid.Row="1"
                               Grid.Column="2"
                               SelectedIndex="0"
                               PlaceholderText="-">
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.JudgementType.Normal}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.JudgementType.Autoplay}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.JudgementType.Fake}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.JudgementType.Value.Normal}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.JudgementType.Value.Autoplay}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.JudgementType.Value.Fake}"/>
                     </ComboBox>
                 </Grid>
             </Expander>
@@ -171,7 +180,8 @@
                 </Expander.Header>
 
                 <Grid ColumnDefinitions="120,20,*"
-                      RowDefinitions="40">
+                      RowDefinitions="30"
+                      RowSpacing="10">
 
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
@@ -183,13 +193,13 @@
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.Inspector.Key.RenderType}" />
+                               Text="{DynamicResource ChartEditor.General.RenderType}" />
                     <ComboBox Grid.Row="0"
                               Grid.Column="2"
                               SelectedIndex="0"
                               PlaceholderText="-">
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.RenderType.Visible}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.RenderType.Hidden}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.RenderType.Value.Visible}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.RenderType.Value.Hidden}"/>
                     </ComboBox>
                 </Grid>
             </Expander>
@@ -206,7 +216,8 @@
                 </Expander.Header>
 
                 <Grid ColumnDefinitions="120,20,*"
-                      RowDefinitions="40,40,40,40,40">
+                      RowDefinitions="30,30,30,30,30"
+                      RowSpacing="10">
 
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
@@ -218,15 +229,15 @@
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.Inspector.Key.SweepDirection}" />
+                               Text="{DynamicResource ChartEditor.General.SweepDirection}" />
                     <ComboBox Grid.Row="0"
                               Grid.Column="2"
                               SelectedIndex="0"
                               PlaceholderText="-">
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.SweepDirection.Instant}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.SweepDirection.Clockwise}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.SweepDirection.Counterclockwise}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.Inspector.Value.SweepDirection.Center}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Instant}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Clockwise}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Counterclockwise}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Center}"/>
                     </ComboBox>
                 </Grid>
             </Expander>

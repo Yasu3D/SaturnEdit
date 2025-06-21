@@ -251,10 +251,6 @@
             <Style Selector="^ /template/ Border#PART_BorderElement">
                 <Setter Property="Background" Value="{DynamicResource TextBoxBackgroundPointerOver}" />
             </Style>
-
-            <Style Selector="^ /template/ TextBlock#PART_Watermark">
-                <Setter Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundPointerOver}" />
-            </Style>
         </Style>
 
         <!-- Focused State -->

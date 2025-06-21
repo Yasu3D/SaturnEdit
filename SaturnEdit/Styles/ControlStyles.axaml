@@ -46,10 +46,12 @@
     <!-- AvaloniaEdit -->
     <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
     
-    <!-- Full Control Re-styles -->
+        <!-- Full Control Re-styles -->
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="Resources/NumericUpDown.axaml"/>
+                <ResourceInclude Source="Resources/ButtonSpinner.axaml"/>
                 <ResourceInclude Source="Resources/ComboBoxItem.axaml"/>
                 <ResourceInclude Source="Resources/ComboBox.axaml"/>
                 <ResourceInclude Source="Resources/TextBox.axaml"/>

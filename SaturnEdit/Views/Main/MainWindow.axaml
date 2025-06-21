@@ -12,6 +12,7 @@
         x:CompileBindings="True"
         x:Name="MainWindowView"
         Focusable="True"
+        Background="{DynamicResource BackgroundSecondary}"
         Title="{DynamicResource Main.Window.Title}">
     <Grid>
         <!-- Buttons and Chrome -->

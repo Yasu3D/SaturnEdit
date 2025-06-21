@@ -1,4 +1,30 @@
 key,en-US
+ChartEditor.General.Timestamp,Timestamp
+ChartEditor.General.Measure,Measure
+ChartEditor.General.Tick,Tick
+ChartEditor.General.Ticks,Ticks
+ChartEditor.General.Beat,Beat
+ChartEditor.General.Position,Position
+ChartEditor.General.Size,Size
+ChartEditor.General.Layer,Layer
+ChartEditor.General.BonusType,Bonus Type
+ChartEditor.General.BonusType.Value.Normal,Normal
+ChartEditor.General.BonusType.Value.Bonus,Bonus
+ChartEditor.General.BonusType.Value.R,R
+ChartEditor.General.JudgementType,Judgement Type
+ChartEditor.General.JudgementType.Value.Normal,Normal
+ChartEditor.General.JudgementType.Value.Autoplay,Autoplay
+ChartEditor.General.JudgementType.Value.Fake,Fake
+ChartEditor.General.RenderType,Render Type
+ChartEditor.General.RenderType.Value.Visible,Visible
+ChartEditor.General.RenderType.Value.Hidden,Hidden
+ChartEditor.General.SweepDirection,Sweep Direction
+ChartEditor.General.SweepDirection.Value.Instant,Instant
+ChartEditor.General.SweepDirection.Value.Clockwise,Clockwise
+ChartEditor.General.SweepDirection.Value.Counterclockwise,Counterclockwise
+ChartEditor.General.SweepDirection.Value.Center,Center
+
+
 ChartEditor.Playback.ToolTip.Play,Play
 ChartEditor.Playback.ToolTip.Pause,Pause
 ChartEditor.Playback.ToolTip.Loop,Loop Playback
@@ -11,35 +37,11 @@ ChartEditor.Playback.ToolTip.PlaybackSettings,Playback Settings
 ChartEditor.Playback.ToolTip.PlaybackSettings.Description,Adjust playback behavior.
 ChartEditor.Playback.ToolTip.PlaybackSpeed,Playback Speed.
 ChartEditor.Playback.ToolTip.PlaybackSpeed.Description,Adjust playback speed in steps of 5%.
-ChartEditor.Cursor.GridDivision,Grid Division
-ChartEditor.Cursor.Position,Position
-ChartEditor.Cursor.Size,Size
 ChartEditor.Inspector.Header.General,General
 ChartEditor.Inspector.Header.Shape,Shape
 ChartEditor.Inspector.Header.Judgement,Judgement
 ChartEditor.Inspector.Header.Hold,Hold
 ChartEditor.Inspector.Header.Lanes,Lanes
-ChartEditor.Inspector.Key.Timestamp,Timestamp
-ChartEditor.Inspector.Key.Ticks,Ticks
-ChartEditor.Inspector.Key.Layer,Layer
-ChartEditor.Inspector.Key.Position,Position
-ChartEditor.Inspector.Key.Size,Size
-ChartEditor.Inspector.Key.BonusType,Bonus Type
-ChartEditor.Inspector.Key.JudgementType,Judgement Type
-ChartEditor.Inspector.Key.RenderType,Render Type
-ChartEditor.Inspector.Key.SweepDirection,Sweep Direction
-ChartEditor.Inspector.Value.BonusType.Normal,Normal
-ChartEditor.Inspector.Value.BonusType.Bonus,Bonus
-ChartEditor.Inspector.Value.BonusType.R,R
-ChartEditor.Inspector.Value.JudgementType.Normal,Normal
-ChartEditor.Inspector.Value.JudgementType.Autoplay,Autoplay
-ChartEditor.Inspector.Value.JudgementType.Fake,Fake
-ChartEditor.Inspector.Value.RenderType.Visible,Visible
-ChartEditor.Inspector.Value.RenderType.Hidden,Hidden
-ChartEditor.Inspector.Value.SweepDirection.Instant,Instant
-ChartEditor.Inspector.Value.SweepDirection.Clockwise,Clockwise
-ChartEditor.Inspector.Value.SweepDirection.Counterclockwise,Counterclockwise
-ChartEditor.Inspector.Value.SweepDirection.Center,Center
 ChartEditor.ChartProperties.Header.Song,Song
 ChartEditor.ChartProperties.Header.Chart,Chart
 ChartEditor.ChartProperties.Header.Display,Display
