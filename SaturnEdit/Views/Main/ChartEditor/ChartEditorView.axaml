@@ -228,11 +228,11 @@
                                   Id="BottomPane"
                                   Proportion="0.3" 
                                   Alignment="Bottom">
-                            <Tool x:Name="Test"
-                                  Id="Test"
-                                  Title="Test"
+                            <Tool x:Name="Cursor"
+                                  Id="Cursor"
+                                  Title="Cursor"
                                   x:DataType="Tool">
-                                <TextBlock Text="{Binding Title}" />
+                                <tabs:CursorView/>
                             </Tool>
                         </ToolDock>
 

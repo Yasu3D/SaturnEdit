@@ -1,0 +1,102 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="400"
+             d:DesignHeight="180"
+             Background="{DynamicResource BackgroundPrimary}"
+             x:Class="SaturnEdit.Views.Main.ChartEditor.Tabs.CursorView">
+    <Grid Margin="16"
+          ColumnDefinitions="120,20,*"
+          RowDefinitions="30, 30, 30, 30"
+          RowSpacing="10">
+        
+        <Rectangle Grid.Column="1"
+                   Grid.RowSpan="4"
+                   Fill="{DynamicResource SeparatorPrimary}"
+                   Width="1"
+                   HorizontalAlignment="Left" />
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource ChartEditor.Inspector.Key.Timestamp}"/>
+        <Grid Grid.Row="0"
+              Grid.Column="2"
+              ColumnDefinitions="*, 10, *">
+            <TextBox Grid.Column="0"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Stretch"
+                     Text="1" />
+
+            <TextBlock Grid.Column="1"
+                       Text="."
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,-10" />
+
+            <TextBox Grid.Column="2"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Stretch"
+                     Text="8" />
+        </Grid>
+        
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource ChartEditor.Cursor.GridDivision}"/>
+        <TextBox Grid.Row="1" Grid.Column="2"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Stretch"
+                     Text="16" />
+
+        <TextBlock Grid.Row="2"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource ChartEditor.Cursor.Position}"/>
+        <TextBlock Grid.Row="2"
+                   Grid.Column="2"
+                   Name="TextBlockPosition"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Margin="10,0"
+                   FontSize="15"
+                   FontFamily="Consolas,Cascadia Code,Monospace"
+                   Text="30"/>
+        <Slider Grid.Row="2"
+                Grid.Column="2"
+                Name="SliderPosition"
+                Classes="Wide"
+                Minimum="0"
+                Maximum="59"
+                Value="30"
+                TickFrequency="1"
+                IsSnapToTickEnabled="True" 
+                ValueChanged="SliderPosition_OnValueChanged"/>
+
+        <TextBlock Grid.Row="3"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource ChartEditor.Cursor.Size}"/>
+        <TextBlock Grid.Row="3"
+                   Grid.Column="2"
+                   Name="TextBlockSize"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Margin="10,0"
+                   FontSize="15"
+                   FontFamily="Consolas,Cascadia Code,Monospace"
+                   Text="15"/>
+        <Slider Grid.Row="3"
+                Grid.Column="2"
+                Name="SliderSize"
+                Classes="Wide"
+                Minimum="1"
+                Maximum="60"
+                Value="15"
+                TickFrequency="1"
+                IsSnapToTickEnabled="True" 
+                ValueChanged="SliderSize_OnValueChanged"/>
+    </Grid>
+</UserControl>

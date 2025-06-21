@@ -8,32 +8,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Assets/sat.tmLanguage.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartViewTxt.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartViewTxt.axaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/InspectorView.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/InspectorView.axaml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Notes/HoldNote.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Notes/HoldNote.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Notes/HoldPointNote.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Notes/HoldPointNote.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerReader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerWriter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerWriter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationUtils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Reader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Reader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Writer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Writer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Reader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Reader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Writer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Writer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en-US.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en-US.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/ColorStyles.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/ColorStyles.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/ControlStyles.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/ControlStyles.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartPropertiesView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartPropertiesView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +134,9 @@
       <workItem from="1750344077701" duration="26841000" />
       <workItem from="1750425046814" duration="7067000" />
       <workItem from="1750432195496" duration="547000" />
-      <workItem from="1750432768794" duration="8018000" />
+      <workItem from="1750432768794" duration="11210000" />
+      <workItem from="1750456766984" duration="1566000" />
+      <workItem from="1750507266208" duration="3246000" />
     </task>
     <servers />
   </component>

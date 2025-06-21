@@ -42,7 +42,7 @@
                     <SolidColorBrush x:Key="ButtonPrimaryPressed"     Color="#0AFFFFFF" />
                     <SolidColorBrush x:Key="ButtonPrimaryPointerOver" Color="#15FFFFFF" />
                     <SolidColorBrush x:Key="ButtonPrimaryDisabled"    Color="#1A000000" />
-                    <SolidColorBrush x:Key="ButtonPrimaryChecked"     Color="#40FFFFFF" />
+                    <SolidColorBrush x:Key="ButtonPrimaryChecked"     Color="#30FFFFFF" />
                     
                     <SolidColorBrush x:Key="ButtonSecondaryPressed"     Color="#40000000" />
                     <SolidColorBrush x:Key="ButtonSecondaryPointerOver" Color="#26000000" />

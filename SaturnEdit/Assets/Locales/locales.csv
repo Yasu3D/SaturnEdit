@@ -11,6 +11,35 @@ ChartEditor.Playback.ToolTip.PlaybackSettings,Playback Settings
 ChartEditor.Playback.ToolTip.PlaybackSettings.Description,Adjust playback behavior.
 ChartEditor.Playback.ToolTip.PlaybackSpeed,Playback Speed.
 ChartEditor.Playback.ToolTip.PlaybackSpeed.Description,Adjust playback speed in steps of 5%.
+ChartEditor.Cursor.GridDivision,Grid Division
+ChartEditor.Cursor.Position,Position
+ChartEditor.Cursor.Size,Size
+ChartEditor.Inspector.Header.General,General
+ChartEditor.Inspector.Header.Shape,Shape
+ChartEditor.Inspector.Header.Judgement,Judgement
+ChartEditor.Inspector.Header.Hold,Hold
+ChartEditor.Inspector.Header.Lanes,Lanes
+ChartEditor.Inspector.Key.Timestamp,Timestamp
+ChartEditor.Inspector.Key.Ticks,Ticks
+ChartEditor.Inspector.Key.Layer,Layer
+ChartEditor.Inspector.Key.Position,Position
+ChartEditor.Inspector.Key.Size,Size
+ChartEditor.Inspector.Key.BonusType,Bonus Type
+ChartEditor.Inspector.Key.JudgementType,Judgement Type
+ChartEditor.Inspector.Key.RenderType,Render Type
+ChartEditor.Inspector.Key.SweepDirection,Sweep Direction
+ChartEditor.Inspector.Value.BonusType.Normal,Normal
+ChartEditor.Inspector.Value.BonusType.Bonus,Bonus
+ChartEditor.Inspector.Value.BonusType.R,R
+ChartEditor.Inspector.Value.JudgementType.Normal,Normal
+ChartEditor.Inspector.Value.JudgementType.Autoplay,Autoplay
+ChartEditor.Inspector.Value.JudgementType.Fake,Fake
+ChartEditor.Inspector.Value.RenderType.Visible,Visible
+ChartEditor.Inspector.Value.RenderType.Hidden,Hidden
+ChartEditor.Inspector.Value.SweepDirection.Instant,Instant
+ChartEditor.Inspector.Value.SweepDirection.Clockwise,Clockwise
+ChartEditor.Inspector.Value.SweepDirection.Counterclockwise,Counterclockwise
+ChartEditor.Inspector.Value.SweepDirection.Center,Center
 ChartEditor.ChartProperties.Header.Song,Song
 ChartEditor.ChartProperties.Header.Chart,Chart
 ChartEditor.ChartProperties.Header.Display,Display
@@ -54,32 +83,6 @@ ChartEditor.ChartProperties.ToolTip.AutoBpmMessage,Auto Bpm Message
 ChartEditor.ChartProperties.ToolTip.AutoBpmMessage.Description,Automatically determine the bpm message based on the chart's bpm change events.
 ChartEditor.ChartProperties.ToolTip.AutoClearThreshold,Auto Clear Threshold
 ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description,Automatically determine the clear threshold based on the chart's difficulty.
-ChartEditor.Inspector.Header.General,General
-ChartEditor.Inspector.Header.Shape,Shape
-ChartEditor.Inspector.Header.Judgement,Judgement
-ChartEditor.Inspector.Header.Hold,Hold
-ChartEditor.Inspector.Header.Lanes,Lanes
-ChartEditor.Inspector.Key.Timestamp,Timestamp
-ChartEditor.Inspector.Key.Ticks,Ticks
-ChartEditor.Inspector.Key.Layer,Layer
-ChartEditor.Inspector.Key.Position,Position
-ChartEditor.Inspector.Key.Size,Size
-ChartEditor.Inspector.Key.BonusType,Bonus Type
-ChartEditor.Inspector.Key.JudgementType,Judgement Type
-ChartEditor.Inspector.Key.RenderType,Render Type
-ChartEditor.Inspector.Key.SweepDirection,Sweep Direction
-ChartEditor.Inspector.Value.BonusType.Normal,Normal
-ChartEditor.Inspector.Value.BonusType.Bonus,Bonus
-ChartEditor.Inspector.Value.BonusType.R,R
-ChartEditor.Inspector.Value.JudgementType.Normal,Normal
-ChartEditor.Inspector.Value.JudgementType.Autoplay,Autoplay
-ChartEditor.Inspector.Value.JudgementType.Fake,Fake
-ChartEditor.Inspector.Value.RenderType.Visible,Visible
-ChartEditor.Inspector.Value.RenderType.Hidden,Hidden
-ChartEditor.Inspector.Value.SweepDirection.Instant,Instant
-ChartEditor.Inspector.Value.SweepDirection.Clockwise,Clockwise
-ChartEditor.Inspector.Value.SweepDirection.Counterclockwise,Counterclockwise
-ChartEditor.Inspector.Value.SweepDirection.Center,Center
 ChartEditor.ChartViewTxt.ToolTip.ShowSpaces,Show Spaces
 ChartEditor.ChartViewTxt.ToolTip.ShowSpaces.Description,Displays a bullet point dot • wherever whitespace is.
 ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting,Syntax Highlighting
