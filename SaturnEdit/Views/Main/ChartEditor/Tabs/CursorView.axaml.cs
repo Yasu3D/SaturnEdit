@@ -13,7 +13,7 @@ public partial class CursorView : UserControl
     private void SliderPosition_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
     {
         if (sender == null) return;
-
+        
         TextBlockPosition.Text = $"{(int)SliderPosition.Value}";
     }
     

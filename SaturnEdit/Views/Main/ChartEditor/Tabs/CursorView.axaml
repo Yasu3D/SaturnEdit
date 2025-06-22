@@ -24,8 +24,10 @@
                    Text="{DynamicResource ChartEditor.General.Measure}" />
         <NumericUpDown Grid.Row="0"
                        Grid.Column="2"
+                       Name="NumericUpDownMeasure"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Stretch"
+                       Minimum="0"
                        Value="0" 
                        FormatString="0"/>
         
@@ -37,6 +39,7 @@
               Grid.Column="2"
               ColumnDefinitions="1*, 15, *">
             <NumericUpDown Grid.Column="0"
+                           Name="NumericUpDownBeat"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Stretch"
                            Minimum="0"
@@ -51,9 +54,11 @@
                        HorizontalAlignment="Center" />
 
             <NumericUpDown Grid.Column="2"
+                           Name="NumericUpDownDivision"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Stretch"
-                           Minimum="-1"
+                           Minimum="1"
+                           Maximum="1920"
                            Increment="1"
                            Value="8"
                            FormatString="0"/>

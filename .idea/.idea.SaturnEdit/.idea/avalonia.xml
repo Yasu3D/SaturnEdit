@@ -33,7 +33,9 @@
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/InspectorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/ProofreaderView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/MainWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Settings/SettingsWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
       </map>
     </option>
   </component>

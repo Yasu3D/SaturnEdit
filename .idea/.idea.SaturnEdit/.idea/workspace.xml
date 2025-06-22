@@ -8,17 +8,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/ButtonSpinner.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/NumericUpDown.axaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ProofreaderView.axaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ProofreaderView.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en-US.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en-US.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/ControlStyles.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/ControlStyles.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/ButtonSpinner.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/ButtonSpinner.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/NumericUpDown.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/NumericUpDown.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/TextBox.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/TextBox.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/InspectorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/InspectorView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui_plans.md" beforeDir="false" afterPath="$PROJECT_DIR$/ui_plans.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,23 +69,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Project.SaturnEdit.executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "XThreadsFramesViewSplitterKey": "0.48941177",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.sourceCode.XAML",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Project.SaturnEdit.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.48941177&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.XAML&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="SaturnEdit" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/SaturnEdit/bin/Debug/net8.0/SaturnEdit.exe" />
@@ -139,7 +142,9 @@
       <workItem from="1750432195496" duration="547000" />
       <workItem from="1750432768794" duration="11210000" />
       <workItem from="1750456766984" duration="1566000" />
-      <workItem from="1750507266208" duration="14028000" />
+      <workItem from="1750507266208" duration="14084000" />
+      <workItem from="1750544413233" duration="93000" />
+      <workItem from="1750610983780" duration="8855000" />
     </task>
     <servers />
   </component>

@@ -195,7 +195,7 @@
                             <icon:FluentIcon Icon="Settings"/>
                             <Button.Flyout>
                                 <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                                    <MenuItem>
+                                    <MenuItem> 
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPause}" />
                                         </MenuItem.Header>

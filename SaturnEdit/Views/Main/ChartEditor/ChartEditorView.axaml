@@ -228,11 +228,11 @@
                                   Id="BottomPane"
                                   Proportion="0.3" 
                                   Alignment="Bottom">
-                            <Tool x:Name="Cursor"
-                                  Id="Cursor"
-                                  Title="Cursor"
+                            <Tool x:Name="Proofreader"
+                                  Id="Proofreader"
+                                  Title="Proofreader"
                                   x:DataType="Tool">
-                                <tabs:CursorView/>
+                                <tabs:ProofreaderView/>
                             </Tool>
                         </ToolDock>
 

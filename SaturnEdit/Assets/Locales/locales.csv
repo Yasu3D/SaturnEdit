@@ -7,6 +7,27 @@ ChartEditor.General.Beat,Beat
 ChartEditor.General.Position,Position
 ChartEditor.General.Size,Size
 ChartEditor.General.Layer,Layer
+ChartEditor.General.Type,Type
+ChartEditor.General.Type.Value.Touch,Touch
+ChartEditor.General.Type.Value.SnapForward,Snap Forward
+ChartEditor.General.Type.Value.SnapBackward,Snap Backward
+ChartEditor.General.Type.Value.SlideClockwise,Slide Clockwise
+ChartEditor.General.Type.Value.SlideCounterclockwise,Slide Counterclockwise
+ChartEditor.General.Type.Value.Chain,Chain
+ChartEditor.General.Type.Value.Hold,Hold
+ChartEditor.General.Type.Value.HoldPoint,Hold Point
+ChartEditor.General.Type.Value.LaneShow,Lane Show
+ChartEditor.General.Type.Value.LaneHide,Lane Hide
+ChartEditor.General.Type.Value.MeasureLine,Measure Line
+ChartEditor.General.Type.Value.SyncLine,Sync Line
+ChartEditor.General.Type.Value.TempoChange,Tempo Change
+ChartEditor.General.Type.Value.MetreChange,Metre Change
+ChartEditor.General.Type.Value.SpeedChange,Speed Change
+ChartEditor.General.Type.Value.VisibilityChange,Visibility Change
+ChartEditor.General.Type.Value.ReverseEffect,Reverse Effect
+ChartEditor.General.Type.Value.StopEffect,Stop Effect
+ChartEditor.General.Type.Value.TutorialMarker,Tutorial Marker
+ChartEditor.General.Type.Value.ChartEnd,Chart End
 ChartEditor.General.BonusType,Bonus Type
 ChartEditor.General.BonusType.Value.Normal,Normal
 ChartEditor.General.BonusType.Value.Bonus,Bonus
@@ -23,8 +44,6 @@ ChartEditor.General.SweepDirection.Value.Instant,Instant
 ChartEditor.General.SweepDirection.Value.Clockwise,Clockwise
 ChartEditor.General.SweepDirection.Value.Counterclockwise,Counterclockwise
 ChartEditor.General.SweepDirection.Value.Center,Center
-
-
 ChartEditor.Playback.ToolTip.Play,Play
 ChartEditor.Playback.ToolTip.Pause,Pause
 ChartEditor.Playback.ToolTip.Loop,Loop Playback
@@ -89,6 +108,12 @@ ChartEditor.ChartViewTxt.ToolTip.ShowSpaces,Show Spaces
 ChartEditor.ChartViewTxt.ToolTip.ShowSpaces.Description,Displays a bullet point dot • wherever whitespace is.
 ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting,Syntax Highlighting
 ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting.Description,Show syntax highlighting for the chart format.
+ChartEditor.Proofreader.Criteria,Criteria
+ChartEditor.Proofreader.Problem,Problem
+ChartEditor.Proofreader.HintClickJump,Click on a problem to jump to its timestamp in the chart.
+ChartEditor.Proofreader.ToolTip.Criteria,Adjust Criteria
+ChartEditor.Proofreader.ToolTip.Criteria.Description,Adjust the things to look out for while proofreading. 
+ChartEditor.Proofreader.ToolTip.Run,Run Proofread
 Main.Window.Title,SaturnEdit
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.
