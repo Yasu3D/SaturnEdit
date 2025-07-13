@@ -117,6 +117,7 @@
     <system:String x:Key="ChartEditor.Proofreader.ToolTip.Criteria">Adjust Criteria</system:String>
     <system:String x:Key="ChartEditor.Proofreader.ToolTip.Criteria.Description">Adjust the things to look out for while proofreading. </system:String>
     <system:String x:Key="ChartEditor.Proofreader.ToolTip.Run">Run Proofread</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.Title">Proofreader Criteria</system:String>
     <system:String x:Key="Main.Window.Title">SaturnEdit</system:String>
     <system:String x:Key="Main.ToolTip.Update">Update Available!</system:String>
     <system:String x:Key="Main.ToolTip.Update.Description">Click to download latest version.</system:String>
@@ -149,8 +150,6 @@
     <system:String x:Key="Menu.Edit.Copy">Copy</system:String>
     <system:String x:Key="Menu.Edit.Paste">Paste</system:String>
     <system:String x:Key="Settings.Window.Title">Settings</system:String>
-    <system:String x:Key="Settings.Footer.Save">Save</system:String>
-    <system:String x:Key="Settings.Footer.Cancel">Cancel</system:String>
     <system:String x:Key="Settings.Playback.QuantizedPause">Quantized Pause</system:String>
     <system:String x:Key="Settings.Playback.QuantizedPauseOff">Exact Pause</system:String>
     <system:String x:Key="Settings.Playback.QuantizedPauseNearest">Quantized Pause (Nearest)</system:String>
@@ -159,4 +158,5 @@
     <system:String x:Key="Settings.Playback.LoopToStart">Loop to Start</system:String>
     <system:String x:Key="Generic.Enabled">Enabled</system:String>
     <system:String x:Key="Generic.Disabled">Disabled</system:String>
+    <system:String x:Key="Generic.Cancel">Cancel</system:String>
 </ResourceDictionary>

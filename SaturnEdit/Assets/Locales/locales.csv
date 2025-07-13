@@ -114,6 +114,7 @@ ChartEditor.Proofreader.HintClickJump,Click on a problem to jump to its timestam
 ChartEditor.Proofreader.ToolTip.Criteria,Adjust Criteria
 ChartEditor.Proofreader.ToolTip.Criteria.Description,Adjust the things to look out for while proofreading. 
 ChartEditor.Proofreader.ToolTip.Run,Run Proofread
+ChartEditor.Proofreader.Criteria.Title,Proofreader Criteria
 Main.Window.Title,SaturnEdit
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.
@@ -146,8 +147,6 @@ Menu.Edit.Cut,Cut
 Menu.Edit.Copy,Copy
 Menu.Edit.Paste,Paste
 Settings.Window.Title,Settings
-Settings.Footer.Save,Save
-Settings.Footer.Cancel,Cancel
 Settings.Playback.QuantizedPause,Quantized Pause
 Settings.Playback.QuantizedPauseOff,Exact Pause
 Settings.Playback.QuantizedPauseNearest,Quantized Pause (Nearest)
@@ -156,3 +155,4 @@ Settings.Playback.QuantizedPauseNext,Quantized Pause (Next)
 Settings.Playback.LoopToStart,Loop to Start
 Generic.Enabled,Enabled
 Generic.Disabled,Disabled
+Generic.Cancel,Cancel

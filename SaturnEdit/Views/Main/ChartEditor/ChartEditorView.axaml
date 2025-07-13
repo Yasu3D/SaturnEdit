@@ -213,7 +213,7 @@
                                       Id="ChartViewTxt"
                                       Title="Chart View Text"
                                       x:DataType="Tool">
-                                    <tabs:ChartViewTxt/>
+                                    <tabs:ChartView3D/>
                                 </Tool>
                             </ToolDock>
 

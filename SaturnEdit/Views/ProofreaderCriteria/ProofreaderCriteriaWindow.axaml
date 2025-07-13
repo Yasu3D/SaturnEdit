@@ -4,14 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:SaturnEdit.Controls"
         mc:Ignorable="d"
-        d:DesignWidth="900"
+        d:DesignWidth="450"
         d:DesignHeight="700"
-        x:Class="SaturnEdit.Views.SettingsWindow"
-        Width="900"
+        x:Class="SaturnEdit.Views.ProofreaderCriteria.ProofreaderCriteriaWindow"
+        Width="450"
         Height="700"
-        MinWidth="900"
+        MinWidth="450"
         MinHeight="700"
-        Title="{DynamicResource Settings.Window.Title}">
+        Title="{DynamicResource ChartEditor.Proofreader.Criteria.Title}">
     <Grid>
         <controls:WindowChrome Name="WindowChrome"
                                ZIndex="99"
@@ -28,7 +28,7 @@
                     <TextBlock HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                Margin="10,0"
-                               Text="{DynamicResource Settings.Window.Title}" />
+                               Text="{DynamicResource ChartEditor.Proofreader.Criteria.Title}" />
                 </Border>
             </Grid>
 

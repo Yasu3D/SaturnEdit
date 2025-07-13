@@ -88,11 +88,12 @@
                 </Button>
 
                 <Button DockPanel.Dock="Right"
-                        Name="ButtonConfigureProofread"
+                        Name="ButtonProofreadCriteria"
                         HorizontalAlignment="Right"
                         Classes="Themed Outlined"
                         Height="30"
-                        Width="75">
+                        Width="75"
+                        Click="ButtonProofreadCriteria_OnClick">
                     <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria}" />
                     <ToolTip.Tip>
                         <StackPanel>
