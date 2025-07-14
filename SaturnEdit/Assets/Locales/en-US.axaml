@@ -63,7 +63,7 @@
     <system:String x:Key="ChartEditor.Inspector.Header.Shape">Shape</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.Judgement">Judgement</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.Hold">Hold</system:String>
-    <system:String x:Key="ChartEditor.Inspector.Header.Lanes">Lanes</system:String>
+    <system:String x:Key="ChartEditor.Inspector.Header.LaneToggles">Lane Toggles</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Header.Song">Song</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Header.Chart">Chart</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Header.Display">Display</system:String>

@@ -10,8 +10,8 @@
                 <ResourceInclude Source="Resources/Dock/ToolTabStripItem.axaml" />
                 <ResourceInclude Source="Resources/Dock/ToolTabStrip.axaml" />
                 
-                <!--<ResourceInclude Source="Resources/Dock/DockTarget.axaml" />-->
-                <ResourceInclude Source="avares://Dock.Avalonia/Controls/DockTarget.axaml" />
+                <ResourceInclude Source="Resources/Dock/DockTarget.axaml" />
+                <!--<ResourceInclude Source="avares://Dock.Avalonia/Controls/DockTarget.axaml" />-->
                 
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/GlobalDockTarget.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/DocumentControl.axaml" />

@@ -60,7 +60,7 @@ ChartEditor.Inspector.Header.General,General
 ChartEditor.Inspector.Header.Shape,Shape
 ChartEditor.Inspector.Header.Judgement,Judgement
 ChartEditor.Inspector.Header.Hold,Hold
-ChartEditor.Inspector.Header.Lanes,Lanes
+ChartEditor.Inspector.Header.LaneToggles,Lane Toggles
 ChartEditor.ChartProperties.Header.Song,Song
 ChartEditor.ChartProperties.Header.Chart,Chart
 ChartEditor.ChartProperties.Header.Display,Display

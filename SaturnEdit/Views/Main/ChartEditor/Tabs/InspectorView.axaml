@@ -210,7 +210,7 @@
             
             <Expander HorizontalAlignment="Stretch" IsExpanded="True">
                 <Expander.Header>
-                    <TextBlock Text="{DynamicResource ChartEditor.Inspector.Header.Lanes}"
+                    <TextBlock Text="{DynamicResource ChartEditor.Inspector.Header.LaneToggles}"
                                FontWeight="Regular"
                                Foreground="{DynamicResource ForegroundPrimary}" />
                 </Expander.Header>
