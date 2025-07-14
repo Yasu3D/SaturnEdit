@@ -9,9 +9,12 @@
         <entry key="SaturnEdit/MainWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/ColorStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/ControlStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/DockStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/ButtonSpinner.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/ComboBox.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/ComboBoxItem.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Resources/Dock/DockTarget.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Resources/Dock/ToolControl.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/Expander.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/Menu.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/MenuFlyoutPresenter.axaml" value="SaturnEdit/SaturnEdit.csproj" />
@@ -34,6 +37,7 @@
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/InspectorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/ProofreaderView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/MainWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/ProofreadCriteria/ProofreadCriteriaWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/ProofreaderCriteria/ProofreaderCriteriaWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />

@@ -4,11 +4,16 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="Resources/Dock/ProportionalStackPanelSplitter.axaml" />
+                <ResourceInclude Source="avares://Dock.Avalonia/Controls/ControlStrings.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/DocumentTabStripItem.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/DocumentTabStrip.axaml" />
                 <ResourceInclude Source="Resources/Dock/ToolTabStripItem.axaml" />
                 <ResourceInclude Source="Resources/Dock/ToolTabStrip.axaml" />
-                <ResourceInclude Source="Resources/Dock/DockTarget.axaml" />
+                
+                <!--<ResourceInclude Source="Resources/Dock/DockTarget.axaml" />-->
+                <ResourceInclude Source="avares://Dock.Avalonia/Controls/DockTarget.axaml" />
+                
+                <ResourceInclude Source="avares://Dock.Avalonia/Controls/GlobalDockTarget.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/DocumentControl.axaml" />
                 <ResourceInclude Source="Resources/Dock/ToolChromeControl.axaml" />
                 <ResourceInclude Source="Resources/Dock/ToolControl.axaml" />
@@ -19,12 +24,21 @@
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/DocumentDockControl.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/PinnedDockControl.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/ProportionalDockControl.axaml" />
+                <ResourceInclude Source="avares://Dock.Avalonia/Controls/StackDockControl.axaml" />
+                <ResourceInclude Source="avares://Dock.Avalonia/Controls/GridDockControl.axaml" />
+                <ResourceInclude Source="avares://Dock.Avalonia/Controls/WrapDockControl.axaml" />
+                <ResourceInclude Source="avares://Dock.Avalonia/Controls/UniformGridDockControl.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/RootDockControl.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/ToolContentControl.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/ToolDockControl.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/DockControl.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/HostWindowTitleBar.axaml" />
                 <ResourceInclude Source="avares://Dock.Avalonia/Controls/HostWindow.axaml" />
+                <ResourceInclude Source="avares://Dock.Avalonia/Controls/DragPreviewControl.axaml" />
+                <ResourceInclude Source="avares://Dock.Avalonia/Controls/DragPreviewWindow.axaml" />
+                <ResourceInclude Source="avares://Dock.Avalonia/Controls/PinnedDockWindow.axaml" />
+                <ResourceInclude Source="avares://Dock.Avalonia/Controls/DockAdornerWindow.axaml" />
+                <ResourceInclude Source="avares://Dock.Avalonia/Themes/Accents/Fluent.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>

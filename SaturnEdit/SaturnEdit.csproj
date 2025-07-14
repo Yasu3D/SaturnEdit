@@ -10,32 +10,39 @@
 
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.3.0"/>
+        <PackageReference Include="Avalonia" Version="11.3.2" />
         <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.3.0" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.3.0"/>
-        <PackageReference Include="Avalonia.Skia" Version="11.3.0" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.0"/>
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.0"/>
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.2" />
+        <PackageReference Include="Avalonia.Skia" Version="11.3.2" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.2" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.2" />
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.6"/>
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.2" />
         <PackageReference Include="AvaloniaEdit.TextMate" Version="11.3.0" />
-        <PackageReference Include="Dock.Avalonia" Version="11.3.0.2"/>
-        <PackageReference Include="Dock.Controls.ProportionalStackPanel" Version="11.3.0.2"/>
-        <PackageReference Include="Dock.Controls.Recycling" Version="11.3.0.2"/>
-        <PackageReference Include="Dock.Controls.Recycling.Model" Version="11.3.0.2"/>
-        <PackageReference Include="Dock.MarkupExtension" Version="11.3.0.2"/>
-        <PackageReference Include="Dock.Model" Version="11.3.0.2"/>
-        <PackageReference Include="Dock.Model.Avalonia" Version="11.3.0.2"/>
-        <PackageReference Include="Dock.Serializer" Version="11.3.0.2"/>
-        <PackageReference Include="Dock.Settings" Version="11.3.0.2"/>
-        <PackageReference Include="FluentIcons.Avalonia" Version="1.1.301"/>
+        <PackageReference Include="Dock.Avalonia" Version="11.3.0.14" />
+        <PackageReference Include="Dock.Controls.ProportionalStackPanel" Version="11.3.0.14" />
+        <PackageReference Include="Dock.Controls.Recycling" Version="11.3.0.14" />
+        <PackageReference Include="Dock.Controls.Recycling.Model" Version="11.3.0.14" />
+        <PackageReference Include="Dock.MarkupExtension" Version="11.3.0.14" />
+        <PackageReference Include="Dock.Model" Version="11.3.0.14" />
+        <PackageReference Include="Dock.Model.Avalonia" Version="11.3.0.14" />
+        <PackageReference Include="Dock.Serializer" Version="11.3.0.12" />
+        <PackageReference Include="Dock.Settings" Version="11.3.0.14" />
+        <PackageReference Include="FluentIcons.Avalonia" Version="1.1.303" />
         <PackageReference Include="SkiaSharp" Version="3.119.0"/>
         <PackageReference Include="Svg.Controls.Avalonia" Version="11.3.0.1" />
     </ItemGroup>
     
     <ItemGroup>
-        <AvaloniaResource Include="Assets\**"/>
+        <AvaloniaResource Include="SaturnEdit\Assets\**"/>
     </ItemGroup>
+    
+    <ItemGroup>
+        <Content Include="Assets\**\*.svg">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
     
     <ItemGroup>
       <ProjectReference Include="..\SaturnData\SaturnData\SaturnData.csproj" />

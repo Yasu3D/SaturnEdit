@@ -8,9 +8,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/App.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/App.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Notes/Notes.afdesign" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Notes/note_icons.afdesign" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnView" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnView" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/DockStyles.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/DockStyles.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +37,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2b90705926ae4f10aa01bbe3f1025828c90908/dd/26fa1aa0/ValueType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1579bf835158dd6aec6bad778df36f37e1ed9bdaa7c2b533f598f5c59bd4/StandardAssetLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17bbecded926db66f0c619b11b6b1e95b3ff589ca31d8d9f5b33ea3881a9c/TextMate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1836e961bce6521928afb9d8a472c4cf9b66e31eb7aa1adcd153b1d310c8c0/DispatcherOperation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/261ea83c988816e3d8fe76b15b7ac6c10af64b8f9e739854f83c137c8ba9/SafeFileHandle.Windows.cs" root0="FORCE_HIGHLIGHTING" />
@@ -134,7 +142,9 @@
       <workItem from="1750507266208" duration="14084000" />
       <workItem from="1750544413233" duration="93000" />
       <workItem from="1750610983780" duration="8855000" />
-      <workItem from="1752413430297" duration="8969000" />
+      <workItem from="1752413430297" duration="10213000" />
+      <workItem from="1752445076658" duration="955000" />
+      <workItem from="1752513998035" duration="6828000" />
     </task>
     <servers />
   </component>
