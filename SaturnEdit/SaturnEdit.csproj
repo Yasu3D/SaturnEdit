@@ -30,19 +30,43 @@
         <PackageReference Include="Dock.Settings" Version="11.3.0.14" />
         <PackageReference Include="FluentIcons.Avalonia" Version="1.1.303" />
         <PackageReference Include="SkiaSharp" Version="3.119.0"/>
-        <PackageReference Include="Svg.Controls.Avalonia" Version="11.3.0.1" />
     </ItemGroup>
     
     <ItemGroup>
         <AvaloniaResource Include="SaturnEdit\Assets\**"/>
+        <None Remove="Assets\Icons\icon_touch@2x.png" />
+        <None Remove="Assets\Icons\icon_touch.png" />
+        <None Remove="Assets\Icons\icon_snap_fwd@2x.png" />
+        <None Remove="Assets\Icons\icon_snap_fwd.png" />
+        <None Remove="Assets\Icons\icon_snap_bwd@2x.png" />
+        <None Remove="Assets\Icons\icon_snap_bwd.png" />
+        <None Remove="Assets\Icons\icon_slide_clw@2x.png" />
+        <None Remove="Assets\Icons\icon_slide_clw.png" />
+        <None Remove="Assets\Icons\icon_slide_ccw@2x.png" />
+        <None Remove="Assets\Icons\icon_slide_ccw.png" />
+        <None Remove="Assets\Icons\icon_hold@2x.png" />
+        <None Remove="Assets\Icons\icon_hold.png" />
+        <None Remove="Assets\Icons\icon_chain@2x.png" />
+        <None Remove="Assets\Icons\icon_chain.png" />
+        <None Remove="Assets\Icons\icon_chain.svg" />
+        <AvaloniaResource Include="Assets\Icons\icon_chain.svg" />
+        <None Remove="Assets\Icons\icon_hold.svg" />
+        <AvaloniaResource Include="Assets\Icons\icon_hold.svg" />
+        <None Remove="Assets\Icons\icon_lane_hide.svg" />
+        <AvaloniaResource Include="Assets\Icons\icon_lane_hide.svg" />
+        <None Remove="Assets\Icons\icon_lane_show.svg" />
+        <AvaloniaResource Include="Assets\Icons\icon_lane_show.svg" />
+        <None Remove="Assets\Icons\icon_slide_ccw.svg" />
+        <AvaloniaResource Include="Assets\Icons\icon_slide_ccw.svg" />
+        <None Remove="Assets\Icons\icon_slide_clw.svg" />
+        <AvaloniaResource Include="Assets\Icons\icon_slide_clw.svg" />
+        <None Remove="Assets\Icons\icon_snap_bwd.svg" />
+        <AvaloniaResource Include="Assets\Icons\icon_snap_bwd.svg" />
+        <None Remove="Assets\Icons\icon_snap_fwd.svg" />
+        <AvaloniaResource Include="Assets\Icons\icon_snap_fwd.svg" />
+        <None Remove="Assets\Icons\icon_touch.svg" />
+        <AvaloniaResource Include="Assets\Icons\icon_touch.svg" />
     </ItemGroup>
-    
-    <ItemGroup>
-        <Content Include="Assets\**\*.svg">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
-
     
     <ItemGroup>
       <ProjectReference Include="..\SaturnData\SaturnData\SaturnData.csproj" />

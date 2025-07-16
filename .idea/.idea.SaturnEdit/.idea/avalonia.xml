@@ -10,6 +10,7 @@
         <entry key="SaturnEdit/Styles/ColorStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/ControlStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/DockStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/IconStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/ButtonSpinner.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/ComboBox.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/ComboBoxItem.axaml" value="SaturnEdit/SaturnEdit.csproj" />
@@ -35,6 +36,8 @@
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/ChartViewTxt.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/InspectorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/NotePalette.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/NotePaletteView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/ProofreaderView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />

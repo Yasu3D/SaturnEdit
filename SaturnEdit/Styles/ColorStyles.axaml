@@ -34,7 +34,7 @@
                     <SolidColorBrush x:Key="SeparatorPrimary"   Color="#454545" />
                     <SolidColorBrush x:Key="SeparatorSecondary" Color="#1C1C1C" />
 
-                    <SolidColorBrush x:Key="ForegroundPrimary"   Color="#ECEEF4" />
+                    <SolidColorBrush x:Key="ForegroundPrimary"   Color="#ECECEC" />
                     <SolidColorBrush x:Key="ForegroundSecondary" Color="#BBBBBB" />
                     <SolidColorBrush x:Key="ForegroundTertiary"  Color="#808080" />
                     <SolidColorBrush x:Key="ForegroundError"     Color="#DD0000"/>
@@ -54,6 +54,8 @@
                     <SolidColorBrush x:Key="ButtonAccentPointerOver" Color="#BB7B41E0" />
                     <SolidColorBrush x:Key="ButtonAccentDisabled"    Color="#707B41E0" />
                     <SolidColorBrush x:Key="ButtonAccentChecked"     Color="#FF7B41E0" />
+                    
+                    <SolidColorBrush x:Key="ButtonFillStandardOutline"     Color="#80FFFFFF" />
                     
                     <SolidColorBrush x:Key="SliderWideTrackPrimary"               Color="#307B41E0" />
                     <SolidColorBrush x:Key="SliderWideTrackPrimaryPressed"        Color="#407B41E0" />
