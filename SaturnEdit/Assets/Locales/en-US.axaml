@@ -64,6 +64,16 @@
     <system:String x:Key="ChartEditor.Inspector.Header.Judgement">Judgement</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.Hold">Hold</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.LaneToggles">Lane Toggles</system:String>
+    <system:String x:Key="ChartEditor.GlobalEventList.Header.GlobalEvents">Global Events</system:String>
+    <system:String x:Key="ChartEditor.LaneToggleList.Header.LaneToggles">Lane Toggles</system:String>
+    <system:String x:Key="ChartEditor.LayerList.Header.Layers">Layers</system:String>
+    <system:String x:Key="ChartEditor.LayerList.Header.Events">Events</system:String>
+    <system:String x:Key="ChartEditor.LayerList.Header.Notes">Notes</system:String>
+    <system:String x:Key="ChartEditor.LayerList.ToolTip.AddNew">Add New</system:String>
+    <system:String x:Key="ChartEditor.LayerList.ToolTip.AddNewEllipsis">Add New...</system:String>
+    <system:String x:Key="ChartEditor.LayerList.ToolTip.DeleteSelection">Delete Selection</system:String>
+    <system:String x:Key="ChartEditor.LayerList.ToolTip.MoveItemUp">Move Item Up</system:String>
+    <system:String x:Key="ChartEditor.LayerList.ToolTip.MoveItemDown">Move Item Down</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Header.Song">Song</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Header.Chart">Chart</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Header.Display">Display</system:String>
@@ -86,6 +96,7 @@
     <system:String x:Key="ChartEditor.ChartProperties.Key.Video">Video</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Key.AudioOffset">Audio Offset</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Key.VideoOffset">Video Offset</system:String>
+    <system:String x:Key="ChartEditor.ChartProperties.Key.ChartEnd">Chart End</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Difficulty.None">NONE</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Difficulty.Normal">NORMAL</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Difficulty.Hard">HARD</system:String>
@@ -107,6 +118,8 @@
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoBpmMessage.Description">Automatically determine the bpm message based on the chart's bpm change events.</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoClearThreshold">Auto Clear Threshold</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description">Automatically determine the clear threshold based on the chart's difficulty.</system:String>
+    <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd">Auto Chart End</system:String>
+    <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description">Automatically determine when a chart should end and transition to the results screen.</system:String>
     <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.ShowSpaces">Show Spaces</system:String>
     <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.ShowSpaces.Description">Displays a bullet point dot • wherever whitespace is.</system:String>
     <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting">Syntax Highlighting</system:String>

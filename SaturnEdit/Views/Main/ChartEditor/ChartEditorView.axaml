@@ -188,11 +188,11 @@
                                   Id="LeftPane"
                                   Proportion="0.25"
                                   Alignment="Left">
-                            <Tool x:Name="Inspector"
-                                  Id="Inspector"
-                                  Title="Inspector"
+                            <Tool x:Name="LayerInspector"
+                                  Id="LayerInspector"
+                                  Title="Layer Inspector"
                                   x:DataType="Tool">
-                                <tabs:InspectorView/>
+                                <tabs:LayerListView/>
                             </Tool>
                         </ToolDock>
 
@@ -220,7 +220,7 @@
                                           Id="ChartViewTxt"
                                           Title="Chart View Text"
                                           x:DataType="Tool">
-                                        <tabs:ChartView3D/>
+                                        <tabs:ChartPropertiesView/>
                                     </Tool>
                                 </ToolDock>
 

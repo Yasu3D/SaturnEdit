@@ -5,6 +5,7 @@
       <map>
         <entry key="SaturnEdit/App.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Assets/Locales/en-US.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Controls/AdvancedListBox.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Controls/WindowChrome.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/MainWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/ColorStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
@@ -35,7 +36,13 @@
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/ChartViewTxt.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/GlobalEventListView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/GlobalEventsInspector.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/InspectorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/LaneToggleList.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/LaneToggleListView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/LayerInspectorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/LayerListView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/NotePalette.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/NotePaletteView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" value="SaturnEdit/SaturnEdit.csproj" />

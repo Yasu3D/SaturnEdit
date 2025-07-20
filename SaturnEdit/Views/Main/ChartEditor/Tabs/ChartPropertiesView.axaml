@@ -104,10 +104,11 @@
                 </Expander.Header>
 
                 <Grid ColumnDefinitions="150,20,*,36"
-                      RowDefinitions="40,40,40,40,40">
+                      RowDefinitions="30,30,30,30,30,30"
+                      RowSpacing="10">
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
-                               Grid.RowSpan="5"
+                               Grid.RowSpan="6"
                                Width="1"
                                HorizontalAlignment="Left"
                                Fill="{DynamicResource SeparatorPrimary}" />
@@ -170,6 +171,48 @@
                             <StackPanel>
                                 <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoClearThreshold}" />
                                 <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="LinkEdit"/>
+                    </ToggleButton>
+                    
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="5"
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.ChartEnd}"
+                               VerticalAlignment="Center" />
+                    <Grid Grid.Column="2"
+                          Grid.Row="5"
+                          ColumnDefinitions="*,15,*">
+                        <NumericUpDown Grid.Column="0"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Stretch"
+                                 Minimum="0"
+                                 Value="1" 
+                                 FormatString="0"/>
+
+                        <Rectangle Grid.Column="1"
+                                   Fill="{DynamicResource SeparatorPrimary}"
+                                   Width="1"
+                                   Margin="0,5"
+                                   HorizontalAlignment="Center" />
+
+                        <NumericUpDown Grid.Column="2"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Stretch"
+                                 Minimum="-1"
+                                 Maximum="1920"
+                                 Value="480" 
+                                 FormatString="0"/>
+                    </Grid>
+                    
+                    <ToggleButton Grid.Row="5"
+                                  Grid.Column="3"
+                                  Classes="Themed Square Outlined"
+                                  HorizontalAlignment="Right">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoChartEnd}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
                         </ToolTip.Tip>
                         <icon:FluentIcon Icon="LinkEdit"/>

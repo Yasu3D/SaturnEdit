@@ -61,6 +61,16 @@ ChartEditor.Inspector.Header.Shape,Shape
 ChartEditor.Inspector.Header.Judgement,Judgement
 ChartEditor.Inspector.Header.Hold,Hold
 ChartEditor.Inspector.Header.LaneToggles,Lane Toggles
+ChartEditor.GlobalEventList.Header.GlobalEvents,Global Events
+ChartEditor.LaneToggleList.Header.LaneToggles,Lane Toggles
+ChartEditor.LayerList.Header.Layers,Layers
+ChartEditor.LayerList.Header.Events,Events
+ChartEditor.LayerList.Header.Notes,Notes
+ChartEditor.LayerList.ToolTip.AddNew,Add New
+ChartEditor.LayerList.ToolTip.AddNewEllipsis,Add New...
+ChartEditor.LayerList.ToolTip.DeleteSelection,Delete Selection
+ChartEditor.LayerList.ToolTip.MoveItemUp,Move Item Up
+ChartEditor.LayerList.ToolTip.MoveItemDown,Move Item Down
 ChartEditor.ChartProperties.Header.Song,Song
 ChartEditor.ChartProperties.Header.Chart,Chart
 ChartEditor.ChartProperties.Header.Display,Display
@@ -83,6 +93,7 @@ ChartEditor.ChartProperties.Key.Audio,Audio
 ChartEditor.ChartProperties.Key.Video,Video
 ChartEditor.ChartProperties.Key.AudioOffset,Audio Offset
 ChartEditor.ChartProperties.Key.VideoOffset,Video Offset
+ChartEditor.ChartProperties.Key.ChartEnd,Chart End
 ChartEditor.ChartProperties.Difficulty.None,NONE
 ChartEditor.ChartProperties.Difficulty.Normal,NORMAL
 ChartEditor.ChartProperties.Difficulty.Hard,HARD
@@ -104,6 +115,8 @@ ChartEditor.ChartProperties.ToolTip.AutoBpmMessage,Auto Bpm Message
 ChartEditor.ChartProperties.ToolTip.AutoBpmMessage.Description,Automatically determine the bpm message based on the chart's bpm change events.
 ChartEditor.ChartProperties.ToolTip.AutoClearThreshold,Auto Clear Threshold
 ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description,Automatically determine the clear threshold based on the chart's difficulty.
+ChartEditor.ChartProperties.ToolTip.AutoChartEnd,Auto Chart End
+ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description,Automatically determine when a chart should end and transition to the results screen.
 ChartEditor.ChartViewTxt.ToolTip.ShowSpaces,Show Spaces
 ChartEditor.ChartViewTxt.ToolTip.ShowSpaces.Description,Displays a bullet point dot • wherever whitespace is.
 ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting,Syntax Highlighting
