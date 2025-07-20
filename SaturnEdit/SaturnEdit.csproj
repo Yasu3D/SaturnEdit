@@ -30,42 +30,124 @@
         <PackageReference Include="Dock.Settings" Version="11.3.0.14" />
         <PackageReference Include="FluentIcons.Avalonia" Version="1.1.303" />
         <PackageReference Include="SkiaSharp" Version="3.119.0"/>
+        <PackageReference Include="Svg.Controls.Avalonia" Version="11.3.0.1" />
     </ItemGroup>
     
     <ItemGroup>
         <AvaloniaResource Include="SaturnEdit\Assets\**"/>
-        <None Remove="Assets\Icons\icon_touch@2x.png" />
-        <None Remove="Assets\Icons\icon_touch.png" />
-        <None Remove="Assets\Icons\icon_snap_fwd@2x.png" />
-        <None Remove="Assets\Icons\icon_snap_fwd.png" />
-        <None Remove="Assets\Icons\icon_snap_bwd@2x.png" />
-        <None Remove="Assets\Icons\icon_snap_bwd.png" />
-        <None Remove="Assets\Icons\icon_slide_clw@2x.png" />
-        <None Remove="Assets\Icons\icon_slide_clw.png" />
-        <None Remove="Assets\Icons\icon_slide_ccw@2x.png" />
-        <None Remove="Assets\Icons\icon_slide_ccw.png" />
-        <None Remove="Assets\Icons\icon_hold@2x.png" />
-        <None Remove="Assets\Icons\icon_hold.png" />
-        <None Remove="Assets\Icons\icon_chain@2x.png" />
-        <None Remove="Assets\Icons\icon_chain.png" />
-        <None Remove="Assets\Icons\icon_chain.svg" />
-        <AvaloniaResource Include="Assets\Icons\icon_chain.svg" />
-        <None Remove="Assets\Icons\icon_hold.svg" />
-        <AvaloniaResource Include="Assets\Icons\icon_hold.svg" />
-        <None Remove="Assets\Icons\icon_lane_hide.svg" />
-        <AvaloniaResource Include="Assets\Icons\icon_lane_hide.svg" />
-        <None Remove="Assets\Icons\icon_lane_show.svg" />
-        <AvaloniaResource Include="Assets\Icons\icon_lane_show.svg" />
-        <None Remove="Assets\Icons\icon_slide_ccw.svg" />
-        <AvaloniaResource Include="Assets\Icons\icon_slide_ccw.svg" />
-        <None Remove="Assets\Icons\icon_slide_clw.svg" />
-        <AvaloniaResource Include="Assets\Icons\icon_slide_clw.svg" />
-        <None Remove="Assets\Icons\icon_snap_bwd.svg" />
-        <AvaloniaResource Include="Assets\Icons\icon_snap_bwd.svg" />
-        <None Remove="Assets\Icons\icon_snap_fwd.svg" />
-        <AvaloniaResource Include="Assets\Icons\icon_snap_fwd.svg" />
-        <None Remove="Assets\Icons\icon_touch.svg" />
-        <AvaloniaResource Include="Assets\Icons\icon_touch.svg" />
+        <AvaloniaResource Include="SaturnEdit\Assets\Icons\Color\**"/>
+        <AvaloniaResource Include="SaturnEdit\Assets\Icons\Mono\**"/>
+
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_0.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_1.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_2.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_3.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_4.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_5.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_6.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_7.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_8.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_9.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_10.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_11.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_touch_12.svg" />
+        
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_0.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_1.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_2.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_3.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_4.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_5.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_6.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_7.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_8.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_9.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_10.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_11.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_chain_12.svg" />
+        
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_0.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_1.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_2.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_3.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_4.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_5.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_6.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_7.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_8.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_9.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_10.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_11.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_hold_12.svg" />
+        
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_0.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_1.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_2.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_3.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_4.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_5.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_6.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_7.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_8.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_9.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_10.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_11.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_clw_12.svg" />
+        
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_0.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_1.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_2.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_3.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_4.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_5.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_6.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_7.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_8.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_9.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_10.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_11.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_slide_ccw_12.svg" />
+        
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_0.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_1.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_2.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_3.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_4.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_5.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_6.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_7.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_8.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_9.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_10.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_11.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_fwd_12.svg" />
+        
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_0.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_1.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_2.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_3.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_4.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_5.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_6.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_7.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_8.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_9.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_10.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_11.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_snap_bwd_12.svg" />
+        
+        <AvaloniaResource Include="Assets\Icons\Color\icon_lane_hide.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_lane_show.svg" />
+        
+        <AvaloniaResource Include="Assets\Icons\Mono\icon_touch.svg" />
+        <AvaloniaResource Include="Assets\Icons\Mono\icon_chain.svg" />
+        <AvaloniaResource Include="Assets\Icons\Mono\icon_hold.svg" />
+        <AvaloniaResource Include="Assets\Icons\Mono\icon_slide_clw.svg" />
+        <AvaloniaResource Include="Assets\Icons\Mono\icon_slide_ccw.svg" />
+        <AvaloniaResource Include="Assets\Icons\Mono\icon_snap_fwd.svg" />
+        <AvaloniaResource Include="Assets\Icons\Mono\icon_snap_bwd.svg" />
+        <AvaloniaResource Include="Assets\Icons\Mono\icon_lane_show.svg" />
+        <AvaloniaResource Include="Assets\Icons\Mono\icon_lane_hide.svg" />
     </ItemGroup>
     
     <ItemGroup>

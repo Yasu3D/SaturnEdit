@@ -931,7 +931,7 @@
         <Style>
             <!-- Controls that inherit from Button -->
             <Style Selector=":is(Button).FillStandard">
-                <Setter Property="Background" Value="{DynamicResource ButtonPrimary}" />
+                <Setter Property="Background" Value="#01000000" />
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource ButtonFillStandardOutline}"></Setter>
                 <Setter Property="BorderThickness" Value="0"/>
@@ -988,7 +988,7 @@
             <!-- True Button -->
             <Style Selector="Button.FillStandard">
                 
-                <Setter Property="Background" Value="{DynamicResource ButtonPrimary}" />
+                <Setter Property="Background" Value="#01000000" />
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource ButtonFillStandardOutline}"></Setter>
                 <Setter Property="BorderThickness" Value="0"/>

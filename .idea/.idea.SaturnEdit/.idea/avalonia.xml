@@ -40,6 +40,7 @@
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/NotePaletteView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/PlaybackView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/ProofreaderView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/WaveformView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/MainWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/ProofreadCriteria/ProofreadCriteriaWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
