@@ -1,0 +1,104 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:SaturnEdit.Controls"
+             mc:Ignorable="d"
+             d:DesignWidth="600"
+             d:DesignHeight="322"
+             Background="{DynamicResource BackgroundPrimary}"
+             x:Class="SaturnEdit.Views.Main.ChartEditor.Tabs.AudioMixerView">
+    <Border BorderBrush="{DynamicResource SeparatorPrimary}"
+            BorderThickness="1,0,1,1">
+        <!-- Channels -->
+        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Disabled"
+                      VerticalAlignment="Stretch"
+                      Padding="0,0,0,16">
+            <StackPanel VerticalAlignment="Stretch"
+                        Background="{DynamicResource BackgroundSecondary}"
+                        Orientation="Horizontal">
+
+                <controls:MixerChannel VerticalAlignment="Stretch"
+                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Master}"
+                                       HasSoloButton="False" 
+                                       HasSoundButton="False"/>
+
+                <Rectangle Width="1"
+                           VerticalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                <controls:MixerChannel VerticalAlignment="Stretch"
+                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Audio}"
+                                       HasSoundButton="False"/>
+
+                <Rectangle Width="1"
+                           VerticalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                <controls:MixerChannel VerticalAlignment="Stretch"
+                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Guide}" />
+
+                <Rectangle Width="1"
+                           VerticalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                <controls:MixerChannel VerticalAlignment="Stretch"
+                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Touch}" />
+
+                <Rectangle Width="1"
+                           VerticalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                <controls:MixerChannel VerticalAlignment="Stretch"
+                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Chain}" />
+
+                <Rectangle Width="1"
+                           VerticalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                <controls:MixerChannel VerticalAlignment="Stretch"
+                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Hold}" />
+
+                <Rectangle Width="1"
+                           VerticalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                <controls:MixerChannel VerticalAlignment="Stretch"
+                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.HoldLoop}" />
+
+                <Rectangle Width="1"
+                           VerticalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                <controls:MixerChannel VerticalAlignment="Stretch"
+                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Slide}" />
+
+                <Rectangle Width="1"
+                           VerticalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                <controls:MixerChannel VerticalAlignment="Stretch"
+                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Snap}" />
+
+                <Rectangle Width="1"
+                           VerticalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                <controls:MixerChannel VerticalAlignment="Stretch"
+                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Bonus}" />
+
+                <Rectangle Width="1"
+                           VerticalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                <controls:MixerChannel VerticalAlignment="Stretch"
+                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.R}" />
+
+                <Rectangle Width="1"
+                           VerticalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</UserControl>

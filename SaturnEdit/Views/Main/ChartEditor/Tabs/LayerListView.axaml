@@ -132,12 +132,12 @@
                     BorderBrush="{DynamicResource SeparatorPrimary}"
                     BorderThickness="0,0,1,0" />
             
-            <!-- Events -->
+            <!-- LayerEvents -->
             <Grid Grid.Row="0"
                   Grid.Column="2"
                   RowDefinitions="40,1,*,31">
                 <TextBlock Grid.Row="0"
-                           Text="{DynamicResource ChartEditor.LayerList.Header.Events}"
+                           Text="{DynamicResource ChartEditor.LayerList.Header.LayerEvents}"
                            FontWeight="Regular"
                            Foreground="{DynamicResource ForegroundPrimary}"
                            Margin="10" />
@@ -288,12 +288,12 @@
                 </Border>
             </Grid>
 
-            <!-- Notes -->
+            <!-- LayerNotes -->
             <Grid Grid.Row="1"
                   Grid.Column="2"
                   RowDefinitions="40,1,*,31">
                 <TextBlock Grid.Row="0"
-                           Text="{DynamicResource ChartEditor.LayerList.Header.Notes}"
+                           Text="{DynamicResource ChartEditor.LayerList.Header.LayerNotes}"
                            FontWeight="Regular"
                            Foreground="{DynamicResource ForegroundPrimary}"
                            Margin="10" />

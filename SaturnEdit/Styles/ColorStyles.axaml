@@ -71,10 +71,16 @@
                     <SolidColorBrush x:Key="SliderWideThumbPointerOver" Color="#CC7B41E0" />
                     <SolidColorBrush x:Key="SliderWideThumbDisabled"    Color="#40888888" />
                     
+                    <SolidColorBrush x:Key="SliderMixerTrack"            Color="#50FFFFFF" />
+                    
                     <SolidColorBrush x:Key="TextBoxBackground"            Color="#40000000" />
                     <SolidColorBrush x:Key="TextBoxBackgroundPointerOver" Color="#60000000" />
                     <SolidColorBrush x:Key="TextBoxBackgroundFocused"     Color="#70000000" />
                     <SolidColorBrush x:Key="TextBoxAccent"                Color="#FF7B41E0" />
+                    
+                    <SolidColorBrush x:Key="MixerVolumePrimary"   Color="#FF606060" />
+                    <SolidColorBrush x:Key="MixerVolumeSecondary" Color="#FF404040" />
+                    <SolidColorBrush x:Key="MixerVolumeAccent"    Color="#FF7B41E0" />
                     
 
                     <!-- Legacy Dock Stuff, mostly overwritten by custom control themes. -->

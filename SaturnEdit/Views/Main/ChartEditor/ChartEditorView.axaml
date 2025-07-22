@@ -234,12 +234,13 @@
                             <ToolDock x:Name="BottomPane"
                                       Id="BottomPane"
                                       Proportion="0.3" 
+                                      MinHeight="362"
                                       Alignment="Bottom">
-                                <Tool x:Name="Proofreader"
-                                      Id="Proofreader"
-                                      Title="Proofreader"
+                                <Tool x:Name="Mixer"
+                                      Id="Mixer"
+                                      Title="Audio Mixer"
                                       x:DataType="Tool">
-                                    <tabs:ProofreaderView/>
+                                    <tabs:InspectorView/>
                                 </Tool>
                             </ToolDock>
 

@@ -61,11 +61,12 @@ ChartEditor.Inspector.Header.Shape,Shape
 ChartEditor.Inspector.Header.Judgement,Judgement
 ChartEditor.Inspector.Header.Hold,Hold
 ChartEditor.Inspector.Header.LaneToggles,Lane Toggles
-ChartEditor.GlobalEventList.Header.GlobalEvents,Global Events
+ChartEditor.EventList.Header.Events,Events
 ChartEditor.LaneToggleList.Header.LaneToggles,Lane Toggles
+ChartEditor.BookmarkList.Header.Bookmarks,Bookmarks
 ChartEditor.LayerList.Header.Layers,Layers
-ChartEditor.LayerList.Header.Events,Events
-ChartEditor.LayerList.Header.Notes,Notes
+ChartEditor.LayerList.Header.LayerEvents,Layer Events
+ChartEditor.LayerList.Header.LayerNotes,Layer Notes
 ChartEditor.LayerList.ToolTip.AddNew,Add New
 ChartEditor.LayerList.ToolTip.AddNewEllipsis,Add New...
 ChartEditor.LayerList.ToolTip.DeleteSelection,Delete Selection
@@ -147,6 +148,45 @@ ChartEditor.NotePalette.NoteLaneShow.Description,Shows the tunnel lanes it occup
 ChartEditor.NotePalette.NoteLaneHide,Lane Hide
 ChartEditor.NotePalette.NoteLaneHide.Description,Hides the tunnel lanes it occupies once it reaches the judgement line.
 ChartEditor.NotePalette.Hidden,Notes of this type are hidden. Right-click to toggle visibility.
+ChartEditor.AudioMixer.Channel.Master,Master
+ChartEditor.AudioMixer.Channel.Audio,Audio
+ChartEditor.AudioMixer.Channel.Guide,Guide
+ChartEditor.AudioMixer.Channel.Touch,Touch
+ChartEditor.AudioMixer.Channel.Chain,Chain
+ChartEditor.AudioMixer.Channel.Hold,Hold
+ChartEditor.AudioMixer.Channel.HoldLoop,Hold Loop
+ChartEditor.AudioMixer.Channel.Slide,Slide
+ChartEditor.AudioMixer.Channel.Snap,Snap
+ChartEditor.AudioMixer.Channel.Bonus,Bonus
+ChartEditor.AudioMixer.Channel.R,R
+ChartEditor.AudioMixer.Placeholder.NoSound,No Sound
+ChartEditor.ChartStatistics.Label.NumberOfLayers,# of Layers:
+ChartEditor.ChartStatistics.Label.NumberOfEvents,# of Events:
+ChartEditor.ChartStatistics.Label.NumberOfTempoChanges,...of those Tempo Changes:
+ChartEditor.ChartStatistics.Label.NumberOfMetreChanges,...of those Metre Changes:
+ChartEditor.ChartStatistics.Label.NumberOfSpeedChanges,...of those Speed Changes:
+ChartEditor.ChartStatistics.Label.NumberOfVisibilityChanges,...of those Visibility Changes:
+ChartEditor.ChartStatistics.Label.NumberOfReverseEffects,...of those Reverse Effects:
+ChartEditor.ChartStatistics.Label.NumberOfStopEffects,...of those Stop Effects:
+ChartEditor.ChartStatistics.Label.NumberOfTutorialTags,...of those Tutorial Tags:
+ChartEditor.ChartStatistics.Label.MaxCombo,Max Combo:
+ChartEditor.ChartStatistics.Label.ScorePerNote,Score per Note:
+ChartEditor.ChartStatistics.Label.ScorePerRNote,Score per R-Note:
+ChartEditor.ChartStatistics.Label.NumberOfNormalNotes,# of Normal Notes:
+ChartEditor.ChartStatistics.Label.NumberOfBonusNotes,# of Bonus Notes:
+ChartEditor.ChartStatistics.Label.NumberOfRNotes,# of R-Notes:
+ChartEditor.ChartStatistics.Label.NumberOfTouchNotes,# of Touch Notes:
+ChartEditor.ChartStatistics.Label.NumberOfChainNotes,# of Chain Notes:
+ChartEditor.ChartStatistics.Label.NumberOfHoldNotes,# of Hold Notes:
+ChartEditor.ChartStatistics.Label.NumberOfSlideNotes,# of Slide Notes:
+ChartEditor.ChartStatistics.Label.NumberOfSlideClockwiseNotes,...of those Clockwise:
+ChartEditor.ChartStatistics.Label.NumberOfSlideCounterclockwiseNotes,...of those Counterclockwise:
+ChartEditor.ChartStatistics.Label.NumberOfSnapNotes,# of Snap Notes:
+ChartEditor.ChartStatistics.Label.NumberOfSnapForwardNotes,...of those Forward:
+ChartEditor.ChartStatistics.Label.NumberOfSnapBackwardNotes,...of those Backward:
+ChartEditor.ChartStatistics.Label.NumberOfLaneToggleNotes,# of Lane Toggles:
+ChartEditor.ChartStatistics.Label.NumberOfLaneShowNotes,...of those Lane Show:
+ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes,...of those Lane Hide:
 Main.Window.Title,SaturnEdit
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.

@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace SaturnEdit.Views.Main.ChartEditor.Tabs;
 
-public partial class GlobalEventListView : UserControl
+public partial class BookmarkListView : UserControl
 {
-    public GlobalEventListView()
+    public BookmarkListView()
     {
         InitializeComponent();
     }

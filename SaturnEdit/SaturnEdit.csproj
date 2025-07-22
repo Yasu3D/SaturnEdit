@@ -154,5 +154,20 @@
       <ProjectReference Include="..\SaturnData\SaturnData\SaturnData.csproj" />
       <ProjectReference Include="..\SaturnView\SaturnView\SaturnView.csproj" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Update="Views\Main\ChartEditor\Tabs\BookmarkListView.axaml.cs">
+        <DependentUpon>BookmarkListView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Main\ChartEditor\Tabs\Fixed\PlaybackView.axaml.cs">
+        <DependentUpon>PlaybackView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Main\ChartEditor\Tabs\Fixed\NotePaletteView.axaml.cs">
+        <DependentUpon>NotePaletteView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
 
 </Project>
