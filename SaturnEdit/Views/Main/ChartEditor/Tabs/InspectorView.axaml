@@ -162,8 +162,8 @@
                               SelectedIndex="0"
                               PlaceholderText="-">
                         <ComboBoxItem Content="{DynamicResource ChartEditor.General.JudgementType.Value.Normal}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.JudgementType.Value.Autoplay}"/>
                         <ComboBoxItem Content="{DynamicResource ChartEditor.General.JudgementType.Value.Fake}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.General.JudgementType.Value.Autoplay}"/>
                     </ComboBox>
                 </Grid>
             </Expander>

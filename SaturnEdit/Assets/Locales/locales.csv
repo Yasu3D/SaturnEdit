@@ -27,15 +27,14 @@ ChartEditor.General.Type.Value.VisibilityChange,Visibility Change
 ChartEditor.General.Type.Value.ReverseEffect,Reverse Effect
 ChartEditor.General.Type.Value.StopEffect,Stop Effect
 ChartEditor.General.Type.Value.TutorialMarker,Tutorial Marker
-ChartEditor.General.Type.Value.ChartEnd,Chart End
 ChartEditor.General.BonusType,Bonus Type
 ChartEditor.General.BonusType.Value.Normal,Normal
 ChartEditor.General.BonusType.Value.Bonus,Bonus
 ChartEditor.General.BonusType.Value.R,R
 ChartEditor.General.JudgementType,Judgement Type
 ChartEditor.General.JudgementType.Value.Normal,Normal
-ChartEditor.General.JudgementType.Value.Autoplay,Autoplay
 ChartEditor.General.JudgementType.Value.Fake,Fake
+ChartEditor.General.JudgementType.Value.Autoplay,Autoplay
 ChartEditor.General.RenderType,Render Type
 ChartEditor.General.RenderType.Value.Visible,Visible
 ChartEditor.General.RenderType.Value.Hidden,Hidden
@@ -129,25 +128,45 @@ ChartEditor.Proofreader.ToolTip.Criteria,Adjust Criteria
 ChartEditor.Proofreader.ToolTip.Criteria.Description,Adjust the things to look out for while proofreading. 
 ChartEditor.Proofreader.ToolTip.Run,Run Proofread
 ChartEditor.Proofreader.Criteria.Title,Proofreader Criteria
-ChartEditor.NotePalette.NoteTouch,Touch Note
-ChartEditor.NotePalette.NoteTouch.Description,Hit by tapping within its area at the right time.
-ChartEditor.NotePalette.NoteChain,Chain Note
-ChartEditor.NotePalette.NoteChain.Description,Hit by tapping or holding down within its area at any time.
-ChartEditor.NotePalette.NoteHold,Hold Note
-ChartEditor.NotePalette.NoteHold.Description,Hit by tapping and holding down within its area at the right time.
-ChartEditor.NotePalette.NoteSlideClockwise,Slide Note (Clockwise)
-ChartEditor.NotePalette.NoteSlideClockwise.Description,Hit by flicking clockwise within its area at the right time.
-ChartEditor.NotePalette.NoteSlideCounterclockwise,Slide Note (Counterclockwise)
-ChartEditor.NotePalette.NoteSlideCounterclockwise.Description,Hit by flicking counterclockwise within its area at the right time.
-ChartEditor.NotePalette.NoteSnapForward,Snap Note (Forward)
-ChartEditor.NotePalette.NoteSnapForward.Description,Hit by flicking forwards within its area at the right time.
-ChartEditor.NotePalette.NoteSnapBackward,Snap Note (Backward)
-ChartEditor.NotePalette.NoteSnapBackward.Description,Hit by flicking backwards within its area at the right time.
-ChartEditor.NotePalette.NoteLaneShow,Lane Show
-ChartEditor.NotePalette.NoteLaneShow.Description,Shows the tunnel lanes it occupies once it reaches the judgement line.
-ChartEditor.NotePalette.NoteLaneHide,Lane Hide
-ChartEditor.NotePalette.NoteLaneHide.Description,Hides the tunnel lanes it occupies once it reaches the judgement line.
+ChartEditor.NotePalette.Note.Touch,Touch Note
+ChartEditor.NotePalette.Note.Touch.Description,Hit by tapping within its area at the right time.
+ChartEditor.NotePalette.Note.Chain,Chain Note
+ChartEditor.NotePalette.Note.Chain.Description,Hit by tapping or holding down within its area at any time.
+ChartEditor.NotePalette.Note.Hold,Hold Note
+ChartEditor.NotePalette.Note.Hold.Description,Hit by tapping and holding down within its area at the right time.
+ChartEditor.NotePalette.Note.SlideClockwise,Slide Note (Clockwise)
+ChartEditor.NotePalette.Note.SlideClockwise.Description,Hit by flicking clockwise within its area at the right time.
+ChartEditor.NotePalette.Note.SlideCounterclockwise,Slide Note (Counterclockwise)
+ChartEditor.NotePalette.Note.SlideCounterclockwise.Description,Hit by flicking counterclockwise within its area at the right time.
+ChartEditor.NotePalette.Note.SnapForward,Snap Note (Forward)
+ChartEditor.NotePalette.Note.SnapForward.Description,Hit by flicking forwards within its area at the right time.
+ChartEditor.NotePalette.Note.SnapBackward,Snap Note (Backward)
+ChartEditor.NotePalette.Note.SnapBackward.Description,Hit by flicking backwards within its area at the right time.
+ChartEditor.NotePalette.Note.LaneShow,Lane Show
+ChartEditor.NotePalette.Note.LaneShow.Description,Shows the tunnel lanes it occupies once it reaches the judgement line.
+ChartEditor.NotePalette.Note.LaneHide,Lane Hide
+ChartEditor.NotePalette.Note.LaneHide.Description,Hides the tunnel lanes it occupies once it reaches the judgement line.
 ChartEditor.NotePalette.Hidden,Notes of this type are hidden. Right-click to toggle visibility.
+ChartEditor.NotePalette.BonusType.Normal,Bonus Type - Normal
+ChartEditor.NotePalette.BonusType.Normal.Description,A normal note without any bonuses or effects.
+ChartEditor.NotePalette.BonusType.Bonus,Bonus Type - Bonus
+ChartEditor.NotePalette.BonusType.Bonus.Description,"Fills the clear gauge more, and plays a sparkly animation with a quiet chime."
+ChartEditor.NotePalette.BonusType.R,Bonus Type - R
+ChartEditor.NotePalette.BonusType.R.Description,"Worth double score, and plays a rainbow animation with a loud splash."
+ChartEditor.NotePalette.JudgementType.Normal,Judgement Type - Normal
+ChartEditor.NotePalette.JudgementType.Normal.Description,A normal note that has to be hit by the player and contributes to the total score.
+ChartEditor.NotePalette.JudgementType.Fake,Judgement Type - Fake
+ChartEditor.NotePalette.JudgementType.Fake.Description,A fake note that does not have to be hit by the player. Does not play any hit VFX and does not contribute to the total score.
+ChartEditor.NotePalette.JudgementType.Autoplay,Judgement Type - Autoplay
+ChartEditor.NotePalette.JudgementType.Autoplay.Description,A note that has an automatic MARVELOUS judgement. Still plays all hit VFX and contributes to the total score.
+ChartEditor.NotePalette.SweepDirection.Center,Center Sweep
+ChartEditor.NotePalette.SweepDirection.Center.Description,Toggles lanes in a sweep from the center of the note to the outer edges.
+ChartEditor.NotePalette.SweepDirection.Clockwise,Clockwise Sweep
+ChartEditor.NotePalette.SweepDirection.Clockwise.Description,Toggles lanes in a clockwise sweep.
+ChartEditor.NotePalette.SweepDirection.Counterclockwise,Counterclockwise Sweep
+ChartEditor.NotePalette.SweepDirection.Counterclockwise.Description,Toggles lanes in a counterclockwise sweep.
+ChartEditor.NotePalette.SweepDirection.Instant,Instant
+ChartEditor.NotePalette.SweepDirection.Instant.Description,Toggles all lanes instantly.
 ChartEditor.AudioMixer.Channel.Master,Master
 ChartEditor.AudioMixer.Channel.Audio,Audio
 ChartEditor.AudioMixer.Channel.Guide,Guide
@@ -187,6 +206,45 @@ ChartEditor.ChartStatistics.Label.NumberOfSnapBackwardNotes,...of those Backward
 ChartEditor.ChartStatistics.Label.NumberOfLaneToggleNotes,# of Lane Toggles:
 ChartEditor.ChartStatistics.Label.NumberOfLaneShowNotes,...of those Lane Show:
 ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes,...of those Lane Hide:
+ChartEditor.ChartView3D.Mode.NoteEditMode,Note Edit Mode
+ChartEditor.ChartView3D.Mode.HoldEditMode,Hold Edit Mode
+ChartEditor.ChartView3D.ToolTip.BoxSelect,Box Select
+ChartEditor.ChartView3D.ToolTip.BoxSelect.Description,"Defines a box-shaped area, then selects all objects that overlap with the area."
+ChartEditor.ChartView3D.ToolTip.EditType,Edit Type
+ChartEditor.ChartView3D.ToolTip.EditType.Description,Changes the type of all selected notes to the current note type.
+ChartEditor.ChartView3D.ToolTip.EditShape,Edit Shape
+ChartEditor.ChartView3D.ToolTip.EditShape.Description,Changes the shape of all selected notes to the cursor's size and position.
+ChartEditor.ChartView3D.ToolTip.DeleteSelection,Delete Selection
+ChartEditor.ChartView3D.ToolTip.DeleteSelection.Description,Deletes all selected objects.
+ChartEditor.ChartView3D.ToolTip.InsertNote,Insert Note
+ChartEditor.ChartView3D.ToolTip.InsertNote.Description,Inserts a note at the current timestamp.
+ChartEditor.ChartView3D.Settings.JudgementWindows,Judgement Windows
+ChartEditor.ChartView3D.Settings.JudgementWindows.ShowJudgementWindows,Show Judgement Windows
+ChartEditor.ChartView3D.Settings.JudgementWindows.ShowMarvelous,Show Marvelous
+ChartEditor.ChartView3D.Settings.JudgementWindows.ShowGreat,Show Great
+ChartEditor.ChartView3D.Settings.JudgementWindows.ShowGood,Show Good
+ChartEditor.ChartView3D.Settings.JudgementWindows.SaturnWindows,Saturn Judgement Windows
+ChartEditor.ChartView3D.Settings.VisualizeHoldWindows,Visualize Hold Note Windows
+ChartEditor.ChartView3D.Settings.VisualizeMaskSweeps,Visualize Mask Sweeps
+ChartEditor.ChartView3D.Settings.ToggleObjectVisibility,Toggle Object Visibility
+ChartEditor.ChartView3D.Menu.Transform,Transform
+ChartEditor.ChartView3D.Menu.Transform.Mirror,Mirror
+ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal,Mirror Horizontal
+ChartEditor.ChartView3D.Menu.Transform.MirrorVertical,Mirror Vertical
+ChartEditor.ChartView3D.Menu.Transform.MirrorCustom,Mirror Custom...
+ChartEditor.ChartView3D.Menu.Transform.FlipDirection,Flip Direction
+ChartEditor.ChartView3D.Menu.Transform.ReverseSelection,Reverse Selection
+ChartEditor.ChartView3D.Menu.Transform.ScaleSelection,Scale Selection...
+ChartEditor.ChartView3D.Menu.Transform.OffsetChart,Offset Chart...
+ChartEditor.ChartView3D.Menu.Transform.ScaleChart,Scale Chart...
+ChartEditor.ChartView3D.Menu.Transform.FlipChart,Flip Chart...
+ChartEditor.ChartView3D.Menu.Convert,Convert
+ChartEditor.ChartView3D.Menu.Convert.NotesToHold,Notes to Hold
+ChartEditor.ChartView3D.Menu.Convert.HoldToNotes,Hold to Notes
+ChartEditor.ChartView3D.Menu.Convert.HoldToHold,Hold to Hold
+ChartEditor.ChartView3D.Menu.Convert.SpikeHolds,Spike Hold
+ChartEditor.ChartView3D.Menu.Convert.SplitHold,Split Hold
+ChartEditor.ChartView3D.Menu.Convert.MergeHold,Merge Hold
 Main.Window.Title,SaturnEdit
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.

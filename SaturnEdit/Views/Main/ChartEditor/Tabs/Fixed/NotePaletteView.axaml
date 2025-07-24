@@ -5,366 +5,488 @@
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
              d:DesignWidth="60"
-             d:DesignHeight="450"
+             d:DesignHeight="750"
              x:Class="SaturnEdit.Views.Main.ChartEditor.Tabs.NotePaletteView">
-    <ScrollViewer Background="{DynamicResource BackgroundPrimary}">
-        <StackPanel>
-            <Grid Name="GroupTouch"
-                  PointerPressed="GroupOnRightClick">
+    <DockPanel Background="{DynamicResource BackgroundPrimary}">
+        <ScrollViewer DockPanel.Dock="Top">
+            <StackPanel>
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="NoteType"
                              Name="RadioButtonTouch"
                              Width="60"
-                             Height="40">
+                             Height="40"
+                             IsChecked="True"
+                             IsCheckedChanged="RadioButtonNoteType_OnIsCheckedChanged">
                     <Svg Name="SvgTouch"
                          Width="32"
                          Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_0.svg" />
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteTouch}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteTouch.Description}"
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Touch}" />
+                                <TextBlock Text="TODO: KEYBIND"
+                                           Margin="15,0,0,0"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Touch.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                 </RadioButton>
 
-                <Grid Name="VisibilityToggleTouch"
-                      IsVisible="False">
-                    <Rectangle Fill="{DynamicResource ButtonSecondaryChecked}" />
-                    <icon:FluentIcon Icon="EyeOff"
-                                     Foreground="{DynamicResource ForegroundSecondary}"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Bottom"
-                                     FontSize="16"
-                                     Margin="3" />
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteTouch}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Hidden}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Grid>
-            </Grid>
-
-            <Grid Name="GroupChain"
-                  PointerPressed="GroupOnRightClick">
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="NoteType"
                              Name="RadioButtonChain"
                              Width="60"
-                             Height="40">
+                             Height="40"
+                             IsCheckedChanged="RadioButtonNoteType_OnIsCheckedChanged">
                     <Svg Name="SvgChain"
                          Width="32"
                          Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_1.svg" />
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteChain}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteChain.Description}"
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain}" />
+                                <TextBlock Text="TODO: KEYBIND"
+                                           Margin="15,0,0,0"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain}" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                 </RadioButton>
 
-                <Grid Name="VisibilityToggleChain"
-                      IsVisible="False">
-                    <Rectangle Fill="{DynamicResource ButtonSecondaryChecked}" />
-                    <icon:FluentIcon Icon="EyeOff"
-                                     Foreground="{DynamicResource ForegroundSecondary}"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Bottom"
-                                     FontSize="16"
-                                     Margin="3" />
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteChain}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Hidden}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Grid>
-            </Grid>
-
-            <Grid Name="GroupHold"
-                  PointerPressed="GroupOnRightClick">
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="NoteType"
                              Name="RadioButtonHold"
                              Width="60"
-                             Height="40">
+                             Height="40"
+                             IsCheckedChanged="RadioButtonNoteType_OnIsCheckedChanged">
                     <Svg Name="SvgHold"
                          Width="32"
                          Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_6.svg" />
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteHold}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteHold.Description}"
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold}" />
+                                <TextBlock Text="TODO: KEYBIND"
+                                           Margin="15,0,0,0"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold}" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                 </RadioButton>
 
-                <Grid Name="VisibilityToggleHold"
-                      IsVisible="False">
-                    <Rectangle Fill="{DynamicResource ButtonSecondaryChecked}" />
-                    <icon:FluentIcon Icon="EyeOff"
-                                     Foreground="{DynamicResource ForegroundSecondary}"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Bottom"
-                                     FontSize="16"
-                                     Margin="3" />
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteHold}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Hidden}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Grid>
-            </Grid>
+                <Rectangle Height="1"
+                           Width="30"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Margin="0,10" />
 
-            <Rectangle Height="1"
-                       Width="30"
-                       Fill="{DynamicResource SeparatorPrimary}"
-                       Margin="0,10" />
-
-            <Grid Name="GroupSlideClockwise"
-                  PointerPressed="GroupOnRightClick">
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="NoteType"
                              Name="RadioButtonSlideClockwise"
                              Width="60"
-                             Height="40">
+                             Height="40"
+                             IsCheckedChanged="RadioButtonNoteType_OnIsCheckedChanged">
                     <Svg Name="SvgSlideClockwise"
                          Width="32"
                          Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_2.svg" />
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSlideClockwise}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSlideClockwise.Description}"
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideClockwise}" />
+                                <TextBlock Text="TODO: KEYBIND"
+                                           Margin="15,0,0,0"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideClockwise}" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideClockwise.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                 </RadioButton>
 
-                <Grid Name="VisibilityToggleSlideClockwise"
-                      IsVisible="False">
-                    <Rectangle Fill="{DynamicResource ButtonSecondaryChecked}" />
-                    <icon:FluentIcon Icon="EyeOff"
-                                     Foreground="{DynamicResource ForegroundSecondary}"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Bottom"
-                                     FontSize="16"
-                                     Margin="3" />
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSlideClockwise}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Hidden}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Grid>
-            </Grid>
-
-            <Grid Name="GroupSlideCounterclockwise"
-                  PointerPressed="GroupOnRightClick">
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="NoteType"
                              Name="RadioButtonSlideCounterclockwise"
                              Width="60"
-                             Height="40">
+                             Height="40"
+                             IsCheckedChanged="RadioButtonNoteType_OnIsCheckedChanged">
                     <Svg Name="SvgSlideCounterclockwise"
                          Width="32"
                          Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_3.svg" />
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSlideCounterclockwise}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSlideCounterclockwise.Description}"
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideCounterclockwise}" />
+                                <TextBlock Text="TODO: KEYBIND"
+                                           Margin="15,0,0,0"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideCounterclockwise}" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideCounterclockwise.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                 </RadioButton>
 
-                <Grid Name="VisibilityToggleSlideCounterclockwise"
-                      IsVisible="False">
-                    <Rectangle Fill="{DynamicResource ButtonSecondaryChecked}" />
-                    <icon:FluentIcon Icon="EyeOff"
-                                     Foreground="{DynamicResource ForegroundSecondary}"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Bottom"
-                                     FontSize="16"
-                                     Margin="3" />
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSlideCounterclockwise}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Hidden}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Grid>
-            </Grid>
+                <Rectangle Height="1"
+                           Width="30"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Margin="0,10" />
 
-            <Rectangle Height="1"
-                       Width="30"
-                       Fill="{DynamicResource SeparatorPrimary}"
-                       Margin="0,10" />
-
-            <Grid Name="GroupSnapForward"
-                  PointerPressed="GroupOnRightClick">
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="NoteType"
                              Name="RadioButtonSnapForward"
                              Width="60"
-                             Height="40">
+                             Height="40"
+                             IsCheckedChanged="RadioButtonNoteType_OnIsCheckedChanged">
                     <Svg Name="SvgSnapForward"
                          Width="32"
                          Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_4.svg" />
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSnapForward}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSnapForward.Description}"
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapForward}" />
+                                <TextBlock Text="TODO: KEYBIND"
+                                           Margin="15,0,0,0"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapForward}" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapForward.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                 </RadioButton>
 
-                <Grid Name="VisibilityToggleSnapForward"
-                      IsVisible="False">
-                    <Rectangle Fill="{DynamicResource ButtonSecondaryChecked}" />
-                    <icon:FluentIcon Icon="EyeOff"
-                                     Foreground="{DynamicResource ForegroundSecondary}"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Bottom"
-                                     FontSize="16"
-                                     Margin="3" />
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSnapForward}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Hidden}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Grid>
-            </Grid>
-
-            <Grid Name="GroupSnapBackward"
-                  PointerPressed="GroupOnRightClick">
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="NoteType"
                              Name="RadioButtonSnapBackward"
                              Width="60"
-                             Height="40">
+                             Height="40"
+                             IsCheckedChanged="RadioButtonNoteType_OnIsCheckedChanged">
                     <Svg Name="SvgSnapBackward"
                          Width="32"
                          Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_5.svg" />
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSnapBackward}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSnapBackward.Description}"
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapBackward}" />
+                                <TextBlock Text="TODO: KEYBIND"
+                                           Margin="15,0,0,0"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapBackward}" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapBackward.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                 </RadioButton>
 
-                <Grid Name="VisibilityToggleSnapBackward"
-                      IsVisible="False">
-                    <Rectangle Fill="{DynamicResource ButtonSecondaryChecked}" />
-                    <icon:FluentIcon Icon="EyeOff"
-                                     Foreground="{DynamicResource ForegroundSecondary}"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Bottom"
-                                     FontSize="16"
-                                     Margin="3" />
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSnapBackward}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Hidden}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Grid>
-            </Grid>
+                <Rectangle Height="1"
+                           Width="30"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Margin="0,10" />
 
-            <Rectangle Height="1"
-                       Width="30"
-                       Fill="{DynamicResource SeparatorPrimary}"
-                       Margin="0,10" />
-
-            <Grid Name="GroupLaneShow"
-                  PointerPressed="GroupOnRightClick">
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="NoteType"
                              Name="RadioButtonLaneShow"
                              Width="60"
-                             Height="40">
-                    <Svg Name="SvgLaneShow"
-                         Width="32"
+                             Height="40"
+                             IsCheckedChanged="RadioButtonNoteType_OnIsCheckedChanged">
+                    <Svg Width="32"
                          Path="avares://SaturnEdit/Assets/Icons/Color/icon_lane_show.svg" />
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteLaneShow}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteLaneShow.Description}"
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneShow}" />
+                                <TextBlock Text="TODO: KEYBIND"
+                                           Margin="15,0,0,0"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneShow}" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneShow.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                 </RadioButton>
 
-                <Grid Name="VisibilityToggleLaneShow"
-                      IsVisible="False">
-                    <Rectangle Fill="{DynamicResource ButtonSecondaryChecked}" />
-                    <icon:FluentIcon Icon="EyeOff"
-                                     Foreground="{DynamicResource ForegroundSecondary}"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Bottom"
-                                     FontSize="16"
-                                     Margin="3" />
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteLaneShow}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Hidden}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Grid>
-            </Grid>
-
-            <Grid Name="GroupLaneHide"
-                  PointerPressed="GroupOnRightClick">
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="NoteType"
                              Name="RadioButtonLaneHide"
                              Width="60"
-                             Height="40">
-                    <Svg Name="SvgLaneHide"
-                         Width="32"
+                             Height="40"
+                             IsCheckedChanged="RadioButtonNoteType_OnIsCheckedChanged">
+                    <Svg Width="32"
                          Path="avares://SaturnEdit/Assets/Icons/Color/icon_lane_hide.svg" />
                     <ToolTip.Tip>
                         <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteLaneHide}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteLaneHide.Description}"
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneHide}" />
+                                <TextBlock Text="TODO: KEYBIND"
+                                           Margin="15,0,0,0"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneHide}" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneHide.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
                 </RadioButton>
 
-                <Grid Name="VisibilityToggleLaneHide"
-                      IsVisible="False">
-                    <Rectangle Fill="{DynamicResource ButtonSecondaryChecked}" />
-                    <icon:FluentIcon Icon="EyeOff"
-                                     Foreground="{DynamicResource ForegroundSecondary}"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Bottom"
-                                     FontSize="16"
-                                     Margin="3" />
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteLaneHide}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Hidden}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Grid>
-            </Grid>
-        </StackPanel>
-    </ScrollViewer>
+                <Rectangle Height="1"
+                           Width="30"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Margin="0,10" />
+
+                <!-- Bonus Types & Judgement Types -->
+                <StackPanel Name="StackPanelBonusTypes"
+                            IsVisible="True">
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="BonusType"
+                                 Name="RadioButtonBonusTypeNormal"
+                                 Width="60"
+                                 Height="40"
+                                 IsChecked="True"
+                                 IsCheckedChanged="RadioButtonBonusType_OnIsCheckedChanged">
+                        <Svg Name="SvgBonusTypeNormalNote"
+                             Width="32"
+                             Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_0.svg" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.BonusType.Normal}" />
+                                    <TextBlock Text="TODO: KEYBIND"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.BonusType.Normal.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="BonusType"
+                                 Name="RadioButtonBonusTypeBonus"
+                                 Width="60"
+                                 Height="40"
+                                 IsCheckedChanged="RadioButtonBonusType_OnIsCheckedChanged">
+                        <Panel>
+                            <Svg Name="SvgBonusTypeBonusNote"
+                                 Width="32"
+                                 Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_0.svg" />
+                            <Svg Width="32"
+                                 Path="avares://SaturnEdit/Assets/Icons/Color/icon_bonus.svg" />
+                        </Panel>
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.BonusType.Bonus}" />
+                                    <TextBlock Text="TODO: KEYBIND"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.BonusType.Bonus.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="BonusType"
+                                 Name="RadioButtonBonusTypeR"
+                                 Width="60"
+                                 Height="40"
+                                 IsCheckedChanged="RadioButtonBonusType_OnIsCheckedChanged">
+                        <Panel Width="40"
+                               Height="40">
+                            <Svg Width="36"
+                                 HorizontalAlignment="Center"
+                                 Path="avares://SaturnEdit/Assets/Icons/Color/icon_r.svg" />
+                            <Svg Name="SvgBonusTypeRNote"
+                                 Width="32"
+                                 HorizontalAlignment="Center"
+                                 Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_0.svg" />
+                        </Panel>
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.BonusType.R}" />
+                                    <TextBlock Text="TODO: KEYBIND"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.BonusType.R.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+
+                    <Rectangle Height="1"
+                               Width="30"
+                               Fill="{DynamicResource SeparatorPrimary}"
+                               Margin="0,10" />
+
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="JudgementType"
+                                 Name="RadioButtonJudgementTypeNormal"
+                                 Width="60"
+                                 Height="40"
+                                 IsChecked="True"
+                                 IsCheckedChanged="RadioButtonBonusType_OnIsCheckedChanged">
+                        <icon:FluentIcon Icon="Square" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.JudgementType.Normal}" />
+                                    <TextBlock Text="TODO: KEYBIND"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.JudgementType.Normal.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+                    
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="JudgementType"
+                                 Name="RadioButtonJudgementType"
+                                 Width="60"
+                                 Height="40"
+                                 IsCheckedChanged="RadioButtonBonusType_OnIsCheckedChanged">
+                        <icon:FluentIcon Icon="SquareHint" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.JudgementType.Fake}" />
+                                    <TextBlock Text="TODO: KEYBIND"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.JudgementType.Fake.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="JudgementType"
+                                 Name="RadioButtonJudgementTypeAutoplay"
+                                 Width="60"
+                                 Height="40"
+                                 IsCheckedChanged="RadioButtonBonusType_OnIsCheckedChanged">
+                        <icon:FluentIcon Icon="Autocorrect" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.JudgementType.Autoplay}" />
+                                    <TextBlock Text="TODO: KEYBIND"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.JudgementType.Autoplay.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+                </StackPanel>
+
+                <!-- Sweep Directions -->
+                <StackPanel Name="StackPanelSweepDirections"
+                            IsVisible="False">
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="SweepDirection"
+                                 Name="RadioButtonCenter"
+                                 Width="60"
+                                 Height="40"
+                                 IsChecked="True"
+                                 IsCheckedChanged="RadioButtonSweepDirection_OnIsCheckedChanged">
+                        <icon:FluentIcon Icon="ArrowFit" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Center}" />
+                                    <TextBlock Text="TODO: KEYBIND"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Center.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="SweepDirection"
+                                 Name="RadioButtonClockwise"
+                                 Width="60"
+                                 Height="40"
+                                 IsCheckedChanged="RadioButtonSweepDirection_OnIsCheckedChanged">
+                        <icon:FluentIcon Icon="ArrowRotateClockwise" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Clockwise}" />
+                                    <TextBlock Text="TODO: KEYBIND"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Clockwise.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="SweepDirection"
+                                 Name="RadioButtonCounterclockwise"
+                                 Width="60"
+                                 Height="40"
+                                 IsCheckedChanged="RadioButtonSweepDirection_OnIsCheckedChanged">
+                        <icon:FluentIcon Icon="ArrowRotateCounterclockwise" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Counterclockwise}" />
+                                    <TextBlock Text="TODO: KEYBIND"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Counterclockwise.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="SweepDirection"
+                                 Name="RadioButtonInstant"
+                                 Width="60"
+                                 Height="40"
+                                 IsCheckedChanged="RadioButtonSweepDirection_OnIsCheckedChanged">
+                        <icon:FluentIcon Icon="Flash" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Instant}" />
+                                    <TextBlock Text="TODO: KEYBIND"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Instant.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
 </UserControl>

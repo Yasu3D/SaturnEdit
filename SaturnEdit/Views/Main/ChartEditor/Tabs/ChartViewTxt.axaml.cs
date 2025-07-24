@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using TextMateSharp.Grammars;
 using AvaloniaEdit.TextMate;
+using System.IO;
 
 namespace SaturnEdit.Views.Main.ChartEditor.Tabs;
 
@@ -15,7 +16,7 @@ public partial class ChartViewTxt : UserControl
         
         RegistryOptions registryOptions = new(ThemeName.DarkPlus); // TODO: Light/Dark Mode support!
         installation = TextEditorChart.InstallTextMate(registryOptions);
-        installation.SetGrammarFile("sat.tmLanguage.json");
+        installation.SetGrammarFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/sat.tmLanguage.json"));
         
         TextEditorChart.Options.ConvertTabsToSpaces = true;
         TextEditorChart.Options.EnableTextDragDrop = true;

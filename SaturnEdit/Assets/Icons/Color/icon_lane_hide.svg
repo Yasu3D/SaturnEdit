@@ -1,1 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg width="100%" height="100%" viewBox="0 0 6 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><rect id="icon_lane_hide" x="0" y="0" width="5.76" height="5.76" style="fill:none;"/><path id="LaneHide" d="M5.52,2.64l-0,0.72c-0,0.265 -0.215,0.48 -0.48,0.48l-0.078,-0l-0.002,0.001l-0.001,-0.001l-1.197,-0l-0.002,0.001l-0.001,-0.001l-1.197,-0l-0.002,0.001l-0.001,-0.001l-1.197,-0l-0.002,0.001l-0.001,-0.001l-0.639,-0c-0.265,-0 -0.48,-0.215 -0.48,-0.48l-0,-0.96c-0,-0.265 0.215,-0.48 0.48,-0.48l0.078,-0l0.002,-0.001l0.001,0.001l1.197,-0l0.002,-0.001l0.001,0.001l1.197,-0l0.002,-0.001l0.001,0.001l0.515,-0l-0,0.36l-0.335,-0l0.6,1.2l0.798,-0l-0.42,-0.84l0.402,0l0.387,0.773c0.008,-0.016 0.012,-0.034 0.012,-0.053l-0,-0.72l0.36,0Zm-2.541,-0.36l-0.798,-0l0.6,1.2l0.798,-0l-0.6,-1.2Zm-1.2,-0l-0.798,-0l0.6,1.2l0.798,-0l-0.6,-1.2Zm-1.167,0.067c-0.008,0.016 -0.012,0.034 -0.012,0.053l-0,0.96c-0,0.066 0.054,0.12 0.12,0.12l0.459,-0l-0.567,-1.133Zm4.908,-0.187l-1.44,-0l-0,-0.48l1.44,-0l-0,0.48Z" style="fill:#bda8ff;"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-268,0)">
+        <g transform="matrix(1,0,0,1,28,0)">
+            <g id="icon_lane_hide" transform="matrix(-1,0,0,1,264,0)">
+                <rect x="0" y="0" width="24" height="24" style="fill:none;"/>
+                <g id="LaneHide" transform="matrix(-1,0,0,1,24,-83)">
+                    <path d="M23,94L23,97C23,98.104 22.104,99 21,99L20.677,99L20.665,99.006L20.661,99L15.677,99L15.665,99.006L15.661,99L10.677,99L10.665,99.006L10.661,99L5.677,99L5.665,99.006L5.661,99L3,99C1.896,99 1,98.104 1,97L1,93C1,91.896 1.896,91 3,91L3.323,91L3.335,90.994L3.339,91L8.323,91L8.335,90.994L8.339,91L13.323,91L13.335,90.994L13.339,91L15.483,91L15.483,92.5L14.089,92.5L16.589,97.5L19.911,97.5L18.161,94L19.839,94L21.449,97.221C21.482,97.154 21.5,97.079 21.5,97L21.5,94L23,94ZM12.411,92.5L9.089,92.5L11.589,97.5L14.911,97.5L12.411,92.5ZM7.411,92.5L4.089,92.5L6.589,97.5L9.911,97.5L7.411,92.5ZM2.551,92.779C2.518,92.846 2.5,92.921 2.5,93L2.5,97C2.5,97.276 2.724,97.5 3,97.5L4.911,97.5L2.551,92.779ZM23,92L17,92L17,90L23,90L23,92Z" style="fill:rgb(189,168,255);"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

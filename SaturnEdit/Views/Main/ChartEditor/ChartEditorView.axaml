@@ -216,11 +216,11 @@
                                           Id="PropertiesPane"
                                           Proportion="0.3"
                                           Alignment="Right">
-                                    <Tool x:Name="ChartViewTxt"
-                                          Id="ChartViewTxt"
-                                          Title="Chart View Text"
+                                    <Tool x:Name="ChartView2D"
+                                          Id="ChartView2D"
+                                          Title="Chart View 2D"
                                           x:DataType="Tool">
-                                        <tabs:ChartPropertiesView/>
+                                        <tabs:ChartView2D/>
                                     </Tool>
                                 </ToolDock>
 

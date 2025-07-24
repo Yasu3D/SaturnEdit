@@ -32,6 +32,13 @@
         <PackageReference Include="SkiaSharp" Version="3.119.0"/>
         <PackageReference Include="Svg.Controls.Avalonia" Version="11.3.0.1" />
     </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="Assets\sat.tmLanguage.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
     
     <ItemGroup>
         <AvaloniaResource Include="SaturnEdit\Assets\**"/>
@@ -138,16 +145,9 @@
         
         <AvaloniaResource Include="Assets\Icons\Color\icon_lane_hide.svg" />
         <AvaloniaResource Include="Assets\Icons\Color\icon_lane_show.svg" />
-        
-        <AvaloniaResource Include="Assets\Icons\Mono\icon_touch.svg" />
-        <AvaloniaResource Include="Assets\Icons\Mono\icon_chain.svg" />
-        <AvaloniaResource Include="Assets\Icons\Mono\icon_hold.svg" />
-        <AvaloniaResource Include="Assets\Icons\Mono\icon_slide_clw.svg" />
-        <AvaloniaResource Include="Assets\Icons\Mono\icon_slide_ccw.svg" />
-        <AvaloniaResource Include="Assets\Icons\Mono\icon_snap_fwd.svg" />
-        <AvaloniaResource Include="Assets\Icons\Mono\icon_snap_bwd.svg" />
-        <AvaloniaResource Include="Assets\Icons\Mono\icon_lane_show.svg" />
-        <AvaloniaResource Include="Assets\Icons\Mono\icon_lane_hide.svg" />
+
+        <AvaloniaResource Include="Assets\Icons\Color\icon_bonus.svg" />
+        <AvaloniaResource Include="Assets\Icons\Color\icon_r.svg" />
     </ItemGroup>
     
     <ItemGroup>

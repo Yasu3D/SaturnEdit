@@ -26,6 +26,11 @@
                         </sys:Exception>
                     </DataValidationErrors.Error>
                 </ComboBox>
+                
+                <ComboBox Classes="Outlined" PlaceholderText="Select an item">
+                    <ComboBoxItem>Item 1</ComboBoxItem>
+                    <ComboBoxItem>Item 2</ComboBoxItem>
+                </ComboBox>
             </StackPanel>
         </Border>
     </Design.PreviewWith>
@@ -176,6 +181,51 @@
             </Style>
             <Style Selector="^ /template/ icon|FluentIcon#DropDownGlyph">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
+            </Style>
+        </Style>
+        
+        
+        <!-- Outlined Style -->
+        <Style Selector="^.Outlined">
+            
+            <Setter Property="Background" Value="Transparent" />
+            
+            <!--  PointerOver State  -->
+            <Style Selector="^:pointerover /template/ Border#Background">
+                <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPointerOver}" />
+            </Style>
+
+            <!--  Pressed State  -->
+            <Style Selector="^:pressed /template/ Border#Background">
+                <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPressed}" />
+            </Style>
+
+            <!-- Error State -->
+            <Style Selector="^:error /template/ Border#Background">
+                <Setter Property="BorderBrush" Value="{DynamicResource SystemControlErrorTextForegroundBrush}" />
+            </Style>
+
+            <!--  Focused State  -->
+            <Style Selector="^:focus /template/ Border#Background">
+                <Setter Property="Background" Value="{DynamicResource ButtonSecondaryPressed}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource TextBoxAccent}"/>
+                <Setter Property="BorderThickness" Value="2"/>
+            </Style>
+
+            <!--  Disabled State  -->
+            <Style Selector="^:disabled">
+                <Style Selector="^ /template/ Border#Background">
+                    <Setter Property="Background" Value="Transparent" />
+                </Style>
+                <Style Selector="^ /template/ ContentControl#ContentPresenter">
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
+                </Style>
+                <Style Selector="^ /template/ TextBlock#PlaceholderTextBlock">
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
+                </Style>
+                <Style Selector="^ /template/ icon|FluentIcon#DropDownGlyph">
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
+                </Style>
             </Style>
         </Style>
     </ControlTheme>

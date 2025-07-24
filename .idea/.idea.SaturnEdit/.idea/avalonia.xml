@@ -42,6 +42,7 @@
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/EventListView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/PlaybackView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/GlobalEventListView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/GlobalEventsInspector.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Main/ChartEditor/Tabs/InspectorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />

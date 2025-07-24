@@ -1,1 +1,26 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg width="100%" height="100%" viewBox="0 0 6 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><rect id="icon_snap_bwd_9" x="0.235" y="0" width="5.76" height="5.76" style="fill:none;"/><path id="Caps-3" serif:id="Caps 3" d="M5.755,2.1l0,1.56c0,0.099 -0.08,0.18 -0.18,0.18l-4.92,-0c-0.099,-0 -0.18,-0.081 -0.18,-0.18l0,-1.56c0,-0.099 0.081,-0.18 0.18,-0.18l4.92,-0c0.1,-0 0.18,0.081 0.18,0.18Z" style="fill:#79e5ff;"/><rect id="Caps-2" serif:id="Caps 2" x="0.475" y="2.246" width="5.28" height="1.277" style="fill:#4eacf7;"/><rect id="Caps-31" serif:id="Caps 3" x="0.475" y="2.56" width="5.28" height="0.651" style="fill:#0093e7;"/><rect id="Base-Note" serif:id="Base Note" x="1.2" y="1.92" width="3.84" height="1.92" style="fill:#4aa170;"/><rect id="Shading" x="1.2" y="2.727" width="3.84" height="0.753" style="fill:#0a5123;"/><path id="Snap" d="M4.075,0.24l0.6,0.48l0.6,-0.48l0,0.96l-0.6,0.48l-0.6,-0.48l0,-0.96Zm-1.44,-0l0.48,0.48l0.48,-0.48l0,0.96l-0.48,0.48l-0.48,-0.48l0,-0.96Zm-1.68,0l0.6,0.48l0.6,-0.48l0,0.96l-0.6,0.48l-0.6,-0.48l0,-0.96Z" style="fill:#2a7949;"/><path id="Snap-Outline" serif:id="Snap Outline" d="M2.635,0.24l0.48,0.48l0.48,-0.48l0,0.96l-0.48,0.48l-0.48,-0.48l0,-0.96Zm0.24,0.579l0,0.282l0.24,0.24l0.24,-0.24l0,-0.282l-0.24,0.24l-0.24,-0.24Zm1.2,-0.579l0.6,0.48l0.6,-0.48l0,0.96l-0.6,0.48l-0.6,-0.48l0,-0.96Zm0.24,0.499l0,0.346l0.36,0.288l0.36,-0.288l0,-0.346l-0.36,0.288l-0.36,-0.288Zm-3.36,-0.499l0.6,0.48l0.6,-0.48l0,0.96l-0.6,0.48l-0.6,-0.48l0,-0.96Zm0.24,0.499l0,0.346l0.36,0.288l0.36,-0.288l0,-0.346l-0.36,0.288l-0.36,-0.288Z" style="fill:#4aa170;"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-196,-252)">
+        <g transform="matrix(1,0,0,1,28,0)">
+            <g id="icon_snap_bwd_9" transform="matrix(-1,0,0,1,191.98,252)">
+                <rect x="0" y="0" width="24" height="24" style="fill:none;"/>
+                <g id="Caps-3" serif:id="Caps 3" transform="matrix(-0.956522,0,0,1,23,0)">
+                    <path d="M23,8.75L23,15.25C23,15.664 22.649,16 22.216,16L0.784,16C0.351,16 0,15.664 0,15.25L0,8.75C0,8.336 0.351,8 0.784,8L22.216,8C22.649,8 23,8.336 23,8.75Z" style="fill:rgb(121,229,255);"/>
+                </g>
+                <g id="Caps-2" serif:id="Caps 2" transform="matrix(-1.22222,0,0,2.66134,25.4444,-30.5599)">
+                    <rect x="2" y="15" width="18" height="2" style="fill:rgb(78,172,247);"/>
+                </g>
+                <g id="Caps-31" serif:id="Caps 3" transform="matrix(-1.22222,0,0,1.35626,25.4444,-9.67876)">
+                    <rect x="2" y="15" width="18" height="2" style="fill:rgb(0,147,231);"/>
+                </g>
+                <g id="Base-Note" serif:id="Base Note" transform="matrix(-1,0,0,1,23.9801,1)">
+                    <path d="M20,7L20,15L4,15L4,7L20,7ZM15.98,0L18.48,2L20.98,0L20.98,4L18.48,6L15.98,4L15.98,0ZM9.98,0L11.98,2L13.98,0L13.98,4L11.98,6L9.98,4L9.98,0ZM2.98,0L5.48,2L7.98,0L7.98,4L5.48,6L2.98,4L2.98,0Z" style="fill:rgb(74,161,112);"/>
+                </g>
+                <g id="Shading" transform="matrix(-0.888889,0,0,1.56816,21.7579,-12.1591)">
+                    <rect x="2" y="15" width="18" height="2" style="fill:rgb(10,81,35);"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

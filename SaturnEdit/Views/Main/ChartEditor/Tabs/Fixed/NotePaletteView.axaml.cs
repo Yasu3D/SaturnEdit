@@ -1,7 +1,9 @@
 using System;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
 namespace SaturnEdit.Views.Main.ChartEditor.Tabs;
@@ -11,95 +13,101 @@ public partial class NotePaletteView : UserControl
     public NotePaletteView()
     {
         InitializeComponent();
-        UpdateIcons();
+
+        Init();
     }
 
-    public void UpdateIcons()
+    private async void Init()
     {
-        bool useMonoIcons = false;
-        
-        int touchColorId = 0;
-        int chainColorId = 1;
-        int holdColorId = 6;
-        int slideClockwiseColorId = 2;
-        int slideCounterclockwiseColorId = 3;
-        int snapForwardColorId = 4;
-        int snapBackwardColorId = 5;
+        // race conditions.....
+        await Task.Delay(10);
 
-        if (useMonoIcons)
-        {
-            SvgTouch.Path = "avares://SaturnEdit/Assets/Icons/Mono/icon_touch.svg";
-            SvgChain.Path = "avares://SaturnEdit/Assets/Icons/Mono/icon_chain.svg";
-            SvgHold.Path = "avares://SaturnEdit/Assets/Icons/Mono/icon_hold.svg";
-            SvgSlideClockwise.Path = "avares://SaturnEdit/Assets/Icons/Mono/icon_slide_clw.svg";
-            SvgSlideCounterclockwise.Path = "avares://SaturnEdit/Assets/Icons/Mono/icon_slide_ccw.svg";
-            SvgSnapForward.Path = "avares://SaturnEdit/Assets/Icons/Mono/icon_snap_fwd.svg";
-            SvgSnapBackward.Path = "avares://SaturnEdit/Assets/Icons/Mono/icon_snap_bwd.svg";
-            SvgLaneShow.Path = "avares://SaturnEdit/Assets/Icons/Mono/icon_lane_show.svg";
-            SvgLaneHide.Path = "avares://SaturnEdit/Assets/Icons/Mono/icon_lane_hide.svg";
-        }
-        else
-        {
-            SvgTouch.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_touch_{touchColorId}.svg";
-            SvgChain.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_chain_{chainColorId}.svg";
-            SvgHold.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_hold_{holdColorId}.svg";
-            SvgSlideClockwise.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_{slideClockwiseColorId}.svg";
-            SvgSlideCounterclockwise.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_{slideCounterclockwiseColorId}.svg";
-            SvgSnapForward.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_{snapForwardColorId}.svg";
-            SvgSnapBackward.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_{snapBackwardColorId}.svg";
-            
-            SvgLaneShow.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_lane_show.svg";
-            SvgLaneHide.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_lane_hide.svg";
-        }
+        UpdateNoteTypeIcons();
+        UpdateSubOptions("RadioButtonTouch");
+        UpdateBonusTypeIcons("RadioButtonTouch");
     }
 
-    private void GroupOnRightClick(object? sender, PointerPressedEventArgs e)
+    private int touchColorId = 0;
+    private int chainColorId = 1;
+    private int holdColorId = 6;
+    private int slideClockwiseColorId = 2;
+    private int slideCounterclockwiseColorId = 3;
+    private int snapForwardColorId = 4;
+    private int snapBackwardColorId = 5;
+    
+    private void RadioButtonNoteType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        if (e.Properties.IsRightButtonPressed == false) return;
+        if (sender is not RadioButton button) return;
+        if (button.IsChecked == false) return;
 
-        if (Equals(sender, GroupTouch))
+        UpdateSubOptions(button.Name ?? "");
+        UpdateBonusTypeIcons(button.Name ?? "");
+    }
+
+    private void RadioButtonBonusType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+    }
+
+    private void RadioButtonSweepDirection_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+    }
+
+    public void UpdateNoteTypeIcons()
+    {
+        SvgTouch.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_touch_{touchColorId}.svg";
+        SvgChain.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_chain_{chainColorId}.svg";
+        SvgHold.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_hold_{holdColorId}.svg";
+        SvgSlideClockwise.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_{slideClockwiseColorId}.svg";
+        SvgSlideCounterclockwise.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_{slideCounterclockwiseColorId}.svg";
+        SvgSnapForward.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_{snapForwardColorId}.svg";
+        SvgSnapBackward.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_{snapBackwardColorId}.svg";
+    }
+
+    private void UpdateSubOptions(string name)
+    {
+        if (name is "RadioButtonLaneShow" or "RadioButtonLaneHide")
         {
-            VisibilityToggleTouch.IsVisible = !VisibilityToggleTouch.IsVisible;
+            StackPanelBonusTypes.IsVisible = false;
+            StackPanelSweepDirections.IsVisible = true;
+            return;
         }
-        
-        if (Equals(sender, GroupChain))
+
+        StackPanelBonusTypes.IsVisible = true;
+        StackPanelSweepDirections.IsVisible = false;
+    }
+
+    private void UpdateBonusTypeIcons(string name)
+    {
+        if (name is "RadioButtonLaneShow" or "RadioButtonLaneHide") return;
+
+        int id = name switch
         {
-            VisibilityToggleChain.IsVisible = !VisibilityToggleChain.IsVisible;
-        }
-        
-        if (Equals(sender, GroupHold))
+            "RadioButtonTouch" => touchColorId,
+            "RadioButtonChain" => chainColorId,
+            "RadioButtonHold" => holdColorId,
+            "RadioButtonSlideClockwise" => slideClockwiseColorId,
+            "RadioButtonSlideCounterclockwise" => slideCounterclockwiseColorId,
+            "RadioButtonSnapForward" => snapForwardColorId,
+            "RadioButtonSnapBackward" => snapBackwardColorId,
+            _ => 0,
+        };
+
+        string type = name switch
         {
-            VisibilityToggleHold.IsVisible = !VisibilityToggleHold.IsVisible;
-        }
-        
-        if (Equals(sender, GroupSlideClockwise))
-        {
-            VisibilityToggleSlideClockwise.IsVisible = !VisibilityToggleSlideClockwise.IsVisible;
-        }
-        
-        if (Equals(sender, GroupSlideCounterclockwise))
-        {
-            VisibilityToggleSlideCounterclockwise.IsVisible = !VisibilityToggleSlideCounterclockwise.IsVisible;
-        }
-        
-        if (Equals(sender, GroupSnapForward))
-        {
-            VisibilityToggleSnapForward.IsVisible = !VisibilityToggleSnapForward.IsVisible;
-        }
-        
-        if (Equals(sender, GroupSnapBackward))
-        {
-            VisibilityToggleSnapBackward.IsVisible = !VisibilityToggleSnapBackward.IsVisible;
-        }
-        
-        if (Equals(sender, GroupLaneShow))
-        {
-            VisibilityToggleLaneShow.IsVisible = !VisibilityToggleLaneShow.IsVisible;
-        }
-        
-        if (Equals(sender, GroupLaneHide))
-        {
-            VisibilityToggleLaneHide.IsVisible = !VisibilityToggleLaneHide.IsVisible;
-        }
+            "RadioButtonTouch" => "icon_touch",
+            "RadioButtonChain" => "icon_chain",
+            "RadioButtonHold" => "icon_hold",
+            "RadioButtonSlideClockwise" => "icon_slide_clw",
+            "RadioButtonSlideCounterclockwise" => "icon_slide_ccw",
+            "RadioButtonSnapForward" => "icon_snap_fwd",
+            "RadioButtonSnapBackward" => "icon_snap_bwd",
+            _ => "",
+        };
+
+        string svgPath = $"avares://SaturnEdit/Assets/Icons/Color/{type}_{id}.svg";
+
+        SvgBonusTypeNormalNote.Path = svgPath;
+        SvgBonusTypeBonusNote.Path = svgPath;
+        SvgBonusTypeRNote.Path = svgPath;
     }
 }

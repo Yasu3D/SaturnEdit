@@ -243,7 +243,7 @@
                                                    Foreground="{DynamicResource ForegroundPrimary}" />
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
-                                        <icon:FluentIcon Icon="Clock"
+                                        <icon:FluentIcon Icon="Rewind"
                                                          Foreground="{DynamicResource ForegroundPrimary}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
@@ -254,7 +254,7 @@
                                                    Foreground="{DynamicResource ForegroundPrimary}" />
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
-                                        <icon:FluentIcon Icon="RecordStop"
+                                        <icon:FluentIcon Icon="Pause"
                                                          Foreground="{DynamicResource ForegroundPrimary}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
