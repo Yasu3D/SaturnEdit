@@ -270,12 +270,17 @@ Menu.File.RenderAsImage,Render as Image...
 Menu.File.Settings,Settings...
 Menu.File.Quit,Quit
 Menu.Edit,Edit
-Menu.View,View
-Menu.Select,Select
-Menu.Navigate,Navigate
+Menu.Edit.Undo,Undo
+Menu.Edit.Redo,Redo
 Menu.Edit.Cut,Cut
 Menu.Edit.Copy,Copy
 Menu.Edit.Paste,Paste
+Menu.View,View
+Menu.Navigate,Navigate
+Menu.Navigate.MoveMeasureForward,Move Measure Forward
+Menu.Navigate.MoveMeasureBack,Move Measure Back
+Menu.Navigate.MoveBeatForward,Move Beat Forward
+Menu.Navigate.MoveBeatBack,Move Beat Back
 Settings.Window.Title,Settings
 Settings.Playback.QuantizedPause,Quantized Pause
 Settings.Playback.QuantizedPauseOff,Exact Pause

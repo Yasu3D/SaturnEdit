@@ -280,7 +280,9 @@
                 <Border Grid.Row="3"
                         VerticalAlignment="Bottom"
                         Height="31"
-                        Background="{DynamicResource BackgroundSecondary}">
+                        Background="{DynamicResource BackgroundSecondary}"
+                        BorderBrush="{DynamicResource SeparatorPrimary}"
+                        BorderThickness="0,0,0,1">
                     <Rectangle Height="1"
                                Fill="{DynamicResource SeparatorPrimary}"
                                Margin="15"

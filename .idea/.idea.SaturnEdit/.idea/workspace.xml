@@ -8,134 +8,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_r.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnView/SaturnView/CanvasBounds.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnData" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Interfaces/IPlayable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Interfaces/IPlayable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_0.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_0.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_1.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_1.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_10.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_10.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_11.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_11.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_12.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_12.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_2.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_2.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_3.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_3.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_4.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_4.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_5.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_5.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_6.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_6.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_7.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_7.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_8.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_8.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_9.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_chain_9.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_0.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_0.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_1.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_1.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_10.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_10.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_11.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_11.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_12.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_12.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_2.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_2.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_3.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_3.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_4.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_4.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_5.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_5.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_6.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_6.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_7.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_7.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_8.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_8.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_9.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_hold_9.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_lane_hide.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_lane_hide.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_lane_show.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_lane_show.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_0.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_0.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_1.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_1.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_10.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_10.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_11.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_11.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_12.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_12.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_2.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_2.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_3.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_3.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_4.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_4.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_5.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_5.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_6.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_6.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_7.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_7.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_8.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_8.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_9.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_ccw_9.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_0.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_0.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_1.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_1.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_10.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_10.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_11.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_11.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_12.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_12.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_2.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_2.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_3.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_3.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_4.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_4.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_5.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_5.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_6.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_6.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_7.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_7.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_8.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_8.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_9.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_slide_clw_9.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_0.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_0.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_1.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_1.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_10.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_10.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_11.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_11.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_12.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_12.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_2.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_2.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_3.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_3.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_4.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_4.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_5.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_5.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_6.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_6.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_7.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_7.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_8.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_8.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_9.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_bwd_9.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_0.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_0.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_1.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_1.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_10.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_10.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_11.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_11.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_12.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_12.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_2.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_2.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_3.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_3.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_4.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_4.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_5.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_5.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_6.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_6.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_7.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_7.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_8.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_8.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_9.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_snap_fwd_9.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_0.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_0.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_1.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_1.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_10.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_10.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_11.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_11.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_12.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_12.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_2.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_2.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_3.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_3.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_4.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_4.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_5.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_5.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_6.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_6.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_7.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_7.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_8.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_8.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_9.svg" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/icon_touch_9.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Color/slice1.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Mono/icon_chain.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Mono/icon_hold.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Mono/icon_lane_hide.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Mono/icon_lane_show.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Mono/icon_slide_ccw.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Mono/icon_slide_clw.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Mono/icon_snap_bwd.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Mono/icon_snap_fwd.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/Mono/icon_touch.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/note_icons_color.afdesign" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/note_icons_color.afdesign" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/temp.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en-US.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en-US.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/ComboBox.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/ComboBox.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartViewTxt.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartViewTxt.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/InspectorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/InspectorView.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/LayerListView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/LayerListView.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnView" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnView" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnView/SaturnView/Renderer2D.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnView/SaturnView/Renderer2D.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnView/SaturnView/Renderer3D.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnView/SaturnView/Renderer3D.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -282,7 +162,7 @@
       <workItem from="1753175110252" duration="23212000" />
       <workItem from="1753211522108" duration="5047000" />
       <workItem from="1753290181984" duration="17138000" />
-      <workItem from="1753370755666" duration="7150000" />
+      <workItem from="1753370755666" duration="9745000" />
     </task>
     <servers />
   </component>

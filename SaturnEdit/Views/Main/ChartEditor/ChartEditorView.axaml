@@ -116,6 +116,53 @@
                     <MenuItem.Header>
                         <TextBlock Text="{DynamicResource Menu.Edit}"/>
                     </MenuItem.Header>
+                    
+                    <MenuItem InputGesture="Ctrl + Z">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.Undo}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowUndo"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem InputGesture="Ctrl + Y">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.Redo}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowRedo"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <Separator/>
+                    
+                    <MenuItem InputGesture="Ctrl + X">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.Cut}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Cut"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem InputGesture="Ctrl + C">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.Copy}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Copy"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem InputGesture="Ctrl + V">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.Paste}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ClipboardPaste"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
                 
                 <MenuItem>
@@ -128,12 +175,44 @@
                     <MenuItem.Header>
                         <TextBlock Text="{DynamicResource Menu.Navigate}"/>
                     </MenuItem.Header>
-                </MenuItem>
-                
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="{DynamicResource Menu.Select}"/>
-                    </MenuItem.Header>
+                    
+                    <MenuItem InputGesture="Up">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatForward}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ChevronRight"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem InputGesture="Down">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatBack}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ChevronLeft"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <Separator/>
+                    
+                    <MenuItem InputGesture="Right">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureForward}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowNext"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem InputGesture="Left">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureBack}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowPrevious"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
             </Menu>
             
@@ -238,9 +317,9 @@
                                       Alignment="Bottom">
                                 <Tool x:Name="Mixer"
                                       Id="Mixer"
-                                      Title="Audio Mixer"
+                                      Title="Cursor"
                                       x:DataType="Tool">
-                                    <tabs:InspectorView/>
+                                    <tabs:CursorView/>
                                 </Tool>
                             </ToolDock>
 
