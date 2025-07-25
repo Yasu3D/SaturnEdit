@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
+using SaturnEdit.Systems;
 using SaturnEdit.Views;
 using SaturnEdit.Views.ChartEditor;
 using SaturnEdit.Views.CosmeticsEditor;

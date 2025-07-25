@@ -6,25 +6,7 @@
             <ResourceDictionary.ThemeDictionaries>
                 
                 <ResourceDictionary x:Key="Light">
-                    <!--<SolidColorBrush x:Key="BackgroundPrimary" Color="#D4D4D4"/>
-                    <SolidColorBrush x:Key="BackgroundSecondary" Color="#E1E1E1"/>
-                    <SolidColorBrush x:Key="SeparatorPrimary" Color="#C6C6C6"/>
-                    <SolidColorBrush x:Key="SeparatorSecondary" Color="#E1E1E1"/>
-                    <SolidColorBrush x:Key="ForegroundPrimary" Color="#313131"/>
-                    <SolidColorBrush x:Key="ForegroundSecondary" Color="#808080"/>
-                    <SolidColorBrush x:Key="AccentColor" Color="#A44FE0"/>
                     
-                    <SolidColorBrush x:Key="DockApplicationAccentBrushLow" Color="#C6C6C6"/> ~1~ Document Grip Selected @1@
-                    <SolidColorBrush x:Key="DockApplicationAccentForegroundBrush">#313131</SolidColorBrush> ~1~ Window Text @1@
-                    <SolidColorBrush x:Key="DockApplicationAccentBrushIndicator" Color="#007ACC"/> ~1~ DockTarget Overlay Color @1@
-                    <SolidColorBrush x:Key="DockTargetPrimary" Color="#AA212121"/> ~1~ DockTarget Outline @1@
-                    <SolidColorBrush x:Key="DockTargetSecondary" Color="#80212121"/> ~1~ DockTarget Fill @1@
-
-                    <SolidColorBrush x:Key="DockThemeBorderLowBrush" Color="#C6C6C6" /> ~1~ Window Border @1@ ~1~ Document Grip Selected Unfocused @1@
-                    <SolidColorBrush x:Key="DockThemeBackgroundBrush" Color="Transparent"/> ~1~ Window Background @1@
-                    <SolidColorBrush x:Key="DockThemeAccentBrush" Color="Transparent" /> ~1~ Window Grip Selected @1@
-                    <SolidColorBrush x:Key="DockThemeForegroundBrush" Color="#313131" /> ~1~ Document Text @1@
-                    <system:Double x:Key="DockFontSizeNormal">12</system:Double>-->
                 </ResourceDictionary>
                 
                 <ResourceDictionary x:Key="Dark">

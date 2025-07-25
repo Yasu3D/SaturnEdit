@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using SaturnEdit.Systems;
 
 namespace SaturnEdit.Views.Main.ChartEditor.Tabs;
 
@@ -13,27 +14,20 @@ public partial class NotePaletteView : UserControl
     public NotePaletteView()
     {
         InitializeComponent();
-
-        Init();
+        
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
     }
 
-    private async void Init()
+    private async void OnSettingsChanged(object? sender, EventArgs e)
     {
         // race conditions.....
-        await Task.Delay(10);
+        await Task.Delay(1);
 
         UpdateNoteTypeIcons();
         UpdateSubOptions("RadioButtonTouch");
         UpdateBonusTypeIcons("RadioButtonTouch");
     }
-
-    private int touchColorId = 0;
-    private int chainColorId = 1;
-    private int holdColorId = 6;
-    private int slideClockwiseColorId = 2;
-    private int slideCounterclockwiseColorId = 3;
-    private int snapForwardColorId = 4;
-    private int snapBackwardColorId = 5;
     
     private void RadioButtonNoteType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
@@ -46,21 +40,23 @@ public partial class NotePaletteView : UserControl
 
     private void RadioButtonBonusType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        
     }
 
     private void RadioButtonSweepDirection_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        
     }
 
     public void UpdateNoteTypeIcons()
     {
-        SvgTouch.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_touch_{touchColorId}.svg";
-        SvgChain.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_chain_{chainColorId}.svg";
-        SvgHold.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_hold_{holdColorId}.svg";
-        SvgSlideClockwise.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_{slideClockwiseColorId}.svg";
-        SvgSlideCounterclockwise.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_{slideCounterclockwiseColorId}.svg";
-        SvgSnapForward.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_{snapForwardColorId}.svg";
-        SvgSnapBackward.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_{snapBackwardColorId}.svg";
+        SvgTouch.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_touch_{(int)SettingsSystem.RenderSettings.TouchNoteColor}.svg";
+        SvgChain.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_chain_{(int)SettingsSystem.RenderSettings.ChainNoteColor}.svg";
+        SvgHold.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_hold_{(int)SettingsSystem.RenderSettings.HoldNoteColor}.svg";
+        SvgSlideClockwise.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_{(int)SettingsSystem.RenderSettings.SlideClockwiseNoteColor}.svg";
+        SvgSlideCounterclockwise.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_{(int)SettingsSystem.RenderSettings.SlideCounterclockwiseNoteColor}.svg";
+        SvgSnapForward.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_{(int)SettingsSystem.RenderSettings.SnapForwardNoteColor}.svg";
+        SvgSnapBackward.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_{(int)SettingsSystem.RenderSettings.SnapBackwardNoteColor}.svg";
     }
 
     private void UpdateSubOptions(string name)
@@ -82,13 +78,13 @@ public partial class NotePaletteView : UserControl
 
         int id = name switch
         {
-            "RadioButtonTouch" => touchColorId,
-            "RadioButtonChain" => chainColorId,
-            "RadioButtonHold" => holdColorId,
-            "RadioButtonSlideClockwise" => slideClockwiseColorId,
-            "RadioButtonSlideCounterclockwise" => slideCounterclockwiseColorId,
-            "RadioButtonSnapForward" => snapForwardColorId,
-            "RadioButtonSnapBackward" => snapBackwardColorId,
+            "RadioButtonTouch" => (int)SettingsSystem.RenderSettings.TouchNoteColor,
+            "RadioButtonChain" => (int)SettingsSystem.RenderSettings.ChainNoteColor,
+            "RadioButtonHold" => (int)SettingsSystem.RenderSettings.HoldNoteColor,
+            "RadioButtonSlideClockwise" => (int)SettingsSystem.RenderSettings.SlideClockwiseNoteColor,
+            "RadioButtonSlideCounterclockwise" => (int)SettingsSystem.RenderSettings.SlideCounterclockwiseNoteColor,
+            "RadioButtonSnapForward" => (int)SettingsSystem.RenderSettings.SnapForwardNoteColor,
+            "RadioButtonSnapBackward" => (int)SettingsSystem.RenderSettings.SnapBackwardNoteColor,
             _ => 0,
         };
 

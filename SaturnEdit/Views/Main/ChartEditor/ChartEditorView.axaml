@@ -201,7 +201,7 @@
                             <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureForward}"/>
                         </MenuItem.Header>
                         <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ArrowNext"/>
+                            <icon:FluentIcon Icon="ChevronDoubleRight"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     
@@ -210,7 +210,27 @@
                             <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureBack}"/>
                         </MenuItem.Header>
                         <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ArrowPrevious"/>
+                            <icon:FluentIcon Icon="ChevronDoubleLeft" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <Separator />
+
+                    <MenuItem InputGesture="">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.JumpToNextNote}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowNext" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem InputGesture="">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.JumpToPreviousNote}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowPrevious" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -319,7 +339,7 @@
                                       Id="Mixer"
                                       Title="Cursor"
                                       x:DataType="Tool">
-                                    <tabs:CursorView/>
+                                    <tabs:AudioMixerView/>
                                 </Tool>
                             </ToolDock>
 

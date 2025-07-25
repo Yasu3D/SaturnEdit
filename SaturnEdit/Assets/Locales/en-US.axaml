@@ -181,6 +181,8 @@
     <system:String x:Key="ChartEditor.AudioMixer.Channel.Snap">Snap</system:String>
     <system:String x:Key="ChartEditor.AudioMixer.Channel.Bonus">Bonus</system:String>
     <system:String x:Key="ChartEditor.AudioMixer.Channel.R">R</system:String>
+    <system:String x:Key="ChartEditor.AudioMixer.Channel.StartClick">Start Click</system:String>
+    <system:String x:Key="ChartEditor.AudioMixer.Channel.Metronome">Metronome</system:String>
     <system:String x:Key="ChartEditor.AudioMixer.Placeholder.NoSound">No Sound</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfLayers"># of Layers:</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfEvents"># of Events:</system:String>
@@ -280,10 +282,12 @@
     <system:String x:Key="Menu.Edit.Paste">Paste</system:String>
     <system:String x:Key="Menu.View">View</system:String>
     <system:String x:Key="Menu.Navigate">Navigate</system:String>
-    <system:String x:Key="Menu.Navigate.MoveMeasureForward">Move Measure Forward</system:String>
-    <system:String x:Key="Menu.Navigate.MoveMeasureBack">Move Measure Back</system:String>
     <system:String x:Key="Menu.Navigate.MoveBeatForward">Move Beat Forward</system:String>
     <system:String x:Key="Menu.Navigate.MoveBeatBack">Move Beat Back</system:String>
+    <system:String x:Key="Menu.Navigate.MoveMeasureForward">Move Measure Forward</system:String>
+    <system:String x:Key="Menu.Navigate.MoveMeasureBack">Move Measure Back</system:String>
+    <system:String x:Key="Menu.Navigate.JumpToNextNote">Jump to Next Note</system:String>
+    <system:String x:Key="Menu.Navigate.JumpToPreviousNote">Jump to Previous Note</system:String>
     <system:String x:Key="Settings.Window.Title">Settings</system:String>
     <system:String x:Key="Settings.Playback.QuantizedPause">Quantized Pause</system:String>
     <system:String x:Key="Settings.Playback.QuantizedPauseOff">Exact Pause</system:String>

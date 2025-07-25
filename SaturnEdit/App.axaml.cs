@@ -3,6 +3,8 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml.Styling;
+using Avalonia.Styling;
+using SaturnEdit.Systems;
 
 namespace SaturnEdit;
 
@@ -15,17 +17,35 @@ public partial class App : Application
             desktop.MainWindow = new MainWindow();
         }
 
-        SetLocale("en-US");
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+            
         base.OnFrameworkInitializationCompleted();
     }
 
-    public static void SetLocale(string key)
+    private void OnSettingsChanged(object? sender, EventArgs e)
+    {
+        SetTheme();
+        SetLocale();
+    }
+    
+    private void SetTheme()
+    {
+        RequestedThemeVariant = SettingsSystem.EditorSettings.Theme switch
+        {
+            EditorSettings.EditorThemeOptions.Light => ThemeVariant.Light,
+            EditorSettings.EditorThemeOptions.Dark => ThemeVariant.Dark,
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+    }
+    
+    private void SetLocale()
     {
         if (Current == null) return;
         
         ResourceInclude? oldLocale = Current.Resources.MergedDictionaries.OfType<ResourceInclude>().FirstOrDefault(x => x.Source?.OriginalString?.Contains("Locales") ?? false);
         
-        Uri uri = new($"avares://SaturnEdit/Assets/Locales/{key}.axaml");
+        Uri uri = new($"avares://SaturnEdit/Assets/Locales/{SettingsSystem.EditorSettings.Locale}.axaml");
         ResourceInclude newLocale = new(uri) { Source = uri };
 
         if (oldLocale != null) Current.Resources.MergedDictionaries.Remove(oldLocale);

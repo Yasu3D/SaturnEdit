@@ -330,7 +330,8 @@
             </Canvas>
 
             <!-- Volume Slider -->
-            <Slider Classes="Mixer"
+            <Slider Name="SliderVolume"
+                    Classes="Mixer"
                     Orientation="Vertical"
                     Minimum="0"
                     Maximum="48"
@@ -351,6 +352,7 @@
                            Height="4"
                            VerticalAlignment="Top" />
                 <Rectangle Grid.Column="0"
+                           Name="MixerVolumeBarLeft"
                            Fill="{DynamicResource MixerVolumeAccent}"
                            Height="10"
                            VerticalAlignment="Bottom" />
@@ -362,6 +364,7 @@
                            Height="4"
                            VerticalAlignment="Top" />
                 <Rectangle Grid.Column="2"
+                           Name="MixerVolumeBarRight"
                            Fill="{DynamicResource MixerVolumeAccent}"
                            Height="10"
                            VerticalAlignment="Bottom" />

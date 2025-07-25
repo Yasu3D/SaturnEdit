@@ -178,6 +178,8 @@ ChartEditor.AudioMixer.Channel.Slide,Slide
 ChartEditor.AudioMixer.Channel.Snap,Snap
 ChartEditor.AudioMixer.Channel.Bonus,Bonus
 ChartEditor.AudioMixer.Channel.R,R
+ChartEditor.AudioMixer.Channel.StartClick,Start Click
+ChartEditor.AudioMixer.Channel.Metronome,Metronome
 ChartEditor.AudioMixer.Placeholder.NoSound,No Sound
 ChartEditor.ChartStatistics.Label.NumberOfLayers,# of Layers:
 ChartEditor.ChartStatistics.Label.NumberOfEvents,# of Events:
@@ -277,10 +279,12 @@ Menu.Edit.Copy,Copy
 Menu.Edit.Paste,Paste
 Menu.View,View
 Menu.Navigate,Navigate
-Menu.Navigate.MoveMeasureForward,Move Measure Forward
-Menu.Navigate.MoveMeasureBack,Move Measure Back
 Menu.Navigate.MoveBeatForward,Move Beat Forward
 Menu.Navigate.MoveBeatBack,Move Beat Back
+Menu.Navigate.MoveMeasureForward,Move Measure Forward
+Menu.Navigate.MoveMeasureBack,Move Measure Back
+Menu.Navigate.JumpToNextNote,Jump to Next Note
+Menu.Navigate.JumpToPreviousNote,Jump to Previous Note
 Settings.Window.Title,Settings
 Settings.Playback.QuantizedPause,Quantized Pause
 Settings.Playback.QuantizedPauseOff,Exact Pause
