@@ -7,103 +7,121 @@
              d:DesignHeight="400"
              Background="{DynamicResource BackgroundPrimary}"
              x:Class="SaturnEdit.Views.Main.ChartEditor.Tabs.ChartStatisticsView">
-    <Grid ColumnDefinitions="20,1,*">
-        <Panel Grid.Column="0">
-            <Rectangle HorizontalAlignment="Stretch"
-                       VerticalAlignment="Top"
-                       Height="400"
-                       Fill="#096EFF">
+    <Grid ColumnDefinitions="20,*">
+        <StackPanel Grid.Column="0">
+            <Border Name="GraphTouchNote" HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Height="57"
+                    Background="#40FFFFFF"
+                    BorderBrush="#FFFFFFFF"
+                    BorderThickness="1">
                 <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSnapBackward}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSnapBackward.Description}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-            </Rectangle>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Touch}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Touch.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </Border>
             
-            <Rectangle HorizontalAlignment="Stretch"
-                       VerticalAlignment="Top"
-                       Height="350"
-                       Fill="#FF0028">
+            <Border Name="GraphChainNote"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Height="57"
+                    Background="#40FFFFFF"
+                    BorderBrush="#FFFFFFFF"
+                    BorderThickness="1">
                 <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSnapForward}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSnapForward.Description}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-            </Rectangle>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </Border>
             
-            <Rectangle HorizontalAlignment="Stretch"
-                       VerticalAlignment="Top"
-                       Height="300"
-                       Fill="#3EFF00">
+            <Border Name="GraphHoldNote"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Height="57"
+                    Background="#40FFFFFF"
+                    BorderBrush="#FFFFFFFF"
+                    BorderThickness="1">
                 <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSlideCounterclockwise}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSlideCounterclockwise.Description}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-            </Rectangle>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </Border>
             
-            <Rectangle HorizontalAlignment="Stretch"
-                       VerticalAlignment="Top"
-                       Height="250"
-                       Fill="#FF7200">
+            <Border Name="GraphSlideClockwiseNote"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Height="57"
+                    Background="#40FFFFFF"
+                    BorderBrush="#FFFFFFFF"
+                    BorderThickness="1">
                 <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSlideClockwise}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteSlideClockwise.Description}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-            </Rectangle>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideClockwise}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideClockwise.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </Border>
             
-            <Rectangle HorizontalAlignment="Stretch"
-                       VerticalAlignment="Top"
-                       Height="200"
-                       Fill="#6D5200">
+            <Border Name="GraphSlideCounterclockwiseNote"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Height="57"
+                    Background="#40FFFFFF"
+                    BorderBrush="#FFFFFFFF"
+                    BorderThickness="1">
                 <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteHold}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteHold.Description}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-            </Rectangle>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideCounterclockwise}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideCounterclockwise.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </Border>
             
-            <Rectangle HorizontalAlignment="Stretch"
-                       VerticalAlignment="Top"
-                       Height="150"
-                       Fill="#FFC400">
+            <Border Name="GraphSnapForwardNote"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Height="57"
+                    Background="#40FFFFFF"
+                    BorderBrush="#FFFFFFFF"
+                    BorderThickness="1">
                 <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteChain}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteChain.Description}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-            </Rectangle>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapForward}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapForward.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </Border>
             
-            <Rectangle HorizontalAlignment="Stretch"
-                       VerticalAlignment="Top"
-                       Height="100"
-                       Fill="#FF28B1">
+            <Border Name="GraphSnapBackwardNote" 
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Height="57"
+                    Background="#40FFFFFF"
+                    BorderBrush="#FFFFFFFF"
+                    BorderThickness="1">
                 <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteTouch}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.NoteTouch.Description}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-            </Rectangle>
-        </Panel>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapBackward}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapBackward.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </Border>
+        </StackPanel>
         
-        <Rectangle Grid.Column="1" Fill="{DynamicResource SeparatorSecondary}"/>
-        
-        <ScrollViewer Grid.Column="2">
+        <ScrollViewer Grid.Column="1">
             <StackPanel Margin="10,10,26,10"
                         Spacing="5">
 
@@ -116,7 +134,7 @@
                            HorizontalAlignment="Stretch"
                            Margin="0,10"
                            Fill="{DynamicResource SeparatorPrimary}" />
-                
+
                 <!-- Layers and Events -->
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfLayers}"
@@ -125,12 +143,12 @@
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
-                
+
                 <Rectangle Height="1"
                            HorizontalAlignment="Stretch"
                            Margin="0,10"
                            Fill="{DynamicResource SeparatorPrimary}" />
-                
+
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfEvents}"
                                HorizontalAlignment="Left" />
@@ -138,7 +156,7 @@
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
-                
+
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfTempoChanges}"
                                Foreground="{DynamicResource ForegroundSecondary}"
@@ -147,7 +165,7 @@
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
-                
+
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfMetreChanges}"
                                Foreground="{DynamicResource ForegroundSecondary}"
@@ -156,7 +174,7 @@
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
-                
+
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfSpeedChanges}"
                                Foreground="{DynamicResource ForegroundSecondary}"
@@ -165,7 +183,7 @@
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
-                
+
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfVisibilityChanges}"
                                Foreground="{DynamicResource ForegroundSecondary}"
@@ -174,7 +192,7 @@
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
-                
+
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfReverseEffects}"
                                Foreground="{DynamicResource ForegroundSecondary}"
@@ -183,7 +201,7 @@
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
-                
+
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfStopEffects}"
                                Foreground="{DynamicResource ForegroundSecondary}"
@@ -192,7 +210,7 @@
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
-                
+
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfTutorialTags}"
                                Foreground="{DynamicResource ForegroundSecondary}"
@@ -201,14 +219,14 @@
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
-                
+
                 <Rectangle Height="1"
                            HorizontalAlignment="Stretch"
                            Margin="0,10"
                            Fill="{DynamicResource SeparatorPrimary}" />
-                
+
                 <!-- Events -->
-                
+
                 <!-- Combo and Score -->
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.MaxCombo}"
@@ -238,7 +256,7 @@
                            HorizontalAlignment="Stretch"
                            Margin="0,10"
                            Fill="{DynamicResource SeparatorPrimary}" />
-                
+
                 <!-- Normal, Bonus, R -->
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfNormalNotes}"
@@ -268,7 +286,7 @@
                            HorizontalAlignment="Stretch"
                            Margin="0,10"
                            Fill="{DynamicResource SeparatorPrimary}" />
-                
+
                 <!-- Touch, Chain, Hold -->
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfTouchNotes}"
@@ -298,7 +316,7 @@
                            HorizontalAlignment="Stretch"
                            Margin="0,10"
                            Fill="{DynamicResource SeparatorPrimary}" />
-                
+
                 <!-- Slides -->
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfSlideNotes}"
@@ -330,7 +348,7 @@
                            HorizontalAlignment="Stretch"
                            Margin="0,10"
                            Fill="{DynamicResource SeparatorPrimary}" />
-                
+
                 <!-- Snaps -->
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfSnapNotes}"
@@ -362,7 +380,7 @@
                            HorizontalAlignment="Stretch"
                            Margin="0,10"
                            Fill="{DynamicResource SeparatorPrimary}" />
-                
+
                 <!-- Lane Toggles -->
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfLaneToggleNotes}"
