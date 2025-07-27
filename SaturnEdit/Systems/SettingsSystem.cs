@@ -122,6 +122,36 @@ public class EditorSettings
     }
     
     private EditorThemeOptions theme = EditorThemeOptions.Dark;
+    
+    public bool ChartViewTxtShowSpaces
+    {
+        get => chartViewTxtShowSpaces;
+        set
+        {
+            if (chartViewTxtShowSpaces != value)
+            {
+                chartViewTxtShowSpaces = value;
+                PropertyChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+    }
+    
+    private bool chartViewTxtShowSpaces = true;
+    
+    public bool ChartViewTxtSyntaxHighlighting
+    {
+        get => chartViewTxtSyntaxHighlighting;
+        set
+        {
+            if (chartViewTxtSyntaxHighlighting != value)
+            {
+                chartViewTxtSyntaxHighlighting = value;
+                PropertyChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+    }
+    
+    private bool chartViewTxtSyntaxHighlighting = true;
 }
 
 public class AudioSettings

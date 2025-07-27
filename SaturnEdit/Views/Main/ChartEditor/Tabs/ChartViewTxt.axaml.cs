@@ -5,6 +5,7 @@ using Avalonia.Interactivity;
 using TextMateSharp.Grammars;
 using AvaloniaEdit.TextMate;
 using System.IO;
+using SaturnEdit.Systems;
 
 namespace SaturnEdit.Views.Main.ChartEditor.Tabs;
 
@@ -23,24 +24,27 @@ public partial class ChartViewTxt : UserControl
 
         Task.Delay(5); // Hacky
         
-        SetShowSpaces();
-        SetSyntaxHighlighting();
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+    }
+
+    private void OnSettingsChanged(object? sender, EventArgs e)
+    {
+        ToggleButtonShowSpaces.IsChecked = SettingsSystem.EditorSettings.ChartViewTxtShowSpaces;
+        ToggleButtonSyntaxHighlighting.IsChecked = SettingsSystem.EditorSettings.ChartViewTxtSyntaxHighlighting;
     }
 
     private readonly TextMate.Installation? installation;
 
-    private void ToggleButtonShowSpaces_OnIsCheckedChanged(object? sender, RoutedEventArgs e) => SetShowSpaces();
-
-    private void ToggleButtonSyntaxHighlighting_OnIsCheckedChanged(object? sender, RoutedEventArgs e) => SetSyntaxHighlighting();
-    
-    private void SetShowSpaces()
+    private void ToggleButtonShowSpaces_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (TextEditorChart == null || ToggleButtonShowSpaces == null) return;
-        
+
         TextEditorChart.Options.ShowSpaces = ToggleButtonShowSpaces.IsChecked ?? false;
+        SettingsSystem.EditorSettings.ChartViewTxtShowSpaces = ToggleButtonShowSpaces.IsChecked ?? false;
     }
 
-    private void SetSyntaxHighlighting()
+    private void ToggleButtonSyntaxHighlighting_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (installation == null || ToggleButtonSyntaxHighlighting == null) return;
 
@@ -54,6 +58,8 @@ public partial class ChartViewTxt : UserControl
             {
                 installation.SetGrammar(null);
             }
+
+            SettingsSystem.EditorSettings.ChartViewTxtSyntaxHighlighting = ToggleButtonSyntaxHighlighting.IsChecked ?? false;
         }
         catch
         {
