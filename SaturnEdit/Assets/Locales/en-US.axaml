@@ -192,7 +192,7 @@
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfVisibilityChanges">...of those Visibility Changes:</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfReverseEffects">...of those Reverse Effects:</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfStopEffects">...of those Stop Effects:</system:String>
-    <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfTutorialTags">...of those Tutorial Tags:</system:String>
+    <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfTutorialMarkers">...of those Tutorial Markers:</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.MaxCombo">Max Combo:</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.ScorePerNote">Score per Note:</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.ScorePerRNote">Score per R-Note:</system:String>
@@ -229,8 +229,8 @@
     <system:String x:Key="ChartEditor.ChartView3D.Settings.JudgementWindows.ShowGreat">Show Great</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Settings.JudgementWindows.ShowGood">Show Good</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Settings.JudgementWindows.SaturnWindows">Saturn Judgement Windows</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Settings.VisualizeHoldWindows">Visualize Hold Note Windows</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Settings.VisualizeMaskSweeps">Visualize Mask Sweeps</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Settings.VisualizeHoldNoteWindows">Visualize Hold Note Windows</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Settings.VisualizeSweepAnimations">Visualize Sweep Animations</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Settings.ToggleObjectVisibility">Toggle Object Visibility</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform">Transform</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform.Mirror">Mirror</system:String>

@@ -212,7 +212,7 @@
                 </Panel>
 
                 <Panel>
-                    <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfTutorialTags}"
+                    <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfTutorialMarkers}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
                     <TextBlock Text="0"

@@ -114,7 +114,7 @@
 
                         <MenuItem>
                             <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource ChartEditor.LayerInspector.Events.TutorialTag}"
+                                <TextBlock Text="{DynamicResource ChartEditor.LayerInspector.Events.TutorialMarker}"
                                            Foreground="{DynamicResource ForegroundPrimary}" />
                             </MenuItem.Header>
                             <MenuItem.Icon>

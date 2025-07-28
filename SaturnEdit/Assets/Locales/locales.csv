@@ -189,7 +189,7 @@ ChartEditor.ChartStatistics.Label.NumberOfSpeedChanges,...of those Speed Changes
 ChartEditor.ChartStatistics.Label.NumberOfVisibilityChanges,...of those Visibility Changes:
 ChartEditor.ChartStatistics.Label.NumberOfReverseEffects,...of those Reverse Effects:
 ChartEditor.ChartStatistics.Label.NumberOfStopEffects,...of those Stop Effects:
-ChartEditor.ChartStatistics.Label.NumberOfTutorialTags,...of those Tutorial Tags:
+ChartEditor.ChartStatistics.Label.NumberOfTutorialMarkers,...of those Tutorial Markers:
 ChartEditor.ChartStatistics.Label.MaxCombo,Max Combo:
 ChartEditor.ChartStatistics.Label.ScorePerNote,Score per Note:
 ChartEditor.ChartStatistics.Label.ScorePerRNote,Score per R-Note:
@@ -226,8 +226,8 @@ ChartEditor.ChartView3D.Settings.JudgementWindows.ShowMarvelous,Show Marvelous
 ChartEditor.ChartView3D.Settings.JudgementWindows.ShowGreat,Show Great
 ChartEditor.ChartView3D.Settings.JudgementWindows.ShowGood,Show Good
 ChartEditor.ChartView3D.Settings.JudgementWindows.SaturnWindows,Saturn Judgement Windows
-ChartEditor.ChartView3D.Settings.VisualizeHoldWindows,Visualize Hold Note Windows
-ChartEditor.ChartView3D.Settings.VisualizeMaskSweeps,Visualize Mask Sweeps
+ChartEditor.ChartView3D.Settings.VisualizeHoldNoteWindows,Visualize Hold Note Windows
+ChartEditor.ChartView3D.Settings.VisualizeSweepAnimations,Visualize Sweep Animations
 ChartEditor.ChartView3D.Settings.ToggleObjectVisibility,Toggle Object Visibility
 ChartEditor.ChartView3D.Menu.Transform,Transform
 ChartEditor.ChartView3D.Menu.Transform.Mirror,Mirror

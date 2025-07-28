@@ -319,7 +319,7 @@
                                           Id="ChartView2D"
                                           Title="Chart View 2D"
                                           x:DataType="Tool">
-                                        <tabs:ChartViewTxt/>
+                                        <tabs:ChartView3D/>
                                     </Tool>
                                 </ToolDock>
 
@@ -339,7 +339,7 @@
                                       Id="Mixer"
                                       Title="Cursor"
                                       x:DataType="Tool">
-                                    <tabs:ChartViewTxt/>
+                                    <tabs:ChartView3D/>
                                 </Tool>
                             </ToolDock>
 
