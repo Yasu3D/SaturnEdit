@@ -5,8 +5,6 @@
     <Style Selector="Window[WindowState=Maximized]">
         <Setter Property="Padding" Value="{OnPlatform Default='0', Windows='8', x:TypeArguments=Thickness}" />
     </Style>
-    
-    <!-- CheckBoxes -->
 
     <!-- TextBoxes -->
     <Style Selector="TextBlock">
@@ -50,6 +48,9 @@
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="Resources/ListBox.axaml"/>
+                <ResourceInclude Source="Resources/ListBoxItem.axaml"/>
+                <ResourceInclude Source="Resources/CheckBox.axaml"/>
                 <ResourceInclude Source="Resources/NumericUpDown.axaml"/>
                 <ResourceInclude Source="Resources/ButtonSpinner.axaml"/>
                 <ResourceInclude Source="Resources/ComboBoxItem.axaml"/>

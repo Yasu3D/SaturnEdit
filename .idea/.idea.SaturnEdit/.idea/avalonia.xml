@@ -7,6 +7,8 @@
         <entry key="SaturnEdit/Assets/Locales/en-US.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Controls/AdvancedListBox.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Controls/MixerChannel.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Controls/ShortcutListItem.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Controls/ThemePreview.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Controls/WindowChrome.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/MainWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/ColorStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
@@ -14,11 +16,14 @@
         <entry key="SaturnEdit/Styles/DockStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/IconStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/ButtonSpinner.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Resources/CheckBox.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/ComboBox.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/ComboBoxItem.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/Dock/DockTarget.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/Dock/ToolControl.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/Expander.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Resources/ListBox.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Resources/ListBoxItem.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/Menu.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/MenuFlyoutPresenter.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/MenuItem.axaml" value="SaturnEdit/SaturnEdit.csproj" />
@@ -26,6 +31,7 @@
         <entry key="SaturnEdit/Styles/Resources/Slider.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/TextBox.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Styles/ButtonStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Styles/CheckboxStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Styles/Expander.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Styles/Slider.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Styles/SliderStyles.axaml" value="SaturnEdit/SaturnEdit.csproj" />
@@ -60,6 +66,11 @@
         <entry key="SaturnEdit/Views/ProofreadCriteria/ProofreadCriteriaWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/ProofreaderCriteria/ProofreaderCriteriaWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Settings/SettingsWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Settings/Tabs/SettingsAppearanceView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Settings/Tabs/SettingsGeneralView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Settings/Tabs/SettingsRenderView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Settings/Tabs/SettingsRenderingView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
       </map>
     </option>
   </component>

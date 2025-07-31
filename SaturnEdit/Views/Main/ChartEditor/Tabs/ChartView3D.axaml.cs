@@ -50,6 +50,13 @@ public partial class ChartView3D : UserControl
          MenuItemShowReverseEffect.IsChecked = SettingsSystem.RenderSettings.ShowReverseEffects;
          MenuItemShowStopEffect.IsChecked = SettingsSystem.RenderSettings.ShowStopEffects;
          MenuItemShowTutorialMarker.IsChecked = SettingsSystem.RenderSettings.ShowTutorialMarkers;
+         
+         MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+         MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+         MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+
+         NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed * 0.1m;
+         ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
     }
 
     private async void OnActualThemeVariantChanged(object? sender, EventArgs e)
@@ -230,5 +237,17 @@ public partial class ChartView3D : UserControl
             SettingsSystem.RenderSettings.ShowTutorialMarkers = menuItem.IsChecked;
             return;
         }
+    }
+
+    private void NumericUpDownNoteSpeed_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
+    {
+        if (sender == null) return;
+        SettingsSystem.RenderSettings.NoteSpeed = (int)Math.Round((e.NewValue * 10) ?? 3);
+    }
+
+    private void ComboBoxBackgroundDim_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (sender is not ComboBox comboBox) return;
+        SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)comboBox.SelectedIndex;
     }
 }

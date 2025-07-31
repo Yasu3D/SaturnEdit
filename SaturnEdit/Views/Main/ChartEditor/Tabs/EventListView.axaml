@@ -31,7 +31,7 @@
                                  Foreground="{DynamicResource ForegroundPrimary}" />
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{DynamicResource ChartEditor.LayerInspector.ToolTip.MoveItemUp}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.MoveItemUp}" />
                         <TextBlock Text="TODO: KEYBIND"
                                    Margin="15,0,0,0"
                                    HorizontalAlignment="Right"
@@ -49,7 +49,7 @@
                                  Foreground="{DynamicResource ForegroundPrimary}" />
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{DynamicResource ChartEditor.LayerInspector.ToolTip.MoveItemDown}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.MoveItemDown}" />
                         <TextBlock Text="TODO: KEYBIND"
                                    Margin="15,0,0,0"
                                    HorizontalAlignment="Right"
@@ -72,7 +72,7 @@
                                  Foreground="{DynamicResource ForegroundPrimary}" />
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{DynamicResource ChartEditor.LayerInspector.ToolTip.DeleteSelection}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.DeleteSelection}" />
                         <TextBlock Text="TODO: KEYBIND"
                                    Margin="15,0,0,0"
                                    HorizontalAlignment="Right"
@@ -92,7 +92,7 @@
                     <MenuFlyout>
                         <MenuItem>
                             <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource ChartEditor.LayerInspector.Events.TempoChange}"
+                                <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TempoChange}"
                                            Foreground="{DynamicResource ForegroundPrimary}" />
                             </MenuItem.Header>
                             <MenuItem.Icon>
@@ -103,7 +103,7 @@
 
                         <MenuItem>
                             <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource ChartEditor.LayerInspector.Events.MetreChange}"
+                                <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.MetreChange}"
                                            Foreground="{DynamicResource ForegroundPrimary}" />
                             </MenuItem.Header>
                             <MenuItem.Icon>
@@ -114,7 +114,7 @@
 
                         <MenuItem>
                             <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource ChartEditor.LayerInspector.Events.TutorialMarker}"
+                                <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TutorialMarker}"
                                            Foreground="{DynamicResource ForegroundPrimary}" />
                             </MenuItem.Header>
                             <MenuItem.Icon>
@@ -125,7 +125,7 @@
                     </MenuFlyout>
                 </Button.Flyout>
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource ChartEditor.LayerInspector.ToolTip.AddNewEllipsis}" />
+                    <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.AddNewEllipsis}" />
                 </ToolTip.Tip>
             </Button>
         </StackPanel>

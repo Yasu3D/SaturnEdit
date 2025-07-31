@@ -220,15 +220,6 @@ ChartEditor.ChartView3D.ToolTip.DeleteSelection,Delete Selection
 ChartEditor.ChartView3D.ToolTip.DeleteSelection.Description,Deletes all selected objects.
 ChartEditor.ChartView3D.ToolTip.InsertNote,Insert Note
 ChartEditor.ChartView3D.ToolTip.InsertNote.Description,Inserts a note at the current timestamp.
-ChartEditor.ChartView3D.Settings.JudgementWindows,Judgement Windows
-ChartEditor.ChartView3D.Settings.JudgementWindows.ShowJudgementWindows,Show Judgement Windows
-ChartEditor.ChartView3D.Settings.JudgementWindows.ShowMarvelous,Show Marvelous
-ChartEditor.ChartView3D.Settings.JudgementWindows.ShowGreat,Show Great
-ChartEditor.ChartView3D.Settings.JudgementWindows.ShowGood,Show Good
-ChartEditor.ChartView3D.Settings.JudgementWindows.SaturnWindows,Saturn Judgement Windows
-ChartEditor.ChartView3D.Settings.VisualizeHoldNoteWindows,Visualize Hold Note Windows
-ChartEditor.ChartView3D.Settings.VisualizeSweepAnimations,Visualize Sweep Animations
-ChartEditor.ChartView3D.Settings.ToggleObjectVisibility,Toggle Object Visibility
 ChartEditor.ChartView3D.Menu.Transform,Transform
 ChartEditor.ChartView3D.Menu.Transform.Mirror,Mirror
 ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal,Mirror Horizontal
@@ -247,6 +238,15 @@ ChartEditor.ChartView3D.Menu.Convert.HoldToHold,Hold to Hold
 ChartEditor.ChartView3D.Menu.Convert.SpikeHolds,Spike Hold
 ChartEditor.ChartView3D.Menu.Convert.SplitHold,Split Hold
 ChartEditor.ChartView3D.Menu.Convert.MergeHold,Merge Hold
+ChartEditor.ChartView3D.Menu.JudgementWindows,Judgement Windows
+ChartEditor.ChartView3D.Menu.JudgementWindows.ShowJudgementWindows,Show Judgement Windows
+ChartEditor.ChartView3D.Menu.JudgementWindows.ShowMarvelous,Show Marvelous
+ChartEditor.ChartView3D.Menu.JudgementWindows.ShowGreat,Show Great
+ChartEditor.ChartView3D.Menu.JudgementWindows.ShowGood,Show Good
+ChartEditor.ChartView3D.Menu.JudgementWindows.SaturnWindows,Saturn Judgement Windows
+ChartEditor.ChartView3D.Menu.VisualizeHoldNoteWindows,Visualize Hold Note Windows
+ChartEditor.ChartView3D.Menu.VisualizeSweepAnimations,Visualize Sweep Animations
+ChartEditor.ChartView3D.Menu.ToggleObjectVisibility,Toggle Object Visibility
 Main.Window.Title,SaturnEdit
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.
@@ -286,12 +286,57 @@ Menu.Navigate.MoveMeasureBack,Move Measure Back
 Menu.Navigate.JumpToNextNote,Jump to Next Note
 Menu.Navigate.JumpToPreviousNote,Jump to Previous Note
 Settings.Window.Title,Settings
+Settings.General,General
+Settings.General.OnProgramStart,On Program Start
+Settings.General.ContinueLastSession,Continue last session
+Settings.General.ShowSplashScreen,Show splash screen
+Settings.General.Languages,Languages
+Settings.Appearance,Appearance
+Settings.Appearance.Themes,Themes
+Settings.Rendering,Rendering
+Settings.Rendering.Performance,Performance
+Settings.Rendering.RefreshRate,Refresh Rate:
+Settings.Rendering.LowPerformanceMode,Low Performance Mode
+Settings.Rendering.3DView,3D View
+Settings.Rendering.NoteSpeed,Note Speed:
+Settings.Rendering.GuideLineType,Guide Line Type:
+Settings.Rendering.GuideLineType.A,A Type
+Settings.Rendering.GuideLineType.B,B Type
+Settings.Rendering.GuideLineType.C,C Type
+Settings.Rendering.GuideLineType.D,D Type
+Settings.Rendering.GuideLineType.E,E Type
+Settings.Rendering.GuideLineType.F,F Type
+Settings.Rendering.GuideLineType.G,G Type
+Settings.Rendering.GuideLineType.None,None
+Settings.Rendering.BackgroundDim,Background Dim:
+Settings.Rendering.BackgroundDim.Level0,No Dim
+Settings.Rendering.BackgroundDim.Level1,Dim +1
+Settings.Rendering.BackgroundDim.Level2,Dim +2
+Settings.Rendering.BackgroundDim.Level3,Dim +3
+Settings.Rendering.BackgroundDim.Level4,Dim +4
+Settings.Rendering.DuringPlayback,During Playback...
+Settings.Rendering.HideEventMarkers,Hide Event Markers
+Settings.Rendering.HideLaneToggleNotes,Hide Lane Toggle Notes
+Settings.Rendering.HideHoldControlPoints,Hide Hold Control Points
+Settings.Rendering.IgnoreLaneToggleAnimations,Ignore Lane Toggle Animations
+Settings.Rendering.Notes,Notes
+Settings.Rendering.NoteThickness,Note Thickness:
+Settings.Rendering.NoteColorTouch,Touch Note Color:
+Settings.Rendering.NoteColorChain,Chain Note Color:
+Settings.Rendering.NoteColorHold,Hold Note Color:
+Settings.Rendering.NoteColorSlideClockwise,Slide Clockwise Note Color:
+Settings.Rendering.NoteColorSlideCounterclockwise,Slide Counterclockwise Note Color:
+Settings.Rendering.NoteColorSnapForward,Snap Forward Note Color:
+Settings.Rendering.NoteColorSnapBackward,Snap Backward Note Color:
 Settings.Playback.QuantizedPause,Quantized Pause
 Settings.Playback.QuantizedPauseOff,Exact Pause
 Settings.Playback.QuantizedPauseNearest,Quantized Pause (Nearest)
 Settings.Playback.QuantizedPausePrevious,Quantized Pause (Previous)
 Settings.Playback.QuantizedPauseNext,Quantized Pause (Next)
 Settings.Playback.LoopToStart,Loop to Start
+Settings.Shortcuts,Shortcuts
+Settings.Shortcuts.Action,ACTION
+Settings.Shortcuts.Shortcut,SHORTCUT
 Generic.Enabled,Enabled
 Generic.Disabled,Disabled
 Generic.Cancel,Cancel

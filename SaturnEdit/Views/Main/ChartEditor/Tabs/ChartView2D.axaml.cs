@@ -2,7 +2,9 @@ using System;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Media;
+using SaturnEdit.Systems;
 using SaturnView;
 using SkiaSharp;
 
@@ -15,6 +17,40 @@ public partial class ChartView2D : UserControl
         InitializeComponent();
         SizeChanged += OnSizeChanged;
         ActualThemeVariantChanged += OnActualThemeVariantChanged;
+        
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+    }
+    
+    private void OnSettingsChanged(object? sender, EventArgs e)
+    {
+         MenuItemShowJudgementWindows.IsChecked = SettingsSystem.RenderSettings.ShowJudgementWindows;
+         MenuItemShowMarvelousWindows.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousWindows;
+         MenuItemShowGreatWindows.IsChecked = SettingsSystem.RenderSettings.ShowGreatWindows;
+         MenuItemShowGoodWindows.IsChecked = SettingsSystem.RenderSettings.ShowGoodWindows;
+         MenuItemSaturnJudgementWindows.IsChecked = SettingsSystem.RenderSettings.SaturnJudgementWindows;
+         MenuItemVisualizeHoldNoteWindows.IsChecked = SettingsSystem.RenderSettings.VisualizeHoldNoteWindows;
+         MenuItemVisualizeSweepAnimations.IsChecked = SettingsSystem.RenderSettings.VisualizeSweepAnimations;
+         MenuItemShowTouch.IsChecked = SettingsSystem.RenderSettings.ShowTouchNotes;
+         MenuItemShowChain.IsChecked = SettingsSystem.RenderSettings.ShowChainNotes;
+         MenuItemShowHold.IsChecked = SettingsSystem.RenderSettings.ShowHoldNotes;
+         MenuItemShowSlideClockwise.IsChecked = SettingsSystem.RenderSettings.ShowSlideClockwiseNotes;
+         MenuItemShowSlideCounterclockwise.IsChecked = SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes;
+         MenuItemShowSnapForward.IsChecked = SettingsSystem.RenderSettings.ShowSnapForwardNotes;
+         MenuItemShowSnapBackward.IsChecked = SettingsSystem.RenderSettings.ShowSnapBackwardNotes;
+         MenuItemShowLaneShow.IsChecked = SettingsSystem.RenderSettings.ShowLaneShowNotes;
+         MenuItemShowLaneHide.IsChecked = SettingsSystem.RenderSettings.ShowLaneHideNotes;
+         MenuItemShowTempoChange.IsChecked = SettingsSystem.RenderSettings.ShowTempoChanges;
+         MenuItemShowMetreChange.IsChecked = SettingsSystem.RenderSettings.ShowMetreChanges;
+         MenuItemShowSpeedChange.IsChecked = SettingsSystem.RenderSettings.ShowSpeedChanges;
+         MenuItemShowVisibilityChange.IsChecked = SettingsSystem.RenderSettings.ShowVisibilityChanges;
+         MenuItemShowReverseEffect.IsChecked = SettingsSystem.RenderSettings.ShowReverseEffects;
+         MenuItemShowStopEffect.IsChecked = SettingsSystem.RenderSettings.ShowStopEffects;
+         MenuItemShowTutorialMarker.IsChecked = SettingsSystem.RenderSettings.ShowTutorialMarkers;
+         
+         MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+         MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+         MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
     }
 
     private async void OnActualThemeVariantChanged(object? sender, EventArgs e)
@@ -52,4 +88,151 @@ public partial class ChartView2D : UserControl
     }
 
     private void RenderCanvas_OnRenderAction(SKCanvas canvas) => Renderer2D.Render(canvas, canvasInfo, clearColor);
+
+    private void MenuItem_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not MenuItem menuItem) return;
+
+        if (menuItem == MenuItemShowJudgementWindows)
+        {
+            SettingsSystem.RenderSettings.ShowJudgementWindows = menuItem.IsChecked;
+
+            MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+            MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+            MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowMarvelousWindows)
+        {
+            SettingsSystem.RenderSettings.ShowMarvelousWindows = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowGreatWindows)
+        {
+            SettingsSystem.RenderSettings.ShowGreatWindows = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowGoodWindows)
+        {
+            SettingsSystem.RenderSettings.ShowGoodWindows = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemSaturnJudgementWindows)
+        {
+            SettingsSystem.RenderSettings.SaturnJudgementWindows = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemVisualizeHoldNoteWindows)
+        {
+            SettingsSystem.RenderSettings.VisualizeHoldNoteWindows = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemVisualizeSweepAnimations)
+        {
+            SettingsSystem.RenderSettings.VisualizeSweepAnimations = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowTouch)
+        {
+            SettingsSystem.RenderSettings.ShowTouchNotes = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowChain)
+        {
+            SettingsSystem.RenderSettings.ShowChainNotes = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowHold)
+        {
+            SettingsSystem.RenderSettings.ShowHoldNotes = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowSlideClockwise)
+        {
+            SettingsSystem.RenderSettings.ShowSlideClockwiseNotes = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowSlideCounterclockwise)
+        {
+            SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowSnapForward)
+        {
+            SettingsSystem.RenderSettings.ShowSnapForwardNotes = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowSnapBackward)
+        {
+            SettingsSystem.RenderSettings.ShowSnapBackwardNotes = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowLaneShow)
+        {
+            SettingsSystem.RenderSettings.ShowLaneShowNotes = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowLaneHide)
+        {
+            SettingsSystem.RenderSettings.ShowLaneHideNotes = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowTempoChange)
+        {
+            SettingsSystem.RenderSettings.ShowTempoChanges = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowMetreChange)
+        {
+            SettingsSystem.RenderSettings.ShowMetreChanges = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowSpeedChange)
+        {
+            SettingsSystem.RenderSettings.ShowSpeedChanges = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowVisibilityChange)
+        {
+            SettingsSystem.RenderSettings.ShowVisibilityChanges = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowReverseEffect)
+        {
+            SettingsSystem.RenderSettings.ShowReverseEffects = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowStopEffect)
+        {
+            SettingsSystem.RenderSettings.ShowStopEffects = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowTutorialMarker)
+        {
+            SettingsSystem.RenderSettings.ShowTutorialMarkers = menuItem.IsChecked;
+            return;
+        }
+    }
 }

@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="112"
+             d:DesignHeight="84"
+             x:Class="SaturnEdit.Controls.ThemePreview">
+    <Border Width="112"
+            Height="84"
+            CornerRadius="3"
+            Background="{DynamicResource BackgroundSecondary}">
+        <Border Margin="16,12,0,0"
+                Background="{DynamicResource BackgroundPrimary}"
+                BorderBrush="{DynamicResource SeparatorPrimary}"
+                BorderThickness="1,1,0,0">
+            <Border Margin="9,5,10,8">
+                <StackPanel Width="76">
+                    <Border Height="38"
+                            Background="{DynamicResource BackgroundSecondary}"
+                            CornerRadius="3"
+                            Margin="0,0,0,8">
+                        <StackPanel Margin="6"
+                                    Spacing="7">
+                            <Border Height="4"
+                                    CornerRadius="2"
+                                    Background="{DynamicResource ForegroundPrimary}" />
+                            <Border Height="4"
+                                    CornerRadius="2"
+                                    Background="{DynamicResource ForegroundPrimary}" />
+                            <Border Height="4"
+                                    CornerRadius="2"
+                                    Width="35"
+                                    HorizontalAlignment="Left"
+                                    Background="{DynamicResource ForegroundPrimary}" />
+                        </StackPanel>
+                    </Border>
+
+                    <Grid ColumnDefinitions="*,4,*"
+                          Height="12">
+                        <Border Grid.Column="0"
+                                Background="{DynamicResource ButtonAccent}"
+                                CornerRadius="3" />
+
+                        <Border Grid.Column="2"
+                                Background="{DynamicResource ButtonPrimaryChecked}"
+                                CornerRadius="3" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Border>
+    </Border>
+</UserControl>

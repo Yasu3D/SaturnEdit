@@ -1,0 +1,814 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="650"
+             d:DesignHeight="610"
+             x:Class="SaturnEdit.Views.Settings.Tabs.SettingsRenderingView">
+    <ScrollViewer Background="{DynamicResource BackgroundPrimary}">
+        <StackPanel Margin="20">
+            <!-- Performance -->
+            <Grid ColumnDefinitions="Auto,*"
+                  Margin="0,0,0,20">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.Performance}"
+                           Margin="0,0,20,0" />
+                <Rectangle Grid.Column="1"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Center"
+                           Height="1"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.RefreshRate}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <NumericUpDown Grid.Column="1"
+                               HorizontalAlignment="Left"
+                               Width="130"
+                               Minimum="0"
+                               Value="60" 
+                               FormatString="F0"/>
+            </Grid>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,0,0,10">
+                <CheckBox IsChecked="False" />
+                <TextBlock Text="{DynamicResource Settings.Rendering.LowPerformanceMode}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+
+            <!-- 3D View -->
+            <Grid ColumnDefinitions="Auto,*"
+                  Margin="0,40,0,20">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.3DView}"
+                           Margin="0,0,20,0" />
+                <Rectangle Grid.Column="1"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Center"
+                           Height="1"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.NoteSpeed}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <NumericUpDown Grid.Column="1"
+                               HorizontalAlignment="Left"
+                               Width="130"
+                               Minimum="1.0"
+                               Maximum="6.0"
+                               Increment="0.1"
+                               Value="3.0"
+                               FormatString="F1" />
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.GuideLineType}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          SelectedIndex="0">
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.GuideLineType.A}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.GuideLineType.B}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.GuideLineType.C}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.GuideLineType.D}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.GuideLineType.E}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.GuideLineType.F}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.GuideLineType.G}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.GuideLineType.None}" />
+                </ComboBox>
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.BackgroundDim}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          SelectedIndex="0">
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level0}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level1}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level2}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level3}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level4}" />
+                </ComboBox>
+            </Grid>
+            
+            <TextBlock Text="{DynamicResource Settings.Rendering.DuringPlayback}"
+                           VerticalAlignment="Center" Margin="0,20,0,10"/>
+            
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,0,0,10">
+                <CheckBox IsChecked="False" />
+                <TextBlock Text="{DynamicResource Settings.Rendering.HideEventMarkers}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,0,0,10">
+                <CheckBox IsChecked="False" />
+                <TextBlock Text="{DynamicResource Settings.Rendering.HideLaneToggleNotes}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,0,0,10">
+                <CheckBox IsChecked="False" />
+                <TextBlock Text="{DynamicResource Settings.Rendering.HideHoldControlPoints}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,0,0,10">
+                <CheckBox IsChecked="False" />
+                <TextBlock Text="{DynamicResource Settings.Rendering.IgnoreLaneToggleAnimations}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+            
+            <!-- Notes -->
+            <Grid ColumnDefinitions="Auto,*"
+                  Margin="0,40,0,20">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.Notes}"
+                           Margin="0,0,20,0" />
+                <Rectangle Grid.Column="1"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Center"
+                           Height="1"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.NoteThickness}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          SelectedIndex="2">
+                    <ComboBoxItem Content="1" />
+                    <ComboBoxItem Content="2" />
+                    <ComboBoxItem Content="3" />
+                    <ComboBoxItem Content="4" />
+                    <ComboBoxItem Content="5" />
+                </ComboBox>
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.NoteColorTouch}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          Height="40"
+                          SelectedIndex="0">
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_0.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_1.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_2.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_3.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_4.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_5.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_6.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_7.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_8.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_9.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_10.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_11.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_12.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+                </ComboBox>
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.NoteColorChain}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          Height="40"
+                          SelectedIndex="1">
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_0.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_1.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_2.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_3.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_4.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_5.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_6.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_7.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_8.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_9.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_10.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_11.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_12.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+                </ComboBox>
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.NoteColorHold}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          Height="40"
+                          SelectedIndex="6">
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_0.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_1.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_2.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_3.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_4.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_5.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_6.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_7.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_8.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_9.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_10.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_11.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_12.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+                </ComboBox>
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.NoteColorSlideClockwise}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          Height="40"
+                          SelectedIndex="2">
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_0.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_1.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_2.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_3.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_4.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_5.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_6.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_7.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_8.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_9.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_10.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_11.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_12.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+                </ComboBox>
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.NoteColorSlideCounterclockwise}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          Height="40"
+                          SelectedIndex="3">
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_0.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_1.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_2.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_3.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_4.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_5.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_6.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_7.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_8.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_9.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_10.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_11.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_12.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+                </ComboBox>
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.NoteColorSnapForward}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          Height="40"
+                          SelectedIndex="4">
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_0.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_1.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_2.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_3.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_4.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_5.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_6.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_7.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_8.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_9.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_10.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_11.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_12.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+                </ComboBox>
+            </Grid>
+
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.NoteColorSnapBackward}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          Height="40"
+                          SelectedIndex="5">
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_0.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_1.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_2.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_3.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_4.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_5.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_6.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_7.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_8.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_9.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_10.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_11.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+
+                    <ComboBoxItem>
+                        <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_12.svg"
+                             Width="130"
+                             Height="30" />
+                    </ComboBoxItem>
+                </ComboBox>
+            </Grid>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

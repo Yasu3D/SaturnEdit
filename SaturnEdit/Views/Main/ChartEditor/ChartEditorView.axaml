@@ -291,7 +291,7 @@
                                   Id="LayerInspector"
                                   Title="Layer Inspector"
                                   x:DataType="Tool">
-                                <tabs:LayerListView/>
+                                <tabs:InspectorView/>
                             </Tool>
                         </ToolDock>
 
@@ -319,7 +319,7 @@
                                           Id="ChartView2D"
                                           Title="Chart View 2D"
                                           x:DataType="Tool">
-                                        <tabs:ChartView3D/>
+                                        <tabs:CursorView/>
                                     </Tool>
                                 </ToolDock>
 

@@ -3,7 +3,7 @@
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime"
                     x:ClassModifier="internal">
     <Design.PreviewWith>
-        <Border Padding="20">
+        <Border Padding="20" Background="{DynamicResource BackgroundPrimary}">
             <StackPanel Spacing="20">
                 <NumericUpDown Minimum="0"
                                Maximum="10"
@@ -45,6 +45,11 @@
                         </sys:Exception>
                     </DataValidationErrors.Error>
                 </NumericUpDown>
+                <NumericUpDown Classes="Outlined" 
+                               Minimum="0"
+                               Maximum="10"
+                               Increment="0.5"
+                               Watermark="Enter text" />
             </StackPanel>
         </Border>
     </Design.PreviewWith>
@@ -98,6 +103,11 @@
         
         <Style Selector="^[ButtonSpinnerLocation=Left] /template/ TextBox#PART_TextBox">
             <Setter Property="CornerRadius" Value="0,5,5,0"/>
+        </Style>
+        
+        <!-- Outlined Style -->
+        <Style Selector="^.Outlined">
+            <Setter Property="Background" Value="Transparent" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

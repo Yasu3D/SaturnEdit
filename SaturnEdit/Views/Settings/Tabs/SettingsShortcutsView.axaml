@@ -1,0 +1,85 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:controls="clr-namespace:SaturnEdit.Controls"
+             mc:Ignorable="d"
+             d:DesignWidth="650"
+             d:DesignHeight="610"
+             Background="{DynamicResource BackgroundPrimary}"
+             x:Class="SaturnEdit.Views.Settings.Tabs.SettingsShortcutsView">
+    <Grid ColumnDefinitions="100,5,100,*,300"
+          RowDefinitions="30, *, 30"
+          Margin="20">
+        <Button Grid.Column="0"
+                Grid.Row="0"
+                Classes="Themed AccentFull"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+            <TextBlock Text="Define..." />
+        </Button>
+
+        <Button Grid.Column="2"
+                Grid.Row="0"
+                Classes="Themed Outlined"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+            <TextBlock Text="Clear" />
+        </Button>
+
+        <TextBox Grid.Column="4"
+                 Grid.Row="0"
+                 Watermark="Search shortcuts...">
+            <TextBox.InnerLeftContent>
+                <icon:FluentIcon Icon="Search"
+                                 Margin="5,0,-5,0"
+                                 Foreground="{DynamicResource ForegroundSecondary}" />
+            </TextBox.InnerLeftContent>
+        </TextBox>
+
+
+        <Border Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                BorderBrush="{DynamicResource SeparatorSecondary}"
+                BorderThickness="1"
+                Margin="0,15">
+
+            <Grid RowDefinitions="40,*">
+                <Grid Grid.Row="0"
+                      Background="#20000000"
+                      ColumnDefinitions="*,200">
+                    <TextBlock Grid.Column="0"
+                               Text="{DynamicResource Settings.Shortcuts.Action}"
+                               Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Foreground="{DynamicResource ForegroundSecondary}" />
+                    <TextBlock Grid.Column="1"
+                               Text="{DynamicResource Settings.Shortcuts.Shortcut}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Foreground="{DynamicResource ForegroundSecondary}" />
+                </Grid>
+
+                <ScrollViewer Grid.Row="1" >
+                    <ListBox SelectionMode="Single">
+                        <controls:ShortcutListItem Background="Red"/>
+                        <controls:ShortcutListItem />
+                        <controls:ShortcutListItem />
+                    </ListBox>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+
+        <Button Grid.Column="4"
+                Grid.Row="2"
+                Classes="Themed Outlined"
+                Width="130"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Stretch">
+            <TextBlock Text="Reset to default" />
+        </Button>
+    </Grid>
+</UserControl>

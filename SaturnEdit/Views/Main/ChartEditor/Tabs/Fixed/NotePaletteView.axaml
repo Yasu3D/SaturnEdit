@@ -51,7 +51,6 @@
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain}" />
                             <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
@@ -75,7 +74,6 @@
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold}" />
                             <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
@@ -104,7 +102,6 @@
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideClockwise}" />
                             <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideClockwise.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
@@ -128,7 +125,6 @@
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideCounterclockwise}" />
                             <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideCounterclockwise.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
@@ -157,7 +153,6 @@
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapForward}" />
                             <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapForward.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
@@ -181,7 +176,6 @@
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapBackward}" />
                             <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapBackward.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
@@ -209,7 +203,6 @@
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneShow}" />
                             <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneShow.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
@@ -232,7 +225,6 @@
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneHide}" />
                             <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneHide.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>

@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.IO;
 using SaturnView;
 using Tomlyn;
@@ -158,6 +157,15 @@ public class AudioSettings
 {
     public event EventHandler? PropertyChanged;
 
+    public enum QuantizedPauseOptions
+    {
+        Exact = 0,
+        Nearest = 1,
+        Previous = 2,
+        Next = 3,
+    }
+
+    
     public bool LoopPlayback
     {
         get => loopPlayback;
@@ -188,6 +196,38 @@ public class AudioSettings
     }
 
     private bool metronome = false;
+    
+    
+    public QuantizedPauseOptions QuantizedPause
+    {
+        get => quantizedPause;
+        set
+        {
+            if (quantizedPause != value)
+            {
+                quantizedPause = value;
+                PropertyChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+    }
+    
+    private QuantizedPauseOptions quantizedPause = QuantizedPauseOptions.Exact;
+    
+    
+    public bool LoopToStart
+    {
+        get => loopToStart;
+        set
+        {
+            if (loopToStart != value)
+            {
+                loopToStart = value;
+                PropertyChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+    }
+    
+    private bool loopToStart = false;
     
     
     public int MasterVolume

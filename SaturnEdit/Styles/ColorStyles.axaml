@@ -39,6 +39,14 @@
                     
                     <SolidColorBrush x:Key="ButtonFillStandardOutline"     Color="#80FFFFFF" />
                     
+                    <SolidColorBrush x:Key="Checkbox"                   Color="#30FFFFFF" />
+                    <SolidColorBrush x:Key="CheckboxPointerOver"        Color="#20FFFFFF" />
+                    <SolidColorBrush x:Key="CheckboxPressed"            Color="#10FFFFFF" />
+                    <SolidColorBrush x:Key="CheckboxDisabled"           Color="#10FFFFFF" />
+                    <SolidColorBrush x:Key="CheckboxChecked"            Color="#FF7B41E0" />
+                    <SolidColorBrush x:Key="CheckboxCheckedPointerOver" Color="#BB7B41E0" />
+                    <SolidColorBrush x:Key="CheckboxCheckedPressed"     Color="#887B41E0" />
+                    
                     <SolidColorBrush x:Key="SliderWideTrackPrimary"               Color="#307B41E0" />
                     <SolidColorBrush x:Key="SliderWideTrackPrimaryPressed"        Color="#407B41E0" />
                     <SolidColorBrush x:Key="SliderWideTrackPrimaryPointerOver"    Color="#607B41E0" />
