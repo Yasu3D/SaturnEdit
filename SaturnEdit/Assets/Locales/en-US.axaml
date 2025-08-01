@@ -338,6 +338,9 @@
     <system:String x:Key="Settings.Playback.QuantizedPauseNext">Quantized Pause (Next)</system:String>
     <system:String x:Key="Settings.Playback.LoopToStart">Loop to Start</system:String>
     <system:String x:Key="Settings.Shortcuts">Shortcuts</system:String>
+    <system:String x:Key="Settings.Shortcuts.Define">Define...</system:String>
+    <system:String x:Key="Settings.Shortcuts.Clear">Clear</system:String>
+    <system:String x:Key="Settings.Shortcuts.ResetToDefault">Reset to default</system:String>
     <system:String x:Key="Settings.Shortcuts.Action">ACTION</system:String>
     <system:String x:Key="Settings.Shortcuts.Shortcut">SHORTCUT</system:String>
     <system:String x:Key="Generic.Enabled">Enabled</system:String>

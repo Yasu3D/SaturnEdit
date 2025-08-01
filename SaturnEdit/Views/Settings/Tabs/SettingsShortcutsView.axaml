@@ -17,7 +17,7 @@
                 Classes="Themed AccentFull"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch">
-            <TextBlock Text="Define..." />
+            <TextBlock Text="{DynamicResource Settings.Shortcuts.Define}" />
         </Button>
 
         <Button Grid.Column="2"
@@ -25,7 +25,7 @@
                 Classes="Themed Outlined"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch">
-            <TextBlock Text="Clear" />
+            <TextBlock Text="{DynamicResource Settings.Shortcuts.Clear}" />
         </Button>
 
         <TextBox Grid.Column="4"
@@ -47,28 +47,29 @@
                 Margin="0,15">
 
             <Grid RowDefinitions="40,*">
-                <Grid Grid.Row="0"
-                      Background="#20000000"
-                      ColumnDefinitions="*,200">
-                    <TextBlock Grid.Column="0"
-                               Text="{DynamicResource Settings.Shortcuts.Action}"
-                               Margin="12,0,0,0"
-                               VerticalAlignment="Center"
-                               Foreground="{DynamicResource ForegroundSecondary}" />
-                    <TextBlock Grid.Column="1"
-                               Text="{DynamicResource Settings.Shortcuts.Shortcut}"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Foreground="{DynamicResource ForegroundSecondary}" />
-                </Grid>
+                <Border Grid.Row="0"
+                        Background="{DynamicResource ButtonSecondaryPressed}"
+                        BorderBrush="{DynamicResource SeparatorSecondary}"
+                        BorderThickness="0,0,0,1">
+                    <Grid ColumnDefinitions="*,200">
+                        <TextBlock Grid.Column="0"
+                                   Text="{DynamicResource Settings.Shortcuts.Action}"
+                                   Margin="12,0,0,0"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                        <TextBlock Grid.Column="1"
+                                   Text="{DynamicResource Settings.Shortcuts.Shortcut}"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </Grid>
+                </Border>
 
-                <ScrollViewer Grid.Row="1" >
-                    <ListBox SelectionMode="Single">
-                        <controls:ShortcutListItem Background="Red"/>
-                        <controls:ShortcutListItem />
-                        <controls:ShortcutListItem />
-                    </ListBox>
-                </ScrollViewer>
+                <ListBox Grid.Row="1"
+                         Name="ListBoxShortcuts"
+                         SelectionMode="Single">
+                    <controls:ShortcutListItem />
+                </ListBox>
             </Grid>
         </Border>
 
@@ -79,7 +80,7 @@
                 Width="130"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Stretch">
-            <TextBlock Text="Reset to default" />
+            <TextBlock Text="{DynamicResource Settings.Shortcuts.ResetToDefault}" />
         </Button>
     </Grid>
 </UserControl>

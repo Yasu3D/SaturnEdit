@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using Avalonia.Controls;
+using Avalonia.Input;
 using SaturnView;
 using Tomlyn;
 
@@ -16,6 +19,7 @@ public static class SettingsSystem
         RenderSettings.PropertyChanged += OnPropertyChanged;
         EditorSettings.PropertyChanged += OnPropertyChanged;
         AudioSettings.PropertyChanged += OnPropertyChanged;
+        ShortcutSettings.PropertyChanged += OnPropertyChanged;
     }
 
     private static void OnPropertyChanged(object? sender, EventArgs e)
@@ -29,6 +33,7 @@ public static class SettingsSystem
     public static RenderSettings RenderSettings { get; set; } = new();
     public static EditorSettings EditorSettings { get; set; } = new();
     public static AudioSettings AudioSettings { get; set; } = new();
+    public static ShortcutSettings ShortcutSettings { get; set; } = new();
     
     public static event EventHandler? SettingsChanged;
 
@@ -69,6 +74,17 @@ public static class SettingsSystem
             AudioSettings = new();
         }
         
+        try
+        {
+            string shortcutSettingsPath = Path.Combine(SettingsPath, "shortcut_settings.toml");
+            string shortcutSettings = File.ReadAllText(shortcutSettingsPath);
+            ShortcutSettings = Toml.ToModel<ShortcutSettings>(shortcutSettings);
+        }
+        catch
+        {
+            ShortcutSettings = new();
+        }
+        
         SettingsChanged?.Invoke(null, EventArgs.Empty);
     }
 
@@ -79,6 +95,7 @@ public static class SettingsSystem
         File.WriteAllText(Path.Combine(SettingsPath, "render_settings.toml"), Toml.FromModel(RenderSettings));
         File.WriteAllText(Path.Combine(SettingsPath, "editor_settings.toml"), Toml.FromModel(EditorSettings));
         File.WriteAllText(Path.Combine(SettingsPath, "audio_settings.toml"), Toml.FromModel(AudioSettings));
+        File.WriteAllText(Path.Combine(SettingsPath, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
     }
 }
 
@@ -426,5 +443,81 @@ public class AudioSettings
     }
     
     private int metronomeVolume = 0;
+}
+
+public class ShortcutSettings
+{
+    public event EventHandler? PropertyChanged;
+
+    public Dictionary<string, Shortcut> Shortcuts { get; set; } = new()
+    {
+        ["Menu.Edit.Cut"]   = new(Key.X, true, false, false),
+        ["Menu.Edit.Copy"]  = new(Key.C, true, false, false),
+        ["Menu.Edit.Paste"] = new(Key.V, true, false, false),
+    };
+
+    public void SetShortcut(string key, Shortcut shortcut)
+    {
+        if (Shortcuts.TryGetValue(key, out Shortcut value) && value.Equals(shortcut))
+        {
+            Shortcuts[key] = shortcut;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+
+        if (Shortcuts.TryAdd(key, shortcut))
+        {
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+}
+
+[Serializable]
+public struct Shortcut(Key key, bool control, bool alt, bool shift) : IEquatable<Shortcut>
+{
+    /// <summary>
+    /// The key to press.
+    /// </summary>
+    public Key Key { get; set; } = key;
+
+    /// <summary>
+    /// Is the control key pressed?
+    /// </summary>
+    public bool Control { get; set; } = control;
+    
+    /// <summary>
+    /// Is the alt key pressed?
+    /// </summary>
+    public bool Alt { get; set; } = alt;
+    
+    /// <summary>
+    /// Is the shift key pressed?
+    /// </summary>
+    public bool Shift { get; set; } = shift;
+
+    public override string ToString()
+    {
+        string result = Control ? "Ctrl+" : "";
+        result += Alt ? "Alt+" : "";
+        result += Shift ? "Shift+" : "";
+        result += $"{Key}";
+
+        return result;
+    }
+
+    public bool Equals(Shortcut other)
+    {
+        return Key == other.Key && Control == other.Control && Alt == other.Alt && Shift == other.Shift;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is Shortcut other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine((int)Key, Control, Alt, Shift);
+    }
 }
     

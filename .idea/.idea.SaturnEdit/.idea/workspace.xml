@@ -8,38 +8,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Controls/ThemePreview.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Controls/ThemePreview.axaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/CheckBox.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsAppearanceView.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsAppearanceView.axaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsGeneralView.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsGeneralView.axaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsRenderingView.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsRenderingView.axaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/App.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/App.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en-US.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en-US.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/ColorStyles.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/ColorStyles.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/ControlStyles.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/ControlStyles.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/NumericUpDown.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/NumericUpDown.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/ListBox.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/ListBox.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/ListBoxItem.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/ListBoxItem.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/EventListView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/EventListView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/SettingsWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/SettingsWindow.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/SettingsWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/SettingsWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnView" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnView" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnView/SaturnView/RenderSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnView/SaturnView/RenderSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,23 +73,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Project.SaturnEdit.executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "XThreadsFramesViewSplitterKey": "0.45219123",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Project.SaturnEdit.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.45219123&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="SaturnEdit" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/SaturnEdit/bin/Debug/net8.0/SaturnEdit.exe" />
@@ -199,7 +178,8 @@
       <workItem from="1753739952225" duration="5091000" />
       <workItem from="1753801479008" duration="26727000" />
       <workItem from="1753922982849" duration="4525000" />
-      <workItem from="1753975065876" duration="17815000" />
+      <workItem from="1753975065876" duration="28729000" />
+      <workItem from="1754014730524" duration="3148000" />
     </task>
     <servers />
   </component>

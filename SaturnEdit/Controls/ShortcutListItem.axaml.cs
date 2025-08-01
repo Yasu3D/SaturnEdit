@@ -10,4 +10,6 @@ public partial class ShortcutListItem : UserControl
     {
         InitializeComponent();
     }
+
+    public string Action { get; set; } = "";
 }

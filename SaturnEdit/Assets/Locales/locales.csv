@@ -335,6 +335,9 @@ Settings.Playback.QuantizedPausePrevious,Quantized Pause (Previous)
 Settings.Playback.QuantizedPauseNext,Quantized Pause (Next)
 Settings.Playback.LoopToStart,Loop to Start
 Settings.Shortcuts,Shortcuts
+Settings.Shortcuts.Define,Define...
+Settings.Shortcuts.Clear,Clear
+Settings.Shortcuts.ResetToDefault,Reset to default
 Settings.Shortcuts.Action,ACTION
 Settings.Shortcuts.Shortcut,SHORTCUT
 Generic.Enabled,Enabled

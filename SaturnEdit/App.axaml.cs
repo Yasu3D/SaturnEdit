@@ -41,14 +41,22 @@ public partial class App : Application
     
     private void SetLocale()
     {
-        if (Current == null) return;
-        
-        ResourceInclude? oldLocale = Current.Resources.MergedDictionaries.OfType<ResourceInclude>().FirstOrDefault(x => x.Source?.OriginalString?.Contains("Locales") ?? false);
-        
-        Uri uri = new($"avares://SaturnEdit/Assets/Locales/{SettingsSystem.EditorSettings.Locale}.axaml");
-        ResourceInclude newLocale = new(uri) { Source = uri };
+        try
+        {
+            if (Current == null) return;
 
-        if (oldLocale != null) Current.Resources.MergedDictionaries.Remove(oldLocale);
-        Current.Resources.MergedDictionaries.Add(newLocale);
+            ResourceInclude? oldLocale = Current.Resources.MergedDictionaries.OfType<ResourceInclude>().FirstOrDefault(x => x.Source?.OriginalString?.Contains("Locales") ?? false);
+
+            Uri uri = new($"avares://SaturnEdit/Assets/Locales/{SettingsSystem.EditorSettings.Locale}.axaml");
+            ResourceInclude newLocale = new(uri) { Source = uri };
+
+            if (oldLocale != null) Current.Resources.MergedDictionaries.Remove(oldLocale);
+            Current.Resources.MergedDictionaries.Add(newLocale);
+        }
+        catch
+        {
+            // Default to known locale if something explodes. That'll invoke the SettingsChanged event, and essentially "recursively" call this method again.
+            SettingsSystem.EditorSettings.Locale = "en-US";
+        }
     }
 }
