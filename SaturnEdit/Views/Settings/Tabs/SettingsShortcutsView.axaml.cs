@@ -93,6 +93,12 @@ public partial class SettingsShortcutsView : UserControl
         }
     }
     
+    private void TextBoxSearch_OnGotFocus(object? sender, GotFocusEventArgs e)
+    {
+        StopDefiningShortcut();
+        ListBoxShortcuts.SelectedItem = null;
+    }
+    
     private void ButtonDefine_OnClick(object? sender, RoutedEventArgs e)
     {
         if (ListBoxShortcuts.SelectedItem is not ShortcutListItem item) return;
@@ -117,7 +123,6 @@ public partial class SettingsShortcutsView : UserControl
         if (TextBoxSearch == null) return;
         GenerateList(TextBoxSearch.Text ?? "");
     }
-    
     
     private void StartDefiningShortcut(ShortcutListItem item)
     {

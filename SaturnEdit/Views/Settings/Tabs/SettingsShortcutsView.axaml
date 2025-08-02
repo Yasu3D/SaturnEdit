@@ -37,7 +37,8 @@
                  Grid.Row="0"
                  Name="TextBoxSearch"
                  Watermark="{DynamicResource Settings.Shortcuts.Search}"
-                 TextChanged="TextBoxSearch_OnTextChanged">
+                 TextChanged="TextBoxSearch_OnTextChanged"
+                 GotFocus="TextBoxSearch_OnGotFocus">
             <TextBox.InnerLeftContent>
                 <icon:FluentIcon Icon="Search"
                                  Margin="5,0,-5,0"
