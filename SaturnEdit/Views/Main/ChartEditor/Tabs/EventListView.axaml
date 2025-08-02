@@ -32,7 +32,7 @@
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.MoveItemUp}" />
-                        <TextBlock Text="TODO: KEYBIND"
+                        <TextBlock Text="TODO: SHORTCUT"
                                    Margin="15,0,0,0"
                                    HorizontalAlignment="Right"
                                    Foreground="{DynamicResource ForegroundSecondary}" />
@@ -50,7 +50,7 @@
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.MoveItemDown}" />
-                        <TextBlock Text="TODO: KEYBIND"
+                        <TextBlock Text="TODO: SHORTCUT"
                                    Margin="15,0,0,0"
                                    HorizontalAlignment="Right"
                                    Foreground="{DynamicResource ForegroundSecondary}" />
@@ -73,7 +73,7 @@
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.DeleteSelection}" />
-                        <TextBlock Text="TODO: KEYBIND"
+                        <TextBlock Text="TODO: SHORTCUT"
                                    Margin="15,0,0,0"
                                    HorizontalAlignment="Right"
                                    Foreground="{DynamicResource ForegroundSecondary}" />

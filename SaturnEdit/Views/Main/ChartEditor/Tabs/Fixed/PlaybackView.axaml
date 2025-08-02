@@ -28,7 +28,7 @@
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{DynamicResource ChartEditor.Playback.ToolTip.Play}" />
-                            <TextBlock Text="TODO: KEYBIND"
+                            <TextBlock Text="TODO: SHORTCUT"
                                        Margin="15,0,0,0"
                                        HorizontalAlignment="Right"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
@@ -84,7 +84,7 @@
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{DynamicResource ChartEditor.Playback.ToolTip.PlaybackSpeed}" />
-                                        <TextBlock Text="TODO: KEYBIND"
+                                        <TextBlock Text="TODO: SHORTCUT"
                                                    Margin="15,0,0,0"
                                                    HorizontalAlignment="Right"
                                                    Foreground="{DynamicResource ForegroundSecondary}" />
@@ -122,7 +122,7 @@
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{DynamicResource ChartEditor.Playback.ToolTip.Loop}" />
-                                        <TextBlock Text="TODO: KEYBIND"
+                                        <TextBlock Text="TODO: SHORTCUT"
                                                    Margin="15,0,0,0"
                                                    HorizontalAlignment="Right"
                                                    Foreground="{DynamicResource ForegroundSecondary}" />
@@ -141,7 +141,7 @@
                             <ToolTip.Tip>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.Playback.ToolTip.LoopStart}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                HorizontalAlignment="Right"
                                                Foreground="{DynamicResource ForegroundSecondary}" />
@@ -157,7 +157,7 @@
                             <ToolTip.Tip>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.Playback.ToolTip.LoopEnd}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                HorizontalAlignment="Right"
                                                Foreground="{DynamicResource ForegroundSecondary}" />

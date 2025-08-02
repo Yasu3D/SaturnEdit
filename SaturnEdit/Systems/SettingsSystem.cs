@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Avalonia.Controls;
 using Avalonia.Input;
 using SaturnView;
 using Tomlyn;
@@ -16,12 +15,73 @@ public static class SettingsSystem
         LoadSettings();
         SaveSettings();
         
-        RenderSettings.PropertyChanged += OnPropertyChanged;
-        EditorSettings.PropertyChanged += OnPropertyChanged;
-        AudioSettings.PropertyChanged += OnPropertyChanged;
-        ShortcutSettings.PropertyChanged += OnPropertyChanged;
+        renderSettings.PropertyChanged += OnPropertyChanged;
+        editorSettings.PropertyChanged += OnPropertyChanged;
+        audioSettings.PropertyChanged += OnPropertyChanged;
+        shortcutSettings.PropertyChanged += OnPropertyChanged;
     }
+    
+    private static string SettingsPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Settings");
 
+    private static AudioSettings audioSettings = new();
+    private static ShortcutSettings shortcutSettings = new();
+    private static EditorSettings editorSettings = new();
+    private static RenderSettings renderSettings = new();
+
+    public static event EventHandler? SettingsChanged;
+    
+    public static RenderSettings RenderSettings
+    {
+        get => renderSettings;
+        set
+        {
+            renderSettings.PropertyChanged -= OnPropertyChanged;
+            renderSettings = value;
+            renderSettings.PropertyChanged += OnPropertyChanged;
+            
+            SettingsChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    
+    public static EditorSettings EditorSettings
+    {
+        get => editorSettings;
+        set
+        {
+            editorSettings.PropertyChanged -= OnPropertyChanged;
+            editorSettings = value;
+            editorSettings.PropertyChanged += OnPropertyChanged;
+            
+            SettingsChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    
+    public static AudioSettings AudioSettings
+    {
+        get => audioSettings;
+        set
+        {
+            audioSettings.PropertyChanged -= OnPropertyChanged;
+            audioSettings = value;
+            audioSettings.PropertyChanged += OnPropertyChanged;
+            
+            SettingsChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    
+    public static ShortcutSettings ShortcutSettings
+    {
+        get => shortcutSettings;
+        set
+        {
+            shortcutSettings.PropertyChanged -= OnPropertyChanged;
+            shortcutSettings = value;
+            shortcutSettings.PropertyChanged += OnPropertyChanged;
+            
+            SettingsChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    
     private static void OnPropertyChanged(object? sender, EventArgs e)
     {
         SettingsChanged?.Invoke(null, EventArgs.Empty);
@@ -29,59 +89,54 @@ public static class SettingsSystem
         
         Console.WriteLine("SettingsChanged");
     }
-
-    public static RenderSettings RenderSettings { get; set; } = new();
-    public static EditorSettings EditorSettings { get; set; } = new();
-    public static AudioSettings AudioSettings { get; set; } = new();
-    public static ShortcutSettings ShortcutSettings { get; set; } = new();
-    
-    public static event EventHandler? SettingsChanged;
-
-    private static string SettingsPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Settings");
     
     public static void LoadSettings()
     {
         try
         {
             string editorSettingsPath = Path.Combine(SettingsPath, "editor_settings.toml");
-            string editorSettings = File.ReadAllText(editorSettingsPath);
-            EditorSettings = Toml.ToModel<EditorSettings>(editorSettings);
+            string editorSettingsData = File.ReadAllText(editorSettingsPath);
+            EditorSettings = Toml.ToModel<EditorSettings>(editorSettingsData);
         }
-        catch
+        catch (Exception e)
         {
+            Console.WriteLine(e);
             EditorSettings = new();
         }
         
         try
         {
             string renderSettingsPath = Path.Combine(SettingsPath, "render_settings.toml");
-            string renderSettings = File.ReadAllText(renderSettingsPath);
-            RenderSettings = Toml.ToModel<RenderSettings>(renderSettings);
+            string renderSettingsData = File.ReadAllText(renderSettingsPath);
+            RenderSettings = Toml.ToModel<RenderSettings>(renderSettingsData);
         }
-        catch
+        catch (Exception e)
         {
+            Console.WriteLine(e);
             RenderSettings = new();
         }
         
         try
         {
             string audioSettingsPath = Path.Combine(SettingsPath, "audio_settings.toml");
-            string audioSettings = File.ReadAllText(audioSettingsPath);
-            AudioSettings = Toml.ToModel<AudioSettings>(audioSettings);
+            string audioSettingsData = File.ReadAllText(audioSettingsPath);
+            AudioSettings = Toml.ToModel<AudioSettings>(audioSettingsData);
         }
-        catch
+        catch (Exception e)
         {
+            Console.WriteLine(e);
             AudioSettings = new();
         }
         
         try
         {
             string shortcutSettingsPath = Path.Combine(SettingsPath, "shortcut_settings.toml");
-            string shortcutSettings = File.ReadAllText(shortcutSettingsPath);
-            ShortcutSettings = Toml.ToModel<ShortcutSettings>(shortcutSettings);
+            string shortcutSettingsData = File.ReadAllText(shortcutSettingsPath);
+            ShortcutSettings = Toml.ToModel<ShortcutSettings>(shortcutSettingsData);
         }
-        catch
+        catch (Exception e)
         {
+            Console.WriteLine(e);
             ShortcutSettings = new();
         }
         
@@ -458,7 +513,7 @@ public class ShortcutSettings
 
     public void SetShortcut(string key, Shortcut shortcut)
     {
-        if (Shortcuts.TryGetValue(key, out Shortcut value) && value.Equals(shortcut))
+        if (Shortcuts.TryGetValue(key, out Shortcut? value) && !value.Equals(shortcut))
         {
             Shortcuts[key] = shortcut;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
@@ -473,8 +528,10 @@ public class ShortcutSettings
 }
 
 [Serializable]
-public struct Shortcut(Key key, bool control, bool alt, bool shift) : IEquatable<Shortcut>
+public class Shortcut(Key key, bool control, bool alt, bool shift)
 {
+    public static Shortcut None = new(Key.None, false, false, false);
+    
     /// <summary>
     /// The key to press.
     /// </summary>
@@ -497,6 +554,8 @@ public struct Shortcut(Key key, bool control, bool alt, bool shift) : IEquatable
 
     public override string ToString()
     {
+        if (Key == Key.None) return "";
+        
         string result = Control ? "Ctrl+" : "";
         result += Alt ? "Alt+" : "";
         result += Shift ? "Shift+" : "";
@@ -508,16 +567,6 @@ public struct Shortcut(Key key, bool control, bool alt, bool shift) : IEquatable
     public bool Equals(Shortcut other)
     {
         return Key == other.Key && Control == other.Control && Alt == other.Alt && Shift == other.Shift;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is Shortcut other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine((int)Key, Control, Alt, Shift);
     }
 }
     

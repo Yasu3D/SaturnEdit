@@ -14,9 +14,17 @@
                    Text="Action"
                    Margin="12,0,0,0"
                    VerticalAlignment="Center"/>
+        
         <TextBlock Grid.Column="1"
                    Name="TextBlockShortcut"
                    Text="Shortcut"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left" />
+        
+        <TextBlock Grid.Column="1"
+                   Name="TextBlockWaitingForInput"
+                   IsVisible="False"
+                   Text="{DynamicResource Settings.Shortcuts.WaitingForInput}"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left" />
     </Grid>

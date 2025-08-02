@@ -24,7 +24,7 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Touch}" />
-                                <TextBlock Text="TODO: KEYBIND"
+                                <TextBlock Text="TODO: SHORTCUT"
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -47,7 +47,7 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain}" />
-                                <TextBlock Text="TODO: KEYBIND"
+                                <TextBlock Text="TODO: SHORTCUT"
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -70,7 +70,7 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold}" />
-                                <TextBlock Text="TODO: KEYBIND"
+                                <TextBlock Text="TODO: SHORTCUT"
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -98,7 +98,7 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideClockwise}" />
-                                <TextBlock Text="TODO: KEYBIND"
+                                <TextBlock Text="TODO: SHORTCUT"
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -121,7 +121,7 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideCounterclockwise}" />
-                                <TextBlock Text="TODO: KEYBIND"
+                                <TextBlock Text="TODO: SHORTCUT"
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -149,7 +149,7 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapForward}" />
-                                <TextBlock Text="TODO: KEYBIND"
+                                <TextBlock Text="TODO: SHORTCUT"
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -172,7 +172,7 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapBackward}" />
-                                <TextBlock Text="TODO: KEYBIND"
+                                <TextBlock Text="TODO: SHORTCUT"
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -199,7 +199,7 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneShow}" />
-                                <TextBlock Text="TODO: KEYBIND"
+                                <TextBlock Text="TODO: SHORTCUT"
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -221,7 +221,7 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneHide}" />
-                                <TextBlock Text="TODO: KEYBIND"
+                                <TextBlock Text="TODO: SHORTCUT"
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -253,7 +253,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.NotePalette.BonusType.Normal}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
@@ -280,7 +280,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.NotePalette.BonusType.Bonus}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
@@ -310,7 +310,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.NotePalette.BonusType.R}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
@@ -337,7 +337,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.NotePalette.JudgementType.Normal}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
@@ -358,7 +358,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.NotePalette.JudgementType.Fake}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
@@ -379,7 +379,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.NotePalette.JudgementType.Autoplay}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
@@ -405,7 +405,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Center}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
@@ -426,7 +426,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Clockwise}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
@@ -447,7 +447,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Counterclockwise}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
@@ -468,7 +468,7 @@
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Instant}" />
-                                    <TextBlock Text="TODO: KEYBIND"
+                                    <TextBlock Text="TODO: SHORTCUT"
                                                Margin="15,0,0,0"
                                                Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>

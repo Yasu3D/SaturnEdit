@@ -59,7 +59,7 @@
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource Main.ToolTip.Settings}" />
-                        <TextBlock Text="TODO: KEYBIND"
+                        <TextBlock Text="TODO: SHORTCUT"
                                    Margin="15,0,0,0"
                                    HorizontalAlignment="Right"
                                    Foreground="{DynamicResource ForegroundSecondary}" />
@@ -82,7 +82,7 @@
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource Main.ToolTip.Undo}" />
-                        <TextBlock Text="TODO: KEYBIND"
+                        <TextBlock Text="TODO: SHORTCUT"
                                    Margin="15,0,0,0"
                                    Foreground="{DynamicResource ForegroundSecondary}" />
                     </StackPanel>
@@ -99,7 +99,7 @@
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource Main.ToolTip.Redo}" />
-                        <TextBlock Text="TODO: KEYBIND"
+                        <TextBlock Text="TODO: SHORTCUT"
                                    Margin="15,0,0,0"
                                    Foreground="{DynamicResource ForegroundSecondary}" />
                     </StackPanel>

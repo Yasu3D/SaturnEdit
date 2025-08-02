@@ -79,7 +79,7 @@
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{DynamicResource ChartEditor.Proofreader.ToolTip.Run}" />
-                            <TextBlock Text="TODO: KEYBIND"
+                            <TextBlock Text="TODO: SHORTCUT"
                                        Margin="15,0,0,0"
                                        HorizontalAlignment="Right"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
