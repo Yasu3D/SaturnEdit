@@ -157,6 +157,13 @@ public static class SettingsSystem
 public class EditorSettings
 {
     public event EventHandler? PropertyChanged;
+
+    public enum LocaleOptions
+    {
+        en_US = 0,
+        ja_JP = 1,
+        cmn_CN = 2,
+    }
     
     public enum EditorThemeOptions
     {
@@ -164,7 +171,7 @@ public class EditorSettings
         Dark = 1,
     }
     
-    public string Locale
+    public LocaleOptions Locale
     {
         get => locale;
         set
@@ -177,7 +184,7 @@ public class EditorSettings
         }
     }
     
-    private string locale = "en-US";
+    private LocaleOptions locale = LocaleOptions.en_US;
 
     public EditorThemeOptions Theme
     {
@@ -193,6 +200,36 @@ public class EditorSettings
     }
     
     private EditorThemeOptions theme = EditorThemeOptions.Dark;
+    
+    public bool ShowSplashScreen
+    {
+        get => showSplashScreen;
+        set
+        {
+            if (showSplashScreen != value)
+            {
+                showSplashScreen = value;
+                PropertyChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+    }
+    
+    private bool showSplashScreen = true;
+    
+    public bool ContinueLastSession
+    {
+        get => continueLastSession;
+        set
+        {
+            if (continueLastSession != value)
+            {
+                continueLastSession = value;
+                PropertyChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+    }
+    
+    private bool continueLastSession = true;
     
     public bool ChartViewTxtShowSpaces
     {
@@ -504,6 +541,13 @@ public class ShortcutSettings
 {
     public event EventHandler? PropertyChanged;
 
+    /// <summary>
+    /// A dictionary of all shortcuts.
+    /// </summary>
+    /// <remarks>
+    /// Shortcuts should be set via <see cref="SetShortcut"/>!!!
+    /// Changes made directly to the dictionary will not invoke <see cref="PropertyChanged"/>.
+    /// </remarks>
     public Dictionary<string, Shortcut> Shortcuts { get; set; } = new()
     {
         ["Menu.Edit.Cut"]   = new(Key.X, true, false, false),
@@ -511,6 +555,11 @@ public class ShortcutSettings
         ["Menu.Edit.Paste"] = new(Key.V, true, false, false),
     };
 
+    /// <summary>
+    /// Sets a shortcut in <see cref="Shortcuts"/> with the provided key, then invokes <see cref="PropertyChanged"/> if the new shortcut is different from the previous.
+    /// </summary>
+    /// <param name="key">The key of the action.</param>
+    /// <param name="shortcut">The shortcut to be pressed.</param>
     public void SetShortcut(string key, Shortcut shortcut)
     {
         if (Shortcuts.TryGetValue(key, out Shortcut? value) && !value.Equals(shortcut))

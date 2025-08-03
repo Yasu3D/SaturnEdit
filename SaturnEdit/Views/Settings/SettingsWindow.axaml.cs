@@ -21,6 +21,7 @@ public partial class SettingsWindow : Window
         shortcutSettingsBackup = Toml.FromModel(SettingsSystem.ShortcutSettings);
         
         SettingsTabContainer.Content = settingsGeneralView;
+        Closing += SettingsWindow_OnClosing;
     }
 
     private readonly string renderSettingsBackup;
@@ -32,6 +33,8 @@ public partial class SettingsWindow : Window
     private readonly SettingsAppearanceView settingsAppearanceView = new();
     private readonly SettingsRenderingView settingsRenderingView = new();
     private readonly SettingsShortcutsView settingsShortcutsView = new();
+
+    private bool saveSettings = false;
 
     private void SettingsTab_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
@@ -55,16 +58,25 @@ public partial class SettingsWindow : Window
 
     private void ButtonSave_OnClick(object? sender, RoutedEventArgs e)
     {
+        saveSettings = true;
         Close();
     }
 
     private void ButtonCancel_OnClick(object? sender, RoutedEventArgs e)
     {
-        // Restore settings from backups.
-        SettingsSystem.RenderSettings   = Toml.ToModel<RenderSettings>(renderSettingsBackup);
-        SettingsSystem.EditorSettings   = Toml.ToModel<EditorSettings>(editorSettingsBackup);
-        SettingsSystem.AudioSettings    = Toml.ToModel<AudioSettings>(audioSettingsBackup);
-        SettingsSystem.ShortcutSettings = Toml.ToModel<ShortcutSettings>(shortcutSettingsBackup);
+        saveSettings = false;
         Close();
+    }
+    
+    private void SettingsWindow_OnClosing(object? sender, WindowClosingEventArgs e)
+    {
+        if (!saveSettings)
+        {
+            // Restore settings from backups.
+            SettingsSystem.RenderSettings   = Toml.ToModel<RenderSettings>(renderSettingsBackup);
+            SettingsSystem.EditorSettings   = Toml.ToModel<EditorSettings>(editorSettingsBackup);
+            SettingsSystem.AudioSettings    = Toml.ToModel<AudioSettings>(audioSettingsBackup);
+            SettingsSystem.ShortcutSettings = Toml.ToModel<ShortcutSettings>(shortcutSettingsBackup);
+        }
     }
 }

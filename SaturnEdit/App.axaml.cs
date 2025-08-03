@@ -56,7 +56,7 @@ public partial class App : Application
         catch
         {
             // Default to known locale if something explodes. That'll invoke the SettingsChanged event, and essentially "recursively" call this method again.
-            SettingsSystem.EditorSettings.Locale = "en-US";
+            SettingsSystem.EditorSettings.Locale = EditorSettings.LocaleOptions.en_US;
         }
     }
 }

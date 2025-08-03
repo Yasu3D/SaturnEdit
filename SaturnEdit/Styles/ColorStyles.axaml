@@ -6,7 +6,110 @@
             <ResourceDictionary.ThemeDictionaries>
                 
                 <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="BackgroundPrimary"   Color="#EEEEEE" />
+                    <SolidColorBrush x:Key="BackgroundSecondary" Color="#CCCCCC" />
                     
+                    <SolidColorBrush x:Key="SeparatorPrimary"   Color="#999999" />
+                    <SolidColorBrush x:Key="SeparatorSecondary" Color="#EEEEEE" />
+
+                    <SolidColorBrush x:Key="ForegroundPrimary"   Color="#FF000000" />
+                    <SolidColorBrush x:Key="ForegroundSecondary" Color="#80000000" />
+                    <SolidColorBrush x:Key="ForegroundTertiary"  Color="#40000000" />
+                    <SolidColorBrush x:Key="ForegroundError"     Color="#DDFF0000"/>
+                    
+                    <SolidColorBrush x:Key="ButtonPrimaryPressed"     Color="#0AFFFFFF" />
+                    <SolidColorBrush x:Key="ButtonPrimaryPointerOver" Color="#15FFFFFF" />
+                    <SolidColorBrush x:Key="ButtonPrimaryDisabled"    Color="#1A000000" />
+                    <SolidColorBrush x:Key="ButtonPrimaryChecked"     Color="#30FFFFFF" />
+                    
+                    <SolidColorBrush x:Key="ButtonSecondaryPressed"     Color="#40000000" />
+                    <SolidColorBrush x:Key="ButtonSecondaryPointerOver" Color="#26000000" />
+                    <SolidColorBrush x:Key="ButtonSecondaryDisabled"    Color="#10FFFFFF" />
+                    <SolidColorBrush x:Key="ButtonSecondaryChecked"     Color="#40000000" />
+                    
+                    <SolidColorBrush x:Key="ButtonAccent"            Color="#FF7B41E0" />
+                    <SolidColorBrush x:Key="ButtonAccentPressed"     Color="#887B41E0" />
+                    <SolidColorBrush x:Key="ButtonAccentPointerOver" Color="#BB7B41E0" />
+                    <SolidColorBrush x:Key="ButtonAccentDisabled"    Color="#707B41E0" />
+                    <SolidColorBrush x:Key="ButtonAccentChecked"     Color="#FF7B41E0" />
+                    
+                    <SolidColorBrush x:Key="ButtonFillStandardOutline"     Color="#80FFFFFF" />
+                    
+                    <SolidColorBrush x:Key="Checkbox"                   Color="#30FFFFFF" />
+                    <SolidColorBrush x:Key="CheckboxPointerOver"        Color="#20FFFFFF" />
+                    <SolidColorBrush x:Key="CheckboxPressed"            Color="#10FFFFFF" />
+                    <SolidColorBrush x:Key="CheckboxDisabled"           Color="#10FFFFFF" />
+                    <SolidColorBrush x:Key="CheckboxChecked"            Color="#FF7B41E0" />
+                    <SolidColorBrush x:Key="CheckboxCheckedPointerOver" Color="#BB7B41E0" />
+                    <SolidColorBrush x:Key="CheckboxCheckedPressed"     Color="#887B41E0" />
+                    
+                    <SolidColorBrush x:Key="SliderWideTrackPrimary"               Color="#307B41E0" />
+                    <SolidColorBrush x:Key="SliderWideTrackPrimaryPressed"        Color="#407B41E0" />
+                    <SolidColorBrush x:Key="SliderWideTrackPrimaryPointerOver"    Color="#607B41E0" />
+                    <SolidColorBrush x:Key="SliderWideTrackPrimaryBorder"         Color="#AA7B41E0" />
+                    <SolidColorBrush x:Key="SliderWideTrackPrimaryDisabled"       Color="#40888888" />
+                    <SolidColorBrush x:Key="SliderWideTrackPrimaryBorderDisabled" Color="#40DDDDDD" />
+                    
+                    <SolidColorBrush x:Key="SliderWideTrackSecondary"             Color="#40000000" />
+                    
+                    <SolidColorBrush x:Key="SliderWideThumb"            Color="#AA7B41E0" />
+                    <SolidColorBrush x:Key="SliderWideThumbPressed"     Color="#607B41E0" />
+                    <SolidColorBrush x:Key="SliderWideThumbPointerOver" Color="#CC7B41E0" />
+                    <SolidColorBrush x:Key="SliderWideThumbDisabled"    Color="#40888888" />
+                    
+                    <SolidColorBrush x:Key="SliderMixerTrack"            Color="#50FFFFFF" />
+                    
+                    <SolidColorBrush x:Key="TextBoxBackground"            Color="#40000000" />
+                    <SolidColorBrush x:Key="TextBoxBackgroundPointerOver" Color="#60000000" />
+                    <SolidColorBrush x:Key="TextBoxBackgroundFocused"     Color="#70000000" />
+                    <SolidColorBrush x:Key="TextBoxAccent"                Color="#FF7B41E0" />
+                    
+                    <SolidColorBrush x:Key="MixerVolumePrimary"   Color="#FF606060" />
+                    <SolidColorBrush x:Key="MixerVolumeSecondary" Color="#FF404040" />
+                    <SolidColorBrush x:Key="MixerVolumeAccent"    Color="#FF7B41E0" />
+                    
+
+                    <!-- Legacy Dock Stuff, mostly overwritten by custom control themes. -->
+                    <SolidColorBrush x:Key="DockApplicationAccentBrushLow" Color="#454545" /> <!-- Document Grip Selected -->
+                    <SolidColorBrush x:Key="DockApplicationAccentForegroundBrush" Color="#D0D0D0" /> <!-- Window Text -->
+                    <SolidColorBrush x:Key="DockApplicationAccentBrushIndicator" Color="#007ACC" /> <!-- DockTarget Overlay Color -->
+                    <SolidColorBrush x:Key="DockTargetPrimary" Color="#AADEDEDE" /> <!-- DockTarget Outline -->
+                    <SolidColorBrush x:Key="DockTargetSecondary" Color="#80DEDEDE" /> <!-- DockTarget Fill -->
+
+                    <SolidColorBrush x:Key="DockThemeBorderLowBrush" Color="#454545" /> <!-- Window Border --> <!-- Document Grip Selected Unfocused -->
+                    <SolidColorBrush x:Key="DockThemeBackgroundBrush" Color="Transparent" /> <!-- Window Background -->
+                    <SolidColorBrush x:Key="DockThemeAccentBrush" Color="Transparent" /> <!-- Window Grip Selected -->
+                    <SolidColorBrush x:Key="DockThemeForegroundBrush" Color="#D0D0D0" /> <!-- Document Text -->
+                    
+                    <system:Double x:Key="DockFontSizeNormal">12</system:Double>
+
+                    <RadialGradientBrush x:Key="ChartEditorChromeGradient"
+                                         RadiusX="225"
+                                         RadiusY="225"
+                                         Center="150, 20"
+                                         GradientOrigin="200, 20">
+                        <GradientStop Color="#30926BFF" Offset="0.0"/>
+                        <GradientStop Color="#00926BFF" Offset="1.0"/>
+                    </RadialGradientBrush>
+                    
+                    <RadialGradientBrush x:Key="StageEditorChromeGradient"
+                                         RadiusX="225"
+                                         RadiusY="225"
+                                         Center="150, 20"
+                                         GradientOrigin="200, 20">
+                        <GradientStop Color="#30E46161" Offset="0.0"/>
+                        <GradientStop Color="#00E46161" Offset="1.0"/>
+                    </RadialGradientBrush>
+                    
+                    <RadialGradientBrush x:Key="CosmeticsEditorChromeGradient"
+                                         RadiusX="225"
+                                         RadiusY="225"
+                                         Center="150, 20"
+                                         GradientOrigin="200, 20">
+                        <GradientStop Color="#30269EBB" Offset="0.0"/>
+                        <GradientStop Color="#00269EBB" Offset="1.0"/>
+                    </RadialGradientBrush>
+
                 </ResourceDictionary>
                 
                 <ResourceDictionary x:Key="Dark">
@@ -16,10 +119,10 @@
                     <SolidColorBrush x:Key="SeparatorPrimary"   Color="#454545" />
                     <SolidColorBrush x:Key="SeparatorSecondary" Color="#1C1C1C" />
 
-                    <SolidColorBrush x:Key="ForegroundPrimary"   Color="#ECECEC" />
-                    <SolidColorBrush x:Key="ForegroundSecondary" Color="#BBBBBB" />
-                    <SolidColorBrush x:Key="ForegroundTertiary"  Color="#808080" />
-                    <SolidColorBrush x:Key="ForegroundError"     Color="#DD0000"/>
+                    <SolidColorBrush x:Key="ForegroundPrimary"   Color="#ECFFFFFF" />
+                    <SolidColorBrush x:Key="ForegroundSecondary" Color="#BBFFFFFF" />
+                    <SolidColorBrush x:Key="ForegroundTertiary"  Color="#80FFFFFF" />
+                    <SolidColorBrush x:Key="ForegroundError"     Color="#DDFF0000"/>
                     
                     <SolidColorBrush x:Key="ButtonPrimaryPressed"     Color="#0AFFFFFF" />
                     <SolidColorBrush x:Key="ButtonPrimaryPointerOver" Color="#15FFFFFF" />

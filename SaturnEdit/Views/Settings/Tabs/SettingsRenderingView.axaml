@@ -28,16 +28,20 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <NumericUpDown Grid.Column="1"
+                               Name="NumericUpDownRefreshRate"
                                HorizontalAlignment="Left"
                                Width="130"
                                Minimum="0"
                                Value="60" 
-                               FormatString="F0"/>
+                               FormatString="F0"
+                               ValueChanged="NumericUpDownRefreshRate_OnValueChanged"/>
             </Grid>
 
             <StackPanel Orientation="Horizontal"
                         Margin="0,0,0,10">
-                <CheckBox IsChecked="False" />
+                <CheckBox Name="CheckBoxLowPerformanceMode"
+                          IsChecked="False" 
+                          IsCheckedChanged="CheckBoxLowPerformanceMode_OnIsCheckedChanged"/>
                 <TextBlock Text="{DynamicResource Settings.Rendering.LowPerformanceMode}"
                            VerticalAlignment="Center" />
             </StackPanel>
@@ -62,13 +66,15 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <NumericUpDown Grid.Column="1"
+                               Name="NumericUpDownNoteSpeed"
                                HorizontalAlignment="Left"
                                Width="130"
                                Minimum="1.0"
                                Maximum="6.0"
                                Increment="0.1"
                                Value="3.0"
-                               FormatString="F1" />
+                               FormatString="F1" 
+                               ValueChanged="NumericUpDownNoteSpeed_OnValueChanged"/>
             </Grid>
 
             <Grid ColumnDefinitions="250,*"
@@ -78,9 +84,11 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <ComboBox Grid.Column="1"
+                          Name="ComboBoxGuideLineType"
                           HorizontalAlignment="Left"
                           Width="130"
-                          SelectedIndex="0">
+                          SelectedIndex="0"
+                          SelectionChanged="ComboBoxGuideLineType_OnSelectionChanged">
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.GuideLineType.A}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.GuideLineType.B}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.GuideLineType.C}" />
@@ -99,9 +107,11 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <ComboBox Grid.Column="1"
+                          Name="ComboBoxBackgroundDim"
                           HorizontalAlignment="Left"
                           Width="130"
-                          SelectedIndex="0">
+                          SelectedIndex="0"
+                          SelectionChanged="ComboBoxBackgroundDim_OnSelectionChanged">
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level0}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level1}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level2}" />
@@ -110,34 +120,42 @@
                 </ComboBox>
             </Grid>
             
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,0,0,10">
+                <CheckBox Name="CheckBoxIgnoreLaneToggleAnimations"
+                          IsChecked="False" 
+                          IsCheckedChanged="CheckBoxIgnoreLaneToggleAnimations_OnIsCheckedChanged"/>
+                <TextBlock Text="{DynamicResource Settings.Rendering.IgnoreLaneToggleAnimations}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+            
             <TextBlock Text="{DynamicResource Settings.Rendering.DuringPlayback}"
                            VerticalAlignment="Center" Margin="0,20,0,10"/>
             
             <StackPanel Orientation="Horizontal"
                         Margin="0,0,0,10">
-                <CheckBox IsChecked="False" />
+                <CheckBox Name="CheckBoxHideEventMarkersDuringPlayback"
+                          IsChecked="False" 
+                          IsCheckedChanged="CheckBoxHideEventMarkersDuringPlayback_OnIsCheckedChanged"/>
                 <TextBlock Text="{DynamicResource Settings.Rendering.HideEventMarkers}"
                            VerticalAlignment="Center" />
             </StackPanel>
             
             <StackPanel Orientation="Horizontal"
                         Margin="0,0,0,10">
-                <CheckBox IsChecked="False" />
+                <CheckBox Name="CheckBoxHideLaneToggleNotesDuringPlayback"
+                          IsChecked="False" 
+                          IsCheckedChanged="CheckBoxHideLaneToggleNotesDuringPlayback_OnIsCheckedChanged"/>
                 <TextBlock Text="{DynamicResource Settings.Rendering.HideLaneToggleNotes}"
                            VerticalAlignment="Center" />
             </StackPanel>
             
             <StackPanel Orientation="Horizontal"
                         Margin="0,0,0,10">
-                <CheckBox IsChecked="False" />
+                <CheckBox Name="CheckBoxHideHoldControlPointsDuringPlayback"
+                          IsChecked="False" 
+                          IsCheckedChanged="CheckBoxHideHoldControlPointsDuringPlayback_OnIsCheckedChanged"/>
                 <TextBlock Text="{DynamicResource Settings.Rendering.HideHoldControlPoints}"
-                           VerticalAlignment="Center" />
-            </StackPanel>
-            
-            <StackPanel Orientation="Horizontal"
-                        Margin="0,0,0,10">
-                <CheckBox IsChecked="False" />
-                <TextBlock Text="{DynamicResource Settings.Rendering.IgnoreLaneToggleAnimations}"
                            VerticalAlignment="Center" />
             </StackPanel>
             
@@ -161,9 +179,11 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <ComboBox Grid.Column="1"
+                          Name="ComboBoxNoteThickness"
                           HorizontalAlignment="Left"
                           Width="130"
-                          SelectedIndex="2">
+                          SelectedIndex="2"
+                          SelectionChanged="ComboBoxNoteThickness_OnSelectionChanged">
                     <ComboBoxItem Content="1" />
                     <ComboBoxItem Content="2" />
                     <ComboBoxItem Content="3" />
@@ -179,10 +199,12 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <ComboBox Grid.Column="1"
+                          Name="ComboBoxNoteColorTouch"
                           HorizontalAlignment="Left"
                           Width="130"
                           Height="40"
-                          SelectedIndex="0">
+                          SelectedIndex="0"
+                          SelectionChanged="ComboBoxNoteColor_OnSelectionChanged">
                     <ComboBoxItem>
                         <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_touch_0.svg"
                              Width="130"
@@ -270,10 +292,12 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <ComboBox Grid.Column="1"
+                          Name="ComboBoxNoteColorChain"
                           HorizontalAlignment="Left"
                           Width="130"
                           Height="40"
-                          SelectedIndex="1">
+                          SelectedIndex="1"
+                          SelectionChanged="ComboBoxNoteColor_OnSelectionChanged">
                     <ComboBoxItem>
                         <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_chain_0.svg"
                              Width="130"
@@ -361,10 +385,12 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <ComboBox Grid.Column="1"
+                          Name="ComboBoxNoteColorHold"
                           HorizontalAlignment="Left"
                           Width="130"
                           Height="40"
-                          SelectedIndex="6">
+                          SelectedIndex="6"
+                          SelectionChanged="ComboBoxNoteColor_OnSelectionChanged">
                     <ComboBoxItem>
                         <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_hold_0.svg"
                              Width="130"
@@ -452,10 +478,12 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <ComboBox Grid.Column="1"
+                          Name="ComboBoxNoteColorSlideClockwise"
                           HorizontalAlignment="Left"
                           Width="130"
                           Height="40"
-                          SelectedIndex="2">
+                          SelectedIndex="2"
+                          SelectionChanged="ComboBoxNoteColor_OnSelectionChanged">
                     <ComboBoxItem>
                         <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_0.svg"
                              Width="130"
@@ -543,10 +571,12 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <ComboBox Grid.Column="1"
+                          Name="ComboBoxNoteColorSlideCounterclockwise"
                           HorizontalAlignment="Left"
                           Width="130"
                           Height="40"
-                          SelectedIndex="3">
+                          SelectedIndex="3"
+                          SelectionChanged="ComboBoxNoteColor_OnSelectionChanged">
                     <ComboBoxItem>
                         <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_0.svg"
                              Width="130"
@@ -634,10 +664,12 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <ComboBox Grid.Column="1"
+                          Name="ComboBoxNoteColorSnapForward"
                           HorizontalAlignment="Left"
                           Width="130"
                           Height="40"
-                          SelectedIndex="4">
+                          SelectedIndex="4"
+                          SelectionChanged="ComboBoxNoteColor_OnSelectionChanged">
                     <ComboBoxItem>
                         <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_0.svg"
                              Width="130"
@@ -725,10 +757,12 @@
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
                 <ComboBox Grid.Column="1"
+                          Name="ComboBoxNoteColorSnapBackward"
                           HorizontalAlignment="Left"
                           Width="130"
                           Height="40"
-                          SelectedIndex="5">
+                          SelectedIndex="5"
+                          SelectionChanged="ComboBoxNoteColor_OnSelectionChanged">
                     <ComboBoxItem>
                         <Svg Path="avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_0.svg"
                              Width="130"
