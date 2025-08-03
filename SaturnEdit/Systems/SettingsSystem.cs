@@ -550,9 +550,31 @@ public class ShortcutSettings
     /// </remarks>
     public Dictionary<string, Shortcut> Shortcuts { get; set; } = new()
     {
-        ["Menu.Edit.Cut"]   = new(Key.X, true, false, false),
-        ["Menu.Edit.Copy"]  = new(Key.C, true, false, false),
-        ["Menu.Edit.Paste"] = new(Key.V, true, false, false),
+        ["ChartEditor.File.New"]            = new(Key.N, true, false, false, "Menu.File.New"),
+        ["ChartEditor.File.Open"]           = new(Key.N, true, false, false, "Menu.File.Open"),
+        ["ChartEditor.File.Close"]          = new(Key.N, true, false, false, "Menu.File.Close"),
+        ["ChartEditor.File.Save"]           = new(Key.N, true, false, false, "Menu.File.Save"),
+        ["ChartEditor.File.SaveAs"]         = new(Key.N, true, false, false, "Menu.File.SaveAs"),
+        ["ChartEditor.File.ReloadFromDisk"] = new(Key.N, true, false, false, "Menu.File.ReloadFromDisk"),
+        ["ChartEditor.File.Export"]         = new(Key.N, true, false, false, "Menu.File.Export"),
+        ["ChartEditor.File.RenderAsImage"]  = new(Key.N, true, false, false, "Menu.File.RenderAsImage"),
+        ["ChartEditor.File.Settings"]       = new(Key.N, true, false, false, "Menu.File.Settings"),
+        ["ChartEditor.File.Quit"]           = new(Key.N, true, false, false, "Menu.File.Quit"),
+        
+        ["ChartEditor.Edit.Undo"]   = new(Key.X, true, false, false, "Menu.Edit.Undo"),
+        ["ChartEditor.Edit.Redo"]   = new(Key.X, true, false, false, "Menu.Edit.Redo"),
+        ["ChartEditor.Edit.Cut"]   = new(Key.X, true, false, false, "Menu.Edit.Cut"),
+        ["ChartEditor.Edit.Copy"]  = new(Key.C, true, false, false, "Menu.Edit.Copy"),
+        ["ChartEditor.Edit.Paste"] = new(Key.V, true, false, false, "Menu.Edit.Paste"),
+        
+        ["ChartEditor.Navigate.MoveBeatForward"]    = new(Key.V, true, false, false, "Menu.Navigate.MoveBeatForward"),
+        ["ChartEditor.Navigate.MoveBeatBack"]       = new(Key.V, true, false, false, "Menu.Navigate.MoveBeatBack"),
+        ["ChartEditor.Navigate.MoveMeasureForward"] = new(Key.V, true, false, false, "Menu.Navigate.MoveMeasureForward"),
+        ["ChartEditor.Navigate.MoveMeasureBack"]    = new(Key.V, true, false, false, "Menu.Navigate.MoveMeasureBack"),
+        ["ChartEditor.Navigate.JumpToNextNote"]     = new(Key.V, true, false, false, "Menu.Navigate.JumpToNextNote"),
+        ["ChartEditor.Navigate.JumpToPreviousNote"] = new(Key.V, true, false, false, "Menu.Navigate.JumpToPreviousNote"),
+        
+        ["ChartEditor.Transform"]    = new(Key.V, true, false, false, "Menu.Navigate.MoveBeatForward"),
     };
 
     /// <summary>
@@ -577,9 +599,9 @@ public class ShortcutSettings
 }
 
 [Serializable]
-public class Shortcut(Key key, bool control, bool alt, bool shift)
+public class Shortcut(Key key, bool control, bool alt, bool shift, string actionMessage)
 {
-    public static Shortcut None = new(Key.None, false, false, false);
+    public static Shortcut None = new(Key.None, false, false, false, "");
     
     /// <summary>
     /// The key to press.
@@ -600,6 +622,11 @@ public class Shortcut(Key key, bool control, bool alt, bool shift)
     /// Is the shift key pressed?
     /// </summary>
     public bool Shift { get; set; } = shift;
+
+    /// <summary>
+    /// The action message to display.
+    /// </summary>
+    public string ActionMessage = actionMessage;
 
     public override string ToString()
     {

@@ -48,9 +48,10 @@ public partial class SettingsShortcutsView : UserControl
             e.Key,
             e.KeyModifiers.HasFlag(KeyModifiers.Control),
             e.KeyModifiers.HasFlag(KeyModifiers.Alt),
-            e.KeyModifiers.HasFlag(KeyModifiers.Shift));
+            e.KeyModifiers.HasFlag(KeyModifiers.Shift),
+            currentItem.Shortcut.ActionMessage);
 
-        SettingsSystem.ShortcutSettings.SetShortcut(currentItem.ActionName, newShortcut);
+        SettingsSystem.ShortcutSettings.SetShortcut(currentItem.Key, newShortcut);
         
         StopDefiningShortcut();
     }
@@ -159,7 +160,7 @@ public partial class SettingsShortcutsView : UserControl
             StopDefiningShortcut();
         }
 
-        SettingsSystem.ShortcutSettings.SetShortcut(item.ActionName, Shortcut.None);
+        SettingsSystem.ShortcutSettings.SetShortcut(item.Key, Shortcut.None);
     }
 
     private void ResetShortcut(ShortcutListItem item)
@@ -171,7 +172,7 @@ public partial class SettingsShortcutsView : UserControl
 
         // Very primitive and dumb solution, but it works (:
         ShortcutSettings tempShortcutSettings = new();
-        SettingsSystem.ShortcutSettings.SetShortcut(item.ActionName, tempShortcutSettings.Shortcuts[item.ActionName]);
+        SettingsSystem.ShortcutSettings.SetShortcut(item.Key, tempShortcutSettings.Shortcuts[item.Key]);
     }
     
     private void GenerateList(string query)
@@ -183,17 +184,27 @@ public partial class SettingsShortcutsView : UserControl
             StopDefiningShortcut();
         }
         
+        string[] queryParts = query.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        
         List<KeyValuePair<string, Shortcut>> shortcuts = query == ""
             ? SettingsSystem.ShortcutSettings.Shortcuts.ToList()
             : SettingsSystem.ShortcutSettings.Shortcuts.Where(x =>
             {
-                bool action = Application.Current.TryGetResource(x.Key, Application.Current.ActualThemeVariant, out object? resource)
+                foreach (string queryPart in queryParts)
+                {
+                    bool action = Application.Current.TryGetResource(x.Key, Application.Current.ActualThemeVariant, out object? resource)
                               && resource is string actionName
-                              && actionName.Contains(query, StringComparison.OrdinalIgnoreCase);
+                              && actionName.Contains(queryPart, StringComparison.OrdinalIgnoreCase);
 
-                bool shortcut = x.Value.ToString().Contains(query, StringComparison.OrdinalIgnoreCase);
+                    bool shortcut = x.Value.ToString().Contains(queryPart, StringComparison.OrdinalIgnoreCase);
 
-                return action || shortcut;
+                    if (action || shortcut)
+                    {
+                        return true;
+                    }
+                }
+                
+                return false;
             }).ToList();
         
         for (int i = 0; i < shortcuts.Count; i++)
@@ -203,9 +214,9 @@ public partial class SettingsShortcutsView : UserControl
                 // Modify existing items
                 if (ListBoxShortcuts.Items[i] is not ShortcutListItem item) continue;
                 
-                item.ActionName = shortcuts[i].Key;
+                item.Key = shortcuts[i].Key;
                 item.Shortcut = shortcuts[i].Value;
-                item.TextBlockAction.Bind(TextBlock.TextProperty, new DynamicResourceExtension(shortcuts[i].Key));
+                item.TextBlockAction.Bind(TextBlock.TextProperty, new DynamicResourceExtension(shortcuts[i].Value.ActionMessage));
                 item.TextBlockShortcut.Text = shortcuts[i].Value.ToString();
 
                 if (i % 2 != 0)
@@ -222,12 +233,12 @@ public partial class SettingsShortcutsView : UserControl
                 // Create new item
                 ShortcutListItem newItem = new()
                 {
-                    ActionName = shortcuts[i].Key,
+                    Key = shortcuts[i].Key,
                     Shortcut = shortcuts[i].Value,
                 };
                 
-                newItem.TextBlockAction.Bind(TextBlock.TextProperty, new DynamicResourceExtension(shortcuts[i].Key));
-                newItem.TextBlockShortcut.Text = shortcuts[i].Value.ToString();
+                newItem.TextBlockAction.Bind(TextBlock.TextProperty, new DynamicResourceExtension(newItem.Shortcut.ActionMessage));
+                newItem.TextBlockShortcut.Text = newItem.Shortcut.ToString();
 
                 if (i % 2 != 0)
                 {

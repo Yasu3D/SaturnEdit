@@ -9,20 +9,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/App.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/App.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en-US.axaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/ColorStyles.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/ColorStyles.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/SettingsWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/SettingsWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsAppearanceView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsAppearanceView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsAppearanceView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsAppearanceView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsGeneralView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsGeneralView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsGeneralView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsGeneralView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsRenderingView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsRenderingView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsRenderingView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsRenderingView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnView" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnView" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnView/SaturnView/RenderSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnView/SaturnView/RenderSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,6 +176,9 @@
       <workItem from="1754014730524" duration="3148000" />
       <workItem from="1754064117121" duration="19778000" />
       <workItem from="1754174750874" duration="9454000" />
+      <workItem from="1754188229781" duration="52000" />
+      <workItem from="1754190285324" duration="1635000" />
+      <workItem from="1754253358748" duration="939000" />
     </task>
     <servers />
   </component>

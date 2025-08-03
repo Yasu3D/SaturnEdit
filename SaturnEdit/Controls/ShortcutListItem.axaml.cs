@@ -12,7 +12,7 @@ public partial class ShortcutListItem : UserControl
         InitializeComponent();
     }
 
-    public string ActionName { get; set; } = "";
+    public string Key { get; set; } = "";
     
     public Shortcut Shortcut { get; set; }
 }
