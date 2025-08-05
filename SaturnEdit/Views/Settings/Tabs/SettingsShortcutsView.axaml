@@ -8,7 +8,6 @@
              d:DesignWidth="650"
              d:DesignHeight="610"
              Background="{DynamicResource BackgroundPrimary}"
-             KeyDown="OnKeyDown"
              x:Class="SaturnEdit.Views.Settings.Tabs.SettingsShortcutsView">
     <Grid ColumnDefinitions="100,5,100,*,300"
           RowDefinitions="30, *, 30"
@@ -59,13 +58,17 @@
                         Background="{DynamicResource ButtonSecondaryPressed}"
                         BorderBrush="{DynamicResource SeparatorSecondary}"
                         BorderThickness="0,0,0,1">
-                    <Grid ColumnDefinitions="*,200">
+                    <Grid ColumnDefinitions="180,*,200">
                         <TextBlock Grid.Column="0"
-                                   Text="{DynamicResource Settings.Shortcuts.Action}"
+                                   Text="{DynamicResource Settings.Shortcuts.Group}"
                                    Margin="12,0,0,0"
                                    VerticalAlignment="Center"
-                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                                   Foreground="{DynamicResource ForegroundTertiary}" />
                         <TextBlock Grid.Column="1"
+                                   Text="{DynamicResource Settings.Shortcuts.Action}"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                        <TextBlock Grid.Column="2"
                                    Text="{DynamicResource Settings.Shortcuts.Shortcut}"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
@@ -78,8 +81,8 @@
                          SelectionMode="Single"
                          DoubleTapped="ListBoxShortcuts_OnDoubleTapped"
                          PointerPressed="ListBoxShortcuts_OnPointerPressed"
-                         SelectionChanged="ListBoxShortcuts_OnSelectionChanged">
-                    <controls:ShortcutListItem />
+                         SelectionChanged="ListBoxShortcuts_OnSelectionChanged" >
+                    <controls:ShortcutListItem/>
                 </ListBox>
             </Grid>
         </Border>

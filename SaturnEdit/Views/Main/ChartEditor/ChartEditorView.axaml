@@ -163,6 +163,51 @@
                             <icon:FluentIcon Icon="ClipboardPaste"/>
                         </MenuItem.Icon>
                     </MenuItem>
+                    
+                    <Separator/>
+                    
+                    <MenuItem InputGesture="">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.SelectAll}"/>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    
+                    <MenuItem InputGesture="">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.DeselectAll}"/>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    
+                    <Separator/>
+                    
+                    <MenuItem InputGesture="">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.BoxSelect}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="SelectObject"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <Separator/>
+                    
+                    <MenuItem InputGesture="">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.CheckerDeselect}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="TransparencySquare"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem InputGesture="">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.SelectSimilar}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Search"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
                 
                 <MenuItem>
@@ -232,6 +277,38 @@
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="ArrowPrevious" />
                         </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <Separator />
+
+                    <MenuItem InputGesture="">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.IncreaseBeatDivision}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Add" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem InputGesture="">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.DecreaseBeatDivision}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Subtract" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem InputGesture="">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.DoubleBeatDivision}" />
+                        </MenuItem.Header>
+                    </MenuItem>
+
+                    <MenuItem InputGesture="">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.HalveBeatDivision}" />
+                        </MenuItem.Header>
                     </MenuItem>
                 </MenuItem>
             </Menu>

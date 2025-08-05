@@ -8,9 +8,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/SettingsWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/SettingsWindow.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -178,7 +186,9 @@
       <workItem from="1754174750874" duration="9454000" />
       <workItem from="1754188229781" duration="52000" />
       <workItem from="1754190285324" duration="1635000" />
-      <workItem from="1754253358748" duration="939000" />
+      <workItem from="1754253358748" duration="16090000" />
+      <workItem from="1754340112554" duration="23148000" />
+      <workItem from="1754421554632" duration="9190000" />
     </task>
     <servers />
   </component>

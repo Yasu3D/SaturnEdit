@@ -42,98 +42,208 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform}"
                                HorizontalAlignment="Center" />
                     <Button.Flyout>
-                        <MenuFlyout Placement="BottomEdgeAlignedLeft">
-
-                            <MenuItem>
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.Mirror}" />
-                                </MenuItem.Header>
+                            <MenuFlyout Placement="BottomEdgeAlignedLeft">
 
                                 <MenuItem>
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveSelectionBeatForward}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="ChevronRight" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveSelectionBeatBack}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="ChevronLeft" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveSelectionMeasureForward}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="ChevronDoubleRight" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveSelectionMeasureBack}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="ChevronDoubleLeft" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <Separator />
+                                
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveClockwise}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="ArrowClockwise" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwise}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="ArrowCounterclockwise" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.IncreaseSize}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="ArrowUp" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.DecreaseSize}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="ArrowDown" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
+                                <Separator/>
+                                
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveClockwiseIterative}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwiseIterative}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.IncreaseSizeIterative}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.DecreaseSizeIterative}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                
+                                <Separator/>
+                                
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.Mirror}" />
+                                    </MenuItem.Header>
+
+                                    <MenuItem>
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal}" />
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <icon:FluentIcon Icon="FlipHorizontal" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
+                                    <MenuItem>
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorVertical}" />
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <icon:FluentIcon Icon="FlipVertical" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    
+                                    <Separator/>
+
+                                    <MenuItem>
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorCustom}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    
+                                    <MenuItem>
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.AdjustAxis}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                </MenuItem>
+
+                                <Separator />
+
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.FlipDirection}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="ArrowReply" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ReverseSelection}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="Clock" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ScaleSelection}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="ArrowBidirectionalUpDown" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <Separator />
+
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.OffsetChart}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="KeyboardShiftUppercase" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ScaleChart}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="ArrowBidirectionalUpDown" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorChart}" />
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
                                         <icon:FluentIcon Icon="FlipHorizontal" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem>
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorVertical}" />
-                                    </MenuItem.Header>
-                                    <MenuItem.Icon>
-                                        <icon:FluentIcon Icon="FlipVertical" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-
-                                <MenuItem>
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorCustom}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                            </MenuItem>
-
-                            <Separator />
-
-                            <MenuItem>
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.FlipDirection}" />
-                                </MenuItem.Header>
-                                <MenuItem.Icon>
-                                    <icon:FluentIcon Icon="ArrowReply" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-
-                            <MenuItem>
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ReverseSelection}" />
-                                </MenuItem.Header>
-                                <MenuItem.Icon>
-                                    <icon:FluentIcon Icon="ArrowCounterclockwise" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-
-                            <MenuItem>
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ScaleSelection}" />
-                                </MenuItem.Header>
-                                <MenuItem.Icon>
-                                    <icon:FluentIcon Icon="ArrowBidirectionalUpDown" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-
-                            <Separator />
-
-                            <MenuItem>
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.OffsetChart}" />
-                                </MenuItem.Header>
-                                <MenuItem.Icon>
-                                    <icon:FluentIcon Icon="KeyboardShiftUppercase" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-
-                            <MenuItem>
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ScaleChart}" />
-                                </MenuItem.Header>
-                                <MenuItem.Icon>
-                                    <icon:FluentIcon Icon="ArrowBidirectionalUpDown" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-
-                            <MenuItem>
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.FlipChart}" />
-                                </MenuItem.Header>
-                                <MenuItem.Icon>
-                                    <icon:FluentIcon Icon="FlipHorizontal" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-
-                        </MenuFlyout>
-                    </Button.Flyout>
+                            </MenuFlyout>
+                        </Button.Flyout>
                 </Button>
 
                 <Button Classes="Themed Outlined"
@@ -166,7 +276,7 @@
 
                             <MenuItem>
                                 <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.SpikeHolds}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.SpikeHold}" />
                                 </MenuItem.Header>
                                 <MenuItem.Icon>
                                     <icon:FluentIcon Icon="HapticStrong" />
@@ -209,7 +319,7 @@
                         <MenuFlyout Placement="BottomEdgeAlignedLeft">
                             <MenuItem>
                                 <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.JudgementWindows}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.JudgementWindows}" />
                                 </MenuItem.Header>
 
                                 <MenuItem Name="MenuItemShowJudgementWindows"
@@ -217,7 +327,7 @@
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.JudgementWindows.ShowJudgementWindows}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowJudgementWindows}" />
                                     </MenuItem.Header>
                                 </MenuItem>
 
@@ -229,7 +339,7 @@
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.JudgementWindows.ShowMarvelous}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows}" />
                                     </MenuItem.Header>
                                 </MenuItem>
                                 <MenuItem Name="MenuItemShowGreatWindows"
@@ -238,7 +348,7 @@
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.JudgementWindows.ShowGreat}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows}" />
                                     </MenuItem.Header>
                                 </MenuItem>
                                 <MenuItem Name="MenuItemShowGoodWindows"
@@ -247,7 +357,7 @@
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.JudgementWindows.ShowGood}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGoodWindows}" />
                                     </MenuItem.Header>
                                 </MenuItem>
 
@@ -259,7 +369,7 @@
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.JudgementWindows.SaturnWindows}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.SaturnJudgementWindows}" />
                                     </MenuItem.Header>
                                 </MenuItem>
                             </MenuItem>
@@ -271,7 +381,7 @@
                                       StaysOpenOnClick="True"
                                       Click="MenuItem_OnClick">
                                 <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.VisualizeHoldNoteWindows}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteWindows}" />
                                 </MenuItem.Header>
                             </MenuItem>
 
@@ -280,7 +390,7 @@
                                       StaysOpenOnClick="True"
                                       Click="MenuItem_OnClick">
                                 <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.VisualizeSweepAnimations}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeSweepAnimations}" />
                                 </MenuItem.Header>
                             </MenuItem>
 
@@ -288,7 +398,7 @@
 
                             <MenuItem>
                                 <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.ToggleObjectVisibility}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility}" />
                                 </MenuItem.Header>
 
                                 <MenuItem Name="MenuItemShowTouch"

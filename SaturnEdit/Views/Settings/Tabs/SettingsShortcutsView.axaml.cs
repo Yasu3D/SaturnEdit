@@ -20,6 +20,8 @@ public partial class SettingsShortcutsView : UserControl
 
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
+        
+        ListBoxShortcuts.AddHandler(KeyDownEvent, OnKeyDown, RoutingStrategies.Tunnel);
     }
 
     private void OnSettingsChanged(object? sender, EventArgs e)
@@ -27,18 +29,24 @@ public partial class SettingsShortcutsView : UserControl
         GenerateList(TextBoxSearch?.Text ?? "");
     }
 
-    private bool definingShortcut = false; 
+    public bool DefiningShortcut = false; 
+    
     private ShortcutListItem? currentItem = null;
 
-    private void OnKeyDown(object? sender, KeyEventArgs e)
+    public void OnKeyDown(object? sender, KeyEventArgs e)
     {
-        if (!definingShortcut) return;
+        if (!DefiningShortcut) return;
         if (currentItem == null) return;
-
+        
         if (e.Key is Key.Escape)
         {
             StopDefiningShortcut();
             return;
+        }
+        
+        if (e.Key is Key.Up or Key.Down or Key.Left or Key.Right or Key.PageUp or Key.PageDown or Key.End or Key.Home)
+        {
+            e.Handled = true;
         }
 
         // Skip modifier keys.
@@ -49,6 +57,7 @@ public partial class SettingsShortcutsView : UserControl
             e.KeyModifiers.HasFlag(KeyModifiers.Control),
             e.KeyModifiers.HasFlag(KeyModifiers.Alt),
             e.KeyModifiers.HasFlag(KeyModifiers.Shift),
+            currentItem.Shortcut.GroupMessage,
             currentItem.Shortcut.ActionMessage);
 
         SettingsSystem.ShortcutSettings.SetShortcut(currentItem.Key, newShortcut);
@@ -88,7 +97,7 @@ public partial class SettingsShortcutsView : UserControl
     
     private void ListBoxShortcuts_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (definingShortcut)
+        if (DefiningShortcut)
         {
             StopDefiningShortcut();
         }
@@ -128,12 +137,12 @@ public partial class SettingsShortcutsView : UserControl
     private void StartDefiningShortcut(ShortcutListItem item)
     {
         // stop previous definition if it's still going.
-        if (definingShortcut && currentItem != null)
+        if (DefiningShortcut && currentItem != null)
         {
             StopDefiningShortcut();
         }
         
-        definingShortcut = true;
+        DefiningShortcut = true;
         currentItem = item;
         
         currentItem.TextBlockShortcut.IsVisible = false;
@@ -149,23 +158,23 @@ public partial class SettingsShortcutsView : UserControl
             currentItem.TextBlockWaitingForInput.IsVisible = false;
         }
         
-        definingShortcut = false;
+        DefiningShortcut = false;
         currentItem = null;
     }
 
     private void ClearShortcut(ShortcutListItem item)
     {
-        if (definingShortcut)
+        if (DefiningShortcut)
         {
             StopDefiningShortcut();
         }
-
-        SettingsSystem.ShortcutSettings.SetShortcut(item.Key, Shortcut.None);
+        
+        SettingsSystem.ShortcutSettings.SetShortcut(item.Key, new(Key.None, false, false, false, item.Shortcut.GroupMessage, item.Shortcut.ActionMessage));
     }
 
     private void ResetShortcut(ShortcutListItem item)
     {
-        if (definingShortcut)
+        if (DefiningShortcut)
         {
             StopDefiningShortcut();
         }
@@ -179,7 +188,7 @@ public partial class SettingsShortcutsView : UserControl
     {
         if (Application.Current == null) return;
         
-        if (definingShortcut)
+        if (DefiningShortcut)
         {
             StopDefiningShortcut();
         }
@@ -192,20 +201,24 @@ public partial class SettingsShortcutsView : UserControl
             {
                 foreach (string queryPart in queryParts)
                 {
-                    bool action = Application.Current.TryGetResource(x.Key, Application.Current.ActualThemeVariant, out object? resource)
-                              && resource is string actionName
+                    bool group = Application.Current.TryGetResource(x.Value.GroupMessage, Application.Current.ActualThemeVariant, out object? groupResource)
+                              && groupResource is string groupName
+                              && groupName.Contains(queryPart, StringComparison.OrdinalIgnoreCase);
+                    
+                    bool action = Application.Current.TryGetResource(x.Value.ActionMessage, Application.Current.ActualThemeVariant, out object? actionResource)
+                              && actionResource is string actionName
                               && actionName.Contains(queryPart, StringComparison.OrdinalIgnoreCase);
 
                     bool shortcut = x.Value.ToString().Contains(queryPart, StringComparison.OrdinalIgnoreCase);
 
-                    if (action || shortcut)
+                    if (group || action || shortcut)
                     {
                         return true;
                     }
                 }
                 
                 return false;
-            }).ToList();
+            }).ToList();    
         
         for (int i = 0; i < shortcuts.Count; i++)
         {
@@ -216,6 +229,7 @@ public partial class SettingsShortcutsView : UserControl
                 
                 item.Key = shortcuts[i].Key;
                 item.Shortcut = shortcuts[i].Value;
+                item.TextBlockGroup.Bind(TextBlock.TextProperty, new DynamicResourceExtension(shortcuts[i].Value.GroupMessage));
                 item.TextBlockAction.Bind(TextBlock.TextProperty, new DynamicResourceExtension(shortcuts[i].Value.ActionMessage));
                 item.TextBlockShortcut.Text = shortcuts[i].Value.ToString();
 
@@ -237,6 +251,7 @@ public partial class SettingsShortcutsView : UserControl
                     Shortcut = shortcuts[i].Value,
                 };
                 
+                newItem.TextBlockGroup.Bind(TextBlock.TextProperty, new DynamicResourceExtension(newItem.Shortcut.GroupMessage));
                 newItem.TextBlockAction.Bind(TextBlock.TextProperty, new DynamicResourceExtension(newItem.Shortcut.ActionMessage));
                 newItem.TextBlockShortcut.Text = newItem.Shortcut.ToString();
 

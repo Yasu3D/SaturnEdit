@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using SaturnEdit.Systems;
 using SaturnEdit.Views.Settings.Tabs;

@@ -8,20 +8,33 @@
              Height="40"
              HorizontalAlignment="Stretch"
              x:Class="SaturnEdit.Controls.ShortcutListItem">
-    <Grid ColumnDefinitions="*,200">
+    <Grid ColumnDefinitions="180,*,200">
         <TextBlock Grid.Column="0"
-                   Name="TextBlockAction"
-                   Text="Action"
+                   Name="TextBlockGroup"
+                   Text="Group"
                    Margin="12,0,0,0"
-                   VerticalAlignment="Center"/>
+                   VerticalAlignment="Center"
+                   Foreground="{DynamicResource ForegroundSecondary}"/>
+        
+        <TextBlock Grid.Column="0"
+                   Text=">"
+                   Margin="0,0,12,0"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Foreground="{DynamicResource ForegroundSecondary}"/>
         
         <TextBlock Grid.Column="1"
+                   Name="TextBlockAction"
+                   Text="Action"
+                   VerticalAlignment="Center"/>
+        
+        <TextBlock Grid.Column="2"
                    Name="TextBlockShortcut"
                    Text="Shortcut"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left" />
         
-        <TextBlock Grid.Column="1"
+        <TextBlock Grid.Column="2"
                    Name="TextBlockWaitingForInput"
                    IsVisible="False"
                    Text="{DynamicResource Settings.Shortcuts.WaitingForInput}"

@@ -550,31 +550,139 @@ public class ShortcutSettings
     /// </remarks>
     public Dictionary<string, Shortcut> Shortcuts { get; set; } = new()
     {
-        ["ChartEditor.File.New"]            = new(Key.N, true, false, false, "Menu.File.New"),
-        ["ChartEditor.File.Open"]           = new(Key.N, true, false, false, "Menu.File.Open"),
-        ["ChartEditor.File.Close"]          = new(Key.N, true, false, false, "Menu.File.Close"),
-        ["ChartEditor.File.Save"]           = new(Key.N, true, false, false, "Menu.File.Save"),
-        ["ChartEditor.File.SaveAs"]         = new(Key.N, true, false, false, "Menu.File.SaveAs"),
-        ["ChartEditor.File.ReloadFromDisk"] = new(Key.N, true, false, false, "Menu.File.ReloadFromDisk"),
-        ["ChartEditor.File.Export"]         = new(Key.N, true, false, false, "Menu.File.Export"),
-        ["ChartEditor.File.RenderAsImage"]  = new(Key.N, true, false, false, "Menu.File.RenderAsImage"),
-        ["ChartEditor.File.Settings"]       = new(Key.N, true, false, false, "Menu.File.Settings"),
-        ["ChartEditor.File.Quit"]           = new(Key.N, true, false, false, "Menu.File.Quit"),
+        ["File.New"]            = new(Key.N,    true,  false, false, "Menu.File", "Menu.File.New"),
+        ["File.Open"]           = new(Key.O,    true,  false, false, "Menu.File", "Menu.File.Open"),
+        ["File.Close"]          = new(Key.None, false, false, false, "Menu.File", "Menu.File.Close"),
+        ["File.Save"]           = new(Key.S,    true,  false, false, "Menu.File", "Menu.File.Save"),
+        ["File.SaveAs"]         = new(Key.S,    true,  false, true,  "Menu.File", "Menu.File.SaveAs"),
+        ["File.ReloadFromDisk"] = new(Key.R,    true,  true,  false, "Menu.File", "Menu.File.ReloadFromDisk"),
+        ["File.Export"]         = new(Key.None, false, false, false, "Menu.File", "Menu.File.Export"),
+        ["File.RenderAsImage"]  = new(Key.None, false, false, false, "Menu.File", "Menu.File.RenderAsImage"),
+        ["File.Settings"]       = new(Key.S,    true,  true,  false, "Menu.File", "Menu.File.Settings"),
+        ["File.Quit"]           = new(Key.None, false, false, false, "Menu.File", "Menu.File.Quit"),
+
+        ["Edit.Undo"]            = new(Key.Z,    true,  false, false, "Menu.Edit", "Menu.Edit.Undo"),
+        ["Edit.Redo"]            = new(Key.Y,    true,  false, false, "Menu.Edit", "Menu.Edit.Redo"),
+        ["Edit.Cut"]             = new(Key.X,    true,  false, false, "Menu.Edit", "Menu.Edit.Cut"),
+        ["Edit.Copy"]            = new(Key.C,    true,  false, false, "Menu.Edit", "Menu.Edit.Copy"),
+        ["Edit.Paste"]           = new(Key.V,    true,  false, false, "Menu.Edit", "Menu.Edit.Paste"),
+        ["Edit.SelectAll"]       = new(Key.A,    true,  false, false, "Menu.Edit", "Menu.Edit.SelectAll"),
+        ["Edit.DeselectAll"]     = new(Key.A,    false, true,  false, "Menu.Edit", "Menu.Edit.DeselectAll"),
+        ["Edit.BoxSelect"]       = new(Key.B,    true,  false, false, "Menu.Edit", "Menu.Edit.BoxSelect"),
+        ["Edit.CheckerDeselect"] = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.CheckerDeselect"),
+        ["Edit.SelectSimilar"]   = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.SelectSimilar"),
+
+        ["Navigate.MoveBeatForward"]      = new(Key.Up,       false, false, false, "Menu.Navigate", "Menu.Navigate.MoveBeatForward"),
+        ["Navigate.MoveBeatBack"]         = new(Key.Down,     false, false, false, "Menu.Navigate", "Menu.Navigate.MoveBeatBack"),
+        ["Navigate.MoveMeasureForward"]   = new(Key.Left,     false, false, false, "Menu.Navigate", "Menu.Navigate.MoveMeasureForward"),
+        ["Navigate.MoveMeasureBack"]      = new(Key.Right,    false, false, false, "Menu.Navigate", "Menu.Navigate.MoveMeasureBack"),
+        ["Navigate.JumpToNextNote"]       = new(Key.None,     false, false, false, "Menu.Navigate", "Menu.Navigate.JumpToNextNote"),
+        ["Navigate.JumpToPreviousNote"]   = new(Key.None,     false, false, false, "Menu.Navigate", "Menu.Navigate.JumpToPreviousNote"),
+        ["Navigate.IncreaseBeatDivision"] = new(Key.OemPlus,  true,  false, false, "Menu.Navigate", "Menu.Navigate.IncreaseBeatDivision"),
+        ["Navigate.DecreaseBeatDivision"] = new(Key.OemMinus, true,  false, false, "Menu.Navigate", "Menu.Navigate.DecreaseBeatDivision"),
+        ["Navigate.DoubleBeatDivision"]   = new(Key.PageUp,   true,  false, false, "Menu.Navigate", "Menu.Navigate.DoubleBeatDivision"),
+        ["Navigate.HalveBeatDivision"]    = new(Key.PageDown, true,  false, false, "Menu.Navigate", "Menu.Navigate.HalveBeatDivision"),
+
+        ["Settings"] = new(Key.S, true, true, false, "Menu.QuickCommands", "Main.ToolTip.Settings"),
+        ["Search"]   = new(Key.F, true, false, false, "Menu.QuickCommands", "Main.ToolTip.Search"),
+
+        ["NotePalette.NoteType.Touch"]                 = new(Key.D1, false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.Touch"),
+        ["NotePalette.NoteType.Chain"]                 = new(Key.D2, false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.Chain"),
+        ["NotePalette.NoteType.Hold"]                  = new(Key.D3, false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.Hold"),
+        ["NotePalette.NoteType.SlideClockwise"]        = new(Key.D4, false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.SlideClockwise"),
+        ["NotePalette.NoteType.SlideCounterclockwise"] = new(Key.D5, false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.SlideCounterclockwise"),
+        ["NotePalette.NoteType.SnapForward"]           = new(Key.D6, false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.SnapForward"),
+        ["NotePalette.NoteType.SnapBackward"]          = new(Key.D7, false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.SnapBackward"),
+        ["NotePalette.NoteType.LaneShow"]              = new(Key.D8, false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.LaneShow"),
+        ["NotePalette.NoteType.LaneHide"]              = new(Key.D9, false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.LaneHide"),
+        ["NotePalette.BonusType.Normal"] = new(Key.D1, false, false, true, "ChartEditor.NotePalette", "ChartEditor.NotePalette.BonusType.Normal"),
+        ["NotePalette.BonusType.Bonus"]  = new(Key.D2, false, false, true, "ChartEditor.NotePalette", "ChartEditor.NotePalette.BonusType.Bonus"),
+        ["NotePalette.BonusType.R"]      = new(Key.D3, false, false, true, "ChartEditor.NotePalette", "ChartEditor.NotePalette.BonusType.R"),
+        ["NotePalette.JudgementType.Normal"]   = new(Key.D1, true, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.JudgementType.Normal"),
+        ["NotePalette.JudgementType.Fake"]     = new(Key.D2, true, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.JudgementType.Fake"),
+        ["NotePalette.JudgementType.Autoplay"] = new(Key.D3, true, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.JudgementType.Autoplay"),
+        ["NotePalette.SweepDirection.Center"]           = new(Key.D1, false, false, true, "ChartEditor.NotePalette", "ChartEditor.NotePalette.SweepDirection.Center"),
+        ["NotePalette.SweepDirection.Clockwise"]        = new(Key.D2, false, false, true, "ChartEditor.NotePalette", "ChartEditor.NotePalette.SweepDirection.Clockwise"),
+        ["NotePalette.SweepDirection.Counterclockwise"] = new(Key.D3, false, false, true, "ChartEditor.NotePalette", "ChartEditor.NotePalette.SweepDirection.Counterclockwise"),
+        ["NotePalette.SweepDirection.Instant"]          = new(Key.D4, false, false, true, "ChartEditor.NotePalette", "ChartEditor.NotePalette.SweepDirection.Instant"),
+
+        ["Playback.Play"]               = new(Key.Space, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Play"),
+        ["Playback.Pause"]              = new(Key.Space, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Pause"),
+        ["Playback.LoopPlayback"]       = new(Key.L,     true,  false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Loop"),
+        ["Playback.SetLoopMarkerStart"] = new(Key.Home,  false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.LoopStart"),
+        ["Playback.SetLoopMarkerEnd"]   = new(Key.End,   false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.LoopEnd"),
+        ["Playback.Metronome"]          = new(Key.M,     true,  false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Metronome"),
+
+        ["Editor.Toolbar.EditType"]        = new(Key.E,      true,  false, false, "ChartEditor.ChartView3D.Toolbar", "ChartEditor.ChartView3D.ToolTip.EditType"),
+        ["Editor.Toolbar.EditShape"]       = new(Key.E,      false, false, true,  "ChartEditor.ChartView3D.Toolbar", "ChartEditor.ChartView3D.ToolTip.EditShape"),
+        ["Editor.Toolbar.EditBoth"]        = new(Key.E,      true,  false, true,  "ChartEditor.ChartView3D.Toolbar", "ChartEditor.ChartView3D.ToolTip.EditBoth"),
+        ["Editor.Toolbar.DeleteSelection"] = new(Key.Delete, false, false, false, "ChartEditor.ChartView3D.Toolbar", "ChartEditor.ChartView3D.ToolTip.DeleteSelection"),
+        ["Editor.Toolbar.Insert"]          = new(Key.E,      false, false, false, "ChartEditor.ChartView3D.Toolbar", "ChartEditor.ChartView3D.ToolTip.InsertNote"),
+
+        ["Editor.NoteEditMode"] = new(Key.Tab, false, false, false, "ChartEditor.General.Editor", "ChartEditor.ChartView3D.Mode.NoteEditMode"),
+        ["Editor.HoldEditMode"] = new(Key.Tab, false, false, false, "ChartEditor.General.Editor", "ChartEditor.ChartView3D.Mode.HoldEditMode"),
+
+        ["Editor.Transform.MoveBeatForward"]               = new(Key.Up,    true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveSelectionBeatForward"),
+        ["Editor.Transform.MoveBeatBack"]                  = new(Key.Down,  true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveSelectionBeatBack"),
+        ["Editor.Transform.MoveMeasureForward"]            = new(Key.Right, true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveSelectionMeasureForward"),
+        ["Editor.Transform.MoveMeasureBack"]               = new(Key.Left,  true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveSelectionMeasureBack"),
+        ["Editor.Transform.MoveClockwise"]                 = new(Key.Left,  false, false, true, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveClockwise"),
+        ["Editor.Transform.MoveCounterclockwise"]          = new(Key.Right, false, false, true, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwise"),
+        ["Editor.Transform.IncreaseSize"]                  = new(Key.Up,    false, false, true, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.IncreaseSize"),
+        ["Editor.Transform.DecreaseSize"]                  = new(Key.Down,  false, false, true, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.DecreaseSize"),
+        ["Editor.Transform.MoveClockwiseIterative"]        = new(Key.Left,  true,  false, true, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveClockwiseIterative"),
+        ["Editor.Transform.MoveCounterclockwiseIterative"] = new(Key.Right, true,  false, true, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwiseIterative"),
+        ["Editor.Transform.IncreaseSizeIterative"]         = new(Key.Up,    true,  false, true, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.IncreaseSizeIterative"),
+        ["Editor.Transform.DecreaseSizeIterative"]         = new(Key.Down,  true,  false, true, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.DecreaseSizeIterative"),
+        ["Editor.Transform.MirrorHorizontal"]              = new(Key.M,     false, false, true, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal"),
+        ["Editor.Transform.MirrorVertical"]                = new(Key.M,     true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MirrorVertical"),
+        ["Editor.Transform.MirrorCustom"]                  = new(Key.M,     false, true,  false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MirrorCustom"),
+        ["Editor.Transform.AdjustAxis"]                    = new(Key.M,     false, true,  true, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.AdjustAxis"),
+        ["Editor.Transform.FlipDirection"]                 = new(Key.F,     false, false, true, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.FlipDirection"),
+        ["Editor.Transform.ReverseSelection"]              = new(Key.R,     true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.ReverseSelection"),
+        ["Editor.Transform.ScaleSelection"]                = new(Key.T,     true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.ScaleSelection"),
+        ["Editor.Transform.OffsetChart"]                   = new(Key.None,  false, false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.OffsetChart"),
+        ["Editor.Transform.ScaleChart"]                    = new(Key.None,  false, false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.ScaleChart"),
+        ["Editor.Transform.MirrorChart"]                   = new(Key.None,  false, false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MirrorChart"),
         
-        ["ChartEditor.Edit.Undo"]   = new(Key.X, true, false, false, "Menu.Edit.Undo"),
-        ["ChartEditor.Edit.Redo"]   = new(Key.X, true, false, false, "Menu.Edit.Redo"),
-        ["ChartEditor.Edit.Cut"]   = new(Key.X, true, false, false, "Menu.Edit.Cut"),
-        ["ChartEditor.Edit.Copy"]  = new(Key.C, true, false, false, "Menu.Edit.Copy"),
-        ["ChartEditor.Edit.Paste"] = new(Key.V, true, false, false, "Menu.Edit.Paste"),
-        
-        ["ChartEditor.Navigate.MoveBeatForward"]    = new(Key.V, true, false, false, "Menu.Navigate.MoveBeatForward"),
-        ["ChartEditor.Navigate.MoveBeatBack"]       = new(Key.V, true, false, false, "Menu.Navigate.MoveBeatBack"),
-        ["ChartEditor.Navigate.MoveMeasureForward"] = new(Key.V, true, false, false, "Menu.Navigate.MoveMeasureForward"),
-        ["ChartEditor.Navigate.MoveMeasureBack"]    = new(Key.V, true, false, false, "Menu.Navigate.MoveMeasureBack"),
-        ["ChartEditor.Navigate.JumpToNextNote"]     = new(Key.V, true, false, false, "Menu.Navigate.JumpToNextNote"),
-        ["ChartEditor.Navigate.JumpToPreviousNote"] = new(Key.V, true, false, false, "Menu.Navigate.JumpToPreviousNote"),
-        
-        ["ChartEditor.Transform"]    = new(Key.V, true, false, false, "Menu.Navigate.MoveBeatForward"),
+        ["Editor.Convert.NotesToHold"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.NotesToHold"),
+        ["Editor.Convert.HoldToNotes"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.HoldToNotes"),
+        ["Editor.Convert.HoldToHold"]  = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.HoldToHold"),
+        ["Editor.Convert.SpikeHold"]   = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.SpikeHold"),
+        ["Editor.Convert.SplitHold"]   = new(Key.H, false, true,  false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.SplitHold"),
+        ["Editor.Convert.MergeHold"]   = new(Key.H, true,  false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.MergeHold"),
+
+        ["Editor.IncreaseNoteSpeed"]     = new(Key.OemPlus,  false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.IncreaseNoteSpeed"),
+        ["Editor.DecreaseNoteSpeed"]     = new(Key.OemMinus, false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.DecreaseNoteSpeed"),
+        ["Editor.IncreaseBackgroundDim"] = new(Key.PageUp,   false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim"),
+        ["Editor.DecreaseBackgroundDim"] = new(Key.PageDown, false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.DecreaseBackgroundDim"),
+
+        ["Editor.Settings.ShowJudgementWindows"]     = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowJudgementWindows"),
+        ["Editor.Settings.ShowMarvelousWindows"]     = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows"),
+        ["Editor.Settings.ShowGreatWindows"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows"),
+        ["Editor.Settings.ShowGoodWindows"]          = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowGoodWindows"),
+        ["Editor.Settings.SaturnJudgementWindows"]   = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.SaturnJudgementWindows"),
+        ["Editor.Settings.VisualizeHoldNoteWindows"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteWindows"),
+        ["Editor.Settings.VisualizeSweepAnimations"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.VisualizeSweepAnimations"),
+
+        ["Editor.Settings.ToggleVisibility.Touch"]                 = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.Touch"),
+        ["Editor.Settings.ToggleVisibility.SnapForward"]           = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.SnapForward"),
+        ["Editor.Settings.ToggleVisibility.SnapBackward"]          = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.SnapBackward"),
+        ["Editor.Settings.ToggleVisibility.SlideClockwise"]        = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.SlideClockwise"),
+        ["Editor.Settings.ToggleVisibility.SlideCounterclockwise"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.SlideCounterclockwise"),
+        ["Editor.Settings.ToggleVisibility.Chain"]                 = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.Chain"),
+        ["Editor.Settings.ToggleVisibility.Hold"]                  = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.Hold"),
+        ["Editor.Settings.ToggleVisibility.LaneShow"]              = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.LaneShow"),
+        ["Editor.Settings.ToggleVisibility.LaneHide"]              = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.LaneHide"),
+        ["Editor.Settings.ToggleVisibility.TempoChange"]           = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.TempoChange"),
+        ["Editor.Settings.ToggleVisibility.MetreChange"]           = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.MetreChange"),
+        ["Editor.Settings.ToggleVisibility.SpeedChange"]           = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.SpeedChange"),
+        ["Editor.Settings.ToggleVisibility.VisibilityChange"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.VisibilityChange"),
+        ["Editor.Settings.ToggleVisibility.ReverseEffect"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.ReverseEffect"),
+        ["Editor.Settings.ToggleVisibility.StopEffect"]            = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.StopEffect"),
+        ["Editor.Settings.ToggleVisibility.TutorialMarker"]        = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.TutorialMarker"),
+
+        ["Proofreader.Run"] = new(Key.P, true, false, false, "ChartEditor.Proofreader", "ChartEditor.Proofreader.ToolTip.Run"),
     };
 
     /// <summary>
@@ -599,10 +707,8 @@ public class ShortcutSettings
 }
 
 [Serializable]
-public class Shortcut(Key key, bool control, bool alt, bool shift, string actionMessage)
+public class Shortcut(Key key, bool control, bool alt, bool shift, string groupMessage, string actionMessage)
 {
-    public static Shortcut None = new(Key.None, false, false, false, "");
-    
     /// <summary>
     /// The key to press.
     /// </summary>
@@ -623,6 +729,11 @@ public class Shortcut(Key key, bool control, bool alt, bool shift, string action
     /// </summary>
     public bool Shift { get; set; } = shift;
 
+    /// <summary>
+    /// The group message to display.
+    /// </summary>
+    public string GroupMessage = groupMessage;
+    
     /// <summary>
     /// The action message to display.
     /// </summary>
