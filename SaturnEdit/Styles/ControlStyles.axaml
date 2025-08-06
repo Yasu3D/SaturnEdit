@@ -45,7 +45,7 @@
     <!-- AvaloniaEdit -->
     <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
     
-        <!-- Full Control Re-styles -->
+    <!-- Full Control Re-styles -->
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

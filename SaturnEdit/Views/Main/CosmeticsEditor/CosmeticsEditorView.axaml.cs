@@ -4,11 +4,10 @@ namespace SaturnEdit.Views.CosmeticsEditor;
 
 public partial class CosmeticsEditorView : UserControl
 {
-    private readonly MainWindow mainWindow;
+    public MainWindow MainWindow;
     
-    public CosmeticsEditorView(MainWindow mainWindow)
+    public CosmeticsEditorView()
     {
         InitializeComponent();
-        this.mainWindow = mainWindow;
     }
 }

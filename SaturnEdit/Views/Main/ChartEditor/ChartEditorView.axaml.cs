@@ -1,24 +1,28 @@
+using System;
+using System.Threading.Tasks;
 using Avalonia.Collections;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using Dock.Model;
 using Dock.Model.Core;
 using Dock.Serializer;
+using SaturnEdit.Systems;
 
 namespace SaturnEdit.Views.ChartEditor;
 
 public partial class ChartEditorView : UserControl
 {
-    private readonly MainWindow mainWindow;
     private readonly DockSerializer serializer;
     private readonly DockState dockState;
     
-    public ChartEditorView(MainWindow mainWindow)
+    public ChartEditorView()
     {
         InitializeComponent();
+        AvaloniaXamlLoader.Load(this);
 
-        this.mainWindow = mainWindow;
         serializer = new(typeof(AvaloniaList<>));
         dockState = new();
 
@@ -27,12 +31,13 @@ public partial class ChartEditorView : UserControl
         {
             dockState.Save(layout);
         }
+
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
     }
 
-    private void InitializeComponent()
+    private void OnSettingsChanged(object? sender, EventArgs e)
     {
-        AvaloniaXamlLoader.Load(this);
+        
     }
-
-    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e) => mainWindow.ShowSettingsWindow();
 }

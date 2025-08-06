@@ -558,7 +558,6 @@ public class ShortcutSettings
         ["File.ReloadFromDisk"] = new(Key.R,    true,  true,  false, "Menu.File", "Menu.File.ReloadFromDisk"),
         ["File.Export"]         = new(Key.None, false, false, false, "Menu.File", "Menu.File.Export"),
         ["File.RenderAsImage"]  = new(Key.None, false, false, false, "Menu.File", "Menu.File.RenderAsImage"),
-        ["File.Settings"]       = new(Key.S,    true,  true,  false, "Menu.File", "Menu.File.Settings"),
         ["File.Quit"]           = new(Key.None, false, false, false, "Menu.File", "Menu.File.Quit"),
 
         ["Edit.Undo"]            = new(Key.Z,    true,  false, false, "Menu.Edit", "Menu.Edit.Undo"),
@@ -583,8 +582,8 @@ public class ShortcutSettings
         ["Navigate.DoubleBeatDivision"]   = new(Key.PageUp,   true,  false, false, "Menu.Navigate", "Menu.Navigate.DoubleBeatDivision"),
         ["Navigate.HalveBeatDivision"]    = new(Key.PageDown, true,  false, false, "Menu.Navigate", "Menu.Navigate.HalveBeatDivision"),
 
-        ["Settings"] = new(Key.S, true, true, false, "Menu.QuickCommands", "Main.ToolTip.Settings"),
-        ["Search"]   = new(Key.F, true, false, false, "Menu.QuickCommands", "Main.ToolTip.Search"),
+        ["QuickCommands.Settings"] = new(Key.S, true, true, false, "Menu.QuickCommands", "Main.ToolTip.Settings"),
+        ["QuickCommands.Search"]   = new(Key.F, true, false, false, "Menu.QuickCommands", "Main.ToolTip.Search"),
 
         ["NotePalette.NoteType.Touch"]                 = new(Key.D1, false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.Touch"),
         ["NotePalette.NoteType.Chain"]                 = new(Key.D2, false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.Chain"),
@@ -756,6 +755,18 @@ public class Shortcut(Key key, bool control, bool alt, bool shift, string groupM
     public bool Equals(Shortcut other)
     {
         return Key == other.Key && Control == other.Control && Alt == other.Alt && Shift == other.Shift;
+    }
+
+    public KeyGesture? ToKeyGesture()
+    {
+        if (Key == Key.None) return null;
+
+        KeyModifiers modifiers = KeyModifiers.None;
+        if (Control) modifiers |= KeyModifiers.Control;
+        if (Alt) modifiers |= KeyModifiers.Alt;
+        if (Shift) modifiers |= KeyModifiers.Shift;
+
+        return new(Key, modifiers);
     }
 }
     
