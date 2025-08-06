@@ -25,8 +25,8 @@ public partial class NotePaletteView : UserControl
         await Task.Delay(1);
 
         UpdateNoteTypeIcons();
-        UpdateSubOptions("RadioButtonTouch");
-        UpdateBonusTypeIcons("RadioButtonTouch");
+        UpdateSubOptions(GetCheckedButtonInGroup("NoteType"));
+        UpdateBonusTypeIcons(GetCheckedButtonInGroup("NoteType"));
     }
     
     private void RadioButtonNoteType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -47,6 +47,11 @@ public partial class NotePaletteView : UserControl
     {
         
     }
+    
+    private void RadioButtonHoldPointRenderType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        
+    }
 
     public void UpdateNoteTypeIcons()
     {
@@ -61,20 +66,32 @@ public partial class NotePaletteView : UserControl
 
     private void UpdateSubOptions(string name)
     {
-        if (name is "RadioButtonLaneShow" or "RadioButtonLaneHide")
-        {
-            StackPanelBonusTypes.IsVisible = false;
-            StackPanelSweepDirections.IsVisible = true;
-            return;
-        }
+        bool laneToggle = name is "RadioButtonLaneShow" or "RadioButtonLaneHide";
+        bool hold = name is "RadioButtonHold";
 
-        StackPanelBonusTypes.IsVisible = true;
-        StackPanelSweepDirections.IsVisible = false;
+        if (laneToggle)
+        {
+            StackPanelBonusTypesJudgementTypes.IsVisible = false;
+            StackPanelHoldPointRenderTypes.IsVisible = false;
+            StackPanelSweepDirections.IsVisible = true;
+        }
+        else if (hold)
+        {
+            StackPanelBonusTypesJudgementTypes.IsVisible = true;
+            StackPanelHoldPointRenderTypes.IsVisible = true;
+            StackPanelSweepDirections.IsVisible = false;
+        }
+        else
+        {
+            StackPanelBonusTypesJudgementTypes.IsVisible = true;
+            StackPanelHoldPointRenderTypes.IsVisible = false;
+            StackPanelSweepDirections.IsVisible = false;
+        }
     }
 
     private void UpdateBonusTypeIcons(string name)
     {
-        if (name is "RadioButtonLaneShow" or "RadioButtonLaneHide") return;
+        if (name is "" or "RadioButtonLaneShow" or "RadioButtonLaneHide") return;
 
         int id = name switch
         {
@@ -105,5 +122,43 @@ public partial class NotePaletteView : UserControl
         SvgBonusTypeNormalNote.Path = svgPath;
         SvgBonusTypeBonusNote.Path = svgPath;
         SvgBonusTypeRNote.Path = svgPath;
+    }
+
+    private string GetCheckedButtonInGroup(string groupName)
+    {
+        if (groupName == "NoteType")
+        {
+            if (RadioButtonTouch.IsChecked ?? false) return "RadioButtonTouch";
+            if (RadioButtonChain.IsChecked ?? false) return "RadioButtonChain";
+            if (RadioButtonHold.IsChecked ?? false) return "RadioButtonHold";
+            if (RadioButtonSlideClockwise.IsChecked ?? false) return "RadioButtonSlideClockwise";
+            if (RadioButtonSlideCounterclockwise.IsChecked ?? false) return "RadioButtonSlideCounterclockwise";
+            if (RadioButtonSnapForward.IsChecked ?? false) return "RadioButtonSnapForward";
+            if (RadioButtonSnapBackward.IsChecked ?? false) return "RadioButtonSnapBackward";
+            if (RadioButtonLaneShow.IsChecked ?? false) return "RadioButtonLaneShow";
+            if (RadioButtonLaneHide.IsChecked ?? false) return "RadioButtonLaneHide";
+        }
+
+        if (groupName == "BonusType")
+        {
+            if (RadioButtonBonusTypeNormal.IsChecked ?? false) return "RadioButtonBonusTypeNormal";
+            if (RadioButtonBonusTypeBonus.IsChecked ?? false) return "RadioButtonBonusTypeBonus";
+            if (RadioButtonBonusTypeR.IsChecked ?? false) return "RadioButtonBonusTypeR";
+        }
+        
+        if (groupName == "JudgementType")
+        {
+            if (RadioButtonJudgementTypeNormal.IsChecked ?? false) return "RadioButtonJudgementTypeNormal";
+            if (RadioButtonJudgementTypeFake.IsChecked ?? false) return "RadioButtonJudgementTypeFake";
+            if (RadioButtonJudgementTypeAutoplay.IsChecked ?? false) return "RadioButtonJudgementTypeAutoplay";
+        }
+        
+        if (groupName == "HoldPointRenderType")
+        {
+            if (RadioButtonHoldPointRenderTypeVisible.IsChecked ?? false) return "RadioButtonHoldPointRenderTypeVisible";
+            if (RadioButtonHoldPointRenderTypeHidden.IsChecked ?? false) return "RadioButtonHoldPointRenderTypeHidden";
+        }
+        
+        return "";
     }
 }

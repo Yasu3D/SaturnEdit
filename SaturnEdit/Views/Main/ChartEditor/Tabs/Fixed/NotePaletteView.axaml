@@ -237,7 +237,7 @@
                            Margin="0,10" />
 
                 <!-- Bonus Types & Judgement Types -->
-                <StackPanel Name="StackPanelBonusTypes"
+                <StackPanel Name="StackPanelBonusTypesJudgementTypes"
                             IsVisible="True">
                     <RadioButton Classes="Themed FillStandard"
                                  GroupName="BonusType"
@@ -349,7 +349,7 @@
                     
                     <RadioButton Classes="Themed FillStandard"
                                  GroupName="JudgementType"
-                                 Name="RadioButtonJudgementType"
+                                 Name="RadioButtonJudgementTypeFake"
                                  Width="60"
                                  Height="40"
                                  IsCheckedChanged="RadioButtonBonusType_OnIsCheckedChanged">
@@ -390,6 +390,58 @@
                     </RadioButton>
                 </StackPanel>
 
+                <!-- Hold Point Render Types -->
+                <StackPanel Name="StackPanelHoldPointRenderTypes"
+                            IsVisible="False">
+                    <Rectangle Height="1"
+                           Width="30"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Margin="0,10" />
+                    
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="HoldPointRenderType"
+                                 Name="RadioButtonHoldPointRenderTypeVisible"
+                                 Width="60"
+                                 Height="40"
+                                 IsChecked="True"
+                                 IsCheckedChanged="RadioButtonHoldPointRenderType_OnIsCheckedChanged">
+                        <icon:FluentIcon Icon="Eye" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.HoldPointRenderType.Visible}" />
+                                    <TextBlock Text="TODO: SHORTCUT"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.HoldPointRenderType.Visible.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+
+                    <RadioButton Classes="Themed FillStandard"
+                                 GroupName="HoldPointRenderType"
+                                 Name="RadioButtonHoldPointRenderTypeHidden"
+                                 Width="60"
+                                 Height="40"
+                                 IsCheckedChanged="RadioButtonHoldPointRenderType_OnIsCheckedChanged">
+                        <icon:FluentIcon Icon="EyeOff" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.NotePalette.HoldPointRenderType.Hidden}" />
+                                    <TextBlock Text="TODO: SHORTCUT"
+                                               Margin="15,0,0,0"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.HoldPointRenderType.Hidden.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </RadioButton>
+                </StackPanel>
+                
                 <!-- Sweep Directions -->
                 <StackPanel Name="StackPanelSweepDirections"
                             IsVisible="False">

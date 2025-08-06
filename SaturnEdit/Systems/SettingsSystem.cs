@@ -605,6 +605,8 @@ public class ShortcutSettings
         ["NotePalette.SweepDirection.Clockwise"]        = new(Key.D2, false, false, true, "ChartEditor.NotePalette", "ChartEditor.NotePalette.SweepDirection.Clockwise"),
         ["NotePalette.SweepDirection.Counterclockwise"] = new(Key.D3, false, false, true, "ChartEditor.NotePalette", "ChartEditor.NotePalette.SweepDirection.Counterclockwise"),
         ["NotePalette.SweepDirection.Instant"]          = new(Key.D4, false, false, true, "ChartEditor.NotePalette", "ChartEditor.NotePalette.SweepDirection.Instant"),
+        ["NotePalette.HoldPointRenderType.Hidden"]  = new(Key.D1, false, true, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.HoldPointRenderType.Hidden"),
+        ["NotePalette.HoldPointRenderType.Visible"] = new(Key.D2, false, true, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.HoldPointRenderType.Visible"),
 
         ["Playback.Play"]               = new(Key.Space, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Play"),
         ["Playback.Pause"]              = new(Key.Space, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Pause"),

@@ -39,6 +39,7 @@
         <Setter Property="ShowDelay" Value="0"/>
         <Setter Property="HorizontalOffset" Value="0"/>
         <Setter Property="VerticalOffset" Value="0"/>
+        <Setter Property="MaxWidth" Value="350"/>
     </Style>
     
     <!-- AvaloniaEdit -->

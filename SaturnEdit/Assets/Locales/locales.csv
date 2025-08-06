@@ -171,6 +171,10 @@ ChartEditor.NotePalette.SweepDirection.Counterclockwise,Sweep - Counterclockwise
 ChartEditor.NotePalette.SweepDirection.Counterclockwise.Description,Toggles lanes in a counterclockwise sweep.
 ChartEditor.NotePalette.SweepDirection.Instant,Sweep - Instant
 ChartEditor.NotePalette.SweepDirection.Instant.Description,Toggles all lanes instantly.
+ChartEditor.NotePalette.HoldPointRenderType.Visible,Render Type - Visible
+ChartEditor.NotePalette.HoldPointRenderType.Visible.Description,A normal hold point that influences the shape and judged area of a Hold Note.
+ChartEditor.NotePalette.HoldPointRenderType.Hidden,Render Type - Hidden
+ChartEditor.NotePalette.HoldPointRenderType.Hidden.Description,"A special hold point that doesn't influence the shape of a Hold Note, but still influences the judged area."
 ChartEditor.AudioMixer.Channel.Master,Master
 ChartEditor.AudioMixer.Channel.Audio,Audio
 ChartEditor.AudioMixer.Channel.Guide,Guide

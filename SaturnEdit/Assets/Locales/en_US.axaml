@@ -174,6 +174,10 @@
     <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Counterclockwise.Description">Toggles lanes in a counterclockwise sweep.</system:String>
     <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Instant">Sweep - Instant</system:String>
     <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Instant.Description">Toggles all lanes instantly.</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.HoldPointRenderType.Visible">Render Type - Visible</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.HoldPointRenderType.Visible.Description">A normal hold point that influences the shape and judged area of a Hold Note.</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.HoldPointRenderType.Hidden">Render Type - Hidden</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.HoldPointRenderType.Hidden.Description">A special hold point that doesn't influence the shape of a Hold Note, but still influences the judged area.</system:String>
     <system:String x:Key="ChartEditor.AudioMixer.Channel.Master">Master</system:String>
     <system:String x:Key="ChartEditor.AudioMixer.Channel.Audio">Audio</system:String>
     <system:String x:Key="ChartEditor.AudioMixer.Channel.Guide">Guide</system:String>
