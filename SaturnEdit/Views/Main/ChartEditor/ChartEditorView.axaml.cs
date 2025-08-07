@@ -31,13 +31,5 @@ public partial class ChartEditorView : UserControl
         {
             dockState.Save(layout);
         }
-
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-    }
-
-    private void OnSettingsChanged(object? sender, EventArgs e)
-    {
-        
     }
 }

@@ -8,17 +8,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Controls/ShortcutListItem.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/BookmarkListView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/BookmarkListView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/BookmarkListView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/BookmarkListView.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/SettingsWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/SettingsWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/EventListView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/EventListView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/EventListView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/EventListView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/PlaybackView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/PlaybackView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/PlaybackView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/PlaybackView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/LaneToggleListView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/LaneToggleListView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/LaneToggleListView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/LaneToggleListView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/LayerListView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/LayerListView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/LayerListView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/LayerListView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ProofreaderView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ProofreaderView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ProofreaderView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ProofreaderView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsGeneralView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsGeneralView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsRenderingView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsRenderingView.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +63,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/261ea83c988816e3d8fe76b15b7ac6c10af64b8f9e739854f83c137c8ba9/SafeFileHandle.Windows.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2c8e7ca976f350cba9836d5565dac56b11e0b56656fa786460eb1395857a6fa/ThrowHelper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/59109b68aa8966a8b4c17bb8642684239e9598dc1f117d294c355534a932786/CastHelpers.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5a876eaa41b34484b8fcd5cb8827d6e27e1844a2709c7397f37df6ed403f/Enum.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6346e651faa0d55ca58f0fc30dae9158ba634a7226b199ac8c35110c1ba718/PathMarkupParser.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7e67932f6ba5519c62825561be88ee19e4e95dcbf15861d3102b329ec4b491/Color.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/80462644bd1cc7e0b229dc4f5752b48c01cb67b46ae563b1b5078cc2556b98/AvaloniaXamlLoader.cs" root0="FORCE_HIGHLIGHTING" />
@@ -61,6 +77,7 @@
     <setting file="file://$PROJECT_DIR$/SaturnData/SaturnData/Notation/Core/Chart.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SaturnData/SaturnData/Notation/Events/StopEffectEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SaturnEdit/Assets/sat.tmLanguage.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -189,6 +206,12 @@
       <workItem from="1754253358748" duration="16090000" />
       <workItem from="1754340112554" duration="23148000" />
       <workItem from="1754421554632" duration="9190000" />
+      <workItem from="1754457056312" duration="114000" />
+      <workItem from="1754457191776" duration="113000" />
+      <workItem from="1754457814389" duration="566000" />
+      <workItem from="1754505696105" duration="17251000" />
+      <workItem from="1754524039539" duration="706000" />
+      <workItem from="1754530910866" duration="1918000" />
     </task>
     <servers />
   </component>

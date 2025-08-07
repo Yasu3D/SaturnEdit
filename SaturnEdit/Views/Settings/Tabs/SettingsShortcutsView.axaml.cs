@@ -28,7 +28,7 @@ public partial class SettingsShortcutsView : UserControl
     {
         GenerateList(TextBoxSearch?.Text ?? "");
     }
-
+    
     public bool DefiningShortcut = false; 
     
     private ShortcutListItem? currentItem = null;

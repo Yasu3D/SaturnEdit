@@ -47,7 +47,7 @@
                         <Button.Flyout>
                             <MenuFlyout Placement="BottomEdgeAlignedLeft">
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemMoveSelectionBeatForward">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveSelectionBeatForward}" />
                                     </MenuItem.Header>
@@ -55,8 +55,8 @@
                                         <icon:FluentIcon Icon="ChevronRight" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
-                                <MenuItem>
+
+                                <MenuItem Name="MenuItemMoveSelectionBeatBack">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveSelectionBeatBack}" />
                                     </MenuItem.Header>
@@ -64,8 +64,8 @@
                                         <icon:FluentIcon Icon="ChevronLeft" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
-                                <MenuItem>
+
+                                <MenuItem Name="MenuItemMoveSelectionMeasureForward">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveSelectionMeasureForward}" />
                                     </MenuItem.Header>
@@ -73,8 +73,8 @@
                                         <icon:FluentIcon Icon="ChevronDoubleRight" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
-                                <MenuItem>
+
+                                <MenuItem Name="MenuItemMoveSelectionMeasureBack">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveSelectionMeasureBack}" />
                                     </MenuItem.Header>
@@ -82,10 +82,10 @@
                                         <icon:FluentIcon Icon="ChevronDoubleLeft" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
-                                <Separator/>
-                                
-                                <MenuItem>
+
+                                <Separator />
+
+                                <MenuItem Name="MenuItemMoveClockwise">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveClockwise}" />
                                     </MenuItem.Header>
@@ -93,8 +93,8 @@
                                         <icon:FluentIcon Icon="ArrowClockwise" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
-                                <MenuItem>
+
+                                <MenuItem Name="MenuItemMoveCounterclockwise">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwise}" />
                                     </MenuItem.Header>
@@ -102,8 +102,8 @@
                                         <icon:FluentIcon Icon="ArrowCounterclockwise" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
-                                <MenuItem>
+
+                                <MenuItem Name="MenuItemIncreaseSize">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.IncreaseSize}" />
                                     </MenuItem.Header>
@@ -111,8 +111,8 @@
                                         <icon:FluentIcon Icon="ArrowUp" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
-                                <MenuItem>
+
+                                <MenuItem Name="MenuItemDecreaseSize">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.DecreaseSize}" />
                                     </MenuItem.Header>
@@ -120,41 +120,41 @@
                                         <icon:FluentIcon Icon="ArrowDown" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
-                                <Separator/>
-                                
-                                <MenuItem>
+
+                                <Separator />
+
+                                <MenuItem Name="MenuItemMoveClockwiseIterative">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveClockwiseIterative}" />
                                     </MenuItem.Header>
                                 </MenuItem>
-                                
-                                <MenuItem>
+
+                                <MenuItem Name="MenuItemMoveCounterclockwiseIterative">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwiseIterative}" />
                                     </MenuItem.Header>
                                 </MenuItem>
-                                
-                                <MenuItem>
+
+                                <MenuItem Name="MenuItemIncreaseSizeIterative">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.IncreaseSizeIterative}" />
                                     </MenuItem.Header>
                                 </MenuItem>
-                                
-                                <MenuItem>
+
+                                <MenuItem Name="MenuItemDecreaseSizeIterative">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.DecreaseSizeIterative}" />
                                     </MenuItem.Header>
                                 </MenuItem>
-                                
-                                <Separator/>
-                                
+
+                                <Separator />
+
                                 <MenuItem>
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.Mirror}" />
                                     </MenuItem.Header>
 
-                                    <MenuItem>
+                                    <MenuItem Name="MenuItemMirrorHorizontal">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal}" />
                                         </MenuItem.Header>
@@ -163,7 +163,7 @@
                                         </MenuItem.Icon>
                                     </MenuItem>
 
-                                    <MenuItem>
+                                    <MenuItem Name="MenuItemMirrorVertical">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorVertical}" />
                                         </MenuItem.Header>
@@ -171,16 +171,16 @@
                                             <icon:FluentIcon Icon="FlipVertical" />
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    
-                                    <Separator/>
 
-                                    <MenuItem>
+                                    <Separator />
+
+                                    <MenuItem Name="MenuItemMirrorCustom">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorCustom}" />
                                         </MenuItem.Header>
                                     </MenuItem>
-                                    
-                                    <MenuItem>
+
+                                    <MenuItem Name="MenuItemAdjustAxis">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.AdjustAxis}" />
                                         </MenuItem.Header>
@@ -189,7 +189,7 @@
 
                                 <Separator />
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemFlipDirection">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.FlipDirection}" />
                                     </MenuItem.Header>
@@ -198,7 +198,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemReverseSelection">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ReverseSelection}" />
                                     </MenuItem.Header>
@@ -207,7 +207,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemScaleSelection">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ScaleSelection}" />
                                     </MenuItem.Header>
@@ -218,7 +218,7 @@
 
                                 <Separator />
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemOffsetChart">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.OffsetChart}" />
                                     </MenuItem.Header>
@@ -227,7 +227,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemScaleChart">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ScaleChart}" />
                                     </MenuItem.Header>
@@ -236,7 +236,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemMirrorChart">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorChart}" />
                                     </MenuItem.Header>
@@ -257,19 +257,19 @@
                         <Button.Flyout>
                             <MenuFlyout Placement="BottomEdgeAlignedLeft">
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemNotesToHold">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.NotesToHold}" />
                                     </MenuItem.Header>
                                 </MenuItem>
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemHoldToNotes">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.HoldToNotes}" />
                                     </MenuItem.Header>
                                 </MenuItem>
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemHoldToHold">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.HoldToHold}" />
                                     </MenuItem.Header>
@@ -277,7 +277,7 @@
 
                                 <Separator />
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemSpikeHold">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.SpikeHold}" />
                                     </MenuItem.Header>
@@ -288,7 +288,7 @@
 
                                 <Separator />
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemSplitHold">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.SplitHold}" />
                                     </MenuItem.Header>
@@ -297,7 +297,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem>
+                                <MenuItem Name="MenuItemMergeHold">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.MergeHold}" />
                                     </MenuItem.Header>
@@ -319,258 +319,258 @@
                             Height="32">
                         <icon:FluentIcon Icon="Settings" />
                         <Button.Flyout>
-                        <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                            <MenuItem>
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.JudgementWindows}" />
-                                </MenuItem.Header>
+                            <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                                <MenuItem>
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.JudgementWindows}" />
+                                    </MenuItem.Header>
 
-                                <MenuItem Name="MenuItemShowJudgementWindows"
+                                    <MenuItem Name="MenuItemShowJudgementWindows"
+                                              ToggleType="CheckBox"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowJudgementWindows}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <Separator />
+
+                                    <MenuItem Name="MenuItemShowMarvelousWindows"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="MenuItemShowGreatWindows"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    <MenuItem Name="MenuItemShowGoodWindows"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGoodWindows}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <Separator />
+
+                                    <MenuItem Name="MenuItemSaturnJudgementWindows"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.SaturnJudgementWindows}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                </MenuItem>
+
+                                <Separator />
+
+                                <MenuItem Name="MenuItemVisualizeHoldNoteWindows"
                                           ToggleType="CheckBox"
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowJudgementWindows}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteWindows}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                                <MenuItem Name="MenuItemVisualizeSweepAnimations"
+                                          ToggleType="CheckBox"
+                                          StaysOpenOnClick="True"
+                                          Click="MenuItem_OnClick">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeSweepAnimations}" />
                                     </MenuItem.Header>
                                 </MenuItem>
 
                                 <Separator />
 
-                                <MenuItem Name="MenuItemShowMarvelousWindows"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
+                                <MenuItem>
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility}" />
                                     </MenuItem.Header>
+
+                                    <MenuItem Name="MenuItemShowTouch"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Touch}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowChain"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Chain}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowHold"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Hold}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowSlideClockwise"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SlideClockwise}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowSlideCounterclockwise"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SlideCounterclockwise}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowSnapForward"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SnapForward}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowSnapBackward"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SnapBackward}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <Separator />
+
+                                    <MenuItem Name="MenuItemShowLaneShow"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.LaneShow}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowLaneHide"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.LaneHide}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <Separator />
+
+                                    <MenuItem Name="MenuItemShowTempoChange"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TempoChange}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowMetreChange"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.MetreChange}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowSpeedChange"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SpeedChange}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowVisibilityChange"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.VisibilityChange}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowReverseEffect"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.ReverseEffect}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowStopEffect"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.StopEffect}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowTutorialMarker"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TutorialMarker}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
                                 </MenuItem>
-                                <MenuItem Name="MenuItemShowGreatWindows"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <MenuItem Name="MenuItemShowGoodWindows"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGoodWindows}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <Separator />
-
-                                <MenuItem Name="MenuItemSaturnJudgementWindows"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.SaturnJudgementWindows}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-                            </MenuItem>
-
-                            <Separator />
-
-                            <MenuItem Name="MenuItemVisualizeHoldNoteWindows"
-                                      ToggleType="CheckBox"
-                                      StaysOpenOnClick="True"
-                                      Click="MenuItem_OnClick">
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteWindows}" />
-                                </MenuItem.Header>
-                            </MenuItem>
-
-                            <MenuItem Name="MenuItemVisualizeSweepAnimations"
-                                      ToggleType="CheckBox"
-                                      StaysOpenOnClick="True"
-                                      Click="MenuItem_OnClick">
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeSweepAnimations}" />
-                                </MenuItem.Header>
-                            </MenuItem>
-
-                            <Separator />
-
-                            <MenuItem>
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility}" />
-                                </MenuItem.Header>
-
-                                <MenuItem Name="MenuItemShowTouch"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Touch}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowChain"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Chain}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowHold"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Hold}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowSlideClockwise"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SlideClockwise}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowSlideCounterclockwise"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SlideCounterclockwise}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowSnapForward"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SnapForward}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowSnapBackward"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SnapBackward}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <Separator />
-
-                                <MenuItem Name="MenuItemShowLaneShow"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.LaneShow}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowLaneHide"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.LaneHide}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <Separator />
-
-                                <MenuItem Name="MenuItemShowTempoChange"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TempoChange}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowMetreChange"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.MetreChange}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowSpeedChange"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SpeedChange}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowVisibilityChange"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.VisibilityChange}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowReverseEffect"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.ReverseEffect}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowStopEffect"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.StopEffect}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                                <MenuItem Name="MenuItemShowTutorialMarker"
-                                          ToggleType="CheckBox"
-                                          IsChecked="True"
-                                          StaysOpenOnClick="True"
-                                          Click="MenuItem_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TutorialMarker}" />
-                                    </MenuItem.Header>
-                                </MenuItem>
-
-                            </MenuItem>
-                        </MenuFlyout>
-                    </Button.Flyout>
+                            </MenuFlyout>
+                        </Button.Flyout>
                     </Button>
                 </StackPanel>
 
@@ -588,7 +588,7 @@
                                    Increment="0.1"
                                    Value="3.0"
                                    FormatString="F1"
-                                   ValueChanged="NumericUpDownNoteSpeed_OnValueChanged"/>
+                                   ValueChanged="NumericUpDownNoteSpeed_OnValueChanged" />
                     <ComboBox Name="ComboBoxBackgroundDim"
                               Width="110"
                               SelectedIndex="0"
@@ -606,7 +606,7 @@
             <!-- Tool Bar & Canvas-->
             <Grid Grid.Row="1"
                   ColumnDefinitions="50,*">
-                <!-- Canvas -->
+                <!-- Tool Bar -->
                 <StackPanel Grid.Column="0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Bottom"
@@ -617,8 +617,15 @@
                             Height="40">
                         <ToolTip.Tip>
                             <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.BoxSelect}" />
+                                    <TextBlock Name="TextBlockShortcutBoxSelect"
+                                               Text="SHORTCUT"
+                                               Margin="15,0,0,0"
+                                               HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
 
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.BoxSelect}" />
                                 <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.BoxSelect.Description}"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -636,7 +643,14 @@
                             Height="40">
                         <ToolTip.Tip>
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.EditType}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.EditType}" />
+                                    <TextBlock Name="TextBlockShortcutEditType"
+                                               Text="SHORTCUT"
+                                               Margin="15,0,0,0"
+                                               HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
                                 <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.EditType.Description}"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -649,7 +663,14 @@
                             Height="40">
                         <ToolTip.Tip>
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.EditShape}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.EditShape}" />
+                                    <TextBlock Name="TextBlockShortcutEditShape"
+                                               Text="SHORTCUT"
+                                               Margin="15,0,0,0"
+                                               HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
                                 <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.EditShape.Description}"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -667,7 +688,14 @@
                             Height="40">
                         <ToolTip.Tip>
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.DeleteSelection}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.DeleteSelection}" />
+                                    <TextBlock Name="TextBlockShortcutDeleteSelection"
+                                               Text="SHORTCUT"
+                                               Margin="15,0,0,0"
+                                               HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
                                 <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.DeleteSelection.Description}"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
@@ -680,7 +708,14 @@
                             Height="40">
                         <ToolTip.Tip>
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.InsertNote}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.InsertNote}" />
+                                    <TextBlock Name="TextBlockShortcutInsertNote"
+                                               Text="SHORTCUT"
+                                               Margin="15,0,0,0"
+                                               HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
                                 <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.InsertNote.Description}"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>

@@ -33,8 +33,8 @@
                                      Foreground="{DynamicResource ForegroundPrimary}" />
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.MoveItemUp}" />
-                            <TextBlock Text="TODO: SHORTCUT"
+                            <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemUp}" />
+                            <TextBlock Name="TextBlockShortcutMoveItemUp1" Text="SHORTCUT"
                                        Margin="15,0,0,0"
                                        HorizontalAlignment="Right"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
@@ -51,8 +51,8 @@
                                      Foreground="{DynamicResource ForegroundPrimary}" />
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.MoveItemDown}" />
-                            <TextBlock Text="TODO: SHORTCUT"
+                            <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemDown}" />
+                            <TextBlock Name="TextBlockShortcutMoveItemDown1" Text="SHORTCUT"
                                        Margin="15,0,0,0"
                                        HorizontalAlignment="Right"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
@@ -74,8 +74,8 @@
                                      Foreground="{DynamicResource ForegroundPrimary}" />
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.DeleteSelection}" />
-                            <TextBlock Text="TODO: SHORTCUT"
+                            <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
+                            <TextBlock Name="TextBlockShortcutDeleteSelection1" Text="SHORTCUT"
                                        Margin="15,0,0,0"
                                        HorizontalAlignment="Right"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
@@ -91,7 +91,7 @@
                                      FontSize="16"
                                      Foreground="{DynamicResource ForegroundPrimary}" />
                     <ToolTip.Tip>
-                        <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.AddNew}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.AddNew}" />
                     </ToolTip.Tip>
                 </Button>
             </StackPanel>
@@ -156,8 +156,8 @@
                                          Foreground="{DynamicResource ForegroundPrimary}" />
                         <ToolTip.Tip>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.MoveItemUp}" />
-                                <TextBlock Text="TODO: SHORTCUT"
+                                <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemUp}" />
+                                <TextBlock Name="TextBlockShortcutMoveItemUp2" Text="SHORTCUT"
                                            Margin="15,0,0,0"
                                            HorizontalAlignment="Right"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
@@ -174,8 +174,8 @@
                                          Foreground="{DynamicResource ForegroundPrimary}" />
                         <ToolTip.Tip>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.MoveItemDown}" />
-                                <TextBlock Text="TODO: SHORTCUT"
+                                <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemDown}" />
+                                <TextBlock Name="TextBlockShortcutMoveItemDown2" Text="SHORTCUT"
                                            Margin="15,0,0,0"
                                            HorizontalAlignment="Right"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
@@ -197,8 +197,8 @@
                                          Foreground="{DynamicResource ForegroundPrimary}" />
                         <ToolTip.Tip>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.DeleteSelection}" />
-                                <TextBlock Text="TODO: SHORTCUT"
+                                <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
+                                <TextBlock Name="TextBlockShortcutDeleteSelection2" Text="SHORTCUT"
                                            Margin="15,0,0,0"
                                            HorizontalAlignment="Right"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
@@ -261,7 +261,7 @@
                             </MenuFlyout>
                         </Button.Flyout>
                         <ToolTip.Tip>
-                            <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.AddNewEllipsis}" />
+                            <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.AddNewEllipsis}" />
                         </ToolTip.Tip>
                     </Button>
                 </StackPanel>
@@ -314,8 +314,8 @@
                                          Foreground="{DynamicResource ForegroundPrimary}" />
                         <ToolTip.Tip>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.MoveItemUp}" />
-                                <TextBlock Text="TODO: SHORTCUT"
+                                <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemUp}" />
+                                <TextBlock Name="TextBlockShortcutMoveItemUp3" Text="SHORTCUT"
                                            Margin="15,0,0,0"
                                            HorizontalAlignment="Right"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
@@ -332,8 +332,8 @@
                                          Foreground="{DynamicResource ForegroundPrimary}" />
                         <ToolTip.Tip>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource ChartEditor.LayerList.ToolTip.MoveItemDown}" />
-                                <TextBlock Text="TODO: SHORTCUT"
+                                <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemDown}" />
+                                <TextBlock Name="TextBlockShortcutMoveItemDown3" Text="SHORTCUT"
                                            Margin="15,0,0,0"
                                            HorizontalAlignment="Right"
                                            Foreground="{DynamicResource ForegroundSecondary}" />

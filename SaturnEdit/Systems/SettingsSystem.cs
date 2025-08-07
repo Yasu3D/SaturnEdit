@@ -607,12 +607,17 @@ public class ShortcutSettings
         ["NotePalette.HoldPointRenderType.Hidden"]  = new(Key.D1, false, true, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.HoldPointRenderType.Hidden"),
         ["NotePalette.HoldPointRenderType.Visible"] = new(Key.D2, false, true, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.HoldPointRenderType.Visible"),
 
-        ["Playback.Play"]               = new(Key.Space, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Play"),
-        ["Playback.Pause"]              = new(Key.Space, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Pause"),
-        ["Playback.LoopPlayback"]       = new(Key.L,     true,  false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Loop"),
-        ["Playback.SetLoopMarkerStart"] = new(Key.Home,  false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.LoopStart"),
-        ["Playback.SetLoopMarkerEnd"]   = new(Key.End,   false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.LoopEnd"),
-        ["Playback.Metronome"]          = new(Key.M,     true,  false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Metronome"),
+        ["List.MoveItemUp"]   = new(Key.Up,   false, false, true, "ChartEditor.List", "ChartEditor.List.ToolTip.MoveItemUp"),
+        ["List.MoveItemDown"] = new(Key.Down, false, false, true, "ChartEditor.List", "ChartEditor.List.ToolTip.MoveItemDown"),
+        
+        ["Editor.Playback.Play"]                  = new(Key.Space, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Play"),
+        ["Editor.Playback.Pause"]                 = new(Key.Space, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Pause"),
+        ["Editor.Playback.IncreasePlaybackSpeed"] = new(Key.Add, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.IncreasePlaybackSpeed"),
+        ["Editor.Playback.DecreasePlaybackSpeed"] = new(Key.Subtract, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.DecreasePlaybackSpeed"),
+        ["Editor.Playback.LoopPlayback"]          = new(Key.L,     true,  false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Loop"),
+        ["Editor.Playback.SetLoopMarkerStart"]    = new(Key.Home,  false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.LoopStart"),
+        ["Editor.Playback.SetLoopMarkerEnd"]      = new(Key.End,   false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.LoopEnd"),
+        ["Editor.Playback.Metronome"]             = new(Key.M,     true,  false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Metronome"),
 
         ["Editor.Toolbar.EditType"]        = new(Key.E,      true,  false, false, "ChartEditor.ChartView3D.Toolbar", "ChartEditor.ChartView3D.ToolTip.EditType"),
         ["Editor.Toolbar.EditShape"]       = new(Key.E,      false, false, true,  "ChartEditor.ChartView3D.Toolbar", "ChartEditor.ChartView3D.ToolTip.EditShape"),

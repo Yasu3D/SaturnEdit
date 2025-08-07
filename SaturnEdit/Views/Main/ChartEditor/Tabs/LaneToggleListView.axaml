@@ -31,7 +31,7 @@
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource ChartEditor.LayerInspector.ToolTip.MoveItemUp}" />
-                        <TextBlock Text="TODO: SHORTCUT"
+                        <TextBlock Name="TextBlockShortcutMoveItemUp" Text="SHORTCUT"
                                    Margin="15,0,0,0"
                                    HorizontalAlignment="Right"
                                    Foreground="{DynamicResource ForegroundSecondary}" />
@@ -49,7 +49,7 @@
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource ChartEditor.LayerInspector.ToolTip.MoveItemDown}" />
-                        <TextBlock Text="TODO: SHORTCUT"
+                        <TextBlock Name="TextBlockShortcutMoveItemDown" Text="SHORTCUT"
                                    Margin="15,0,0,0"
                                    HorizontalAlignment="Right"
                                    Foreground="{DynamicResource ForegroundSecondary}" />

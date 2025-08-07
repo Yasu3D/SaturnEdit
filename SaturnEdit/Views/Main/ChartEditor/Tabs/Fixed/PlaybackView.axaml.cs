@@ -3,6 +3,7 @@ using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Threading;
+using SaturnEdit.Systems;
 
 namespace SaturnEdit.Views.Main.ChartEditor.Tabs;
 
@@ -12,6 +13,20 @@ public partial class PlaybackView : UserControl
     {
         InitializeComponent();
         SetTickMargins();
+        
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+    }
+
+    private void OnSettingsChanged(object? sender, EventArgs e)
+    {
+        TextBlockShortcutPlay.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Play"].ToString();
+        TextBlockShortcutPause.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Pause"].ToString();
+        TextBlockShortcutIncreasePlaybackSpeed.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.IncreasePlaybackSpeed"].ToString();
+        TextBlockShortcutDecreasePlaybackSpeed.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.DecreasePlaybackSpeed"].ToString();
+        TextBlockShortcutLoop.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.LoopPlayback"].ToString();
+        TextBlockShortcutSetLoopStart.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.SetLoopMarkerStart"].ToString();
+        TextBlockShortcutSetLoopEnd.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.SetLoopMarkerEnd"].ToString();
     }
 
     private void SetTickMargins()

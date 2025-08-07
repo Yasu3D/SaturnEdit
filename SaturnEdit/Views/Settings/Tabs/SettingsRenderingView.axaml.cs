@@ -16,8 +16,12 @@ public partial class SettingsRenderingView : UserControl
         OnSettingsChanged(null, EventArgs.Empty);
     }
 
+    private bool blockEvent = false;
+    
     private void OnSettingsChanged(object? sender, EventArgs empty)
     {
+        blockEvent = true;
+        
         NumericUpDownRefreshRate.Value = SettingsSystem.RenderSettings.RefreshRate;
         CheckBoxLowPerformanceMode.IsChecked = SettingsSystem.RenderSettings.LowPerformanceMode;
         
@@ -40,10 +44,13 @@ public partial class SettingsRenderingView : UserControl
         ComboBoxNoteColorSlideCounterclockwise.SelectedIndex = (int)SettingsSystem.RenderSettings.SlideCounterclockwiseNoteColor;
         ComboBoxNoteColorSnapForward.SelectedIndex = (int)SettingsSystem.RenderSettings.SnapForwardNoteColor;
         ComboBoxNoteColorSnapBackward.SelectedIndex = (int)SettingsSystem.RenderSettings.SnapBackwardNoteColor;
+
+        blockEvent = false;
     }
 
     private void NumericUpDownRefreshRate_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
+        if (blockEvent) return;
         if (NumericUpDownRefreshRate == null) return;
 
         SettingsSystem.RenderSettings.RefreshRate = (int)(NumericUpDownRefreshRate.Value ?? 60);
@@ -51,6 +58,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void CheckBoxLowPerformanceMode_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvent) return;
         if (CheckBoxLowPerformanceMode == null) return;
 
         SettingsSystem.RenderSettings.LowPerformanceMode = CheckBoxLowPerformanceMode.IsChecked ?? false;
@@ -58,6 +66,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void NumericUpDownNoteSpeed_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
+        if (blockEvent) return;
         if (NumericUpDownNoteSpeed == null) return;
 
         SettingsSystem.RenderSettings.NoteSpeed = (int)(NumericUpDownNoteSpeed.Value * 10 ?? 30);
@@ -65,6 +74,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void ComboBoxGuideLineType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        if (blockEvent) return;
         if (ComboBoxGuideLineType == null) return;
 
         SettingsSystem.RenderSettings.GuideLineType = (RenderSettings.GuideLineTypeOption)ComboBoxGuideLineType.SelectedIndex;
@@ -72,6 +82,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void ComboBoxBackgroundDim_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        if (blockEvent) return;
         if (ComboBoxBackgroundDim == null) return;
 
         SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)ComboBoxBackgroundDim.SelectedIndex;
@@ -79,6 +90,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void CheckBoxIgnoreLaneToggleAnimations_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvent) return;
         if (CheckBoxIgnoreLaneToggleAnimations == null) return;
 
         SettingsSystem.RenderSettings.IgnoreLaneToggleAnimations = CheckBoxIgnoreLaneToggleAnimations.IsChecked ?? false;
@@ -86,6 +98,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void CheckBoxHideEventMarkersDuringPlayback_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvent) return;
         if (CheckBoxHideEventMarkersDuringPlayback == null) return;
 
         SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback = CheckBoxHideEventMarkersDuringPlayback.IsChecked ?? false;
@@ -93,6 +106,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void CheckBoxHideLaneToggleNotesDuringPlayback_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvent) return;
         if (CheckBoxHideLaneToggleNotesDuringPlayback == null) return;
 
         SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback = CheckBoxHideLaneToggleNotesDuringPlayback.IsChecked ?? false;
@@ -100,6 +114,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void CheckBoxHideHoldControlPointsDuringPlayback_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvent) return;
         if (CheckBoxHideHoldControlPointsDuringPlayback == null) return;
 
         SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback = CheckBoxHideHoldControlPointsDuringPlayback.IsChecked ?? false;
@@ -107,6 +122,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void ComboBoxNoteThickness_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        if (blockEvent) return;
         if (ComboBoxNoteThickness == null) return;
 
         SettingsSystem.RenderSettings.NoteThickness = (RenderSettings.NoteThicknessOption)ComboBoxNoteThickness.SelectedIndex;
@@ -114,6 +130,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void ComboBoxNoteColor_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        if (blockEvent) return;
         if (sender is not ComboBox comboBox) return;
 
         RenderSettings.NoteColorOption color = (RenderSettings.NoteColorOption)comboBox.SelectedIndex;
