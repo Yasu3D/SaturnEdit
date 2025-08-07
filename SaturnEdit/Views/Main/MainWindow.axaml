@@ -17,306 +17,398 @@
         Focusable="True"
         Background="{DynamicResource BackgroundSecondary}"
         Title="{DynamicResource Main.Window.Title}">
-    <Grid>
-        <Panel VerticalAlignment="Top"
-                    Height="40"
-                    ZIndex="99">
-            <!-- ChartEditor Menu Bar -->
-            <Menu Name="MenuChartEditor"
-                  HorizontalAlignment="Left"
-                  Margin="41,0,0,0">
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="{DynamicResource Menu.File}"/>
-                    </MenuItem.Header>
-                    
-                    <MenuItem Name="MenuItemNew">
+    <Grid RowDefinitions="40,1,*">
+        <!-- Menu -->
+        <Panel Grid.Row="0"
+               VerticalAlignment="Top"
+               Height="40">
+            <!-- Menu Background -->
+            <Rectangle Fill="{DynamicResource BackgroundPrimary}"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       IsHitTestVisible="False" />
+
+            <!-- Menu Background Gradient -->
+            <Rectangle Fill="{DynamicResource ChartEditorChromeGradient}"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       IsHitTestVisible="False"/>
+
+            <!-- Tabs and Menus -->
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+                <!-- Tabs -->
+                <RadioButton Name="TabChartEditor"
+                             Classes="Themed Square Standard"
+                             GroupName="EditorTabs"
+                             VerticalAlignment="Center"
+                             Width="30"
+                             Height="30"
+                             CornerRadius="4"
+                             Margin="5,5,0,5"
+                             IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
+                             IsChecked="True"
+                             ToolTip.HorizontalOffset="5"
+                             ToolTip.Placement="Right">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Main.ToolTip.ChartEditor}" />
+                            <TextBlock Text="{DynamicResource Main.ToolTip.ChartEditor.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="GanttChart"
+                                     FontSize="22" />
+                </RadioButton>
+
+                <RadioButton Name="TabStageEditor"
+                             Classes="Themed Square Standard"
+                             GroupName="EditorTabs"
+                             VerticalAlignment="Center"
+                             Width="30"
+                             Height="30"
+                             CornerRadius="4"
+                             Margin="5,5,0,5"
+                             IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
+                             IsChecked="False"
+                             ToolTip.HorizontalOffset="5"
+                             ToolTip.Placement="Right">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Main.ToolTip.StageEditor}" />
+                            <TextBlock Text="{DynamicResource Main.ToolTip.StageEditor.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="Steps"
+                                     FontSize="22" />
+                </RadioButton>
+
+                <RadioButton Name="TabContentEditor"
+                             Classes="Themed Square Standard"
+                             GroupName="EditorTabs"
+                             VerticalAlignment="Center"
+                             Width="30"
+                             Height="30"
+                             CornerRadius="4"
+                             Margin="5,5,0,5"
+                             IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
+                             IsChecked="False"
+                             ToolTip.HorizontalOffset="5"
+                             ToolTip.Placement="Right">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Main.ToolTip.CosmeticsEditor}" />
+                            <TextBlock Text="{DynamicResource Main.ToolTip.CosmeticsEditor.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="PaintBrushSparkle"
+                                     FontSize="22" />
+                </RadioButton>
+
+                <!-- Separator -->
+                <Rectangle Width="1"
+                           Fill="{DynamicResource SeparatorPrimary}" 
+                           VerticalAlignment="Stretch"
+                           Margin="5"/>
+
+                <!-- ChartEditor Menu -->
+                <Menu Name="MenuChartEditor"
+                      HorizontalAlignment="Left">
+                    <MenuItem>
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.File.New}"/>
+                            <TextBlock Text="{DynamicResource Menu.File}" />
                         </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="DocumentAdd"/>
-                        </MenuItem.Icon>
+
+                        <MenuItem Name="MenuItemNew">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.New}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="DocumentAdd" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Name="MenuItemOpen">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.Open}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="Folder" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Name="MenuItemClose">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.Close}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+
+                        <Separator />
+
+                        <MenuItem Name="MenuItemSave">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.Save}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="Save" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Name="MenuItemSaveAs">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.SaveAs}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        <MenuItem Name="MenuItemReloadFromDisk">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.ReloadFromDisk}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="ArrowSync" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <Separator />
+
+                        <MenuItem Name="MenuItemExport">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.Export}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+
+                        <MenuItem Name="MenuItemRenderAsImage">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.RenderAsImage}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="ImageSparkle" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <Separator />
+
+                        <MenuItem Name="MenuItemSettings"
+                                  Click="MenuItemSettings_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.Settings}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="Settings" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Name="MenuItemQuit">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.Quit}" />
+                            </MenuItem.Header>
+                        </MenuItem>
                     </MenuItem>
-                    <MenuItem Name="MenuItemOpen">
+
+                    <MenuItem>
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.File.Open}"/>
+                            <TextBlock Text="{DynamicResource Menu.Edit}" />
                         </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="Folder"/>
-                        </MenuItem.Icon>
+
+                        <MenuItem Name="MenuItemUndo">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Edit.Undo}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="ArrowUndo" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Name="MenuItemRedo">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Edit.Redo}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="ArrowRedo" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <Separator />
+
+                        <MenuItem Name="MenuItemCut">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Edit.Cut}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="Cut" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Name="MenuItemCopy">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Edit.Copy}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="Copy" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Name="MenuItemPaste">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Edit.Paste}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="ClipboardPaste" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <Separator />
+
+                        <MenuItem Name="MenuItemSelectAll">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Edit.SelectAll}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+
+                        <MenuItem Name="MenuItemDeselectAll">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Edit.DeselectAll}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+
+                        <Separator />
+
+                        <MenuItem Name="MenuItemBoxSelect">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Edit.BoxSelect}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="SelectObject" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <Separator />
+
+                        <MenuItem Name="MenuItemCheckerDeselect">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Edit.CheckerDeselect}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="TransparencySquare" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Name="MenuItemSelectSimilar">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Edit.SelectSimilar}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="Search" />
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
-                    <MenuItem Name="MenuItemClose">
+
+                    <MenuItem>
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.File.Close}"/>
+                            <TextBlock Text="{DynamicResource Menu.View}" />
                         </MenuItem.Header>
                     </MenuItem>
 
-                    <Separator/>
-                    
-                    <MenuItem Name="MenuItemSave">
+                    <MenuItem>
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.File.Save}"/>
+                            <TextBlock Text="{DynamicResource Menu.Navigate}" />
                         </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="Save"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Name="MenuItemSaveAs">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.File.SaveAs}"/>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    <MenuItem Name="MenuItemReloadFromDisk">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.File.ReloadFromDisk}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ArrowSync"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <Separator/>
-                    
-                    <MenuItem Name="MenuItemExport">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.File.Export}"/>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    
-                    <MenuItem Name="MenuItemRenderAsImage">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.File.RenderAsImage}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ImageSparkle"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <Separator/>
-                    
-                    <MenuItem Name="MenuItemSettings" 
-                              Click="MenuItemSettings_OnClick">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.File.Settings}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="Settings"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <MenuItem Name="MenuItemQuit">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.File.Quit}"/>
-                        </MenuItem.Header>
-                    </MenuItem>
-                </MenuItem>
-                
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="{DynamicResource Menu.Edit}"/>
-                    </MenuItem.Header>
-                    
-                    <MenuItem Name="MenuItemUndo">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Edit.Undo}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ArrowUndo"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <MenuItem Name="MenuItemRedo">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Edit.Redo}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ArrowRedo"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <Separator/>
-                    
-                    <MenuItem Name="MenuItemCut">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Edit.Cut}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="Cut"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <MenuItem Name="MenuItemCopy">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Edit.Copy}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="Copy"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <MenuItem Name="MenuItemPaste">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Edit.Paste}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ClipboardPaste"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <Separator/>
-                    
-                    <MenuItem Name="MenuItemSelectAll">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Edit.SelectAll}"/>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    
-                    <MenuItem Name="MenuItemDeselectAll">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Edit.DeselectAll}"/>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    
-                    <Separator/>
-                    
-                    <MenuItem Name="MenuItemBoxSelect">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Edit.BoxSelect}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="SelectObject"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <Separator/>
-                    
-                    <MenuItem Name="MenuItemCheckerDeselect">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Edit.CheckerDeselect}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="TransparencySquare"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <MenuItem Name="MenuItemSelectSimilar">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Edit.SelectSimilar}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="Search"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
-                
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="{DynamicResource Menu.View}"/>
-                    </MenuItem.Header>
-                </MenuItem>
-                
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="{DynamicResource Menu.Navigate}"/>
-                    </MenuItem.Header>
-                    
-                    <MenuItem Name="MenuItemMoveBeatForward">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatForward}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ChevronRight"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <MenuItem Name="MenuItemMoveBeatBack">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatBack}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ChevronLeft"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <Separator/>
-                    
-                    <MenuItem Name="MenuItemMoveMeasureForward">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureForward}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ChevronDoubleRight"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <MenuItem Name="MenuItemMoveMeasureBack">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureBack}"/>
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ChevronDoubleLeft" />
-                        </MenuItem.Icon>
-                    </MenuItem>
 
-                    <Separator />
+                        <MenuItem Name="MenuItemMoveBeatForward">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatForward}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="ChevronRight" />
+                            </MenuItem.Icon>
+                        </MenuItem>
 
-                    <MenuItem Name="MenuItemJumpToNextNote">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.JumpToNextNote}" />
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ArrowNext" />
-                        </MenuItem.Icon>
-                    </MenuItem>
+                        <MenuItem Name="MenuItemMoveBeatBack">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatBack}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="ChevronLeft" />
+                            </MenuItem.Icon>
+                        </MenuItem>
 
-                    <MenuItem Name="MenuItemJumpToPreviousNote">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.JumpToPreviousNote}" />
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ArrowPrevious" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <Separator />
+                        <Separator />
 
-                    <MenuItem Name="MenuItemIncreaseBeatDivision">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.IncreaseBeatDivision}" />
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="Add" />
-                        </MenuItem.Icon>
-                    </MenuItem>
+                        <MenuItem Name="MenuItemMoveMeasureForward">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureForward}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="ChevronDoubleRight" />
+                            </MenuItem.Icon>
+                        </MenuItem>
 
-                    <MenuItem Name="MenuItemDecreaseBeatDivision">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.DecreaseBeatDivision}" />
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="Subtract" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <MenuItem Name="MenuItemDoubleBeatDivision">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.DoubleBeatDivision}" />
-                        </MenuItem.Header>
-                    </MenuItem>
+                        <MenuItem Name="MenuItemMoveMeasureBack">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureBack}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="ChevronDoubleLeft" />
+                            </MenuItem.Icon>
+                        </MenuItem>
 
-                    <MenuItem Name="MenuItemHalveBeatDivision">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.HalveBeatDivision}" />
-                        </MenuItem.Header>
+                        <Separator />
+
+                        <MenuItem Name="MenuItemJumpToNextNote">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Navigate.JumpToNextNote}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="ArrowNext" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Name="MenuItemJumpToPreviousNote">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Navigate.JumpToPreviousNote}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="ArrowPrevious" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <Separator />
+
+                        <MenuItem Name="MenuItemIncreaseBeatDivision">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Navigate.IncreaseBeatDivision}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="Add" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Name="MenuItemDecreaseBeatDivision">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Navigate.DecreaseBeatDivision}" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="Subtract" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Name="MenuItemDoubleBeatDivision">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Navigate.DoubleBeatDivision}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+
+                        <MenuItem Name="MenuItemHalveBeatDivision">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.Navigate.HalveBeatDivision}" />
+                            </MenuItem.Header>
+                        </MenuItem>
                     </MenuItem>
-                </MenuItem>
-            </Menu>
-            
-            <!-- Menu Bar, Buttons and Chrome -->
+                </Menu>
+            </StackPanel>
+
+            <!-- Buttons and Chrome -->
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
-                
+
                 <Button Name="ButtonUpdate"
                         Classes="Themed Square AccentFull"
                         Margin="5"
@@ -330,9 +422,9 @@
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
-                    <icon:FluentIcon Icon="ArrowDownload"/>
+                    <icon:FluentIcon Icon="ArrowDownload" />
                 </Button>
-                
+
                 <Button Name="ButtonSearch"
                         Classes="Themed Square Standard"
                         Margin="5"
@@ -341,7 +433,7 @@
                         ToolTip.Placement="Bottom">
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{DynamicResource Main.ToolTip.Search}"/>
+                            <TextBlock Text="{DynamicResource Main.ToolTip.Search}" />
                             <TextBlock Name="TextBlockShortcutSearch"
                                        Text="SHORTCUT"
                                        Margin="15,0,0,0"
@@ -349,9 +441,9 @@
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
-                    <icon:FluentIcon Icon="Search"/>
+                    <icon:FluentIcon Icon="Search" />
                 </Button>
-                
+
                 <Button Name="ButtonSettings"
                         Classes="Themed Square Standard"
                         Margin="5"
@@ -368,14 +460,14 @@
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
-                    <icon:FluentIcon Icon="Settings"/>
+                    <icon:FluentIcon Icon="Settings" />
                 </Button>
 
                 <Rectangle Fill="{DynamicResource SeparatorPrimary}"
                            Width="1"
-                           VerticalAlignment="Stretch" 
-                           Margin="5,10"/>
-                
+                           VerticalAlignment="Stretch"
+                           Margin="5,10" />
+
                 <Button Name="ButtonUndo"
                         Classes="Themed Square Standard"
                         Margin="5"
@@ -391,9 +483,9 @@
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
-                    <icon:FluentIcon Icon="ArrowUndo"/>
+                    <icon:FluentIcon Icon="ArrowUndo" />
                 </Button>
-                
+
                 <Button Name="ButtonRedo"
                         Classes="Themed Square Standard"
                         Margin="5"
@@ -409,124 +501,38 @@
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>
-                    <icon:FluentIcon Icon="ArrowRedo"/>
+                    <icon:FluentIcon Icon="ArrowRedo" />
                 </Button>
-                
+
                 <Rectangle Fill="{DynamicResource SeparatorPrimary}"
                            Width="1"
-                           VerticalAlignment="Stretch" 
-                           Margin="5,10"/>
-                
+                           VerticalAlignment="Stretch"
+                           Margin="5,10" />
+
                 <controls:WindowChrome Name="WindowChrome"
                                        HorizontalAlignment="Right"
                                        VerticalAlignment="Top" />
             </StackPanel>
         </Panel>
-        
-        <!-- Tabs and Content -->
-        <Grid ColumnDefinitions="41, *">
-            <!-- Tab Bar -->
-            <Grid Column="0"
-                  ColumnDefinitions="40, 1">
 
-                <!-- Tabs -->
-                <StackPanel Grid.Column="0"
-                            Background="{DynamicResource BackgroundPrimary}">
+        <!-- Horizontal Separator -->
+        <Rectangle Grid.Row="1"
+                   Fill="{DynamicResource SeparatorSecondary}" />
 
-                    <RadioButton Name="TabChartEditor"
-                                 Classes="Themed Square Standard"
-                                 GroupName="EditorTabs"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Left"
-                                 Width="30"
-                                 Height="30"
-                                 Margin="5,5,5,0"
-                                 IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
-                                 IsChecked="True"
-                                 ToolTip.HorizontalOffset="5"
-                                 ToolTip.Placement="Right"> 
-                        <ToolTip.Tip>
-                            <StackPanel>
-                                <TextBlock Text="{DynamicResource Main.ToolTip.ChartEditor}" />
-                                <TextBlock Text="{DynamicResource Main.ToolTip.ChartEditor.Description}"
-                                           Foreground="{DynamicResource ForegroundSecondary}" />
-                            </StackPanel>
-                        </ToolTip.Tip>
-                        <icon:FluentIcon Icon="GanttChart" FontSize="22"/>
-                    </RadioButton>
+        <!-- Content -->
+        <Panel Grid.Row="2"
+               Margin="1,0,1,1">
+            <chartEditor:ChartEditorView Name="ChartEditor"
+                                         IsVisible="True"
+                                         IsEnabled="True" />
 
-                    <RadioButton Name="TabStageEditor"
-                                 Classes="Themed Square Standard"
-                                 GroupName="EditorTabs"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Left"
-                                 Width="30"
-                                 Height="30"
-                                 Margin="5,5,5,0"
-                                 IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
-                                 IsChecked="False"
-                                 ToolTip.HorizontalOffset="5"
-                                 ToolTip.Placement="Right">
-                        <ToolTip.Tip>
-                            <StackPanel>
-                                <TextBlock Text="{DynamicResource Main.ToolTip.StageEditor}" />
-                                <TextBlock Text="{DynamicResource Main.ToolTip.StageEditor.Description}"
-                                           Foreground="{DynamicResource ForegroundSecondary}" />
-                            </StackPanel>
-                        </ToolTip.Tip>
-                        <icon:FluentIcon Icon="Steps" FontSize="22"/>
-                    </RadioButton>
+            <cosmeticsEditor:CosmeticsEditorView Name="StageEditor"
+                                                 IsVisible="False"
+                                                 IsEnabled="False" />
 
-                    <RadioButton Name="TabContentEditor"
-                                 Classes="Themed Square Standard"
-                                 GroupName="EditorTabs"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Left"
-                                 Width="30"
-                                 Height="30"
-                                 Margin="5,5,5,0"
-                                 IsCheckedChanged="EditorTabs_OnIsCheckedChanged"
-                                 IsChecked="False"
-                                 ToolTip.HorizontalOffset="5"
-                                 ToolTip.Placement="Right">
-                        <ToolTip.Tip>
-                            <StackPanel>
-                                <TextBlock Text="{DynamicResource Main.ToolTip.CosmeticsEditor}" />
-                                <TextBlock Text="{DynamicResource Main.ToolTip.CosmeticsEditor.Description}"
-                                           Foreground="{DynamicResource ForegroundSecondary}" />
-                            </StackPanel>
-                        </ToolTip.Tip>
-                        <icon:FluentIcon Icon="PaintBrushSparkle" FontSize="22"/>
-                    </RadioButton>
-
-                    <!--<Rectangle Height="1"
-                           HorizontalAlignment="Stretch"
-                           Fill="{DynamicResource SeparatorPrimary}"
-                           Margin="5,8,5,3" />-->
-
-
-                </StackPanel>
-
-                <!-- Separator -->
-                <Rectangle Grid.Column="1"
-                           Fill="{DynamicResource SeparatorSecondary}" />
-
-            </Grid>
-
-            <!-- Content -->
-            <Grid Column="1">
-                <chartEditor:ChartEditorView Name="ChartEditor"
-                             IsVisible="True"
-                             IsEnabled="True"/>
-            
-                <cosmeticsEditor:CosmeticsEditorView Name="StageEditor"
-                             IsVisible="False"
-                             IsEnabled="False"/>
-            
-                <stageEditor:StageEditorView Name="CosmeticsEditor"
-                             IsVisible="False"
-                             IsEnabled="False"/>
-            </Grid>
-        </Grid>
+            <stageEditor:StageEditorView Name="CosmeticsEditor"
+                                         IsVisible="False"
+                                         IsEnabled="False" />
+        </Panel>
     </Grid>
 </Window>

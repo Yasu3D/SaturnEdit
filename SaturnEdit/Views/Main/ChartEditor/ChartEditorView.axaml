@@ -7,32 +7,17 @@
              d:DesignWidth="800"
              d:DesignHeight="450"
              x:Class="SaturnEdit.Views.ChartEditor.ChartEditorView">
-    <Grid RowDefinitions="40,1,*,79">
-        
-        <!-- Menu Bar Background -->
-        <Rectangle Grid.Row="0" 
-                   Fill="{DynamicResource BackgroundPrimary}"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   IsHitTestVisible="False"  />
-        
-        <Rectangle Grid.Row="0" 
-                   Fill="{DynamicResource ChartEditorChromeGradient}"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   IsHitTestVisible="False"  />
-        
-        <!-- Separator -->
-        <Rectangle Grid.Row="1" Fill="{DynamicResource SeparatorSecondary}"/>
+    <Grid RowDefinitions="*,79">
         
         <!-- Content -->
-        <Grid Grid.Row="2" 
+        <Grid Grid.Row="0"
               ColumnDefinitions="60,1, *">
-            
-            <tabs:NotePaletteView Grid.Column="0"/>
-            
-            <Rectangle Grid.Column="1" Fill="{DynamicResource SeparatorSecondary}"/>
-            
+
+            <tabs:NotePaletteView Grid.Column="0" />
+
+            <Rectangle Grid.Column="1"
+                       Fill="{DynamicResource SeparatorSecondary}" />
+
             <DockControl Grid.Column="2"
                          x:Name="Dock"
                          InitializeLayout="True"
@@ -74,7 +59,7 @@
                                   Id="LayerInspector"
                                   Title="Layer Inspector"
                                   x:DataType="Tool">
-                                <tabs:InspectorView/>
+                                <tabs:InspectorView />
                             </Tool>
                         </ToolDock>
 
@@ -92,7 +77,7 @@
                             <ProportionalDock x:Name="RightPane"
                                               Id="RightPane"
                                               Orientation="Horizontal">
-                            
+
                                 <!-- Properties Pane -->
                                 <ToolDock x:Name="PropertiesPane"
                                           Id="PropertiesPane"
@@ -102,7 +87,7 @@
                                           Id="ChartView2D"
                                           Title="Chart View 2D"
                                           x:DataType="Tool">
-                                        <tabs:CursorView/>
+                                        <tabs:CursorView />
                                     </Tool>
                                 </ToolDock>
 
@@ -115,14 +100,14 @@
 
                             <ToolDock x:Name="BottomPane"
                                       Id="BottomPane"
-                                      Proportion="0.3" 
+                                      Proportion="0.3"
                                       MinHeight="362"
                                       Alignment="Bottom">
                                 <Tool x:Name="Mixer"
                                       Id="Mixer"
                                       Title="Cursor"
                                       x:DataType="Tool">
-                                    <tabs:ChartView3D/>
+                                    <tabs:ChartView3D />
                                 </Tool>
                             </ToolDock>
 
@@ -133,8 +118,8 @@
 
             </DockControl>
         </Grid>
-        
-        <tabs:PlaybackView Grid.Row="3"/>
-        
+
+        <tabs:PlaybackView Grid.Row="1" />
+
     </Grid>
 </UserControl>

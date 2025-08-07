@@ -174,8 +174,34 @@
                     <SolidColorBrush x:Key="MixerVolumePrimary"   Color="#FF606060" />
                     <SolidColorBrush x:Key="MixerVolumeSecondary" Color="#FF404040" />
                     <SolidColorBrush x:Key="MixerVolumeAccent"    Color="#FF7B41E0" />
-                    
 
+                    <RadialGradientBrush x:Key="ChartEditorChromeGradient"
+                                         RadiusX="225"
+                                         RadiusY="225"
+                                         Center="280, 20"
+                                         GradientOrigin="200, 20">
+                        <GradientStop Color="#30926BFF" Offset="0.0"/>
+                        <GradientStop Color="#00926BFF" Offset="1.0"/>
+                    </RadialGradientBrush>
+                    
+                    <RadialGradientBrush x:Key="StageEditorChromeGradient"
+                                         RadiusX="225"
+                                         RadiusY="225"
+                                         Center="280, 20"
+                                         GradientOrigin="200, 20">
+                        <GradientStop Color="#30E46161" Offset="0.0"/>
+                        <GradientStop Color="#00E46161" Offset="1.0"/>
+                    </RadialGradientBrush>
+                    
+                    <RadialGradientBrush x:Key="CosmeticsEditorChromeGradient"
+                                         RadiusX="225"
+                                         RadiusY="225"
+                                         Center="280, 20"
+                                         GradientOrigin="200, 20">
+                        <GradientStop Color="#30269EBB" Offset="0.0"/>
+                        <GradientStop Color="#00269EBB" Offset="1.0"/>
+                    </RadialGradientBrush>
+                    
                     <!-- Legacy Dock Stuff, mostly overwritten by custom control themes. -->
                     <SolidColorBrush x:Key="DockApplicationAccentBrushLow" Color="#454545" /> <!-- Document Grip Selected -->
                     <SolidColorBrush x:Key="DockApplicationAccentForegroundBrush" Color="#D0D0D0" /> <!-- Window Text -->
@@ -189,33 +215,6 @@
                     <SolidColorBrush x:Key="DockThemeForegroundBrush" Color="#D0D0D0" /> <!-- Document Text -->
                     
                     <system:Double x:Key="DockFontSizeNormal">12</system:Double>
-
-                    <RadialGradientBrush x:Key="ChartEditorChromeGradient"
-                                         RadiusX="225"
-                                         RadiusY="225"
-                                         Center="150, 20"
-                                         GradientOrigin="200, 20">
-                        <GradientStop Color="#30926BFF" Offset="0.0"/>
-                        <GradientStop Color="#00926BFF" Offset="1.0"/>
-                    </RadialGradientBrush>
-                    
-                    <RadialGradientBrush x:Key="StageEditorChromeGradient"
-                                         RadiusX="225"
-                                         RadiusY="225"
-                                         Center="150, 20"
-                                         GradientOrigin="200, 20">
-                        <GradientStop Color="#30E46161" Offset="0.0"/>
-                        <GradientStop Color="#00E46161" Offset="1.0"/>
-                    </RadialGradientBrush>
-                    
-                    <RadialGradientBrush x:Key="CosmeticsEditorChromeGradient"
-                                         RadiusX="225"
-                                         RadiusY="225"
-                                         Center="150, 20"
-                                         GradientOrigin="200, 20">
-                        <GradientStop Color="#30269EBB" Offset="0.0"/>
-                        <GradientStop Color="#00269EBB" Offset="1.0"/>
-                    </RadialGradientBrush>
                 </ResourceDictionary>
                 
             </ResourceDictionary.ThemeDictionaries>
