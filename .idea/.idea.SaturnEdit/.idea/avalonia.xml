@@ -21,6 +21,8 @@
         <entry key="SaturnEdit/Styles/Resources/ComboBox.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/ComboBoxItem.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/Dock/DockTarget.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Resources/Dock/GlobalDockTarget.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Styles/Resources/Dock/ToolChromeControl.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/Dock/ToolControl.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/Expander.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Styles/Resources/ListBox.axaml" value="SaturnEdit/SaturnEdit.csproj" />

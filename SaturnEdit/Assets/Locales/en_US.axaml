@@ -62,11 +62,13 @@
     <system:String x:Key="ChartEditor.Playback.ToolTip.PlaybackSpeed.Description">Adjust playback speed in steps of 5%.</system:String>
     <system:String x:Key="ChartEditor.Playback.ToolTip.IncreasePlaybackSpeed">Increase Playback Speed</system:String>
     <system:String x:Key="ChartEditor.Playback.ToolTip.DecreasePlaybackSpeed">Decrease Playback Speed</system:String>
+    <system:String x:Key="ChartEditor.Inspector">Inspector</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.General">General</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.Shape">Shape</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.Judgement">Judgement</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.Hold">Hold</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.LaneToggles">Lane Toggles</system:String>
+    <system:String x:Key="ChartEditor.EventList">Event List</system:String>
     <system:String x:Key="ChartEditor.EventList.Header.Events">Events</system:String>
     <system:String x:Key="ChartEditor.List">List</system:String>
     <system:String x:Key="ChartEditor.List.ToolTip.AddNew">Add New</system:String>
@@ -74,11 +76,15 @@
     <system:String x:Key="ChartEditor.List.ToolTip.DeleteSelection">Delete Selection</system:String>
     <system:String x:Key="ChartEditor.List.ToolTip.MoveItemUp">Move Item Up</system:String>
     <system:String x:Key="ChartEditor.List.ToolTip.MoveItemDown">Move Item Down</system:String>
+    <system:String x:Key="ChartEditor.LaneToggleList">Lane Toggle List</system:String>
     <system:String x:Key="ChartEditor.LaneToggleList.Header.LaneToggles">Lane Toggles</system:String>
+    <system:String x:Key="ChartEditor.BookmarkList">Bookmark List</system:String>
     <system:String x:Key="ChartEditor.BookmarkList.Header.Bookmarks">Bookmarks</system:String>
+    <system:String x:Key="ChartEditor.LayerList">Layer List</system:String>
     <system:String x:Key="ChartEditor.LayerList.Header.Layers">Layers</system:String>
     <system:String x:Key="ChartEditor.LayerList.Header.LayerEvents">Layer Events</system:String>
     <system:String x:Key="ChartEditor.LayerList.Header.LayerNotes">Layer Notes</system:String>
+    <system:String x:Key="ChartEditor.ChartProperties">Chart Properties</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Header.Song">Song</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Header.Chart">Chart</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Header.Display">Display</system:String>
@@ -125,6 +131,7 @@
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description">Automatically determine the clear threshold based on the chart's difficulty.</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd">Auto Chart End</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description">Automatically determine when a chart should end and transition to the results screen.</system:String>
+    <system:String x:Key="ChartEditor.ChartViewTxt">Chart View (Text)</system:String>
     <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.ShowSpaces">Show Spaces</system:String>
     <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.ShowSpaces.Description">Displays a bullet point dot • wherever whitespace is.</system:String>
     <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting">Syntax Highlighting</system:String>
@@ -181,6 +188,7 @@
     <system:String x:Key="ChartEditor.NotePalette.HoldPointRenderType.Visible.Description">A normal hold point that influences the shape and judged area of a Hold Note.</system:String>
     <system:String x:Key="ChartEditor.NotePalette.HoldPointRenderType.Hidden">Render Type - Hidden</system:String>
     <system:String x:Key="ChartEditor.NotePalette.HoldPointRenderType.Hidden.Description">A special hold point that doesn't influence the shape of a Hold Note, but still influences the judged area.</system:String>
+    <system:String x:Key="ChartEditor.AudioMixer">Audio Mixer</system:String>
     <system:String x:Key="ChartEditor.AudioMixer.Channel.Master">Master</system:String>
     <system:String x:Key="ChartEditor.AudioMixer.Channel.Audio">Audio</system:String>
     <system:String x:Key="ChartEditor.AudioMixer.Channel.Guide">Guide</system:String>
@@ -195,6 +203,7 @@
     <system:String x:Key="ChartEditor.AudioMixer.Channel.StartClick">Start Click</system:String>
     <system:String x:Key="ChartEditor.AudioMixer.Channel.Metronome">Metronome</system:String>
     <system:String x:Key="ChartEditor.AudioMixer.Placeholder.NoSound">No Sound</system:String>
+    <system:String x:Key="ChartEditor.ChartStatistics">Chart Statistics</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfLayers"># of Layers:</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfEvents"># of Events:</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfTempoChanges">...of those Tempo Changes:</system:String>
@@ -222,6 +231,7 @@
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfLaneToggleNotes"># of Lane Toggles:</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfLaneShowNotes">...of those Lane Show:</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes">...of those Lane Hide:</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D">Chart View (3D)</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Mode.NoteEditMode">Note Edit Mode</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Mode.HoldEditMode">Hold Edit Mode</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.BoxSelect">Box Select</system:String>
@@ -281,6 +291,9 @@
     <system:String x:Key="ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim">Increase Background Dim</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.DecreaseBackgroundDim">Decrease Background Dim</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Toolbar">Toolbar</system:String>
+    <system:String x:Key="ChartEditor.ChartView2D">Chart View (2D)</system:String>
+    <system:String x:Key="ChartEditor.Waveform">Waveform</system:String>
+    <system:String x:Key="ChartEditor.Cursor">Cursor</system:String>
     <system:String x:Key="Main.Window.Title">SaturnEdit</system:String>
     <system:String x:Key="Main.ToolTip.Update">Update Available!</system:String>
     <system:String x:Key="Main.ToolTip.Update.Description">Click to download latest version.</system:String>
@@ -317,6 +330,14 @@
     <system:String x:Key="Menu.Edit.CheckerDeselect">Checker Deselect...</system:String>
     <system:String x:Key="Menu.Edit.SelectSimilar">Select Similar...</system:String>
     <system:String x:Key="Menu.View">View</system:String>
+    <system:String x:Key="Menu.View.ToolWindows">Tool Windows</system:String>
+    <system:String x:Key="Menu.View.LayoutPresets">Layout Presets</system:String>
+    <system:String x:Key="Menu.View.LayoutPresets.Classic">Classic Layout</system:String>
+    <system:String x:Key="Menu.View.LayoutPresets.Classic.Description">A simple layout, reminiscent of the editors that came before.</system:String>
+    <system:String x:Key="Menu.View.LayoutPresets.Advanced">Advanced Layout</system:String>
+    <system:String x:Key="Menu.View.LayoutPresets.Advanced.Description">A more advanced layout, suitable for larger screens and note designers doing complex work with layers.</system:String>
+    <system:String x:Key="Menu.View.SaveLayout">Save Layout...</system:String>
+    <system:String x:Key="Menu.View.LoadLayout">Load Layout</system:String>
     <system:String x:Key="Menu.Navigate">Navigate</system:String>
     <system:String x:Key="Menu.Navigate.MoveBeatForward">Move Beat Forward</system:String>
     <system:String x:Key="Menu.Navigate.MoveBeatBack">Move Beat Back</system:String>

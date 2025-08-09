@@ -26,10 +26,15 @@ public partial class ChartEditorView : UserControl
         serializer = new(typeof(AvaloniaList<>));
         dockState = new();
 
-        IDock? layout = Dock?.Layout;
+        IDock? layout = TabDock?.Layout;
         if (layout != null)
         {
             dockState.Save(layout);
         }
+    }
+
+    private void Test()
+    {
+        
     }
 }

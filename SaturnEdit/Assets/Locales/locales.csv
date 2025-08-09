@@ -59,11 +59,13 @@ ChartEditor.Playback.ToolTip.PlaybackSpeed,Playback Speed
 ChartEditor.Playback.ToolTip.PlaybackSpeed.Description,Adjust playback speed in steps of 5%.
 ChartEditor.Playback.ToolTip.IncreasePlaybackSpeed,Increase Playback Speed
 ChartEditor.Playback.ToolTip.DecreasePlaybackSpeed,Decrease Playback Speed
+ChartEditor.Inspector,Inspector
 ChartEditor.Inspector.Header.General,General
 ChartEditor.Inspector.Header.Shape,Shape
 ChartEditor.Inspector.Header.Judgement,Judgement
 ChartEditor.Inspector.Header.Hold,Hold
 ChartEditor.Inspector.Header.LaneToggles,Lane Toggles
+ChartEditor.EventList,Event List
 ChartEditor.EventList.Header.Events,Events
 ChartEditor.List,List
 ChartEditor.List.ToolTip.AddNew,Add New
@@ -71,11 +73,15 @@ ChartEditor.List.ToolTip.AddNewEllipsis,Add New...
 ChartEditor.List.ToolTip.DeleteSelection,Delete Selection
 ChartEditor.List.ToolTip.MoveItemUp,Move Item Up
 ChartEditor.List.ToolTip.MoveItemDown,Move Item Down
+ChartEditor.LaneToggleList,Lane Toggle List
 ChartEditor.LaneToggleList.Header.LaneToggles,Lane Toggles
+ChartEditor.BookmarkList,Bookmark List
 ChartEditor.BookmarkList.Header.Bookmarks,Bookmarks
+ChartEditor.LayerList,Layer List
 ChartEditor.LayerList.Header.Layers,Layers
 ChartEditor.LayerList.Header.LayerEvents,Layer Events
 ChartEditor.LayerList.Header.LayerNotes,Layer Notes
+ChartEditor.ChartProperties,Chart Properties
 ChartEditor.ChartProperties.Header.Song,Song
 ChartEditor.ChartProperties.Header.Chart,Chart
 ChartEditor.ChartProperties.Header.Display,Display
@@ -122,6 +128,7 @@ ChartEditor.ChartProperties.ToolTip.AutoClearThreshold,Auto Clear Threshold
 ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description,Automatically determine the clear threshold based on the chart's difficulty.
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd,Auto Chart End
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description,Automatically determine when a chart should end and transition to the results screen.
+ChartEditor.ChartViewTxt,Chart View (Text)
 ChartEditor.ChartViewTxt.ToolTip.ShowSpaces,Show Spaces
 ChartEditor.ChartViewTxt.ToolTip.ShowSpaces.Description,Displays a bullet point dot • wherever whitespace is.
 ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting,Syntax Highlighting
@@ -178,6 +185,7 @@ ChartEditor.NotePalette.HoldPointRenderType.Visible,Render Type - Visible
 ChartEditor.NotePalette.HoldPointRenderType.Visible.Description,A normal hold point that influences the shape and judged area of a Hold Note.
 ChartEditor.NotePalette.HoldPointRenderType.Hidden,Render Type - Hidden
 ChartEditor.NotePalette.HoldPointRenderType.Hidden.Description,"A special hold point that doesn't influence the shape of a Hold Note, but still influences the judged area."
+ChartEditor.AudioMixer,Audio Mixer
 ChartEditor.AudioMixer.Channel.Master,Master
 ChartEditor.AudioMixer.Channel.Audio,Audio
 ChartEditor.AudioMixer.Channel.Guide,Guide
@@ -192,6 +200,7 @@ ChartEditor.AudioMixer.Channel.R,R
 ChartEditor.AudioMixer.Channel.StartClick,Start Click
 ChartEditor.AudioMixer.Channel.Metronome,Metronome
 ChartEditor.AudioMixer.Placeholder.NoSound,No Sound
+ChartEditor.ChartStatistics,Chart Statistics
 ChartEditor.ChartStatistics.Label.NumberOfLayers,# of Layers:
 ChartEditor.ChartStatistics.Label.NumberOfEvents,# of Events:
 ChartEditor.ChartStatistics.Label.NumberOfTempoChanges,...of those Tempo Changes:
@@ -219,6 +228,7 @@ ChartEditor.ChartStatistics.Label.NumberOfSnapBackwardNotes,...of those Backward
 ChartEditor.ChartStatistics.Label.NumberOfLaneToggleNotes,# of Lane Toggles:
 ChartEditor.ChartStatistics.Label.NumberOfLaneShowNotes,...of those Lane Show:
 ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes,...of those Lane Hide:
+ChartEditor.ChartView3D,Chart View (3D)
 ChartEditor.ChartView3D.Mode.NoteEditMode,Note Edit Mode
 ChartEditor.ChartView3D.Mode.HoldEditMode,Hold Edit Mode
 ChartEditor.ChartView3D.ToolTip.BoxSelect,Box Select
@@ -278,6 +288,9 @@ ChartEditor.ChartView3D.Menu.DecreaseNoteSpeed,Decrease Note Speed
 ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim,Increase Background Dim
 ChartEditor.ChartView3D.Menu.DecreaseBackgroundDim,Decrease Background Dim
 ChartEditor.ChartView3D.Toolbar,Toolbar
+ChartEditor.ChartView2D,Chart View (2D)
+ChartEditor.Waveform,Waveform
+ChartEditor.Cursor,Cursor
 Main.Window.Title,SaturnEdit
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.
@@ -314,6 +327,14 @@ Menu.Edit.BoxSelect,Box Select
 Menu.Edit.CheckerDeselect,Checker Deselect...
 Menu.Edit.SelectSimilar,Select Similar...
 Menu.View,View
+Menu.View.ToolWindows,Tool Windows
+Menu.View.LayoutPresets,Layout Presets
+Menu.View.LayoutPresets.Classic,Classic Layout
+Menu.View.LayoutPresets.Classic.Description,"A simple layout, reminiscent of the editors that came before."
+Menu.View.LayoutPresets.Advanced,Advanced Layout
+Menu.View.LayoutPresets.Advanced.Description,"A more advanced layout, suitable for larger screens and note designers doing complex work with layers."
+Menu.View.SaveLayout,Save Layout...
+Menu.View.LoadLayout,Load Layout
 Menu.Navigate,Navigate
 Menu.Navigate.MoveBeatForward,Move Beat Forward
 Menu.Navigate.MoveBeatBack,Move Beat Back

@@ -21,9 +21,6 @@ public partial class MainWindow : Window
 
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
-        
-        StageEditor.MainWindow = this;
-        CosmeticsEditor.MainWindow = this;
     }
 
     private void OnSettingsChanged(object? sender, EventArgs e)

@@ -18,7 +18,7 @@
         Background="{DynamicResource BackgroundSecondary}"
         Title="{DynamicResource Main.Window.Title}">
     <Grid RowDefinitions="40,1,*">
-        <!-- Menu -->
+        <!-- Top Bar -->
         <Panel Grid.Row="0"
                VerticalAlignment="Top"
                Height="40">
@@ -305,6 +305,182 @@
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.View}" />
                         </MenuItem.Header>
+
+                        <MenuItem>
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.View.ToolWindows}" />
+                            </MenuItem.Header>
+                            
+                            <MenuItem Name="MenuItemChartView3D">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="CircleShadow" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            
+                            <MenuItem Name="MenuItemChartView2D">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView2D}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="GanttChart" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            
+                            <MenuItem Name="MenuItemChartViewTxt">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartViewTxt}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="TextT" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            
+                            <Separator/>
+                            
+                            <MenuItem Name="MenuItemChartProperties">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="TextBulletList" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            
+                            <MenuItem Name="MenuItemChartStatistics">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="DataHistogram" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            
+                            <MenuItem Name="MenuItemProofreader">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.Proofreader}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="ApprovalsApp" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            
+                            <Separator/>
+                            
+                            <MenuItem Name="MenuItemEventList">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.EventList}" />
+                                </MenuItem.Header>
+                            </MenuItem>
+                            
+                            <MenuItem Name="MenuItemLayerList">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.LayerList}" />
+                                </MenuItem.Header>
+                            </MenuItem>
+                            
+                            <MenuItem Name="MenuItemLaneToggleList">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.LaneToggleList}" />
+                                </MenuItem.Header>
+                            </MenuItem>
+                            
+                            <MenuItem Name="MenuItemBookmarkList">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.BookmarkList}" />
+                                </MenuItem.Header>
+                            </MenuItem>
+                            
+                            <Separator/>
+                            
+                            <MenuItem Name="MenuItemInspector">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.Inspector}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="WrenchScrewdriver" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+   
+                            <MenuItem Name="MenuItemCursor">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.Cursor}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="CircleHintHalfVertical" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            
+                            <Separator/>
+                            
+                            <MenuItem Name="MenuItemAudioMixer">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.AudioMixer}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="Speaker2" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            
+                            <MenuItem Name="MenuItemWaveform">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.Waveform}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="Pulse" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </MenuItem>
+                        
+                        <Separator/>
+                        
+                        <MenuItem>
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.View.LayoutPresets}" />
+                            </MenuItem.Header>
+
+                            <MenuItem>
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource Menu.View.LayoutPresets.Classic}" />
+                                </MenuItem.Header>
+                                <ToolTip.Tip>
+                                    <StackPanel>
+                                        <TextBlock Text="{DynamicResource Menu.View.LayoutPresets.Classic}" />
+                                        <TextBlock Text="{DynamicResource Menu.View.LayoutPresets.Classic.Description}"
+                                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                                    </StackPanel>
+                                </ToolTip.Tip>
+                            </MenuItem>
+                            
+                            <MenuItem>
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource Menu.View.LayoutPresets.Advanced}" />
+                                </MenuItem.Header>
+                                <ToolTip.Tip>
+                                    <StackPanel>
+                                        <TextBlock Text="{DynamicResource Menu.View.LayoutPresets.Advanced}" />
+                                        <TextBlock Text="{DynamicResource Menu.View.LayoutPresets.Advanced.Description}"
+                                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                                    </StackPanel>
+                                </ToolTip.Tip>
+                            </MenuItem>
+                        </MenuItem>
+                        
+                        <Separator/>
+                        
+                        <MenuItem>
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.View.SaveLayout}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                        <MenuItem>
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.View.LoadLayout}" />
+                            </MenuItem.Header>
+                        </MenuItem>
                     </MenuItem>
 
                     <MenuItem>
