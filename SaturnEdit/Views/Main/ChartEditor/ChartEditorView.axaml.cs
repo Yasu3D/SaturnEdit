@@ -1,15 +1,11 @@
 using System;
-using System.Threading.Tasks;
 using Avalonia.Collections;
 using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Avalonia.Threading;
 using Dock.Model;
+using Dock.Model.Avalonia.Controls;
 using Dock.Model.Core;
 using Dock.Serializer;
-using SaturnEdit.Systems;
 
 namespace SaturnEdit.Views.ChartEditor;
 
@@ -17,7 +13,7 @@ public partial class ChartEditorView : UserControl
 {
     private readonly DockSerializer serializer;
     private readonly DockState dockState;
-    
+
     public ChartEditorView()
     {
         InitializeComponent();
@@ -26,15 +22,24 @@ public partial class ChartEditorView : UserControl
         serializer = new(typeof(AvaloniaList<>));
         dockState = new();
 
-        IDock? layout = TabDock?.Layout;
+        IDock? layout = DockControl?.Layout;
         if (layout != null)
         {
             dockState.Save(layout);
         }
     }
 
-    private void Test()
+    public void CreateNewFloatingTool(UserControl userControl)
     {
+        Tool tool = new() { Content = new Func<IServiceProvider, object>(_ => userControl) };
         
+        ToolDock toolDock = new()
+        {
+            VisibleDockables = DockControl.Factory?.CreateList<IDockable>(tool),
+            ActiveDockable = tool,
+        };
+
+        DockControl.Factory?.AddDockable(RootDock, toolDock);
+        DockControl.Factory?.FloatDockable(toolDock);
     }
 }

@@ -20,5 +20,5 @@
             <Setter Property="ExtendClientAreaToDecorationsHint" Value="True"/>
         </Style>
     </Application.Styles>
-
+    
 </Application>

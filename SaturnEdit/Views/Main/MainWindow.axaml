@@ -311,7 +311,8 @@
                                 <TextBlock Text="{DynamicResource Menu.View.ToolWindows}" />
                             </MenuItem.Header>
                             
-                            <MenuItem Name="MenuItemChartView3D">
+                            <MenuItem Name="MenuItemChartView3D"
+                                      Click="MenuItemToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D}" />
                                 </MenuItem.Header>

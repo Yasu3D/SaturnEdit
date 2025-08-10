@@ -8,13 +8,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/Dock/GlobalDockTarget.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationUtils.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/App.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/App.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml" afterDir="false" />
@@ -39,10 +37,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2b90705926ae4f10aa01bbe3f1025828c90908/dd/26fa1aa0/ValueType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/14be3e5ce324a564c079692a5cf89ae165e6dd447781d92b7625f4cc6d0e6/TemplateContent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1579bf835158dd6aec6bad778df36f37e1ed9bdaa7c2b533f598f5c59bd4/StandardAssetLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17bbecded926db66f0c619b11b6b1e95b3ff589ca31d8d9f5b33ea3881a9c/TextMate.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/18271b231f311a85fe64698dc18655e24f08e4045a7feae47f6978671d9b/IFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1836e961bce6521928afb9d8a472c4cf9b66e31eb7aa1adcd153b1d310c8c0/DispatcherOperation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2336aace97ddc8cc25862b3b71d24f55d8388d6cd680a37a5c4e412b7640/ProportionalStackPanel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/261ea83c988816e3d8fe76b15b7ac6c10af64b8f9e739854f83c137c8ba9/SafeFileHandle.Windows.cs" root0="FORCE_HIGHLIGHTING" />
@@ -52,10 +51,13 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6346e651faa0d55ca58f0fc30dae9158ba634a7226b199ac8c35110c1ba718/PathMarkupParser.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7e67932f6ba5519c62825561be88ee19e4e95dcbf15861d3102b329ec4b491/Color.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/80462644bd1cc7e0b229dc4f5752b48c01cb67b46ae563b1b5078cc2556b98/AvaloniaXamlLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/85c9ed87591a0e967fa32dc9462d0e38ffef676e117db273485b85b7349596/TemplateResult.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/97b5d7b50be9f742d98774804196ef90c6e0d73566febd9dc1a5154359257/FactoryBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b23cb847f33b753542a42b3f20ac9361fcabd14fd166ec471fe468e3597a9b/Interactive.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b2e2ff5e4f118b6e4ad5f910e9fde1fd6a338b5716cff790e934a2014dc8379/File.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bd1d5c50194fea68ff3559c160230b0ab50f5acf4ce3061bffd6d62958e2182/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bf532557e1d8544b48c54c27b05b69b5b6c73c44c5ecb71777b05059e9192cb/Layoutable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c7da56581ee7b20208f09e80b735961e4d5d7b9e5562bfdec94a75c57b391/ThrowHelper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9953ccb43c29d78a4581a51c60cbc84c14eec77e91f9c3fdbc25c29e/SkiaApplicationExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dad9b0d97f2e9ef92a936a0ad1a16a060412cd1ecaee0cbd5714b64dfd89599/ThemeVariantTypeConverter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e49d9521ff091d353928d1c44539ba0a4c93a9ebb2e65190880b4fe5eb8/StyledElement.cs" root0="FORCE_HIGHLIGHTING" />
@@ -85,7 +87,7 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.45219123&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.5037037&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -203,6 +205,12 @@
       <workItem from="1754598931150" duration="15366000" />
       <workItem from="1754635052883" duration="2707000" />
       <workItem from="1754691014290" duration="9521000" />
+      <workItem from="1754705182434" duration="43000" />
+      <workItem from="1754707203778" duration="440000" />
+      <workItem from="1754708436902" duration="10311000" />
+      <workItem from="1754720958795" duration="1822000" />
+      <workItem from="1754724534568" duration="1598000" />
+      <workItem from="1754785524482" duration="902000" />
     </task>
     <servers />
   </component>

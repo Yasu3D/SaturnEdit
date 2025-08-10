@@ -3,12 +3,15 @@ using System.IO;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Dock.Model;
+using Dock.Model.Avalonia.Controls;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
 using SaturnEdit.Views;
 using SaturnEdit.Views.ChartEditor;
 using SaturnEdit.Views.CosmeticsEditor;
+using SaturnEdit.Views.Main.ChartEditor.Tabs;
 using SaturnEdit.Views.StageEditor;
 
 namespace SaturnEdit;
@@ -112,8 +115,6 @@ public partial class MainWindow : Window
         
     }
     
-    
-    
     public async void ShowSettingsWindow()
     {
         try
@@ -125,5 +126,31 @@ public partial class MainWindow : Window
         {
             // ignored.
         }
+    }
+
+    private void MenuItemToolWindows_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not MenuItem menuItem) return;
+        UserControl? userControl = menuItem.Name switch
+        {
+            "MenuItemChartView3D" => new ChartView3D(),
+            "MenuItemChartView2D" => new ChartView2D(),
+            "MenuItemChartViewTxt" => new ChartViewTxt(),
+            "MenuItemChartProperties" => new ChartPropertiesView(),
+            "MenuItemChartStatistics" => new ChartStatisticsView(),
+            "MenuItemProofreader" => new ProofreaderView(),
+            "MenuItemEventList" => new EventListView(),
+            "MenuItemLayerList" => new LayerListView(),
+            "MenuItemLaneToggleList" => new LaneToggleListView(),
+            "MenuItemBookmarkList" => new BookmarkListView(),
+            "MenuItemInspector" => new InspectorView(),
+            "MenuItemCursor" => new CursorView(),
+            "MenuItemAudioMixer" => new AudioMixerView(),
+            "MenuItemWaveform" => new WaveformView(),
+            _ => null,
+        };
+
+        if (userControl == null) return;
+        ChartEditor.CreateNewFloatingTool(userControl);
     }
 }

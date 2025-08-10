@@ -20,14 +20,14 @@
 
             <!-- Tab Dock -->
             <DockControl Grid.Column="2"
-                         x:Name="TabDock"
+                         x:Name="DockControl"
                          InitializeLayout="True"
                          InitializeFactory="True" >
                 <DockControl.Factory>
                     <Factory />
                 </DockControl.Factory>
 
-                <RootDock x:Name="TestRoot"
+                <RootDock x:Name="RootDock"
                           IsCollapsable="False"
                           DefaultDockable="{Binding #MainLayout}">
                     <RootDock.Windows />
