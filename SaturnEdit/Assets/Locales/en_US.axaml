@@ -294,6 +294,8 @@
     <system:String x:Key="ChartEditor.ChartView2D">Chart View (2D)</system:String>
     <system:String x:Key="ChartEditor.Waveform">Waveform</system:String>
     <system:String x:Key="ChartEditor.Cursor">Cursor</system:String>
+    <system:String x:Key="ChartEditor.Cursor.OddBeatDivisionWarning">Odd Beat Division</system:String>
+    <system:String x:Key="ChartEditor.Cursor.OddBeatDivisionWarning.Description">The current Beat Division does not evenly divide into 1920 Ticks. Notes placed with this division may have inconsistent timestamps.</system:String>
     <system:String x:Key="Main.Window.Title">SaturnEdit</system:String>
     <system:String x:Key="Main.ToolTip.Update">Update Available!</system:String>
     <system:String x:Key="Main.ToolTip.Update.Description">Click to download latest version.</system:String>

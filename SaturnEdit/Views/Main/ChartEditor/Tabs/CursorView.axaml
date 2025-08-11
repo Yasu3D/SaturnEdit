@@ -2,8 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
-             d:DesignWidth="325"
+             d:DesignWidth="350"
              d:DesignHeight="180"
              Background="{DynamicResource BackgroundPrimary}"
              x:Class="SaturnEdit.Views.Main.ChartEditor.Tabs.CursorView">
@@ -29,7 +30,8 @@
                        HorizontalAlignment="Stretch"
                        Minimum="0"
                        Value="0" 
-                       FormatString="0"/>
+                       FormatString="0"
+                       ValueChanged="NumericUpDownMeasure_OnValueChanged"/>
         
         <TextBlock Grid.Row="1"
                    Grid.Column="0"
@@ -42,10 +44,11 @@
                            Name="NumericUpDownBeat"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Stretch"
-                           Minimum="0"
+                           Minimum="-1"
                            Increment="1"
                            Value="1"
-                           FormatString="0"/>
+                           FormatString="0"
+                           ValueChanged="NumericUpDownBeat_OnValueChanged"/>
 
             <Rectangle Grid.Column="1"
                        Fill="{DynamicResource SeparatorPrimary}"
@@ -53,15 +56,33 @@
                        Margin="0,5"
                        HorizontalAlignment="Center" />
 
-            <NumericUpDown Grid.Column="2"
-                           Name="NumericUpDownDivision"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Stretch"
-                           Minimum="1"
-                           Maximum="1920"
-                           Increment="1"
-                           Value="8"
-                           FormatString="0"/>
+            <Grid Column="2"
+                  ColumnDefinitions="25,*">
+                <icon:FluentIcon Name="IconOddDivisionWarning"
+                                 IsVisible="False"
+                                 Icon="Warning"
+                                 Margin="0,0,5,0"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.Cursor.OddBeatDivisionWarning}"/>
+                            <TextBlock Text="{DynamicResource ChartEditor.Cursor.OddBeatDivisionWarning.Description}" Foreground="{DynamicResource ForegroundSecondary}"/>
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
+                
+                <NumericUpDown Grid.Column="1"
+                               Name="NumericUpDownDivision"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Stretch"
+                               Minimum="1"
+                               Maximum="1920"
+                               Increment="1"
+                               Value="8"
+                               FormatString="0"
+                               ValueChanged="NumericUpDownDivision_OnValueChanged"/>
+            </Grid>
+            
         </Grid>
 
         <TextBlock Grid.Row="2"

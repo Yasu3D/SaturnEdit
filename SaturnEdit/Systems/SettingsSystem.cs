@@ -158,6 +158,8 @@ public class EditorSettings
 {
     public event EventHandler? PropertyChanged;
 
+#region Enum Definitions
+
     public enum LocaleOptions
     {
         en_US = 0,
@@ -171,6 +173,9 @@ public class EditorSettings
         Dark = 1,
     }
     
+#endregion Enum Definitions
+    
+    private LocaleOptions locale = LocaleOptions.en_US;
     public LocaleOptions Locale
     {
         get => locale;
@@ -183,9 +188,8 @@ public class EditorSettings
             }
         }
     }
-    
-    private LocaleOptions locale = LocaleOptions.en_US;
 
+    private EditorThemeOptions theme = EditorThemeOptions.Dark;
     public EditorThemeOptions Theme
     {
         get => theme;
@@ -199,8 +203,7 @@ public class EditorSettings
         }
     }
     
-    private EditorThemeOptions theme = EditorThemeOptions.Dark;
-    
+    private bool showSplashScreen = true;
     public bool ShowSplashScreen
     {
         get => showSplashScreen;
@@ -214,8 +217,7 @@ public class EditorSettings
         }
     }
     
-    private bool showSplashScreen = true;
-    
+    private bool continueLastSession = true;
     public bool ContinueLastSession
     {
         get => continueLastSession;
@@ -229,8 +231,7 @@ public class EditorSettings
         }
     }
     
-    private bool continueLastSession = true;
-    
+    private bool chartViewTxtShowSpaces = true;
     public bool ChartViewTxtShowSpaces
     {
         get => chartViewTxtShowSpaces;
@@ -244,8 +245,7 @@ public class EditorSettings
         }
     }
     
-    private bool chartViewTxtShowSpaces = true;
-    
+    private bool chartViewTxtSyntaxHighlighting = true;
     public bool ChartViewTxtSyntaxHighlighting
     {
         get => chartViewTxtSyntaxHighlighting;
@@ -258,13 +258,13 @@ public class EditorSettings
             }
         }
     }
-    
-    private bool chartViewTxtSyntaxHighlighting = true;
 }
 
 public class AudioSettings
 {
     public event EventHandler? PropertyChanged;
+
+#region Enum Definitions
 
     public enum QuantizedPauseOptions
     {
@@ -273,8 +273,10 @@ public class AudioSettings
         Previous = 2,
         Next = 3,
     }
-
     
+#endregion
+    
+    private bool loopPlayback = false;
     public bool LoopPlayback
     {
         get => loopPlayback;
@@ -288,9 +290,7 @@ public class AudioSettings
         }
     }
     
-    private bool loopPlayback = false;
-    
-
+    private bool metronome = false;
     public bool Metronome
     {
         get => metronome;
@@ -303,10 +303,8 @@ public class AudioSettings
             }
         }
     }
-
-    private bool metronome = false;
     
-    
+    private QuantizedPauseOptions quantizedPause = QuantizedPauseOptions.Exact;
     public QuantizedPauseOptions QuantizedPause
     {
         get => quantizedPause;
@@ -320,9 +318,7 @@ public class AudioSettings
         }
     }
     
-    private QuantizedPauseOptions quantizedPause = QuantizedPauseOptions.Exact;
-    
-    
+    private bool loopToStart = false;
     public bool LoopToStart
     {
         get => loopToStart;
@@ -336,9 +332,7 @@ public class AudioSettings
         }
     }
     
-    private bool loopToStart = false;
-    
-    
+    private int masterVolume = 0;
     public int MasterVolume
     {
         get => masterVolume;
@@ -352,9 +346,6 @@ public class AudioSettings
         }
     }
     
-    private int masterVolume = 0;
-    
-
     public int AudioVolume
     {
         get => audioVolume;
@@ -367,10 +358,9 @@ public class AudioSettings
             }
         }
     }
-    
     private int audioVolume = 0;
     
-
+    private int guideVolume = 0;
     public int GuideVolume
     {
         get => guideVolume;
@@ -384,8 +374,7 @@ public class AudioSettings
         }
     }
     
-    private int guideVolume = 0;
-
+    private int touchVolume = 0;
     public int TouchVolume
     {
         get => touchVolume;
@@ -398,9 +387,8 @@ public class AudioSettings
             }
         }
     }
-
-    private int touchVolume = 0;
     
+    private int chainVolume = 0;    
     public int ChainVolume
     {
         get => chainVolume;
@@ -414,8 +402,7 @@ public class AudioSettings
         }
     }
 
-    private int chainVolume = 0;
-    
+    private int holdVolume = 0;
     public int HoldVolume
     {
         get => holdVolume;
@@ -428,9 +415,8 @@ public class AudioSettings
             }
         }
     }
-
-    private int holdVolume = 0;
     
+    private int holdLoopVolume = 0;
     public int HoldLoopVolume
     {
         get => holdLoopVolume;
@@ -443,9 +429,8 @@ public class AudioSettings
             }
         }
     }
-
-    private int holdLoopVolume = 0;
     
+    private int slideVolume = 0;
     public int SlideVolume
     {
         get => slideVolume;
@@ -458,9 +443,8 @@ public class AudioSettings
             }
         }
     }
-
-    private int slideVolume = 0;
     
+    private int snapVolume = 0;
     public int SnapVolume
     {
         get => snapVolume;
@@ -474,8 +458,7 @@ public class AudioSettings
         }
     }
     
-    private int snapVolume = 0;
-    
+    private int bonusVolume = 0;
     public int BonusVolume
     {
         get => bonusVolume;
@@ -488,9 +471,8 @@ public class AudioSettings
             }
         }
     }
-
-    private int bonusVolume = 0;
     
+    private int rVolume = 0;
     public int RVolume
     {
         get => rVolume;
@@ -503,9 +485,8 @@ public class AudioSettings
             }
         }
     }
-
-    private int rVolume = 0;
     
+    private int startClickVolume = 0;
     public int StartClickVolume
     {
         get => startClickVolume;
@@ -518,9 +499,8 @@ public class AudioSettings
             }
         }
     }
-
-    private int startClickVolume = 0;
     
+    private int metronomeVolume = 0;
     public int MetronomeVolume
     {
         get => metronomeVolume;
@@ -533,8 +513,6 @@ public class AudioSettings
             }
         }
     }
-    
-    private int metronomeVolume = 0;
 }
 
 public class ShortcutSettings
@@ -545,10 +523,10 @@ public class ShortcutSettings
     /// A dictionary of all shortcuts.
     /// </summary>
     /// <remarks>
-    /// Shortcuts should be set via <see cref="SetShortcut"/>!!!
+    /// Shortcuts should be set via <see cref="SetShortcut"/>.<br/>
     /// Changes made directly to the dictionary will not invoke <see cref="PropertyChanged"/>.
     /// </remarks>
-    public Dictionary<string, Shortcut> Shortcuts { get; set; } = new()
+    public Dictionary<string, Shortcut> Shortcuts { get; } = new()
     {
         ["File.New"]            = new(Key.N,    true,  false, false, "Menu.File", "Menu.File.New"),
         ["File.Open"]           = new(Key.O,    true,  false, false, "Menu.File", "Menu.File.Open"),

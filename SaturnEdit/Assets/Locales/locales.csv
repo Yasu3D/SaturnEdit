@@ -291,6 +291,8 @@ ChartEditor.ChartView3D.Toolbar,Toolbar
 ChartEditor.ChartView2D,Chart View (2D)
 ChartEditor.Waveform,Waveform
 ChartEditor.Cursor,Cursor
+ChartEditor.Cursor.OddBeatDivisionWarning,Odd Beat Division
+ChartEditor.Cursor.OddBeatDivisionWarning.Description,The current Beat Division does not evenly divide into 1920 Ticks. Notes placed with this division may have inconsistent timestamps.
 Main.Window.Title,SaturnEdit
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.

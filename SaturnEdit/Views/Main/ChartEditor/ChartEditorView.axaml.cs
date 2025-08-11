@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Collections;
 using Avalonia.Controls;
+using Avalonia.Controls.Templates;
 using Avalonia.Markup.Xaml;
 using Dock.Model;
 using Dock.Model.Avalonia.Controls;
@@ -31,7 +32,8 @@ public partial class ChartEditorView : UserControl
 
     public void CreateNewFloatingTool(UserControl userControl)
     {
-        Tool tool = new() { Content = new Func<IServiceProvider, object>(_ => userControl) };
+        return;
+        Tool tool = new() { Content = userControl };
         
         ToolDock toolDock = new()
         {

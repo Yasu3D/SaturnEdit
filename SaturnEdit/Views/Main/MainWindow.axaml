@@ -121,7 +121,7 @@
                             <TextBlock Text="{DynamicResource Menu.File}" />
                         </MenuItem.Header>
 
-                        <MenuItem Name="MenuItemNew">
+                        <MenuItem Name="MenuItemChartEditorNew">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.New}" />
                             </MenuItem.Header>
@@ -129,7 +129,7 @@
                                 <icon:FluentIcon Icon="DocumentAdd" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Name="MenuItemOpen">
+                        <MenuItem Name="MenuItemChartEditorOpen">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.Open}" />
                             </MenuItem.Header>
@@ -137,7 +137,7 @@
                                 <icon:FluentIcon Icon="Folder" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Name="MenuItemClose">
+                        <MenuItem Name="MenuItemChartEditorClose">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.Close}" />
                             </MenuItem.Header>
@@ -145,7 +145,7 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemSave">
+                        <MenuItem Name="MenuItemChartEditorSave">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.Save}" />
                             </MenuItem.Header>
@@ -153,12 +153,12 @@
                                 <icon:FluentIcon Icon="Save" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Name="MenuItemSaveAs">
+                        <MenuItem Name="MenuItemChartEditorSaveAs">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.SaveAs}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        <MenuItem Name="MenuItemReloadFromDisk">
+                        <MenuItem Name="MenuItemChartEditorReloadFromDisk">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.ReloadFromDisk}" />
                             </MenuItem.Header>
@@ -169,13 +169,13 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemExport">
+                        <MenuItem Name="MenuItemChartEditorExport">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.Export}" />
                             </MenuItem.Header>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemRenderAsImage">
+                        <MenuItem Name="MenuItemChartEditorRenderAsImage">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.RenderAsImage}" />
                             </MenuItem.Header>
@@ -186,7 +186,7 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemSettings"
+                        <MenuItem Name="MenuItemChartEditorSettings"
                                   Click="MenuItemSettings_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.Settings}" />
@@ -196,7 +196,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemQuit">
+                        <MenuItem Name="MenuItemChartEditorQuit">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.Quit}" />
                             </MenuItem.Header>
@@ -208,7 +208,7 @@
                             <TextBlock Text="{DynamicResource Menu.Edit}" />
                         </MenuItem.Header>
 
-                        <MenuItem Name="MenuItemUndo">
+                        <MenuItem Name="MenuItemChartEditorUndo">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.Undo}" />
                             </MenuItem.Header>
@@ -217,7 +217,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemRedo">
+                        <MenuItem Name="MenuItemChartEditorRedo">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.Redo}" />
                             </MenuItem.Header>
@@ -228,7 +228,7 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemCut">
+                        <MenuItem Name="MenuItemChartEditorCut">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.Cut}" />
                             </MenuItem.Header>
@@ -237,7 +237,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemCopy">
+                        <MenuItem Name="MenuItemChartEditorCopy">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.Copy}" />
                             </MenuItem.Header>
@@ -246,7 +246,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemPaste">
+                        <MenuItem Name="MenuItemChartEditorPaste">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.Paste}" />
                             </MenuItem.Header>
@@ -257,13 +257,13 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemSelectAll">
+                        <MenuItem Name="MenuItemChartEditorSelectAll">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.SelectAll}" />
                             </MenuItem.Header>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemDeselectAll">
+                        <MenuItem Name="MenuItemChartEditorDeselectAll">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.DeselectAll}" />
                             </MenuItem.Header>
@@ -271,7 +271,7 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemBoxSelect">
+                        <MenuItem Name="MenuItemChartEditorBoxSelect">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.BoxSelect}" />
                             </MenuItem.Header>
@@ -282,7 +282,7 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemCheckerDeselect">
+                        <MenuItem Name="MenuItemChartEditorCheckerDeselect">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.CheckerDeselect}" />
                             </MenuItem.Header>
@@ -291,7 +291,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemSelectSimilar">
+                        <MenuItem Name="MenuItemChartEditorSelectSimilar">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.SelectSimilar}" />
                             </MenuItem.Header>
@@ -311,8 +311,8 @@
                                 <TextBlock Text="{DynamicResource Menu.View.ToolWindows}" />
                             </MenuItem.Header>
                             
-                            <MenuItem Name="MenuItemChartView3D"
-                                      Click="MenuItemToolWindows_OnClick">
+                            <MenuItem Name="MenuItemChartEditorChartView3D"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D}" />
                                 </MenuItem.Header>
@@ -321,7 +321,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             
-                            <MenuItem Name="MenuItemChartView2D">
+                            <MenuItem Name="MenuItemChartEditorChartView2D">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView2D}" />
                                 </MenuItem.Header>
@@ -330,7 +330,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             
-                            <MenuItem Name="MenuItemChartViewTxt">
+                            <MenuItem Name="MenuItemChartEditorChartViewTxt">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartViewTxt}" />
                                 </MenuItem.Header>
@@ -341,7 +341,7 @@
                             
                             <Separator/>
                             
-                            <MenuItem Name="MenuItemChartProperties">
+                            <MenuItem Name="MenuItemChartEditorChartProperties">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartProperties}" />
                                 </MenuItem.Header>
@@ -350,7 +350,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             
-                            <MenuItem Name="MenuItemChartStatistics">
+                            <MenuItem Name="MenuItemChartEditorChartStatistics">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics}" />
                                 </MenuItem.Header>
@@ -359,7 +359,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             
-                            <MenuItem Name="MenuItemProofreader">
+                            <MenuItem Name="MenuItemChartEditorProofreader">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.Proofreader}" />
                                 </MenuItem.Header>
@@ -370,25 +370,25 @@
                             
                             <Separator/>
                             
-                            <MenuItem Name="MenuItemEventList">
+                            <MenuItem Name="MenuItemChartEditorEventList">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.EventList}" />
                                 </MenuItem.Header>
                             </MenuItem>
                             
-                            <MenuItem Name="MenuItemLayerList">
+                            <MenuItem Name="MenuItemChartEditorLayerList">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.LayerList}" />
                                 </MenuItem.Header>
                             </MenuItem>
                             
-                            <MenuItem Name="MenuItemLaneToggleList">
+                            <MenuItem Name="MenuItemChartEditorLaneToggleList">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.LaneToggleList}" />
                                 </MenuItem.Header>
                             </MenuItem>
                             
-                            <MenuItem Name="MenuItemBookmarkList">
+                            <MenuItem Name="MenuItemChartEditorBookmarkList">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.BookmarkList}" />
                                 </MenuItem.Header>
@@ -396,7 +396,7 @@
                             
                             <Separator/>
                             
-                            <MenuItem Name="MenuItemInspector">
+                            <MenuItem Name="MenuItemChartEditorInspector">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.Inspector}" />
                                 </MenuItem.Header>
@@ -405,7 +405,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
    
-                            <MenuItem Name="MenuItemCursor">
+                            <MenuItem Name="MenuItemChartEditorCursor">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.Cursor}" />
                                 </MenuItem.Header>
@@ -416,7 +416,7 @@
                             
                             <Separator/>
                             
-                            <MenuItem Name="MenuItemAudioMixer">
+                            <MenuItem Name="MenuItemChartEditorAudioMixer">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.AudioMixer}" />
                                 </MenuItem.Header>
@@ -425,7 +425,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             
-                            <MenuItem Name="MenuItemWaveform">
+                            <MenuItem Name="MenuItemChartEditorWaveform">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.Waveform}" />
                                 </MenuItem.Header>
@@ -489,7 +489,7 @@
                             <TextBlock Text="{DynamicResource Menu.Navigate}" />
                         </MenuItem.Header>
 
-                        <MenuItem Name="MenuItemMoveBeatForward">
+                        <MenuItem Name="MenuItemChartEditorMoveBeatForward">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatForward}" />
                             </MenuItem.Header>
@@ -498,7 +498,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemMoveBeatBack">
+                        <MenuItem Name="MenuItemChartEditorMoveBeatBack">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatBack}" />
                             </MenuItem.Header>
@@ -509,7 +509,7 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemMoveMeasureForward">
+                        <MenuItem Name="MenuItemChartEditorMoveMeasureForward">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureForward}" />
                             </MenuItem.Header>
@@ -518,7 +518,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemMoveMeasureBack">
+                        <MenuItem Name="MenuItemChartEditorMoveMeasureBack">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureBack}" />
                             </MenuItem.Header>
@@ -529,7 +529,7 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemJumpToNextNote">
+                        <MenuItem Name="MenuItemChartEditorJumpToNextNote">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Navigate.JumpToNextNote}" />
                             </MenuItem.Header>
@@ -538,7 +538,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemJumpToPreviousNote">
+                        <MenuItem Name="MenuItemChartEditorJumpToPreviousNote">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Navigate.JumpToPreviousNote}" />
                             </MenuItem.Header>
@@ -549,7 +549,7 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemIncreaseBeatDivision">
+                        <MenuItem Name="MenuItemChartEditorIncreaseBeatDivision">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Navigate.IncreaseBeatDivision}" />
                             </MenuItem.Header>
@@ -558,7 +558,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemDecreaseBeatDivision">
+                        <MenuItem Name="MenuItemChartEditorDecreaseBeatDivision">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Navigate.DecreaseBeatDivision}" />
                             </MenuItem.Header>
@@ -567,13 +567,13 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemDoubleBeatDivision">
+                        <MenuItem Name="MenuItemChartEditorDoubleBeatDivision">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Navigate.DoubleBeatDivision}" />
                             </MenuItem.Header>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemHalveBeatDivision">
+                        <MenuItem Name="MenuItemChartEditorHalveBeatDivision">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Navigate.HalveBeatDivision}" />
                             </MenuItem.Header>

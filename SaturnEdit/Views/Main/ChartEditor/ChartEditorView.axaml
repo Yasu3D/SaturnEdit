@@ -47,6 +47,8 @@
                                     <tabs:ChartPropertiesView />
                                 </Tool>
                             </ToolDock>
+                            
+                            <ProportionalDockSplitter />
 
                             <ToolDock>
                                 <Tool x:Name="ToolDockTestTool3">
