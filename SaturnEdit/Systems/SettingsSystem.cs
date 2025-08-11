@@ -160,12 +160,14 @@ public class EditorSettings
 
 #region Enum Definitions
 
+    // ReSharper disable InconsistentNaming
     public enum LocaleOptions
     {
         en_US = 0,
         ja_JP = 1,
         cmn_CN = 2,
     }
+    // ReSharper restore InconsistentNaming
     
     public enum EditorThemeOptions
     {
@@ -175,7 +177,6 @@ public class EditorSettings
     
 #endregion Enum Definitions
     
-    private LocaleOptions locale = LocaleOptions.en_US;
     public LocaleOptions Locale
     {
         get => locale;
@@ -188,8 +189,8 @@ public class EditorSettings
             }
         }
     }
+    private LocaleOptions locale = LocaleOptions.en_US;
 
-    private EditorThemeOptions theme = EditorThemeOptions.Dark;
     public EditorThemeOptions Theme
     {
         get => theme;
@@ -202,8 +203,8 @@ public class EditorSettings
             }
         }
     }
+    private EditorThemeOptions theme = EditorThemeOptions.Dark;
     
-    private bool showSplashScreen = true;
     public bool ShowSplashScreen
     {
         get => showSplashScreen;
@@ -216,8 +217,8 @@ public class EditorSettings
             }
         }
     }
+    private bool showSplashScreen = true;
     
-    private bool continueLastSession = true;
     public bool ContinueLastSession
     {
         get => continueLastSession;
@@ -230,8 +231,8 @@ public class EditorSettings
             }
         }
     }
+    private bool continueLastSession = true;
     
-    private bool chartViewTxtShowSpaces = true;
     public bool ChartViewTxtShowSpaces
     {
         get => chartViewTxtShowSpaces;
@@ -244,8 +245,8 @@ public class EditorSettings
             }
         }
     }
+    private bool chartViewTxtShowSpaces = true;
     
-    private bool chartViewTxtSyntaxHighlighting = true;
     public bool ChartViewTxtSyntaxHighlighting
     {
         get => chartViewTxtSyntaxHighlighting;
@@ -258,6 +259,7 @@ public class EditorSettings
             }
         }
     }
+    private bool chartViewTxtSyntaxHighlighting = true;
 }
 
 public class AudioSettings

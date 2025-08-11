@@ -7,8 +7,13 @@ public static class PlayheadSystem
 {
     public static event EventHandler? TimestampChanged;
     public static event EventHandler? DivisionChanged;
+    public static event EventHandler? ShapeChanged;
     
-    private static Timestamp timestamp;
+    public const int DefaultDivision = 8;
+    
+    /// <summary>
+    /// The current timestamp of the "playhead"
+    /// </summary>
     public static Timestamp Timestamp
     {
         get => timestamp;
@@ -21,8 +26,11 @@ public static class PlayheadSystem
             }
         }
     }
-
-    private static int division;
+    private static Timestamp timestamp;
+    
+    /// <summary>
+    /// The current beat division.
+    /// </summary>
     public static int Division
     {
         get => division;
@@ -35,4 +43,46 @@ public static class PlayheadSystem
             }
         }
     }
+    private static int division = DefaultDivision;
+
+    /// <summary>
+    /// The number of ticks between each beat.
+    /// </summary>
+    public static int DivisionInterval => 1920 / Math.Max(1, Division);
+
+    /// <summary>
+    /// The position of the note cursor.<br/>
+    /// Follows standard note shape definitions.
+    /// </summary>
+    public static int Position
+    {
+        get => position;
+        set
+        {
+            if (position != value)
+            {
+                position = value;
+                ShapeChanged?.Invoke(null, EventArgs.Empty);
+            }
+        }
+    }
+    private static int position = 30;
+    
+    /// <summary>
+    /// The size of the note cursor.<br/>
+    /// Follows standard note shape definitions.
+    /// </summary>
+    public static int Size
+    {
+        get => size;
+        set
+        {
+            if (size != value)
+            {
+                size = value;
+                ShapeChanged?.Invoke(null, EventArgs.Empty);
+            }
+        }
+    }
+    private static int size = 15;
 }

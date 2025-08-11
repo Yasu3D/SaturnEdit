@@ -44,7 +44,7 @@
                         <ProportionalDock Orientation="Vertical">
                             <ToolDock>
                                 <Tool x:Name="ToolDockTestTool2">
-                                    <tabs:ChartPropertiesView />
+                                    <tabs:CursorView />
                                 </Tool>
                             </ToolDock>
                             
