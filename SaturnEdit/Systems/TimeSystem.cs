@@ -3,11 +3,10 @@ using SaturnData.Notation.Core;
 
 namespace SaturnEdit.Systems;
 
-public static class PlayheadSystem
+public static class TimeSystem
 {
     public static event EventHandler? TimestampChanged;
     public static event EventHandler? DivisionChanged;
-    public static event EventHandler? ShapeChanged;
     
     public const int DefaultDivision = 8;
     
@@ -49,40 +48,4 @@ public static class PlayheadSystem
     /// The number of ticks between each beat.
     /// </summary>
     public static int DivisionInterval => 1920 / Math.Max(1, Division);
-
-    /// <summary>
-    /// The position of the note cursor.<br/>
-    /// Follows standard note shape definitions.
-    /// </summary>
-    public static int Position
-    {
-        get => position;
-        set
-        {
-            if (position != value)
-            {
-                position = value;
-                ShapeChanged?.Invoke(null, EventArgs.Empty);
-            }
-        }
-    }
-    private static int position = 30;
-    
-    /// <summary>
-    /// The size of the note cursor.<br/>
-    /// Follows standard note shape definitions.
-    /// </summary>
-    public static int Size
-    {
-        get => size;
-        set
-        {
-            if (size != value)
-            {
-                size = value;
-                ShapeChanged?.Invoke(null, EventArgs.Empty);
-            }
-        }
-    }
-    private static int size = 15;
 }

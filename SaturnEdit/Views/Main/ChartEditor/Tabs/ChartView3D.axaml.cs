@@ -24,6 +24,7 @@ public partial class ChartView3D : UserControl
 
     private readonly CanvasInfo canvasInfo = new();
     private SKColor clearColor;
+    private bool blockEvents = false;
     
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
@@ -66,6 +67,7 @@ public partial class ChartView3D : UserControl
 
     private void MenuItem_OnClick(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
         if (sender is not MenuItem menuItem) return;
 
         if (menuItem == MenuItemShowJudgementWindows)
@@ -213,18 +215,22 @@ public partial class ChartView3D : UserControl
 
     private void NumericUpDownNoteSpeed_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
+        if (blockEvents) return;
         if (sender == null) return;
         SettingsSystem.RenderSettings.NoteSpeed = (int)Math.Round((e.NewValue * 10) ?? 3);
     }
 
     private void ComboBoxBackgroundDim_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        if (blockEvents) return;
         if (sender is not ComboBox comboBox) return;
         SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)comboBox.SelectedIndex;
     }
     
     private void UpdateSettings()
     {
+        blockEvents = true;
+        
         MenuItemShowJudgementWindows.IsChecked = SettingsSystem.RenderSettings.ShowJudgementWindows;
         MenuItemShowMarvelousWindows.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousWindows;
         MenuItemShowGreatWindows.IsChecked = SettingsSystem.RenderSettings.ShowGreatWindows;
@@ -249,9 +255,14 @@ public partial class ChartView3D : UserControl
         MenuItemShowStopEffect.IsChecked = SettingsSystem.RenderSettings.ShowStopEffects;
         MenuItemShowTutorialMarker.IsChecked = SettingsSystem.RenderSettings.ShowTutorialMarkers;
 
+        NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed / 10.0m;
+        ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
+        
         MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
         MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
         MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+
+        blockEvents = false;
     }
 
     private void UpdateShortcuts()

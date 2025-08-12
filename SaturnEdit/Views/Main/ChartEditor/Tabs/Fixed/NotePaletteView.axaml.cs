@@ -67,32 +67,27 @@ public partial class NotePaletteView : UserControl
 
     private void UpdateSubOptions(string name)
     {
-        bool laneToggle = name is "RadioButtonLaneShow" or "RadioButtonLaneHide";
-        bool hold = name is "RadioButtonHold";
+        bool showSweepDirections = name is "RadioButtonLaneShow"
+            or "RadioButtonLaneHide";
+        
+        bool showHoldPointRenderType = name is "RadioButtonHold";
 
-        if (laneToggle)
-        {
-            StackPanelBonusTypesJudgementTypes.IsVisible = false;
-            StackPanelHoldPointRenderTypes.IsVisible = false;
-            StackPanelSweepDirections.IsVisible = true;
-        }
-        else if (hold)
-        {
-            StackPanelBonusTypesJudgementTypes.IsVisible = true;
-            StackPanelHoldPointRenderTypes.IsVisible = true;
-            StackPanelSweepDirections.IsVisible = false;
-        }
-        else
-        {
-            StackPanelBonusTypesJudgementTypes.IsVisible = true;
-            StackPanelHoldPointRenderTypes.IsVisible = false;
-            StackPanelSweepDirections.IsVisible = false;
-        }
+        bool showBonusType = name is "RadioButtonTouch"
+            or "RadioButtonChain"
+            or "RadioButtonHold"
+            or "RadioButtonSlideClockwise"
+            or "RadioButtonSlideCounterclockwise"
+            or "RadioButtonSnapForward"
+            or "RadioButtonSnapBackward";
+
+        StackPanelBonusTypesJudgementTypes.IsVisible = showBonusType;
+        StackPanelHoldPointRenderTypes.IsVisible = showHoldPointRenderType;
+        StackPanelSweepDirections.IsVisible = showSweepDirections;
     }
 
     private void UpdateBonusTypeIcons(string name)
     {
-        if (name is "" or "RadioButtonLaneShow" or "RadioButtonLaneHide") return;
+        if (name is "" or "RadioButtonLaneShow" or "RadioButtonLaneHide" or "RadioButtonSync" or "RadioButtonMeasureLine") return;
 
         int id = name switch
         {
@@ -136,6 +131,8 @@ public partial class NotePaletteView : UserControl
         TextBlockShortcutNoteSnapBackward.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.SnapBackward"].ToString();
         TextBlockShortcutNoteLaneShow.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.LaneShow"].ToString();
         TextBlockShortcutNoteLaneHide.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.LaneHide"].ToString();
+        TextBlockShortcutNoteSync.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.Sync"].ToString();
+        TextBlockShortcutNoteMeasureLine.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.MeasureLine"].ToString();
         TextBlockShortcutBonusTypeNormal.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.Normal"].ToString();
         TextBlockShortcutBonusTypeBonus.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.Bonus"].ToString();
         TextBlockShortcutBonusTypeR.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.R"].ToString();

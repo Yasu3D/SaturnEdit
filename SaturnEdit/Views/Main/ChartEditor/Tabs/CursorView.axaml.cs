@@ -11,9 +11,9 @@ public partial class CursorView : UserControl
     {
         InitializeComponent();
         
-        PlayheadSystem.TimestampChanged += OnTimestampChanged;
-        PlayheadSystem.DivisionChanged += OnDivisionChanged;
-        PlayheadSystem.ShapeChanged += OnShapeChanged;
+        TimeSystem.TimestampChanged += OnTimestampChanged;
+        TimeSystem.DivisionChanged += OnDivisionChanged;
+        CursorSystem.ShapeChanged += OnShapeChanged;
         
         OnTimestampChanged(null, EventArgs.Empty);
         OnDivisionChanged(null, EventArgs.Empty);
@@ -26,26 +26,26 @@ public partial class CursorView : UserControl
     {
         blockEvents = true;
 
-        NumericUpDownMeasure.Value = PlayheadSystem.Timestamp.Measure;
-        NumericUpDownBeat.Value = PlayheadSystem.Timestamp.Tick / PlayheadSystem.DivisionInterval;
+        NumericUpDownMeasure.Value = TimeSystem.Timestamp.Measure;
+        NumericUpDownBeat.Value = TimeSystem.Timestamp.Tick / TimeSystem.DivisionInterval;
         
         blockEvents = false;
 
-        NumericUpDownBeat.Minimum = PlayheadSystem.Timestamp.Measure == 0 ? 0 : -1;
+        NumericUpDownBeat.Minimum = TimeSystem.Timestamp.Measure == 0 ? 0 : -1;
     }
 
     private void OnDivisionChanged(object? sender, EventArgs e)
     {
         blockEvents = true;
         
-        NumericUpDownDivision.Value = PlayheadSystem.Division;
+        NumericUpDownDivision.Value = TimeSystem.Division;
 
         blockEvents = false;
         
-        NumericUpDownBeat.Value = Math.Clamp((int?)NumericUpDownBeat.Value ?? 0, 0, PlayheadSystem.Division - 1);
-        NumericUpDownBeat.Maximum = PlayheadSystem.Division + 1;
+        NumericUpDownBeat.Value = Math.Clamp((int?)NumericUpDownBeat.Value ?? 0, 0, TimeSystem.Division - 1);
+        NumericUpDownBeat.Maximum = TimeSystem.Division + 1;
         
-        bool oddDivision = 1920 % PlayheadSystem.Division != 0;
+        bool oddDivision = 1920 % TimeSystem.Division != 0;
         IconOddDivisionWarning.IsVisible = oddDivision;
     }
 
@@ -53,8 +53,8 @@ public partial class CursorView : UserControl
     {
         blockEvents = true;
 
-        SliderPosition.Value = PlayheadSystem.Position;
-        SliderSize.Value = PlayheadSystem.Size;
+        SliderPosition.Value = CursorSystem.Position;
+        SliderSize.Value = CursorSystem.Size;
         
         blockEvents = false;
         
@@ -67,7 +67,7 @@ public partial class CursorView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
 
-        PlayheadSystem.Position = (int)SliderPosition.Value;
+        CursorSystem.Position = (int)SliderPosition.Value;
     }
     
     private void SliderSize_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
@@ -75,7 +75,7 @@ public partial class CursorView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
 
-        PlayheadSystem.Size = (int)SliderSize.Value;
+        CursorSystem.Size = (int)SliderSize.Value;
     }
 
     private void NumericUpDownMeasure_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -84,7 +84,7 @@ public partial class CursorView : UserControl
         if (sender == null) return;
 
         int value = (int?)NumericUpDownMeasure.Value ?? 0;
-        PlayheadSystem.Timestamp = new(value, PlayheadSystem.Timestamp.Tick);
+        TimeSystem.Timestamp = new(value, TimeSystem.Timestamp.Tick);
     }
     
     private void NumericUpDownBeat_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -96,17 +96,17 @@ public partial class CursorView : UserControl
         
         if (value == -1)
         {
-            value = PlayheadSystem.Division - 1;
-            PlayheadSystem.Timestamp -= 1920;
+            value = TimeSystem.Division - 1;
+            TimeSystem.Timestamp -= 1920;
         }
         
-        if (value >= PlayheadSystem.Division)
+        if (value >= TimeSystem.Division)
         {
             value = 0;
-            PlayheadSystem.Timestamp += 1920;
+            TimeSystem.Timestamp += 1920;
         }
         
-        PlayheadSystem.Timestamp = new(PlayheadSystem.Timestamp.Measure, value * PlayheadSystem.DivisionInterval);
+        TimeSystem.Timestamp = new(TimeSystem.Timestamp.Measure, value * TimeSystem.DivisionInterval);
     }
     
     private void NumericUpDownDivision_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -114,7 +114,7 @@ public partial class CursorView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
 
-        int value = (int?)NumericUpDownDivision.Value ?? PlayheadSystem.DefaultDivision;
-        PlayheadSystem.Division = value;
+        int value = (int?)NumericUpDownDivision.Value ?? TimeSystem.DefaultDivision;
+        TimeSystem.Division = value;
     }
 }
