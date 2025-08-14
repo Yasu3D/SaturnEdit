@@ -1,5 +1,6 @@
 using System;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 
 namespace SaturnEdit.Systems;
@@ -60,4 +61,60 @@ public static class CursorSystem
         }
     }
     private static Type currentNoteType = typeof(TouchNote);
+
+    public static BonusType CurrentBonusType
+    {
+        get => currentBonusType;
+        set
+        {
+            if (currentBonusType != value)
+            {
+                currentBonusType = value;
+                TypeChanged?.Invoke(null, EventArgs.Empty);
+            }
+        }
+    }
+    private static BonusType currentBonusType = BonusType.Normal;
+    
+    public static HoldPointRenderType CurrentHoldPointRenderType
+    {
+        get => currentHoldPointRenderType;
+        set
+        {
+            if (currentHoldPointRenderType != value)
+            {
+                currentHoldPointRenderType = value;
+                TypeChanged?.Invoke(null, EventArgs.Empty);
+            }
+        }
+    }
+    private static HoldPointRenderType currentHoldPointRenderType = HoldPointRenderType.Visible;
+    
+    public static JudgementType CurrentJudgementType
+    {
+        get => currentJudgementType;
+        set
+        {
+            if (currentJudgementType != value)
+            {
+                currentJudgementType = value;
+                TypeChanged?.Invoke(null, EventArgs.Empty);
+            }
+        }
+    }
+    private static JudgementType currentJudgementType = JudgementType.Normal;
+    
+    public static LaneSweepDirection CurrentSweepDirection
+    {
+        get => currentSweepDirection;
+        set
+        {
+            if (currentSweepDirection != value)
+            {
+                currentSweepDirection = value;
+                TypeChanged?.Invoke(null, EventArgs.Empty);
+            }
+        }
+    }
+    private static LaneSweepDirection currentSweepDirection = LaneSweepDirection.Center;
 }

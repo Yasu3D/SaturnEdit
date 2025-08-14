@@ -5,6 +5,7 @@ using Avalonia.Controls.Templates;
 using Avalonia.Markup.Xaml;
 using Dock.Model;
 using Dock.Model.Avalonia.Controls;
+using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Serializer;
 
@@ -32,7 +33,9 @@ public partial class ChartEditorView : UserControl
 
     public void CreateNewFloatingTool(UserControl userControl)
     {
-        return;
+        if (DockControl.Factory == null) return;
+        if (RootDock.VisibleDockables == null) return;
+        
         Tool tool = new() { Content = userControl };
         
         ToolDock toolDock = new()
@@ -41,7 +44,19 @@ public partial class ChartEditorView : UserControl
             ActiveDockable = tool,
         };
 
-        DockControl.Factory?.AddDockable(RootDock, toolDock);
-        DockControl.Factory?.FloatDockable(toolDock);
+        if (RootDock.VisibleDockables.Count != 0)
+        {
+            Console.WriteLine("RootDock contains dockables!");
+
+            //DockControl.Factory?.AddDockable(RootDock, toolDock);
+            //DockControl.Factory?.FloatDockable(toolDock);
+        }
+        else
+        {
+            Console.WriteLine("RootDock is empty!");
+            
+            //DockControl.Factory?.AddDockable(RootDock, toolDock);
+            //DockControl.Factory?.InitLayout(RootDock);
+        }
     }
 }

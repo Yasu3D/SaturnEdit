@@ -8,19 +8,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Systems/CursorSystem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SaturnEdit/ViewLocator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/App.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/App.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/App.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/App.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/note_icons_color.afdesign" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/note_icons_color.afdesign" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/note_icons_color.afdesign~lock~" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/PlayheadSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/TimeSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView3D.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/CursorView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/DockStyles.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/DockStyles.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/Dock/GlobalDockTarget.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/Dock/GlobalDockTarget.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/Menu.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/Menu.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/MenuFlyoutPresenter.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/MenuFlyoutPresenter.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/MenuItem.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/MenuItem.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/CursorSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/CursorSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,11 +50,13 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2b90705926ae4f10aa01bbe3f1025828c90908/dd/26fa1aa0/ValueType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0c1b2d696c2c430681e76ddeaf3947891f8a00/_d2775/SweepDirection.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/14be3e5ce324a564c079692a5cf89ae165e6dd447781d92b7625f4cc6d0e6/TemplateContent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1579bf835158dd6aec6bad778df36f37e1ed9bdaa7c2b533f598f5c59bd4/StandardAssetLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17bbecded926db66f0c619b11b6b1e95b3ff589ca31d8d9f5b33ea3881a9c/TextMate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/18271b231f311a85fe64698dc18655e24f08e4045a7feae47f6978671d9b/IFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1836e961bce6521928afb9d8a472c4cf9b66e31eb7aa1adcd153b1d310c8c0/DispatcherOperation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/227c4d4a84371bf9ecba16bb779137cf1252c3fd25e497740449c51bad4377/UserControl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2336aace97ddc8cc25862b3b71d24f55d8388d6cd680a37a5c4e412b7640/ProportionalStackPanel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/261ea83c988816e3d8fe76b15b7ac6c10af64b8f9e739854f83c137c8ba9/SafeFileHandle.Windows.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2c63aae54b612235eaecdd5faed79ab1304fc4379e331292e72c0d9f53c45fc/DockableBase.cs" root0="FORCE_HIGHLIGHTING" />
@@ -90,23 +100,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Project.SaturnEdit.executor&quot;: &quot;Debug&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.5037037&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Project.SaturnEdit.executor": "Debug",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "XThreadsFramesViewSplitterKey": "0.13752913",
+    "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.editor",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="SaturnEdit" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/SaturnEdit/bin/Debug/net8.0/SaturnEdit.exe" />
@@ -224,7 +234,10 @@
       <workItem from="1754796426668" duration="1853000" />
       <workItem from="1754798907696" duration="3876000" />
       <workItem from="1754872832878" duration="24894000" />
-      <workItem from="1754956821687" duration="11689000" />
+      <workItem from="1754956821687" duration="11950000" />
+      <workItem from="1755074663546" duration="594000" />
+      <workItem from="1755080849242" duration="8544000" />
+      <workItem from="1755148854829" duration="8468000" />
     </task>
     <servers />
   </component>

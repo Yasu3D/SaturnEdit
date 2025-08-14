@@ -5,6 +5,8 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using SaturnData.Notation.Interfaces;
+using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
 
 namespace SaturnEdit.Views.Main.ChartEditor.Tabs;
@@ -16,7 +18,18 @@ public partial class NotePaletteView : UserControl
         InitializeComponent();
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
+        CursorSystem.TypeChanged += OnTypeChanged;
         OnSettingsChanged(null, EventArgs.Empty);
+        OnTypeChanged(null, EventArgs.Empty);
+    }
+
+    private bool blockEvents;
+
+    private void OnTypeChanged(object? sender, EventArgs e)
+    {
+        UpdateSubOptions();
+        UpdateBonusTypeIcons();
+        UpdateSelection();
     }
 
     private async void OnSettingsChanged(object? sender, EventArgs e)
@@ -24,10 +37,10 @@ public partial class NotePaletteView : UserControl
         // race conditions.....
         await Task.Delay(1);
 
-        UpdateNoteTypeIcons();
-        UpdateSubOptions(GetCheckedButtonInGroup("NoteType"));
-        UpdateBonusTypeIcons(GetCheckedButtonInGroup("NoteType"));
         UpdateShortcuts();
+        UpdateNoteTypeIcons();
+        UpdateSubOptions();
+        UpdateBonusTypeIcons();
     }
     
     private void RadioButtonNoteType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -35,23 +48,77 @@ public partial class NotePaletteView : UserControl
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
 
-        UpdateSubOptions(button.Name ?? "");
-        UpdateBonusTypeIcons(button.Name ?? "");
+        CursorSystem.CurrentNoteType = button.Name switch
+        {
+            "RadioButtonTouch" => typeof(TouchNote),
+            "RadioButtonChain" => typeof(ChainNote),
+            "RadioButtonHold" => typeof(HoldNote),
+            "RadioButtonSlideClockwise" => typeof(SlideClockwiseNote),
+            "RadioButtonSlideCounterclockwise" => typeof(SlideCounterclockwiseNote),
+            "RadioButtonSnapForward" => typeof(SnapForwardNote),
+            "RadioButtonSnapBackward" => typeof(SnapBackwardNote),
+            "RadioButtonLaneShow" => typeof(LaneShowNote),
+            "RadioButtonLaneHide" => typeof(LaneHideNote),
+            "RadioButtonSync" => typeof(SyncNote),
+            "RadioButtonMeasureLine" => typeof(MeasureLineNote),
+            _ => CursorSystem.CurrentNoteType,
+        };
     }
 
     private void RadioButtonBonusType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        
+        if (sender is not RadioButton button) return;
+        if (button.IsChecked == false) return;
+
+        CursorSystem.CurrentBonusType = button.Name switch
+        {
+            "RadioButtonBonusTypeNormal" => BonusType.Normal,
+            "RadioButtonBonusTypeBonus" => BonusType.Bonus,
+            "RadioButtonBonusTypeR" => BonusType.R,
+            _ => CursorSystem.CurrentBonusType,
+        };
     }
 
-    private void RadioButtonSweepDirection_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    private void RadioButtonJudgementType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        
+        if (sender is not RadioButton button) return;
+        if (button.IsChecked == false) return;
+
+        CursorSystem.CurrentJudgementType = button.Name switch
+        {
+            "RadioButtonJudgementTypeNormal" => JudgementType.Normal,
+            "RadioButtonJudgementTypeFake" => JudgementType.Fake,
+            "RadioButtonJudgementTypeAutoplay" => JudgementType.Autoplay,
+            _ => CursorSystem.CurrentJudgementType,
+        };
     }
     
     private void RadioButtonHoldPointRenderType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        
+        if (sender is not RadioButton button) return;
+        if (button.IsChecked == false) return;
+
+        CursorSystem.CurrentHoldPointRenderType = button.Name switch
+        {
+            "RadioButtonHoldPointRenderTypeVisible" => HoldPointRenderType.Visible,
+            "RadioButtonHoldPointRenderTypeHidden" => HoldPointRenderType.Hidden,
+            _ => CursorSystem.CurrentHoldPointRenderType,
+        };
+    }
+
+    private void RadioButtonSweepDirection_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not RadioButton button) return;
+        if (button.IsChecked == false) return;
+
+        CursorSystem.CurrentSweepDirection = button.Name switch
+        {
+            "RadioButtonSweepDirectionCenter" => LaneSweepDirection.Center,
+            "RadioButtonSweepDirectionClockwise" => LaneSweepDirection.Clockwise,
+            "RadioButtonSweepDirectionCounterclockwise" => LaneSweepDirection.Counterclockwise,
+            "RadioButtonSweepDirectionInstant" => LaneSweepDirection.Instant,
+            _ => CursorSystem.CurrentSweepDirection,
+        };
     }
 
     public void UpdateNoteTypeIcons()
@@ -65,55 +132,56 @@ public partial class NotePaletteView : UserControl
         SvgSnapBackward.Path = $"avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_{(int)SettingsSystem.RenderSettings.SnapBackwardNoteColor}.svg";
     }
 
-    private void UpdateSubOptions(string name)
+    private void UpdateSubOptions()
     {
-        bool showSweepDirections = name is "RadioButtonLaneShow"
-            or "RadioButtonLaneHide";
+        bool showSweepDirections = CursorSystem.CurrentNoteType == typeof(LaneShowNote) 
+                                   || CursorSystem.CurrentNoteType == typeof(LaneHideNote);
         
-        bool showHoldPointRenderType = name is "RadioButtonHold";
+        bool showHoldPointRenderType = CursorSystem.CurrentNoteType == typeof(HoldNote);
 
-        bool showBonusType = name is "RadioButtonTouch"
-            or "RadioButtonChain"
-            or "RadioButtonHold"
-            or "RadioButtonSlideClockwise"
-            or "RadioButtonSlideCounterclockwise"
-            or "RadioButtonSnapForward"
-            or "RadioButtonSnapBackward";
+        bool showBonusType =CursorSystem.CurrentNoteType == typeof(TouchNote)
+            || CursorSystem.CurrentNoteType == typeof(ChainNote)
+            || CursorSystem.CurrentNoteType == typeof(HoldNote)
+            || CursorSystem.CurrentNoteType == typeof(SlideClockwiseNote)
+            || CursorSystem.CurrentNoteType == typeof(SlideCounterclockwiseNote)
+            || CursorSystem.CurrentNoteType == typeof(SnapForwardNote)
+            || CursorSystem.CurrentNoteType == typeof(SnapBackwardNote);
 
         StackPanelBonusTypesJudgementTypes.IsVisible = showBonusType;
         StackPanelHoldPointRenderTypes.IsVisible = showHoldPointRenderType;
         StackPanelSweepDirections.IsVisible = showSweepDirections;
     }
 
-    private void UpdateBonusTypeIcons(string name)
+    private void UpdateBonusTypeIcons()
     {
-        if (name is "" or "RadioButtonLaneShow" or "RadioButtonLaneHide" or "RadioButtonSync" or "RadioButtonMeasureLine") return;
-
-        int id = name switch
+        Type type = CursorSystem.CurrentNoteType;
+        int id = type switch
         {
-            "RadioButtonTouch" => (int)SettingsSystem.RenderSettings.TouchNoteColor,
-            "RadioButtonChain" => (int)SettingsSystem.RenderSettings.ChainNoteColor,
-            "RadioButtonHold" => (int)SettingsSystem.RenderSettings.HoldNoteColor,
-            "RadioButtonSlideClockwise" => (int)SettingsSystem.RenderSettings.SlideClockwiseNoteColor,
-            "RadioButtonSlideCounterclockwise" => (int)SettingsSystem.RenderSettings.SlideCounterclockwiseNoteColor,
-            "RadioButtonSnapForward" => (int)SettingsSystem.RenderSettings.SnapForwardNoteColor,
-            "RadioButtonSnapBackward" => (int)SettingsSystem.RenderSettings.SnapBackwardNoteColor,
+            _ when type == typeof(TouchNote) => (int)SettingsSystem.RenderSettings.TouchNoteColor,
+            _ when type == typeof(ChainNote) => (int)SettingsSystem.RenderSettings.ChainNoteColor,
+            _ when type == typeof(HoldNote) => (int)SettingsSystem.RenderSettings.HoldNoteColor,
+            _ when type == typeof(SlideClockwiseNote) => (int)SettingsSystem.RenderSettings.SlideClockwiseNoteColor,
+            _ when type == typeof(SlideCounterclockwiseNote) => (int)SettingsSystem.RenderSettings.SlideCounterclockwiseNoteColor,
+            _ when type == typeof(SnapForwardNote) => (int)SettingsSystem.RenderSettings.SnapForwardNoteColor,
+            _ when type == typeof(SnapBackwardNote) => (int)SettingsSystem.RenderSettings.SnapBackwardNoteColor,
             _ => 0,
         };
 
-        string type = name switch
+        string svgPath = type switch
         {
-            "RadioButtonTouch" => "icon_touch",
-            "RadioButtonChain" => "icon_chain",
-            "RadioButtonHold" => "icon_hold",
-            "RadioButtonSlideClockwise" => "icon_slide_clw",
-            "RadioButtonSlideCounterclockwise" => "icon_slide_ccw",
-            "RadioButtonSnapForward" => "icon_snap_fwd",
-            "RadioButtonSnapBackward" => "icon_snap_bwd",
+            _ when type == typeof(TouchNote) => $"avares://SaturnEdit/Assets/Icons/Color/icon_touch_{id}.svg",
+            _ when type == typeof(ChainNote) => $"avares://SaturnEdit/Assets/Icons/Color/icon_chain_{id}.svg",
+            _ when type == typeof(HoldNote) => $"avares://SaturnEdit/Assets/Icons/Color/icon_hold_{id}.svg",
+            _ when type == typeof(SlideClockwiseNote) => $"avares://SaturnEdit/Assets/Icons/Color/icon_slide_clw_{id}.svg",
+            _ when type == typeof(SlideCounterclockwiseNote) => $"avares://SaturnEdit/Assets/Icons/Color/icon_slide_ccw_{id}.svg",
+            _ when type == typeof(SnapForwardNote) => $"avares://SaturnEdit/Assets/Icons/Color/icon_snap_fwd_{id}.svg",
+            _ when type == typeof(SnapBackwardNote) => $"avares://SaturnEdit/Assets/Icons/Color/icon_snap_bwd_{id}.svg",
+            _ when type == typeof(LaneShowNote) => $"avares://SaturnEdit/Assets/Icons/Color/icon_lane_show.svg",
+            _ when type == typeof(LaneHideNote) => $"avares://SaturnEdit/Assets/Icons/Color/icon_lane_hide.svg",
+            _ when type == typeof(SyncNote) => "avares://SaturnEdit/Assets/Icons/Color/icon_sync.svg",
+            _ when type == typeof(MeasureLineNote) => "avares://SaturnEdit/Assets/Icons/Color/icon_measure.svg",
             _ => "",
         };
-
-        string svgPath = $"avares://SaturnEdit/Assets/Icons/Color/{type}_{id}.svg";
 
         SvgBonusTypeNormalNote.Path = svgPath;
         SvgBonusTypeBonusNote.Path = svgPath;
@@ -147,41 +215,38 @@ public partial class NotePaletteView : UserControl
         TextBlockShortcutSweepDirectionInstant.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.HoldPointRenderType.Visible"].ToString();
     }
 
-    private string GetCheckedButtonInGroup(string groupName)
+    private void UpdateSelection()
     {
-        if (groupName == "NoteType")
-        {
-            if (RadioButtonTouch.IsChecked ?? false) return "RadioButtonTouch";
-            if (RadioButtonChain.IsChecked ?? false) return "RadioButtonChain";
-            if (RadioButtonHold.IsChecked ?? false) return "RadioButtonHold";
-            if (RadioButtonSlideClockwise.IsChecked ?? false) return "RadioButtonSlideClockwise";
-            if (RadioButtonSlideCounterclockwise.IsChecked ?? false) return "RadioButtonSlideCounterclockwise";
-            if (RadioButtonSnapForward.IsChecked ?? false) return "RadioButtonSnapForward";
-            if (RadioButtonSnapBackward.IsChecked ?? false) return "RadioButtonSnapBackward";
-            if (RadioButtonLaneShow.IsChecked ?? false) return "RadioButtonLaneShow";
-            if (RadioButtonLaneHide.IsChecked ?? false) return "RadioButtonLaneHide";
-        }
+        blockEvents = true;
+        
+        if (CursorSystem.CurrentNoteType == typeof(TouchNote)) RadioButtonTouch.IsChecked = true;
+        if (CursorSystem.CurrentNoteType == typeof(ChainNote)) RadioButtonChain.IsChecked = true;
+        if (CursorSystem.CurrentNoteType == typeof(HoldNote)) RadioButtonHold.IsChecked = true;
+        if (CursorSystem.CurrentNoteType == typeof(SlideClockwiseNote)) RadioButtonSlideClockwise.IsChecked = true;
+        if (CursorSystem.CurrentNoteType == typeof(SlideCounterclockwiseNote)) RadioButtonSlideCounterclockwise.IsChecked = true;
+        if (CursorSystem.CurrentNoteType == typeof(SnapForwardNote)) RadioButtonSnapForward.IsChecked = true;
+        if (CursorSystem.CurrentNoteType == typeof(SnapBackwardNote)) RadioButtonSnapBackward.IsChecked = true;
+        if (CursorSystem.CurrentNoteType == typeof(LaneShowNote)) RadioButtonLaneShow.IsChecked = true;
+        if (CursorSystem.CurrentNoteType == typeof(LaneHideNote)) RadioButtonLaneHide.IsChecked = true;
+        if (CursorSystem.CurrentNoteType == typeof(SyncNote)) RadioButtonSync.IsChecked = true;
+        if (CursorSystem.CurrentNoteType == typeof(MeasureLineNote)) RadioButtonMeasureLine.IsChecked = true;
 
-        if (groupName == "BonusType")
-        {
-            if (RadioButtonBonusTypeNormal.IsChecked ?? false) return "RadioButtonBonusTypeNormal";
-            if (RadioButtonBonusTypeBonus.IsChecked ?? false) return "RadioButtonBonusTypeBonus";
-            if (RadioButtonBonusTypeR.IsChecked ?? false) return "RadioButtonBonusTypeR";
-        }
+        if (CursorSystem.CurrentBonusType == BonusType.Normal) RadioButtonBonusTypeNormal.IsChecked = true;
+        if (CursorSystem.CurrentBonusType == BonusType.Bonus) RadioButtonBonusTypeBonus.IsChecked = true;
+        if (CursorSystem.CurrentBonusType == BonusType.R) RadioButtonBonusTypeR.IsChecked = true;
         
-        if (groupName == "JudgementType")
-        {
-            if (RadioButtonJudgementTypeNormal.IsChecked ?? false) return "RadioButtonJudgementTypeNormal";
-            if (RadioButtonJudgementTypeFake.IsChecked ?? false) return "RadioButtonJudgementTypeFake";
-            if (RadioButtonJudgementTypeAutoplay.IsChecked ?? false) return "RadioButtonJudgementTypeAutoplay";
-        }
+        if (CursorSystem.CurrentJudgementType == JudgementType.Normal) RadioButtonJudgementTypeNormal.IsChecked = true;
+        if (CursorSystem.CurrentJudgementType == JudgementType.Fake) RadioButtonJudgementTypeFake.IsChecked = true;
+        if (CursorSystem.CurrentJudgementType == JudgementType.Autoplay) RadioButtonJudgementTypeAutoplay.IsChecked = true;
         
-        if (groupName == "HoldPointRenderType")
-        {
-            if (RadioButtonHoldPointRenderTypeVisible.IsChecked ?? false) return "RadioButtonHoldPointRenderTypeVisible";
-            if (RadioButtonHoldPointRenderTypeHidden.IsChecked ?? false) return "RadioButtonHoldPointRenderTypeHidden";
-        }
+        if (CursorSystem.CurrentHoldPointRenderType == HoldPointRenderType.Visible) RadioButtonHoldPointRenderTypeVisible.IsChecked = true;
+        if (CursorSystem.CurrentHoldPointRenderType == HoldPointRenderType.Hidden) RadioButtonHoldPointRenderTypeHidden.IsChecked = true;
         
-        return "";
+        if (CursorSystem.CurrentSweepDirection == LaneSweepDirection.Center) RadioButtonSweepDirectionCenter.IsChecked = true;
+        if (CursorSystem.CurrentSweepDirection == LaneSweepDirection.Clockwise) RadioButtonSweepDirectionClockwise.IsChecked = true;
+        if (CursorSystem.CurrentSweepDirection == LaneSweepDirection.Counterclockwise) RadioButtonSweepDirectionCounterclockwise.IsChecked = true;
+        if (CursorSystem.CurrentSweepDirection == LaneSweepDirection.Instant) RadioButtonSweepDirectionInstant.IsChecked = true;
+
+        blockEvents = false;
     }
 }

@@ -4,46 +4,50 @@
                     xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                     x:ClassModifier="internal">
     <Design.PreviewWith>
-        <Border Height="200" Width="500" Background="{DynamicResource BackgroundPrimary}">
-            <Menu VerticalAlignment="Top"> 
-            <MenuItem Header="Item 1"/>
-            <MenuItem Header="Item 2" IsSubMenuOpen="True">
-                <MenuItem InputGesture="Ctrl + S">
-                    <MenuItem.Header>
-                        <TextBlock Text="Child 1"/>
-                    </MenuItem.Header>
-                    <MenuItem.Icon>
-                        <icon:FluentIcon Icon="Color"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock Text="Child 2" />
-                    </MenuItem.Header>
-                    <MenuItem>
+        <Border Height="200"
+                Width="500"
+                Background="{DynamicResource BackgroundPrimary}">
+            <Menu VerticalAlignment="Top">
+                <MenuItem Header="Item 1" />
+                <MenuItem Header="Item 2"
+                          IsSubMenuOpen="True">
+                    <MenuItem InputGesture="Ctrl + S">
                         <MenuItem.Header>
-                            <TextBlock Text="Nested Child 1" />
-                        </MenuItem.Header>
-                    </MenuItem>
-                    <Separator/>
-                    <MenuItem IsEnabled="False" InputGesture="Alt+F4">
-                        <MenuItem.Header>
-                            <TextBlock Text="Nested Child 2" />
+                            <TextBlock Text="Child 1" />
                         </MenuItem.Header>
                         <MenuItem.Icon>
-                        <icon:FluentIcon Icon="AccessTime"/>
+                            <icon:FluentIcon Icon="Color" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="Child 2" />
+                        </MenuItem.Header>
+                        <MenuItem>
+                            <MenuItem.Header>
+                                <TextBlock Text="Nested Child 1" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem IsEnabled="True"
+                                  InputGesture="Alt+F4">
+                            <MenuItem.Header>
+                                <TextBlock Text="Nested Child 2" />
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="AccessTime" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem ToggleType="CheckBox">
+                        <MenuItem.Header>
+                            <TextBlock Text="Child 3" />
+                        </MenuItem.Header>
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem ToggleType="CheckBox">
-                    <MenuItem.Header>
-                        <TextBlock Text="Child 3"/>
-                    </MenuItem.Header>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="Item 3"/>
-            <MenuItem Header="Item 4"/>
-        </Menu>
+                <MenuItem Header="Item 3" />
+                <MenuItem Header="Item 4" />
+            </Menu>
         </Border>
     </Design.PreviewWith>
 
@@ -130,18 +134,17 @@
                         <Border Background="{DynamicResource BackgroundPrimary}"
                                 BorderBrush="{DynamicResource SeparatorPrimary}"
                                 BorderThickness="1"
-                                Padding="4,-1"
                                 MaxWidth="{DynamicResource FlyoutThemeMaxWidth}"
                                 MinHeight="{DynamicResource MenuFlyoutThemeMinHeight}"
                                 HorizontalAlignment="Stretch"
-                                CornerRadius="7"
+                                BoxShadow="0 0 10 0 #80000000"
                                 Margin="5"
-                                BoxShadow="0 0 10 0 #80000000">
+                                CornerRadius="7">
                             <ScrollViewer Theme="{StaticResource FluentMenuScrollViewer}">
                                 <ItemsPresenter Name="PART_ItemsPresenter"
+                                                Margin="0,3"
                                                 ItemsPanel="{TemplateBinding ItemsPanel}"
-                                                Margin="{DynamicResource MenuFlyoutScrollerMargin}"
-                                                Grid.IsSharedSizeScope="True" />
+                                                Grid.IsSharedSizeScope="True"/>
                             </ScrollViewer>
                         </Border>
                     </Popup>

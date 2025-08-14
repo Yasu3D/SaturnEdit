@@ -32,7 +32,7 @@
             <Rectangle Fill="{DynamicResource ChartEditorChromeGradient}"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
-                       IsHitTestVisible="False"/>
+                       IsHitTestVisible="False" />
 
             <!-- Tabs and Menus -->
             <StackPanel Orientation="Horizontal"
@@ -109,9 +109,9 @@
 
                 <!-- Separator -->
                 <Rectangle Width="1"
-                           Fill="{DynamicResource SeparatorPrimary}" 
+                           Fill="{DynamicResource SeparatorPrimary}"
                            VerticalAlignment="Stretch"
-                           Margin="5"/>
+                           Margin="5" />
 
                 <!-- ChartEditor Menu -->
                 <Menu Name="MenuChartEditor"
@@ -310,7 +310,7 @@
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.View.ToolWindows}" />
                             </MenuItem.Header>
-                            
+
                             <MenuItem Name="MenuItemChartEditorChartView3D"
                                       Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
@@ -320,8 +320,9 @@
                                     <icon:FluentIcon Icon="CircleShadow" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            
-                            <MenuItem Name="MenuItemChartEditorChartView2D">
+
+                            <MenuItem Name="MenuItemChartEditorChartView2D"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView2D}" />
                                 </MenuItem.Header>
@@ -329,8 +330,9 @@
                                     <icon:FluentIcon Icon="GanttChart" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            
-                            <MenuItem Name="MenuItemChartEditorChartViewTxt">
+
+                            <MenuItem Name="MenuItemChartEditorChartViewTxt"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartViewTxt}" />
                                 </MenuItem.Header>
@@ -338,10 +340,11 @@
                                     <icon:FluentIcon Icon="TextT" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            
-                            <Separator/>
-                            
-                            <MenuItem Name="MenuItemChartEditorChartProperties">
+
+                            <Separator />
+
+                            <MenuItem Name="MenuItemChartEditorChartProperties"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartProperties}" />
                                 </MenuItem.Header>
@@ -349,8 +352,9 @@
                                     <icon:FluentIcon Icon="TextBulletList" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            
-                            <MenuItem Name="MenuItemChartEditorChartStatistics">
+
+                            <MenuItem Name="MenuItemChartEditorChartStatistics"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics}" />
                                 </MenuItem.Header>
@@ -358,8 +362,9 @@
                                     <icon:FluentIcon Icon="DataHistogram" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            
-                            <MenuItem Name="MenuItemChartEditorProofreader">
+
+                            <MenuItem Name="MenuItemChartEditorProofreader"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.Proofreader}" />
                                 </MenuItem.Header>
@@ -367,36 +372,41 @@
                                     <icon:FluentIcon Icon="ApprovalsApp" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            
-                            <Separator/>
-                            
-                            <MenuItem Name="MenuItemChartEditorEventList">
+
+                            <Separator />
+
+                            <MenuItem Name="MenuItemChartEditorEventList"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.EventList}" />
                                 </MenuItem.Header>
                             </MenuItem>
-                            
-                            <MenuItem Name="MenuItemChartEditorLayerList">
+
+                            <MenuItem Name="MenuItemChartEditorLayerList"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.LayerList}" />
                                 </MenuItem.Header>
                             </MenuItem>
-                            
-                            <MenuItem Name="MenuItemChartEditorLaneToggleList">
+
+                            <MenuItem Name="MenuItemChartEditorLaneToggleList"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.LaneToggleList}" />
                                 </MenuItem.Header>
                             </MenuItem>
-                            
-                            <MenuItem Name="MenuItemChartEditorBookmarkList">
+
+                            <MenuItem Name="MenuItemChartEditorBookmarkList"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.BookmarkList}" />
                                 </MenuItem.Header>
                             </MenuItem>
-                            
-                            <Separator/>
-                            
-                            <MenuItem Name="MenuItemChartEditorInspector">
+
+                            <Separator />
+
+                            <MenuItem Name="MenuItemChartEditorInspector"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.Inspector}" />
                                 </MenuItem.Header>
@@ -404,8 +414,9 @@
                                     <icon:FluentIcon Icon="WrenchScrewdriver" />
                                 </MenuItem.Icon>
                             </MenuItem>
-   
-                            <MenuItem Name="MenuItemChartEditorCursor">
+
+                            <MenuItem Name="MenuItemChartEditorCursor"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.Cursor}" />
                                 </MenuItem.Header>
@@ -413,10 +424,11 @@
                                     <icon:FluentIcon Icon="CircleHintHalfVertical" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            
-                            <Separator/>
-                            
-                            <MenuItem Name="MenuItemChartEditorAudioMixer">
+
+                            <Separator />
+
+                            <MenuItem Name="MenuItemChartEditorAudioMixer"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.AudioMixer}" />
                                 </MenuItem.Header>
@@ -424,8 +436,9 @@
                                     <icon:FluentIcon Icon="Speaker2" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            
-                            <MenuItem Name="MenuItemChartEditorWaveform">
+
+                            <MenuItem Name="MenuItemChartEditorWaveform"
+                                      Click="MenuItemChartEditorToolWindows_OnClick">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.Waveform}" />
                                 </MenuItem.Header>
@@ -434,9 +447,9 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                         </MenuItem>
-                        
-                        <Separator/>
-                        
+
+                        <Separator />
+
                         <MenuItem>
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.View.LayoutPresets}" />
@@ -454,7 +467,7 @@
                                     </StackPanel>
                                 </ToolTip.Tip>
                             </MenuItem>
-                            
+
                             <MenuItem>
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource Menu.View.LayoutPresets.Advanced}" />
@@ -468,15 +481,15 @@
                                 </ToolTip.Tip>
                             </MenuItem>
                         </MenuItem>
-                        
-                        <Separator/>
-                        
+
+                        <Separator />
+
                         <MenuItem>
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.View.SaveLayout}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem>
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.View.LoadLayout}" />

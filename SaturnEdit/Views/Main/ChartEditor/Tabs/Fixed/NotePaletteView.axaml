@@ -293,15 +293,15 @@
                     </StackPanel>
                 </ToolTip.Tip>
             </RadioButton>
-
-            <Rectangle Height="1"
-                       Width="30"
-                       Fill="{DynamicResource SeparatorPrimary}"
-                       Margin="0,10" />
-
+            
             <!-- Bonus Types & Judgement Types -->
             <StackPanel Name="StackPanelBonusTypesJudgementTypes"
                         IsVisible="True">
+                <Rectangle Height="1"
+                           Width="30"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Margin="0,10" />
+
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="BonusType"
                              Name="RadioButtonBonusTypeNormal"
@@ -397,7 +397,7 @@
                              Width="60"
                              Height="40"
                              IsChecked="True"
-                             IsCheckedChanged="RadioButtonBonusType_OnIsCheckedChanged">
+                             IsCheckedChanged="RadioButtonJudgementType_OnIsCheckedChanged">
                     <icon:FluentIcon Icon="Square" />
                     <ToolTip.Tip>
                         <StackPanel>
@@ -419,7 +419,7 @@
                              Name="RadioButtonJudgementTypeFake"
                              Width="60"
                              Height="40"
-                             IsCheckedChanged="RadioButtonBonusType_OnIsCheckedChanged">
+                             IsCheckedChanged="RadioButtonJudgementType_OnIsCheckedChanged">
                     <icon:FluentIcon Icon="SquareHint" />
                     <ToolTip.Tip>
                         <StackPanel>
@@ -441,7 +441,7 @@
                              Name="RadioButtonJudgementTypeAutoplay"
                              Width="60"
                              Height="40"
-                             IsCheckedChanged="RadioButtonBonusType_OnIsCheckedChanged">
+                             IsCheckedChanged="RadioButtonJudgementType_OnIsCheckedChanged">
                     <icon:FluentIcon Icon="Autocorrect" />
                     <ToolTip.Tip>
                         <StackPanel>
@@ -518,7 +518,7 @@
                         IsVisible="False">
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="SweepDirection"
-                             Name="RadioButtonCenter"
+                             Name="RadioButtonSweepDirectionCenter"
                              Width="60"
                              Height="40"
                              IsChecked="True"
@@ -541,7 +541,7 @@
 
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="SweepDirection"
-                             Name="RadioButtonClockwise"
+                             Name="RadioButtonSweepDirectionClockwise"
                              Width="60"
                              Height="40"
                              IsCheckedChanged="RadioButtonSweepDirection_OnIsCheckedChanged">
@@ -563,7 +563,7 @@
 
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="SweepDirection"
-                             Name="RadioButtonCounterclockwise"
+                             Name="RadioButtonSweepDirectionCounterclockwise"
                              Width="60"
                              Height="40"
                              IsCheckedChanged="RadioButtonSweepDirection_OnIsCheckedChanged">
@@ -585,7 +585,7 @@
 
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="SweepDirection"
-                             Name="RadioButtonInstant"
+                             Name="RadioButtonSweepDirectionInstant"
                              Width="60"
                              Height="40"
                              IsCheckedChanged="RadioButtonSweepDirection_OnIsCheckedChanged">

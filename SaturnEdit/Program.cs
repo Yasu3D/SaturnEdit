@@ -12,8 +12,6 @@ class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        DockSettings.EnableGlobalDocking = true;
-        
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }
 
