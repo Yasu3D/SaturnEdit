@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using SaturnEdit.Systems;
-using SaturnEdit.Windows.ProofreaderCriteria;
+using SaturnEdit.Windows.Dialogs.ProofreaderCriteria;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 

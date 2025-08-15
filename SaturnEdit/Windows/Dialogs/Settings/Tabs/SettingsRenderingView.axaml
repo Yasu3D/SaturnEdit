@@ -5,7 +5,7 @@
              mc:Ignorable="d"
              d:DesignWidth="650"
              d:DesignHeight="610"
-             x:Class="SaturnEdit.Windows.Settings.Tabs.SettingsRenderingView">
+             x:Class="SaturnEdit.Windows.Dialogs.Settings.Tabs.SettingsRenderingView">
     <ScrollViewer Background="{DynamicResource BackgroundPrimary}">
         <StackPanel Margin="20">
             <!-- Performance -->

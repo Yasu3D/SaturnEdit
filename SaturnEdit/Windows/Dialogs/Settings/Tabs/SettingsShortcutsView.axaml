@@ -8,7 +8,7 @@
              d:DesignWidth="650"
              d:DesignHeight="610"
              Background="{DynamicResource BackgroundPrimary}"
-             x:Class="SaturnEdit.Windows.Settings.Tabs.SettingsShortcutsView">
+             x:Class="SaturnEdit.Windows.Dialogs.Settings.Tabs.SettingsShortcutsView">
     <Grid ColumnDefinitions="100,5,100,*,300"
           RowDefinitions="30, *, 30"
           Margin="20">

@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              d:DesignWidth="650"
              d:DesignHeight="610"
-             x:Class="SaturnEdit.Windows.Settings.Tabs.SettingsAppearanceView">
+             x:Class="SaturnEdit.Windows.Dialogs.Settings.Tabs.SettingsAppearanceView">
     <ScrollViewer Background="{DynamicResource BackgroundPrimary}">
         <StackPanel Margin="20">
             <Grid ColumnDefinitions="Auto,*"

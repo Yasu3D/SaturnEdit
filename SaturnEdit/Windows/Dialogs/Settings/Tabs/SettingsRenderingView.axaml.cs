@@ -4,7 +4,7 @@ using Avalonia.Interactivity;
 using SaturnEdit.Systems;
 using SaturnView;
 
-namespace SaturnEdit.Windows.Settings.Tabs;
+namespace SaturnEdit.Windows.Dialogs.Settings.Tabs;
 
 public partial class SettingsRenderingView : UserControl
 {

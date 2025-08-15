@@ -46,9 +46,9 @@ public partial class MixerChannel : UserControl
             ButtonSolo.IsVisible = HasSoloButton;
             ButtonSound.IsVisible = HasSoundButton;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            // ignored
+            Console.WriteLine(ex);
         }
     }
 }

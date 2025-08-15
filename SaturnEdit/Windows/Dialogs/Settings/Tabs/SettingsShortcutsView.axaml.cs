@@ -10,7 +10,7 @@ using Avalonia.Media;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 
-namespace SaturnEdit.Windows.Settings.Tabs;
+namespace SaturnEdit.Windows.Dialogs.Settings.Tabs;
 
 public partial class SettingsShortcutsView : UserControl
 {

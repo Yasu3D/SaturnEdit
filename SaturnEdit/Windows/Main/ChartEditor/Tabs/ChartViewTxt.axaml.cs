@@ -61,9 +61,9 @@ public partial class ChartViewTxt : UserControl
 
             SettingsSystem.EditorSettings.ChartViewTxtSyntaxHighlighting = ToggleButtonSyntaxHighlighting.IsChecked ?? false;
         }
-        catch
+        catch (Exception ex)
         {
-            // ignored
+            Console.WriteLine(ex);
         }
     }
 }

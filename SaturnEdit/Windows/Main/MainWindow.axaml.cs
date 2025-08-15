@@ -1,20 +1,11 @@
 using System;
-using System.IO;
-using System.Threading.Tasks;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Platform.Storage;
-using Dock.Model;
-using Dock.Model.Avalonia.Controls;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
-using SaturnEdit.Windows;
-using SaturnEdit.Windows.ChartEditor;
-using SaturnEdit.Windows.CosmeticsEditor;
+using SaturnEdit.Windows.Dialogs;
 using SaturnEdit.Windows.Main.ChartEditor.Tabs;
-using SaturnEdit.Windows.StageEditor;
 
 namespace SaturnEdit;
 
@@ -26,8 +17,6 @@ public partial class MainWindow : Window
 
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
-
-        ChartSystem.Entry.Artist = "Test";
     }
 
     private void OnSettingsChanged(object? sender, EventArgs e)
@@ -122,12 +111,14 @@ public partial class MainWindow : Window
     {
         try
         {
+            
+            
             SettingsWindow settingsWindow = new();
             await settingsWindow.ShowDialog(this);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            // ignored.
+            Console.WriteLine(ex);
         }
     }
 

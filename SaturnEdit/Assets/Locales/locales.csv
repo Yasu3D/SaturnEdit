@@ -120,7 +120,6 @@ ChartEditor.ChartProperties.BackgroundOption.Boss,Boss
 ChartEditor.ChartProperties.BackgroundOption.StageUp,Stage Up
 ChartEditor.ChartProperties.BackgroundOption.WorldsEnd,World's End
 ChartEditor.ChartProperties.BackgroundOption.Jacket,Jacket
-ChartEditor.ChartProperties.ToolTip.PickFile,Pick File...
 ChartEditor.ChartProperties.ToolTip.AutoReading,Auto Reading
 ChartEditor.ChartProperties.ToolTip.AutoReading.Description,Automatically determine the reading based on the chart's title.
 ChartEditor.ChartProperties.ToolTip.AutoBpmMessage,Auto Bpm Message
@@ -413,6 +412,8 @@ Settings.Shortcuts.Group,GROUP
 Settings.Shortcuts.Action,ACTION
 Settings.Shortcuts.Shortcut,SHORTCUT
 Settings.Shortcuts.WaitingForInput,Waiting for input...
+Export.Window.Title,Export
 Generic.Enabled,Enabled
 Generic.Disabled,Disabled
 Generic.Cancel,Cancel
+Generic.PickFile,Pick File...

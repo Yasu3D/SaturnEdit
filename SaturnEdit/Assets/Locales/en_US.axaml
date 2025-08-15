@@ -123,7 +123,6 @@
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.StageUp">Stage Up</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.WorldsEnd">World's End</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.Jacket">Jacket</system:String>
-    <system:String x:Key="ChartEditor.ChartProperties.ToolTip.PickFile">Pick File...</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoReading">Auto Reading</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoReading.Description">Automatically determine the reading based on the chart's title.</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoBpmMessage">Auto Bpm Message</system:String>
@@ -416,7 +415,9 @@
     <system:String x:Key="Settings.Shortcuts.Action">ACTION</system:String>
     <system:String x:Key="Settings.Shortcuts.Shortcut">SHORTCUT</system:String>
     <system:String x:Key="Settings.Shortcuts.WaitingForInput">Waiting for input...</system:String>
+    <system:String x:Key="Export.Window.Title">Export</system:String>
     <system:String x:Key="Generic.Enabled">Enabled</system:String>
     <system:String x:Key="Generic.Disabled">Disabled</system:String>
     <system:String x:Key="Generic.Cancel">Cancel</system:String>
+    <system:String x:Key="Generic.PickFile">Pick File...</system:String>
 </ResourceDictionary>

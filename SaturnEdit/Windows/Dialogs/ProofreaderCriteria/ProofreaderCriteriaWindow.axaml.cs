@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace SaturnEdit.Windows.ProofreaderCriteria;
+namespace SaturnEdit.Windows.Dialogs.ProofreaderCriteria;
 
 public partial class ProofreaderCriteriaWindow : Window
 {

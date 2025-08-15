@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using SaturnEdit.Systems;
 
-namespace SaturnEdit.Windows.Settings.Tabs;
+namespace SaturnEdit.Windows.Dialogs.Settings.Tabs;
 
 public partial class SettingsGeneralView : UserControl
 {

@@ -98,9 +98,9 @@ public static class SettingsSystem
             string editorSettingsData = File.ReadAllText(editorSettingsPath);
             EditorSettings = Toml.ToModel<EditorSettings>(editorSettingsData);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
+            Console.WriteLine(ex);
             EditorSettings = new();
         }
         
@@ -110,9 +110,9 @@ public static class SettingsSystem
             string renderSettingsData = File.ReadAllText(renderSettingsPath);
             RenderSettings = Toml.ToModel<RenderSettings>(renderSettingsData);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
+            Console.WriteLine(ex);
             RenderSettings = new();
         }
         
@@ -122,9 +122,9 @@ public static class SettingsSystem
             string audioSettingsData = File.ReadAllText(audioSettingsPath);
             AudioSettings = Toml.ToModel<AudioSettings>(audioSettingsData);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
+            Console.WriteLine(ex);
             AudioSettings = new();
         }
         
@@ -134,9 +134,9 @@ public static class SettingsSystem
             string shortcutSettingsData = File.ReadAllText(shortcutSettingsPath);
             ShortcutSettings = Toml.ToModel<ShortcutSettings>(shortcutSettingsData);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
+            Console.WriteLine(ex);
             ShortcutSettings = new();
         }
         

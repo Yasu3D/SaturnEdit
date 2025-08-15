@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         d:DesignWidth="450"
         d:DesignHeight="700"
-        x:Class="SaturnEdit.Windows.ProofreaderCriteria.ProofreaderCriteriaWindow"
+        x:Class="SaturnEdit.Windows.Dialogs.ProofreaderCriteria.ProofreaderCriteriaWindow"
         Width="450"
         Height="700"
         MinWidth="450"

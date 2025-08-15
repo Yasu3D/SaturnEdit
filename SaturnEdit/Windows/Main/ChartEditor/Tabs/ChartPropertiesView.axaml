@@ -327,7 +327,7 @@
                                   HorizontalAlignment="Right">
                         <ToolTip.Tip>
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.PickFile}" />
+                                <TextBlock Text="{DynamicResource Generic.PickFile}" />
                             </StackPanel>
                         </ToolTip.Tip>
                         <icon:FluentIcon Icon="FolderOpen"/>
@@ -347,7 +347,7 @@
                                   HorizontalAlignment="Right">
                         <ToolTip.Tip>
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.PickFile}" />
+                                <TextBlock Text="{DynamicResource Generic.PickFile}" />
                             </StackPanel>
                         </ToolTip.Tip>
                         <icon:FluentIcon Icon="FolderOpen"/>
@@ -367,7 +367,7 @@
                                   HorizontalAlignment="Right">
                         <ToolTip.Tip>
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.PickFile}" />
+                                <TextBlock Text="{DynamicResource Generic.PickFile}" />
                             </StackPanel>
                         </ToolTip.Tip>
                         <icon:FluentIcon Icon="FolderOpen"/>

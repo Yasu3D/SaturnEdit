@@ -2,11 +2,11 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using SaturnEdit.Systems;
-using SaturnEdit.Windows.Settings.Tabs;
+using SaturnEdit.Windows.Dialogs.Settings.Tabs;
 using SaturnView;
 using Tomlyn;
 
-namespace SaturnEdit.Windows;
+namespace SaturnEdit.Windows.Dialogs;
 
 public partial class SettingsWindow : Window
 {

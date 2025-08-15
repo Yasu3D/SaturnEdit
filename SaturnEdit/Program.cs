@@ -1,6 +1,5 @@
 ﻿using Avalonia;
 using System;
-using Dock.Settings;
 
 namespace SaturnEdit;
 

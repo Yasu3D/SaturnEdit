@@ -69,9 +69,9 @@ public partial class WindowChrome : UserControl
             IconMaximize.IsVisible = window.WindowState == WindowState.Normal;
             IconRestore.IsVisible = window.WindowState == WindowState.Maximized;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // ignored.
+            Console.WriteLine(ex);
         }
     }
 }

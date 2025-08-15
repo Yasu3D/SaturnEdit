@@ -12,6 +12,7 @@ using Dock.Serializer;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
+using SaturnEdit.Windows.Dialogs.Export;
 
 namespace SaturnEdit.Windows.ChartEditor;
 
@@ -86,8 +87,9 @@ public partial class ChartEditorView : UserControl
             ChartSystem.WriteChart(ChartSystem.Entry.ChartPath, new(), true, true);
             return true;
         }
-        catch
+        catch (Exception ex)
         {
+            Console.WriteLine(ex);
             return false;
         }
     }
@@ -126,8 +128,9 @@ public partial class ChartEditorView : UserControl
             ChartSystem.WriteChart(file.Path.AbsolutePath, new(), true, true);
             return true;
         }
-        catch
+        catch (Exception ex)
         {
+            Console.WriteLine(ex);
             return false;
         }
     }
@@ -141,31 +144,32 @@ public partial class ChartEditorView : UserControl
     {
         try
         {
+            // Open an export dialog.
             if (VisualRoot is not Window rootWindow) return false;
-            // ExportWindow exportWindow = new();
-            // await rootWindow.ShowDialog<bool>(exportWindow);
+            ExportWindow exportWindow = new();
+            await exportWindow.ShowDialog(rootWindow);
+
+            // Return if export was cancelled.
+            if (exportWindow.DialogResult == ExportWindow.ExportDialogResult.Cancel) return false;
             
-            NotationWriteArgs args = new()
-            {
-                
-            };
-            
+            // Open the file picker.
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return false;
-            
-            IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(ExportSaveOptions(args));
+            IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(ExportFilePickerSaveOptions(ChartSystem.NotationWriteArgs));
             if (file == null) return false;
 
-            ChartSystem.WriteChart(file.Path.AbsolutePath, args, true, true);
+            // Write the chart to the defined path, with the defined notation arguments.
+            ChartSystem.WriteChart(file.Path.AbsolutePath, ChartSystem.NotationWriteArgs, true, true);
             return true;
         }
-        catch
+        catch (Exception ex)
         {
+            Console.WriteLine(ex);
             return false;
         }
     }
 
-    private FilePickerSaveOptions ExportSaveOptions(NotationWriteArgs args)
+    private FilePickerSaveOptions ExportFilePickerSaveOptions(NotationWriteArgs args)
     {
         string defaultExtension = args.FormatVersion switch
         {
