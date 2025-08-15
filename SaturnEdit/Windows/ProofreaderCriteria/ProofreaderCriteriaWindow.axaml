@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:SaturnEdit.Controls"
+        mc:Ignorable="d"
+        d:DesignWidth="450"
+        d:DesignHeight="700"
+        x:Class="SaturnEdit.Windows.ProofreaderCriteria.ProofreaderCriteriaWindow"
+        Width="450"
+        Height="700"
+        MinWidth="450"
+        MinHeight="700"
+        Title="{DynamicResource ChartEditor.Proofreader.Criteria.Title}">
+    <Grid>
+        <controls:WindowChrome Name="WindowChrome"
+                               ZIndex="99"
+                               Classes="ShowCloseOnly"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Top" />
+
+        <DockPanel>
+            <!-- Window Header -->
+            <Grid DockPanel.Dock="Top">
+                <Border Height="40"
+                        Background="{DynamicResource BackgroundPrimary}"
+                        IsHitTestVisible="False">
+                    <TextBlock HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Margin="10,0"
+                               Text="{DynamicResource ChartEditor.Proofreader.Criteria.Title}" />
+                </Border>
+            </Grid>
+
+            <!-- Footer -->
+            <Border DockPanel.Dock="Bottom"
+                    Height="50"
+                    Background="{DynamicResource BackgroundPrimary}">
+
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Right">
+                    <Button Classes="Themed AccentFull"
+                            Height="28"
+                            Margin="11,11,9,11"
+                            Width="75">
+                        <TextBlock Text="{DynamicResource Menu.File.Save}" />
+                    </Button>
+
+                    <Button Classes="Themed Outlined"
+                            Height="28"
+                            Margin="9,11,11,11"
+                            Width="75">
+                        <TextBlock Text="{DynamicResource Generic.Cancel}" />
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- Content -->
+            <Border 
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch" />
+        </DockPanel>
+    </Grid>
+</Window>

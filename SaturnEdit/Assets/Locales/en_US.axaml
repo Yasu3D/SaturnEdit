@@ -324,6 +324,8 @@
     <system:String x:Key="Menu.File.RenderAsImage">Render as Image...</system:String>
     <system:String x:Key="Menu.File.Settings">Settings...</system:String>
     <system:String x:Key="Menu.File.Quit">Quit</system:String>
+    <system:String x:Key="Menu.File.SaturnChartFile">Saturn Chart File</system:String>
+    <system:String x:Key="Menu.File.MerChartFile">Mer Chart File</system:String>
     <system:String x:Key="Menu.Edit">Edit</system:String>
     <system:String x:Key="Menu.Edit.Undo">Undo</system:String>
     <system:String x:Key="Menu.Edit.Redo">Redo</system:String>

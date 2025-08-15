@@ -1,0 +1,155 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:SaturnEdit.Controls"
+        xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+        mc:Ignorable="d"
+        d:DesignWidth="900"
+        d:DesignHeight="700"
+        x:Class="SaturnEdit.Windows.SettingsWindow"
+        Width="900"
+        Height="700"
+        MinWidth="900"
+        MinHeight="700"
+        Focusable="True"
+        Title="{DynamicResource Settings.Window.Title}">
+    <Grid>
+        <controls:WindowChrome Name="WindowChrome"
+                               ZIndex="99"
+                               Classes="ShowCloseOnly"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Top" />
+
+        <DockPanel>
+            <!-- Window Header -->
+            <Grid DockPanel.Dock="Top">
+                <Border Height="40"
+                        Background="{DynamicResource BackgroundPrimary}"
+                        IsHitTestVisible="False">
+                    <TextBlock HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Margin="10,0"
+                               Text="{DynamicResource Settings.Window.Title}" />
+                </Border>
+            </Grid>
+
+            <!-- Footer -->
+            <Border DockPanel.Dock="Bottom"
+                    Height="50"
+                    Background="{DynamicResource BackgroundPrimary}">
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Name="ButtonSave"
+                            Classes="Themed AccentFull"
+                            Height="28"
+                            Margin="11,11,9,11"
+                            Width="75"
+                            Click="ButtonSave_OnClick">
+                        <TextBlock Text="{DynamicResource Menu.File.Save}" />
+                    </Button>
+
+                    <Button Name="ButtonCancel"
+                            Classes="Themed Outlined"
+                            Height="28"
+                            Margin="9,11,11,11"
+                            Width="75"
+                            Click="ButtonCancel_OnClick">
+                        <TextBlock Text="{DynamicResource Generic.Cancel}" />
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- Content -->
+            <Border BorderBrush="{DynamicResource SeparatorSecondary}"
+                    BorderThickness="0,1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+                <Grid ColumnDefinitions="250,*">
+                    <Border Grid.Column="0"
+                            Background="{DynamicResource BackgroundPrimary}"
+                            BorderBrush="{DynamicResource SeparatorSecondary}"
+                            BorderThickness="0,0,1,0">
+                        <ScrollViewer>
+                            <StackPanel Spacing="1">
+                                <RadioButton Name="RadioButtonGeneral"
+                                             GroupName="SettingsTabs"
+                                             Classes="Themed Accent"
+                                             CornerRadius="0"
+                                             HorizontalAlignment="Stretch"
+                                             HorizontalContentAlignment="Left"
+                                             IsChecked="True"
+                                             IsCheckedChanged="SettingsTab_OnIsCheckedChanged">
+                                    <Grid ColumnDefinitions="60,190">
+                                        <icon:FluentIcon Grid.Column="0"
+                                                         Icon="Settings"
+                                                         Margin="10" />
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{DynamicResource Settings.General}"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </RadioButton>
+
+                                <RadioButton Name="RadioButtonAppearance"
+                                             GroupName="SettingsTabs"
+                                             Classes="Themed Accent"
+                                             CornerRadius="0"
+                                             HorizontalAlignment="Stretch"
+                                             HorizontalContentAlignment="Left"
+                                             IsCheckedChanged="SettingsTab_OnIsCheckedChanged">
+                                    <Grid ColumnDefinitions="60,190">
+                                        <icon:FluentIcon Grid.Column="0"
+                                                         Icon="Eye"
+                                                         Margin="10" />
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{DynamicResource Settings.Appearance}"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </RadioButton>
+                                
+                                <RadioButton Name="RadioButtonRendering"
+                                             GroupName="SettingsTabs"
+                                             Classes="Themed Accent"
+                                             CornerRadius="0"
+                                             HorizontalAlignment="Stretch"
+                                             HorizontalContentAlignment="Left"
+                                             IsCheckedChanged="SettingsTab_OnIsCheckedChanged">
+                                    <Grid ColumnDefinitions="60,190">
+                                        <icon:FluentIcon Grid.Column="0"
+                                                         Icon="Camera"
+                                                         Margin="10" />
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{DynamicResource Settings.Rendering}"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </RadioButton>
+
+                                <RadioButton Name="RadioButtonShortcuts"
+                                             GroupName="SettingsTabs"
+                                             Classes="Themed Accent"
+                                             CornerRadius="0"
+                                             HorizontalAlignment="Stretch"
+                                             HorizontalContentAlignment="Left"
+                                             IsCheckedChanged="SettingsTab_OnIsCheckedChanged">
+                                    <Grid ColumnDefinitions="60,190">
+                                        <icon:FluentIcon Grid.Column="0"
+                                                         Icon="Keyboard"
+                                                         Margin="10" />
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{DynamicResource Settings.Shortcuts}"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </RadioButton>
+
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+                    
+                    <UserControl Grid.Column="1"
+                                 Name="SettingsTabContainer"/>
+                </Grid>
+            </Border>
+        </DockPanel>
+    </Grid>
+</Window>

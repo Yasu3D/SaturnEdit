@@ -181,5 +181,9 @@
         <HintPath>C:\Users\lfris\.nuget\packages\dock.avalonia\11.3.0.17\lib\net8.0\Dock.Avalonia.dll</HintPath>
       </Reference>
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Windows\Export\" />
+    </ItemGroup>
 
 </Project>

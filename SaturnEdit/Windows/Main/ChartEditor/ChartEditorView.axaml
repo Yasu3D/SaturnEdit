@@ -1,0 +1,94 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:tabs="clr-namespace:SaturnEdit.Windows.Main.ChartEditor.Tabs"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="SaturnEdit.Windows.ChartEditor.ChartEditorView">
+    <Grid RowDefinitions="*,79">
+
+        <!-- Content -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="60,1, *">
+
+            <tabs:NotePaletteView Grid.Column="0" />
+
+            <Rectangle Grid.Column="1"
+                       Fill="{DynamicResource SeparatorSecondary}" />
+
+            <!-- Tab Dock -->
+            <DockControl Grid.Column="2"
+                         x:Name="DockControl"
+                         InitializeLayout="True"
+                         InitializeFactory="True">
+                <DockControl.Factory>
+                    <Factory />
+                </DockControl.Factory>
+
+                <RootDock x:Name="RootDock"
+                          IsCollapsable="False">
+                    <RootDock.Windows />
+                    <!-- Temporary Layout -->
+                    
+                    <!-- Horizontal Split -->
+                    <ProportionalDock Orientation="Horizontal">
+                        
+                        <!-- Left Panel - Inspector/LayerList/Cursor -->
+                        <ProportionalDock Orientation="Vertical">
+
+                            <!-- Top Section - Inspector/LayerList -->
+                            <ToolDock>
+                                <Tool Title="Inspector">
+                                    <tabs:InspectorView />
+                                </Tool>
+                                <Tool Title="LayerList">
+                                    <tabs:LayerListView />
+                                </Tool>
+                            </ToolDock>
+                            
+                            <ProportionalDockSplitter/>
+                            
+                            <!-- Bottom Section - Cursor -->
+                            <ToolDock>
+                                <Tool Title="Cursor">
+                                    <tabs:CursorView />
+                                </Tool>
+                            </ToolDock>
+                            
+                        </ProportionalDock>
+                        
+                        <ProportionalDockSplitter />
+                        
+                        <!-- Center Panel - ChartView3D/ChartView2D -->
+                        <ToolDock>
+                            <Tool Title="ChartView3D">
+                                <tabs:ChartView3D />
+                            </Tool>
+                            <Tool Title="ChartView2D">
+                                <tabs:ChartView2D />
+                            </Tool>
+                        </ToolDock>
+                        
+                        <ProportionalDockSplitter />
+                        
+                        <!-- Right Panel - ChartProperties/ChartStatistics -->
+                        <ToolDock>
+                            <Tool Title="ChartProperties">
+                                <tabs:ChartPropertiesView />
+                            </Tool>
+                            <Tool Title="ChartStatistics">
+                                <tabs:ChartStatisticsView />
+                            </Tool>
+                        </ToolDock>
+                        
+                    </ProportionalDock>
+                </RootDock>
+            </DockControl>
+        </Grid>
+
+        <tabs:PlaybackView Grid.Row="1" />
+
+    </Grid>
+</UserControl>

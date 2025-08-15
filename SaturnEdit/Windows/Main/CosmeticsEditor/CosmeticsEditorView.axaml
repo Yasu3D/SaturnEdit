@@ -1,0 +1,119 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="SaturnEdit.Windows.CosmeticsEditor.CosmeticsEditorView">
+    <Grid RowDefinitions="40,1,*">
+        
+        <!-- Menu Bar Background -->
+        <Rectangle Grid.Row="0" 
+                   Fill="{DynamicResource BackgroundPrimary}"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   IsHitTestVisible="False"  />
+        
+        <Rectangle Grid.Row="0" 
+                   Fill="{DynamicResource CosmeticsEditorChromeGradient}"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   IsHitTestVisible="False"  />
+        
+        <!-- Menu Bar -->
+        <DockPanel Grid.Row="0">
+            <Menu DockPanel.Dock="Left">
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock Text="{DynamicResource ChartEditor.Menu.File}"/>
+                    </MenuItem.Header>
+                    
+                    <MenuItem InputGesture="Ctrl + N">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.New}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="DocumentAdd"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem InputGesture="Ctrl + O">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Open}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Folder"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <Separator/>
+                    
+                    <MenuItem InputGesture="Ctrl + S">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Save}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Save"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem InputGesture="Ctrl + Shift + S">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.SaveAs}"/>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.ReloadFromDisk}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowSync"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <Separator/>
+                    
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Export}"/>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.RenderAsImage}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ImageSparkle"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <Separator/>
+                    
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Settings}"/>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Settings"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem>
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Quit}"/>
+                        </MenuItem.Header>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+            
+            <Rectangle Fill="Transparent" IsHitTestVisible="False"/>
+        </DockPanel>
+        
+        <!-- Separator -->
+        <Rectangle Grid.Row="1" Fill="{DynamicResource SeparatorSecondary}"/>
+        
+        <!-- Content -->
+        
+    </Grid>
+</UserControl>
