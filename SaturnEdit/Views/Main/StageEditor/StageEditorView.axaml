@@ -46,11 +46,6 @@
                             <icon:FluentIcon Icon="Folder"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem>
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource ChartEditor.Menu.File.Close}"/>
-                        </MenuItem.Header>
-                    </MenuItem>
 
                     <Separator/>
                     

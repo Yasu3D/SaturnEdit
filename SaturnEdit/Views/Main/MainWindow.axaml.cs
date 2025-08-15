@@ -1,8 +1,10 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using Dock.Model;
 using Dock.Model.Avalonia.Controls;
 using SaturnData.Notation.Core;
@@ -24,6 +26,8 @@ public partial class MainWindow : Window
 
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
+
+        ChartSystem.Entry.Artist = "Test";
     }
 
     private void OnSettingsChanged(object? sender, EventArgs e)
@@ -35,7 +39,6 @@ public partial class MainWindow : Window
         
         MenuItemChartEditorNew.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.New"].ToKeyGesture();
         MenuItemChartEditorOpen.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Open"].ToKeyGesture();
-        MenuItemChartEditorClose.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Close"].ToKeyGesture();
         MenuItemChartEditorSave.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Save"].ToKeyGesture();
         MenuItemChartEditorSaveAs.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.SaveAs"].ToKeyGesture();
         MenuItemChartEditorReloadFromDisk.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.ReloadFromDisk"].ToKeyGesture();
@@ -153,4 +156,16 @@ public partial class MainWindow : Window
         if (userControl == null) return;
         ChartEditor.CreateNewFloatingTool(userControl);
     }
+
+    private void MenuItemChartEditorNew_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileNew();
+
+    private void MenuItemChartEditorOpen_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileOpen();
+
+    private void MenuItemChartEditorSave_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileSave();
+
+    private void MenuItemChartEditorSaveAs_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileSaveAs();
+
+    private void MenuItemChartEditorReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileReloadFromDisk();
+
+    private void MenuItemChartEditorExport_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileExport();
 }

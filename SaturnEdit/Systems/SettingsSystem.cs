@@ -532,7 +532,6 @@ public class ShortcutSettings
     {
         ["File.New"]            = new(Key.N,    true,  false, false, "Menu.File", "Menu.File.New"),
         ["File.Open"]           = new(Key.O,    true,  false, false, "Menu.File", "Menu.File.Open"),
-        ["File.Close"]          = new(Key.None, false, false, false, "Menu.File", "Menu.File.Close"),
         ["File.Save"]           = new(Key.S,    true,  false, false, "Menu.File", "Menu.File.Save"),
         ["File.SaveAs"]         = new(Key.S,    true,  false, true,  "Menu.File", "Menu.File.SaveAs"),
         ["File.ReloadFromDisk"] = new(Key.R,    true,  true,  false, "Menu.File", "Menu.File.ReloadFromDisk"),

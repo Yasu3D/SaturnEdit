@@ -8,27 +8,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/ViewLocator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnData" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/App.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/App.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/App.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/App.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/note_icons_color.afdesign" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/note_icons_color.afdesign" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Icons/note_icons_color.afdesign~lock~" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/DockStyles.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/DockStyles.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/Dock/GlobalDockTarget.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/Dock/GlobalDockTarget.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/Menu.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/Menu.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/MenuFlyoutPresenter.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/MenuFlyoutPresenter.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/MenuItem.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Styles/Resources/MenuItem.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/CursorSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/CursorSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Core/Chart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Core/Chart.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Core/Entry.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Core/Entry.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerReader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerWriter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerWriter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationReadOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationReadArgs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationSerializer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationSerializer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationWriteOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationWriteArgs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV1/SatV1Reader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV1/SatV1Reader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV1/SatV1Writer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV1/SatV1Writer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Reader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Reader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Writer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Writer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Reader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Reader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Writer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Writer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/ChartSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/ChartSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/ChartEditorView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartPropertiesView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartPropertiesView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/CosmeticsEditor/CosmeticsEditorView.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/MainWindow.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Views/Main/StageEditor/StageEditorView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Views/Main/StageEditor/StageEditorView.axaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +89,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fcb9104d589e021956403128a5117096b830f6976c42d12388ac7355eafe/Registry.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SaturnData/SaturnData/Notation/Core/Chart.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SaturnData/SaturnData/Notation/Events/StopEffectEvent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SaturnData/SaturnData/obj/Debug/net8.0/SaturnData.AssemblyInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SaturnEdit/Assets/sat.tmLanguage.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SaturnEdit/Views/Main/ChartEditor/Tabs/ChartView2D.axaml.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -100,23 +106,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Project.SaturnEdit.executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "XThreadsFramesViewSplitterKey": "0.13752913",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.editor",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Project.SaturnEdit.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.31971398&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="SaturnEdit" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/SaturnEdit/bin/Debug/net8.0/SaturnEdit.exe" />
@@ -237,7 +243,8 @@
       <workItem from="1754956821687" duration="11950000" />
       <workItem from="1755074663546" duration="594000" />
       <workItem from="1755080849242" duration="8544000" />
-      <workItem from="1755148854829" duration="8468000" />
+      <workItem from="1755148854829" duration="19804000" />
+      <workItem from="1755186069909" duration="5004000" />
     </task>
     <servers />
   </component>

@@ -121,7 +121,8 @@
                             <TextBlock Text="{DynamicResource Menu.File}" />
                         </MenuItem.Header>
 
-                        <MenuItem Name="MenuItemChartEditorNew">
+                        <MenuItem Name="MenuItemChartEditorNew"
+                                  Click="MenuItemChartEditorNew_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.New}" />
                             </MenuItem.Header>
@@ -129,7 +130,8 @@
                                 <icon:FluentIcon Icon="DocumentAdd" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Name="MenuItemChartEditorOpen">
+                        <MenuItem Name="MenuItemChartEditorOpen"
+                                  Click="MenuItemChartEditorOpen_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.Open}" />
                             </MenuItem.Header>
@@ -137,15 +139,11 @@
                                 <icon:FluentIcon Icon="Folder" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Name="MenuItemChartEditorClose">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource Menu.File.Close}" />
-                            </MenuItem.Header>
-                        </MenuItem>
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemChartEditorSave">
+                        <MenuItem Name="MenuItemChartEditorSave"
+                                  Click="MenuItemChartEditorSave_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.Save}" />
                             </MenuItem.Header>
@@ -153,12 +151,14 @@
                                 <icon:FluentIcon Icon="Save" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Name="MenuItemChartEditorSaveAs">
+                        <MenuItem Name="MenuItemChartEditorSaveAs"
+                                  Click="MenuItemChartEditorSaveAs_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.SaveAs}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        <MenuItem Name="MenuItemChartEditorReloadFromDisk">
+                        <MenuItem Name="MenuItemChartEditorReloadFromDisk"
+                                  Click="MenuItemChartEditorReloadFromDisk_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.ReloadFromDisk}" />
                             </MenuItem.Header>
@@ -169,7 +169,8 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemChartEditorExport">
+                        <MenuItem Name="MenuItemChartEditorExport"
+                                  Click="MenuItemChartEditorExport_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.Export}" />
                             </MenuItem.Header>

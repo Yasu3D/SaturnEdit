@@ -123,6 +123,7 @@
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.StageUp">Stage Up</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.WorldsEnd">World's End</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.Jacket">Jacket</system:String>
+    <system:String x:Key="ChartEditor.ChartProperties.ToolTip.PickFile">Pick File...</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoReading">Auto Reading</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoReading.Description">Automatically determine the reading based on the chart's title.</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoBpmMessage">Auto Bpm Message</system:String>
@@ -316,11 +317,10 @@
     <system:String x:Key="Menu.File">File</system:String>
     <system:String x:Key="Menu.File.New">New</system:String>
     <system:String x:Key="Menu.File.Open">Open...</system:String>
-    <system:String x:Key="Menu.File.Close">Close</system:String>
     <system:String x:Key="Menu.File.Save">Save</system:String>
     <system:String x:Key="Menu.File.SaveAs">Save As...</system:String>
     <system:String x:Key="Menu.File.ReloadFromDisk">Reload from Disk</system:String>
-    <system:String x:Key="Menu.File.Export">Export</system:String>
+    <system:String x:Key="Menu.File.Export">Export...</system:String>
     <system:String x:Key="Menu.File.RenderAsImage">Render as Image...</system:String>
     <system:String x:Key="Menu.File.Settings">Settings...</system:String>
     <system:String x:Key="Menu.File.Quit">Quit</system:String>

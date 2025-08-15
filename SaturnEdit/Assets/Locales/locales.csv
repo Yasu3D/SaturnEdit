@@ -120,6 +120,7 @@ ChartEditor.ChartProperties.BackgroundOption.Boss,Boss
 ChartEditor.ChartProperties.BackgroundOption.StageUp,Stage Up
 ChartEditor.ChartProperties.BackgroundOption.WorldsEnd,World's End
 ChartEditor.ChartProperties.BackgroundOption.Jacket,Jacket
+ChartEditor.ChartProperties.ToolTip.PickFile,Pick File...
 ChartEditor.ChartProperties.ToolTip.AutoReading,Auto Reading
 ChartEditor.ChartProperties.ToolTip.AutoReading.Description,Automatically determine the reading based on the chart's title.
 ChartEditor.ChartProperties.ToolTip.AutoBpmMessage,Auto Bpm Message
@@ -313,14 +314,15 @@ Main.ToolTip.StageEditor.Description,Create and edit Stage-Up stages.
 Menu.File,File
 Menu.File.New,New
 Menu.File.Open,Open...
-Menu.File.Close,Close
 Menu.File.Save,Save
 Menu.File.SaveAs,Save As...
 Menu.File.ReloadFromDisk,Reload from Disk
-Menu.File.Export,Export
+Menu.File.Export,Export...
 Menu.File.RenderAsImage,Render as Image...
 Menu.File.Settings,Settings...
 Menu.File.Quit,Quit
+Menu.File.SaturnChartFile,Saturn Chart File
+Menu.File.MerChartFile,Mer Chart File
 Menu.Edit,Edit
 Menu.Edit.Undo,Undo
 Menu.Edit.Redo,Redo
