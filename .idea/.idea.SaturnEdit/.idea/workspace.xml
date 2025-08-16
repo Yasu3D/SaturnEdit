@@ -8,47 +8,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Export/ExportWindow.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Export/ExportWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/dictionaries/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/dictionaries/project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnData" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Events/InvisibleEffectEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Events/VisibilityChangeEvent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerReader.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerWriter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerWriter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationReadArgs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationReadArgs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationUtils.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationWriteArgs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationWriteArgs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Reader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Reader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Reader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Reader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Writer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV3/SatV3Writer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/App.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/App.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Writer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Writer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Controls/MixerChannel.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Controls/MixerChannel.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Controls/WindowChrome.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Controls/WindowChrome.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/SaturnEdit.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/ChartSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/ChartSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/SettingsSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Export/ExportWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Export/ExportWindow.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Export/ExportWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Export/ExportWindow.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/SettingsWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/SettingsWindow.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/ChartEditorView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/ChartEditorView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/Tabs/ChartPropertiesView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/Tabs/ChartPropertiesView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/Tabs/ChartViewTxt.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/Tabs/ChartViewTxt.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/Tabs/ProofreaderView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/Tabs/ProofreaderView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Main/MainWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Main/MainWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/ProofreaderCriteria/ProofreaderCriteriaWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/ProofreaderCriteria/ProofreaderCriteriaWindow.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/ProofreaderCriteria/ProofreaderCriteriaWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/ProofreaderCriteria/ProofreaderCriteriaWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Settings/SettingsWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/SettingsWindow.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Settings/SettingsWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/SettingsWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Settings/Tabs/SettingsAppearanceView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsAppearanceView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Settings/Tabs/SettingsAppearanceView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsAppearanceView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Settings/Tabs/SettingsGeneralView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsGeneralView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Settings/Tabs/SettingsGeneralView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsGeneralView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Settings/Tabs/SettingsRenderingView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsRenderingView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Settings/Tabs/SettingsRenderingView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsRenderingView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Settings/Tabs/SettingsShortcutsView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsShortcutsView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Settings/Tabs/SettingsShortcutsView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsShortcutsView.axaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,9 +38,10 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/SaturnData" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Temp/SourceGeneratedDocuments/67584553363E3686E14E4B3B/Avalonia.Generators/Avalonia.Generators.NameGenerator.AvaloniaNameSourceGenerator/SaturnEdit.Windows.Dialogs.Export.ExportWindow.g.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2b90705926ae4f10aa01bbe3f1025828c90908/dd/26fa1aa0/ValueType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0c1b2d696c2c430681e76ddeaf3947891f8a00/_d2775/SweepDirection.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/14be3e5ce324a564c079692a5cf89ae165e6dd447781d92b7625f4cc6d0e6/TemplateContent.cs" root0="FORCE_HIGHLIGHTING" />
@@ -127,7 +100,7 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.31971398&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.3249027&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -262,7 +235,9 @@
       <workItem from="1755186069909" duration="5004000" />
       <workItem from="1755241156977" duration="3180000" />
       <workItem from="1755244391658" duration="11391000" />
-      <workItem from="1755269673273" duration="8584000" />
+      <workItem from="1755269673273" duration="14239000" />
+      <workItem from="1755344183511" duration="22412000" />
+      <workItem from="1755379036415" duration="1186000" />
     </task>
     <servers />
   </component>

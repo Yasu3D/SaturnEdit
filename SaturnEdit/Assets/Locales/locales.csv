@@ -413,6 +413,50 @@ Settings.Shortcuts.Action,ACTION
 Settings.Shortcuts.Shortcut,SHORTCUT
 Settings.Shortcuts.WaitingForInput,Waiting for input...
 Export.Window.Title,Export
+Export.FormatVersion.Mer,MER
+Export.FormatVersion.SatV1,SATv1 (Legacy)
+Export.FormatVersion.SatV2,SATv2 (Legacy)
+Export.FormatVersion.SatV3,SATv3
+Export.ResetSettings,Reset Settings
+Export.Header.CommonArguments,Common Arguments
+Export.Header.BackwardsCompatibilityArguments,Backwards Compatibility Arguments
+Export.Header.MerArguments,MER Arguments
+Export.Watermark,Watermark
+Export.Watermark.Description,A comment at the top of the file to identify what created it.
+Export.FakeNotes,Fake Notes
+Export.FakeNotes.Description,How should Notes with the Fake Judgement Type be treated in formats that don't support them?
+Export.FakeNotes.ExcludeFromExport,Exclude from Export
+Export.FakeNotes.ExcludeFromExport.Description,Exclude all "Fake" Notes from the exported file.
+Export.FakeNotes.ConvertToNormalNotes,Convert to Normal Notes
+Export.FakeNotes.ConvertToNormalNotes.Description,Convert all Fake Notes to Normal Notes.
+Export.AutoplayNotes,Autoplay Notes
+Export.AutoplayNotes.Description,How should Notes with the "Autoplay" Judgement Type be treated in formats that don't support them?
+Export.AutoplayNotes.ExcludeFromExport,Exclude from Export
+Export.AutoplayNotes.ExcludeFromExport.Description,Exclude all "Autoplay" Notes from the exported file.
+Export.AutoplayNotes.ConvertToNormalNotes,Convert to Normal Notes
+Export.AutoplayNotes.ConvertToNormalNotes.Description,Convert all "Autoplay" Notes to normal Notes.
+Export.ExtraLayers,Extra Layers
+Export.ExtraLayers.Description,How should extra layers be treated in formats that don't support them?
+Export.ExtraLayers.ExcludeFromExport,Exclude from Export
+Export.ExtraLayers.ExcludeFromExport.Description,Exclude all notes and events from extra layers when exporting.
+Export.ExtraLayers.MergeIntoMainLayer,Merge into Main Layer
+Export.ExtraLayers.MergeIntoMainLayer.Description,Merge notes from extra layers into main layer.
+Export.ExtraLayers.MergeIntoMainLayerWithoutEvents,Merge into Main Layer without Events
+Export.ExtraLayers.MergeIntoMainLayerWithoutEvents.Description,"Merge notes from extra layers into main layer, but exclude Events."
+Export.ExtendedBonusTypes,Extended Bonus Types
+Export.ExtendedBonusTypes.Description,How should bonus notes be treated in formats that don't support them?
+Export.ExtendedBonusTypes.ConvertToNormal,Convert to Normal Note
+Export.ExtendedBonusTypes.ConvertToNormal.Description,Convert extended bonus notes to Normal Notes.
+Export.ExtendedBonusTypes.ConvertToRNote,Convert to R-Note
+Export.ExtendedBonusTypes.ConvertToRNote.Description,Convert extended bonus notes to R-Notes.
+Export.WriteMusicPath,Write Music Path
+Export.WriteMusicPath.Description,How should the music path be written?
+Export.WriteMusicPath.None,None
+Export.WriteMusicPath.None.Description,Don't write the file name at all.
+Export.WriteMusicPath.NoExtension,No Extension
+Export.WriteMusicPath.NoExtension.Description,Write the file name without the file extension.
+Export.WriteMusicPath.WithExtension,With Extension
+Export.WriteMusicPath.WithExtension.Description,Write the file name with the file extension.
 Generic.Enabled,Enabled
 Generic.Disabled,Disabled
 Generic.Cancel,Cancel

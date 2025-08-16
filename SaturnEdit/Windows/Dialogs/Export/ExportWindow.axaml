@@ -4,10 +4,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:SaturnEdit.Controls"
         mc:Ignorable="d"
-        d:DesignWidth="400"
-        d:DesignHeight="500"
-        Width="400"
-        Height="500"
+        d:DesignWidth="500"
+        d:DesignHeight="600"
+        Width="500"
+        Height="600"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.Export.ExportWindow"
         Title="ExportWindow">
     <Panel>
@@ -18,7 +19,7 @@
                                VerticalAlignment="Top" />
 
         <Grid RowDefinitions="41,*,51">
-            <!-- Window Header -->
+            <!-- Header -->
             <Grid Grid.Row="0">
                 <Border Background="{DynamicResource BackgroundPrimary}"
                         BorderThickness="0,0,0,1"
@@ -40,35 +41,311 @@
                     <Border Grid.Row="0"
                             BorderThickness="0,0,0,1"
                             BorderBrush="{DynamicResource SeparatorPrimary}">
-                        <ComboBox SelectedIndex="0" Margin="5">
-                            <ComboBoxItem Content="SATv3" />
-                            <ComboBoxItem Content="SATv2" />
-                            <ComboBoxItem Content="SATv1" />
+                        <ComboBox Name="ComboBoxFileType"
+                                  Margin="5"
+                                  SelectionChanged="ComboBoxFileType_OnSelectionChanged">
                             <ComboBoxItem Content="MER" />
+                            <ComboBoxItem Content="SATv1" />
+                            <ComboBoxItem Content="SATv2" />
+                            <ComboBoxItem Content="SATv3" />
                         </ComboBox>
                     </Border>
 
+                    <!-- Options -->
                     <ScrollViewer Grid.Row="1"
                                   Background="{DynamicResource BackgroundSecondary}">
-                        <StackPanel Margin="10,5">
-                            <Grid ColumnDefinitions="150,20,*"
-                                  RowDefinitions="40,40,40,40">
-                                <Rectangle Grid.Row="0"
-                                           Grid.Column="1"
-                                           Grid.RowSpan="4"
-                                           Width="1"
-                                           HorizontalAlignment="Left"
-                                           Fill="{DynamicResource SeparatorPrimary}" />
+                        <StackPanel>
+                            
+                            <!-- Common Args -->
+                            <StackPanel Name="GroupCommonArgs">
+                                <Expander HorizontalAlignment="Stretch"
+                                          IsExpanded="True">
+                                    <Expander.Header>
+                                        <TextBlock Text="{DynamicResource Export.Header.CommonArguments}"
+                                                   FontWeight="Regular"
+                                                   Foreground="{DynamicResource ForegroundPrimary}" />
+                                    </Expander.Header>
+                                    <StackPanel>
+                                        <Grid Name="OptionWatermark"
+                                              ColumnDefinitions="200,20,*"
+                                              Height="40">
+                                            <Rectangle Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       Width="1"
+                                                       HorizontalAlignment="Left"
+                                                       Fill="{DynamicResource SeparatorPrimary}" />
 
-                                <TextBlock Grid.Row="0"
-                                           Grid.Column="0"
-                                           VerticalAlignment="Center"
-                                           Text="{DynamicResource ChartEditor.ChartProperties.Key.Title}" />
-                                <TextBox Grid.Row="0"
-                                         Grid.Column="2"
-                                         VerticalAlignment="Center"
-                                         Text="Title" />
-                            </Grid>
+                                            <TextBlock Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{DynamicResource Export.Watermark}">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.Watermark.Description}"/>
+                                                </ToolTip.Tip>
+                                            </TextBlock>
+                                            <TextBox Grid.Row="0"
+                                                     Grid.Column="2"
+                                                     Name="TextBoxWatermark"
+                                                     VerticalAlignment="Center"
+                                                     TextChanged="TextBoxWatermark_OnTextChanged">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.Watermark.Description}"/>
+                                                </ToolTip.Tip>
+                                            </TextBox>
+                                        </Grid>
+                                    </StackPanel>
+                                </Expander>
+
+                                <Rectangle Fill="{DynamicResource SeparatorPrimary}"
+                                           Height="1"
+                                           Margin="10,0" />
+                            </StackPanel>
+                            
+                            <!-- Backwards Compatibility Args -->
+                            <StackPanel Name="GroupBackwardsCompatibilityArgs">
+                                <Expander HorizontalAlignment="Stretch"
+                                          IsExpanded="True">
+                                    <Expander.Header>
+                                        <TextBlock Text="{DynamicResource Export.Header.BackwardsCompatibilityArguments}"
+                                                   FontWeight="Regular"
+                                                   Foreground="{DynamicResource ForegroundPrimary}" />
+                                    </Expander.Header>
+                                    <StackPanel>
+                                        <Grid Name="OptionFakeNotes"
+                                              ColumnDefinitions="200,20,*"
+                                              Height="40">
+                                            <Rectangle Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       Width="1"
+                                                       HorizontalAlignment="Left"
+                                                       Fill="{DynamicResource SeparatorPrimary}" />
+
+                                            <TextBlock Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{DynamicResource Export.FakeNotes}">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.FakeNotes.Description}"/>
+                                                </ToolTip.Tip>
+                                            </TextBlock>
+                                            <ComboBox Grid.Row="0"
+                                                     Grid.Column="2"
+                                                     Name="ComboBoxFakeNotes"
+                                                     VerticalAlignment="Center"
+                                                     SelectionChanged="ComboBoxFakeNotes_OnSelectionChanged">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.FakeNotes.Description}"/>
+                                                </ToolTip.Tip>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.FakeNotes.ExcludeFromExport}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.FakeNotes.ExcludeFromExport.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.FakeNotes.ConvertToNormalNotes}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.FakeNotes.ConvertToNormalNotes.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                            </ComboBox>
+                                        </Grid>
+                                        
+                                        <Grid Name="OptionAutoplayNotes"
+                                              ColumnDefinitions="200,20,*"
+                                              Height="40">
+                                            <Rectangle Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       Width="1"
+                                                       HorizontalAlignment="Left"
+                                                       Fill="{DynamicResource SeparatorPrimary}" />
+
+                                            <TextBlock Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{DynamicResource Export.AutoplayNotes}">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.AutoplayNotes.Description}"/>
+                                                </ToolTip.Tip>
+                                            </TextBlock>
+                                            <ComboBox Grid.Row="0"
+                                                     Grid.Column="2"
+                                                     Name="ComboBoxAutoplayNotes"
+                                                     VerticalAlignment="Center"
+                                                     SelectionChanged="ComboBoxAutoplayNotes_OnSelectionChanged">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.AutoplayNotes.Description}"/>
+                                                </ToolTip.Tip>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.AutoplayNotes.ExcludeFromExport}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.AutoplayNotes.ExcludeFromExport.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.AutoplayNotes.ConvertToNormalNotes}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.AutoplayNotes.ConvertToNormalNotes.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                            </ComboBox>
+                                        </Grid>
+                                        
+                                        <Grid Name="OptionExtraLayers"
+                                              ColumnDefinitions="200,20,*"
+                                              Height="40">
+                                            <Rectangle Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       Width="1"
+                                                       HorizontalAlignment="Left"
+                                                       Fill="{DynamicResource SeparatorPrimary}" />
+
+                                            <TextBlock Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{DynamicResource Export.ExtraLayers}">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.ExtraLayers.Description}"/>
+                                                </ToolTip.Tip>
+                                            </TextBlock>
+                                            <ComboBox Grid.Row="0"
+                                                     Grid.Column="2"
+                                                     Name="ComboBoxExtraLayers"
+                                                     VerticalAlignment="Center"
+                                                     SelectionChanged="ComboBoxExtraLayers_OnSelectionChanged">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.ExtraLayers.Description}"/>
+                                                </ToolTip.Tip>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.ExtraLayers.ExcludeFromExport}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.ExtraLayers.ExcludeFromExport.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.ExtraLayers.MergeIntoMainLayer}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.ExtraLayers.MergeIntoMainLayer.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.ExtraLayers.MergeIntoMainLayerWithoutEvents}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.ExtraLayers.MergeIntoMainLayerWithoutEvents.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                            </ComboBox>
+                                        </Grid>
+                                        
+                                        <Grid Name="OptionExtendedBonusTypes"
+                                              ColumnDefinitions="200,20,*"
+                                              Height="40">
+                                            <Rectangle Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       Width="1"
+                                                       HorizontalAlignment="Left"
+                                                       Fill="{DynamicResource SeparatorPrimary}" />
+
+                                            <TextBlock Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{DynamicResource Export.ExtendedBonusTypes}">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.ExtendedBonusTypes.Description}"/>
+                                                </ToolTip.Tip>
+                                            </TextBlock>
+                                            <ComboBox Grid.Row="0"
+                                                     Grid.Column="2"
+                                                     Name="ComboBoxExtendedBonusTypes"
+                                                     VerticalAlignment="Center"
+                                                     SelectionChanged="ComboBoxExtendedBonusTypes_OnSelectionChanged">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.ExtendedBonusTypes.Description}"/>
+                                                </ToolTip.Tip>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.ExtendedBonusTypes.ConvertToNormal}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.ExtendedBonusTypes.ConvertToNormal.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.ExtendedBonusTypes.ConvertToRNote}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.ExtendedBonusTypes.ConvertToRNote.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                            </ComboBox>
+                                        </Grid>
+                                    </StackPanel>
+                                </Expander>
+
+                                <Rectangle Fill="{DynamicResource SeparatorPrimary}"
+                                           Height="1"
+                                           Margin="10,0" />
+                            </StackPanel>
+
+                            <!-- MER Format Args -->
+                            <StackPanel Name="GroupMerArgs">
+                                <Expander HorizontalAlignment="Stretch"
+                                          IsExpanded="True">
+                                    <Expander.Header>
+                                        <TextBlock Text="{DynamicResource Export.Header.MerArguments}"
+                                                   FontWeight="Regular"
+                                                   Foreground="{DynamicResource ForegroundPrimary}" />
+                                    </Expander.Header>
+                                    <StackPanel>
+                                        <Grid Name="OptionWriteMusicPath"
+                                              ColumnDefinitions="200,20,*"
+                                              Height="40">
+                                            <Rectangle Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       Width="1"
+                                                       HorizontalAlignment="Left"
+                                                       Fill="{DynamicResource SeparatorPrimary}" />
+
+                                            <TextBlock Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{DynamicResource Export.WriteMusicPath}">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.WriteMusicPath.Description}"/>
+                                                </ToolTip.Tip>
+                                            </TextBlock>
+                                            <ComboBox Grid.Row="0"
+                                                     Grid.Column="2"
+                                                     Name="ComboBoxWriteMusicPath"
+                                                     VerticalAlignment="Center"
+                                                     SelectionChanged="ComboBoxWriteMusicPath_OnSelectionChanged">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.WriteMusicPath.Description}"/>
+                                                </ToolTip.Tip>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.WriteMusicPath.None}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.WriteMusicPath.None.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.WriteMusicPath.NoExtension}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.WriteMusicPath.NoExtension.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.WriteMusicPath.WithExtension}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.WriteMusicPath.WithExtension.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                            </ComboBox>
+                                        </Grid>
+                                    </StackPanel>
+                                </Expander>
+
+                                <Rectangle Fill="{DynamicResource SeparatorPrimary}"
+                                           Height="1"
+                                           Margin="10,0" />
+                            </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
@@ -80,35 +357,35 @@
                     BorderThickness="0,1,0,0"
                     BorderBrush="{DynamicResource SeparatorPrimary}">
                 <Panel>
-                    <Button Name="ButtonResetExportSettings"
-                            Classes="Themed AccentFull"
-                            Height="28"
-                            Margin="11,11,9,11"
-                            Width="75"
-                            Click="ButtonExport_OnClick">
-                        <TextBlock Text="{DynamicResource Menu.File.Export}" />
-                    </Button>
-                    
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Right">
-                    <Button Name="ButtonSave"
-                            Classes="Themed AccentFull"
-                            Height="28"
-                            Margin="11,11,9,11"
-                            Width="75"
-                            Click="ButtonExport_OnClick">
-                        <TextBlock Text="{DynamicResource Menu.File.Export}" />
-                    </Button>
-
-                    <Button Name="ButtonCancel"
+                    <Button Name="ButtonResetSettings"
                             Classes="Themed Outlined"
                             Height="28"
-                            Margin="9,11,11,11"
-                            Width="75"
-                            Click="ButtonCancel_OnClick">
-                        <TextBlock Text="{DynamicResource Generic.Cancel}" />
+                            Width="110"
+                            Margin="11,11,9,11"
+                            Click="ButtonResetSettings_OnClick">
+                        <TextBlock Text="{DynamicResource Export.ResetSettings}" />
                     </Button>
-                </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Button Name="ButtonSave"
+                                Classes="Themed AccentFull"
+                                Height="28"
+                                Margin="11,11,9,11"
+                                Width="75"
+                                Click="ButtonExport_OnClick">
+                            <TextBlock Text="{DynamicResource Menu.File.Export}" />
+                        </Button>
+
+                        <Button Name="ButtonCancel"
+                                Classes="Themed Outlined"
+                                Height="28"
+                                Margin="9,11,11,11"
+                                Width="75"
+                                Click="ButtonCancel_OnClick">
+                            <TextBlock Text="{DynamicResource Generic.Cancel}" />
+                        </Button>
+                    </StackPanel>
                 </Panel>
             </Border>
         </Grid>

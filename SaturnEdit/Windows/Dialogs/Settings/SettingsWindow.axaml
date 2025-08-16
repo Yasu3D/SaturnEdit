@@ -22,7 +22,7 @@
                                VerticalAlignment="Top" />
 
         <Grid RowDefinitions="40,*,50">
-            <!-- Window Header -->
+            <!-- Header -->
             <Grid Grid.Row="0">
                 <Border Height="40"
                         Background="{DynamicResource BackgroundPrimary}"

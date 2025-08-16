@@ -151,15 +151,18 @@ public partial class ChartEditorView : UserControl
 
             // Return if export was cancelled.
             if (exportWindow.DialogResult == ExportWindow.ExportDialogResult.Cancel) return false;
+            if (exportWindow.NotationWriteArgs.FormatVersion == FormatVersion.Unknown) return false;
             
+            Console.WriteLine(exportWindow.NotationWriteArgs.ExportWatermark);
+
             // Open the file picker.
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return false;
-            IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(ExportFilePickerSaveOptions(ChartSystem.NotationWriteArgs));
+            IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(ExportFilePickerSaveOptions(exportWindow.NotationWriteArgs));
             if (file == null) return false;
 
             // Write the chart to the defined path, with the defined notation arguments.
-            ChartSystem.WriteChart(file.Path.AbsolutePath, ChartSystem.NotationWriteArgs, true, true);
+            ChartSystem.WriteChart(file.Path.AbsolutePath, exportWindow.NotationWriteArgs, true, true);
             return true;
         }
         catch (Exception ex)

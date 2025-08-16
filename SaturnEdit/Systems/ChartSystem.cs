@@ -19,9 +19,6 @@ public static class ChartSystem
     public static Chart Chart { get; private set; } = new();
     public static Entry Entry { get; private set; } = new();
     
-    public static NotationReadArgs NotationReadArgs = new();
-    public static NotationWriteArgs NotationWriteArgs = new();
-
     /// <summary>
     /// Determines if the editor will prompt the user to save when a chart is closed.
     /// </summary>
