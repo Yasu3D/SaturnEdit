@@ -460,6 +460,10 @@
     <system:String x:Key="Export.WriteMusicPath.NoExtension.Description">Write the file name without the file extension.</system:String>
     <system:String x:Key="Export.WriteMusicPath.WithExtension">With Extension</system:String>
     <system:String x:Key="Export.WriteMusicPath.WithExtension.Description">Write the file name with the file extension.</system:String>
+    <system:String x:Key="ModalDialog.SavePrompt.Title">Save Chart</system:String>
+    <system:String x:Key="ModalDialog.SavePrompt.Header">Do you want to save changes to your chart before closing?</system:String>
+    <system:String x:Key="ModalDialog.SavePrompt.Paragraph">Your changes will be lost if you don't save them.</system:String>
+    <system:String x:Key="ModalDialog.SavePrompt.DontSave">Don't Save</system:String>
     <system:String x:Key="Generic.Enabled">Enabled</system:String>
     <system:String x:Key="Generic.Disabled">Disabled</system:String>
     <system:String x:Key="Generic.Cancel">Cancel</system:String>

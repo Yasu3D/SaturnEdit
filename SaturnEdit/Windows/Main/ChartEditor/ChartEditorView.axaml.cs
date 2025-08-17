@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Collections;
@@ -9,10 +10,12 @@ using Dock.Model;
 using Dock.Model.Avalonia.Controls;
 using Dock.Model.Core;
 using Dock.Serializer;
+using FluentIcons.Common;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
 using SaturnEdit.Windows.Dialogs.Export;
+using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.ChartEditor;
 
@@ -25,7 +28,7 @@ public partial class ChartEditorView : UserControl
     {
         InitializeComponent();
         AvaloniaXamlLoader.Load(this);
-        
+
         serializer = new(typeof(AvaloniaList<>));
         dockState = new();
 
@@ -40,9 +43,9 @@ public partial class ChartEditorView : UserControl
     {
         if (DockControl.Factory == null) return;
         if (RootDock.VisibleDockables == null) return;
-        
+
         Tool tool = new() { Content = userControl };
-        
+
         ToolDock toolDock = new()
         {
             VisibleDockables = DockControl.Factory?.CreateList<IDockable>(tool),
@@ -59,31 +62,109 @@ public partial class ChartEditorView : UserControl
         else
         {
             Console.WriteLine("RootDock is empty!");
-            
+
             //DockControl.Factory?.AddDockable(RootDock, toolDock);
             //DockControl.Factory?.InitLayout(RootDock);
         }
     }
-    
-    public void FileNew()
+
+    public async void FileNew()
     {
-        
+        // Prompt to save an unsaved chart first.
+        if (!ChartSystem.IsSaved)
+        {
+            ModalDialogResult result = await PromptSave();
+
+            // Cancel
+            if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
+
+            // Save
+            if (result is ModalDialogResult.Primary)
+            {
+                bool success = await FileSave();
+
+                // Abort opening new file of save was unsuccessful.
+                if (!success) return;
+            }
+
+            // Don't Save
+            // Continue as normal.
+        }
+
+        // Open new chart dialog.
+
+        // Create new chart.
     }
 
-    public void FileOpen()
+    public async Task<bool> FileOpen()
     {
+        // TODO: Error Messages
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return false;
 
+            // Prompt to save an unsaved chart first.
+            if (!ChartSystem.IsSaved)
+            {
+                ModalDialogResult result = await PromptSave();
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return false;
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await FileSave();
+
+                    // Abort opening new file of save was unsuccessful.
+                    if (!success) return false;
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            // Open file picker.
+            IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
+            {
+                AllowMultiple = false,
+                FileTypeFilter =
+                [
+                    new("Chart Files")
+                    {
+                        Patterns = ["*.sat", "*.mer*", "*.map"],
+                    },
+                ],
+            });
+
+            // Read chart from file.
+            if (files.Count != 1) return false;
+
+            NotationReadArgs args = new();
+            
+            ChartSystem.ReadChart(files[0].Path.AbsolutePath, args);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
     }
 
     public async Task<bool> FileSave()
     {
+        // TODO: Error Messages
         try
         {
+            // Save As if chart file doesn't have a path yet.
             if (!File.Exists(ChartSystem.Entry.ChartPath))
             {
                 return await FileSaveAs();
             }
 
+            // Write chart to file.
             ChartSystem.WriteChart(ChartSystem.Entry.ChartPath, new(), true, true);
             return true;
         }
@@ -101,6 +182,7 @@ public partial class ChartEditorView : UserControl
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return false;
 
+            // Open file picker.
             IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(new()
             {
                 DefaultExtension = ".sat",
@@ -125,6 +207,7 @@ public partial class ChartEditorView : UserControl
 
             if (file == null) return false;
 
+            // Write chart to file.
             ChartSystem.WriteChart(file.Path.AbsolutePath, new(), true, true);
             return true;
         }
@@ -135,13 +218,45 @@ public partial class ChartEditorView : UserControl
         }
     }
 
-    public void FileReloadFromDisk()
+    public async void FileReloadFromDisk()
     {
-        
+        // TODO: Error Messages
+        if (ChartSystem.Entry.ChartPath == "") return;
+
+        // Prompt to save an unsaved chart first.
+        if (!ChartSystem.IsSaved)
+        {
+            ModalDialogResult result = await PromptSave();
+
+            // Cancel
+            if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
+
+            // Save
+            if (result is ModalDialogResult.Primary)
+            {
+                bool success = await FileSave();
+
+                // Abort opening new file of save was unsuccessful.
+                if (!success) return;
+            }
+
+            // Don't Save
+            // Continue as normal.
+        }
+
+        NotationReadArgs args = new()
+        {
+            InferClearThresholdFromDifficulty = false,
+            OptimizeHoldNotes = false,
+            SortCollections = true,
+        };
+
+        ChartSystem.ReadChart(ChartSystem.Entry.ChartPath, args);
     }
 
     public async Task<bool> FileExport()
     {
+        // TODO: Error Messages
         try
         {
             // Open an export dialog.
@@ -152,7 +267,7 @@ public partial class ChartEditorView : UserControl
             // Return if export was cancelled.
             if (exportWindow.DialogResult == ExportWindow.ExportDialogResult.Cancel) return false;
             if (exportWindow.NotationWriteArgs.FormatVersion == FormatVersion.Unknown) return false;
-            
+
             // Open the file picker.
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return false;
@@ -200,10 +315,10 @@ public partial class ChartEditorView : UserControl
             FormatVersion.SatV3 => "Menu.File.SaturnChartFile",
             _ => "Menu.File.UnknownChartFile",
         };
-        
+
         TryGetResource(key, ActualThemeVariant, out object? resource);
         string filePickerFileTypeName = resource as string ?? "";
-        
+
         return new()
         {
             DefaultExtension = defaultExtension,
@@ -216,5 +331,25 @@ public partial class ChartEditorView : UserControl
                 },
             ],
         };
+    }
+
+    private async Task<ModalDialogResult> PromptSave()
+    {
+        if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
+
+        ModalDialog dialog = new()
+        {
+            DialogIcon = Icon.Warning,
+            WindowTitleKey = "ModalDialog.SavePrompt.Title",
+            HeaderKey = "ModalDialog.SavePrompt.Header",
+            ParagraphKey = "ModalDialog.SavePrompt.Paragraph",
+            ButtonPrimaryKey = "Menu.File.Save",
+            ButtonSecondaryKey = "ModalDialog.SavePrompt.DontSave",
+            ButtonTertiaryKey = "Generic.Cancel",
+        };
+
+        dialog.InitializeDialog();
+        await dialog.ShowDialog(rootWindow);
+        return dialog.Result;
     }
 }

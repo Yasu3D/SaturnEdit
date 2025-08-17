@@ -18,11 +18,11 @@ public static class ChartSystem
     
     public static Chart Chart { get; private set; } = new();
     public static Entry Entry { get; private set; } = new();
-    
+
     /// <summary>
     /// Determines if the editor will prompt the user to save when a chart is closed.
     /// </summary>
-    public static bool IsSaved { get; private set; } = true;
+    public static bool IsSaved { get; private set; } = false;
 
     /// <summary>
     /// Creates a new chart to work on by resetting the <see cref="Chart"/> and <see cref="Entry"/> objects, then invokes <see cref="ChartChanged"/> and <see cref="EntryChanged"/>

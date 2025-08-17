@@ -75,13 +75,18 @@
         <entry key="SaturnEdit/Views/Settings/Tabs/SettingsRenderingView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Views/Settings/Tabs/SettingsShortcutsView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Dialogs/Export/ExportWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Windows/Dialogs/ModalDialog/ModalDialog.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Windows/Dialogs/OneOptionDialog/OneOptionDialog.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Dialogs/ProofreaderCriteria/ProofreaderCriteriaWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Dialogs/Settings/SettingsWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsAppearanceView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsGeneralView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsRenderingView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsShortcutsView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Windows/Dialogs/ThreeOptionDialog/ThreeOptionDialog.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Windows/Dialogs/TwoOptionDialog/TwoOptionDialogWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Export/ExportWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Windows/Main/ChartEditor/ChartEditorView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Main/ChartEditor/Tabs/ChartPropertiesView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Main/MainWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />

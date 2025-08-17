@@ -183,10 +183,6 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Windows\Dialogs\" />
-    </ItemGroup>
-    
-    <ItemGroup>
       <AdditionalFiles Include="Windows\Dialogs\Export\ExportWindow.axaml" />
       <AdditionalFiles Include="Windows\Dialogs\ProofreaderCriteria\ProofreaderCriteriaWindow.axaml" />
       <AdditionalFiles Include="Windows\Dialogs\Settings\SettingsWindow.axaml" />

@@ -457,6 +457,10 @@ Export.WriteMusicPath.NoExtension,No Extension
 Export.WriteMusicPath.NoExtension.Description,Write the file name without the file extension.
 Export.WriteMusicPath.WithExtension,With Extension
 Export.WriteMusicPath.WithExtension.Description,Write the file name with the file extension.
+ModalDialog.SavePrompt.Title,Save Chart
+ModalDialog.SavePrompt.Header,Do you want to save changes to your chart before closing?
+ModalDialog.SavePrompt.Paragraph,Your changes will be lost if you don't save them.
+ModalDialog.SavePrompt.DontSave,Don't Save
 Generic.Enabled,Enabled
 Generic.Disabled,Disabled
 Generic.Cancel,Cancel
