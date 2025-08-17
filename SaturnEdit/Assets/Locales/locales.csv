@@ -418,9 +418,9 @@ Export.FormatVersion.SatV1,SATv1 (Legacy)
 Export.FormatVersion.SatV2,SATv2 (Legacy)
 Export.FormatVersion.SatV3,SATv3
 Export.ResetSettings,Reset Settings
-Export.Header.CommonArguments,Common Arguments
-Export.Header.BackwardsCompatibilityArguments,Backwards Compatibility Arguments
+Export.Header.SatArguments,SAT Arguments
 Export.Header.MerArguments,MER Arguments
+Export.Header.BackwardsCompatibilityArguments,Backwards Compatibility Arguments
 Export.Watermark,Watermark
 Export.Watermark.Description,A comment at the top of the file to identify what created it.
 Export.FakeNotes,Fake Notes

@@ -416,10 +416,14 @@
     <system:String x:Key="Settings.Shortcuts.Shortcut">SHORTCUT</system:String>
     <system:String x:Key="Settings.Shortcuts.WaitingForInput">Waiting for input...</system:String>
     <system:String x:Key="Export.Window.Title">Export</system:String>
+    <system:String x:Key="Export.FormatVersion.Mer">MER</system:String>
+    <system:String x:Key="Export.FormatVersion.SatV1">SATv1 (Legacy)</system:String>
+    <system:String x:Key="Export.FormatVersion.SatV2">SATv2 (Legacy)</system:String>
+    <system:String x:Key="Export.FormatVersion.SatV3">SATv3</system:String>
     <system:String x:Key="Export.ResetSettings">Reset Settings</system:String>
-    <system:String x:Key="Export.Header.CommonArguments">Common Arguments</system:String>
-    <system:String x:Key="Export.Header.BackwardsCompatibilityArguments">Backwards Compatibility Arguments</system:String>
+    <system:String x:Key="Export.Header.SatArguments">SAT Arguments</system:String>
     <system:String x:Key="Export.Header.MerArguments">MER Arguments</system:String>
+    <system:String x:Key="Export.Header.BackwardsCompatibilityArguments">Backwards Compatibility Arguments</system:String>
     <system:String x:Key="Export.Watermark">Watermark</system:String>
     <system:String x:Key="Export.Watermark.Description">A comment at the top of the file to identify what created it.</system:String>
     <system:String x:Key="Export.FakeNotes">Fake Notes</system:String>

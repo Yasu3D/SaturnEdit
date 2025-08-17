@@ -83,6 +83,7 @@
         <entry key="SaturnEdit/Windows/Dialogs/Settings/Tabs/SettingsShortcutsView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Export/ExportWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Main/ChartEditor/Tabs/ChartPropertiesView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
+        <entry key="SaturnEdit/Windows/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Main/MainWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
         <entry key="SaturnEdit/Windows/Settings/SettingsWindow.axaml" value="SaturnEdit/SaturnEdit.csproj" />
       </map>

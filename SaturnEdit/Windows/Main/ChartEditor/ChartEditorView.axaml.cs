@@ -153,8 +153,6 @@ public partial class ChartEditorView : UserControl
             if (exportWindow.DialogResult == ExportWindow.ExportDialogResult.Cancel) return false;
             if (exportWindow.NotationWriteArgs.FormatVersion == FormatVersion.Unknown) return false;
             
-            Console.WriteLine(exportWindow.NotationWriteArgs.ExportWatermark);
-
             // Open the file picker.
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return false;

@@ -516,6 +516,11 @@
             <!-- Sweep Directions -->
             <StackPanel Name="StackPanelSweepDirections"
                         IsVisible="False">
+                <Rectangle Height="1"
+                       Width="30"
+                       Fill="{DynamicResource SeparatorPrimary}"
+                       Margin="0,10" />
+                
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="SweepDirection"
                              Name="RadioButtonSweepDirectionCenter"

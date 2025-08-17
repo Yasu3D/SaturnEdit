@@ -45,7 +45,7 @@ public partial class ExportWindow : Window
         {
             case FormatVersion.Mer:
             {
-                GroupCommonArgs.IsVisible = false;
+                GroupSatArgs.IsVisible = false;
                 OptionWatermark.IsVisible = false;
 
                 GroupBackwardsCompatibilityArgs.IsVisible = true;
@@ -61,7 +61,7 @@ public partial class ExportWindow : Window
             
             case FormatVersion.SatV1:
             {
-                GroupCommonArgs.IsVisible = true;
+                GroupSatArgs.IsVisible = true;
                 OptionWatermark.IsVisible = true;
 
                 GroupBackwardsCompatibilityArgs.IsVisible = true;
@@ -77,7 +77,7 @@ public partial class ExportWindow : Window
             
             case FormatVersion.SatV2:
             {
-                GroupCommonArgs.IsVisible = true;
+                GroupSatArgs.IsVisible = true;
                 OptionWatermark.IsVisible = true;
 
                 GroupBackwardsCompatibilityArgs.IsVisible = true;
@@ -93,7 +93,7 @@ public partial class ExportWindow : Window
             
             case FormatVersion.SatV3:
             {
-                GroupCommonArgs.IsVisible = true;
+                GroupSatArgs.IsVisible = true;
                 OptionWatermark.IsVisible = true;
 
                 GroupBackwardsCompatibilityArgs.IsVisible = false;

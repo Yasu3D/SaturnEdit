@@ -56,12 +56,12 @@
                                   Background="{DynamicResource BackgroundSecondary}">
                         <StackPanel>
                             
-                            <!-- Common Args -->
-                            <StackPanel Name="GroupCommonArgs">
+                            <!-- SAT Format Args -->
+                            <StackPanel Name="GroupSatArgs">
                                 <Expander HorizontalAlignment="Stretch"
                                           IsExpanded="True">
                                     <Expander.Header>
-                                        <TextBlock Text="{DynamicResource Export.Header.CommonArguments}"
+                                        <TextBlock Text="{DynamicResource Export.Header.SatArguments}"
                                                    FontWeight="Regular"
                                                    Foreground="{DynamicResource ForegroundPrimary}" />
                                     </Expander.Header>
@@ -92,6 +92,69 @@
                                                     <TextBlock Text="{DynamicResource Export.Watermark.Description}"/>
                                                 </ToolTip.Tip>
                                             </TextBox>
+                                        </Grid>
+                                    </StackPanel>
+                                </Expander>
+
+                                <Rectangle Fill="{DynamicResource SeparatorPrimary}"
+                                           Height="1"
+                                           Margin="10,0" />
+                            </StackPanel>
+                            
+                            <!-- MER Format Args -->
+                            <StackPanel Name="GroupMerArgs">
+                                <Expander HorizontalAlignment="Stretch"
+                                          IsExpanded="True">
+                                    <Expander.Header>
+                                        <TextBlock Text="{DynamicResource Export.Header.MerArguments}"
+                                                   FontWeight="Regular"
+                                                   Foreground="{DynamicResource ForegroundPrimary}" />
+                                    </Expander.Header>
+                                    <StackPanel>
+                                        <Grid Name="OptionWriteMusicPath"
+                                              ColumnDefinitions="200,20,*"
+                                              Height="40">
+                                            <Rectangle Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       Width="1"
+                                                       HorizontalAlignment="Left"
+                                                       Fill="{DynamicResource SeparatorPrimary}" />
+
+                                            <TextBlock Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center"
+                                                       Text="{DynamicResource Export.WriteMusicPath}">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.WriteMusicPath.Description}"/>
+                                                </ToolTip.Tip>
+                                            </TextBlock>
+                                            <ComboBox Grid.Row="0"
+                                                     Grid.Column="2"
+                                                     Name="ComboBoxWriteMusicPath"
+                                                     VerticalAlignment="Center"
+                                                     SelectionChanged="ComboBoxWriteMusicPath_OnSelectionChanged">
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{DynamicResource Export.WriteMusicPath.Description}"/>
+                                                </ToolTip.Tip>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.WriteMusicPath.None}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.WriteMusicPath.None.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.WriteMusicPath.NoExtension}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.WriteMusicPath.NoExtension.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                                
+                                                <ComboBoxItem Content="{DynamicResource Export.WriteMusicPath.WithExtension}">
+                                                    <ToolTip.Tip>
+                                                        <TextBlock Text="{DynamicResource Export.WriteMusicPath.WithExtension.Description}" />
+                                                    </ToolTip.Tip>
+                                                </ComboBoxItem>
+                                            </ComboBox>
                                         </Grid>
                                     </StackPanel>
                                 </Expander>
@@ -284,68 +347,7 @@
                                            Margin="10,0" />
                             </StackPanel>
 
-                            <!-- MER Format Args -->
-                            <StackPanel Name="GroupMerArgs">
-                                <Expander HorizontalAlignment="Stretch"
-                                          IsExpanded="True">
-                                    <Expander.Header>
-                                        <TextBlock Text="{DynamicResource Export.Header.MerArguments}"
-                                                   FontWeight="Regular"
-                                                   Foreground="{DynamicResource ForegroundPrimary}" />
-                                    </Expander.Header>
-                                    <StackPanel>
-                                        <Grid Name="OptionWriteMusicPath"
-                                              ColumnDefinitions="200,20,*"
-                                              Height="40">
-                                            <Rectangle Grid.Row="0"
-                                                       Grid.Column="1"
-                                                       Width="1"
-                                                       HorizontalAlignment="Left"
-                                                       Fill="{DynamicResource SeparatorPrimary}" />
-
-                                            <TextBlock Grid.Row="0"
-                                                       Grid.Column="0"
-                                                       VerticalAlignment="Center"
-                                                       Text="{DynamicResource Export.WriteMusicPath}">
-                                                <ToolTip.Tip>
-                                                    <TextBlock Text="{DynamicResource Export.WriteMusicPath.Description}"/>
-                                                </ToolTip.Tip>
-                                            </TextBlock>
-                                            <ComboBox Grid.Row="0"
-                                                     Grid.Column="2"
-                                                     Name="ComboBoxWriteMusicPath"
-                                                     VerticalAlignment="Center"
-                                                     SelectionChanged="ComboBoxWriteMusicPath_OnSelectionChanged">
-                                                <ToolTip.Tip>
-                                                    <TextBlock Text="{DynamicResource Export.WriteMusicPath.Description}"/>
-                                                </ToolTip.Tip>
-                                                
-                                                <ComboBoxItem Content="{DynamicResource Export.WriteMusicPath.None}">
-                                                    <ToolTip.Tip>
-                                                        <TextBlock Text="{DynamicResource Export.WriteMusicPath.None.Description}" />
-                                                    </ToolTip.Tip>
-                                                </ComboBoxItem>
-                                                
-                                                <ComboBoxItem Content="{DynamicResource Export.WriteMusicPath.NoExtension}">
-                                                    <ToolTip.Tip>
-                                                        <TextBlock Text="{DynamicResource Export.WriteMusicPath.NoExtension.Description}" />
-                                                    </ToolTip.Tip>
-                                                </ComboBoxItem>
-                                                
-                                                <ComboBoxItem Content="{DynamicResource Export.WriteMusicPath.WithExtension}">
-                                                    <ToolTip.Tip>
-                                                        <TextBlock Text="{DynamicResource Export.WriteMusicPath.WithExtension.Description}" />
-                                                    </ToolTip.Tip>
-                                                </ComboBoxItem>
-                                            </ComboBox>
-                                        </Grid>
-                                    </StackPanel>
-                                </Expander>
-
-                                <Rectangle Fill="{DynamicResource SeparatorPrimary}"
-                                           Height="1"
-                                           Margin="10,0" />
-                            </StackPanel>
+                            
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>

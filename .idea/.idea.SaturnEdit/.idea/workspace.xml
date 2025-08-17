@@ -8,19 +8,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba5b5d95-f762-4a60-9e19-773d6e4090de" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SaturnEdit/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerWriter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/Mer/MerWriter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationUtils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationWriteArgs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/NotationWriteArgs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Writer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnData/SaturnData/Notation/Serialization/SatV2/SatV2Writer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/en_US.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Assets/Locales/locales.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Systems/ChartSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Systems/ChartSystem.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Export/ExportWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Export/ExportWindow.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Export/ExportWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Export/ExportWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/SettingsWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Dialogs/Settings/SettingsWindow.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/ChartEditorView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/ChartEditorView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/SaturnEdit/Windows/Main/ChartEditor/Tabs/Fixed/NotePaletteView.axaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +33,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/SaturnData" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/AppData/Local/Temp/SourceGeneratedDocuments/67584553363E3686E14E4B3B/Avalonia.Generators/Avalonia.Generators.NameGenerator.AvaloniaNameSourceGenerator/SaturnEdit.Windows.Dialogs.Export.ExportWindow.g.cs" root0="FORCE_HIGHLIGHTING" />
@@ -237,7 +232,8 @@
       <workItem from="1755244391658" duration="11391000" />
       <workItem from="1755269673273" duration="14239000" />
       <workItem from="1755344183511" duration="22412000" />
-      <workItem from="1755379036415" duration="1186000" />
+      <workItem from="1755379036415" duration="2655000" />
+      <workItem from="1755412609475" duration="1973000" />
     </task>
     <servers />
   </component>
