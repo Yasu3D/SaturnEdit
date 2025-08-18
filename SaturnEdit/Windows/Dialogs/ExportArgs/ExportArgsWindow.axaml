@@ -9,7 +9,7 @@
         Width="500"
         Height="600"
         Focusable="True"
-        x:Class="SaturnEdit.Windows.Dialogs.Export.ExportWindow"
+        x:Class="SaturnEdit.Windows.Dialogs.ExportArgs.ExportArgsWindow"
         Title="ExportWindow">
     <Panel>
         <controls:WindowChrome Name="WindowChrome"

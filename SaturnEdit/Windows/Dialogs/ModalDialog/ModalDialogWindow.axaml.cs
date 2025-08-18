@@ -15,9 +15,9 @@ public enum ModalDialogResult
     Tertiary = 3,
 }
 
-public partial class ModalDialog : Window
+public partial class ModalDialogWindow : Window
 {
-    public ModalDialog()
+    public ModalDialogWindow()
     {
         InitializeComponent();
     }

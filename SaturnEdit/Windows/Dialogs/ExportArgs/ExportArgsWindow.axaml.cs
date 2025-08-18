@@ -2,12 +2,13 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using SaturnData.Notation.Serialization;
+using SaturnEdit.Windows.Dialogs.ModalDialog;
 
-namespace SaturnEdit.Windows.Dialogs.Export;
+namespace SaturnEdit.Windows.Dialogs.ExportArgs;
 
-public partial class ExportWindow : Window
+public partial class ExportArgsWindow : Window
 {
-    public ExportWindow()
+    public ExportArgsWindow()
     {
         InitializeComponent();
         OnArgsChanged();
@@ -18,12 +19,7 @@ public partial class ExportWindow : Window
     public static string? DefaultExportWatermark => new NotationWriteArgs().ExportWatermark;
     public NotationWriteArgs NotationWriteArgs = new();
     
-    public ExportDialogResult DialogResult = ExportDialogResult.Cancel;
-    public enum ExportDialogResult
-    {
-        Cancel = 0,
-        Export = 1,
-    }
+    public ModalDialogResult DialogResult = ModalDialogResult.Cancel;
     
     private bool blockEvents = false;
 
@@ -185,13 +181,13 @@ public partial class ExportWindow : Window
     
     private void ButtonExport_OnClick(object? sender, RoutedEventArgs e)
     {
-        DialogResult = ExportDialogResult.Export;
+        DialogResult = ModalDialogResult.Primary;
         Close();
     }
 
     private void ButtonCancel_OnClick(object? sender, RoutedEventArgs e)
     {
-        DialogResult = ExportDialogResult.Cancel;
+        DialogResult = ModalDialogResult.Cancel;
         Close();
     }
 
