@@ -9,6 +9,7 @@
         d:DesignHeight="220"
         Width="500"
         Height="220"
+        CanResize="False"
         x:Class="SaturnEdit.Windows.Dialogs.ModalDialog.ModalDialog"
         Title="ModalDialog">
     <Panel>

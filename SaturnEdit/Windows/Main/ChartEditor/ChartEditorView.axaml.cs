@@ -298,12 +298,12 @@ public partial class ChartEditorView : UserControl
 
         string suggestedFileName = ChartSystem.Entry.Difficulty switch
         {
-            Difficulty.None => $"chart.{defaultExtension}",
-            Difficulty.Normal => $"0_normal.{defaultExtension}",
-            Difficulty.Hard => $"1_hard.{defaultExtension}",
-            Difficulty.Expert => $"2_expert.{defaultExtension}",
-            Difficulty.Inferno => $"3_inferno.{defaultExtension}",
-            Difficulty.WorldsEnd => $"4_worldsend.{defaultExtension}",
+            Difficulty.None => $"chart{defaultExtension}",
+            Difficulty.Normal => $"0_normal{defaultExtension}",
+            Difficulty.Hard => $"1_hard{defaultExtension}",
+            Difficulty.Expert => $"2_expert{defaultExtension}",
+            Difficulty.Inferno => $"3_inferno{defaultExtension}",
+            Difficulty.WorldsEnd => $"4_worldsend{defaultExtension}",
             _ => $"chart.{defaultExtension}",
         };
 
