@@ -4,8 +4,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:SaturnEdit.Controls"
         mc:Ignorable="d"
-        d:DesignWidth="800"
-        d:DesignHeight="450"
+        d:DesignWidth="400"
+        d:DesignHeight="232"
+        Width="400"
+        Height="232"
         x:Class="SaturnEdit.Windows.Dialogs.ImportArgs.ImportArgsWindow"
         Title="ImportArgsWindow">
     <Panel>
@@ -25,7 +27,7 @@
                     <TextBlock HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                Margin="10,0"
-                               Text="{DynamicResource Export.Window.Title}" />
+                               Text="{DynamicResource Import.Window.Title}" />
                 </Border>
             </Grid>
 
@@ -35,71 +37,72 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch">
                 <!-- Options -->
-                    <ScrollViewer Background="{DynamicResource BackgroundSecondary}">
-                        <StackPanel>
-                            <Grid Name="OptionWatermark"
-                                  ColumnDefinitions="200,20,*"
-                                  RowDefinitions="40,40,40">
-                                <Rectangle Grid.Row="0"
-                                           Grid.Column="1"
-                                           Grid.RowSpan="3"
-                                           Width="1"
-                                           HorizontalAlignment="Left"
-                                           Fill="{DynamicResource SeparatorPrimary}" />
+                <ScrollViewer Background="{DynamicResource BackgroundSecondary}">
+                    <StackPanel>
+                        <Grid Name="OptionWatermark"
+                              ColumnDefinitions="200,20,*"
+                              RowDefinitions="40,40,40"
+                              Margin="10">
+                            <Rectangle Grid.Row="0"
+                                       Grid.Column="1"
+                                       Grid.RowSpan="3"
+                                       Width="1"
+                                       HorizontalAlignment="Left"
+                                       Fill="{DynamicResource SeparatorPrimary}" />
 
-                                <TextBlock Grid.Row="0"
-                                           Grid.Column="0"
-                                           VerticalAlignment="Center"
-                                           Text="{DynamicResource Import.SortCollections}">
-                                    <ToolTip.Tip>
-                                        <TextBlock Text="{DynamicResource Import.SortCollections.Description}" />
-                                    </ToolTip.Tip>
-                                </TextBlock>
-                                <CheckBox Grid.Row="0"
-                                          Grid.Column="2"
-                                          Name="CheckBoxSortCollections"
-                                          IsCheckedChanged="CheckBoxSortCollections_OnIsCheckedChanged">
-                                    <ToolTip.Tip>
-                                        <TextBlock Text="{DynamicResource Import.SortCollections.Description}" />
-                                    </ToolTip.Tip>
-                                </CheckBox>
-                                
-                                <TextBlock Grid.Row="1"
-                                           Grid.Column="0"
-                                           VerticalAlignment="Center"
-                                           Text="{DynamicResource Import.OptimizeHoldNotes}">
-                                    <ToolTip.Tip>
-                                        <TextBlock Text="{DynamicResource Import.OptimizeHoldNotes.Description}" />
-                                    </ToolTip.Tip>
-                                </TextBlock>
-                                <CheckBox Grid.Row="1"
-                                          Grid.Column="2"
-                                          Name="CheckBoxOptimizeHoldNotes"
-                                          IsCheckedChanged="CheckBoxOptimizeHoldNotes_OnIsCheckedChanged">
-                                    <ToolTip.Tip>
-                                        <TextBlock Text="{DynamicResource Import.OptimizeHoldNotes.Description}" />
-                                    </ToolTip.Tip>
-                                </CheckBox>
-                                
-                                <TextBlock Grid.Row="2"
-                                           Grid.Column="0"
-                                           VerticalAlignment="Center"
-                                           Text="{DynamicResource Import.InferClearThreshold}">
-                                    <ToolTip.Tip>
-                                        <TextBlock Text="{DynamicResource Import.InferClearThreshold.Description}" />
-                                    </ToolTip.Tip>
-                                </TextBlock>
-                                <CheckBox Grid.Row="2"
-                                          Grid.Column="2"
-                                          Name="CheckBoxInferClearThresholdFromDifficulty"
-                                          IsCheckedChanged="CheckBoxInferClearThresholdFromDifficulty_OnIsCheckedChanged">
-                                    <ToolTip.Tip>
-                                        <TextBlock Text="{DynamicResource Import.InferClearThreshold.Description}" />
-                                    </ToolTip.Tip>
-                                </CheckBox>
-                            </Grid>
-                        </StackPanel>
-                    </ScrollViewer>
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="0"
+                                       VerticalAlignment="Center"
+                                       Text="{DynamicResource Import.SortCollections}">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="{DynamicResource Import.SortCollections.Description}" />
+                                </ToolTip.Tip>
+                            </TextBlock>
+                            <CheckBox Grid.Row="0"
+                                      Grid.Column="2"
+                                      Name="CheckBoxSortCollections"
+                                      IsCheckedChanged="CheckBoxSortCollections_OnIsCheckedChanged">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="{DynamicResource Import.SortCollections.Description}" />
+                                </ToolTip.Tip>
+                            </CheckBox>
+
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="0"
+                                       VerticalAlignment="Center"
+                                       Text="{DynamicResource Import.OptimizeHoldNotes}">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="{DynamicResource Import.OptimizeHoldNotes.Description}" />
+                                </ToolTip.Tip>
+                            </TextBlock>
+                            <CheckBox Grid.Row="1"
+                                      Grid.Column="2"
+                                      Name="CheckBoxOptimizeHoldNotes"
+                                      IsCheckedChanged="CheckBoxOptimizeHoldNotes_OnIsCheckedChanged">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="{DynamicResource Import.OptimizeHoldNotes.Description}" />
+                                </ToolTip.Tip>
+                            </CheckBox>
+
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="0"
+                                       VerticalAlignment="Center"
+                                       Text="{DynamicResource Import.InferClearThreshold}">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="{DynamicResource Import.InferClearThreshold.Description}" />
+                                </ToolTip.Tip>
+                            </TextBlock>
+                            <CheckBox Grid.Row="2"
+                                      Grid.Column="2"
+                                      Name="CheckBoxInferClearThresholdFromDifficulty"
+                                      IsCheckedChanged="CheckBoxInferClearThresholdFromDifficulty_OnIsCheckedChanged">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="{DynamicResource Import.InferClearThreshold.Description}" />
+                                </ToolTip.Tip>
+                            </CheckBox>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
             </Border>
 
             <!-- Footer -->

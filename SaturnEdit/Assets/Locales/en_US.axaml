@@ -415,7 +415,7 @@
     <system:String x:Key="Settings.Shortcuts.Action">ACTION</system:String>
     <system:String x:Key="Settings.Shortcuts.Shortcut">SHORTCUT</system:String>
     <system:String x:Key="Settings.Shortcuts.WaitingForInput">Waiting for input...</system:String>
-    <system:String x:Key="Export.Window.Title">Export</system:String>
+    <system:String x:Key="Export.Window.Title">Export Arguments</system:String>
     <system:String x:Key="Export.FormatVersion.Mer">MER</system:String>
     <system:String x:Key="Export.FormatVersion.SatV1">SATv1 (Legacy)</system:String>
     <system:String x:Key="Export.FormatVersion.SatV2">SATv2 (Legacy)</system:String>
@@ -460,6 +460,13 @@
     <system:String x:Key="Export.WriteMusicPath.NoExtension.Description">Write the file name without the file extension.</system:String>
     <system:String x:Key="Export.WriteMusicPath.WithExtension">With Extension</system:String>
     <system:String x:Key="Export.WriteMusicPath.WithExtension.Description">Write the file name with the file extension.</system:String>
+    <system:String x:Key="Import.Window.Title">Import Arguments</system:String>
+    <system:String x:Key="Import.SortCollections">Sort Collections</system:String>
+    <system:String x:Key="Import.SortCollections.Description">Should all objects in collections be sorted by their timestamp?</system:String>
+    <system:String x:Key="Import.OptimizeHoldNotes">Optimize Hold Notes</system:String>
+    <system:String x:Key="Import.OptimizeHoldNotes.Description">Should hidden hold note segments be removed?</system:String>
+    <system:String x:Key="Import.InferClearThreshold">Infer Clear Threshold</system:String>
+    <system:String x:Key="Import.InferClearThreshold.Description">Should the clear threshold be inferred from the chosen Difficulty instead of the value defined by the @CLEAR tag?</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Title">Save Chart</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Header">Do you want to save changes to your chart before closing?</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Paragraph">Your changes will be lost if you don't save them.</system:String>
