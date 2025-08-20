@@ -154,6 +154,8 @@
         <AvaloniaResource Include="Assets\Icons\Color\icon_measure.svg" />
         <None Remove="Assets\Icons\Color\icon_sync.svg" />
         <AvaloniaResource Include="Assets\Icons\Color\icon_sync.svg" />
+        <None Remove="Assets\PlaceholderJacket.png" />
+        <AvaloniaResource Include="Assets\PlaceholderJacket.png" />
     </ItemGroup>
     
     <ItemGroup>

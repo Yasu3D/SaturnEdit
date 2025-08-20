@@ -32,8 +32,9 @@
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Title}" />
                     <TextBox Grid.Row="0"
                              Grid.Column="2"
+                             Name="TextBoxTitle"
                              VerticalAlignment="Center"
-                             Text="Title" />
+                             TextChanged="TextBoxTitle_OnTextChanged" />
 
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
@@ -41,20 +42,24 @@
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Reading}" />
                     <TextBox Grid.Row="1"
                              Grid.Column="2"
+                             Name="TextBoxReading"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Stretch"
-                             Text="TITLE" />
+                             TextChanged="TextBoxReading_OnTextChanged"/>
                     <ToggleButton Grid.Row="1"
                                   Grid.Column="3"
+                                  Name="ToggleButtonAutoReading"
                                   Classes="Themed Square Outlined"
-                                  HorizontalAlignment="Right">
+                                  HorizontalAlignment="Right"
+                                  IsCheckedChanged="ToggleButtonAutoReading_OnIsCheckedChanged">
                         <ToolTip.Tip>
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoClearThreshold}" />
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoReading}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoReading.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
                         </ToolTip.Tip>
-                        <icon:FluentIcon Icon="LinkEdit"/>
+                        <icon:FluentIcon Icon="LinkEdit" />
                     </ToggleButton>
 
 
@@ -64,37 +69,42 @@
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Artist}" />
                     <TextBox Grid.Row="2"
                              Grid.Column="2"
+                             Name="TextBoxArtist"
                              VerticalAlignment="Center"
-                             Text="Artist" />
-                    
+                             TextChanged="TextBoxArtist_OnTextChanged" />
+
                     <TextBlock Grid.Row="3"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.BpmMessage}" />
                     <TextBox Grid.Row="3"
                              Grid.Column="2"
+                             Name="TextBoxBpmMessage"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Stretch"
-                             Text="120" />
+                             TextChanged="TextBoxBpmMessage_OnTextChanged"/>
                     <ToggleButton Grid.Row="3"
                                   Grid.Column="3"
+                                  Name="ToggleButtonAutoBpmMessage"
                                   Classes="Themed Square Outlined"
-                                  HorizontalAlignment="Right">
+                                  HorizontalAlignment="Right"
+                                  IsCheckedChanged="ToggleButtonAutoBpmMessage_OnIsCheckedChanged">
                         <ToolTip.Tip>
                             <StackPanel>
                                 <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoBpmMessage}" />
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoBpmMessage.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoBpmMessage.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
                         </ToolTip.Tip>
-                        <icon:FluentIcon Icon="LinkEdit"/>
+                        <icon:FluentIcon Icon="LinkEdit" />
                     </ToggleButton>
                 </Grid>
             </Expander>
 
             <Rectangle Fill="{DynamicResource SeparatorPrimary}"
                        Height="1"
-                       Margin="10,0"/>
-            
+                       Margin="10,0" />
+
             <Expander HorizontalAlignment="Stretch"
                       IsExpanded="True">
                 <Expander.Header>
@@ -119,63 +129,71 @@
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Revision}" />
                     <TextBox Grid.Row="0"
                              Grid.Column="2"
+                             Name="TextBoxRevision"
                              VerticalAlignment="Center"
-                             Text="1.0.0" />
-                    
+                             TextChanged="TextBoxRevision_OnTextChanged"/>
+
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.NotesDesigner}" />
                     <TextBox Grid.Row="1"
                              Grid.Column="2"
+                             Name="TextBoxNotesDesigner"
                              VerticalAlignment="Center"
-                             Text="Notes Designer" />
-                    
+                             TextChanged="TextBoxNotesDesigner_OnTextChanged"/>
+
                     <TextBlock Grid.Row="2"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Difficulty}" />
                     <ComboBox Grid.Row="2"
                               Grid.Column="2"
-                              SelectedIndex="0">
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Normal}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Hard}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Expert}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Inferno}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.WorldsEnd}"/>
+                              Name="ComboBoxDifficulty"
+                              SelectionChanged="ComboBoxDifficulty_OnSelectionChanged">
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Normal}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Hard}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Expert}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Inferno}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.WorldsEnd}" />
                     </ComboBox>
-                    
+
                     <TextBlock Grid.Row="3"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Level}" />
                     <TextBox Grid.Row="3"
                              Grid.Column="2"
+                             Name="TextBoxLevel"
                              VerticalAlignment="Center"
-                             Text="0.0" />
-                    
+                             LostFocus="TextBoxLevel_OnLostFocus"/>
+
                     <TextBlock Grid.Row="4"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Clear}" />
                     <TextBox Grid.Row="4"
                              Grid.Column="2"
+                             Name="TextBoxClearThreshold"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Stretch"
-                             Text="0.45" />
+                             LostFocus="TextBoxClearThreshold_OnLostFocus"/>
                     <ToggleButton Grid.Row="4"
                                   Grid.Column="3"
+                                  Name="ToggleButtonAutoClearThreshold"
                                   Classes="Themed Square Outlined"
-                                  HorizontalAlignment="Right">
+                                  HorizontalAlignment="Right"
+                                  IsCheckedChanged="ToggleButtonAutoClearThreshold_OnIsCheckedChanged">
                         <ToolTip.Tip>
                             <StackPanel>
                                 <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoClearThreshold}" />
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
                         </ToolTip.Tip>
-                        <icon:FluentIcon Icon="LinkEdit"/>
+                        <icon:FluentIcon Icon="LinkEdit" />
                     </ToggleButton>
-                    
+
                     <TextBlock Grid.Column="0"
                                Grid.Row="5"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.ChartEnd}"
@@ -184,11 +202,12 @@
                           Grid.Row="5"
                           ColumnDefinitions="*,15,*">
                         <NumericUpDown Grid.Column="0"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Stretch"
-                                 Minimum="0"
-                                 Value="1" 
-                                 FormatString="0"/>
+                                       Name="NumericUpDownChartEndMeasure"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       Minimum="0"
+                                       FormatString="0" 
+                                       ValueChanged="NumericUpDownChartEndMeasure_OnValueChanged"/>
 
                         <Rectangle Grid.Column="1"
                                    Fill="{DynamicResource SeparatorPrimary}"
@@ -197,34 +216,38 @@
                                    HorizontalAlignment="Center" />
 
                         <NumericUpDown Grid.Column="2"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Stretch"
-                                 Minimum="-1"
-                                 Maximum="1920"
-                                 Value="480" 
-                                 FormatString="0"/>
+                                       Name="NumericUpDownChartEndTick"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       Minimum="-1"
+                                       Maximum="1920"
+                                       FormatString="0" 
+                                       ValueChanged="NumericUpDownChartEndTick_OnValueChanged"/>
                     </Grid>
-                    
+
                     <ToggleButton Grid.Row="5"
                                   Grid.Column="3"
+                                  Name="ToggleButtonAutoChartEnd"
                                   Classes="Themed Square Outlined"
-                                  HorizontalAlignment="Right">
+                                  HorizontalAlignment="Right"
+                                  IsCheckedChanged="ToggleButtonAutoChartEnd_OnIsCheckedChanged">
                         <ToolTip.Tip>
                             <StackPanel>
                                 <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoChartEnd}" />
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
                         </ToolTip.Tip>
-                        <icon:FluentIcon Icon="LinkEdit"/>
+                        <icon:FluentIcon Icon="LinkEdit" />
                     </ToggleButton>
-                    
+
                 </Grid>
             </Expander>
 
             <Rectangle Fill="{DynamicResource SeparatorPrimary}"
                        Height="1"
-                       Margin="10,0"/>
-            
+                       Margin="10,0" />
+
             <Expander HorizontalAlignment="Stretch"
                       IsExpanded="True">
                 <Expander.Header>
@@ -248,53 +271,57 @@
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewBegin}" />
                     <TextBox Grid.Row="0"
                              Grid.Column="2"
+                             Name="TextBoxPreviewBegin"
                              VerticalAlignment="Center"
-                             Text="0.0" />
-                    
+                             LostFocus="TextBoxPreviewBegin_OnLostFocus"/>
+
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewLength}" />
                     <TextBox Grid.Row="1"
                              Grid.Column="2"
+                             Name="TextBoxPreviewLength"
                              VerticalAlignment="Center"
-                             Text="0.0" />
-                    
+                             LostFocus="TextBoxPreviewLength_OnLostFocus"/>
+
                     <TextBlock Grid.Row="2"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Background}" />
                     <ComboBox Grid.Row="2"
                               Grid.Column="2"
-                              SelectedIndex="0">
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Auto}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Saturn}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Version3}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Version2}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Version1}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Boss}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.StageUp}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.WorldsEnd}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Jacket}"/>
+                              Name="ComboBoxBackground"
+                              SelectionChanged="ComboBoxBackground_OnSelectionChanged">
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Auto}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Saturn}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Version3}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Version2}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Version1}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Boss}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.StageUp}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.WorldsEnd}" />
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Jacket}" />
                     </ComboBox>
-                    
+
                     <TextBlock Grid.Row="3"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Tutorial}" />
                     <ComboBox Grid.Row="3"
                               Grid.Column="2"
-                              SelectedIndex="0">
-                        <ComboBoxItem Content="{DynamicResource Generic.Disabled}"/>
-                        <ComboBoxItem Content="{DynamicResource Generic.Enabled}"/>
+                              Name="ComboBoxTutorialMode"
+                              SelectionChanged="ComboBoxTutorialMode_OnSelectionChanged">
+                        <ComboBoxItem Content="{DynamicResource Generic.Disabled}" />
+                        <ComboBoxItem Content="{DynamicResource Generic.Enabled}" />
                     </ComboBox>
                 </Grid>
             </Expander>
 
             <Rectangle Fill="{DynamicResource SeparatorPrimary}"
                        Height="1"
-                       Margin="10,0"/>
-            
+                       Margin="10,0" />
+
             <Expander HorizontalAlignment="Stretch"
                       IsExpanded="True">
                 <Expander.Header>
@@ -304,92 +331,117 @@
                 </Expander.Header>
 
                 <Grid ColumnDefinitions="150,20,*,36"
-                      RowDefinitions="40,40,40,40,40">
+                      RowDefinitions="40,40,40,40,40,Auto">
 
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
-                               Grid.RowSpan="5"
+                               Grid.RowSpan="6"
                                Width="1"
                                HorizontalAlignment="Left"
                                Fill="{DynamicResource SeparatorPrimary}" />
-                    
+
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Jacket}" />
                     <TextBox Grid.Row="0"
                              Grid.Column="2"
+                             Name="TextBoxJacket"
                              VerticalAlignment="Center"
-                             Text="" />
+                             LostFocus="TextBoxJacket_OnLostFocus"/>
                     <Button Grid.Row="0"
-                                  Grid.Column="3"
-                                  Classes="Themed Square Outlined"
-                                  HorizontalAlignment="Right">
+                            Grid.Column="3"
+                            Name="ButtonPickFileJacket"
+                            Classes="Themed Square Outlined"
+                            HorizontalAlignment="Right"
+                            Click="ButtonPickFileJacket_OnClick">
                         <ToolTip.Tip>
                             <StackPanel>
                                 <TextBlock Text="{DynamicResource Generic.PickFile}" />
                             </StackPanel>
                         </ToolTip.Tip>
-                        <icon:FluentIcon Icon="FolderOpen"/>
+                        <icon:FluentIcon Icon="FolderOpen" />
                     </Button>
-                    
+
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Audio}" />
                     <TextBox Grid.Row="1"
                              Grid.Column="2"
+                             Name="TextBoxAudio"
                              VerticalAlignment="Center"
-                             Text="" />
+                             LostFocus="TextBoxAudio_OnLostFocus"/>
                     <Button Grid.Row="1"
-                                  Grid.Column="3"
-                                  Classes="Themed Square Outlined"
-                                  HorizontalAlignment="Right">
+                            Grid.Column="3"
+                            Name="ButtonPickFileAudio"
+                            Classes="Themed Square Outlined"
+                            HorizontalAlignment="Right"
+                            Click="ButtonPickFileAudio_OnClick">
                         <ToolTip.Tip>
                             <StackPanel>
                                 <TextBlock Text="{DynamicResource Generic.PickFile}" />
                             </StackPanel>
                         </ToolTip.Tip>
-                        <icon:FluentIcon Icon="FolderOpen"/>
+                        <icon:FluentIcon Icon="FolderOpen" />
                     </Button>
-                    
+
                     <TextBlock Grid.Row="2"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Video}" />
                     <TextBox Grid.Row="2"
                              Grid.Column="2"
+                             Name="TextBoxVideo"
                              VerticalAlignment="Center"
-                             Text="" />
+                             LostFocus="TextBoxVideo_OnLostFocus"/>
                     <Button Grid.Row="2"
-                                  Grid.Column="3"
-                                  Classes="Themed Square Outlined"
-                                  HorizontalAlignment="Right">
+                            Grid.Column="3"
+                            Name="ButtonPickFileVideo"
+                            Classes="Themed Square Outlined"
+                            HorizontalAlignment="Right"
+                            Click="ButtonPickFileVideo_OnClick">
                         <ToolTip.Tip>
                             <StackPanel>
                                 <TextBlock Text="{DynamicResource Generic.PickFile}" />
                             </StackPanel>
                         </ToolTip.Tip>
-                        <icon:FluentIcon Icon="FolderOpen"/>
+                        <icon:FluentIcon Icon="FolderOpen" />
                     </Button>
-                    
+
                     <TextBlock Grid.Row="3"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.AudioOffset}" />
                     <TextBox Grid.Row="3"
                              Grid.Column="2"
+                             Name="TextBoxAudioOffset"
                              VerticalAlignment="Center"
-                             Text="0.000" />
-                    
+                             LostFocus="TextBoxAudioOffset_OnLostFocus"/>
+
                     <TextBlock Grid.Row="4"
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.VideoOffset}" />
                     <TextBox Grid.Row="4"
                              Grid.Column="2"
+                             Name="TextBoxVideoOffset"
                              VerticalAlignment="Center"
-                             Text="0.000" />
+                             LostFocus="TextBoxVideoOffset_OnLostFocus" />
+
+                    <Border Grid.Row="5"
+                            Grid.Column="2"
+                            Background="Black"
+                            Margin="0,5,0,0">
+                        <Border Background="White"
+                                Margin="3">
+                            <Panel Margin="2">
+                                <Image Name="ImageJacket" IsVisible="False"/>
+                            <Image Name="ImageJacketPlaceholder"
+                                   Source="avares://SaturnEdit/Assets/PlaceholderJacket.png"/>
+                            </Panel>
+                        </Border>
+                    </Border>
                 </Grid>
             </Expander>
         </StackPanel>

@@ -301,7 +301,6 @@ public partial class ChartEditorView : UserControl
             return false;
         }
     }
-
     
     private FilePickerSaveOptions ExportFilePickerSaveOptions(NotationWriteArgs args)
     {
