@@ -8,7 +8,8 @@
              Background="{DynamicResource BackgroundPrimary}"
              x:Class="SaturnEdit.Windows.Main.ChartEditor.Tabs.ChartStatisticsView">
     <Grid ColumnDefinitions="20,*">
-        <StackPanel Grid.Column="0">
+        <StackPanel Grid.Column="0"
+                    Name="StackPanelGraph">
             <Border Name="GraphTouchNote" HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
                     Height="57"
@@ -126,7 +127,8 @@
                         Spacing="5">
 
                 <!-- File Info -->
-                <TextBlock Text="sample_file.sat"
+                <TextBlock Name="TextBlockFileName"
+                           Text="sample_file.sat"
                            FontFamily="Consolas,Cascadia Code,Monospace"
                            HorizontalAlignment="Left" />
 
@@ -135,11 +137,45 @@
                            Margin="0,10"
                            Fill="{DynamicResource SeparatorPrimary}" />
 
+                <!-- Combo and Score -->
+                <Panel>
+                    <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.MaxCombo}"
+                               HorizontalAlignment="Left" />
+                    <TextBlock Name="TextBlockMaxCombo" 
+                               Text="0"
+                               HorizontalAlignment="Right"
+                               FontFamily="Consolas,Cascadia Code,Monospace" />
+                </Panel>
+
+                <Panel>
+                    <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.ScorePerNote}"
+                               HorizontalAlignment="Left" />
+                    <TextBlock Name="TextBlockScorePerNote" 
+                               Text="0"
+                               HorizontalAlignment="Right"
+                               FontFamily="Consolas,Cascadia Code,Monospace" />
+                </Panel>
+
+                <Panel>
+                    <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.ScorePerRNote}"
+                               HorizontalAlignment="Left" />
+                    <TextBlock Name="TextBlockScorePerRNote" 
+                               Text="0"
+                               HorizontalAlignment="Right"
+                               FontFamily="Consolas,Cascadia Code,Monospace" />
+                </Panel>
+
+                <Rectangle Height="1"
+                           HorizontalAlignment="Stretch"
+                           Margin="0,10"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+                
                 <!-- Layers and Events -->
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfLayers}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockLayerCount"
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -152,7 +188,8 @@
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfEvents}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockEventCount"
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -161,7 +198,8 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfTempoChanges}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockTempoChangeCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -170,7 +208,18 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfMetreChanges}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockMetreChangeCount" 
+                               Text="0"
+                               HorizontalAlignment="Right"
+                               FontFamily="Consolas,Cascadia Code,Monospace" />
+                </Panel>
+                
+                <Panel>
+                    <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfTutorialMarkers}"
+                               Foreground="{DynamicResource ForegroundSecondary}"
+                               HorizontalAlignment="Left" />
+                    <TextBlock Name="TextBlockTutorialMarkerCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -179,7 +228,8 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfSpeedChanges}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockSpeedChangeCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -188,7 +238,8 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfVisibilityChanges}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockVisibilityChangeCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -197,7 +248,8 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfReverseEffects}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockReverseEffectCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -206,48 +258,8 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfStopEffects}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
-                               HorizontalAlignment="Right"
-                               FontFamily="Consolas,Cascadia Code,Monospace" />
-                </Panel>
-
-                <Panel>
-                    <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfTutorialMarkers}"
-                               Foreground="{DynamicResource ForegroundSecondary}"
-                               HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
-                               HorizontalAlignment="Right"
-                               FontFamily="Consolas,Cascadia Code,Monospace" />
-                </Panel>
-
-                <Rectangle Height="1"
-                           HorizontalAlignment="Stretch"
-                           Margin="0,10"
-                           Fill="{DynamicResource SeparatorPrimary}" />
-
-                <!-- Events -->
-
-                <!-- Combo and Score -->
-                <Panel>
-                    <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.MaxCombo}"
-                               HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
-                               HorizontalAlignment="Right"
-                               FontFamily="Consolas,Cascadia Code,Monospace" />
-                </Panel>
-
-                <Panel>
-                    <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.ScorePerNote}"
-                               HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
-                               HorizontalAlignment="Right"
-                               FontFamily="Consolas,Cascadia Code,Monospace" />
-                </Panel>
-
-                <Panel>
-                    <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.ScorePerRNote}"
-                               HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockStopEffectCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -261,7 +273,8 @@
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfNormalNotes}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockNormalNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -269,7 +282,8 @@
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfBonusNotes}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockBonusNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -277,7 +291,8 @@
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfRNotes}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockRNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -291,7 +306,8 @@
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfTouchNotes}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockTouchNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -299,7 +315,8 @@
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfChainNotes}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockChainNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -307,7 +324,8 @@
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfHoldNotes}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockHoldNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -321,7 +339,8 @@
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfSlideNotes}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockSlideNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -330,7 +349,8 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfSlideClockwiseNotes}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockSlideClockwiseNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -339,7 +359,8 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfSlideCounterclockwiseNotes}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockSlideCounterclockwiseNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -353,7 +374,8 @@
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfSnapNotes}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockSnapNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -362,7 +384,8 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfSnapForwardNotes}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockSnapForwardNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -371,7 +394,8 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfSnapBackwardNotes}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockSnapBackwardNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -385,7 +409,8 @@
                 <Panel>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfLaneToggleNotes}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockLaneToggleNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -394,7 +419,8 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfLaneShowNotes}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockLaneShowNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>
@@ -403,7 +429,8 @@
                     <TextBlock Text="{DynamicResource ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes}"
                                Foreground="{DynamicResource ForegroundSecondary}"
                                HorizontalAlignment="Left" />
-                    <TextBlock Text="0"
+                    <TextBlock Name="TextBlockLaneHideNoteCount" 
+                               Text="0"
                                HorizontalAlignment="Right"
                                FontFamily="Consolas,Cascadia Code,Monospace" />
                 </Panel>

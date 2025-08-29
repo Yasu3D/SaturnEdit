@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using SaturnData.Notation.Core;
@@ -16,7 +17,14 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         SettingsSystem.SettingsChanged += OnSettingsChanged;
+        ChartSystem.EntryChanged += OnEntryChanged;
         OnSettingsChanged(null, EventArgs.Empty);
+        OnEntryChanged(null, EventArgs.Empty);
+    }
+
+    private void OnEntryChanged(object? sender, EventArgs e)
+    {
+        MenuItemChartEditorReloadFromDisk.IsEnabled = File.Exists(ChartSystem.Entry.ChartPath);
     }
 
     private void OnSettingsChanged(object? sender, EventArgs e)
@@ -150,13 +158,15 @@ public partial class MainWindow : Window
 
     private void MenuItemChartEditorNew_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileNew();
 
-    private void MenuItemChartEditorOpen_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileOpen();
+    private void MenuItemChartEditorOpen_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileOpen();
 
     private void MenuItemChartEditorSave_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileSave();
 
     private void MenuItemChartEditorSaveAs_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileSaveAs();
 
-    private void MenuItemChartEditorReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileReloadFromDisk();
+    private void MenuItemChartEditorReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileReloadFromDisk();
 
-    private void MenuItemChartEditorExport_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileExport();
+    private void MenuItemChartEditorExport_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileExport();
+
+    private void MenuItemChartEditorQuit_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileQuit();
 }

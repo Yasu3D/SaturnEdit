@@ -30,12 +30,12 @@ public partial class ChartPropertiesView : UserControl
 
     private bool blockEvent = false;
     
-    private void OnEntryChanged(object? sender, EventArgs e)
+    private async void OnEntryChanged(object? sender, EventArgs e)
     {
         Console.WriteLine("EntryChanged");
         if (ChartSystem.Entry.AutoReading)
         {
-            //ChartSystem.Entry.Reading = await ChartSystem.Entry.GetAutoReading();
+            ChartSystem.Entry.Reading = await ChartSystem.Entry.GetAutoReading();
         }
 
         if (ChartSystem.Entry.AutoClearThreshold)
@@ -422,7 +422,7 @@ public partial class ChartPropertiesView : UserControl
             });
             if (files.Count != 1) return;
 
-            ChartSystem.Entry.JacketPath = files[0].Path.AbsolutePath;
+            ChartSystem.Entry.JacketPath = files[0].Path.LocalPath;
         }
         catch (Exception ex)
         {
@@ -451,7 +451,7 @@ public partial class ChartPropertiesView : UserControl
             });
             if (files.Count != 1) return;
 
-            ChartSystem.Entry.AudioPath = files[0].Path.AbsolutePath;
+            ChartSystem.Entry.AudioPath = files[0].Path.LocalPath;
         }
         catch (Exception ex)
         {
@@ -480,7 +480,7 @@ public partial class ChartPropertiesView : UserControl
             });
             if (files.Count != 1) return;
 
-            ChartSystem.Entry.VideoPath = files[0].Path.AbsolutePath;
+            ChartSystem.Entry.VideoPath = files[0].Path.LocalPath;
         }
         catch (Exception ex)
         {

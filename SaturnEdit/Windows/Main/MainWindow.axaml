@@ -197,7 +197,8 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemChartEditorQuit">
+                        <MenuItem Name="MenuItemChartEditorQuit"
+                                  Click="MenuItemChartEditorQuit_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.File.Quit}" />
                             </MenuItem.Header>

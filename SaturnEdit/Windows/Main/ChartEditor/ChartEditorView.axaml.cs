@@ -84,7 +84,7 @@ public partial class ChartEditorView : UserControl
             {
                 bool success = await FileSave();
 
-                // Abort opening new file of save was unsuccessful.
+                // Abort opening new file if save was unsuccessful.
                 if (!success) return;
             }
 
@@ -117,7 +117,7 @@ public partial class ChartEditorView : UserControl
                 {
                     bool success = await FileSave();
 
-                    // Abort opening new file of save was unsuccessful.
+                    // Abort opening new file if save was unsuccessful.
                     if (!success) return false;
                 }
 
@@ -139,10 +139,9 @@ public partial class ChartEditorView : UserControl
             });
             if (files.Count != 1) return false;
 
-            
             // Get Read Args
             NotationReadArgs args = new();
-            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(files[0].Path.AbsolutePath);
+            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(files[0].Path.LocalPath);
             if (formatVersion == FormatVersion.Unknown) return false;
             if (formatVersion != FormatVersion.SatV3)
             {
@@ -154,7 +153,7 @@ public partial class ChartEditorView : UserControl
             }
             
             // Read chart from file.
-            ChartSystem.ReadChart(files[0].Path.AbsolutePath, args);
+            ChartSystem.ReadChart(files[0].Path.LocalPath, args);
             return true;
         }
         catch (Exception ex)
@@ -218,7 +217,7 @@ public partial class ChartEditorView : UserControl
             if (file == null) return false;
 
             // Write chart to file.
-            ChartSystem.WriteChart(file.Path.AbsolutePath, new(), true, true);
+            ChartSystem.WriteChart(file.Path.LocalPath, new(), true, true);
             return true;
         }
         catch (Exception ex)
@@ -247,7 +246,7 @@ public partial class ChartEditorView : UserControl
                 {
                     bool success = await FileSave();
 
-                    // Abort opening new file of save was unsuccessful.
+                    // Abort opening new file if save was unsuccessful.
                     if (!success) return false;
                 }
 
@@ -292,7 +291,7 @@ public partial class ChartEditorView : UserControl
             if (file == null) return false;
 
             // Write the chart to the defined path, with the defined notation arguments.
-            ChartSystem.WriteChart(file.Path.AbsolutePath, exportArgsWindow.NotationWriteArgs, true, true);
+            ChartSystem.WriteChart(file.Path.LocalPath, exportArgsWindow.NotationWriteArgs, true, true);
             return true;
         }
         catch (Exception ex)
@@ -300,6 +299,36 @@ public partial class ChartEditorView : UserControl
             Console.WriteLine(ex);
             return false;
         }
+    }
+
+    public async void FileQuit()
+    {
+        TopLevel? topLevel = TopLevel.GetTopLevel(this);
+        if (topLevel == null) return;
+
+        // Prompt to save an unsaved chart first.
+        if (!ChartSystem.IsSaved)
+        {
+            ModalDialogResult result = await PromptSave();
+
+            // Cancel
+            if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
+
+            // Save
+            if (result is ModalDialogResult.Primary)
+            {
+                bool success = await FileSave();
+
+                // Abort quitting if save was unsuccessful.
+                if (!success) return;
+            }
+
+            // Don't Save
+            // Continue as normal.
+        }
+
+        if (VisualRoot is not Window rootWindow) return;
+        rootWindow.Close();
     }
     
     private FilePickerSaveOptions ExportFilePickerSaveOptions(NotationWriteArgs args)
