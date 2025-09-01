@@ -32,7 +32,6 @@ public partial class ChartPropertiesView : UserControl
     
     private async void OnEntryChanged(object? sender, EventArgs e)
     {
-        Console.WriteLine("EntryChanged");
         if (ChartSystem.Entry.AutoReading)
         {
             ChartSystem.Entry.Reading = await ChartSystem.Entry.GetAutoReading();

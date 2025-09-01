@@ -131,11 +131,6 @@
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description">Automatically determine the clear threshold based on the chart's difficulty.</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd">Auto Chart End</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description">Automatically determine when a chart should end and transition to the results screen.</system:String>
-    <system:String x:Key="ChartEditor.ChartViewTxt">Chart View (Text)</system:String>
-    <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.ShowSpaces">Show Spaces</system:String>
-    <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.ShowSpaces.Description">Displays a bullet point dot • wherever whitespace is.</system:String>
-    <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting">Syntax Highlighting</system:String>
-    <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting.Description">Show syntax highlighting for the chart format.</system:String>
     <system:String x:Key="ChartEditor.Proofreader">Proofreader</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria">Criteria</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem">Problem</system:String>
@@ -296,6 +291,13 @@
     <system:String x:Key="ChartEditor.ChartView3D.Menu.DecreaseBackgroundDim">Decrease Background Dim</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Toolbar">Toolbar</system:String>
     <system:String x:Key="ChartEditor.ChartView2D">Chart View (2D)</system:String>
+    <system:String x:Key="ChartEditor.ChartViewTxt">Chart View (Text)</system:String>
+    <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.ShowSpaces">Show Spaces</system:String>
+    <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.ShowSpaces.Description">Displays a bullet point dot • wherever whitespace is.</system:String>
+    <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting">Syntax Highlighting</system:String>
+    <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting.Description">Show syntax highlighting for the chart format.</system:String>
+    <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.ApplyChanges">Apply Changes</system:String>
+    <system:String x:Key="ChartEditor.ChartViewTxt.ToolTip.ApplyChanges.Description">Attempt to apply changes by reading chart data.</system:String>
     <system:String x:Key="ChartEditor.Waveform">Waveform</system:String>
     <system:String x:Key="ChartEditor.Cursor">Cursor</system:String>
     <system:String x:Key="ChartEditor.Cursor.OddBeatDivisionWarning">Odd Beat Division</system:String>

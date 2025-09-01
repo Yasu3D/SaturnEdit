@@ -9,7 +9,7 @@
              d:DesignHeight="450"
              Background="{DynamicResource BackgroundSecondary}"
              x:Class="SaturnEdit.Windows.Main.ChartEditor.Tabs.ChartViewTxt">
-    <Grid>
+    <Panel>
         <DockPanel>
             <avaloniaEdit:TextEditor DockPanel.Dock="Top"
                                      Name="TextEditorChart"
@@ -53,6 +53,7 @@
                           Classes="Themed Square Outlined"
                           IsChecked="True"
                           IsCheckedChanged="ToggleButtonShowSpaces_OnIsCheckedChanged">
+                <icon:FluentIcon Icon="Spacebar" />
                 <ToolTip.Tip>
                     <StackPanel>
                         <TextBlock Text="{DynamicResource ChartEditor.ChartViewTxt.ToolTip.ShowSpaces}" />
@@ -60,22 +61,41 @@
                                    Foreground="{DynamicResource ForegroundSecondary}" />
                     </StackPanel>
                 </ToolTip.Tip>
-                <icon:FluentIcon Icon="Spacebar" />
             </ToggleButton>
 
             <ToggleButton Name="ToggleButtonSyntaxHighlighting"
                           Classes="Themed Square Outlined"
                           IsChecked="True"
                           IsCheckedChanged="ToggleButtonSyntaxHighlighting_OnIsCheckedChanged">
+                <icon:FluentIcon Icon="Code" />
                 <ToolTip.Tip>
                     <StackPanel>
                         <TextBlock Text="{DynamicResource ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting}" />
                         <TextBlock Text="{DynamicResource ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting.Description}"
                                    Foreground="{DynamicResource ForegroundSecondary}" />
                     </StackPanel>
-                </ToolTip.Tip>
-                <icon:FluentIcon Icon="BracesVariable" />
+                </ToolTip.Tip> 
             </ToggleButton>
         </StackPanel>
-    </Grid>
+        
+        <StackPanel HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="8"
+                    Spacing="5">
+            <Button Name="ButtonApplyChanges"
+                    Classes="Themed Square Outlined"
+                    Width="40"
+                    Height="40"
+                    Click="ButtonApplyChanges_OnClick">
+                <icon:FluentIcon Icon="Checkmark" />
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource ChartEditor.ChartViewTxt.ToolTip.ApplyChanges}" />
+                        <TextBlock Text="{DynamicResource ChartEditor.ChartViewTxt.ToolTip.ApplyChanges.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </Button>
+        </StackPanel>
+    </Panel>
 </UserControl>

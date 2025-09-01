@@ -128,11 +128,6 @@ ChartEditor.ChartProperties.ToolTip.AutoClearThreshold,Auto Clear Threshold
 ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description,Automatically determine the clear threshold based on the chart's difficulty.
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd,Auto Chart End
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description,Automatically determine when a chart should end and transition to the results screen.
-ChartEditor.ChartViewTxt,Chart View (Text)
-ChartEditor.ChartViewTxt.ToolTip.ShowSpaces,Show Spaces
-ChartEditor.ChartViewTxt.ToolTip.ShowSpaces.Description,Displays a bullet point dot • wherever whitespace is.
-ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting,Syntax Highlighting
-ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting.Description,Show syntax highlighting for the chart format.
 ChartEditor.Proofreader,Proofreader
 ChartEditor.Proofreader.Criteria,Criteria
 ChartEditor.Proofreader.Problem,Problem
@@ -293,6 +288,13 @@ ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim,Increase Background Dim
 ChartEditor.ChartView3D.Menu.DecreaseBackgroundDim,Decrease Background Dim
 ChartEditor.ChartView3D.Toolbar,Toolbar
 ChartEditor.ChartView2D,Chart View (2D)
+ChartEditor.ChartViewTxt,Chart View (Text)
+ChartEditor.ChartViewTxt.ToolTip.ShowSpaces,Show Spaces
+ChartEditor.ChartViewTxt.ToolTip.ShowSpaces.Description,Displays a bullet point dot • wherever whitespace is.
+ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting,Syntax Highlighting
+ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting.Description,Show syntax highlighting for the chart format.
+ChartEditor.ChartViewTxt.ToolTip.ApplyChanges,Apply Changes
+ChartEditor.ChartViewTxt.ToolTip.ApplyChanges.Description,Attempt to apply changes by reading chart data.
 ChartEditor.Waveform,Waveform
 ChartEditor.Cursor,Cursor
 ChartEditor.Cursor.OddBeatDivisionWarning,Odd Beat Division

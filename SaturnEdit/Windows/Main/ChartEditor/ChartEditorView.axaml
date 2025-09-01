@@ -69,6 +69,9 @@
                             <Tool Title="ChartView2D">
                                 <tabs:ChartView2D />
                             </Tool>
+                            <Tool Title="ChartViewTxt">
+                                <tabs:ChartViewTxt />
+                            </Tool>
                         </ToolDock>
                         
                         <ProportionalDockSplitter />

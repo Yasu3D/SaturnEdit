@@ -57,6 +57,24 @@ public static class ChartSystem
         ChartChanged?.Invoke(null, EventArgs.Empty);
         EntryChanged?.Invoke(null, EventArgs.Empty);
     }
+    
+    /// <summary>
+    /// Creates a new chart to work on by reading data from an array of lines, then invokes <see cref="ChartChanged"/> and <see cref="EntryChanged"/>
+    /// </summary>
+    /// <param name="path">Path to the file to read from.</param>
+    /// <param name="args">Arguments for how the chart should be read.</param>
+    public static void ReadChart(string[] data, NotationReadArgs args)
+    {
+        Entry.EntryChanged -= OnEntryChanged;
+
+        Entry = NotationSerializer.ToEntry(data, args);
+        Chart = NotationSerializer.ToChart(data, args);
+        
+        Entry.EntryChanged += OnEntryChanged;
+        
+        ChartChanged?.Invoke(null, EventArgs.Empty);
+        EntryChanged?.Invoke(null, EventArgs.Empty);
+    }
 
     /// <summary>
     /// Writes a chart to a file.
