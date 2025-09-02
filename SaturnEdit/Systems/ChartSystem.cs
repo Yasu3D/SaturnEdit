@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 
@@ -49,8 +51,8 @@ public static class ChartSystem
     {
         Entry.EntryChanged -= OnEntryChanged;
 
-        Entry = NotationSerializer.ToEntry(path, args);
-        Chart = NotationSerializer.ToChart(path, args);
+        Entry entry = NotationSerializer.ToEntry(path, args, out _);
+        Chart chart = NotationSerializer.ToChart(path, args, out _);
         
         Entry.EntryChanged += OnEntryChanged;
         
@@ -59,21 +61,34 @@ public static class ChartSystem
     }
     
     /// <summary>
-    /// Creates a new chart to work on by reading data from an array of lines, then invokes <see cref="ChartChanged"/> and <see cref="EntryChanged"/>
+    /// Updates a chart to 
     /// </summary>
-    /// <param name="path">Path to the file to read from.</param>
-    /// <param name="args">Arguments for how the chart should be read.</param>
-    public static void ReadChart(string[] data, NotationReadArgs args)
+    /// <param name="text"></param>
+    /// <param name="args"></param>
+    /// <param name="exceptions"></param>
+    public static void ReadChartEditorTxt(string text, NotationReadArgs args, out List<Exception> exceptions)
     {
-        Entry.EntryChanged -= OnEntryChanged;
+        string[] data = text.Split('\n');
 
-        Entry = NotationSerializer.ToEntry(data, args);
-        Chart = NotationSerializer.ToChart(data, args);
+        Entry entry = NotationSerializer.ToEntry(data, args, out List<Exception> entryExceptions);
+        Chart chart = NotationSerializer.ToChart(data, args, out List<Exception> chartExceptions);
+        exceptions = entryExceptions.Concat(chartExceptions).ToList();
+        
+        Entry.EntryChanged -= OnEntryChanged;
+        
+        if (exceptions.Count == 0)
+        {
+            Entry = entry;
+            Chart = chart;
+        }
         
         Entry.EntryChanged += OnEntryChanged;
         
-        ChartChanged?.Invoke(null, EventArgs.Empty);
-        EntryChanged?.Invoke(null, EventArgs.Empty);
+        if (exceptions.Count == 0)
+        {
+            ChartChanged?.Invoke(null, EventArgs.Empty);
+            EntryChanged?.Invoke(null, EventArgs.Empty);
+        }
     }
 
     /// <summary>

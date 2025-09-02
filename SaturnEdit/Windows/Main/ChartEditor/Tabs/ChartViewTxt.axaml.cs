@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -90,9 +91,16 @@ public partial class ChartViewTxt : UserControl
         {
             
         }
+        
+        ChartSystem.ReadChartEditorTxt(TextEditorChart.Text, readArgs, out List<Exception> exceptions);
 
-        string[] data = TextEditorChart.Text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-        ChartSystem.ReadChart(data, readArgs);
+        ErrorList.IsVisible = exceptions.Count > 0;
+        TextBlockErrorCount.Text = $"Errors found in file : {exceptions.Count}";
+        TextBlockErrorList.Text = "";
+        foreach (Exception exception in exceptions)
+        {
+            TextBlockErrorList.Text += exception.Message + "\n";
+        }
     }
 
     private void UpdateTextFromChart()
