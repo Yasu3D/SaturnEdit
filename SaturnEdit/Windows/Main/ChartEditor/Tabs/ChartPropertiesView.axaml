@@ -344,6 +344,17 @@
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Jacket}" />
+                    <icon:FluentIcon Grid.Row="0"
+                                     Grid.Column="0"
+                                     HorizontalAlignment="Right"
+                                     Name="IconJacketFileNotFoundWarning"
+                                     IsVisible="True"
+                                     Icon="Warning"
+                                     Foreground="{DynamicResource ForegroundWarning}">
+                        <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
+                        </ToolTip.Tip>
+                    </icon:FluentIcon>
                     <TextBox Grid.Row="0"
                              Grid.Column="2"
                              Name="TextBoxJacket"
@@ -367,6 +378,17 @@
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Audio}" />
+                    <icon:FluentIcon Grid.Row="1"
+                                     Grid.Column="0"
+                                     HorizontalAlignment="Right"
+                                     Name="IconAudioFileNotFoundWarning"
+                                     IsVisible="True"
+                                     Icon="Warning"
+                                     Foreground="{DynamicResource ForegroundWarning}">
+                        <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
+                        </ToolTip.Tip>
+                    </icon:FluentIcon>
                     <TextBox Grid.Row="1"
                              Grid.Column="2"
                              Name="TextBoxAudio"
@@ -390,6 +412,17 @@
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.Video}" />
+                    <icon:FluentIcon Grid.Row="2"
+                                     Grid.Column="0"
+                                     HorizontalAlignment="Right"
+                                     Name="IconVideoFileNotFoundWarning"
+                                     IsVisible="True"
+                                     Icon="Warning"
+                                     Foreground="{DynamicResource ForegroundWarning}">
+                        <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
+                        </ToolTip.Tip>
+                    </icon:FluentIcon>
                     <TextBox Grid.Row="2"
                              Grid.Column="2"
                              Name="TextBoxVideo"

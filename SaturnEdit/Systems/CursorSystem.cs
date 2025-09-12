@@ -19,11 +19,10 @@ public static class CursorSystem
         get => position;
         set
         {
-            if (position != value)
-            {
-                position = value;
-                ShapeChanged?.Invoke(null, EventArgs.Empty);
-            }
+            if (position == value) return;
+            
+            position = value;
+            ShapeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static int position = 30;
@@ -37,11 +36,10 @@ public static class CursorSystem
         get => size;
         set
         {
-            if (size != value)
-            {
-                size = value;
-                ShapeChanged?.Invoke(null, EventArgs.Empty);
-            }
+            if (size == value) return;
+            
+            size = value;
+            ShapeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static int size = 15;
@@ -52,12 +50,11 @@ public static class CursorSystem
         set
         {
             if (value.BaseType != typeof(Note)) return;
+
+            if (currentNoteType == value) return;
             
-            if (currentNoteType != value)
-            {
-                currentNoteType = value;
-                TypeChanged?.Invoke(null, EventArgs.Empty);
-            }
+            currentNoteType = value;
+            TypeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static Type currentNoteType = typeof(TouchNote);
@@ -67,11 +64,10 @@ public static class CursorSystem
         get => currentBonusType;
         set
         {
-            if (currentBonusType != value)
-            {
-                currentBonusType = value;
-                TypeChanged?.Invoke(null, EventArgs.Empty);
-            }
+            if (currentBonusType == value) return;
+            
+            currentBonusType = value;
+            TypeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static BonusType currentBonusType = BonusType.Normal;
@@ -81,11 +77,10 @@ public static class CursorSystem
         get => currentHoldPointRenderType;
         set
         {
-            if (currentHoldPointRenderType != value)
-            {
-                currentHoldPointRenderType = value;
-                TypeChanged?.Invoke(null, EventArgs.Empty);
-            }
+            if (currentHoldPointRenderType == value) return;
+            
+            currentHoldPointRenderType = value;
+            TypeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static HoldPointRenderType currentHoldPointRenderType = HoldPointRenderType.Visible;
@@ -95,11 +90,10 @@ public static class CursorSystem
         get => currentJudgementType;
         set
         {
-            if (currentJudgementType != value)
-            {
-                currentJudgementType = value;
-                TypeChanged?.Invoke(null, EventArgs.Empty);
-            }
+            if (currentJudgementType == value) return;
+            
+            currentJudgementType = value;
+            TypeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static JudgementType currentJudgementType = JudgementType.Normal;
@@ -109,11 +103,10 @@ public static class CursorSystem
         get => currentSweepDirection;
         set
         {
-            if (currentSweepDirection != value)
-            {
-                currentSweepDirection = value;
-                TypeChanged?.Invoke(null, EventArgs.Empty);
-            }
+            if (currentSweepDirection == value) return;
+            
+            currentSweepDirection = value;
+            TypeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static LaneSweepDirection currentSweepDirection = LaneSweepDirection.Center;

@@ -131,6 +131,7 @@
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description">Automatically determine the clear threshold based on the chart's difficulty.</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd">Auto Chart End</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description">Automatically determine when a chart should end and transition to the results screen.</system:String>
+    <system:String x:Key="ChartEditor.ChartProperties.FileNotFoundWarning">File not found.</system:String>
     <system:String x:Key="ChartEditor.Proofreader">Proofreader</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria">Criteria</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem">Problem</system:String>

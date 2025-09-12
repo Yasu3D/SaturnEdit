@@ -30,6 +30,9 @@
         <PackageReference Include="Dock.Serializer" Version="11.3.0.12" />
         <PackageReference Include="Dock.Settings" Version="11.3.2" />
         <PackageReference Include="FluentIcons.Avalonia" Version="1.1.303" />
+        <PackageReference Include="ManagedBass" Version="4.0.1" />
+        <PackageReference Include="ManagedBass.Flac" Version="4.0.1" />
+        <PackageReference Include="ManagedBass.Fx" Version="4.0.1" />
         <PackageReference Include="SkiaSharp" Version="3.119.0"/>
         <PackageReference Include="Svg.Controls.Avalonia" Version="11.3.0.3" />
         <PackageReference Include="Tomlyn" Version="0.19.0" />
@@ -39,6 +42,36 @@
         <Content Include="Assets\sat.tmLanguage.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+    </ItemGroup>
+        
+    <ItemGroup>
+        <ContentWithTargetPath Include="Bass\Linux_x64\libbass.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <TargetPath>libbass.so</TargetPath>
+        </ContentWithTargetPath>
+        <ContentWithTargetPath Include="Bass\Linux_x64\libbass_fx.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <TargetPath>libbass_fx.so</TargetPath>
+        </ContentWithTargetPath>
+        <ContentWithTargetPath Include="Bass\Linux_x64\libbassflac.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <TargetPath>libbassflac.so</TargetPath>
+        </ContentWithTargetPath>
+    </ItemGroup>
+        
+    <ItemGroup>
+        <ContentWithTargetPath Include="Bass\Win_x64\bass.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <TargetPath>bass.dll</TargetPath>
+        </ContentWithTargetPath>
+        <ContentWithTargetPath Include="Bass\Win_x64\bass_fx.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <TargetPath>bass_fx.dll</TargetPath>
+        </ContentWithTargetPath>
+        <ContentWithTargetPath Include="Bass\Win_x64\bassflac.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <TargetPath>bassflac.dll</TargetPath>
+        </ContentWithTargetPath>
     </ItemGroup>
 
     

@@ -128,6 +128,7 @@ ChartEditor.ChartProperties.ToolTip.AutoClearThreshold,Auto Clear Threshold
 ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description,Automatically determine the clear threshold based on the chart's difficulty.
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd,Auto Chart End
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description,Automatically determine when a chart should end and transition to the results screen.
+ChartEditor.ChartProperties.FileNotFoundWarning,File not found.
 ChartEditor.Proofreader,Proofreader
 ChartEditor.Proofreader.Criteria,Criteria
 ChartEditor.Proofreader.Problem,Problem

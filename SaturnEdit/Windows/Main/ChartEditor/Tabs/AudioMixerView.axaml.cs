@@ -35,19 +35,19 @@ public partial class AudioMixerView : UserControl
     {
         blockChanges = true;
         
-        ChannelMaster.SliderVolume.Value     = VolumeToSliderValue(SettingsSystem.AudioSettings.MasterVolume);
-        ChannelAudio.SliderVolume.Value      = VolumeToSliderValue(SettingsSystem.AudioSettings.AudioVolume);
-        ChannelGuide.SliderVolume.Value      = VolumeToSliderValue(SettingsSystem.AudioSettings.GuideVolume);
-        ChannelTouch.SliderVolume.Value      = VolumeToSliderValue(SettingsSystem.AudioSettings.TouchVolume);
-        ChannelChain.SliderVolume.Value      = VolumeToSliderValue(SettingsSystem.AudioSettings.ChainVolume);
-        ChannelHold.SliderVolume.Value       = VolumeToSliderValue(SettingsSystem.AudioSettings.HoldVolume);
-        ChannelHoldLoop.SliderVolume.Value   = VolumeToSliderValue(SettingsSystem.AudioSettings.HoldLoopVolume);
-        ChannelSnap.SliderVolume.Value       = VolumeToSliderValue(SettingsSystem.AudioSettings.SnapVolume);
-        ChannelSlide.SliderVolume.Value      = VolumeToSliderValue(SettingsSystem.AudioSettings.SlideVolume);
-        ChannelBonus.SliderVolume.Value      = VolumeToSliderValue(SettingsSystem.AudioSettings.BonusVolume);
-        ChannelR.SliderVolume.Value          = VolumeToSliderValue(SettingsSystem.AudioSettings.RVolume);
-        ChannelStartClick.SliderVolume.Value = VolumeToSliderValue(SettingsSystem.AudioSettings.StartClickVolume);
-        ChannelMetronome.SliderVolume.Value  = VolumeToSliderValue(SettingsSystem.AudioSettings.MetronomeVolume);
+        ChannelMaster.SliderVolume.Value     = DecibelsToSliderValue(SettingsSystem.AudioSettings.MasterVolume);
+        ChannelAudio.SliderVolume.Value      = DecibelsToSliderValue(SettingsSystem.AudioSettings.AudioVolume);
+        ChannelGuide.SliderVolume.Value      = DecibelsToSliderValue(SettingsSystem.AudioSettings.GuideVolume);
+        ChannelTouch.SliderVolume.Value      = DecibelsToSliderValue(SettingsSystem.AudioSettings.TouchVolume);
+        ChannelChain.SliderVolume.Value      = DecibelsToSliderValue(SettingsSystem.AudioSettings.ChainVolume);
+        ChannelHold.SliderVolume.Value       = DecibelsToSliderValue(SettingsSystem.AudioSettings.HoldVolume);
+        ChannelHoldLoop.SliderVolume.Value   = DecibelsToSliderValue(SettingsSystem.AudioSettings.HoldLoopVolume);
+        ChannelSnap.SliderVolume.Value       = DecibelsToSliderValue(SettingsSystem.AudioSettings.SnapVolume);
+        ChannelSlide.SliderVolume.Value      = DecibelsToSliderValue(SettingsSystem.AudioSettings.SlideVolume);
+        ChannelBonus.SliderVolume.Value      = DecibelsToSliderValue(SettingsSystem.AudioSettings.BonusVolume);
+        ChannelR.SliderVolume.Value          = DecibelsToSliderValue(SettingsSystem.AudioSettings.RVolume);
+        ChannelStartClick.SliderVolume.Value = DecibelsToSliderValue(SettingsSystem.AudioSettings.StartClickVolume);
+        ChannelMetronome.SliderVolume.Value  = DecibelsToSliderValue(SettingsSystem.AudioSettings.MetronomeVolume);
 
         blockChanges = false;
     }
@@ -58,7 +58,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelMaster.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.MasterVolume = SliderValueToVolume(ChannelMaster.SliderVolume.Value);
+        SettingsSystem.AudioSettings.MasterVolume = SliderValueToDecibels(ChannelMaster.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -68,7 +68,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelAudio.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.AudioVolume = SliderValueToVolume(ChannelAudio.SliderVolume.Value);
+        SettingsSystem.AudioSettings.AudioVolume = SliderValueToDecibels(ChannelAudio.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -78,7 +78,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelGuide.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.GuideVolume = SliderValueToVolume(ChannelGuide.SliderVolume.Value);
+        SettingsSystem.AudioSettings.GuideVolume = SliderValueToDecibels(ChannelGuide.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -88,7 +88,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelTouch.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.TouchVolume = SliderValueToVolume(ChannelTouch.SliderVolume.Value);
+        SettingsSystem.AudioSettings.TouchVolume = SliderValueToDecibels(ChannelTouch.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -98,7 +98,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelChain.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.ChainVolume = SliderValueToVolume(ChannelChain.SliderVolume.Value);
+        SettingsSystem.AudioSettings.ChainVolume = SliderValueToDecibels(ChannelChain.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -108,7 +108,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelHold.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.HoldVolume = SliderValueToVolume(ChannelHold.SliderVolume.Value);
+        SettingsSystem.AudioSettings.HoldVolume = SliderValueToDecibels(ChannelHold.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -118,7 +118,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelHoldLoop.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.HoldLoopVolume = SliderValueToVolume(ChannelHoldLoop.SliderVolume.Value);
+        SettingsSystem.AudioSettings.HoldLoopVolume = SliderValueToDecibels(ChannelHoldLoop.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -128,7 +128,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelSnap.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.SnapVolume = SliderValueToVolume(ChannelSnap.SliderVolume.Value);
+        SettingsSystem.AudioSettings.SnapVolume = SliderValueToDecibels(ChannelSnap.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -138,7 +138,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelSlide.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.SlideVolume = SliderValueToVolume(ChannelSlide.SliderVolume.Value);
+        SettingsSystem.AudioSettings.SlideVolume = SliderValueToDecibels(ChannelSlide.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -148,7 +148,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelBonus.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.BonusVolume = SliderValueToVolume(ChannelBonus.SliderVolume.Value);
+        SettingsSystem.AudioSettings.BonusVolume = SliderValueToDecibels(ChannelBonus.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -158,7 +158,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelR.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.RVolume = SliderValueToVolume(ChannelR.SliderVolume.Value);
+        SettingsSystem.AudioSettings.RVolume = SliderValueToDecibels(ChannelR.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -168,7 +168,7 @@ public partial class AudioMixerView : UserControl
         if (ChannelStartClick.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.StartClickVolume = SliderValueToVolume(ChannelStartClick.SliderVolume.Value);
+        SettingsSystem.AudioSettings.StartClickVolume = SliderValueToDecibels(ChannelStartClick.SliderVolume.Value);
         blockChanges = false;
     }
     
@@ -178,18 +178,18 @@ public partial class AudioMixerView : UserControl
         if (ChannelMetronome.SliderVolume == null) return;
         
         blockChanges = true;
-        SettingsSystem.AudioSettings.MetronomeVolume = SliderValueToVolume(ChannelMetronome.SliderVolume.Value);
+        SettingsSystem.AudioSettings.MetronomeVolume = SliderValueToDecibels(ChannelMetronome.SliderVolume.Value);
         blockChanges = false;
     }
 
-    private int SliderValueToVolume(double value)
+    private int SliderValueToDecibels(double value)
     {
         return value > 24
             ? (int)(value - 36)
             : (int)(2 * value - 60);
     }
 
-    private double VolumeToSliderValue(int value)
+    private double DecibelsToSliderValue(int value)
     {
         return value < -12
             ? 0.5 * value + 30

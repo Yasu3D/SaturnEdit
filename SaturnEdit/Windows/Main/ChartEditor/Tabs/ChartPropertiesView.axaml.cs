@@ -78,6 +78,10 @@ public partial class ChartPropertiesView : UserControl
         TextBoxClearThreshold.IsEnabled = !ChartSystem.Entry.AutoClearThreshold;
         NumericUpDownChartEndMeasure.IsEnabled = !ChartSystem.Entry.AutoChartEnd;
         NumericUpDownChartEndTick.IsEnabled = !ChartSystem.Entry.AutoChartEnd;
+
+        IconJacketFileNotFoundWarning.IsVisible = ChartSystem.Entry.JacketPath != "" && !File.Exists(ChartSystem.Entry.JacketPath);
+        IconAudioFileNotFoundWarning.IsVisible = ChartSystem.Entry.AudioPath != "" && !File.Exists(ChartSystem.Entry.AudioPath);
+        IconVideoFileNotFoundWarning.IsVisible = ChartSystem.Entry.VideoPath != "" && !File.Exists(ChartSystem.Entry.VideoPath);
         
         blockEvent = false;
         
@@ -238,14 +242,17 @@ public partial class ChartPropertiesView : UserControl
         if (blockEvent) return;
         if (sender == null) return;
         
-        ChartSystem.Entry.ChartEnd = new((int?)NumericUpDownChartEndMeasure.Value ?? 0, (int?)NumericUpDownChartEndTick.Value ?? 0);
+        ChartSystem.Entry.ChartEnd = new((int?)NumericUpDownChartEndMeasure.Value ?? 0, (int?)NumericUpDownChartEndTick.Value ?? 0)
+        {
+            Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, ChartSystem.Entry.ChartEnd),
+        };
     }
 
     private void NumericUpDownChartEndTick_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
         if (blockEvent) return;
         if (sender == null) return;
-
+        
         blockEvent = true;
         if (NumericUpDownChartEndTick.Value == -1)
         {
@@ -260,7 +267,10 @@ public partial class ChartPropertiesView : UserControl
         }
         blockEvent = false;
         
-        ChartSystem.Entry.ChartEnd = new((int?)NumericUpDownChartEndMeasure.Value ?? 0, (int?)NumericUpDownChartEndTick.Value ?? 0);
+        ChartSystem.Entry.ChartEnd = new((int?)NumericUpDownChartEndMeasure.Value ?? 0, (int?)NumericUpDownChartEndTick.Value ?? 0)
+        {
+            Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, ChartSystem.Entry.ChartEnd),
+        };
     }
 
     private void ToggleButtonAutoChartEnd_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -336,7 +346,7 @@ public partial class ChartPropertiesView : UserControl
         if (blockEvent) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.JacketPath = Path.Combine(Path.GetDirectoryName(ChartSystem.Entry.ChartPath) ?? "", TextBoxJacket.Text ?? "");
+        ChartSystem.Entry.JacketPath = TextBoxJacket.Text == "" ? "" : Path.Combine(Path.GetDirectoryName(ChartSystem.Entry.ChartPath) ?? "", TextBoxJacket.Text ?? "");
     }
 
     private void TextBoxAudio_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -344,7 +354,7 @@ public partial class ChartPropertiesView : UserControl
         if (blockEvent) return;
         if (sender == null) return;
         
-        ChartSystem.Entry.AudioPath = Path.Combine(Path.GetDirectoryName(ChartSystem.Entry.ChartPath) ?? "", TextBoxAudio.Text ?? "");
+        ChartSystem.Entry.AudioPath = TextBoxAudio.Text == "" ? "" : Path.Combine(Path.GetDirectoryName(ChartSystem.Entry.ChartPath) ?? "", TextBoxAudio.Text ?? "");
     }
 
     private void TextBoxVideo_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -352,7 +362,7 @@ public partial class ChartPropertiesView : UserControl
         if (blockEvent) return;
         if (sender == null) return;
         
-        ChartSystem.Entry.VideoPath = Path.Combine(Path.GetDirectoryName(ChartSystem.Entry.ChartPath) ?? "", TextBoxVideo.Text ?? "");
+        ChartSystem.Entry.VideoPath = TextBoxVideo.Text == "" ? "" : Path.Combine(Path.GetDirectoryName(ChartSystem.Entry.ChartPath) ?? "", TextBoxVideo.Text ?? "");
     }
 
     private void TextBoxAudioOffset_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -444,7 +454,7 @@ public partial class ChartPropertiesView : UserControl
                 [
                     new("Audio Files")
                     {
-                        Patterns = ["*.wav", "*.mp3", "*.ogg", "*.flac"],
+                        Patterns = ["*.wav", "*.mp3", "*.flac"],
                     },
                 ],
             });

@@ -55,6 +55,9 @@
                                 <Tool Title="Cursor">
                                     <tabs:CursorView />
                                 </Tool>
+                                <Tool Title="Audio Mixer">
+                                    <tabs:AudioMixerView />
+                                </Tool>
                             </ToolDock>
                             
                         </ProportionalDock>

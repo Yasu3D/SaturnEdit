@@ -2,8 +2,7 @@ using System;
 using System.IO;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using SaturnData.Notation.Core;
-using SaturnData.Notation.Serialization;
+using ManagedBass;
 using SaturnEdit.Systems;
 using SaturnEdit.Windows.Dialogs;
 using SaturnEdit.Windows.Main.ChartEditor.Tabs;
@@ -20,6 +19,9 @@ public partial class MainWindow : Window
         ChartSystem.EntryChanged += OnEntryChanged;
         OnSettingsChanged(null, EventArgs.Empty);
         OnEntryChanged(null, EventArgs.Empty);
+        Closed += AudioSystem.OnClosed;
+
+        Console.WriteLine();
     }
 
     private void OnEntryChanged(object? sender, EventArgs e)

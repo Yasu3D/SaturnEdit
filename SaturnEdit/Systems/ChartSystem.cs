@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using SaturnData.Notation;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 
@@ -11,9 +13,16 @@ public static class ChartSystem
     static ChartSystem()
     {
         Entry.EntryChanged += OnEntryChanged;
+        ChartChanged += OnChartChanged;
     }
 
     private static void OnEntryChanged(object? sender, EventArgs e) => EntryChanged?.Invoke(sender, e);
+    
+    private static void OnChartChanged(object? sender, EventArgs e)
+    {
+        NotationUtils.CalculateTime(Entry, Chart);
+        NotationUtils.CalculateScaledTime(Chart);
+    }
     
     public static event EventHandler? ChartChanged;
     public static event EventHandler? EntryChanged;
@@ -24,7 +33,7 @@ public static class ChartSystem
     /// <summary>
     /// Determines if the editor will prompt the user to save when a chart is closed.
     /// </summary>
-    public static bool IsSaved { get; private set; } = false;
+    public static bool IsSaved { get; private set; } = true;
 
     /// <summary>
     /// Creates a new chart to work on by resetting the <see cref="Chart"/> and <see cref="Entry"/> objects, then invokes <see cref="ChartChanged"/> and <see cref="EntryChanged"/>
@@ -51,8 +60,8 @@ public static class ChartSystem
     {
         Entry.EntryChanged -= OnEntryChanged;
 
-        Entry entry = NotationSerializer.ToEntry(path, args, out _);
-        Chart chart = NotationSerializer.ToChart(path, args, out _);
+        Entry = NotationSerializer.ToEntry(path, args, out _);
+        Chart = NotationSerializer.ToChart(path, args, out _);
         
         Entry.EntryChanged += OnEntryChanged;
         
@@ -100,7 +109,15 @@ public static class ChartSystem
     public static void WriteChart(string path, NotationWriteArgs args, bool markAsSaved, bool updatePath)
     {
         NotationSerializer.ToFile(path, Entry, Chart, args);
-        Entry.ChartPath = updatePath ? path : Entry.ChartPath;
+
+        if (updatePath)
+        {
+            Entry.ChartPath = path;
+            Entry.JacketPath = Entry.JacketPath == "" ? "" : Path.Combine(Path.GetDirectoryName(Entry.ChartPath) ?? "", Path.GetFileName(Entry.JacketPath));
+            Entry.AudioPath = Entry.AudioPath == "" ? "" : Path.Combine(Path.GetDirectoryName(Entry.ChartPath) ?? "", Path.GetFileName(Entry.AudioPath));
+            Entry.VideoPath = Entry.VideoPath == "" ? "" : Path.Combine(Path.GetDirectoryName(Entry.ChartPath) ?? "", Path.GetFileName(Entry.VideoPath));
+        }
+        
         IsSaved = markAsSaved || IsSaved;
     }
 }

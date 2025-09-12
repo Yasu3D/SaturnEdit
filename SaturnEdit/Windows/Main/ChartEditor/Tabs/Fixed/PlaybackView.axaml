@@ -22,10 +22,12 @@
                   ColumnDefinitions="77,1,Auto,1">
 
                 <!-- Play/Stop Button -->
-                <ToggleButton Classes="Themed Concave"
+                <ToggleButton Name="ToggleButtonPlay"
+                              Classes="Themed Concave"
                               CornerRadius="0"
                               ToolTip.VerticalOffset="5"
-                              ToolTip.Placement="Top">
+                              ToolTip.Placement="Top"
+                              IsCheckedChanged="ToggleButtonPlay_OnIsCheckedChanged">
                     <ToolTip.Tip>
                         <Panel>
                             <StackPanel Name="StackPanelToolTipPlay"
@@ -50,7 +52,8 @@
                             </StackPanel>
                         </Panel>
                     </ToolTip.Tip>
-                    <icon:FluentIcon Icon="Play"
+                    <icon:FluentIcon Name="IconPlay"
+                                     Icon="Play"
                                      FontSize="28" />
                 </ToggleButton>
 
@@ -93,7 +96,7 @@
                                 Classes="Wide"
                                 TickFrequency="5"
                                 IsSnapToTickEnabled="True"
-                                Minimum="0"
+                                Minimum="5"
                                 Maximum="300"
                                 Value="100"
                                 ValueChanged="SliderPlaybackSpeed_OnValueChanged">
@@ -277,8 +280,11 @@
 
             <!-- Seek Slider -->
             <Slider Grid.Column="1"
+                    Name="SliderSeek"
                     Classes="Wide"
-                    Margin="0,0,0,1" />
+                    Margin="0,0,0,1" 
+                    Minimum="0"
+                    ValueChanged="SliderSeek_OnValueChanged"/>
         </Grid>
     </Grid>
 </UserControl>

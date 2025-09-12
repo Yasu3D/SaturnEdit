@@ -182,11 +182,10 @@ public class EditorSettings
         get => locale;
         set
         {
-            if (locale != value)
-            {
-                locale = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (locale == value) return;
+            
+            locale = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     private LocaleOptions locale = LocaleOptions.en_US;
@@ -196,11 +195,10 @@ public class EditorSettings
         get => theme;
         set
         {
-            if (theme != value)
-            {
-                theme = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (theme == value) return;
+            
+            theme = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     private EditorThemeOptions theme = EditorThemeOptions.Dark;
@@ -210,11 +208,10 @@ public class EditorSettings
         get => showSplashScreen;
         set
         {
-            if (showSplashScreen != value)
-            {
-                showSplashScreen = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (showSplashScreen == value) return;
+            
+            showSplashScreen = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     private bool showSplashScreen = true;
@@ -224,11 +221,10 @@ public class EditorSettings
         get => continueLastSession;
         set
         {
-            if (continueLastSession != value)
-            {
-                continueLastSession = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (continueLastSession == value) return;
+            
+            continueLastSession = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     private bool continueLastSession = true;
@@ -238,11 +234,10 @@ public class EditorSettings
         get => chartViewTxtShowSpaces;
         set
         {
-            if (chartViewTxtShowSpaces != value)
-            {
-                chartViewTxtShowSpaces = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (chartViewTxtShowSpaces == value) return;
+            
+            chartViewTxtShowSpaces = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     private bool chartViewTxtShowSpaces = true;
@@ -252,11 +247,10 @@ public class EditorSettings
         get => chartViewTxtSyntaxHighlighting;
         set
         {
-            if (chartViewTxtSyntaxHighlighting != value)
-            {
-                chartViewTxtSyntaxHighlighting = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (chartViewTxtSyntaxHighlighting == value) return;
+            
+            chartViewTxtSyntaxHighlighting = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     private bool chartViewTxtSyntaxHighlighting = true;
@@ -284,11 +278,10 @@ public class AudioSettings
         get => loopPlayback;
         set
         {
-            if (loopPlayback != value)
-            {
-                loopPlayback = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (loopPlayback == value) return;
+            
+            loopPlayback = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -298,11 +291,10 @@ public class AudioSettings
         get => metronome;
         set
         {
-            if (metronome != value)
-            {
-                metronome = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (metronome == value) return;
+           
+            metronome = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -312,11 +304,10 @@ public class AudioSettings
         get => quantizedPause;
         set
         {
-            if (quantizedPause != value)
-            {
-                quantizedPause = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (quantizedPause == value) return;
+            
+            quantizedPause = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -326,11 +317,10 @@ public class AudioSettings
         get => loopToStart;
         set
         {
-            if (loopToStart != value)
-            {
-                loopToStart = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (loopToStart == value) return;
+            
+            loopToStart = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -340,11 +330,10 @@ public class AudioSettings
         get => masterVolume;
         set
         {
-            if (masterVolume != value)
-            {
-                masterVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (masterVolume == value) return;
+            
+            masterVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -353,11 +342,10 @@ public class AudioSettings
         get => audioVolume;
         set
         {
-            if (audioVolume != value)
-            {
-                audioVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (audioVolume == value) return;
+            
+            audioVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     private int audioVolume = 0;
@@ -368,11 +356,10 @@ public class AudioSettings
         get => guideVolume;
         set
         {
-            if (guideVolume != value)
-            {
-                guideVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (guideVolume == value) return;
+            
+            guideVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -382,11 +369,10 @@ public class AudioSettings
         get => touchVolume;
         set
         {
-            if (touchVolume != value)
-            {
-                touchVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (touchVolume == value) return;
+            
+            touchVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -396,11 +382,10 @@ public class AudioSettings
         get => chainVolume;
         set
         {
-            if (chainVolume != value)
-            {
-                chainVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (chainVolume == value) return;
+            
+            chainVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -410,11 +395,10 @@ public class AudioSettings
         get => holdVolume;
         set
         {
-            if (holdVolume != value)
-            {
-                holdVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (holdVolume == value) return;
+            
+            holdVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -424,11 +408,10 @@ public class AudioSettings
         get => holdLoopVolume;
         set
         {
-            if (holdLoopVolume != value)
-            {
-                holdLoopVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (holdLoopVolume == value) return;
+            
+            holdLoopVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -438,11 +421,10 @@ public class AudioSettings
         get => slideVolume;
         set
         {
-            if (slideVolume != value)
-            {
-                slideVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (slideVolume == value) return;
+            
+            slideVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -452,11 +434,10 @@ public class AudioSettings
         get => snapVolume;
         set
         {
-            if (snapVolume != value)
-            {
-                snapVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (snapVolume == value) return;
+            
+            snapVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -466,11 +447,10 @@ public class AudioSettings
         get => bonusVolume;
         set
         {
-            if (bonusVolume != value)
-            {
-                bonusVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (bonusVolume == value) return;
+            
+            bonusVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -480,11 +460,10 @@ public class AudioSettings
         get => rVolume;
         set
         {
-            if (rVolume != value)
-            {
-                rVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (rVolume == value) return;
+            
+            rVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -494,11 +473,10 @@ public class AudioSettings
         get => startClickVolume;
         set
         {
-            if (startClickVolume != value)
-            {
-                startClickVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (startClickVolume == value) return;
+            
+            startClickVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -508,11 +486,10 @@ public class AudioSettings
         get => metronomeVolume;
         set
         {
-            if (metronomeVolume != value)
-            {
-                metronomeVolume = value;
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
-            }
+            if (metronomeVolume == value) return;
+            
+            metronomeVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

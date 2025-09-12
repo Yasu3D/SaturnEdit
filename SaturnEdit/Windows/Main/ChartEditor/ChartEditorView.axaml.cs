@@ -174,7 +174,8 @@ public partial class ChartEditorView : UserControl
             }
 
             // Write chart to file.
-            ChartSystem.WriteChart(ChartSystem.Entry.ChartPath, new(), true, true);
+            bool updatePath = !File.Exists(ChartSystem.Entry.ChartPath);
+            ChartSystem.WriteChart(ChartSystem.Entry.ChartPath, new(), true, updatePath);
             return true;
         }
         catch (Exception ex)
