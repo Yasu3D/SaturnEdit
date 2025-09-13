@@ -454,7 +454,7 @@ public partial class ChartPropertiesView : UserControl
                 [
                     new("Audio Files")
                     {
-                        Patterns = ["*.wav", "*.mp3", "*.flac"],
+                        Patterns = ["*.wav", "*.mp3", "*.ogg", "*.flac"],
                     },
                 ],
             });
