@@ -347,12 +347,16 @@
                     <icon:FluentIcon Grid.Row="0"
                                      Grid.Column="0"
                                      HorizontalAlignment="Right"
+                                     Margin="0,0,10,0"
                                      Name="IconJacketFileNotFoundWarning"
                                      IsVisible="True"
                                      Icon="Warning"
                                      Foreground="{DynamicResource ForegroundWarning}">
                         <ToolTip.Tip>
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
                         </ToolTip.Tip>
                     </icon:FluentIcon>
                     <TextBox Grid.Row="0"
@@ -381,12 +385,16 @@
                     <icon:FluentIcon Grid.Row="1"
                                      Grid.Column="0"
                                      HorizontalAlignment="Right"
+                                     Margin="0,0,10,0"
                                      Name="IconAudioFileNotFoundWarning"
                                      IsVisible="True"
                                      Icon="Warning"
                                      Foreground="{DynamicResource ForegroundWarning}">
                         <ToolTip.Tip>
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
                         </ToolTip.Tip>
                     </icon:FluentIcon>
                     <TextBox Grid.Row="1"
@@ -415,12 +423,16 @@
                     <icon:FluentIcon Grid.Row="2"
                                      Grid.Column="0"
                                      HorizontalAlignment="Right"
+                                     Margin="0,0,10,0"
                                      Name="IconVideoFileNotFoundWarning"
                                      IsVisible="True"
                                      Icon="Warning"
                                      Foreground="{DynamicResource ForegroundWarning}">
                         <ToolTip.Tip>
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
                         </ToolTip.Tip>
                     </icon:FluentIcon>
                     <TextBox Grid.Row="2"

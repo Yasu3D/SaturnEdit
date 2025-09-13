@@ -7,6 +7,8 @@ namespace SaturnEdit.Systems;
 
 public static class CursorSystem
 {
+    public static void Initialize() { }
+    
     public static event EventHandler? ShapeChanged;
     public static event EventHandler? TypeChanged;
     

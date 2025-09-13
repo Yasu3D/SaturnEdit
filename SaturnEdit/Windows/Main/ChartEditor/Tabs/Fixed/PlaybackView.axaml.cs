@@ -77,14 +77,14 @@ public partial class PlaybackView : UserControl
     {
         blockEvents = true;
 
-        ToggleButtonPlay.IsChecked = TimeSystem.PlaybackState;
+        ToggleButtonPlay.IsChecked = TimeSystem.PlaybackState == PlaybackState.Playing;
         
         blockEvents = false;
         
-        StackPanelToolTipPause.IsVisible = TimeSystem.PlaybackState;
-        StackPanelToolTipPlay.IsVisible = !TimeSystem.PlaybackState;
+        StackPanelToolTipPause.IsVisible = TimeSystem.PlaybackState == PlaybackState.Playing;
+        StackPanelToolTipPlay.IsVisible = TimeSystem.PlaybackState != PlaybackState.Playing;
 
-        IconPlay.Icon = TimeSystem.PlaybackState ? Icon.Stop : Icon.Play;
+        IconPlay.Icon = TimeSystem.PlaybackState == PlaybackState.Playing ? Icon.Stop : Icon.Play;
     }
     
     private void OnPlaybackSpeedChanged(object? sender, EventArgs e)
@@ -126,7 +126,7 @@ public partial class PlaybackView : UserControl
         if (blockEvents) return;
         
         bool play = ToggleButtonPlay.IsChecked ?? false;
-        TimeSystem.PlaybackState = play;
+        TimeSystem.PlaybackState = play ? PlaybackState.Playing : PlaybackState.Stopped;
     }
     
     private void SliderPlaybackSpeed_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)

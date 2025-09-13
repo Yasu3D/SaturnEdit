@@ -10,13 +10,17 @@ namespace SaturnEdit.Systems;
 
 public static class ChartSystem
 {
-    static ChartSystem()
+    public static void Initialize()
     {
         Entry.EntryChanged += OnEntryChanged;
+        Entry.AudioChanged += OnAudioChanged;
+        Entry.JacketChanged += OnJacketChanged;
         ChartChanged += OnChartChanged;
     }
 
     private static void OnEntryChanged(object? sender, EventArgs e) => EntryChanged?.Invoke(sender, e);
+    private static void OnAudioChanged(object? sender, EventArgs e) => AudioChanged?.Invoke(sender, e);
+    private static void OnJacketChanged(object? sender, EventArgs e) => JacketChanged?.Invoke(sender, e);
     
     private static void OnChartChanged(object? sender, EventArgs e)
     {
@@ -26,6 +30,8 @@ public static class ChartSystem
     
     public static event EventHandler? ChartChanged;
     public static event EventHandler? EntryChanged;
+    public static event EventHandler? JacketChanged;
+    public static event EventHandler? AudioChanged;
     
     public static Chart Chart { get; private set; } = new();
     public static Entry Entry { get; private set; } = new();
@@ -41,14 +47,20 @@ public static class ChartSystem
     public static void NewChart()
     {
         Entry.EntryChanged -= OnEntryChanged;
+        Entry.AudioChanged -= OnAudioChanged;
+        Entry.JacketChanged -= OnJacketChanged;
         
         Chart = new();
         Entry = new();
         
         Entry.EntryChanged += OnEntryChanged;
+        Entry.AudioChanged += OnAudioChanged;
+        Entry.JacketChanged += OnJacketChanged;
         
         ChartChanged?.Invoke(null, EventArgs.Empty);
         EntryChanged?.Invoke(null, EventArgs.Empty);
+        AudioChanged?.Invoke(null, EventArgs.Empty);
+        JacketChanged?.Invoke(null, EventArgs.Empty);
     }
 
     /// <summary>
@@ -59,14 +71,20 @@ public static class ChartSystem
     public static void ReadChart(string path, NotationReadArgs args)
     {
         Entry.EntryChanged -= OnEntryChanged;
+        Entry.AudioChanged -= OnAudioChanged;
+        Entry.JacketChanged -= OnJacketChanged;
 
         Entry = NotationSerializer.ToEntry(path, args, out _);
         Chart = NotationSerializer.ToChart(path, args, out _);
         
         Entry.EntryChanged += OnEntryChanged;
+        Entry.AudioChanged += OnAudioChanged;
+        Entry.JacketChanged += OnJacketChanged;
         
         ChartChanged?.Invoke(null, EventArgs.Empty);
         EntryChanged?.Invoke(null, EventArgs.Empty);
+        AudioChanged?.Invoke(null, EventArgs.Empty);
+        JacketChanged?.Invoke(null, EventArgs.Empty);
     }
     
     /// <summary>
@@ -84,6 +102,8 @@ public static class ChartSystem
         exceptions = entryExceptions.Concat(chartExceptions).ToList();
         
         Entry.EntryChanged -= OnEntryChanged;
+        Entry.AudioChanged -= OnAudioChanged;
+        Entry.JacketChanged -= OnJacketChanged;
         
         if (exceptions.Count == 0)
         {
@@ -92,11 +112,15 @@ public static class ChartSystem
         }
         
         Entry.EntryChanged += OnEntryChanged;
+        Entry.AudioChanged += OnAudioChanged;
+        Entry.JacketChanged += OnJacketChanged;
         
         if (exceptions.Count == 0)
         {
             ChartChanged?.Invoke(null, EventArgs.Empty);
             EntryChanged?.Invoke(null, EventArgs.Empty);
+            AudioChanged?.Invoke(null, EventArgs.Empty);
+            JacketChanged?.Invoke(null, EventArgs.Empty);
         }
     }
 
@@ -106,16 +130,15 @@ public static class ChartSystem
     /// <param name="path">Path to the file to write to.</param>
     /// <param name="args">Arguments for how the chart should be written.</param>
     /// <param name="markAsSaved">Should the chart be marked as saved?</param>
+    /// <param name="updatePath">Should the <c>RootDirectory</c> and <c>ChartFile</c> paths get updated?</param>
     public static void WriteChart(string path, NotationWriteArgs args, bool markAsSaved, bool updatePath)
     {
         NotationSerializer.ToFile(path, Entry, Chart, args);
 
         if (updatePath)
         {
-            Entry.ChartPath = path;
-            Entry.JacketPath = Entry.JacketPath == "" ? "" : Path.Combine(Path.GetDirectoryName(Entry.ChartPath) ?? "", Path.GetFileName(Entry.JacketPath));
-            Entry.AudioPath = Entry.AudioPath == "" ? "" : Path.Combine(Path.GetDirectoryName(Entry.ChartPath) ?? "", Path.GetFileName(Entry.AudioPath));
-            Entry.VideoPath = Entry.VideoPath == "" ? "" : Path.Combine(Path.GetDirectoryName(Entry.ChartPath) ?? "", Path.GetFileName(Entry.VideoPath));
+            Entry.RootDirectory = Path.GetDirectoryName(path) ?? "";
+            Entry.ChartFile = Path.GetFileName(path);
         }
         
         IsSaved = markAsSaved || IsSaved;

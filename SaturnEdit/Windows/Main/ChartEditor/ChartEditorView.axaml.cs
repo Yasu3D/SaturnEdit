@@ -168,14 +168,14 @@ public partial class ChartEditorView : UserControl
         try
         {
             // Save As if chart file doesn't have a path yet.
-            if (!File.Exists(ChartSystem.Entry.ChartPath))
+            if (!File.Exists(ChartSystem.Entry.ChartFile))
             {
                 return await FileSaveAs();
             }
 
             // Write chart to file.
-            bool updatePath = !File.Exists(ChartSystem.Entry.ChartPath);
-            ChartSystem.WriteChart(ChartSystem.Entry.ChartPath, new(), true, updatePath);
+            bool updatePath = !File.Exists(ChartSystem.Entry.ChartFile);
+            ChartSystem.WriteChart(ChartSystem.Entry.ChartFile, new(), true, updatePath);
             return true;
         }
         catch (Exception ex)
@@ -232,7 +232,7 @@ public partial class ChartEditorView : UserControl
     {
         try
         {
-            if (ChartSystem.Entry.ChartPath == "") return false;
+            if (!File.Exists(ChartSystem.Entry.ChartPath)) return false;
 
             // Prompt to save an unsaved chart first.
             if (!ChartSystem.IsSaved)
@@ -262,7 +262,7 @@ public partial class ChartEditorView : UserControl
                 SortCollections = true,
             };
 
-            ChartSystem.ReadChart(ChartSystem.Entry.ChartPath, args);
+            ChartSystem.ReadChart(ChartSystem.Entry.ChartFile, args);
             return true;
         }
         catch (Exception ex)

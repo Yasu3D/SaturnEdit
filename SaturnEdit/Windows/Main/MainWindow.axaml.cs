@@ -20,13 +20,11 @@ public partial class MainWindow : Window
         OnSettingsChanged(null, EventArgs.Empty);
         OnEntryChanged(null, EventArgs.Empty);
         Closed += AudioSystem.OnClosed;
-
-        Console.WriteLine();
     }
 
     private void OnEntryChanged(object? sender, EventArgs e)
     {
-        MenuItemChartEditorReloadFromDisk.IsEnabled = File.Exists(ChartSystem.Entry.ChartPath);
+        MenuItemChartEditorReloadFromDisk.IsEnabled = File.Exists(ChartSystem.Entry.ChartFile);
     }
 
     private void OnSettingsChanged(object? sender, EventArgs e)

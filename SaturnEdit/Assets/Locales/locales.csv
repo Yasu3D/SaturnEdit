@@ -129,6 +129,7 @@ ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description,Automatically
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd,Auto Chart End
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description,Automatically determine when a chart should end and transition to the results screen.
 ChartEditor.ChartProperties.FileNotFoundWarning,File not found.
+ChartEditor.ChartProperties.FileNotFoundWarning.Description,Ensure that all media files are in the same directory as the chart file.
 ChartEditor.Proofreader,Proofreader
 ChartEditor.Proofreader.Criteria,Criteria
 ChartEditor.Proofreader.Problem,Problem
@@ -471,6 +472,15 @@ ModalDialog.SavePrompt.Title,Save Chart
 ModalDialog.SavePrompt.Header,Do you want to save changes to your chart before closing?
 ModalDialog.SavePrompt.Paragraph,Your changes will be lost if you don't save them.
 ModalDialog.SavePrompt.DontSave,Don't Save
+ModalDialog.FileMovePrompt.Title,Move or copy selected file.
+ModalDialog.FileMovePrompt.Header,Do you want to copy or move the selected file?
+ModalDialog.FileMovePrompt.Paragraph,The selected file is in an external directory. To be loaded it must be copied or moved to the same directory as the chart.
+ModalDialog.FileMovePrompt.CopyFile,Copy File
+ModalDialog.FileMovePrompt.MoveFile,Move File
+ModalDialog.FileOverwritePrompt.Title,Overwrite existing file(s).
+ModalDialog.FileOverwritePrompt.Header,Do you want to overwrite an existing file?
+ModalDialog.FileOverwritePrompt.Paragraph,A file with the same name already exists in the chart directory.
+ModalDialog.FileOverwritePrompt.OverwriteFile,Overwrite File
 Generic.Enabled,Enabled
 Generic.Disabled,Disabled
 Generic.Cancel,Cancel

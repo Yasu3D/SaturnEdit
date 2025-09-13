@@ -4,13 +4,19 @@ using SaturnData.Notation.Core;
 
 namespace SaturnEdit.Systems;
 
+public enum PlaybackState
+{
+    Stopped = 0,
+    Playing = 1,
+}
+
 public static class TimeSystem
 {
-    static TimeSystem()
+    public static void Initialize()
     {
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
-    }
+    } 
 
     public static readonly DispatcherTimer UpdateTimer = new(TimeSpan.FromMilliseconds(1000.0f / SettingsSystem.RenderSettings.RefreshRate), DispatcherPriority.Render, UpdateTimer_OnTick);
     private static float tickInterval;
@@ -23,9 +29,9 @@ public static class TimeSystem
     public const int DefaultDivision = 8;
     
     /// <summary>
-    /// The current playback state of the "playhead".
+    /// The current playback state of the playhead.
     /// </summary>
-    public static bool PlaybackState
+    public static PlaybackState PlaybackState
     {
         get => playbackState;
         set
@@ -36,7 +42,7 @@ public static class TimeSystem
             PlaybackStateChanged?.Invoke(null, EventArgs.Empty);
         }
     }
-    private static bool playbackState;
+    private static PlaybackState playbackState;
 
     public static int PlaybackSpeed
     {
@@ -103,7 +109,6 @@ public static class TimeSystem
     private static void UpdateTimer_OnTick(object? sender, EventArgs eventArgs)
     {
         // TODO: Handle playback state changes
-        // TODO: NAudio doesn't report time accurately enough.
         
         // Handle keeping UpdateTimer and AudioTimer in-sync.
         //if (PlaybackState == PlaybackState.Stopped) return;

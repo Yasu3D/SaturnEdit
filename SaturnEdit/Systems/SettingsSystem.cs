@@ -10,7 +10,7 @@ namespace SaturnEdit.Systems;
 [Serializable]
 public static class SettingsSystem
 {
-    static SettingsSystem()
+    public static void Initialize()
     {
         LoadSettings();
         SaveSettings();
@@ -260,6 +260,8 @@ public class AudioSettings
 {
     public event EventHandler? PropertyChanged;
 
+    public event EventHandler? VolumeChanged;
+
 #region Enum Definitions
 
     public enum QuantizedPauseOptions
@@ -334,6 +336,7 @@ public class AudioSettings
             
             masterVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -346,6 +349,7 @@ public class AudioSettings
             
             audioVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     private int audioVolume = 0;
@@ -360,6 +364,7 @@ public class AudioSettings
             
             guideVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -373,6 +378,7 @@ public class AudioSettings
             
             touchVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -386,6 +392,7 @@ public class AudioSettings
             
             chainVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -399,6 +406,7 @@ public class AudioSettings
             
             holdVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -412,6 +420,7 @@ public class AudioSettings
             
             holdLoopVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -425,6 +434,7 @@ public class AudioSettings
             
             slideVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -438,6 +448,7 @@ public class AudioSettings
             
             snapVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -451,6 +462,7 @@ public class AudioSettings
             
             bonusVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -464,6 +476,7 @@ public class AudioSettings
             
             rVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -477,6 +490,7 @@ public class AudioSettings
             
             startClickVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
     
@@ -490,6 +504,7 @@ public class AudioSettings
             
             metronomeVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

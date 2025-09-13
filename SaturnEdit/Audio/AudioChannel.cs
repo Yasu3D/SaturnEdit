@@ -1,3 +1,4 @@
+using System;
 using ManagedBass;
 using ManagedBass.Flac;
 using ManagedBass.Fx;
@@ -69,26 +70,15 @@ public class AudioChannel
     /// The playback speed of the audio channel.
     /// </summary>
     /// <remarks>
-    /// [0 - 200]
+    /// [5% - 300%]
     /// </remarks>
     public float Speed
     {
         get => speed;
         set
         {
-            speed = value;
-
-            float rate = value * 0.01f;
-            rate *= SampleRate;
-            
-            
-
-            Bass.ChannelSetAttribute(StreamHandle, ChannelAttribute.Frequency, rate);
-            
-            float tempo = speed - 100;
-            float pitch = tempo * 0.24f;
-            //Bass.ChannelSetAttribute(StreamHandle, ChannelAttribute.Pitch, pitch);
-            //Bass.ChannelSetAttribute(StreamHandle, ChannelAttribute.Tempo, tempo);
+            speed = Math.Clamp(value, 5, 300);
+            Bass.ChannelSetAttribute(StreamHandle, ChannelAttribute.Frequency, speed * 0.01f * SampleRate);
         }
     }
     private float speed = 100;
@@ -101,6 +91,8 @@ public class AudioChannel
         get => playing;
         set
         {
+            if (playing == value) return;
+            
             playing = value;
 
             if (playing) Bass.ChannelPlay(StreamHandle);

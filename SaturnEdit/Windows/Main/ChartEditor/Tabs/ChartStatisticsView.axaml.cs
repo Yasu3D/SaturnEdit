@@ -239,7 +239,7 @@ public partial class ChartStatisticsView : UserControl
         int effectiveNoteCount = normalNoteCount + bonusNoteCount + rNoteCount * 2;
         decimal scorePerNote = effectiveNoteCount == 0 ? 0 : 1_000_000.0m / effectiveNoteCount;
         
-        TextBlockFileName.Text = Path.GetFileName(ChartSystem.Entry.ChartPath);
+        TextBlockFileName.Text = Path.GetFileName(ChartSystem.Entry.ChartFile);
 
         TextBlockMaxCombo.Text = maxCombo.ToString();
         TextBlockScorePerNote.Text = scorePerNote == 0 ? "/" : scorePerNote.ToString("F2", CultureInfo.InvariantCulture);

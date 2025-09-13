@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using ExCSS;
+using FluentIcons.Common;
 using Kawazu;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Events;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
 using SaturnEdit.Windows.Dialogs.ImportArgs;
+using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -24,6 +28,7 @@ public partial class ChartPropertiesView : UserControl
 
         ChartSystem.EntryChanged += OnEntryChanged;
         ChartSystem.ChartChanged += OnChartChanged;
+        ChartSystem.JacketChanged += OnJacketChanged;
         OnEntryChanged(null, EventArgs.Empty);
         OnChartChanged(null, EventArgs.Empty);
     }
@@ -62,9 +67,9 @@ public partial class ChartPropertiesView : UserControl
         ComboBoxBackground.SelectedIndex = (int)ChartSystem.Entry.Background;
         ComboBoxTutorialMode.SelectedIndex = ChartSystem.Entry.TutorialMode ? 1 : 0;
 
-        TextBoxJacket.Text = Path.GetFileName(ChartSystem.Entry.JacketPath);
-        TextBoxAudio.Text = Path.GetFileName(ChartSystem.Entry.AudioPath);
-        TextBoxVideo.Text = Path.GetFileName(ChartSystem.Entry.VideoPath);
+        TextBoxJacket.Text = ChartSystem.Entry.JacketFile;
+        TextBoxAudio.Text = ChartSystem.Entry.AudioFile;
+        TextBoxVideo.Text = ChartSystem.Entry.VideoFile;
         TextBoxAudioOffset.Text = (ChartSystem.Entry.AudioOffset / 1000).ToString("F3", CultureInfo.InvariantCulture);
         TextBoxVideoOffset.Text = (ChartSystem.Entry.VideoOffset / 1000).ToString("F3", CultureInfo.InvariantCulture);
         
@@ -79,12 +84,39 @@ public partial class ChartPropertiesView : UserControl
         NumericUpDownChartEndMeasure.IsEnabled = !ChartSystem.Entry.AutoChartEnd;
         NumericUpDownChartEndTick.IsEnabled = !ChartSystem.Entry.AutoChartEnd;
 
-        IconJacketFileNotFoundWarning.IsVisible = ChartSystem.Entry.JacketPath != "" && !File.Exists(ChartSystem.Entry.JacketPath);
-        IconAudioFileNotFoundWarning.IsVisible = ChartSystem.Entry.AudioPath != "" && !File.Exists(ChartSystem.Entry.AudioPath);
-        IconVideoFileNotFoundWarning.IsVisible = ChartSystem.Entry.VideoPath != "" && !File.Exists(ChartSystem.Entry.VideoPath);
+        IconJacketFileNotFoundWarning.IsVisible = ChartSystem.Entry.JacketFile != "" && !File.Exists(ChartSystem.Entry.JacketPath);
+        IconAudioFileNotFoundWarning.IsVisible =  ChartSystem.Entry.AudioFile  != "" && !File.Exists(ChartSystem.Entry.AudioPath);
+        IconVideoFileNotFoundWarning.IsVisible =  ChartSystem.Entry.VideoFile  != "" && !File.Exists(ChartSystem.Entry.VideoPath);
         
         blockEvent = false;
-        
+    }
+
+    private void OnChartChanged(object? sender, EventArgs e)
+    {
+        if (ChartSystem.Entry.AutoBpmMessage)
+        {
+            try
+            {
+                List<Event> tempoChanges = ChartSystem.Chart.Events.Where(x => x is TempoChangeEvent).ToList();
+                float minTempo = tempoChanges.Min(x => ((TempoChangeEvent)x).Tempo);
+                float maxTempo = tempoChanges.Max(x => ((TempoChangeEvent)x).Tempo);
+
+                ChartSystem.Entry.BpmMessage = minTempo == maxTempo 
+                    ? $"{minTempo}" 
+                    : $"{minTempo} - {maxTempo}";
+            }
+            catch (Exception ex)
+            {
+                // don't throw
+                Console.WriteLine(ex);
+            }
+        }
+
+        // TODO: Implement Auto BPM
+    }
+
+    private void OnJacketChanged(object? sender, EventArgs e)
+    {
         try
         {
             bool jacketExists = File.Exists(ChartSystem.Entry.JacketPath);
@@ -99,11 +131,6 @@ public partial class ChartPropertiesView : UserControl
             ImageJacketPlaceholder.IsVisible = true;
             ImageJacket.IsVisible = false;
         }
-    }
-
-    private void OnChartChanged(object? sender, EventArgs e)
-    {
-        // TODO: Implement Auto BPM
     }
     
     private void TextBoxTitle_OnTextChanged(object? sender, TextChangedEventArgs e)
@@ -345,8 +372,12 @@ public partial class ChartPropertiesView : UserControl
     {
         if (blockEvent) return;
         if (sender == null) return;
-
-        ChartSystem.Entry.JacketPath = TextBoxJacket.Text == "" ? "" : Path.Combine(Path.GetDirectoryName(ChartSystem.Entry.ChartPath) ?? "", TextBoxJacket.Text ?? "");
+        
+        // JacketChanged gets invoked even when the value doesn't change to allow re-loading the same file.
+        // This would be a bit unintuitive here, because clicking out of the textbox without making any changes would still reload the Jacket.
+        if (ChartSystem.Entry.JacketFile == TextBoxJacket.Text) return;
+        
+        ChartSystem.Entry.JacketFile = TextBoxJacket.Text ?? "";
     }
 
     private void TextBoxAudio_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -354,7 +385,11 @@ public partial class ChartPropertiesView : UserControl
         if (blockEvent) return;
         if (sender == null) return;
         
-        ChartSystem.Entry.AudioPath = TextBoxAudio.Text == "" ? "" : Path.Combine(Path.GetDirectoryName(ChartSystem.Entry.ChartPath) ?? "", TextBoxAudio.Text ?? "");
+        // AudioChanged gets invoked even when the value doesn't change to allow re-loading the same file.
+        // This would be a bit unintuitive here, because clicking out of the textbox without making any changes would still reload the Audio.
+        if (ChartSystem.Entry.AudioFile == TextBoxAudio.Text) return;
+
+        ChartSystem.Entry.AudioFile = TextBoxAudio.Text ?? "";
     }
 
     private void TextBoxVideo_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -362,7 +397,11 @@ public partial class ChartPropertiesView : UserControl
         if (blockEvent) return;
         if (sender == null) return;
         
-        ChartSystem.Entry.VideoPath = TextBoxVideo.Text == "" ? "" : Path.Combine(Path.GetDirectoryName(ChartSystem.Entry.ChartPath) ?? "", TextBoxVideo.Text ?? "");
+        // VideoChanged gets invoked even when the value doesn't change to allow re-loading the same file.
+        // This would be a bit unintuitive here, because clicking out of the textbox without making any changes would still reload the Video.
+        if (ChartSystem.Entry.VideoFile == TextBoxVideo.Text) return;
+
+        ChartSystem.Entry.VideoFile = TextBoxVideo.Text ?? "";
     }
 
     private void TextBoxAudioOffset_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -409,7 +448,6 @@ public partial class ChartPropertiesView : UserControl
         }
     }
     
-    // TODO: Validate File Existence, prompt to copy to chart directory?
     private async void ButtonPickFileJacket_OnClick(object? sender, RoutedEventArgs e)
     {
         try
@@ -430,8 +468,24 @@ public partial class ChartPropertiesView : UserControl
                 ],
             });
             if (files.Count != 1) return;
+            
+            if (ChartSystem.Entry.RootDirectory == "")
+            {
+                // Define new root directory.
+                ChartSystem.Entry.RootDirectory = Path.GetDirectoryName(files[0].Path.LocalPath) ?? "";
+                ChartSystem.Entry.JacketFile = Path.GetFileName(files[0].Path.LocalPath);
+            }
+            else
+            {
+                // Use existing root directory.
+                string filename = Path.GetFileName(files[0].Path.LocalPath);
+                string pathFromRootDirectory = Path.Combine(ChartSystem.Entry.RootDirectory, filename);
 
-            ChartSystem.Entry.JacketPath = files[0].Path.LocalPath;
+                // Prompt user to move or copy the selected file if it's not in the root directory yet.
+                if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
+
+                ChartSystem.Entry.JacketFile = filename;
+            }
         }
         catch (Exception ex)
         {
@@ -460,7 +514,23 @@ public partial class ChartPropertiesView : UserControl
             });
             if (files.Count != 1) return;
 
-            ChartSystem.Entry.AudioPath = files[0].Path.LocalPath;
+            if (ChartSystem.Entry.RootDirectory == "")
+            {
+                // Define new root directory.
+                ChartSystem.Entry.RootDirectory = Path.GetDirectoryName(files[0].Path.LocalPath) ?? "";
+                ChartSystem.Entry.AudioFile = Path.GetFileName(files[0].Path.LocalPath);
+            }
+            else
+            {
+                // Use existing root directory.
+                string filename = Path.GetFileName(files[0].Path.LocalPath);
+                string pathFromRootDirectory = Path.Combine(ChartSystem.Entry.RootDirectory, filename);
+
+                // Prompt user to move or copy the selected file if it's not in the root directory yet.
+                if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
+
+                ChartSystem.Entry.AudioFile = filename;
+            }
         }
         catch (Exception ex)
         {
@@ -489,11 +559,95 @@ public partial class ChartPropertiesView : UserControl
             });
             if (files.Count != 1) return;
 
-            ChartSystem.Entry.VideoPath = files[0].Path.LocalPath;
+            if (ChartSystem.Entry.RootDirectory == "")
+            {
+                // Define new root directory.
+                ChartSystem.Entry.RootDirectory = Path.GetDirectoryName(files[0].Path.LocalPath) ?? "";
+                ChartSystem.Entry.VideoFile = Path.GetFileName(files[0].Path.LocalPath);
+            }
+            else
+            {
+                // Use existing root directory.
+                string filename = Path.GetFileName(files[0].Path.LocalPath);
+                string pathFromRootDirectory = Path.Combine(ChartSystem.Entry.RootDirectory, filename);
+
+                // Prompt user to move or copy the selected file if it's not in the root directory yet.
+                if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
+                
+                ChartSystem.Entry.VideoFile = filename;
+            }
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex);
         }
+    }
+
+    private async Task<bool> PromptFileMoveAndOverwrite(string sourceFilePath, string projectFilePath)
+    {
+        if (sourceFilePath != projectFilePath)
+        {
+            ModalDialogResult moveResult = await promptFileMove();
+            if (moveResult is ModalDialogResult.Tertiary or ModalDialogResult.Cancel) return false;
+
+            // File already exists in root directory. Prompt to overwrite files.
+            if (File.Exists(projectFilePath))
+            {
+                ModalDialogResult overwriteResult = await promptFileOverwrite();
+                if (overwriteResult is ModalDialogResult.Secondary or ModalDialogResult.Cancel) return false;
+            }
+            
+            if (moveResult is ModalDialogResult.Primary)
+            {
+                // Copy
+                File.Copy(sourceFilePath, projectFilePath, true);
+            }
+            else if (moveResult is ModalDialogResult.Secondary)
+            {
+                // Move
+                File.Move(sourceFilePath, projectFilePath, true);
+            }
+        }
+
+        return true;
+        
+        async Task<ModalDialogResult> promptFileMove()
+    {
+        if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
+
+        ModalDialogWindow dialog = new()
+        {
+            DialogIcon = Icon.Warning,
+            WindowTitleKey = "ModalDialog.FileMovePrompt.Title",
+            HeaderKey = "ModalDialog.FileMovePrompt.Header",
+            ParagraphKey = "ModalDialog.FileMovePrompt.Paragraph",
+            ButtonPrimaryKey = "ModalDialog.FileMovePrompt.CopyFile",
+            ButtonSecondaryKey = "ModalDialog.FileMovePrompt.MoveFile",
+            ButtonTertiaryKey = "Generic.Cancel",
+        };
+
+        dialog.InitializeDialog();
+        await dialog.ShowDialog(rootWindow);
+        return dialog.Result;
+    }
+        
+        async Task<ModalDialogResult> promptFileOverwrite()
+    {
+        if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
+
+        ModalDialogWindow dialog = new()
+        {
+            DialogIcon = Icon.Warning,
+            WindowTitleKey = "ModalDialog.FileOverwritePrompt.Title",
+            HeaderKey = "ModalDialog.FileOverwritePrompt.Header",
+            ParagraphKey = "ModalDialog.FileOverwritePrompt.Paragraph",
+            ButtonPrimaryKey = "ModalDialog.FileOverwritePrompt.OverwriteFile",
+            ButtonSecondaryKey = "Generic.Cancel",
+        };
+
+        dialog.InitializeDialog();
+        await dialog.ShowDialog(rootWindow);
+        return dialog.Result;
+    }
     }
 }

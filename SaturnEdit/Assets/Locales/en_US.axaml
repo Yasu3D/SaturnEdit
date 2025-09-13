@@ -132,6 +132,7 @@
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd">Auto Chart End</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description">Automatically determine when a chart should end and transition to the results screen.</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.FileNotFoundWarning">File not found.</system:String>
+    <system:String x:Key="ChartEditor.ChartProperties.FileNotFoundWarning.Description">Ensure that all media files are in the same directory as the chart file.</system:String>
     <system:String x:Key="ChartEditor.Proofreader">Proofreader</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria">Criteria</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem">Problem</system:String>
@@ -474,6 +475,15 @@
     <system:String x:Key="ModalDialog.SavePrompt.Header">Do you want to save changes to your chart before closing?</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Paragraph">Your changes will be lost if you don't save them.</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.DontSave">Don't Save</system:String>
+    <system:String x:Key="ModalDialog.FileMovePrompt.Title">Move or copy selected file.</system:String>
+    <system:String x:Key="ModalDialog.FileMovePrompt.Header">Do you want to copy or move the selected file?</system:String>
+    <system:String x:Key="ModalDialog.FileMovePrompt.Paragraph">The selected file is in an external directory. To be loaded it must be copied or moved to the same directory as the chart.</system:String>
+    <system:String x:Key="ModalDialog.FileMovePrompt.CopyFile">Copy File</system:String>
+    <system:String x:Key="ModalDialog.FileMovePrompt.MoveFile">Move File</system:String>
+    <system:String x:Key="ModalDialog.FileOverwritePrompt.Title">Overwrite existing file(s).</system:String>
+    <system:String x:Key="ModalDialog.FileOverwritePrompt.Header">Do you want to overwrite an existing file?</system:String>
+    <system:String x:Key="ModalDialog.FileOverwritePrompt.Paragraph">A file with the same name already exists in the chart directory.</system:String>
+    <system:String x:Key="ModalDialog.FileOverwritePrompt.OverwriteFile">Overwrite File</system:String>
     <system:String x:Key="Generic.Enabled">Enabled</system:String>
     <system:String x:Key="Generic.Disabled">Disabled</system:String>
     <system:String x:Key="Generic.Cancel">Cancel</system:String>

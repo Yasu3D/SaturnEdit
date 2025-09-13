@@ -14,6 +14,12 @@ public partial class App : Application
     public override void Initialize() 
     {
         AvaloniaXamlLoader.Load(this);
+        
+        SettingsSystem.Initialize();
+        TimeSystem.Initialize();
+        CursorSystem.Initialize();
+        ChartSystem.Initialize();
+        AudioSystem.Initialize();
     }
     
     public override void OnFrameworkInitializationCompleted()
