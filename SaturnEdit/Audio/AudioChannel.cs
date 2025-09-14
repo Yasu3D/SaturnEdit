@@ -53,7 +53,7 @@ public class AudioChannel
     /// </summary>
     public double Position 
     { 
-        get => Bass.ChannelBytes2Seconds(StreamHandle, Bass.ChannelGetLength(StreamHandle)) * 1000;
+        get => Bass.ChannelBytes2Seconds(StreamHandle, Bass.ChannelGetPosition(StreamHandle)) * 1000;
         set => Bass.ChannelSetPosition(StreamHandle, Bass.ChannelSeconds2Bytes(StreamHandle, value * 0.001));
     }
 
@@ -91,13 +91,22 @@ public class AudioChannel
         get => playing;
         set
         {
-            if (playing == value) return;
+            if (!OneShot && playing == value) return;
             
             playing = value;
-
-            if (playing) Bass.ChannelPlay(StreamHandle);
-            else Bass.ChannelPause(StreamHandle);
+            
+            if (playing)
+            {
+                if (OneShot) Bass.ChannelSetPosition(StreamHandle, 0);
+                Bass.ChannelPlay(StreamHandle);
+            }
+            else
+            {
+                Bass.ChannelPause(StreamHandle);
+            }
         }
     }
     private bool playing = false;
+
+    public bool OneShot { get; set; } = false;
 }

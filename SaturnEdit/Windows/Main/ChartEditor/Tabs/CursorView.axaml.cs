@@ -83,8 +83,10 @@ public partial class CursorView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
 
-        int value = (int?)NumericUpDownMeasure.Value ?? 0;
-        TimeSystem.Timestamp = new(value, TimeSystem.Timestamp.Tick);
+        int measure = (int?)NumericUpDownMeasure.Value ?? 0;
+        int tick = TimeSystem.Timestamp.Tick;
+        
+        TimeSystem.Seek(measure, tick);
     }
     
     private void NumericUpDownBeat_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -92,21 +94,22 @@ public partial class CursorView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
 
-        int value = (int?)NumericUpDownBeat.Value ?? 0;
+        int measure = TimeSystem.Timestamp.Measure;
+        int beat = (int?)NumericUpDownBeat.Value ?? 0;
         
-        if (value == -1)
+        if (beat == -1)
         {
-            value = TimeSystem.Division - 1;
-            TimeSystem.Timestamp -= 1920;
+            beat = TimeSystem.Division - 1;
+            measure -= 1;
         }
         
-        if (value >= TimeSystem.Division)
+        if (beat >= TimeSystem.Division)
         {
-            value = 0;
-            TimeSystem.Timestamp += 1920;
+            beat = 0;
+            measure += 1;
         }
-        
-        TimeSystem.Timestamp = new(TimeSystem.Timestamp.Measure, value * TimeSystem.DivisionInterval);
+
+        TimeSystem.Seek(measure, beat * TimeSystem.DivisionInterval);
     }
     
     private void NumericUpDownDivision_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -114,7 +117,7 @@ public partial class CursorView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
 
-        int value = (int?)NumericUpDownDivision.Value ?? TimeSystem.DefaultDivision;
-        TimeSystem.Division = value;
+        int division = (int?)NumericUpDownDivision.Value ?? TimeSystem.DefaultDivision;
+        TimeSystem.Division = division;
     }
 }

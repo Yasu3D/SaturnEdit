@@ -21,9 +21,11 @@ public static class TimeSystem
     public static readonly DispatcherTimer UpdateTimer = new(TimeSpan.FromMilliseconds(1000.0f / SettingsSystem.RenderSettings.RefreshRate), DispatcherPriority.Render, UpdateTimer_OnTick);
     private static float tickInterval;
     
+    public static event EventHandler? TimestampChanged;
+    public static event EventHandler? TimestampSeeked;
+    
     public static event EventHandler? PlaybackStateChanged;
     public static event EventHandler? PlaybackSpeedChanged;
-    public static event EventHandler? TimestampChanged;
     public static event EventHandler? DivisionChanged;
     
     public const int DefaultDivision = 8;
@@ -63,7 +65,7 @@ public static class TimeSystem
     public static Timestamp Timestamp
     {
         get => timestamp;
-        set
+        private set
         {
             if (timestamp == value) return;
             
@@ -97,7 +99,7 @@ public static class TimeSystem
     private static float timeScale = 1.0f;
     private static float audioTime = 0;
 
-    private const float deltaMultiplier = 0.001f;
+    private const float deltaMultiplier = 0.01f;
     private const float forceAlignDelta = 50.0f;
     
     private static void OnSettingsChanged(object? sender, EventArgs e)
@@ -111,10 +113,9 @@ public static class TimeSystem
         // TODO: Handle playback state changes
         
         // Handle keeping UpdateTimer and AudioTimer in-sync.
-        //if (PlaybackState == PlaybackState.Stopped) return;
+        if (PlaybackState == PlaybackState.Stopped) return;
         
-        /*
-        if (AudioSystem.OutputDevice.PlaybackState != NAudio.Wave.PlaybackState.Playing || AudioSystem.AudioFile == null)
+        if (AudioSystem.AudioChannelAudio == null || !AudioSystem.AudioChannelAudio.Playing)
         {
             // AudioSystem isn't playing audio, or there's no loaded audio.
             // Continue, but synchronise the AudioTimer to the UpdateTimer since there's no audio to rely on.
@@ -128,7 +129,7 @@ public static class TimeSystem
             // AudioSystem is playing audio.
             // Synchronise the UpdateTimer to the AudioTimer to make sure they don't drift apart.
             float time = Timestamp.Time + tickInterval * timeScale;
-            //audioTime = ((float)AudioSystem.AudioFile.Position / AudioSystem.AudioFile.Length) * (float)AudioSystem.AudioFile.TotalTime.TotalMilliseconds;
+            audioTime = (float)AudioSystem.AudioChannelAudio.Position;
 
             float delta = time - audioTime;
             if (Math.Abs(delta) >= forceAlignDelta || timeScale == 0)
@@ -140,10 +141,27 @@ public static class TimeSystem
             Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, time, Division);
             timeScale = (PlaybackSpeed / 100.0f) - (delta * deltaMultiplier);
         }
-        */
         
-        //Console.WriteLine($"{Timestamp.Measure} {Timestamp.Tick} | {AudioSystem.AudioFile?.Position} | {Timestamp.Time} {audioTime} | {timeScale}");
+        
+        Console.WriteLine($"{Timestamp.Measure} {Timestamp.Tick} | {AudioSystem.AudioChannelAudio?.Position} | {Timestamp.Time} {audioTime} | {timeScale}");
         
         //Console.WriteLine($"{Timestamp.Measure} {Timestamp.Tick} | {Timestamp.Time}");
+    }
+
+    public static void Seek(int measure, int tick)
+    {
+        Timestamp t = new(measure, tick);
+        t.Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, t);
+
+        Timestamp = t;
+        TimestampSeeked?.Invoke(null, EventArgs.Empty);
+    }
+
+    public static void Seek(float time, int div)
+    {
+        Timestamp t = Timestamp.TimestampFromTime(ChartSystem.Chart, time, div);
+
+        Timestamp = t;
+        TimestampSeeked?.Invoke(null, EventArgs.Empty);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using ManagedBass;
 using SaturnEdit.Audio;
 
@@ -39,7 +40,7 @@ public static class AudioSystem
     
     private static float NormalizeVolume(float decibel) => (decibel + 60.0f) / 60.0f;
     
-    private static AudioChannel? audioChannelAudio;
+    public static AudioChannel? AudioChannelAudio;
     
     private static AudioChannel? audioChannelGuide;
     private static AudioChannel? audioChannelTouch;
@@ -60,16 +61,17 @@ public static class AudioSystem
 
     private static void OnAudioChanged(object? sender, EventArgs e)
     {
-        Console.WriteLine("AudioChanged");
-        
-        if (audioChannelAudio != null) audioChannelAudio.Playing = false;
+        if (AudioChannelAudio != null) AudioChannelAudio.Playing = false;
         
         try
         {
-            audioChannelAudio = new(ChartSystem.Entry.AudioPath)
+            if (!File.Exists(ChartSystem.Entry.AudioPath))
             {
-                Playing = true,
-            };
+                AudioChannelAudio = null;
+                return;
+            }
+
+            AudioChannelAudio = new(ChartSystem.Entry.AudioPath);
 
             //TimeSystem.PlaybackState = false;
             //OnSettingsChanged(null, EventArgs.Empty);
@@ -77,15 +79,14 @@ public static class AudioSystem
         }
         catch (Exception ex)
         {
-            audioChannelAudio = null;
-            
+            AudioChannelAudio = null;
             Console.WriteLine(ex);
         }
     }
     
     private static void OnVolumeChanged(object? sender, EventArgs e)
     {
-        if (audioChannelAudio      != null) audioChannelAudio.Volume      = NormalizeVolume(SettingsSystem.AudioSettings.AudioVolume);
+        if (AudioChannelAudio      != null) AudioChannelAudio.Volume      = NormalizeVolume(SettingsSystem.AudioSettings.AudioVolume);
         if (audioChannelGuide      != null) audioChannelGuide.Volume      = NormalizeVolume(SettingsSystem.AudioSettings.GuideVolume);
         if (audioChannelTouch      != null) audioChannelTouch.Volume      = NormalizeVolume(SettingsSystem.AudioSettings.TouchVolume);
         if (audioChannelChain      != null) audioChannelChain.Volume      = NormalizeVolume(SettingsSystem.AudioSettings.ChainVolume);
@@ -99,25 +100,23 @@ public static class AudioSystem
         if (audioChannelMetronome  != null) audioChannelMetronome.Volume  = NormalizeVolume(SettingsSystem.AudioSettings.MetronomeVolume);
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     private static void OnPlaybackSpeedChanged(object? sender, EventArgs e)
     {
-        if (audioChannelAudio == null) return;
-        audioChannelAudio.Speed = TimeSystem.PlaybackSpeed;
+        if (AudioChannelAudio == null) return;
+        AudioChannelAudio.Speed = TimeSystem.PlaybackSpeed;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     private static void OnTimestampChanged(object? sender, EventArgs e)
     {
@@ -126,6 +125,8 @@ public static class AudioSystem
     
     private static void UpdateTimer_OnTick(object? sender, EventArgs e)
     {
-        
+        if (AudioChannelAudio == null) return;
+
+        AudioChannelAudio.Playing = TimeSystem.PlaybackState == PlaybackState.Playing;
     }
 }

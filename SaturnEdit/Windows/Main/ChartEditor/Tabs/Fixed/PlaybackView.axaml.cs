@@ -43,6 +43,8 @@ public partial class PlaybackView : UserControl
 
         blockEvents = true;
         
+        // TODO: Reimplement this
+        
         //if (chartEnd > 1)
         //{
         //    SliderSeek.Maximum = chartEnd;
@@ -65,10 +67,11 @@ public partial class PlaybackView : UserControl
     
     private void OnTimestampChanged(object? sender, EventArgs e)
     {
-        return;
         blockEvents = true;
 
-        SliderSeek.Value = TimeSystem.Timestamp.Time;
+        // TODO: Reimplement this
+        
+        //SliderSeek.Value = TimeSystem.Timestamp.Time;
         
         blockEvents = false;
     }
@@ -132,14 +135,16 @@ public partial class PlaybackView : UserControl
     private void SliderPlaybackSpeed_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
     {
         if (blockEvents) return;
-        if (sender is not Slider slider) return;
+        if (sender is not Slider) return;
 
-        TimeSystem.PlaybackSpeed = (int)slider.Value;
+        TimeSystem.PlaybackSpeed = (int)SliderPlaybackSpeed.Value;
     }
     
     private void SliderSeek_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
     {
         if (blockEvents) return;
-        if (sender is not Slider slider) return;
+        if (sender is not Slider) return;
+
+        TimeSystem.Seek((float)SliderSeek.Value, TimeSystem.Division);
     }
 }

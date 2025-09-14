@@ -261,6 +261,7 @@ public class AudioSettings
     public event EventHandler? PropertyChanged;
 
     public event EventHandler? VolumeChanged;
+    public event EventHandler? HitsoundsChanged;
 
 #region Enum Definitions
 
@@ -274,7 +275,6 @@ public class AudioSettings
     
 #endregion
     
-    private bool loopPlayback = false;
     public bool LoopPlayback
     {
         get => loopPlayback;
@@ -286,8 +286,8 @@ public class AudioSettings
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private bool loopPlayback = false;
     
-    private bool metronome = false;
     public bool Metronome
     {
         get => metronome;
@@ -299,8 +299,8 @@ public class AudioSettings
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private bool metronome = false;
     
-    private QuantizedPauseOptions quantizedPause = QuantizedPauseOptions.Exact;
     public QuantizedPauseOptions QuantizedPause
     {
         get => quantizedPause;
@@ -312,8 +312,8 @@ public class AudioSettings
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private QuantizedPauseOptions quantizedPause = QuantizedPauseOptions.Exact;
     
-    private bool loopToStart = false;
     public bool LoopToStart
     {
         get => loopToStart;
@@ -325,8 +325,8 @@ public class AudioSettings
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private bool loopToStart = false;
     
-    private int masterVolume = 0;
     public int MasterVolume
     {
         get => masterVolume;
@@ -339,6 +339,7 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int masterVolume = 0;
     
     public int AudioVolume
     {
@@ -354,7 +355,6 @@ public class AudioSettings
     }
     private int audioVolume = 0;
     
-    private int guideVolume = 0;
     public int GuideVolume
     {
         get => guideVolume;
@@ -367,8 +367,8 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int guideVolume = 0;
     
-    private int touchVolume = 0;
     public int TouchVolume
     {
         get => touchVolume;
@@ -381,8 +381,8 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int touchVolume = 0;
     
-    private int chainVolume = 0;    
     public int ChainVolume
     {
         get => chainVolume;
@@ -395,8 +395,8 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int chainVolume = 0;    
 
-    private int holdVolume = 0;
     public int HoldVolume
     {
         get => holdVolume;
@@ -409,8 +409,8 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int holdVolume = 0;
     
-    private int holdLoopVolume = 0;
     public int HoldLoopVolume
     {
         get => holdLoopVolume;
@@ -423,8 +423,8 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int holdLoopVolume = 0;
     
-    private int slideVolume = 0;
     public int SlideVolume
     {
         get => slideVolume;
@@ -437,8 +437,8 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int slideVolume = 0;
     
-    private int snapVolume = 0;
     public int SnapVolume
     {
         get => snapVolume;
@@ -451,8 +451,8 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int snapVolume = 0;
     
-    private int bonusVolume = 0;
     public int BonusVolume
     {
         get => bonusVolume;
@@ -465,8 +465,8 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int bonusVolume = 0;
     
-    private int rVolume = 0;
     public int RVolume
     {
         get => rVolume;
@@ -479,8 +479,8 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int rVolume = 0;
     
-    private int startClickVolume = 0;
     public int StartClickVolume
     {
         get => startClickVolume;
@@ -493,8 +493,8 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int startClickVolume = 0;
     
-    private int metronomeVolume = 0;
     public int MetronomeVolume
     {
         get => metronomeVolume;
@@ -507,6 +507,21 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+    private int metronomeVolume = 0;
+
+    public string HitsoundGuidePath
+    {
+        get => hitsoundGuidePath;
+        set
+        {
+            if (hitsoundGuidePath == value) return;
+            
+            hitsoundGuidePath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string hitsoundGuidePath = "";
 }
 
 public class ShortcutSettings
