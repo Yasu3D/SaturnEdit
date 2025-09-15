@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:controls="clr-namespace:SaturnEdit.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="200"
@@ -278,13 +279,22 @@
 
             </Grid>
 
+            <!-- Waveform -->
+            <Panel Grid.Column="1"
+                       Name="PanelCanvasContainer">
+                    <controls:SkiaSharpCanvas Name="RenderCanvas"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              RenderAction="RenderCanvas_OnRenderAction" />
+            </Panel>
+            
             <!-- Seek Slider -->
             <Slider Grid.Column="1"
                     Name="SliderSeek"
                     Classes="Wide"
-                    Margin="0,0,0,1" 
+                    Margin="0,0,0,1"
                     Minimum="0"
-                    ValueChanged="SliderSeek_OnValueChanged"/>
+                    ValueChanged="SliderSeek_OnValueChanged" />
         </Grid>
     </Grid>
 </UserControl>

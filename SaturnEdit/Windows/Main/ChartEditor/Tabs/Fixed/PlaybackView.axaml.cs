@@ -1,11 +1,17 @@
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using Avalonia.Threading;
 using FluentIcons.Common;
+using SaturnEdit.Audio;
 using SaturnEdit.Systems;
+using SaturnView;
+using SkiaSharp;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -14,6 +20,8 @@ public partial class PlaybackView : UserControl
     public PlaybackView()
     {
         InitializeComponent();
+        
+        ActualThemeVariantChanged += OnActualThemeVariantChanged;
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
@@ -38,20 +46,51 @@ public partial class PlaybackView : UserControl
 
     private bool blockEvents;
 
+    private readonly CanvasInfo canvasInfo = new();
+    private SKColor clearColor;
+    private float sliderMaximum = 0;
+
+    private float[]? waveform = null;
+    
+    private async void OnActualThemeVariantChanged(object? sender, EventArgs e)
+    {
+        try
+        {
+            await Task.Delay(1);
+
+            if (Application.Current == null) return;
+            if (!Application.Current.TryGetResource("BackgroundPrimary", Application.Current.ActualThemeVariant, out object? resource)) return;
+            if (resource is not SolidColorBrush brush) return;
+        
+            clearColor = new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
+        }
+        catch (Exception ex)
+        {
+            // classic error pink
+            clearColor = new(0xFF, 0x00, 0xFF, 0xFF);
+        }
+    }
+
+    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => RendererWaveform.RenderSeekSlider(canvas, canvasInfo, clearColor, waveform, ChartSystem.Entry.AudioOffset, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, sliderMaximum);
+    
     private void OnEntryChanged(object? sender, EventArgs e) => RecalculateSeekSlider();
     private void OnChartChanged(object? sender, EventArgs e) => RecalculateSeekSlider();
-    private void OnAudioLoaded(object? sender, EventArgs e) => RecalculateSeekSlider();
+    private void OnAudioLoaded(object? sender, EventArgs e)
+    {
+        RecalculateSeekSlider();
+        waveform = AudioChannel.GetWaveformData(ChartSystem.Entry.AudioPath);
+    }
 
     private void RecalculateSeekSlider()
     {
         float chartEnd = ChartSystem.Entry.ChartEnd.Time;
         float audioEnd = (float?)AudioSystem.AudioChannelAudio?.Length ?? 0;
         
-        float maxEnd = Math.Max(chartEnd, audioEnd); 
+        sliderMaximum = Math.Max(chartEnd, audioEnd);
         
         blockEvents = true;
         
-        SliderSeek.Maximum = maxEnd;
+        SliderSeek.Maximum = sliderMaximum;
         SliderSeek.Value = TimeSystem.Timestamp.Time;
         
         blockEvents = false;
@@ -112,6 +151,12 @@ public partial class PlaybackView : UserControl
             TickPlaybackSpeed100.Margin = new(sliderWidth * ((100.0 - 5) / 295), 0, 0, 0);
             TickPlaybackSpeed200.Margin = new(sliderWidth * ((200.0 - 5) / 295), 0, 0, 0);
         });
+        
+        RenderCanvas.Width = PanelCanvasContainer.Bounds.Width;
+        RenderCanvas.Height = PanelCanvasContainer.Bounds.Height;
+
+        canvasInfo.Width = (float)PanelCanvasContainer.Bounds.Width;
+        canvasInfo.Height = (float)PanelCanvasContainer.Bounds.Height;
     }
 
     private void ToggleButtonPlay_OnIsCheckedChanged(object? sender, RoutedEventArgs e)

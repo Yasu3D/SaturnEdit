@@ -33,7 +33,7 @@ public static class AudioSystem
 
     public static event EventHandler? AudioLoaded;
     
-    public static AudioChannel? AudioChannelAudio;
+    public static AudioChannel? AudioChannelAudio { get; set; }
     
     private static AudioChannel? audioChannelGuide;
     private static AudioChannel? audioChannelTouch;
@@ -68,6 +68,9 @@ public static class AudioSystem
             }
 
             AudioChannelAudio = new(ChartSystem.Entry.AudioPath);
+            OnVolumeChanged(null, EventArgs.Empty);
+            OnTimestampSeeked(null, EventArgs.Empty);
+            OnPlaybackSpeedChanged(null, EventArgs.Empty);
         }
         catch (Exception ex)
         {
