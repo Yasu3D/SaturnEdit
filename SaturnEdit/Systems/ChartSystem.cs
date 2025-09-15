@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using SaturnData.Notation;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Events;
 using SaturnData.Notation.Serialization;
 
 namespace SaturnEdit.Systems;
@@ -16,6 +17,10 @@ public static class ChartSystem
         Entry.AudioChanged += OnAudioChanged;
         Entry.JacketChanged += OnJacketChanged;
         ChartChanged += OnChartChanged;
+        
+        AudioSystem.AudioLoaded += OnAudioLoaded;
+        
+        OnChartChanged(null, EventArgs.Empty);
     }
 
     private static void OnEntryChanged(object? sender, EventArgs e) => EntryChanged?.Invoke(sender, e);
@@ -26,6 +31,14 @@ public static class ChartSystem
     {
         NotationUtils.CalculateTime(Entry, Chart);
         NotationUtils.CalculateScaledTime(Chart);
+        RecalculateChartEnd();
+    }
+
+    private static void OnAudioLoaded(object? sender, EventArgs e) => RecalculateChartEnd();
+
+    private static void RecalculateChartEnd()
+    {
+        Entry.ChartEnd = NotationUtils.CalculateIdealChartEnd(Chart, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0);
     }
     
     public static event EventHandler? ChartChanged;
@@ -33,7 +46,7 @@ public static class ChartSystem
     public static event EventHandler? JacketChanged;
     public static event EventHandler? AudioChanged;
     
-    public static Chart Chart { get; private set; } = new();
+    public static Chart Chart { get; private set; } = new() { Events = [ new TempoChangeEvent(new(0), 120), new MetreChangeEvent(new(0), 4, 4) ] };
     public static Entry Entry { get; private set; } = new();
 
     /// <summary>

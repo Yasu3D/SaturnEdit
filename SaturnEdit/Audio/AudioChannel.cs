@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using ManagedBass;
 using ManagedBass.Flac;
 using ManagedBass.Fx;
@@ -19,12 +20,12 @@ public class AudioChannel
         }
         
         // Explode if load failed.
-        if (StreamHandle == 0) throw new($"Audio file could not be loaded by Bass.");
+        if (StreamHandle == 0) throw new("Audio file could not be loaded by Bass.");
 
         StreamHandle = BassFx.TempoCreate(StreamHandle, BassFlags.FxFreeSource);
         
         // Explode if fx load failed.
-        if (StreamHandle == 0) throw new($"Audio file could not be loaded by BassFX.");
+        if (StreamHandle == 0) throw new("Audio file could not be loaded by BassFX.");
 
         // Prevent click noise when changing tempo.
         Bass.ChannelSetAttribute(StreamHandle, ChannelAttribute.TempoPreventClick, 1);
@@ -32,7 +33,7 @@ public class AudioChannel
         Length = Bass.ChannelBytes2Seconds(StreamHandle, Bass.ChannelGetLength(StreamHandle)) * 1000;
         SampleRate = (int)Bass.ChannelGetAttribute(StreamHandle, ChannelAttribute.Frequency);
     }
-
+    
     /// <summary>
     /// The handle of the Bass stream.
     /// </summary>
@@ -109,4 +110,87 @@ public class AudioChannel
     private bool playing = false;
 
     public bool OneShot { get; set; } = false;
+
+    public static float[]? GetWaveformData(string path)
+    {
+        // This code is borrowed/adapted from osu.
+        
+        const float resolution = 0.001f;
+        const int pointsPerIteration = 1000;
+        const int bytesPerSample = 4;
+
+        float[]? points = null;
+        float[]? sampleBuffer = null;
+        
+        try
+        {
+            // Try loading as flac.
+            int handle = BassFlac.CreateStream(path, 0, 0, BassFlags.Decode | BassFlags.Prescan | BassFlags.Float);
+            
+            // Try loading as anything else if that failed.
+            if (handle == 0 && Bass.LastError == Errors.FileFormat)
+            {
+                handle = Bass.CreateStream(path, 0, 0, BassFlags.Decode | BassFlags.Prescan | BassFlags.Float);
+            }
+            
+            if (!Bass.ChannelGetInfo(handle, out ChannelInfo info)) return points;
+
+            long length = Bass.ChannelGetLength(handle);
+
+            // Each "amplitude point" is generated from a number of samples, each sample contains a number of channels
+            int samplesPerPoint = (int)(info.Frequency * resolution * info.Channels);
+
+            int bytesPerPoint = samplesPerPoint * bytesPerSample;
+
+            int pointCount = (int)(length / bytesPerPoint);
+
+            points = new float[pointCount];
+
+            // Each iteration pulls in several samples
+            int bytesPerIteration = bytesPerPoint * pointsPerIteration;
+
+            sampleBuffer = ArrayPool<float>.Shared.Rent(bytesPerIteration / bytesPerSample);
+
+            int pointIndex = 0;
+
+            // Read sample data
+            while (length > 0)
+            {
+                length = Bass.ChannelGetData(handle, sampleBuffer, bytesPerIteration);
+
+                if (length < 0) return points;
+
+                int samplesRead = (int)(length / bytesPerSample);
+
+                // Each point is composed of multiple samples
+                for (int i = 0; i < samplesRead && pointIndex < pointCount; i += samplesPerPoint)
+                {
+                    // Channels are interleaved in the sample data (data[0] -> channel0, data[1] -> channel1, data[2] -> channel0, etc)
+                    // samplesPerPoint assumes this interleaving behaviour
+                    int secondChannelIndex = info.Channels > 1 ? 1 : 0;
+                 
+                    float amplitude = 0;
+                    
+                    for (int j = i; j < i + samplesPerPoint; j += info.Channels)
+                    {
+                        // Find max amplitude in samples of either channel.
+                        amplitude = Math.Max(amplitude, Math.Abs(sampleBuffer[j]));
+                        amplitude = Math.Max(amplitude, Math.Abs(sampleBuffer[j + secondChannelIndex]));
+                    }
+
+                    // BASS may provide unclipped samples, so clip them ourselves
+                    amplitude = Math.Min(1, amplitude);
+
+                    points[pointIndex] = amplitude;
+                    pointIndex++;
+                }
+            }
+        }
+        finally
+        {
+            if (sampleBuffer != null) ArrayPool<float>.Shared.Return(sampleBuffer);
+        }
+
+        return points;
+    }
 }

@@ -22,23 +22,16 @@ public static class AudioSystem
         SettingsSystem.AudioSettings.VolumeChanged += OnVolumeChanged;
         OnVolumeChanged(null, EventArgs.Empty);
 
-        
-        
-        
-        
-        
-        TimeSystem.UpdateTimer.Tick += UpdateTimer_OnTick;
+        TimeSystem.TimestampSeeked += OnTimestampSeeked;
+        OnTimestampSeeked(null, EventArgs.Empty);
         
         TimeSystem.PlaybackSpeedChanged += OnPlaybackSpeedChanged;
         OnPlaybackSpeedChanged(null, EventArgs.Empty);
         
-        TimeSystem.TimestampChanged += OnTimestampChanged;
-        OnTimestampChanged(null, EventArgs.Empty);
+        TimeSystem.UpdateTimer.Tick += UpdateTimer_OnTick;
     }
 
-    private static float latency = 0;
-    
-    private static float NormalizeVolume(float decibel) => (decibel + 60.0f) / 60.0f;
+    public static event EventHandler? AudioLoaded;
     
     public static AudioChannel? AudioChannelAudio;
     
@@ -53,6 +46,9 @@ public static class AudioSystem
     private static AudioChannel? audioChannelR;
     private static AudioChannel? audioChannelStartClick;
     private static AudioChannel? audioChannelMetronome;
+    
+    private static float latency = 0;
+    private static float NormalizeVolume(float decibel) => (decibel + 60.0f) / 60.0f;
     
     public static void OnClosed(object? sender, EventArgs e)
     {
@@ -72,16 +68,14 @@ public static class AudioSystem
             }
 
             AudioChannelAudio = new(ChartSystem.Entry.AudioPath);
-
-            //TimeSystem.PlaybackState = false;
-            //OnSettingsChanged(null, EventArgs.Empty);
-            //OnPlaybackSpeedChanged(null, EventArgs.Empty);
         }
         catch (Exception ex)
         {
             AudioChannelAudio = null;
             Console.WriteLine(ex);
         }
+        
+        AudioLoaded?.Invoke(null, EventArgs.Empty);
     }
     
     private static void OnVolumeChanged(object? sender, EventArgs e)
@@ -100,33 +94,35 @@ public static class AudioSystem
         if (audioChannelMetronome  != null) audioChannelMetronome.Volume  = NormalizeVolume(SettingsSystem.AudioSettings.MetronomeVolume);
     }
     
+    private static void OnTimestampSeeked(object? sender, EventArgs e)
+    {
+        if (AudioChannelAudio == null) return;
+        AudioChannelAudio.Position = TimeSystem.Timestamp.Time;
+    }
+    
     private static void OnPlaybackSpeedChanged(object? sender, EventArgs e)
     {
         if (AudioChannelAudio == null) return;
         AudioChannelAudio.Speed = TimeSystem.PlaybackSpeed;
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    private static void OnTimestampChanged(object? sender, EventArgs e)
-    {
-        
-    }
-    
     private static void UpdateTimer_OnTick(object? sender, EventArgs e)
     {
         if (AudioChannelAudio == null) return;
 
-        AudioChannelAudio.Playing = TimeSystem.PlaybackState == PlaybackState.Playing;
+        // Pause audio if playback is stopped.
+        if (TimeSystem.PlaybackState is PlaybackState.Stopped)
+        {
+            AudioChannelAudio.Playing = false;
+        }
+        
+        // Play audio if time is inside playback range. Pause otherwise.
+        if (TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview)
+        {
+            bool beforeAudio = TimeSystem.Timestamp.Time < 0;
+            bool afterAudio = TimeSystem.Timestamp.Time > AudioChannelAudio.Length;
+
+            AudioChannelAudio.Playing = !beforeAudio && !afterAudio;
+        }
     }
 }

@@ -27,40 +27,32 @@ public partial class PlaybackView : UserControl
         TimeSystem.PlaybackSpeedChanged += OnPlaybackSpeedChanged;
         OnPlaybackSpeedChanged(null, EventArgs.Empty);
 
-        ChartSystem.ChartChanged += OnEntryOrChartChanged;
-        ChartSystem.EntryChanged += OnEntryOrChartChanged;
-        OnEntryOrChartChanged(null, EventArgs.Empty);
+        ChartSystem.ChartChanged += OnEntryChanged;
+        ChartSystem.EntryChanged += OnChartChanged;
+        AudioSystem.AudioLoaded += OnAudioLoaded;
+        RecalculateSeekSlider();
         
         SizeChanged += OnSizeChanged;
         OnSizeChanged(null, new(null));
     }
 
     private bool blockEvents;
-    
-    private void OnEntryOrChartChanged(object? sender, EventArgs e)
+
+    private void OnEntryChanged(object? sender, EventArgs e) => RecalculateSeekSlider();
+    private void OnChartChanged(object? sender, EventArgs e) => RecalculateSeekSlider();
+    private void OnAudioLoaded(object? sender, EventArgs e) => RecalculateSeekSlider();
+
+    private void RecalculateSeekSlider()
     {
         float chartEnd = ChartSystem.Entry.ChartEnd.Time;
-
+        float audioEnd = (float?)AudioSystem.AudioChannelAudio?.Length ?? 0;
+        
+        float maxEnd = Math.Max(chartEnd, audioEnd); 
+        
         blockEvents = true;
         
-        // TODO: Reimplement this
-        
-        //if (chartEnd > 1)
-        //{
-        //    SliderSeek.Maximum = chartEnd;
-        //    SliderSeek.IsEnabled = true;
-        //    SliderPlaybackSpeed.IsEnabled = true;
-        //    ToggleButtonPlay.IsEnabled = true;
-        //}
-        //else
-        //{
-        //    SliderSeek.Maximum = 1000;
-        //    SliderSeek.Value = 0;
-        //    SliderSeek.IsEnabled = false;
-        //    SliderPlaybackSpeed.IsEnabled = false;
-        //    ToggleButtonPlay.IsEnabled = false;
-        //    ToggleButtonPlay.IsChecked = false;
-        //}
+        SliderSeek.Maximum = maxEnd;
+        SliderSeek.Value = TimeSystem.Timestamp.Time;
         
         blockEvents = false;
     }
@@ -68,10 +60,8 @@ public partial class PlaybackView : UserControl
     private void OnTimestampChanged(object? sender, EventArgs e)
     {
         blockEvents = true;
-
-        // TODO: Reimplement this
         
-        //SliderSeek.Value = TimeSystem.Timestamp.Time;
+        SliderSeek.Value = TimeSystem.Timestamp.Time;
         
         blockEvents = false;
     }
@@ -80,14 +70,14 @@ public partial class PlaybackView : UserControl
     {
         blockEvents = true;
 
-        ToggleButtonPlay.IsChecked = TimeSystem.PlaybackState == PlaybackState.Playing;
+        ToggleButtonPlay.IsChecked = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview;
         
         blockEvents = false;
         
-        StackPanelToolTipPause.IsVisible = TimeSystem.PlaybackState == PlaybackState.Playing;
-        StackPanelToolTipPlay.IsVisible = TimeSystem.PlaybackState != PlaybackState.Playing;
+        StackPanelToolTipPause.IsVisible = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview;
+        StackPanelToolTipPlay.IsVisible = TimeSystem.PlaybackState is PlaybackState.Stopped;
 
-        IconPlay.Icon = TimeSystem.PlaybackState == PlaybackState.Playing ? Icon.Stop : Icon.Play;
+        IconPlay.Icon = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview ? Icon.Stop : Icon.Play;
     }
     
     private void OnPlaybackSpeedChanged(object? sender, EventArgs e)

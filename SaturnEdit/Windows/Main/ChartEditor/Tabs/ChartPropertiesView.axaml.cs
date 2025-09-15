@@ -8,14 +8,10 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
-using ExCSS;
 using FluentIcons.Common;
-using Kawazu;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
-using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
-using SaturnEdit.Windows.Dialogs.ImportArgs;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
@@ -269,10 +265,13 @@ public partial class ChartPropertiesView : UserControl
         if (blockEvent) return;
         if (sender == null) return;
         
-        ChartSystem.Entry.ChartEnd = new((int?)NumericUpDownChartEndMeasure.Value ?? 0, (int?)NumericUpDownChartEndTick.Value ?? 0)
-        {
-            Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, ChartSystem.Entry.ChartEnd),
-        };
+        int measure = (int?)NumericUpDownChartEndMeasure.Value ?? 0;
+        int tick = (int?)NumericUpDownChartEndTick.Value ?? 0;
+        
+        Timestamp chartEnd = new(measure, tick);
+        chartEnd.Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, chartEnd);
+
+        ChartSystem.Entry.ChartEnd = chartEnd;
     }
 
     private void NumericUpDownChartEndTick_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -293,11 +292,14 @@ public partial class ChartPropertiesView : UserControl
             NumericUpDownChartEndTick.Value = 0;
         }
         blockEvent = false;
+
+        int measure = (int?)NumericUpDownChartEndMeasure.Value ?? 0;
+        int tick = (int?)NumericUpDownChartEndTick.Value ?? 0;
         
-        ChartSystem.Entry.ChartEnd = new((int?)NumericUpDownChartEndMeasure.Value ?? 0, (int?)NumericUpDownChartEndTick.Value ?? 0)
-        {
-            Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, ChartSystem.Entry.ChartEnd),
-        };
+        Timestamp chartEnd = new(measure, tick);
+        chartEnd.Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, chartEnd);
+
+        ChartSystem.Entry.ChartEnd = chartEnd;
     }
 
     private void ToggleButtonAutoChartEnd_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -308,6 +310,14 @@ public partial class ChartPropertiesView : UserControl
         ChartSystem.Entry.AutoChartEnd = ToggleButtonAutoChartEnd.IsChecked ?? false;
     }
 
+    private void ButtonPlayPreview_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender == null) return;
+
+        TimeSystem.PlaybackState = PlaybackState.Preview;
+        TimeSystem.Seek(ChartSystem.Entry.PreviewBegin, TimeSystem.Division);
+    }
+    
     private void TextBoxPreviewBegin_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvent) return;
@@ -612,42 +622,42 @@ public partial class ChartPropertiesView : UserControl
         return true;
         
         async Task<ModalDialogResult> promptFileMove()
-    {
-        if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
-
-        ModalDialogWindow dialog = new()
         {
-            DialogIcon = Icon.Warning,
-            WindowTitleKey = "ModalDialog.FileMovePrompt.Title",
-            HeaderKey = "ModalDialog.FileMovePrompt.Header",
-            ParagraphKey = "ModalDialog.FileMovePrompt.Paragraph",
-            ButtonPrimaryKey = "ModalDialog.FileMovePrompt.CopyFile",
-            ButtonSecondaryKey = "ModalDialog.FileMovePrompt.MoveFile",
-            ButtonTertiaryKey = "Generic.Cancel",
-        };
+            if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
 
-        dialog.InitializeDialog();
-        await dialog.ShowDialog(rootWindow);
-        return dialog.Result;
-    }
+            ModalDialogWindow dialog = new()
+            {
+                DialogIcon = Icon.Warning,
+                WindowTitleKey = "ModalDialog.FileMovePrompt.Title",
+                HeaderKey = "ModalDialog.FileMovePrompt.Header",
+                ParagraphKey = "ModalDialog.FileMovePrompt.Paragraph",
+                ButtonPrimaryKey = "ModalDialog.FileMovePrompt.CopyFile",
+                ButtonSecondaryKey = "ModalDialog.FileMovePrompt.MoveFile",
+                ButtonTertiaryKey = "Generic.Cancel",
+            };
+
+            dialog.InitializeDialog();
+            await dialog.ShowDialog(rootWindow);
+            return dialog.Result;
+        }
         
         async Task<ModalDialogResult> promptFileOverwrite()
-    {
-        if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
-
-        ModalDialogWindow dialog = new()
         {
-            DialogIcon = Icon.Warning,
-            WindowTitleKey = "ModalDialog.FileOverwritePrompt.Title",
-            HeaderKey = "ModalDialog.FileOverwritePrompt.Header",
-            ParagraphKey = "ModalDialog.FileOverwritePrompt.Paragraph",
-            ButtonPrimaryKey = "ModalDialog.FileOverwritePrompt.OverwriteFile",
-            ButtonSecondaryKey = "Generic.Cancel",
-        };
+            if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
 
-        dialog.InitializeDialog();
-        await dialog.ShowDialog(rootWindow);
-        return dialog.Result;
-    }
+            ModalDialogWindow dialog = new()
+            {
+                DialogIcon = Icon.Warning,
+                WindowTitleKey = "ModalDialog.FileOverwritePrompt.Title",
+                HeaderKey = "ModalDialog.FileOverwritePrompt.Header",
+                ParagraphKey = "ModalDialog.FileOverwritePrompt.Paragraph",
+                ButtonPrimaryKey = "ModalDialog.FileOverwritePrompt.OverwriteFile",
+                ButtonSecondaryKey = "Generic.Cancel",
+            };
+
+            dialog.InitializeDialog();
+            await dialog.ShowDialog(rootWindow);
+            return dialog.Result;
+        }
     }
 }

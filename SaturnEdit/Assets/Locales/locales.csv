@@ -120,6 +120,7 @@ ChartEditor.ChartProperties.BackgroundOption.Boss,Boss
 ChartEditor.ChartProperties.BackgroundOption.StageUp,Stage Up
 ChartEditor.ChartProperties.BackgroundOption.WorldsEnd,World's End
 ChartEditor.ChartProperties.BackgroundOption.Jacket,Jacket
+ChartEditor.ChartProperties.ToolTip.PlayPreview,Play Preview
 ChartEditor.ChartProperties.ToolTip.AutoReading,Auto Reading
 ChartEditor.ChartProperties.ToolTip.AutoReading.Description,Automatically determine the reading based on the chart's title.
 ChartEditor.ChartProperties.ToolTip.AutoBpmMessage,Auto Bpm Message

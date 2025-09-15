@@ -274,6 +274,19 @@
                              Name="TextBoxPreviewBegin"
                              VerticalAlignment="Center"
                              LostFocus="TextBoxPreviewBegin_OnLostFocus"/>
+                    <Button Grid.Row="0"
+                            Grid.Column="3"
+                            Name="ButtonPlayPreview"
+                            Classes="Themed Square Outlined"
+                            HorizontalAlignment="Right"
+                            Click="ButtonPlayPreview_OnClick">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.PlayPreview}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="Play" />
+                    </Button>
 
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"

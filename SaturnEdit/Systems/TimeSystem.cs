@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
 
@@ -8,6 +9,7 @@ public enum PlaybackState
 {
     Stopped = 0,
     Playing = 1,
+    Preview = 2,
 }
 
 public static class TimeSystem
@@ -97,10 +99,9 @@ public static class TimeSystem
     public static int DivisionInterval => 1920 / Math.Max(1, Division);
 
     private static float timeScale = 1.0f;
-    private static float audioTime = 0;
 
-    private const float deltaMultiplier = 0.01f;
-    private const float forceAlignDelta = 50.0f;
+    private const float DeltaMultiplier = 0.01f;
+    private const float ForceAlignDelta = 50.0f;
     
     private static void OnSettingsChanged(object? sender, EventArgs e)
     {
@@ -110,7 +111,25 @@ public static class TimeSystem
 
     private static void UpdateTimer_OnTick(object? sender, EventArgs eventArgs)
     {
-        // TODO: Handle playback state changes
+        // Stop playback and seek to begin when chart end is reached.
+        if (Timestamp.Time > ChartSystem.Entry.ChartEnd.Time)
+        {
+            PlaybackState = PlaybackState.Stopped;
+            Seek(0.0f, Division);
+        }
+
+        // Stop playback and seek to preview begin when preview end is reached.
+        if (PlaybackState == PlaybackState.Preview && Timestamp.Time > ChartSystem.Entry.PreviewBegin + ChartSystem.Entry.PreviewLength)
+        {
+            PlaybackState = PlaybackState.Stopped;
+            Seek(ChartSystem.Entry.PreviewBegin, Division);
+        }
+        
+        // Seek to PreviewBegin when playback state is preview
+        if (PlaybackState == PlaybackState.Preview && Timestamp.Time < ChartSystem.Entry.PreviewBegin)
+        {
+            Seek(ChartSystem.Entry.PreviewBegin, Division);
+        }
         
         // Handle keeping UpdateTimer and AudioTimer in-sync.
         if (PlaybackState == PlaybackState.Stopped) return;
@@ -120,7 +139,7 @@ public static class TimeSystem
             // AudioSystem isn't playing audio, or there's no loaded audio.
             // Continue, but synchronise the AudioTimer to the UpdateTimer since there's no audio to rely on.
             Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, Timestamp.Time + tickInterval, Division);
-            audioTime = Timestamp.Time;
+            if (AudioSystem.AudioChannelAudio != null) AudioSystem.AudioChannelAudio.Position = Timestamp.Time;
 
             timeScale = PlaybackSpeed / 100.0f;
         }
@@ -129,23 +148,16 @@ public static class TimeSystem
             // AudioSystem is playing audio.
             // Synchronise the UpdateTimer to the AudioTimer to make sure they don't drift apart.
             float time = Timestamp.Time + tickInterval * timeScale;
-            audioTime = (float)AudioSystem.AudioChannelAudio.Position;
 
-            float delta = time - audioTime;
-            if (Math.Abs(delta) >= forceAlignDelta || timeScale == 0)
+            float delta = time - (float)AudioSystem.AudioChannelAudio.Position;
+            if (Math.Abs(delta) >= ForceAlignDelta || timeScale == 0)
             {
-                time = audioTime;
-                Console.WriteLine("SNAP!");
+                time = (float)AudioSystem.AudioChannelAudio.Position;
             }
 
             Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, time, Division);
-            timeScale = (PlaybackSpeed / 100.0f) - (delta * deltaMultiplier);
+            timeScale = (PlaybackSpeed / 100.0f) - (delta * DeltaMultiplier);
         }
-        
-        
-        Console.WriteLine($"{Timestamp.Measure} {Timestamp.Tick} | {AudioSystem.AudioChannelAudio?.Position} | {Timestamp.Time} {audioTime} | {timeScale}");
-        
-        //Console.WriteLine($"{Timestamp.Measure} {Timestamp.Tick} | {Timestamp.Time}");
     }
 
     public static void Seek(int measure, int tick)

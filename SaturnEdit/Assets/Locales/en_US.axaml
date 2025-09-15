@@ -123,6 +123,7 @@
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.StageUp">Stage Up</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.WorldsEnd">World's End</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.Jacket">Jacket</system:String>
+    <system:String x:Key="ChartEditor.ChartProperties.ToolTip.PlayPreview">Play Preview</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoReading">Auto Reading</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoReading.Description">Automatically determine the reading based on the chart's title.</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoBpmMessage">Auto Bpm Message</system:String>
