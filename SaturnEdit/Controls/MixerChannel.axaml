@@ -600,31 +600,17 @@
             </Canvas>
         </Panel>
 
-        <!-- Mute/Solo -->
-        <StackPanel Grid.Row="2"
-                    Orientation="Horizontal"
-                    Spacing="16"
-                    HorizontalAlignment="Center">
-            <ToggleButton Name="ButtonMute" 
-                          Classes="Themed Outlined"
-                          Width="24"
-                          Height="24"
-                          CornerRadius="3"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center">
-                <TextBlock Text="M" />
-            </ToggleButton>
-
-            <ToggleButton Name="ButtonSolo" 
-                          Classes="Themed Outlined"
-                          Width="24"
-                          Height="24"
-                          CornerRadius="3"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center">
-                <TextBlock Text="S" />
-            </ToggleButton>
-        </StackPanel>
+        <!-- Mute -->
+        <ToggleButton Grid.Row="2"
+                      Name="ButtonMute" 
+                      Classes="Themed Outlined"
+                      Width="24"
+                      Height="24"
+                      CornerRadius="3"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+            <TextBlock Text="M" />
+        </ToggleButton>
 
         <!-- Channel Name -->
         <Border Grid.Row="3"

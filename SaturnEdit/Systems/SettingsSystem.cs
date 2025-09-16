@@ -508,6 +508,188 @@ public class AudioSettings
         }
     }
     private int metronomeVolume = 0;
+    
+    public bool MuteMaster
+    {
+        get => muteMaster;
+        set
+        {
+            if (muteMaster == value) return;
+            
+            muteMaster = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteMaster = false;
+    
+    public bool MuteAudio
+    {
+        get => muteAudio;
+        set
+        {
+            if (muteAudio == value) return;
+            
+            muteAudio = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteAudio = false;
+    
+    public bool MuteGuide
+    {
+        get => muteGuide;
+        set
+        {
+            if (muteGuide == value) return;
+            
+            muteGuide = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteGuide = false;
+    
+    public bool MuteTouch
+    {
+        get => muteTouch;
+        set
+        {
+            if (muteTouch == value) return;
+            
+            muteTouch = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteTouch = false;
+    
+    public bool MuteChain
+    {
+        get => muteChain;
+        set
+        {
+            if (muteChain == value) return;
+            
+            muteChain = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteChain = false;
+    
+    public bool MuteHold
+    {
+        get => muteHold;
+        set
+        {
+            if (muteHold == value) return;
+            
+            muteHold = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteHold = false;
+    
+    public bool MuteHoldLoop
+    {
+        get => muteHoldLoop;
+        set
+        {
+            if (muteHoldLoop == value) return;
+            
+            muteHoldLoop = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteHoldLoop = false;
+    
+    public bool MuteSlide
+    {
+        get => muteSlide;
+        set
+        {
+            if (muteSlide == value) return;
+            
+            muteSlide = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteSlide = false;
+    
+    public bool MuteSnap
+    {
+        get => muteSnap;
+        set
+        {
+            if (muteSnap == value) return;
+            
+            muteSnap = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteSnap = false;
+    
+    public bool MuteBonus
+    {
+        get => muteBonus;
+        set
+        {
+            if (muteBonus == value) return;
+            
+            muteBonus = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteBonus = false;
+    
+    public bool MuteR
+    {
+        get => muteR;
+        set
+        {
+            if (muteR == value) return;
+            
+            muteR = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteR = false;
+    
+    public bool MuteStartClick
+    {
+        get => muteStartClick;
+        set
+        {
+            if (muteStartClick == value) return;
+            
+            muteStartClick = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteStartClick = false;
+    
+    public bool MuteMetronome
+    {
+        get => muteMetronome;
+        set
+        {
+            if (muteMetronome == value) return;
+            
+            muteMetronome = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            VolumeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private bool muteMetronome = false;
 
     public string HitsoundGuidePath
     {

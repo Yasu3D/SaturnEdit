@@ -32,20 +32,20 @@ public static class AudioSystem
     }
 
     public static event EventHandler? AudioLoaded;
+    public static event EventHandler? MuteChanged;
     
     public static AudioChannel? AudioChannelAudio { get; set; }
-    
-    private static AudioChannel? audioChannelGuide;
-    private static AudioChannel? audioChannelTouch;
-    private static AudioChannel? audioChannelChain;
-    private static AudioChannel? audioChannelHold;
-    private static AudioChannel? audioChannelHoldLoop;
-    private static AudioChannel? audioChannelSlide;
-    private static AudioChannel? audioChannelSnap;
-    private static AudioChannel? audioChannelBonus;
-    private static AudioChannel? audioChannelR;
-    private static AudioChannel? audioChannelStartClick;
-    private static AudioChannel? audioChannelMetronome;
+    public static AudioChannel? AudioChannelGuide;
+    public static AudioChannel? AudioChannelTouch;
+    public static AudioChannel? AudioChannelChain;
+    public static AudioChannel? AudioChannelHold;
+    public static AudioChannel? AudioChannelHoldLoop;
+    public static AudioChannel? AudioChannelSlide;
+    public static AudioChannel? AudioChannelSnap;
+    public static AudioChannel? AudioChannelBonus;
+    public static AudioChannel? AudioChannelR;
+    public static AudioChannel? AudioChannelStartClick;
+    public static AudioChannel? AudioChannelMetronome;
     
     private static float latency = 0;
     
@@ -84,18 +84,18 @@ public static class AudioSystem
     {
         double masterVolume = AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume);
         
-        if (AudioChannelAudio      != null) AudioChannelAudio.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        if (audioChannelGuide      != null) audioChannelGuide.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.GuideVolume);
-        if (audioChannelTouch      != null) audioChannelTouch.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.TouchVolume);
-        if (audioChannelChain      != null) audioChannelChain.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.ChainVolume);
-        if (audioChannelHold       != null) audioChannelHold.Volume       = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.HoldVolume);
-        if (audioChannelHoldLoop   != null) audioChannelHoldLoop.Volume   = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.HoldLoopVolume);
-        if (audioChannelSlide      != null) audioChannelSlide.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.SlideVolume);
-        if (audioChannelSnap       != null) audioChannelSnap.Volume       = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.SnapVolume);
-        if (audioChannelBonus      != null) audioChannelBonus.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.BonusVolume);
-        if (audioChannelR          != null) audioChannelR.Volume          = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.RVolume);
-        if (audioChannelStartClick != null) audioChannelStartClick.Volume = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.StartClickVolume);
-        if (audioChannelMetronome  != null) audioChannelMetronome.Volume  = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.MetronomeVolume);
+        if (AudioChannelAudio      != null) AudioChannelAudio.Volume      = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteAudio      ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+        if (AudioChannelGuide      != null) AudioChannelGuide.Volume      = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteGuide      ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.GuideVolume);
+        if (AudioChannelTouch      != null) AudioChannelTouch.Volume      = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteTouch      ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.TouchVolume);
+        if (AudioChannelChain      != null) AudioChannelChain.Volume      = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteChain      ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.ChainVolume);
+        if (AudioChannelHold       != null) AudioChannelHold.Volume       = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteHold       ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.HoldVolume);
+        if (AudioChannelHoldLoop   != null) AudioChannelHoldLoop.Volume   = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteHoldLoop   ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.HoldLoopVolume);
+        if (AudioChannelSlide      != null) AudioChannelSlide.Volume      = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteSlide      ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.SlideVolume);
+        if (AudioChannelSnap       != null) AudioChannelSnap.Volume       = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteSnap       ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.SnapVolume);
+        if (AudioChannelBonus      != null) AudioChannelBonus.Volume      = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteBonus      ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.BonusVolume);
+        if (AudioChannelR          != null) AudioChannelR.Volume          = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteR          ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.RVolume);
+        if (AudioChannelStartClick != null) AudioChannelStartClick.Volume = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteStartClick ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.StartClickVolume);
+        if (AudioChannelMetronome  != null) AudioChannelMetronome.Volume  = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteMetronome  ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.MetronomeVolume);
     }
     
     private static void OnTimestampSeeked(object? sender, EventArgs e)

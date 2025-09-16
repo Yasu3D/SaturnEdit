@@ -22,7 +22,6 @@
                 <controls:MixerChannel Name="ChannelMaster"
                                        VerticalAlignment="Stretch"
                                        ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Master}"
-                                       HasSoloButton="False" 
                                        HasSoundButton="False"/>
 
                 <Rectangle Width="1"

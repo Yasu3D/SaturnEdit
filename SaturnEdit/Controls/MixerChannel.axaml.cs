@@ -28,13 +28,6 @@ public partial class MixerChannel : UserControl
         set => SetValue(HasSoundButtonProperty, value);
     }
     
-    public static readonly StyledProperty<bool> HasSoloButtonProperty = AvaloniaProperty.Register<MixerChannel, bool>(nameof(HasSoloButton), defaultValue: true);
-    public bool HasSoloButton
-    {
-        get => GetValue(HasSoloButtonProperty);
-        set => SetValue(HasSoloButtonProperty, value);
-    }
-    
     private async void InitializeControl()
     {
         try
@@ -43,7 +36,6 @@ public partial class MixerChannel : UserControl
             await Task.Delay(1);
             
             TextBlockChannelName.Text = ChannelName;
-            ButtonSolo.IsVisible = HasSoloButton;
             ButtonSound.IsVisible = HasSoundButton;
         }
         catch (Exception ex)

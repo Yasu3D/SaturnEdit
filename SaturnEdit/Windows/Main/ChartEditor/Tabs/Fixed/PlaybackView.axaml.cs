@@ -48,6 +48,7 @@ public partial class PlaybackView : UserControl
 
     private readonly CanvasInfo canvasInfo = new();
     private SKColor clearColor;
+    private SKColor waveformColor;
     private float sliderMaximum = 0;
 
     private float[]? waveform = null;
@@ -59,10 +60,15 @@ public partial class PlaybackView : UserControl
             await Task.Delay(1);
 
             if (Application.Current == null) return;
-            if (!Application.Current.TryGetResource("BackgroundPrimary", Application.Current.ActualThemeVariant, out object? resource)) return;
-            if (resource is not SolidColorBrush brush) return;
-        
-            clearColor = new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
+            if (Application.Current.TryGetResource("BackgroundPrimary", Application.Current.ActualThemeVariant, out object? clearColorResource) && clearColorResource is SolidColorBrush clearColorBrush)
+            {
+                clearColor = new(clearColorBrush.Color.R, clearColorBrush.Color.G, clearColorBrush.Color.B, clearColorBrush.Color.A);
+            }
+            
+            if (Application.Current.TryGetResource("ForegroundPrimary", Application.Current.ActualThemeVariant, out object? waveformColorResource) && waveformColorResource is SolidColorBrush waveformColorBrush)
+            {
+                waveformColor = new(waveformColorBrush.Color.R, waveformColorBrush.Color.G, waveformColorBrush.Color.B, 0x60);
+            }
         }
         catch (Exception ex)
         {
@@ -71,7 +77,7 @@ public partial class PlaybackView : UserControl
         }
     }
 
-    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => RendererWaveform.RenderSeekSlider(canvas, canvasInfo, clearColor, waveform, ChartSystem.Entry.AudioOffset, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, sliderMaximum);
+    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => RendererWaveform.RenderSeekSlider(canvas, canvasInfo, clearColor, waveformColor, waveform, ChartSystem.Entry.AudioOffset, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, sliderMaximum);
     
     private void OnEntryChanged(object? sender, EventArgs e) => RecalculateSeekSlider();
     private void OnChartChanged(object? sender, EventArgs e) => RecalculateSeekSlider();
