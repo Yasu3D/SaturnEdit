@@ -48,7 +48,6 @@ public static class AudioSystem
     private static AudioChannel? audioChannelMetronome;
     
     private static float latency = 0;
-    private static float NormalizeVolume(float decibel) => (decibel + 60.0f) / 60.0f;
     
     public static void OnClosed(object? sender, EventArgs e)
     {
@@ -83,18 +82,20 @@ public static class AudioSystem
     
     private static void OnVolumeChanged(object? sender, EventArgs e)
     {
-        if (AudioChannelAudio      != null) AudioChannelAudio.Volume      = NormalizeVolume(SettingsSystem.AudioSettings.AudioVolume);
-        if (audioChannelGuide      != null) audioChannelGuide.Volume      = NormalizeVolume(SettingsSystem.AudioSettings.GuideVolume);
-        if (audioChannelTouch      != null) audioChannelTouch.Volume      = NormalizeVolume(SettingsSystem.AudioSettings.TouchVolume);
-        if (audioChannelChain      != null) audioChannelChain.Volume      = NormalizeVolume(SettingsSystem.AudioSettings.ChainVolume);
-        if (audioChannelHold       != null) audioChannelHold.Volume       = NormalizeVolume(SettingsSystem.AudioSettings.HoldVolume);
-        if (audioChannelHoldLoop   != null) audioChannelHoldLoop.Volume   = NormalizeVolume(SettingsSystem.AudioSettings.HoldLoopVolume);
-        if (audioChannelSlide      != null) audioChannelSlide.Volume      = NormalizeVolume(SettingsSystem.AudioSettings.SlideVolume);
-        if (audioChannelSnap       != null) audioChannelSnap.Volume       = NormalizeVolume(SettingsSystem.AudioSettings.SnapVolume);
-        if (audioChannelBonus      != null) audioChannelBonus.Volume      = NormalizeVolume(SettingsSystem.AudioSettings.BonusVolume);
-        if (audioChannelR          != null) audioChannelR.Volume          = NormalizeVolume(SettingsSystem.AudioSettings.RVolume);
-        if (audioChannelStartClick != null) audioChannelStartClick.Volume = NormalizeVolume(SettingsSystem.AudioSettings.StartClickVolume);
-        if (audioChannelMetronome  != null) audioChannelMetronome.Volume  = NormalizeVolume(SettingsSystem.AudioSettings.MetronomeVolume);
+        double masterVolume = AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume);
+        
+        if (AudioChannelAudio      != null) AudioChannelAudio.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+        if (audioChannelGuide      != null) audioChannelGuide.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.GuideVolume);
+        if (audioChannelTouch      != null) audioChannelTouch.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.TouchVolume);
+        if (audioChannelChain      != null) audioChannelChain.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.ChainVolume);
+        if (audioChannelHold       != null) audioChannelHold.Volume       = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.HoldVolume);
+        if (audioChannelHoldLoop   != null) audioChannelHoldLoop.Volume   = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.HoldLoopVolume);
+        if (audioChannelSlide      != null) audioChannelSlide.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.SlideVolume);
+        if (audioChannelSnap       != null) audioChannelSnap.Volume       = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.SnapVolume);
+        if (audioChannelBonus      != null) audioChannelBonus.Volume      = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.BonusVolume);
+        if (audioChannelR          != null) audioChannelR.Volume          = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.RVolume);
+        if (audioChannelStartClick != null) audioChannelStartClick.Volume = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.StartClickVolume);
+        if (audioChannelMetronome  != null) audioChannelMetronome.Volume  = masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.MetronomeVolume);
     }
     
     private static void OnTimestampSeeked(object? sender, EventArgs e)

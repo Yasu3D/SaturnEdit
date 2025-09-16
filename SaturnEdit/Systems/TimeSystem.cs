@@ -21,7 +21,7 @@ public static class TimeSystem
     } 
 
     public static readonly DispatcherTimer UpdateTimer = new(TimeSpan.FromMilliseconds(1000.0f / SettingsSystem.RenderSettings.RefreshRate), DispatcherPriority.Render, UpdateTimer_OnTick);
-    private static float tickInterval;
+    public static float TickInterval { get; private set; }
     
     public static event EventHandler? TimestampChanged;
     public static event EventHandler? TimestampSeeked;
@@ -105,8 +105,8 @@ public static class TimeSystem
     
     private static void OnSettingsChanged(object? sender, EventArgs e)
     {
-        tickInterval = 1000.0f / SettingsSystem.RenderSettings.RefreshRate;
-        UpdateTimer.Interval = TimeSpan.FromMilliseconds(tickInterval);
+        TickInterval = 1000.0f / SettingsSystem.RenderSettings.RefreshRate;
+        UpdateTimer.Interval = TimeSpan.FromMilliseconds(TickInterval);
     }
 
     private static void UpdateTimer_OnTick(object? sender, EventArgs eventArgs)
@@ -138,7 +138,7 @@ public static class TimeSystem
         {
             // AudioSystem isn't playing audio, or there's no loaded audio.
             // Continue, but synchronise the AudioTimer to the UpdateTimer since there's no audio to rely on.
-            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, Timestamp.Time + tickInterval, Division);
+            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, Timestamp.Time + TickInterval, Division);
             if (AudioSystem.AudioChannelAudio != null) AudioSystem.AudioChannelAudio.Position = Timestamp.Time;
 
             timeScale = PlaybackSpeed / 100.0f;
@@ -147,7 +147,7 @@ public static class TimeSystem
         {
             // AudioSystem is playing audio.
             // Synchronise the UpdateTimer to the AudioTimer to make sure they don't drift apart.
-            float time = Timestamp.Time + tickInterval * timeScale;
+            float time = Timestamp.Time + TickInterval * timeScale;
 
             float delta = time - (float)AudioSystem.AudioChannelAudio.Position;
             if (Math.Abs(delta) >= ForceAlignDelta || timeScale == 0)

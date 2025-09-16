@@ -27,6 +27,8 @@ public partial class AudioMixerView : UserControl
         ChannelR.SliderVolume.ValueChanged          += ChannelRSliderVolumeOnValueChanged;
         ChannelStartClick.SliderVolume.ValueChanged += ChannelStartClickSliderVolumeOnValueChanged;
         ChannelMetronome.SliderVolume.ValueChanged  += ChannelMetronomeSliderVolumeOnValueChanged;
+
+        TimeSystem.UpdateTimer.Tick += UpdateTimer_OnTick;
     }
 
     private bool blockChanges = false;
@@ -182,6 +184,23 @@ public partial class AudioMixerView : UserControl
         blockChanges = false;
     }
 
+    private void UpdateTimer_OnTick(object? sender, EventArgs e)
+    {
+        ChannelAudio.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioChannelAudio?.LevelLeft, AudioSystem.AudioChannelAudio?.Volume, ChannelAudio.MixerVolumeBarLeft.Height);
+        ChannelAudio.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioChannelAudio?.LevelRight, AudioSystem.AudioChannelAudio?.Volume, ChannelAudio.MixerVolumeBarRight.Height);
+        
+        return;
+
+        double getLevel(float? level, double? volume, double currentHeight)
+        {
+            const double maxHeight = 175;
+            
+            currentHeight = Math.Max(currentHeight, maxHeight * (level ?? 0) * (volume ?? 0));
+            currentHeight -= TimeSystem.TickInterval * 0.2f;
+            return Math.Clamp(currentHeight, 0, maxHeight);
+        }
+    }
+    
     private int SliderValueToDecibels(double value)
     {
         return value > 24

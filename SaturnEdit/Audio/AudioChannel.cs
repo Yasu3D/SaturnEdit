@@ -59,7 +59,7 @@ public class AudioChannel
     }
 
     /// <summary>
-    /// The playback volume of the audio channel.
+    /// The playback volume of the audio channel.<br/>Range 0 to 1
     /// </summary>
     public double Volume
     {
@@ -92,13 +92,10 @@ public class AudioChannel
         get => playing;
         set
         {
-            if (!OneShot && playing == value) return;
-            
             playing = value;
             
             if (playing)
             {
-                if (OneShot) Bass.ChannelSetPosition(StreamHandle, 0);
                 Bass.ChannelPlay(StreamHandle);
             }
             else
@@ -109,7 +106,29 @@ public class AudioChannel
     }
     private bool playing = false;
 
-    public bool OneShot { get; set; } = false;
+    /// <summary>
+    /// The current level of the left channel.<br/>Range 0-1.
+    /// </summary>
+    public float LevelLeft
+    {
+        get
+        {
+            int level = Bass.ChannelGetLevelLeft(StreamHandle);
+            return level == -1 ? -1 : level / 32768.0f;
+        }
+    }
+
+    /// <summary>
+    /// The current level of the right channel.<br/>Range 0-1.
+    /// </summary>
+    public float LevelRight
+    {
+        get
+        {
+            int level = Bass.ChannelGetLevelRight(StreamHandle);
+            return level == -1 ? -1 : level / 32768.0f;
+        }
+    }
 
     public static float[]? GetWaveformData(string path)
     {
@@ -192,5 +211,13 @@ public class AudioChannel
         }
 
         return points;
+    }
+
+    public static double DecibelToVolume(int decibel)
+    {
+        double normalized = decibel / 60.0 + 1;
+        double scaled = 0.1 * Math.Pow(Math.E, 2.4 * normalized) - 0.1;
+        
+        return scaled;
     }
 }
