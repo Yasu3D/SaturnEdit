@@ -152,8 +152,10 @@ public static class AudioSystem
     
     private static void OnTimestampSeeked(object? sender, EventArgs e)
     {
-        if (AudioChannelAudio == null) return;
-        AudioChannelAudio.Position = TimeSystem.AudioTime;
+        if (AudioChannelAudio != null)
+        {
+            AudioChannelAudio.Position = TimeSystem.AudioTime;
+        }
         
         UpdateHitsoundHashSets();
     }
@@ -209,10 +211,9 @@ public static class AudioSystem
             
             // Hold notes need to play hitsounds for both the hold start and hold end notes.
             // Always check if the end of the hold note is passed before discarding the note entirely.
-            
-            // Hold Start has already passed
             if (note is HoldNote holdNote && PassedNotes.Contains(holdNote) && holdNote.Points.Count > 1)
             {
+                // Hold Start has already passed
                 HoldPointNote holdEnd = holdNote.Points[^1];
                 
                 // Hold End has not passed yet.
@@ -314,6 +315,14 @@ public static class AudioSystem
             if (timeable.Timestamp.Time < TimeSystem.HitsoundTime)
             {
                 PassedNotes.Add(note);
+            }
+
+            if (note is HoldNote holdNote && holdNote.Points.Count > 1)
+            {
+                if (holdNote.Points[^1].Timestamp.Time < TimeSystem.HitsoundTime)
+                {
+                    PassedNotes.Add(holdNote.Points[^1]);
+                }
             }
 
             if (note is SlideClockwiseNote or SlideCounterclockwiseNote && note is IPlayable playable && playable.BonusType == BonusType.Bonus)

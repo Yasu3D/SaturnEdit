@@ -108,11 +108,6 @@ public static class TimeSystem
     /// The number of ticks between each beat.
     /// </summary>
     public static int DivisionInterval => 1920 / Math.Max(1, Division);
-
-    private static float timeScale = 1.0f;
-
-    private const float DeltaMultiplier = 0.01f;
-    private const float ForceAlignDelta = 50.0f;
     
     private static void OnSettingsChanged(object? sender, EventArgs e)
     {
@@ -148,27 +143,15 @@ public static class TimeSystem
         if (AudioSystem.AudioChannelAudio == null || !AudioSystem.AudioChannelAudio.Playing)
         {
             // AudioSystem isn't playing audio, or there's no loaded audio.
-            // Continue, but synchronise the AudioTimer to the UpdateTimer since there's no audio to rely on.
-            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, Timestamp.Time + TickInterval, Division);
+            // Keep counting up with UpdateTimer, and synchronise the AudioTimer to it.
+            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, Timestamp.Time + TickInterval * PlaybackSpeed * 0.01f, Division);
             if (AudioSystem.AudioChannelAudio != null) AudioSystem.AudioChannelAudio.Position = AudioTime;
-
-            timeScale = PlaybackSpeed / 100.0f;
         }
         else
         {
             // AudioSystem is playing audio.
-            // Synchronise the UpdateTimer to the AudioTimer to make sure they don't drift apart.
-            float time = Timestamp.Time + TickInterval * timeScale;
-            
-            float delta = time - (float)AudioSystem.AudioChannelAudio.Position + ChartSystem.Entry.AudioOffset;
-            if (Math.Abs(delta) >= ForceAlignDelta || timeScale == 0)
-            {
-                Console.WriteLine("Snap");
-                time = (float)AudioSystem.AudioChannelAudio.Position;
-            }
-
-            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, time, Division);
-            timeScale = (PlaybackSpeed / 100.0f) - (delta * DeltaMultiplier);
+            // ManagedBass is absolutely cracked at keeping time, so just sync directly to that.
+            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, (float)AudioSystem.AudioChannelAudio.Position, Division);
         }
     }
 
