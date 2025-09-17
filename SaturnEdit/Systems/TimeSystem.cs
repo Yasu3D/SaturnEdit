@@ -83,6 +83,12 @@ public static class TimeSystem
     public static float AudioTime => Timestamp.Time + ChartSystem.Entry.AudioOffset;
 
     /// <summary>
+    /// <see cref="Timestamp"/> with compensation for the sound card <see cref="AudioSystem.Latency"/>
+    /// </summary>
+    public static float HitsoundTime => Timestamp.Time + AudioSystem.Latency + MagicOffset;
+    private const float MagicOffset = 50;
+    
+    /// <summary>
     /// The current beat division to snap to.
     /// </summary>
     public static int Division
@@ -157,6 +163,7 @@ public static class TimeSystem
             float delta = time - (float)AudioSystem.AudioChannelAudio.Position + ChartSystem.Entry.AudioOffset;
             if (Math.Abs(delta) >= ForceAlignDelta || timeScale == 0)
             {
+                Console.WriteLine("Snap");
                 time = (float)AudioSystem.AudioChannelAudio.Position;
             }
 

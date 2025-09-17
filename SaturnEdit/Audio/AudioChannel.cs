@@ -213,12 +213,4 @@ public class AudioChannel
 
         return points;
     }
-
-    public static double DecibelToVolume(int decibel)
-    {
-        double normalized = decibel / 60.0 + 1;
-        double scaled = 0.1 * Math.Pow(Math.E, 2.4 * normalized) - 0.1;
-        
-        return scaled;
-    }
 }

@@ -53,18 +53,6 @@
                            VerticalAlignment="Stretch"
                            Fill="{DynamicResource SeparatorPrimary}" />
 
-                <controls:MixerChannel Name="ChannelChain"
-                                       VerticalAlignment="Stretch"
-                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Chain}" />
-
-                <Rectangle Width="1"
-                           VerticalAlignment="Stretch"
-                           Fill="{DynamicResource SeparatorPrimary}" />
-
-                <controls:MixerChannel Name="ChannelHold"
-                                       VerticalAlignment="Stretch"
-                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Hold}" />
-
                 <Rectangle Width="1"
                            VerticalAlignment="Stretch"
                            Fill="{DynamicResource SeparatorPrimary}" />
@@ -80,14 +68,6 @@
                 <controls:MixerChannel Name="ChannelSlide"
                                        VerticalAlignment="Stretch"
                                        ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Slide}" />
-
-                <Rectangle Width="1"
-                           VerticalAlignment="Stretch"
-                           Fill="{DynamicResource SeparatorPrimary}" />
-
-                <controls:MixerChannel Name="ChannelSnap"
-                                       VerticalAlignment="Stretch"
-                                       ChannelName="{DynamicResource ChartEditor.AudioMixer.Channel.Snap}" />
 
                 <Rectangle Width="1"
                            VerticalAlignment="Stretch"

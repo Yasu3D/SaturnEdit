@@ -565,34 +565,6 @@ public class AudioSettings
     }
     private bool muteTouch = false;
     
-    public bool MuteChain
-    {
-        get => muteChain;
-        set
-        {
-            if (muteChain == value) return;
-            
-            muteChain = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteChain = false;
-    
-    public bool MuteHold
-    {
-        get => muteHold;
-        set
-        {
-            if (muteHold == value) return;
-            
-            muteHold = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteHold = false;
-    
     public bool MuteHoldLoop
     {
         get => muteHoldLoop;
@@ -620,20 +592,6 @@ public class AudioSettings
         }
     }
     private bool muteSlide = false;
-    
-    public bool MuteSnap
-    {
-        get => muteSnap;
-        set
-        {
-            if (muteSnap == value) return;
-            
-            muteSnap = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteSnap = false;
     
     public bool MuteBonus
     {
@@ -719,34 +677,6 @@ public class AudioSettings
     }
     private string hitsoundTouchPath = "";
     
-    public string HitsoundChainPath
-    {
-        get => hitsoundChainPath;
-        set
-        {
-            if (hitsoundChainPath == value) return;
-            
-            hitsoundChainPath = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private string hitsoundChainPath = "";
-    
-    public string HitsoundHoldPath
-    {
-        get => hitsoundHoldPath;
-        set
-        {
-            if (hitsoundHoldPath == value) return;
-            
-            hitsoundHoldPath = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private string hitsoundHoldPath = "";
-    
     public string HitsoundHoldLoopPath
     {
         get => hitsoundHoldLoopPath;
@@ -774,20 +704,6 @@ public class AudioSettings
         }
     }
     private string hitsoundSlidePath = "";
-    
-    public string HitsoundSnapPath
-    {
-        get => hitsoundSnapPath;
-        set
-        {
-            if (hitsoundSnapPath == value) return;
-            
-            hitsoundSnapPath = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private string hitsoundSnapPath = "";
     
     public string HitsoundBonusPath
     {

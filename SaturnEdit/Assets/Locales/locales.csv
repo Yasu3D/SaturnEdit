@@ -192,11 +192,8 @@ ChartEditor.AudioMixer.Channel.Master,Master
 ChartEditor.AudioMixer.Channel.Audio,Audio
 ChartEditor.AudioMixer.Channel.Guide,Guide
 ChartEditor.AudioMixer.Channel.Touch,Touch
-ChartEditor.AudioMixer.Channel.Chain,Chain
-ChartEditor.AudioMixer.Channel.Hold,Hold
 ChartEditor.AudioMixer.Channel.HoldLoop,Hold Loop
 ChartEditor.AudioMixer.Channel.Slide,Slide
-ChartEditor.AudioMixer.Channel.Snap,Snap
 ChartEditor.AudioMixer.Channel.Bonus,Bonus
 ChartEditor.AudioMixer.Channel.R,R
 ChartEditor.AudioMixer.Channel.StartClick,Start Click
