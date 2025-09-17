@@ -106,7 +106,7 @@ public static class ChartSystem
     /// <param name="text"></param>
     /// <param name="args"></param>
     /// <param name="exceptions"></param>
-    public static void ReadChartEditorTxt(string text, NotationReadArgs args, out List<Exception> exceptions)
+    public static void ReadChartEditorTxt(string text, string rootDirectory, NotationReadArgs args, out List<Exception> exceptions)
     {
         string[] data = text.Split('\n');
 
@@ -122,6 +122,8 @@ public static class ChartSystem
 
             Entry = entry;
             Chart = chart;
+
+            Entry.RootDirectory = rootDirectory;
             
             Entry.EntryChanged += OnEntryChanged;
             Entry.AudioChanged += OnAudioChanged;

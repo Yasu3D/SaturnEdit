@@ -6,8 +6,12 @@ using Avalonia.Interactivity;
 using TextMateSharp.Grammars;
 using AvaloniaEdit.TextMate;
 using System.IO;
+using Avalonia.Platform.Storage;
+using FluentIcons.Common;
+using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
+using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -87,16 +91,8 @@ public partial class ChartViewTxt : UserControl
 
     private void UpdateChartFromText()
     {
-        // TODO: Preserve Root directory.
+        ChartSystem.ReadChartEditorTxt(TextEditorChart.Text, ChartSystem.Entry.RootDirectory, readArgs, out List<Exception> exceptions);
         
-        // TODO: Save prompt
-        if (!ChartSystem.IsSaved)
-        {
-            
-        }
-        
-        ChartSystem.ReadChartEditorTxt(TextEditorChart.Text, readArgs, out List<Exception> exceptions);
-
         ErrorList.IsVisible = exceptions.Count > 0;
         TextBlockErrorCount.Text = $"Errors found in file : {exceptions.Count}";
         TextBlockErrorList.Text = "";
@@ -105,7 +101,7 @@ public partial class ChartViewTxt : UserControl
             TextBlockErrorList.Text += exception.Message + "\n";
         }
     }
-
+    
     private void UpdateTextFromChart()
     {
         TextEditorChart.Text = NotationSerializer.ToString(ChartSystem.Entry, ChartSystem.Chart, writeArgs);
