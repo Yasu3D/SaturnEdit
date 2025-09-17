@@ -14,13 +14,18 @@ public static class AudioSystem
         Bass.PlaybackBufferLength = 150;
         
         Bass.GetInfo(out BassInfo info);
-        latency = info.Latency;
+        Latency = info.Latency;
         
         ChartSystem.AudioChanged += OnAudioChanged;
         OnAudioChanged(null, EventArgs.Empty);
 
+        ChartSystem.EntryChanged += OnEntryChanged;
+
         SettingsSystem.AudioSettings.VolumeChanged += OnVolumeChanged;
         OnVolumeChanged(null, EventArgs.Empty);
+
+        SettingsSystem.AudioSettings.HitsoundsChanged += OnHitsoundsChanged;
+        OnHitsoundsChanged(null, EventArgs.Empty);
 
         TimeSystem.TimestampSeeked += OnTimestampSeeked;
         OnTimestampSeeked(null, EventArgs.Empty);
@@ -32,23 +37,22 @@ public static class AudioSystem
     }
 
     public static event EventHandler? AudioLoaded;
-    public static event EventHandler? MuteChanged;
     
-    public static AudioChannel? AudioChannelAudio { get; set; }
-    public static AudioChannel? AudioChannelGuide;
-    public static AudioChannel? AudioChannelTouch;
-    public static AudioChannel? AudioChannelChain;
-    public static AudioChannel? AudioChannelHold;
-    public static AudioChannel? AudioChannelHoldLoop;
-    public static AudioChannel? AudioChannelSlide;
-    public static AudioChannel? AudioChannelSnap;
-    public static AudioChannel? AudioChannelBonus;
-    public static AudioChannel? AudioChannelR;
-    public static AudioChannel? AudioChannelStartClick;
-    public static AudioChannel? AudioChannelMetronome;
-    
-    private static float latency = 0;
-    
+    public static AudioChannel? AudioChannelAudio { get; private set; }
+    public static AudioChannel? AudioChannelGuide { get; private set; }
+    public static AudioChannel? AudioChannelTouch { get; private set; }
+    public static AudioChannel? AudioChannelChain { get; private set; }
+    public static AudioChannel? AudioChannelHold { get; private set; }
+    public static AudioChannel? AudioChannelHoldLoop { get; private set; }
+    public static AudioChannel? AudioChannelSlide { get; private set; }
+    public static AudioChannel? AudioChannelSnap { get; private set; }
+    public static AudioChannel? AudioChannelBonus { get; private set; }
+    public static AudioChannel? AudioChannelR { get; private set; }
+    public static AudioChannel? AudioChannelStartClick { get; private set; }
+    public static AudioChannel? AudioChannelMetronome { get; private set; }
+
+    public static float Latency { get; private set; } = 0;
+
     public static void OnClosed(object? sender, EventArgs e)
     {
         Bass.Free();
@@ -67,9 +71,49 @@ public static class AudioSystem
             }
 
             AudioChannelAudio = new(ChartSystem.Entry.AudioPath);
+            
             OnVolumeChanged(null, EventArgs.Empty);
             OnTimestampSeeked(null, EventArgs.Empty);
             OnPlaybackSpeedChanged(null, EventArgs.Empty);
+        }
+        catch (Exception ex)
+        {
+            AudioChannelAudio = null;
+            Console.WriteLine(ex);
+        }
+        
+        AudioLoaded?.Invoke(null, EventArgs.Empty);
+    }
+    
+    private static void OnHitsoundsChanged(object? sender, EventArgs e)
+    {
+        if (AudioChannelGuide != null) AudioChannelGuide.Playing = false;
+        if (AudioChannelTouch != null) AudioChannelTouch.Playing = false;
+        if (AudioChannelChain != null) AudioChannelChain.Playing = false;
+        if (AudioChannelHold != null) AudioChannelHold.Playing = false;
+        if (AudioChannelHoldLoop != null) AudioChannelHoldLoop.Playing = false;
+        if (AudioChannelSlide != null) AudioChannelSlide.Playing = false;
+        if (AudioChannelSnap != null) AudioChannelSnap.Playing = false;
+        if (AudioChannelBonus != null) AudioChannelBonus.Playing = false;
+        if (AudioChannelR != null) AudioChannelR.Playing = false;
+        if (AudioChannelStartClick != null) AudioChannelStartClick.Playing = false;
+        if (AudioChannelMetronome != null) AudioChannelMetronome.Playing = false;
+        
+        try
+        {
+            AudioChannelGuide      = File.Exists(SettingsSystem.AudioSettings.HitsoundGuidePath)      ? new(SettingsSystem.AudioSettings.HitsoundGuidePath)      : null;
+            AudioChannelTouch      = File.Exists(SettingsSystem.AudioSettings.HitsoundTouchPath)      ? new(SettingsSystem.AudioSettings.HitsoundTouchPath)      : null;
+            AudioChannelChain      = File.Exists(SettingsSystem.AudioSettings.HitsoundChainPath)      ? new(SettingsSystem.AudioSettings.HitsoundChainPath)      : null;
+            AudioChannelHold       = File.Exists(SettingsSystem.AudioSettings.HitsoundHoldPath)       ? new(SettingsSystem.AudioSettings.HitsoundHoldPath)       : null;
+            AudioChannelHoldLoop   = File.Exists(SettingsSystem.AudioSettings.HitsoundHoldLoopPath)   ? new(SettingsSystem.AudioSettings.HitsoundHoldLoopPath)   : null;
+            AudioChannelSlide      = File.Exists(SettingsSystem.AudioSettings.HitsoundSlidePath)      ? new(SettingsSystem.AudioSettings.HitsoundSlidePath)      : null;
+            AudioChannelSnap       = File.Exists(SettingsSystem.AudioSettings.HitsoundSnapPath)       ? new(SettingsSystem.AudioSettings.HitsoundSnapPath)       : null;
+            AudioChannelBonus      = File.Exists(SettingsSystem.AudioSettings.HitsoundBonusPath)      ? new(SettingsSystem.AudioSettings.HitsoundBonusPath)      : null;
+            AudioChannelR          = File.Exists(SettingsSystem.AudioSettings.HitsoundRPath)          ? new(SettingsSystem.AudioSettings.HitsoundRPath)          : null;
+            AudioChannelStartClick = File.Exists(SettingsSystem.AudioSettings.HitsoundStartClickPath) ? new(SettingsSystem.AudioSettings.HitsoundStartClickPath) : null;
+            AudioChannelMetronome  = File.Exists(SettingsSystem.AudioSettings.HitsoundMetronomePath)  ? new(SettingsSystem.AudioSettings.HitsoundMetronomePath)  : null;
+            
+            OnVolumeChanged(null, EventArgs.Empty);
         }
         catch (Exception ex)
         {
@@ -97,12 +141,10 @@ public static class AudioSystem
         if (AudioChannelStartClick != null) AudioChannelStartClick.Volume = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteStartClick ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.StartClickVolume);
         if (AudioChannelMetronome  != null) AudioChannelMetronome.Volume  = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteMetronome  ? 0 : masterVolume * AudioChannel.DecibelToVolume(SettingsSystem.AudioSettings.MetronomeVolume);
     }
+
+    private static void OnEntryChanged(object? sender, EventArgs e) => UpdateAudioPosition();
     
-    private static void OnTimestampSeeked(object? sender, EventArgs e)
-    {
-        if (AudioChannelAudio == null) return;
-        AudioChannelAudio.Position = TimeSystem.Timestamp.Time;
-    }
+    private static void OnTimestampSeeked(object? sender, EventArgs e) => UpdateAudioPosition();
     
     private static void OnPlaybackSpeedChanged(object? sender, EventArgs e)
     {
@@ -123,10 +165,16 @@ public static class AudioSystem
         // Play audio if time is inside playback range. Pause otherwise.
         if (TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview)
         {
-            bool beforeAudio = TimeSystem.Timestamp.Time < 0;
-            bool afterAudio = TimeSystem.Timestamp.Time > AudioChannelAudio.Length;
+            bool beforeAudio = TimeSystem.AudioTime < 0;
+            bool afterAudio = TimeSystem.AudioTime > AudioChannelAudio.Length;
 
             AudioChannelAudio.Playing = !beforeAudio && !afterAudio;
         }
+    }
+
+    private static void UpdateAudioPosition()
+    {
+        if (AudioChannelAudio == null) return;
+        AudioChannelAudio.Position = TimeSystem.AudioTime;
     }
 }

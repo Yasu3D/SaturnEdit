@@ -499,6 +499,7 @@ public partial class ChartPropertiesView : UserControl
         }
         catch (Exception ex)
         {
+            // don't throw
             Console.WriteLine(ex);
         }
     }
@@ -544,6 +545,7 @@ public partial class ChartPropertiesView : UserControl
         }
         catch (Exception ex)
         {
+            // don't throw
             Console.WriteLine(ex);
         }
     }
@@ -589,6 +591,7 @@ public partial class ChartPropertiesView : UserControl
         }
         catch (Exception ex)
         {
+            // don't throw
             Console.WriteLine(ex);
         }
     }

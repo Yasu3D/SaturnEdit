@@ -1,7 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using SaturnEdit.Audio;
 using SaturnEdit.Systems;
 
@@ -12,10 +17,13 @@ public partial class AudioMixerView : UserControl
     public AudioMixerView()
     {
         InitializeComponent();
+        InitChannels();
         
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-        
+        TimeSystem.UpdateTimer.Tick += UpdateTimer_OnTick;
+    }
+
+    private async void InitChannels()
+    {
         ChannelMaster.SliderVolume.ValueChanged     += ChannelSliderVolume_OnValueChanged;
         ChannelAudio.SliderVolume.ValueChanged      += ChannelSliderVolume_OnValueChanged;
         ChannelGuide.SliderVolume.ValueChanged      += ChannelSliderVolume_OnValueChanged;
@@ -44,7 +52,24 @@ public partial class AudioMixerView : UserControl
         ChannelStartClick.ButtonMute.IsCheckedChanged += ChannelButtonMute_OnIsCheckedChanged;
         ChannelMetronome.ButtonMute.IsCheckedChanged  += ChannelButtonMute_OnIsCheckedChanged;
         
-        TimeSystem.UpdateTimer.Tick += UpdateTimer_OnTick;
+        ChannelMaster.ButtonSound.Click     += ChannelButtonSound_OnClick;
+        ChannelAudio.ButtonSound.Click      += ChannelButtonSound_OnClick;
+        ChannelGuide.ButtonSound.Click      += ChannelButtonSound_OnClick;
+        ChannelTouch.ButtonSound.Click      += ChannelButtonSound_OnClick;
+        ChannelChain.ButtonSound.Click      += ChannelButtonSound_OnClick;
+        ChannelHold.ButtonSound.Click       += ChannelButtonSound_OnClick;
+        ChannelHoldLoop.ButtonSound.Click   += ChannelButtonSound_OnClick;
+        ChannelSnap.ButtonSound.Click       += ChannelButtonSound_OnClick;
+        ChannelSlide.ButtonSound.Click      += ChannelButtonSound_OnClick;
+        ChannelBonus.ButtonSound.Click      += ChannelButtonSound_OnClick;
+        ChannelR.ButtonSound.Click          += ChannelButtonSound_OnClick;
+        ChannelStartClick.ButtonSound.Click += ChannelButtonSound_OnClick;
+        ChannelMetronome.ButtonSound.Click  += ChannelButtonSound_OnClick;
+        
+        // race conditions, part 2 (:
+        await Task.Delay(1);
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
@@ -80,6 +105,24 @@ public partial class AudioMixerView : UserControl
         ChannelR.ButtonMute.IsChecked          = SettingsSystem.AudioSettings.MuteR;
         ChannelStartClick.ButtonMute.IsChecked = SettingsSystem.AudioSettings.MuteStartClick;
         ChannelMetronome.ButtonMute.IsChecked  = SettingsSystem.AudioSettings.MuteMetronome;
+        
+        string noSound = "";
+        object? resource = null;
+        
+        Application.Current?.TryGetResource("ChartEditor.AudioMixer.Placeholder.NoSound", Application.Current.ActualThemeVariant, out resource);
+        if (resource is string s) noSound = s;
+        
+        ChannelGuide.TextBlockSound.Text      = File.Exists(SettingsSystem.AudioSettings.HitsoundGuidePath)      ? Path.GetFileNameWithoutExtension(SettingsSystem.AudioSettings.HitsoundGuidePath)      : noSound;
+        ChannelTouch.TextBlockSound.Text      = File.Exists(SettingsSystem.AudioSettings.HitsoundTouchPath)      ? Path.GetFileNameWithoutExtension(SettingsSystem.AudioSettings.HitsoundTouchPath)      : noSound;
+        ChannelChain.TextBlockSound.Text      = File.Exists(SettingsSystem.AudioSettings.HitsoundChainPath)      ? Path.GetFileNameWithoutExtension(SettingsSystem.AudioSettings.HitsoundChainPath)      : noSound;
+        ChannelHold.TextBlockSound.Text       = File.Exists(SettingsSystem.AudioSettings.HitsoundHoldPath)       ? Path.GetFileNameWithoutExtension(SettingsSystem.AudioSettings.HitsoundHoldPath)       : noSound;
+        ChannelHoldLoop.TextBlockSound.Text   = File.Exists(SettingsSystem.AudioSettings.HitsoundHoldLoopPath)   ? Path.GetFileNameWithoutExtension(SettingsSystem.AudioSettings.HitsoundHoldLoopPath)   : noSound;
+        ChannelSnap.TextBlockSound.Text       = File.Exists(SettingsSystem.AudioSettings.HitsoundSnapPath)       ? Path.GetFileNameWithoutExtension(SettingsSystem.AudioSettings.HitsoundSnapPath)       : noSound;
+        ChannelSlide.TextBlockSound.Text      = File.Exists(SettingsSystem.AudioSettings.HitsoundSlidePath)      ? Path.GetFileNameWithoutExtension(SettingsSystem.AudioSettings.HitsoundSlidePath)      : noSound;
+        ChannelBonus.TextBlockSound.Text      = File.Exists(SettingsSystem.AudioSettings.HitsoundBonusPath)      ? Path.GetFileNameWithoutExtension(SettingsSystem.AudioSettings.HitsoundBonusPath)      : noSound;
+        ChannelR.TextBlockSound.Text          = File.Exists(SettingsSystem.AudioSettings.HitsoundRPath)          ? Path.GetFileNameWithoutExtension(SettingsSystem.AudioSettings.HitsoundRPath)          : noSound;
+        ChannelStartClick.TextBlockSound.Text = File.Exists(SettingsSystem.AudioSettings.HitsoundStartClickPath) ? Path.GetFileNameWithoutExtension(SettingsSystem.AudioSettings.HitsoundStartClickPath) : noSound;
+        ChannelMetronome.TextBlockSound.Text  = File.Exists(SettingsSystem.AudioSettings.HitsoundMetronomePath)  ? Path.GetFileNameWithoutExtension(SettingsSystem.AudioSettings.HitsoundMetronomePath)  : noSound;
 
         blockEvents = false;
     }
@@ -185,7 +228,6 @@ public partial class AudioMixerView : UserControl
 
         int value = SliderValueToDecibels(slider.Value);
         
-        // ugly... but better than the alternative.
         if      (ReferenceEquals(sender, ChannelMaster.SliderVolume))     { SettingsSystem.AudioSettings.MasterVolume     = value; }
         else if (ReferenceEquals(sender, ChannelAudio.SliderVolume))      { SettingsSystem.AudioSettings.AudioVolume      = value; }
         else if (ReferenceEquals(sender, ChannelGuide.SliderVolume))      { SettingsSystem.AudioSettings.GuideVolume      = value; }
@@ -208,7 +250,6 @@ public partial class AudioMixerView : UserControl
 
         bool value = button.IsChecked ?? false;
         
-        // ugly... but better than the alternative.
         if      (ReferenceEquals(sender, ChannelMaster.ButtonMute))     { SettingsSystem.AudioSettings.MuteMaster     = value; }
         else if (ReferenceEquals(sender, ChannelAudio.ButtonMute))      { SettingsSystem.AudioSettings.MuteAudio      = value; }
         else if (ReferenceEquals(sender, ChannelGuide.ButtonMute))      { SettingsSystem.AudioSettings.MuteGuide      = value; }
@@ -222,6 +263,55 @@ public partial class AudioMixerView : UserControl
         else if (ReferenceEquals(sender, ChannelR.ButtonMute))          { SettingsSystem.AudioSettings.MuteR          = value; }
         else if (ReferenceEquals(sender, ChannelStartClick.ButtonMute)) { SettingsSystem.AudioSettings.MuteStartClick = value; }
         else if (ReferenceEquals(sender, ChannelMetronome.ButtonMute))  { SettingsSystem.AudioSettings.MuteMetronome  = value; }
+    }
+    
+    private async void ChannelButtonSound_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (sender == null) return;
+
+        string path = "";
+        
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return;
+
+            // Open file picker.
+            IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
+            {
+                AllowMultiple = false,
+                FileTypeFilter =
+                [
+                    new("Audio Files")
+                    {
+                        Patterns = ["*.wav", "*.mp3", "*.ogg", "*.flac"],
+                    },
+                ],
+            });
+            if (files.Count != 1) return;
+
+            path = files[0].Path.LocalPath;
+        }
+        catch (Exception ex)
+        {
+            // don't throw
+            Console.WriteLine(ex);
+        }
+
+        if (!File.Exists(path)) return;
+        
+        if      (ReferenceEquals(sender, ChannelGuide.ButtonSound))      { SettingsSystem.AudioSettings.HitsoundGuidePath      = path; }
+        else if (ReferenceEquals(sender, ChannelTouch.ButtonSound))      { SettingsSystem.AudioSettings.HitsoundTouchPath      = path; }
+        else if (ReferenceEquals(sender, ChannelChain.ButtonSound))      { SettingsSystem.AudioSettings.HitsoundChainPath      = path; }
+        else if (ReferenceEquals(sender, ChannelHold.ButtonSound))       { SettingsSystem.AudioSettings.HitsoundHoldPath       = path; }
+        else if (ReferenceEquals(sender, ChannelHoldLoop.ButtonSound))   { SettingsSystem.AudioSettings.HitsoundHoldLoopPath   = path; }
+        else if (ReferenceEquals(sender, ChannelSnap.ButtonSound))       { SettingsSystem.AudioSettings.HitsoundSnapPath       = path; }
+        else if (ReferenceEquals(sender, ChannelSlide.ButtonSound))      { SettingsSystem.AudioSettings.HitsoundSlidePath      = path; }
+        else if (ReferenceEquals(sender, ChannelBonus.ButtonSound))      { SettingsSystem.AudioSettings.HitsoundBonusPath      = path; }
+        else if (ReferenceEquals(sender, ChannelR.ButtonSound))          { SettingsSystem.AudioSettings.HitsoundRPath          = path; }
+        else if (ReferenceEquals(sender, ChannelStartClick.ButtonSound)) { SettingsSystem.AudioSettings.HitsoundStartClickPath = path; }
+        else if (ReferenceEquals(sender, ChannelMetronome.ButtonSound))  { SettingsSystem.AudioSettings.HitsoundMetronomePath  = path; }
     }
     
     private int SliderValueToDecibels(double value)

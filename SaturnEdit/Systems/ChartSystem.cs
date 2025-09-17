@@ -77,7 +77,7 @@ public static class ChartSystem
     }
 
     /// <summary>
-    /// Creates a new chart to work on by reading data from a file, then invokes <see cref="ChartChanged"/> and <see cref="EntryChanged"/>
+    /// Creates a new chart to work on by reading data from a file, then invokes <see cref="ChartChanged"/>, <see cref="EntryChanged"/>, <see cref="AudioChanged"/> and <see cref="JacketChanged"/>
     /// </summary>
     /// <param name="path">Path to the file to read from.</param>
     /// <param name="args">Arguments for how the chart should be read.</param>
@@ -101,7 +101,7 @@ public static class ChartSystem
     }
     
     /// <summary>
-    /// Updates a chart to 
+    /// Updates a chart to  work on by reading data from ChartViewTxt, then invokes <see cref="ChartChanged"/>, <see cref="EntryChanged"/>, <see cref="AudioChanged"/> and <see cref="JacketChanged"/>
     /// </summary>
     /// <param name="text"></param>
     /// <param name="args"></param>
@@ -114,22 +114,19 @@ public static class ChartSystem
         Chart chart = NotationSerializer.ToChart(data, args, out List<Exception> chartExceptions);
         exceptions = entryExceptions.Concat(chartExceptions).ToList();
         
-        Entry.EntryChanged -= OnEntryChanged;
-        Entry.AudioChanged -= OnAudioChanged;
-        Entry.JacketChanged -= OnJacketChanged;
-        
         if (exceptions.Count == 0)
         {
+            Entry.EntryChanged -= OnEntryChanged;
+            Entry.AudioChanged -= OnAudioChanged;
+            Entry.JacketChanged -= OnJacketChanged;
+
             Entry = entry;
             Chart = chart;
-        }
+            
+            Entry.EntryChanged += OnEntryChanged;
+            Entry.AudioChanged += OnAudioChanged;
+            Entry.JacketChanged += OnJacketChanged;
         
-        Entry.EntryChanged += OnEntryChanged;
-        Entry.AudioChanged += OnAudioChanged;
-        Entry.JacketChanged += OnJacketChanged;
-        
-        if (exceptions.Count == 0)
-        {
             ChartChanged?.Invoke(null, EventArgs.Empty);
             EntryChanged?.Invoke(null, EventArgs.Empty);
             AudioChanged?.Invoke(null, EventArgs.Empty);

@@ -704,6 +704,146 @@ public class AudioSettings
         }
     }
     private string hitsoundGuidePath = "";
+    
+    public string HitsoundTouchPath
+    {
+        get => hitsoundTouchPath;
+        set
+        {
+            if (hitsoundTouchPath == value) return;
+            
+            hitsoundTouchPath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string hitsoundTouchPath = "";
+    
+    public string HitsoundChainPath
+    {
+        get => hitsoundChainPath;
+        set
+        {
+            if (hitsoundChainPath == value) return;
+            
+            hitsoundChainPath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string hitsoundChainPath = "";
+    
+    public string HitsoundHoldPath
+    {
+        get => hitsoundHoldPath;
+        set
+        {
+            if (hitsoundHoldPath == value) return;
+            
+            hitsoundHoldPath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string hitsoundHoldPath = "";
+    
+    public string HitsoundHoldLoopPath
+    {
+        get => hitsoundHoldLoopPath;
+        set
+        {
+            if (hitsoundHoldLoopPath == value) return;
+            
+            hitsoundHoldLoopPath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string hitsoundHoldLoopPath = "";
+    
+    public string HitsoundSlidePath
+    {
+        get => hitsoundSlidePath;
+        set
+        {
+            if (hitsoundSlidePath == value) return;
+            
+            hitsoundSlidePath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string hitsoundSlidePath = "";
+    
+    public string HitsoundSnapPath
+    {
+        get => hitsoundSnapPath;
+        set
+        {
+            if (hitsoundSnapPath == value) return;
+            
+            hitsoundSnapPath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string hitsoundSnapPath = "";
+    
+    public string HitsoundBonusPath
+    {
+        get => hitsoundBonusPath;
+        set
+        {
+            if (hitsoundBonusPath == value) return;
+            
+            hitsoundBonusPath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string hitsoundBonusPath = "";
+    
+    public string HitsoundRPath
+    {
+        get => hitsoundRPath;
+        set
+        {
+            if (hitsoundRPath == value) return;
+            
+            hitsoundRPath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string hitsoundRPath = "";
+    
+    public string HitsoundStartClickPath
+    {
+        get => hitsoundStartClickPath;
+        set
+        {
+            if (hitsoundStartClickPath == value) return;
+            
+            hitsoundStartClickPath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string hitsoundStartClickPath = "";
+    
+    public string HitsoundMetronomePath
+    {
+        get => hitsoundMetronomePath;
+        set
+        {
+            if (hitsoundMetronomePath == value) return;
+            
+            hitsoundMetronomePath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string hitsoundMetronomePath = "";
 }
 
 public class ShortcutSettings

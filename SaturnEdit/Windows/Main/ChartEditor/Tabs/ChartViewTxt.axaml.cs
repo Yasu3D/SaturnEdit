@@ -87,6 +87,9 @@ public partial class ChartViewTxt : UserControl
 
     private void UpdateChartFromText()
     {
+        // TODO: Preserve Root directory.
+        
+        // TODO: Save prompt
         if (!ChartSystem.IsSaved)
         {
             

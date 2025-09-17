@@ -52,8 +52,8 @@ public class AudioChannel
     /// <summary>
     /// The position of the audio channel in milliseconds.
     /// </summary>
-    public double Position 
-    { 
+    public double Position
+    {
         get => Bass.ChannelBytes2Seconds(StreamHandle, Bass.ChannelGetPosition(StreamHandle)) * 1000;
         set => Bass.ChannelSetPosition(StreamHandle, Bass.ChannelSeconds2Bytes(StreamHandle, value * 0.001));
     }
@@ -92,6 +92,7 @@ public class AudioChannel
         get => playing;
         set
         {
+            if (playing == value) return;
             playing = value;
             
             if (playing)

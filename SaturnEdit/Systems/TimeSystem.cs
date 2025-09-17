@@ -78,6 +78,11 @@ public static class TimeSystem
     private static Timestamp timestamp;
 
     /// <summary>
+    /// <see cref="Timestamp"/> offset by <see cref="SaturnData.Notation.Core.Entry.AudioOffset"/>
+    /// </summary>
+    public static float AudioTime => Timestamp.Time + ChartSystem.Entry.AudioOffset;
+
+    /// <summary>
     /// The current beat division to snap to.
     /// </summary>
     public static int Division
@@ -139,7 +144,7 @@ public static class TimeSystem
             // AudioSystem isn't playing audio, or there's no loaded audio.
             // Continue, but synchronise the AudioTimer to the UpdateTimer since there's no audio to rely on.
             Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, Timestamp.Time + TickInterval, Division);
-            if (AudioSystem.AudioChannelAudio != null) AudioSystem.AudioChannelAudio.Position = Timestamp.Time;
+            if (AudioSystem.AudioChannelAudio != null) AudioSystem.AudioChannelAudio.Position = AudioTime;
 
             timeScale = PlaybackSpeed / 100.0f;
         }
@@ -148,8 +153,8 @@ public static class TimeSystem
             // AudioSystem is playing audio.
             // Synchronise the UpdateTimer to the AudioTimer to make sure they don't drift apart.
             float time = Timestamp.Time + TickInterval * timeScale;
-
-            float delta = time - (float)AudioSystem.AudioChannelAudio.Position;
+            
+            float delta = time - (float)AudioSystem.AudioChannelAudio.Position + ChartSystem.Entry.AudioOffset;
             if (Math.Abs(delta) >= ForceAlignDelta || timeScale == 0)
             {
                 time = (float)AudioSystem.AudioChannelAudio.Position;

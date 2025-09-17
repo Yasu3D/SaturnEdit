@@ -5,7 +5,7 @@
              mc:Ignorable="d"
              d:DesignWidth="110"
              d:DesignHeight="305"
-             Background="{DynamicResource BackgroundSecondary}"
+             Background="{DynamicResource BackgroundPrimary}"
              Width="110"
              ChannelName="Unassigned"
              x:Class="SaturnEdit.Controls.MixerChannel">
@@ -14,7 +14,6 @@
 
         <!-- Sound Button -->
         <Border Grid.Row="0"
-                Background="{DynamicResource BackgroundSecondary}"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 Height="28"
@@ -354,7 +353,7 @@
                 <Rectangle Grid.Column="0"
                            Name="MixerVolumeBarLeft"
                            Fill="{DynamicResource MixerVolumeAccent}"
-                           Height="10"
+                           Height="0"
                            VerticalAlignment="Bottom" />
 
                 <Rectangle Grid.Column="2"
@@ -366,7 +365,7 @@
                 <Rectangle Grid.Column="2"
                            Name="MixerVolumeBarRight"
                            Fill="{DynamicResource MixerVolumeAccent}"
-                           Height="10"
+                           Height="0"
                            VerticalAlignment="Bottom" />
             </Grid>
 
