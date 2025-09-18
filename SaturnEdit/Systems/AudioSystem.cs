@@ -4,6 +4,7 @@ using System.IO;
 using ManagedBass;
 using SaturnData.Notation;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.Audio;
@@ -58,6 +59,7 @@ public static class AudioSystem
     public static float Latency { get; private set; } = 0;
     private static readonly HashSet<Note> PassedNotes = [];
     private static readonly HashSet<Note> PassedBonusSlides = [];
+    private static Timestamp? nextMetronomeClick = Timestamp.Zero;
 
     public static void OnClosed(object? sender, EventArgs e)
     {
@@ -147,7 +149,7 @@ public static class AudioSystem
 
     private static void OnChartChanged(object? sender, EventArgs e)
     {
-        UpdateHitsoundHashSets();
+        RefreshHitsounds();
     }
     
     private static void OnTimestampSeeked(object? sender, EventArgs e)
@@ -157,7 +159,7 @@ public static class AudioSystem
             AudioChannelAudio.Position = TimeSystem.AudioTime;
         }
         
-        UpdateHitsoundHashSets();
+        RefreshHitsounds();
     }
     
     private static void OnPlaybackSpeedChanged(object? sender, EventArgs e)
@@ -168,7 +170,7 @@ public static class AudioSystem
     
     private static void UpdateTimer_OnTick(object? sender, EventArgs e)
     {
-        HandleHitsounds();
+        TriggerHitsounds();
         
         if (AudioChannelAudio == null) return;
 
@@ -188,7 +190,7 @@ public static class AudioSystem
         }
     }
 
-    private static void HandleHitsounds()
+    private static void TriggerHitsounds()
     {
         if (TimeSystem.PlaybackState == PlaybackState.Stopped)
         {
@@ -204,6 +206,24 @@ public static class AudioSystem
             return;
         }
         
+        // Metronome clicks
+        if (nextMetronomeClick != null && nextMetronomeClick.Value.Time < TimeSystem.HitsoundTime)
+        {
+            if (AudioSampleStartClick != null && nextMetronomeClick.Value.Measure < 1)
+            {
+                // Start clicks
+                AudioSampleStartClick?.Play();
+            }
+            else if (SettingsSystem.AudioSettings.Metronome)
+            {
+                // Constant metronome
+                AudioSampleMetronome?.Play();
+            }
+            
+            nextMetronomeClick = GetNextClick(TimeSystem.HitsoundTime);
+        }
+        
+        // Notes
         foreach (Layer l in ChartSystem.Chart.Layers)
         foreach (Note n in l.Notes)
         {
@@ -302,8 +322,10 @@ public static class AudioSystem
         }
     }
 
-    private static void UpdateHitsoundHashSets()
+    private static void RefreshHitsounds()
     {
+        nextMetronomeClick = GetNextClick(TimeSystem.Timestamp.Time);
+        
         PassedNotes.Clear();
         PassedBonusSlides.Clear();
         
@@ -346,5 +368,22 @@ public static class AudioSystem
         double scaled = 0.1 * Math.Pow(Math.E, 2.4 * normalized) - 0.1;
         
         return scaled;
+    }
+
+    private static Timestamp? GetNextClick(float time)
+    {
+        if (time == 0) return Timestamp.Zero; // hacky but works!
+        
+        MetreChangeEvent? metre = NotationUtils.LastMetreChange(ChartSystem.Chart, time);
+        if (metre == null) return null;
+        
+        int clicks = metre.Upper;
+        int ticks = 1920 / clicks;
+        
+        Timestamp nextClick = Timestamp.TimestampFromTime(ChartSystem.Chart, time, clicks);
+        nextClick += ticks;
+        
+        nextClick.Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, nextClick);
+        return nextClick;
     }
 }

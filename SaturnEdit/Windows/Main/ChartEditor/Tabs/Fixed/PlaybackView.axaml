@@ -141,10 +141,12 @@
                     <!-- Setting Buttons -->
                     <StackPanel Grid.Row="2"
                                 Orientation="Horizontal">
-                        <ToggleButton Classes="Themed Square Accent"
+                        <ToggleButton Name="ToggleButtonLoop" 
+                                      Classes="Themed Square Accent"
                                       Margin="4,4,2,4"
                                       ToolTip.VerticalOffset="5"
-                                      ToolTip.Placement="Top">
+                                      ToolTip.Placement="Top"
+                                      IsCheckedChanged="ToggleButtonLoop_OnIsCheckedChanged">
                             <ToolTip.Tip>
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
@@ -166,7 +168,8 @@
                         <Button Classes="Themed Square Standard"
                                 Margin="2,4"
                                 ToolTip.VerticalOffset="5"
-                                ToolTip.Placement="Top">
+                                ToolTip.Placement="Top"
+                                Click="ButtonLoopStart_OnClick">
                             <ToolTip.Tip>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.Playback.ToolTip.LoopStart}" />
@@ -183,7 +186,8 @@
                         <Button Classes="Themed Square Standard"
                                 Margin="2,4"
                                 ToolTip.VerticalOffset="5"
-                                ToolTip.Placement="Top">
+                                ToolTip.Placement="Top"
+                                Click="ButtonLoopEnd_OnClick">
                             <ToolTip.Tip>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.Playback.ToolTip.LoopEnd}" />
@@ -197,10 +201,12 @@
                             <icon:FluentIcon Icon="ArrowTurnUpLeft" />
                         </Button>
 
-                        <ToggleButton Classes="Themed Square Accent"
+                        <ToggleButton Name="ToggleButtonMetronome" 
+                                      Classes="Themed Square Accent"
                                       Margin="2,4"
                                       ToolTip.VerticalOffset="5"
-                                      ToolTip.Placement="Top">
+                                      ToolTip.Placement="Top"
+                                      IsCheckedChanged="ToggleButtonMetronome_OnIsCheckedChanged">
                             <ToolTip.Tip>
                                 <StackPanel>
                                     <TextBlock Text="{DynamicResource ChartEditor.Playback.ToolTip.Metronome}" />
@@ -288,11 +294,31 @@
                                               RenderAction="RenderCanvas_OnRenderAction" />
             </Panel>
             
+            <!-- Loop Markers -->
+            <Panel Grid.Column="1">
+                <Border Name="LoopMarkerStart"
+                        IsVisible="False"
+                        HorizontalAlignment="Left"
+                        Height="78"
+                        Width="11"
+                        Background="Transparent"
+                        BorderBrush="{DynamicResource ForegroundSecondary}"
+                        BorderThickness="1.5,1.5,0,1.5" />
+                
+                <Border Name="LoopMarkerEnd"
+                        IsVisible="False"
+                        HorizontalAlignment="Left"
+                        Height="78"
+                        Width="11"
+                        Background="Transparent"
+                        BorderBrush="{DynamicResource ForegroundSecondary}"
+                        BorderThickness="0,1.5,1.5,1.5" />
+            </Panel>
+            
             <!-- Seek Slider -->
             <Slider Grid.Column="1"
                     Name="SliderSeek"
                     Classes="Wide"
-                    Margin="0,0,0,1"
                     Minimum="0"
                     ValueChanged="SliderSeek_OnValueChanged" />
         </Grid>

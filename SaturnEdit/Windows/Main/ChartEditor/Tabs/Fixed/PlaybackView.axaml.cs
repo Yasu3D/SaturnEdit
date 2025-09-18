@@ -35,6 +35,9 @@ public partial class PlaybackView : UserControl
         TimeSystem.PlaybackSpeedChanged += OnPlaybackSpeedChanged;
         OnPlaybackSpeedChanged(null, EventArgs.Empty);
 
+        TimeSystem.LoopChanged += OnLoopChanged;
+        OnLoopChanged(null, EventArgs.Empty);
+
         ChartSystem.ChartChanged += OnEntryChanged;
         ChartSystem.EntryChanged += OnChartChanged;
         AudioSystem.AudioLoaded += OnAudioLoaded;
@@ -79,20 +82,54 @@ public partial class PlaybackView : UserControl
 
     private void RenderCanvas_OnRenderAction(SKCanvas canvas) => RendererWaveform.RenderSeekSlider(canvas, canvasInfo, clearColor, waveformColor, waveform, ChartSystem.Entry.AudioOffset, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, sliderMaximum);
     
-    private void OnEntryChanged(object? sender, EventArgs e) => RecalculateSeekSlider();
-    private void OnChartChanged(object? sender, EventArgs e) => RecalculateSeekSlider();
+    private void OnEntryChanged(object? sender, EventArgs e)
+    {
+        RecalculateSeekSlider();
+        UpdateLoopMarkers();
+    }
+
+    private void OnChartChanged(object? sender, EventArgs e)
+    {
+        RecalculateSeekSlider();
+        UpdateLoopMarkers();
+    }
+
     private void OnAudioLoaded(object? sender, EventArgs e)
     {
         RecalculateSeekSlider();
+        UpdateLoopMarkers();
         waveform = AudioChannel.GetWaveformData(ChartSystem.Entry.AudioPath);
     }
 
+    private void OnLoopChanged(object? sender, EventArgs e)
+    {
+        UpdateLoopMarkers();
+    }
+    
+    private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            double sliderWidth = SliderPlaybackSpeed.Bounds.Width - 10;
+
+            TickPlaybackSpeed25.Margin  = new(sliderWidth * (( 25.0 - 5) / 295), 0, 0, 0);
+            TickPlaybackSpeed50.Margin  = new(sliderWidth * (( 50.0 - 5) / 295), 0, 0, 0);
+            TickPlaybackSpeed100.Margin = new(sliderWidth * ((100.0 - 5) / 295), 0, 0, 0);
+            TickPlaybackSpeed200.Margin = new(sliderWidth * ((200.0 - 5) / 295), 0, 0, 0);
+        });
+        
+        RenderCanvas.Width = PanelCanvasContainer.Bounds.Width;
+        RenderCanvas.Height = PanelCanvasContainer.Bounds.Height;
+
+        canvasInfo.Width = (float)PanelCanvasContainer.Bounds.Width;
+        canvasInfo.Height = (float)PanelCanvasContainer.Bounds.Height;
+        
+        UpdateLoopMarkers();
+    }
+    
     private void RecalculateSeekSlider()
     {
-        float chartEnd = ChartSystem.Entry.ChartEnd.Time;
-        float audioEnd = (float?)AudioSystem.AudioChannelAudio?.Length ?? 0;
-        
-        sliderMaximum = Math.Max(chartEnd, audioEnd);
+        sliderMaximum = ChartSystem.Entry.ChartEnd.Time;
         
         blockEvents = true;
         
@@ -100,6 +137,25 @@ public partial class PlaybackView : UserControl
         SliderSeek.Value = TimeSystem.Timestamp.Time;
         
         blockEvents = false;
+    }
+    
+    private void UpdateLoopMarkers()
+    {
+        LoopMarkerStart.IsVisible = SettingsSystem.AudioSettings.LoopPlayback;
+        LoopMarkerEnd.IsVisible   = SettingsSystem.AudioSettings.LoopPlayback;
+        
+        if (!SettingsSystem.AudioSettings.LoopPlayback) return;
+        
+        double max = sliderMaximum;
+
+        double start = Math.Clamp(TimeSystem.LoopStart / max, 0, 1);
+        start = start * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * start;
+        
+        double end   = Math.Clamp(TimeSystem.LoopEnd   / max, 0, 1);
+        end = end * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * end;
+
+        LoopMarkerStart.Margin = new(start, 0, 0, 0);
+        LoopMarkerEnd.Margin   = new(end,   0, 0, 0);
     }
     
     private void OnTimestampChanged(object? sender, EventArgs e)
@@ -144,25 +200,15 @@ public partial class PlaybackView : UserControl
         TextBlockShortcutLoop.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.LoopPlayback"].ToString();
         TextBlockShortcutSetLoopStart.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.SetLoopMarkerStart"].ToString();
         TextBlockShortcutSetLoopEnd.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.SetLoopMarkerEnd"].ToString();
-    }
-    
-    private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
-    {
-        Dispatcher.UIThread.Post(() =>
-        {
-            double sliderWidth = SliderPlaybackSpeed.Bounds.Width - 10;
 
-            TickPlaybackSpeed25.Margin  = new(sliderWidth * (( 25.0 - 5) / 295), 0, 0, 0);
-            TickPlaybackSpeed50.Margin  = new(sliderWidth * (( 50.0 - 5) / 295), 0, 0, 0);
-            TickPlaybackSpeed100.Margin = new(sliderWidth * ((100.0 - 5) / 295), 0, 0, 0);
-            TickPlaybackSpeed200.Margin = new(sliderWidth * ((200.0 - 5) / 295), 0, 0, 0);
-        });
+        UpdateLoopMarkers();
         
-        RenderCanvas.Width = PanelCanvasContainer.Bounds.Width;
-        RenderCanvas.Height = PanelCanvasContainer.Bounds.Height;
+        blockEvents = true;
 
-        canvasInfo.Width = (float)PanelCanvasContainer.Bounds.Width;
-        canvasInfo.Height = (float)PanelCanvasContainer.Bounds.Height;
+        ToggleButtonLoop.IsChecked = SettingsSystem.AudioSettings.LoopPlayback;
+        ToggleButtonMetronome.IsChecked = SettingsSystem.AudioSettings.Metronome;
+        
+        blockEvents = false;
     }
 
     private void ToggleButtonPlay_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -188,4 +234,34 @@ public partial class PlaybackView : UserControl
 
         TimeSystem.Seek((float)SliderSeek.Value, TimeSystem.Division);
     }
+
+    private void ToggleButtonLoop_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+
+        SettingsSystem.AudioSettings.LoopPlayback = ToggleButtonLoop.IsChecked ?? false;
+    }
+
+    private void ToggleButtonMetronome_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+
+        SettingsSystem.AudioSettings.Metronome = ToggleButtonMetronome.IsChecked ?? false;
+    }
+    
+    private void ButtonLoopStart_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+
+        TimeSystem.LoopStart = TimeSystem.Timestamp.Time;
+    }
+
+    private void ButtonLoopEnd_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+
+        TimeSystem.LoopEnd = TimeSystem.Timestamp.Time;
+    }
+    
+    // TODO: Playback Settings flyout
 }
