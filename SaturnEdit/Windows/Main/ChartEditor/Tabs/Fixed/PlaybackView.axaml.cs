@@ -207,6 +207,12 @@ public partial class PlaybackView : UserControl
 
         ToggleButtonLoop.IsChecked = SettingsSystem.AudioSettings.LoopPlayback;
         ToggleButtonMetronome.IsChecked = SettingsSystem.AudioSettings.Metronome;
+
+        MenuItemQuantizedPauseOff.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Off;
+        MenuItemQuantizedPauseNearest.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Nearest;
+        MenuItemQuantizedPausePrevious.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Previous;
+        MenuItemQuantizedPauseNext.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Next;
+        MenuItemLoopToStart.IsChecked = SettingsSystem.AudioSettings.LoopToStart;
         
         blockEvents = false;
     }
@@ -232,7 +238,7 @@ public partial class PlaybackView : UserControl
         if (blockEvents) return;
         if (sender is not Slider) return;
 
-        TimeSystem.Seek((float)SliderSeek.Value, TimeSystem.Division);
+        TimeSystem.SeekTime((float)SliderSeek.Value, TimeSystem.Division);
     }
 
     private void ToggleButtonLoop_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -263,5 +269,26 @@ public partial class PlaybackView : UserControl
         TimeSystem.LoopEnd = TimeSystem.Timestamp.Time;
     }
     
-    // TODO: Playback Settings flyout
+    private void MenuItemQuantizedPause_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (sender is not MenuItem item) return;
+
+        SettingsSystem.AudioSettings.QuantizedPause = item.Name switch
+        {
+            "MenuItemQuantizedPauseOff" => AudioSettings.QuantizedPauseOptions.Off,
+            "MenuItemQuantizedPauseNearest" => AudioSettings.QuantizedPauseOptions.Nearest,
+            "MenuItemQuantizedPausePrevious" => AudioSettings.QuantizedPauseOptions.Previous,
+            "MenuItemQuantizedPauseNext" => AudioSettings.QuantizedPauseOptions.Next,
+            _ => AudioSettings.QuantizedPauseOptions.Off,
+        };
+    }
+
+    private void MenuItemLoopToStart_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (sender is not MenuItem item) return;
+
+        SettingsSystem.AudioSettings.LoopToStart = item.IsChecked;
+    }
 }

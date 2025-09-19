@@ -315,7 +315,7 @@ public partial class ChartPropertiesView : UserControl
         if (sender == null) return;
 
         TimeSystem.PlaybackState = PlaybackState.Preview;
-        TimeSystem.Seek(ChartSystem.Entry.PreviewBegin, TimeSystem.Division);
+        TimeSystem.SeekTime(ChartSystem.Entry.PreviewBegin, TimeSystem.Division);
     }
     
     private void TextBoxPreviewBegin_OnLostFocus(object? sender, RoutedEventArgs e)

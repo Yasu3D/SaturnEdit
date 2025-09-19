@@ -267,7 +267,7 @@ public class AudioSettings
 
     public enum QuantizedPauseOptions
     {
-        Exact = 0,
+        Off = 0,
         Nearest = 1,
         Previous = 2,
         Next = 3,
@@ -312,7 +312,7 @@ public class AudioSettings
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    private QuantizedPauseOptions quantizedPause = QuantizedPauseOptions.Exact;
+    private QuantizedPauseOptions quantizedPause = QuantizedPauseOptions.Off;
     
     public bool LoopToStart
     {

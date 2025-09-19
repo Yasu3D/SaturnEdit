@@ -239,35 +239,45 @@
                                             <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPause}" />
                                         </MenuItem.Header>
 
-                                        <MenuItem ToggleType="Radio"
+                                        <MenuItem Name="MenuItemQuantizedPauseOff" 
+                                                  ToggleType="Radio"
                                                   GroupName="QuantizePause"
-                                                  IsChecked="True">
+                                                  IsChecked="True"
+                                                  Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
                                                 <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseOff}" />
                                             </MenuItem.Header>
                                         </MenuItem>
-                                        <MenuItem ToggleType="Radio"
-                                                  GroupName="QuantizePause">
+                                        <MenuItem Name="MenuItemQuantizedPauseNearest"
+                                                  ToggleType="Radio"
+                                                  GroupName="QuantizePause"
+                                                  Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
                                                 <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseNearest}" />
                                             </MenuItem.Header>
                                         </MenuItem>
-                                        <MenuItem ToggleType="Radio"
-                                                  GroupName="QuantizePause">
+                                        <MenuItem Name="MenuItemQuantizedPausePrevious"
+                                                  ToggleType="Radio"
+                                                  GroupName="QuantizePause"
+                                                  Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
                                                 <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPausePrevious}" />
                                             </MenuItem.Header>
                                         </MenuItem>
-                                        <MenuItem ToggleType="Radio"
-                                                  GroupName="QuantizePause">
+                                        <MenuItem Name="MenuItemQuantizedPauseNext"
+                                                  ToggleType="Radio"
+                                                  GroupName="QuantizePause"
+                                                  Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
                                                 <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseNext}" />
                                             </MenuItem.Header>
                                         </MenuItem>
                                     </MenuItem>
 
-                                    <MenuItem ToggleType="CheckBox"
-                                              IsChecked="True">
+                                    <MenuItem Name="MenuItemLoopToStart" 
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              Click="MenuItemLoopToStart_OnClick">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource Settings.Playback.LoopToStart}" />
                                         </MenuItem.Header>

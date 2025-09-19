@@ -20,6 +20,9 @@ public static class TimeSystem
 
         ChartSystem.EntryChanged += OnEntryChanged;
         OnEntryChanged(null, EventArgs.Empty);
+
+        PlaybackStateChanged += OnPlaybackStateChanged;
+        OnPlaybackStateChanged(null, EventArgs.Empty);
     }
     
     public static readonly DispatcherTimer UpdateTimer = new(TimeSpan.FromMilliseconds(1000.0f / SettingsSystem.RenderSettings.RefreshRate), DispatcherPriority.Render, UpdateTimer_OnTick);
@@ -155,6 +158,52 @@ public static class TimeSystem
         TickInterval = 1000.0f / SettingsSystem.RenderSettings.RefreshRate;
         UpdateTimer.Interval = TimeSpan.FromMilliseconds(TickInterval);
     }
+    
+    private static void OnPlaybackStateChanged(object? sender, EventArgs e)
+    {
+        float time = Timestamp.Time;
+        float currentBeatTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, Timestamp);
+        float nextBeatTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, Timestamp + DivisionInterval);
+
+        float currentBeatDelta = Math.Abs(time - currentBeatTime);
+        float nextBeatDelta = Math.Abs(time - nextBeatTime);
+        
+        switch (SettingsSystem.AudioSettings.QuantizedPause)
+        {
+            case AudioSettings.QuantizedPauseOptions.Off: break;
+
+            case AudioSettings.QuantizedPauseOptions.Nearest:
+            {
+                if (currentBeatDelta < nextBeatDelta)
+                {
+                    SeekTime(currentBeatTime, Division);
+                }
+                else
+                {
+                    SeekTime(nextBeatTime, Division);
+                }
+                
+                break;
+            }
+
+            case AudioSettings.QuantizedPauseOptions.Previous:
+            {
+                SeekTime(currentBeatTime, Division);
+                
+                break;
+            }
+
+            case AudioSettings.QuantizedPauseOptions.Next:
+            {
+                if (currentBeatDelta != 0)
+                {
+                    SeekTime(nextBeatTime, Division);
+                } 
+                
+                break;
+            }
+        }
+    }
 
     private static void UpdateTimer_OnTick(object? sender, EventArgs eventArgs)
     {
@@ -162,13 +211,13 @@ public static class TimeSystem
         if (PlaybackState == PlaybackState.Preview && Timestamp.Time > ChartSystem.Entry.PreviewBegin + ChartSystem.Entry.PreviewLength)
         {
             PlaybackState = PlaybackState.Stopped;
-            Seek(ChartSystem.Entry.PreviewBegin, Division);
+            SeekTime(ChartSystem.Entry.PreviewBegin, Division);
         }
         
         // Seek to PreviewBegin when playback state is preview
         if (PlaybackState == PlaybackState.Preview && Timestamp.Time < ChartSystem.Entry.PreviewBegin)
         {
-            Seek(ChartSystem.Entry.PreviewBegin, Division);
+            SeekTime(ChartSystem.Entry.PreviewBegin, Division);
         }
   
         // Looping
@@ -179,7 +228,7 @@ public static class TimeSystem
             {
                 if (Timestamp.Time < LoopStart || Timestamp.Time > LoopEnd)
                 {
-                    Seek(LoopStart + 0.1f, Division); // HACKY: +0.1ms to prevent infinite loops.
+                    SeekTime(LoopStart + 0.1f, Division); // HACKY: +0.1ms to prevent infinite loops.
                 }
             }
             
@@ -188,27 +237,28 @@ public static class TimeSystem
             {
                 if (Timestamp.Time > ChartSystem.Entry.ChartEnd.Time)
                 {
-                    Seek(0.0f, Division);
+                    SeekTime(0.0f, Division);
                 }
                 
                 if (Timestamp.Time > LoopEnd && Timestamp.Time < LoopStart)
                 {
-                    Seek(LoopStart + 0.1f, Division); // HACKY: +0.1ms to prevent infinite loops.
+                    SeekTime(LoopStart + 0.1f, Division); // HACKY: +0.1ms to prevent infinite loops.
                 }
             }
         }
-        else // No looping
+        else // No explicit looping
         {
             // Stop playback and seek to begin when chart end is reached.
             if (Timestamp.Time > ChartSystem.Entry.ChartEnd.Time)
             {
                 PlaybackState = PlaybackState.Stopped;
-                Seek(0.0f, Division);
+
+                if (SettingsSystem.AudioSettings.LoopToStart)
+                {
+                    SeekTime(0.0f, Division);
+                }
             }
         }
-        
-        
-
         
         // No need to handle timers if playback is stopped.
         if (PlaybackState == PlaybackState.Stopped) return;
@@ -229,7 +279,7 @@ public static class TimeSystem
         }
     }
 
-    public static void Seek(int measure, int tick)
+    public static void SeekMeasureTick(int measure, int tick)
     {
         Timestamp t = new(measure, tick);
         t.Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, t);
@@ -238,7 +288,7 @@ public static class TimeSystem
         TimestampSeeked?.Invoke(null, EventArgs.Empty);
     }
 
-    public static void Seek(float time, int div)
+    public static void SeekTime(float time, int div)
     {
         Timestamp t = Timestamp.TimestampFromTime(ChartSystem.Chart, time, div);
 

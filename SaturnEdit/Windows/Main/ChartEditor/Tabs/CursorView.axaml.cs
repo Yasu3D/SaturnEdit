@@ -86,7 +86,7 @@ public partial class CursorView : UserControl
         int measure = (int?)NumericUpDownMeasure.Value ?? 0;
         int tick = TimeSystem.Timestamp.Tick;
         
-        TimeSystem.Seek(measure, tick);
+        TimeSystem.SeekMeasureTick(measure, tick);
     }
     
     private void NumericUpDownBeat_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -109,7 +109,7 @@ public partial class CursorView : UserControl
             measure += 1;
         }
 
-        TimeSystem.Seek(measure, beat * TimeSystem.DivisionInterval);
+        TimeSystem.SeekMeasureTick(measure, beat * TimeSystem.DivisionInterval);
     }
     
     private void NumericUpDownDivision_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
