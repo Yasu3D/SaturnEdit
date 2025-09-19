@@ -124,8 +124,8 @@ public partial class AudioMixerView : UserControl
         ChannelTouch.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleTouch?.LevelRight, touchVolume, ChannelTouch.MixerVolumeBarRight.Height);
         
         double holdLoopVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        ChannelHoldLoop.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleHoldLoop?.LevelLeft, holdLoopVolume, ChannelHoldLoop.MixerVolumeBarLeft.Height);
-        ChannelHoldLoop.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleHoldLoop?.LevelRight, holdLoopVolume, ChannelHoldLoop.MixerVolumeBarRight.Height);
+        ChannelHoldLoop.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioChannelHoldLoop?.LevelLeft, holdLoopVolume, ChannelHoldLoop.MixerVolumeBarLeft.Height);
+        ChannelHoldLoop.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioChannelHoldLoop?.LevelRight, holdLoopVolume, ChannelHoldLoop.MixerVolumeBarRight.Height);
         
         double slideVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
         ChannelSlide.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleSlide?.LevelLeft, slideVolume, ChannelSlide.MixerVolumeBarLeft.Height);

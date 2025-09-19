@@ -383,34 +383,6 @@ public class AudioSettings
     }
     private int touchVolume = 0;
     
-    public int ChainVolume
-    {
-        get => chainVolume;
-        set
-        {
-            if (chainVolume == value) return;
-            
-            chainVolume = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            VolumeChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private int chainVolume = 0;    
-
-    public int HoldVolume
-    {
-        get => holdVolume;
-        set
-        {
-            if (holdVolume == value) return;
-            
-            holdVolume = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            VolumeChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private int holdVolume = 0;
-    
     public int HoldLoopVolume
     {
         get => holdLoopVolume;
@@ -438,20 +410,6 @@ public class AudioSettings
         }
     }
     private int slideVolume = 0;
-    
-    public int SnapVolume
-    {
-        get => snapVolume;
-        set
-        {
-            if (snapVolume == value) return;
-            
-            snapVolume = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            VolumeChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private int snapVolume = 0;
     
     public int BonusVolume
     {
@@ -760,6 +718,32 @@ public class AudioSettings
         }
     }
     private string hitsoundMetronomePath = "";
+    
+    public float HoldLoopStart
+    {
+        get => holdLoopStart;
+        set
+        {
+            if (holdLoopStart == value) return;
+            
+            holdLoopStart = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private float holdLoopStart = 1655.0f;
+    
+    public float HoldLoopEnd
+    {
+        get => holdLoopEnd;
+        set
+        {
+            if (holdLoopEnd == value) return;
+            
+            holdLoopEnd = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private float holdLoopEnd = 3482.0f;
 }
 
 public class ShortcutSettings

@@ -89,13 +89,13 @@ public class AudioChannel
     /// </summary>
     public bool Playing
     {
-        get => playing;
+        get => Bass.ChannelIsActive(StreamHandle) == PlaybackState.Playing;
         set
         {
+            bool playing = Bass.ChannelIsActive(StreamHandle) == PlaybackState.Playing;
             if (playing == value) return;
-            playing = value;
             
-            if (playing)
+            if (value)
             {
                 Bass.ChannelPlay(StreamHandle);
             }
@@ -105,7 +105,6 @@ public class AudioChannel
             }
         }
     }
-    private bool playing = false;
 
     /// <summary>
     /// The current level of the left channel.<br/>Range 0-1.

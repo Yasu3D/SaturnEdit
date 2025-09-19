@@ -45,30 +45,30 @@
     </ItemGroup>
         
     <ItemGroup>
-        <ContentWithTargetPath Include="Bass\Linux_x64\libbass.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+        <ContentWithTargetPath Include="Audio\Linux_x64\libbass.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <TargetPath>libbass.so</TargetPath>
         </ContentWithTargetPath>
-        <ContentWithTargetPath Include="Bass\Linux_x64\libbass_fx.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+        <ContentWithTargetPath Include="Audio\Linux_x64\libbass_fx.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <TargetPath>libbass_fx.so</TargetPath>
         </ContentWithTargetPath>
-        <ContentWithTargetPath Include="Bass\Linux_x64\libbassflac.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+        <ContentWithTargetPath Include="Audio\Linux_x64\libbassflac.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <TargetPath>libbassflac.so</TargetPath>
         </ContentWithTargetPath>
     </ItemGroup>
         
     <ItemGroup>
-        <ContentWithTargetPath Include="Bass\Win_x64\bass.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+        <ContentWithTargetPath Include="Audio\Win_x64\bass.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <TargetPath>bass.dll</TargetPath>
         </ContentWithTargetPath>
-        <ContentWithTargetPath Include="Bass\Win_x64\bass_fx.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+        <ContentWithTargetPath Include="Audio\Win_x64\bass_fx.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <TargetPath>bass_fx.dll</TargetPath>
         </ContentWithTargetPath>
-        <ContentWithTargetPath Include="Bass\Win_x64\bassflac.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+        <ContentWithTargetPath Include="Audio\Win_x64\bassflac.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <TargetPath>bassflac.dll</TargetPath>
         </ContentWithTargetPath>
