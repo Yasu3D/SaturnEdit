@@ -130,7 +130,7 @@ public static class TimeSystem
             LoopChanged?.Invoke(null, EventArgs.Empty);
         }
     }
-    private static float loopStart = 0;
+    private static float loopStart = -1;
     
     /// <summary>
     /// The end of the playback loop.
@@ -146,7 +146,7 @@ public static class TimeSystem
             LoopChanged?.Invoke(null, EventArgs.Empty);
         }
     }
-    private static float loopEnd = 0;
+    private static float loopEnd = -1;
 
     private static void OnEntryChanged(object? sender, EventArgs e)
     {
@@ -221,7 +221,7 @@ public static class TimeSystem
         }
   
         // Looping
-        if (PlaybackState == PlaybackState.Playing && SettingsSystem.AudioSettings.LoopPlayback)
+        if (PlaybackState == PlaybackState.Playing && SettingsSystem.AudioSettings.LoopPlayback && LoopStart != -1 && LoopEnd != -1)
         {
             // LoopStart before LoopEnd
             if (LoopStart < LoopEnd)

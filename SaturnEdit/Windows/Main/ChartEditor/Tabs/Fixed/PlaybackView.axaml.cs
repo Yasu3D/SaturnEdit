@@ -41,7 +41,7 @@ public partial class PlaybackView : UserControl
         ChartSystem.ChartChanged += OnEntryChanged;
         ChartSystem.EntryChanged += OnChartChanged;
         AudioSystem.AudioLoaded += OnAudioLoaded;
-        RecalculateSeekSlider();
+        UpdateSeekSlider();
         
         SizeChanged += OnSizeChanged;
         OnSizeChanged(null, new(null));
@@ -84,19 +84,19 @@ public partial class PlaybackView : UserControl
     
     private void OnEntryChanged(object? sender, EventArgs e)
     {
-        RecalculateSeekSlider();
+        UpdateSeekSlider();
         UpdateLoopMarkers();
     }
 
     private void OnChartChanged(object? sender, EventArgs e)
     {
-        RecalculateSeekSlider();
+        UpdateSeekSlider();
         UpdateLoopMarkers();
     }
 
     private void OnAudioLoaded(object? sender, EventArgs e)
     {
-        RecalculateSeekSlider();
+        UpdateSeekSlider();
         UpdateLoopMarkers();
         waveform = AudioChannel.GetWaveformData(ChartSystem.Entry.AudioPath);
     }
@@ -127,7 +127,7 @@ public partial class PlaybackView : UserControl
         UpdateLoopMarkers();
     }
     
-    private void RecalculateSeekSlider()
+    private void UpdateSeekSlider()
     {
         sliderMaximum = ChartSystem.Entry.ChartEnd.Time;
         
@@ -141,21 +141,26 @@ public partial class PlaybackView : UserControl
     
     private void UpdateLoopMarkers()
     {
-        LoopMarkerStart.IsVisible = SettingsSystem.AudioSettings.LoopPlayback;
-        LoopMarkerEnd.IsVisible   = SettingsSystem.AudioSettings.LoopPlayback;
+        LoopMarkerStart.IsVisible = TimeSystem.LoopStart != -1 && SettingsSystem.AudioSettings.LoopPlayback;
+        LoopMarkerEnd.IsVisible   = TimeSystem.LoopEnd   != -1 && SettingsSystem.AudioSettings.LoopPlayback;
         
-        if (!SettingsSystem.AudioSettings.LoopPlayback) return;
+        if (!SettingsSystem.AudioSettings.LoopPlayback || (TimeSystem.LoopStart == -1 && TimeSystem.LoopEnd == -1)) return;
         
         double max = sliderMaximum;
 
-        double start = Math.Clamp(TimeSystem.LoopStart / max, 0, 1);
-        start = start * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * start;
-        
-        double end   = Math.Clamp(TimeSystem.LoopEnd   / max, 0, 1);
-        end = end * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * end;
+        if (TimeSystem.LoopStart != -1)
+        {
+            double start = Math.Clamp(TimeSystem.LoopStart / max, 0, 1);
+            start = start * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * start;
+            LoopMarkerStart.Margin = new(start, 0, 0, 0);
+        }
 
-        LoopMarkerStart.Margin = new(start, 0, 0, 0);
-        LoopMarkerEnd.Margin   = new(end,   0, 0, 0);
+        if (TimeSystem.LoopEnd != -1)
+        {
+            double end   = Math.Clamp(TimeSystem.LoopEnd   / max, 0, 1);
+            end = end * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * end;
+            LoopMarkerEnd.Margin   = new(end,   0, 0, 0);
+        }
     }
     
     private void OnTimestampChanged(object? sender, EventArgs e)
