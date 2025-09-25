@@ -25,7 +25,9 @@ public static class TimeSystem
         OnPlaybackStateChanged(null, EventArgs.Empty);
     }
     
-    public static readonly DispatcherTimer UpdateTimer = new(TimeSpan.FromMilliseconds(1000.0f / SettingsSystem.RenderSettings.RefreshRate), DispatcherPriority.Render, UpdateTimer_OnTick);
+    // TODO: DispatcherTimer ***sucks***. It can do high refresh rate, but any cursor movement will grind it to a halt -> rendering appears laggy because timestamp doesnt update quickly enough.
+    // TODO: Refine TimeSystem to not rely on a high refresh rate timer and stick to a more basic timer. Update timestamp on demand, or hook into a render event maybe?
+    public static readonly DispatcherTimer UpdateTimer = new(TimeSpan.FromMilliseconds(1000.0f / SettingsSystem.RenderSettings.RefreshRate), DispatcherPriority.MaxValue, UpdateTimer_OnTick);
     public static float TickInterval { get; private set; }
     
     public static event EventHandler? TimestampChanged;
