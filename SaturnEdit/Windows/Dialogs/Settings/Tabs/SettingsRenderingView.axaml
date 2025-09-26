@@ -20,23 +20,7 @@
                            Height="1"
                            Fill="{DynamicResource SeparatorPrimary}" />
             </Grid>
-
-            <Grid ColumnDefinitions="250,*"
-                  Margin="0,0,0,10">
-                <TextBlock Grid.Column="0"
-                           Text="{DynamicResource Settings.Rendering.RefreshRate}"
-                           VerticalAlignment="Center"
-                           Margin="0,0,10,0" />
-                <NumericUpDown Grid.Column="1"
-                               Name="NumericUpDownRefreshRate"
-                               HorizontalAlignment="Left"
-                               Width="130"
-                               Minimum="0"
-                               Value="60" 
-                               FormatString="F0"
-                               ValueChanged="NumericUpDownRefreshRate_OnValueChanged"/>
-            </Grid>
-
+            
             <StackPanel Orientation="Horizontal"
                         Margin="0,0,0,10">
                 <CheckBox Name="CheckBoxLowPerformanceMode"
@@ -117,6 +101,25 @@
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level2}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level3}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level4}" />
+                </ComboBox>
+            </Grid>
+            
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.JudgementLineColor}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          Name="ComboBoxJudgementLineColor"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          SelectedIndex="0"
+                          SelectionChanged="ComboBoxJudgementLineColor_OnSelectionChanged">
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.JudgementLineColor.Version0}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.JudgementLineColor.Version1}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.JudgementLineColor.Version2}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.JudgementLineColor.Version3}" />
                 </ComboBox>
             </Grid>
             

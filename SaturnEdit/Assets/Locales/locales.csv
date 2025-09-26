@@ -385,6 +385,11 @@ Settings.Rendering.BackgroundDim.Level1,Dim +1
 Settings.Rendering.BackgroundDim.Level2,Dim +2
 Settings.Rendering.BackgroundDim.Level3,Dim +3
 Settings.Rendering.BackgroundDim.Level4,Dim +4
+Settings.Rendering.JudgementLineColor,Judgement Line Color:
+Settings.Rendering.JudgementLineColor.Version0,Version0
+Settings.Rendering.JudgementLineColor.Version1,Version1
+Settings.Rendering.JudgementLineColor.Version2,Version2
+Settings.Rendering.JudgementLineColor.Version3,Version3
 Settings.Rendering.DuringPlayback,During Playback...
 Settings.Rendering.HideEventMarkers,Hide Event Markers
 Settings.Rendering.HideLaneToggleNotes,Hide Lane Toggle Notes

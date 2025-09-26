@@ -388,6 +388,11 @@
     <system:String x:Key="Settings.Rendering.BackgroundDim.Level2">Dim +2</system:String>
     <system:String x:Key="Settings.Rendering.BackgroundDim.Level3">Dim +3</system:String>
     <system:String x:Key="Settings.Rendering.BackgroundDim.Level4">Dim +4</system:String>
+    <system:String x:Key="Settings.Rendering.JudgementLineColor">Judgement Line Color:</system:String>
+    <system:String x:Key="Settings.Rendering.JudgementLineColor.Version0">Version0</system:String>
+    <system:String x:Key="Settings.Rendering.JudgementLineColor.Version1">Version1</system:String>
+    <system:String x:Key="Settings.Rendering.JudgementLineColor.Version2">Version2</system:String>
+    <system:String x:Key="Settings.Rendering.JudgementLineColor.Version3">Version3</system:String>
     <system:String x:Key="Settings.Rendering.DuringPlayback">During Playback...</system:String>
     <system:String x:Key="Settings.Rendering.HideEventMarkers">Hide Event Markers</system:String>
     <system:String x:Key="Settings.Rendering.HideLaneToggleNotes">Hide Lane Toggle Notes</system:String>

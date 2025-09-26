@@ -22,12 +22,12 @@ public partial class SettingsRenderingView : UserControl
     {
         blockEvent = true;
         
-        NumericUpDownRefreshRate.Value = SettingsSystem.RenderSettings.RefreshRate;
         CheckBoxLowPerformanceMode.IsChecked = SettingsSystem.RenderSettings.LowPerformanceMode;
         
         NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed / 10.0m;
         ComboBoxGuideLineType.SelectedIndex = (int)SettingsSystem.RenderSettings.GuideLineType;
         ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
+        ComboBoxJudgementLineColor.SelectedIndex = (int)SettingsSystem.RenderSettings.JudgementLineColor;
         
         CheckBoxIgnoreLaneToggleAnimations.IsChecked = SettingsSystem.RenderSettings.IgnoreLaneToggleAnimations;
         
@@ -46,14 +46,6 @@ public partial class SettingsRenderingView : UserControl
         ComboBoxNoteColorSnapBackward.SelectedIndex = (int)SettingsSystem.RenderSettings.SnapBackwardNoteColor;
 
         blockEvent = false;
-    }
-
-    private void NumericUpDownRefreshRate_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
-    {
-        if (blockEvent) return;
-        if (NumericUpDownRefreshRate == null) return;
-
-        SettingsSystem.RenderSettings.RefreshRate = (int)(NumericUpDownRefreshRate.Value ?? 60);
     }
 
     private void CheckBoxLowPerformanceMode_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -86,6 +78,14 @@ public partial class SettingsRenderingView : UserControl
         if (ComboBoxBackgroundDim == null) return;
 
         SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)ComboBoxBackgroundDim.SelectedIndex;
+    }
+    
+    private void ComboBoxJudgementLineColor_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvent) return;
+        if (ComboBoxJudgementLineColor == null) return;
+
+        SettingsSystem.RenderSettings.JudgementLineColor = (RenderSettings.JudgementLineColorOption)ComboBoxJudgementLineColor.SelectedIndex;
     }
 
     private void CheckBoxIgnoreLaneToggleAnimations_OnIsCheckedChanged(object? sender, RoutedEventArgs e)

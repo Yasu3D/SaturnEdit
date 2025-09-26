@@ -731,6 +731,8 @@
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
                                               RenderAction="RenderCanvas_OnRenderAction" />
+                    <Image Name="DebugReferenceImage" 
+                           Opacity="1"/>
                 </Panel>
             </Grid>
         </Grid>

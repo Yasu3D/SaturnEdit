@@ -71,16 +71,7 @@ public static class TimeSystem
     /// </summary>
     public static Timestamp Timestamp
     {
-        get
-        {
-            // Always get the latest timestamp from the audio system to bypass the resolution limitations of the .NET Timer class.
-            if (AudioSystem.AudioChannelAudio != null && AudioSystem.AudioChannelAudio.Playing)
-            {
-                return Timestamp.TimestampFromTime(ChartSystem.Chart, (float)AudioSystem.AudioChannelAudio.Position, Division);
-            }
-            
-            return timestamp;
-        }
+        get => timestamp;
         private set
         {
             if (timestamp == value) return;
@@ -253,7 +244,8 @@ public static class TimeSystem
         else // No explicit looping
         {
             // Stop playback and seek to begin when chart end is reached.
-            if (Timestamp.Time > ChartSystem.Entry.ChartEnd.Time)
+            // -500 ms because yet again the audio system likes to be a bit hacky.
+            if (Timestamp.Time > ChartSystem.Entry.ChartEnd.Time - 500)
             {
                 PlaybackState = PlaybackState.Stopped;
 

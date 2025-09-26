@@ -64,7 +64,7 @@ public partial class ChartView3D : UserControl
         canvasInfo.Center = new(canvasInfo.Radius, canvasInfo.Radius);
     }
 
-    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => Renderer3D.Render(canvas, canvasInfo, clearColor);
+    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => Renderer3D.Render(canvas, canvasInfo, SettingsSystem.RenderSettings, clearColor, ChartSystem.Chart, ChartSystem.Entry, TimeSystem.Timestamp.Time);
 
     private void MenuItem_OnClick(object? sender, RoutedEventArgs e)
     {
