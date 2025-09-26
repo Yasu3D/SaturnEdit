@@ -165,25 +165,32 @@ public partial class PlaybackView : UserControl
     
     private void OnTimestampChanged(object? sender, EventArgs e)
     {
-        blockEvents = true;
         
-        SliderSeek.Value = TimeSystem.Timestamp.Time;
-        
-        blockEvents = false;
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
+            
+            SliderSeek.Value = TimeSystem.Timestamp.Time;
+            
+            blockEvents = false;
+        });
     }
     
     private void OnPlaybackStateChanged(object? sender, EventArgs e)
     {
-        blockEvents = true;
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
 
-        ToggleButtonPlay.IsChecked = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview;
-        
-        blockEvents = false;
-        
-        StackPanelToolTipPause.IsVisible = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview;
-        StackPanelToolTipPlay.IsVisible = TimeSystem.PlaybackState is PlaybackState.Stopped;
+            ToggleButtonPlay.IsChecked = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview;
+            
+            blockEvents = false;
+            
+            StackPanelToolTipPause.IsVisible = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview;
+            StackPanelToolTipPlay.IsVisible = TimeSystem.PlaybackState is PlaybackState.Stopped;
 
-        IconPlay.Icon = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview ? Icon.Stop : Icon.Play;
+            IconPlay.Icon = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview ? Icon.Stop : Icon.Play;
+        });
     }
     
     private void OnPlaybackSpeedChanged(object? sender, EventArgs e)

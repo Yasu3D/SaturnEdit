@@ -37,43 +37,43 @@ public partial class ChartStatisticsView : UserControl
 
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
-        uint colorCode = NoteColors.BaseNoteColorFromId((int)SettingsSystem.RenderSettings.TouchNoteColor);
+        uint colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.TouchNoteColor);
         Color backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
         Color borderColor = Color.FromUInt32(colorCode);
         GraphTouchNote.Background = new SolidColorBrush(backgroundColor);
         GraphTouchNote.BorderBrush = new SolidColorBrush(borderColor);
         
-        colorCode = NoteColors.BaseNoteColorFromId((int)SettingsSystem.RenderSettings.ChainNoteColor);
+        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.ChainNoteColor);
         backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
         borderColor = Color.FromUInt32(colorCode);
         GraphChainNote.Background = new SolidColorBrush(backgroundColor);
         GraphChainNote.BorderBrush = new SolidColorBrush(borderColor);
         
-        colorCode = NoteColors.BaseNoteColorFromId((int)SettingsSystem.RenderSettings.HoldNoteColor);
+        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.HoldNoteColor);
         backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
         borderColor = Color.FromUInt32(colorCode);
         GraphHoldNote.Background = new SolidColorBrush(backgroundColor);
         GraphHoldNote.BorderBrush = new SolidColorBrush(borderColor);
         
-        colorCode = NoteColors.BaseNoteColorFromId((int)SettingsSystem.RenderSettings.SlideClockwiseNoteColor);
+        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SlideClockwiseNoteColor);
         backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
         borderColor = Color.FromUInt32(colorCode);
         GraphSlideClockwiseNote.Background = new SolidColorBrush(backgroundColor);
         GraphSlideClockwiseNote.BorderBrush = new SolidColorBrush(borderColor);
         
-        colorCode = NoteColors.BaseNoteColorFromId((int)SettingsSystem.RenderSettings.SlideCounterclockwiseNoteColor);
+        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SlideCounterclockwiseNoteColor);
         backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
         borderColor = Color.FromUInt32(colorCode);
         GraphSlideCounterclockwiseNote.Background = new SolidColorBrush(backgroundColor);
         GraphSlideCounterclockwiseNote.BorderBrush = new SolidColorBrush(borderColor);
         
-        colorCode = NoteColors.BaseNoteColorFromId((int)SettingsSystem.RenderSettings.SnapForwardNoteColor);
+        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SnapForwardNoteColor);
         backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
         borderColor = Color.FromUInt32(colorCode);
         GraphSnapForwardNote.Background = new SolidColorBrush(backgroundColor);
         GraphSnapForwardNote.BorderBrush = new SolidColorBrush(borderColor);
         
-        colorCode = NoteColors.BaseNoteColorFromId((int)SettingsSystem.RenderSettings.SnapBackwardNoteColor);
+        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SnapBackwardNoteColor);
         backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
         borderColor = Color.FromUInt32(colorCode);
         GraphSnapBackwardNote.Background = new SolidColorBrush(backgroundColor);

@@ -1,5 +1,5 @@
 using System;
-using Avalonia.Threading;
+using System.Threading;
 using SaturnData.Notation.Core;
 
 namespace SaturnEdit.Systems;
@@ -15,9 +15,6 @@ public static class TimeSystem
 {
     public static void Initialize()
     {
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-
         ChartSystem.EntryChanged += OnEntryChanged;
         OnEntryChanged(null, EventArgs.Empty);
 
@@ -25,10 +22,10 @@ public static class TimeSystem
         OnPlaybackStateChanged(null, EventArgs.Empty);
     }
     
-    // TODO: DispatcherTimer ***sucks***. It can do high refresh rate, but any cursor movement will grind it to a halt -> rendering appears laggy because timestamp doesnt update quickly enough.
-    // TODO: Refine TimeSystem to not rely on a high refresh rate timer and stick to a more basic timer. Update timestamp on demand, or hook into a render event maybe?
-    public static readonly DispatcherTimer UpdateTimer = new(TimeSpan.FromMilliseconds(1000.0f / SettingsSystem.RenderSettings.RefreshRate), DispatcherPriority.MaxValue, UpdateTimer_OnTick);
-    public static float TickInterval { get; private set; }
+    public const float TickInterval = 1000.0f / 60;
+    public static readonly Timer UpdateTimer = new(UpdateTimer_OnTick, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(TickInterval));
+
+    public static event EventHandler? UpdateTick;
     
     public static event EventHandler? TimestampChanged;
     public static event EventHandler? TimestampSeeked;
@@ -74,7 +71,16 @@ public static class TimeSystem
     /// </summary>
     public static Timestamp Timestamp
     {
-        get => timestamp;
+        get
+        {
+            // Always get the latest timestamp from the audio system to bypass the resolution limitations of the .NET Timer class.
+            if (AudioSystem.AudioChannelAudio != null && AudioSystem.AudioChannelAudio.Playing)
+            {
+                return Timestamp.TimestampFromTime(ChartSystem.Chart, (float)AudioSystem.AudioChannelAudio.Position, Division);
+            }
+            
+            return timestamp;
+        }
         private set
         {
             if (timestamp == value) return;
@@ -155,12 +161,6 @@ public static class TimeSystem
         LoopEnd = Math.Min(LoopEnd, ChartSystem.Entry.ChartEnd.Time);
     }
     
-    private static void OnSettingsChanged(object? sender, EventArgs e)
-    {
-        TickInterval = 1000.0f / SettingsSystem.RenderSettings.RefreshRate;
-        UpdateTimer.Interval = TimeSpan.FromMilliseconds(TickInterval);
-    }
-    
     private static void OnPlaybackStateChanged(object? sender, EventArgs e)
     {
         float time = Timestamp.Time;
@@ -207,8 +207,10 @@ public static class TimeSystem
         }
     }
 
-    private static void UpdateTimer_OnTick(object? sender, EventArgs eventArgs)
+    private static void UpdateTimer_OnTick(object? sender)
     {
+        UpdateTick?.Invoke(null, EventArgs.Empty);
+        
         // Stop playback and seek to preview begin when preview end is reached.
         if (PlaybackState == PlaybackState.Preview && Timestamp.Time > ChartSystem.Entry.PreviewBegin + ChartSystem.Entry.PreviewLength)
         {

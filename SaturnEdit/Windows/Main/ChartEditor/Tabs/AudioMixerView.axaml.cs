@@ -7,6 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
 using SaturnEdit.Audio;
 using SaturnEdit.Systems;
 
@@ -19,7 +20,7 @@ public partial class AudioMixerView : UserControl
         InitializeComponent();
         InitChannels();
         
-        TimeSystem.UpdateTimer.Tick += UpdateTimer_OnTick;
+        TimeSystem.UpdateTick += OnUpdateTick;
     }
 
     private async void InitChannels()
@@ -109,69 +110,72 @@ public partial class AudioMixerView : UserControl
         blockEvents = false;
     }
 
-    private void UpdateTimer_OnTick(object? sender, EventArgs e)
+    private void OnUpdateTick(object? sender, EventArgs e)
     {
-        double audioVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        ChannelAudio.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioChannelAudio?.LevelLeft, audioVolume, ChannelAudio.MixerVolumeBarLeft.Height);
-        ChannelAudio.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioChannelAudio?.LevelRight, audioVolume, ChannelAudio.MixerVolumeBarRight.Height);
-        
-        double guideVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        ChannelGuide.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleGuide?.LevelLeft, guideVolume, ChannelGuide.MixerVolumeBarLeft.Height);
-        ChannelGuide.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleGuide?.LevelRight, guideVolume, ChannelGuide.MixerVolumeBarRight.Height);
-        
-        double touchVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        ChannelTouch.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleTouch?.LevelLeft, touchVolume, ChannelTouch.MixerVolumeBarLeft.Height);
-        ChannelTouch.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleTouch?.LevelRight, touchVolume, ChannelTouch.MixerVolumeBarRight.Height);
-        
-        double holdLoopVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        ChannelHoldLoop.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioChannelHoldLoop?.LevelLeft, holdLoopVolume, ChannelHoldLoop.MixerVolumeBarLeft.Height);
-        ChannelHoldLoop.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioChannelHoldLoop?.LevelRight, holdLoopVolume, ChannelHoldLoop.MixerVolumeBarRight.Height);
-        
-        double slideVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        ChannelSlide.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleSlide?.LevelLeft, slideVolume, ChannelSlide.MixerVolumeBarLeft.Height);
-        ChannelSlide.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleSlide?.LevelRight, slideVolume, ChannelSlide.MixerVolumeBarRight.Height);
-        
-        double bonusVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        ChannelBonus.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleBonus?.LevelLeft, bonusVolume, ChannelBonus.MixerVolumeBarLeft.Height);
-        ChannelBonus.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleBonus?.LevelRight, bonusVolume, ChannelBonus.MixerVolumeBarRight.Height);
-        
-        double rVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        ChannelR.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleR?.LevelLeft, rVolume, ChannelR.MixerVolumeBarLeft.Height);
-        ChannelR.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleR?.LevelRight, rVolume, ChannelR.MixerVolumeBarRight.Height);
-        
-        double startClickVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        ChannelStartClick.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleStartClick?.LevelLeft, startClickVolume, ChannelStartClick.MixerVolumeBarLeft.Height);
-        ChannelStartClick.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleStartClick?.LevelRight, startClickVolume, ChannelStartClick.MixerVolumeBarRight.Height);
-        
-        double metronomeVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        ChannelMetronome.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleMetronome?.LevelLeft, metronomeVolume, ChannelMetronome.MixerVolumeBarLeft.Height);
-        ChannelMetronome.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleMetronome?.LevelRight, metronomeVolume, ChannelMetronome.MixerVolumeBarRight.Height);
-        
-        double masterVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume);
-        double masterRmsLeft = ChannelAudio.MixerVolumeBarLeft.Height * ChannelAudio.MixerVolumeBarLeft.Height;
-        masterRmsLeft += ChannelGuide.MixerVolumeBarLeft.Height * ChannelGuide.MixerVolumeBarLeft.Height;
-        masterRmsLeft += ChannelTouch.MixerVolumeBarLeft.Height * ChannelTouch.MixerVolumeBarLeft.Height;
-        masterRmsLeft += ChannelHoldLoop.MixerVolumeBarLeft.Height * ChannelHoldLoop.MixerVolumeBarLeft.Height;
-        masterRmsLeft += ChannelSlide.MixerVolumeBarLeft.Height * ChannelSlide.MixerVolumeBarLeft.Height;
-        masterRmsLeft += ChannelBonus.MixerVolumeBarLeft.Height * ChannelBonus.MixerVolumeBarLeft.Height;
-        masterRmsLeft += ChannelR.MixerVolumeBarLeft.Height * ChannelR.MixerVolumeBarLeft.Height;
-        masterRmsLeft += ChannelStartClick.MixerVolumeBarLeft.Height * ChannelStartClick.MixerVolumeBarLeft.Height;
-        masterRmsLeft += ChannelMetronome.MixerVolumeBarLeft.Height * ChannelMetronome.MixerVolumeBarLeft.Height;
-        masterRmsLeft = Math.Sqrt(masterRmsLeft);
-        
-        double masterRmsRight = ChannelAudio.MixerVolumeBarRight.Height * ChannelAudio.MixerVolumeBarRight.Height;
-        masterRmsRight += ChannelGuide.MixerVolumeBarRight.Height * ChannelGuide.MixerVolumeBarRight.Height;
-        masterRmsRight += ChannelTouch.MixerVolumeBarRight.Height * ChannelTouch.MixerVolumeBarRight.Height;
-        masterRmsRight += ChannelHoldLoop.MixerVolumeBarRight.Height * ChannelHoldLoop.MixerVolumeBarRight.Height;
-        masterRmsRight += ChannelSlide.MixerVolumeBarRight.Height * ChannelSlide.MixerVolumeBarRight.Height;
-        masterRmsRight += ChannelBonus.MixerVolumeBarRight.Height * ChannelBonus.MixerVolumeBarRight.Height;
-        masterRmsRight += ChannelR.MixerVolumeBarRight.Height * ChannelR.MixerVolumeBarRight.Height;
-        masterRmsRight += ChannelStartClick.MixerVolumeBarRight.Height * ChannelStartClick.MixerVolumeBarRight.Height;
-        masterRmsRight += ChannelMetronome.MixerVolumeBarRight.Height * ChannelMetronome.MixerVolumeBarRight.Height;
-        masterRmsRight = Math.Sqrt(masterRmsRight);
-        
-        ChannelMaster.MixerVolumeBarLeft.Height = masterRmsLeft * masterVolume;
-        ChannelMaster.MixerVolumeBarRight.Height = masterRmsRight * masterVolume;
+        Dispatcher.UIThread.Post(() =>
+        {
+            double audioVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+            ChannelAudio.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioChannelAudio?.LevelLeft, audioVolume, ChannelAudio.MixerVolumeBarLeft.Height);
+            ChannelAudio.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioChannelAudio?.LevelRight, audioVolume, ChannelAudio.MixerVolumeBarRight.Height);
+            
+            double guideVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+            ChannelGuide.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleGuide?.LevelLeft, guideVolume, ChannelGuide.MixerVolumeBarLeft.Height);
+            ChannelGuide.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleGuide?.LevelRight, guideVolume, ChannelGuide.MixerVolumeBarRight.Height);
+            
+            double touchVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+            ChannelTouch.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleTouch?.LevelLeft, touchVolume, ChannelTouch.MixerVolumeBarLeft.Height);
+            ChannelTouch.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleTouch?.LevelRight, touchVolume, ChannelTouch.MixerVolumeBarRight.Height);
+            
+            double holdLoopVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+            ChannelHoldLoop.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioChannelHoldLoop?.LevelLeft, holdLoopVolume, ChannelHoldLoop.MixerVolumeBarLeft.Height);
+            ChannelHoldLoop.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioChannelHoldLoop?.LevelRight, holdLoopVolume, ChannelHoldLoop.MixerVolumeBarRight.Height);
+            
+            double slideVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+            ChannelSlide.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleSlide?.LevelLeft, slideVolume, ChannelSlide.MixerVolumeBarLeft.Height);
+            ChannelSlide.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleSlide?.LevelRight, slideVolume, ChannelSlide.MixerVolumeBarRight.Height);
+            
+            double bonusVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+            ChannelBonus.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleBonus?.LevelLeft, bonusVolume, ChannelBonus.MixerVolumeBarLeft.Height);
+            ChannelBonus.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleBonus?.LevelRight, bonusVolume, ChannelBonus.MixerVolumeBarRight.Height);
+            
+            double rVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+            ChannelR.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleR?.LevelLeft, rVolume, ChannelR.MixerVolumeBarLeft.Height);
+            ChannelR.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleR?.LevelRight, rVolume, ChannelR.MixerVolumeBarRight.Height);
+            
+            double startClickVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+            ChannelStartClick.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleStartClick?.LevelLeft, startClickVolume, ChannelStartClick.MixerVolumeBarLeft.Height);
+            ChannelStartClick.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleStartClick?.LevelRight, startClickVolume, ChannelStartClick.MixerVolumeBarRight.Height);
+            
+            double metronomeVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+            ChannelMetronome.MixerVolumeBarLeft.Height = getLevel(AudioSystem.AudioSampleMetronome?.LevelLeft, metronomeVolume, ChannelMetronome.MixerVolumeBarLeft.Height);
+            ChannelMetronome.MixerVolumeBarRight.Height = getLevel(AudioSystem.AudioSampleMetronome?.LevelRight, metronomeVolume, ChannelMetronome.MixerVolumeBarRight.Height);
+            
+            double masterVolume = AudioSystem.DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume);
+            double masterRmsLeft = ChannelAudio.MixerVolumeBarLeft.Height * ChannelAudio.MixerVolumeBarLeft.Height;
+            masterRmsLeft += ChannelGuide.MixerVolumeBarLeft.Height * ChannelGuide.MixerVolumeBarLeft.Height;
+            masterRmsLeft += ChannelTouch.MixerVolumeBarLeft.Height * ChannelTouch.MixerVolumeBarLeft.Height;
+            masterRmsLeft += ChannelHoldLoop.MixerVolumeBarLeft.Height * ChannelHoldLoop.MixerVolumeBarLeft.Height;
+            masterRmsLeft += ChannelSlide.MixerVolumeBarLeft.Height * ChannelSlide.MixerVolumeBarLeft.Height;
+            masterRmsLeft += ChannelBonus.MixerVolumeBarLeft.Height * ChannelBonus.MixerVolumeBarLeft.Height;
+            masterRmsLeft += ChannelR.MixerVolumeBarLeft.Height * ChannelR.MixerVolumeBarLeft.Height;
+            masterRmsLeft += ChannelStartClick.MixerVolumeBarLeft.Height * ChannelStartClick.MixerVolumeBarLeft.Height;
+            masterRmsLeft += ChannelMetronome.MixerVolumeBarLeft.Height * ChannelMetronome.MixerVolumeBarLeft.Height;
+            masterRmsLeft = Math.Sqrt(masterRmsLeft);
+            
+            double masterRmsRight = ChannelAudio.MixerVolumeBarRight.Height * ChannelAudio.MixerVolumeBarRight.Height;
+            masterRmsRight += ChannelGuide.MixerVolumeBarRight.Height * ChannelGuide.MixerVolumeBarRight.Height;
+            masterRmsRight += ChannelTouch.MixerVolumeBarRight.Height * ChannelTouch.MixerVolumeBarRight.Height;
+            masterRmsRight += ChannelHoldLoop.MixerVolumeBarRight.Height * ChannelHoldLoop.MixerVolumeBarRight.Height;
+            masterRmsRight += ChannelSlide.MixerVolumeBarRight.Height * ChannelSlide.MixerVolumeBarRight.Height;
+            masterRmsRight += ChannelBonus.MixerVolumeBarRight.Height * ChannelBonus.MixerVolumeBarRight.Height;
+            masterRmsRight += ChannelR.MixerVolumeBarRight.Height * ChannelR.MixerVolumeBarRight.Height;
+            masterRmsRight += ChannelStartClick.MixerVolumeBarRight.Height * ChannelStartClick.MixerVolumeBarRight.Height;
+            masterRmsRight += ChannelMetronome.MixerVolumeBarRight.Height * ChannelMetronome.MixerVolumeBarRight.Height;
+            masterRmsRight = Math.Sqrt(masterRmsRight);
+            
+            ChannelMaster.MixerVolumeBarLeft.Height = masterRmsLeft * masterVolume;
+            ChannelMaster.MixerVolumeBarRight.Height = masterRmsRight * masterVolume;
+        });
         
         return;
 

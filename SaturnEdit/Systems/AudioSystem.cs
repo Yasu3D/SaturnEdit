@@ -41,7 +41,7 @@ public static class AudioSystem
         TimeSystem.PlaybackSpeedChanged += OnPlaybackSpeedChanged;
         OnPlaybackSpeedChanged(null, EventArgs.Empty);
         
-        TimeSystem.UpdateTimer.Tick += UpdateTimer_OnTick;
+        TimeSystem.UpdateTick += OnUpdateTick;
     }
 
     public static event EventHandler? AudioLoaded;
@@ -179,7 +179,7 @@ public static class AudioSystem
         AudioChannelAudio.Speed = TimeSystem.PlaybackSpeed;
     }
     
-    private static void UpdateTimer_OnTick(object? sender, EventArgs e)
+    private static void OnUpdateTick(object? sender, EventArgs e)
     {
         TriggerHitsounds();
         

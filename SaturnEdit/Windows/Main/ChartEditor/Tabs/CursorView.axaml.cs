@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Threading;
 using SaturnEdit.Systems;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
@@ -24,14 +25,17 @@ public partial class CursorView : UserControl
 
     private void OnTimestampChanged(object? sender, EventArgs e)
     {
-        blockEvents = true;
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
+            
+            NumericUpDownMeasure.Value = TimeSystem.Timestamp.Measure;
+            NumericUpDownBeat.Value = TimeSystem.Timestamp.Tick / TimeSystem.DivisionInterval;
+            
+            blockEvents = false;
 
-        NumericUpDownMeasure.Value = TimeSystem.Timestamp.Measure;
-        NumericUpDownBeat.Value = TimeSystem.Timestamp.Tick / TimeSystem.DivisionInterval;
-        
-        blockEvents = false;
-
-        NumericUpDownBeat.Minimum = TimeSystem.Timestamp.Measure == 0 ? 0 : -1;
+            NumericUpDownBeat.Minimum = TimeSystem.Timestamp.Measure == 0 ? 0 : -1;
+        });
     }
 
     private void OnDivisionChanged(object? sender, EventArgs e)
