@@ -215,7 +215,7 @@ public partial class ChartPropertiesView : UserControl
         
         try
         {
-            ChartSystem.Entry.Level = Convert.ToSingle(TextBoxLevel.Text ?? "", CultureInfo.InvariantCulture);
+            ChartSystem.Entry.Level = Convert.ToDouble(TextBoxLevel.Text ?? "", CultureInfo.InvariantCulture);
         }
         catch (Exception ex)
         {

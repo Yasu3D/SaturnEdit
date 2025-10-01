@@ -1,10 +1,12 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using SaturnEdit.Systems;
 using SaturnView;
 using SkiaSharp;
@@ -21,11 +23,30 @@ public partial class ChartView3D : UserControl
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
+        
+        //TODO: REMOVE THIS ONCE NO LONGER NEEDED
+        ChartSystem.JacketChanged += OnJacketChanged;
+        OnJacketChanged(null, EventArgs.Empty);
     }
 
     private readonly CanvasInfo canvasInfo = new();
     private SKColor clearColor;
     private bool blockEvents = false;
+    
+    private void OnJacketChanged(object? sender, EventArgs e)
+    {
+        try
+        {
+            bool jacketExists = File.Exists(ChartSystem.Entry.JacketPath);
+            DebugReferenceImage.Source = jacketExists ? new Bitmap(ChartSystem.Entry.JacketPath) : null;
+            DebugReferenceImage.IsVisible = jacketExists;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            DebugReferenceImage.IsVisible = false;
+        }
+    }
     
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
@@ -64,7 +85,7 @@ public partial class ChartView3D : UserControl
         canvasInfo.Center = new(canvasInfo.Radius, canvasInfo.Radius);
     }
 
-    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => Renderer3D.Render(canvas, canvasInfo, SettingsSystem.RenderSettings, clearColor, ChartSystem.Chart, ChartSystem.Entry, TimeSystem.Timestamp.Time);
+    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => Renderer3D.Render(canvas, canvasInfo, SettingsSystem.RenderSettings, clearColor, ChartSystem.Chart, ChartSystem.Entry, TimeSystem.Timestamp.Time, TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview);
 
     private void MenuItem_OnClick(object? sender, RoutedEventArgs e)
     {

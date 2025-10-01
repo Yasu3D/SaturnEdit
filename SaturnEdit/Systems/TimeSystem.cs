@@ -1,6 +1,8 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
 using SaturnData.Notation.Core;
+using SaturnEdit.Audio;
 
 namespace SaturnEdit.Systems;
 
@@ -22,9 +24,9 @@ public static class TimeSystem
         OnPlaybackStateChanged(null, EventArgs.Empty);
     }
     
-    public const float TickInterval = 1000.0f / 60;
+    public const float TickInterval = 1000.0f / 120.0f;
     public static readonly Timer UpdateTimer = new(UpdateTimer_OnTick, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(TickInterval));
-
+    
     public static event EventHandler? UpdateTick;
     
     public static event EventHandler? TimestampChanged;
@@ -244,8 +246,7 @@ public static class TimeSystem
         else // No explicit looping
         {
             // Stop playback and seek to begin when chart end is reached.
-            // -500 ms because yet again the audio system likes to be a bit hacky.
-            if (Timestamp.Time > ChartSystem.Entry.ChartEnd.Time - 500)
+            if (PlaybackState is PlaybackState.Playing or PlaybackState.Preview && Timestamp.Time > ChartSystem.Entry.ChartEnd.Time)
             {
                 PlaybackState = PlaybackState.Stopped;
 

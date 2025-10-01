@@ -29,6 +29,7 @@ public static class ChartSystem
     
     private static void OnChartChanged(object? sender, EventArgs e)
     {
+        NotationUtils.GenerateAllMeasureLineAndSyncNotes(Chart, Entry.ChartEnd);
         NotationUtils.CalculateTime(Entry, Chart);
         NotationUtils.CalculateScaledTime(Chart);
         RecalculateChartEnd();
