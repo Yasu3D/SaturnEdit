@@ -195,7 +195,7 @@ public static class AudioSystem
         if (TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview)
         {
             bool beforeAudio = TimeSystem.AudioTime < 0;
-            bool afterAudio = TimeSystem.AudioTime > AudioChannelAudio.Length;
+            bool afterAudio = TimeSystem.AudioTime > AudioChannelAudio.Length - 100; // -100ms because Bass loves to end playback and loop it early...
             
             AudioChannelAudio.Playing = !beforeAudio && !afterAudio;
         }
