@@ -23,7 +23,8 @@
     <system:String x:Key="ChartEditor.General.Type.Value.LaneShow">Lane Show</system:String>
     <system:String x:Key="ChartEditor.General.Type.Value.LaneHide">Lane Hide</system:String>
     <system:String x:Key="ChartEditor.General.Type.Value.MeasureLine">Measure Line</system:String>
-    <system:String x:Key="ChartEditor.General.Type.Value.SyncLine">Sync Line</system:String>
+    <system:String x:Key="ChartEditor.General.Type.Value.BeatLine">Beat Line</system:String>
+    <system:String x:Key="ChartEditor.General.Type.Value.Sync">Sync</system:String>
     <system:String x:Key="ChartEditor.General.Type.Value.TempoChange">Tempo Change</system:String>
     <system:String x:Key="ChartEditor.General.Type.Value.MetreChange">Metre Change</system:String>
     <system:String x:Key="ChartEditor.General.Type.Value.SpeedChange">Speed Change</system:String>
@@ -276,6 +277,7 @@
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert.SplitHold">Split Hold</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert.MergeHold">Merge Hold</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings">Chart View Settings</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowSpeedChanges">Show Speed Changes</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.JudgementWindows">Judgement Windows</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowJudgementWindows">Show Judgement Windows</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows">Show Marvelous Windows</system:String>

@@ -30,7 +30,6 @@ public partial class ChartView3D : UserControl
     }
 
     private readonly CanvasInfo canvasInfo = new();
-    private SKColor clearColor;
     private bool blockEvents = false;
     
     private void OnJacketChanged(object? sender, EventArgs e)
@@ -64,12 +63,12 @@ public partial class ChartView3D : UserControl
             if (!Application.Current.TryGetResource("BackgroundSecondary", Application.Current.ActualThemeVariant, out object? resource)) return;
             if (resource is not SolidColorBrush brush) return;
         
-            clearColor = new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
+            canvasInfo.BackgroundColor= new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
         }
         catch (Exception ex)
         {
             // classic error pink
-            clearColor = new(0xFF, 0x00, 0xFF, 0xFF);
+            canvasInfo.BackgroundColor = new(0xFF, 0x00, 0xFF, 0xFF);
         }
     }
     
@@ -85,7 +84,7 @@ public partial class ChartView3D : UserControl
         canvasInfo.Center = new(canvasInfo.Radius, canvasInfo.Radius);
     }
 
-    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => Renderer3D.Render(canvas, canvasInfo, SettingsSystem.RenderSettings, clearColor, ChartSystem.Chart, ChartSystem.Entry, TimeSystem.Timestamp.Time, TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview);
+    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => Renderer3D.Render(canvas, canvasInfo, SettingsSystem.RenderSettings, ChartSystem.Chart, ChartSystem.Entry, TimeSystem.Timestamp.Time, TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview);
 
     private void MenuItem_OnClick(object? sender, RoutedEventArgs e)
     {
@@ -102,6 +101,12 @@ public partial class ChartView3D : UserControl
             return;
         }
 
+        if (menuItem == MenuItemShowSpeedChanges)
+        {
+            SettingsSystem.RenderSettings.ShowSpeedChanges = menuItem.IsChecked;
+            return;
+        }
+        
         if (menuItem == MenuItemShowMarvelousWindows)
         {
             SettingsSystem.RenderSettings.ShowMarvelousWindows = menuItem.IsChecked;
@@ -138,99 +143,115 @@ public partial class ChartView3D : UserControl
             return;
         }
         
-        if (menuItem == MenuItemShowTouch)
+        if (menuItem == MenuItemShowTouchNotes)
         {
             SettingsSystem.RenderSettings.ShowTouchNotes = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowChain)
+        if (menuItem == MenuItemShowChainNotes)
         {
             SettingsSystem.RenderSettings.ShowChainNotes = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowHold)
+        if (menuItem == MenuItemShowHoldNotes)
         {
             SettingsSystem.RenderSettings.ShowHoldNotes = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowSlideClockwise)
+        if (menuItem == MenuItemShowSlideClockwiseNotes)
         {
             SettingsSystem.RenderSettings.ShowSlideClockwiseNotes = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowSlideCounterclockwise)
+        if (menuItem == MenuItemShowSlideCounterclockwiseNotes)
         {
             SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowSnapForward)
+        if (menuItem == MenuItemShowSnapForwardNotes)
         {
             SettingsSystem.RenderSettings.ShowSnapForwardNotes = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowSnapBackward)
+        if (menuItem == MenuItemShowSnapBackwardNotes)
         {
             SettingsSystem.RenderSettings.ShowSnapBackwardNotes = menuItem.IsChecked;
             return;
         }
+
+        if (menuItem == MenuItemShowSyncNotes)
+        {
+            SettingsSystem.RenderSettings.ShowSyncNotes = menuItem.IsChecked;
+            return;
+        }
+
+        if (menuItem == MenuItemShowMeasureLineNotes)
+        {
+            SettingsSystem.RenderSettings.ShowMeasureLineNotes = menuItem.IsChecked;
+        }
         
-        if (menuItem == MenuItemShowLaneShow)
+        if (menuItem == MenuItemShowBeatLineNotes)
+        {
+            SettingsSystem.RenderSettings.ShowBeatLineNotes = menuItem.IsChecked;
+        }
+        
+        if (menuItem == MenuItemShowLaneShowNotes)
         {
             SettingsSystem.RenderSettings.ShowLaneShowNotes = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowLaneHide)
+        if (menuItem == MenuItemShowLaneHideNotes)
         {
             SettingsSystem.RenderSettings.ShowLaneHideNotes = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowTempoChange)
+        if (menuItem == MenuItemShowTempoChangeEvents)
         {
-            SettingsSystem.RenderSettings.ShowTempoChanges = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowTempoChangeEvents = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowMetreChange)
+        if (menuItem == MenuItemShowMetreChangeEvents)
         {
-            SettingsSystem.RenderSettings.ShowMetreChanges = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowMetreChangeEvents = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowSpeedChange)
+        if (menuItem == MenuItemShowSpeedChangeEvents)
         {
-            SettingsSystem.RenderSettings.ShowSpeedChanges = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowSpeedChangeEvents = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowVisibilityChange)
+        if (menuItem == MenuItemShowVisibilityChangeEvents)
         {
-            SettingsSystem.RenderSettings.ShowVisibilityChanges = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowVisibilityChangeEvents = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowReverseEffect)
+        if (menuItem == MenuItemShowReverseEffectEvents)
         {
-            SettingsSystem.RenderSettings.ShowReverseEffects = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowReverseEffectEvents = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowStopEffect)
+        if (menuItem == MenuItemShowStopEffectEvents)
         {
-            SettingsSystem.RenderSettings.ShowStopEffects = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowStopEffectEvents = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowTutorialMarker)
+        if (menuItem == MenuItemShowTutorialMarkerEvents)
         {
-            SettingsSystem.RenderSettings.ShowTutorialMarkers = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowTutorialMarkerEvents = menuItem.IsChecked;
             return;
         }
     }
@@ -252,7 +273,8 @@ public partial class ChartView3D : UserControl
     private void UpdateSettings()
     {
         blockEvents = true;
-        
+
+        MenuItemShowSpeedChanges.IsChecked = SettingsSystem.RenderSettings.ShowSpeedChanges;
         MenuItemShowJudgementWindows.IsChecked = SettingsSystem.RenderSettings.ShowJudgementWindows;
         MenuItemShowMarvelousWindows.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousWindows;
         MenuItemShowGreatWindows.IsChecked = SettingsSystem.RenderSettings.ShowGreatWindows;
@@ -260,22 +282,22 @@ public partial class ChartView3D : UserControl
         MenuItemSaturnJudgementWindows.IsChecked = SettingsSystem.RenderSettings.SaturnJudgementWindows;
         MenuItemVisualizeHoldNoteWindows.IsChecked = SettingsSystem.RenderSettings.VisualizeHoldNoteWindows;
         MenuItemVisualizeSweepAnimations.IsChecked = SettingsSystem.RenderSettings.VisualizeSweepAnimations;
-        MenuItemShowTouch.IsChecked = SettingsSystem.RenderSettings.ShowTouchNotes;
-        MenuItemShowChain.IsChecked = SettingsSystem.RenderSettings.ShowChainNotes;
-        MenuItemShowHold.IsChecked = SettingsSystem.RenderSettings.ShowHoldNotes;
-        MenuItemShowSlideClockwise.IsChecked = SettingsSystem.RenderSettings.ShowSlideClockwiseNotes;
-        MenuItemShowSlideCounterclockwise.IsChecked = SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes;
-        MenuItemShowSnapForward.IsChecked = SettingsSystem.RenderSettings.ShowSnapForwardNotes;
-        MenuItemShowSnapBackward.IsChecked = SettingsSystem.RenderSettings.ShowSnapBackwardNotes;
-        MenuItemShowLaneShow.IsChecked = SettingsSystem.RenderSettings.ShowLaneShowNotes;
-        MenuItemShowLaneHide.IsChecked = SettingsSystem.RenderSettings.ShowLaneHideNotes;
-        MenuItemShowTempoChange.IsChecked = SettingsSystem.RenderSettings.ShowTempoChanges;
-        MenuItemShowMetreChange.IsChecked = SettingsSystem.RenderSettings.ShowMetreChanges;
-        MenuItemShowSpeedChange.IsChecked = SettingsSystem.RenderSettings.ShowSpeedChanges;
-        MenuItemShowVisibilityChange.IsChecked = SettingsSystem.RenderSettings.ShowVisibilityChanges;
-        MenuItemShowReverseEffect.IsChecked = SettingsSystem.RenderSettings.ShowReverseEffects;
-        MenuItemShowStopEffect.IsChecked = SettingsSystem.RenderSettings.ShowStopEffects;
-        MenuItemShowTutorialMarker.IsChecked = SettingsSystem.RenderSettings.ShowTutorialMarkers;
+        MenuItemShowTouchNotes.IsChecked = SettingsSystem.RenderSettings.ShowTouchNotes;
+        MenuItemShowChainNotes.IsChecked = SettingsSystem.RenderSettings.ShowChainNotes;
+        MenuItemShowHoldNotes.IsChecked = SettingsSystem.RenderSettings.ShowHoldNotes;
+        MenuItemShowSlideClockwiseNotes.IsChecked = SettingsSystem.RenderSettings.ShowSlideClockwiseNotes;
+        MenuItemShowSlideCounterclockwiseNotes.IsChecked = SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes;
+        MenuItemShowSnapForwardNotes.IsChecked = SettingsSystem.RenderSettings.ShowSnapForwardNotes;
+        MenuItemShowSnapBackwardNotes.IsChecked = SettingsSystem.RenderSettings.ShowSnapBackwardNotes;
+        MenuItemShowLaneShowNotes.IsChecked = SettingsSystem.RenderSettings.ShowLaneShowNotes;
+        MenuItemShowLaneHideNotes.IsChecked = SettingsSystem.RenderSettings.ShowLaneHideNotes;
+        MenuItemShowTempoChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowTempoChangeEvents;
+        MenuItemShowMetreChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowMetreChangeEvents;
+        MenuItemShowSpeedChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowSpeedChangeEvents;
+        MenuItemShowVisibilityChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowVisibilityChangeEvents;
+        MenuItemShowReverseEffectEvents.IsChecked = SettingsSystem.RenderSettings.ShowReverseEffectEvents;
+        MenuItemShowStopEffectEvents.IsChecked = SettingsSystem.RenderSettings.ShowStopEffectEvents;
+        MenuItemShowTutorialMarkerEvents.IsChecked = SettingsSystem.RenderSettings.ShowTutorialMarkerEvents;
 
         NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed / 10.0m;
         ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
@@ -323,7 +345,8 @@ public partial class ChartView3D : UserControl
         MenuItemSpikeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"].ToKeyGesture();
         MenuItemSplitHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SplitHold"].ToKeyGesture();
         MenuItemMergeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.MergeHold"].ToKeyGesture();
-        
+
+        MenuItemShowSpeedChanges.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowSpeedChanges"].ToKeyGesture();
         MenuItemShowJudgementWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgementWindows"].ToKeyGesture();
         MenuItemShowMarvelousWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"].ToKeyGesture();
         MenuItemShowGreatWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"].ToKeyGesture();
@@ -331,22 +354,22 @@ public partial class ChartView3D : UserControl
         MenuItemSaturnJudgementWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgementWindows"].ToKeyGesture();
         MenuItemVisualizeHoldNoteWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeHoldNoteWindows"].ToKeyGesture();
         MenuItemVisualizeSweepAnimations.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeSweepAnimations"].ToKeyGesture();
-        MenuItemShowTouch.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"].ToKeyGesture();
-        MenuItemShowChain.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapForward"].ToKeyGesture();
-        MenuItemShowHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapBackward"].ToKeyGesture();
-        MenuItemShowSlideClockwise.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideClockwise"].ToKeyGesture();
-        MenuItemShowSlideCounterclockwise.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideCounterclockwise"].ToKeyGesture();
-        MenuItemShowSnapForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Chain"].ToKeyGesture();
-        MenuItemShowSnapBackward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Hold"].ToKeyGesture();
-        MenuItemShowLaneShow.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneShow"].ToKeyGesture();
-        MenuItemShowLaneHide.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneHide"].ToKeyGesture();
-        MenuItemShowTempoChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TempoChange"].ToKeyGesture();
-        MenuItemShowMetreChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MetreChange"].ToKeyGesture();
-        MenuItemShowSpeedChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SpeedChange"].ToKeyGesture();
-        MenuItemShowVisibilityChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.VisibilityChange"].ToKeyGesture();
-        MenuItemShowReverseEffect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.ReverseEffect"].ToKeyGesture();
-        MenuItemShowStopEffect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.StopEffect"].ToKeyGesture();
-        MenuItemShowTutorialMarker.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TutorialMarker"].ToKeyGesture();
+        MenuItemShowTouchNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"].ToKeyGesture();
+        MenuItemShowChainNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapForward"].ToKeyGesture();
+        MenuItemShowHoldNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapBackward"].ToKeyGesture();
+        MenuItemShowSlideClockwiseNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideClockwise"].ToKeyGesture();
+        MenuItemShowSlideCounterclockwiseNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideCounterclockwise"].ToKeyGesture();
+        MenuItemShowSnapForwardNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Chain"].ToKeyGesture();
+        MenuItemShowSnapBackwardNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Hold"].ToKeyGesture();
+        MenuItemShowLaneShowNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneShow"].ToKeyGesture();
+        MenuItemShowLaneHideNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneHide"].ToKeyGesture();
+        MenuItemShowTempoChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TempoChange"].ToKeyGesture();
+        MenuItemShowMetreChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MetreChange"].ToKeyGesture();
+        MenuItemShowSpeedChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SpeedChange"].ToKeyGesture();
+        MenuItemShowVisibilityChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.VisibilityChange"].ToKeyGesture();
+        MenuItemShowReverseEffectEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.ReverseEffect"].ToKeyGesture();
+        MenuItemShowStopEffectEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.StopEffect"].ToKeyGesture();
+        MenuItemShowTutorialMarkerEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TutorialMarker"].ToKeyGesture();
 
     }
 }

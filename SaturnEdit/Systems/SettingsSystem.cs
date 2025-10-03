@@ -873,6 +873,7 @@ public class ShortcutSettings
         ["Editor.IncreaseBackgroundDim"] = new(Key.PageUp,   false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim"),
         ["Editor.DecreaseBackgroundDim"] = new(Key.PageDown, false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.DecreaseBackgroundDim"),
 
+        ["Editor.Settings.ShowSpeedChanges"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowSpeedChanges"),
         ["Editor.Settings.ShowJudgementWindows"]     = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowJudgementWindows"),
         ["Editor.Settings.ShowMarvelousWindows"]     = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows"),
         ["Editor.Settings.ShowGreatWindows"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows"),

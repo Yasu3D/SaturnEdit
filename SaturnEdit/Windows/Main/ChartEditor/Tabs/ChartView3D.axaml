@@ -320,11 +320,22 @@
                         <icon:FluentIcon Icon="Settings" />
                         <Button.Flyout>
                             <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                                <MenuItem Name="MenuItemShowSpeedChanges"
+                                          ToggleType="CheckBox"
+                                          StaysOpenOnClick="True"
+                                          Click="MenuItem_OnClick">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowSpeedChanges}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                                <Separator />
+                                
                                 <MenuItem>
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.JudgementWindows}" />
                                     </MenuItem.Header>
-
+                                    
                                     <MenuItem Name="MenuItemShowJudgementWindows"
                                               ToggleType="CheckBox"
                                               StaysOpenOnClick="True"
@@ -404,7 +415,7 @@
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility}" />
                                     </MenuItem.Header>
 
-                                    <MenuItem Name="MenuItemShowTouch"
+                                    <MenuItem Name="MenuItemShowTouchNotes"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -414,7 +425,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowChain"
+                                    <MenuItem Name="MenuItemShowChainNotes"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -424,7 +435,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowHold"
+                                    <MenuItem Name="MenuItemShowHoldNotes"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -434,7 +445,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowSlideClockwise"
+                                    <MenuItem Name="MenuItemShowSlideClockwiseNotes"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -444,7 +455,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowSlideCounterclockwise"
+                                    <MenuItem Name="MenuItemShowSlideCounterclockwiseNotes"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -454,7 +465,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowSnapForward"
+                                    <MenuItem Name="MenuItemShowSnapForwardNotes"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -464,7 +475,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowSnapBackward"
+                                    <MenuItem Name="MenuItemShowSnapBackwardNotes"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -476,7 +487,39 @@
 
                                     <Separator />
 
-                                    <MenuItem Name="MenuItemShowLaneShow"
+                                    <MenuItem Name="MenuItemShowSyncNotes"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Sync}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowMeasureLineNotes"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.MeasureLine}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemShowBeatLineNotes"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.BeatLine}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+                                    
+                                    <Separator />
+                                    
+                                    <MenuItem Name="MenuItemShowLaneShowNotes"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -486,7 +529,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowLaneHide"
+                                    <MenuItem Name="MenuItemShowLaneHideNotes"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -498,7 +541,7 @@
 
                                     <Separator />
 
-                                    <MenuItem Name="MenuItemShowTempoChange"
+                                    <MenuItem Name="MenuItemShowTempoChangeEvents"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -508,7 +551,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowMetreChange"
+                                    <MenuItem Name="MenuItemShowMetreChangeEvents"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -518,7 +561,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowSpeedChange"
+                                    <MenuItem Name="MenuItemShowSpeedChangeEvents"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -528,7 +571,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowVisibilityChange"
+                                    <MenuItem Name="MenuItemShowVisibilityChangeEvents"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -538,7 +581,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowReverseEffect"
+                                    <MenuItem Name="MenuItemShowReverseEffectEvents"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -548,7 +591,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowStopEffect"
+                                    <MenuItem Name="MenuItemShowStopEffectEvents"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"
@@ -558,7 +601,7 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemShowTutorialMarker"
+                                    <MenuItem Name="MenuItemShowTutorialMarkerEvents"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
                                               StaysOpenOnClick="True"

@@ -20,7 +20,8 @@ ChartEditor.General.Type.Value.HoldPoint,Hold Point
 ChartEditor.General.Type.Value.LaneShow,Lane Show
 ChartEditor.General.Type.Value.LaneHide,Lane Hide
 ChartEditor.General.Type.Value.MeasureLine,Measure Line
-ChartEditor.General.Type.Value.SyncLine,Sync Line
+ChartEditor.General.Type.Value.BeatLine,Beat Line
+ChartEditor.General.Type.Value.Sync,Sync
 ChartEditor.General.Type.Value.TempoChange,Tempo Change
 ChartEditor.General.Type.Value.MetreChange,Metre Change
 ChartEditor.General.Type.Value.SpeedChange,Speed Change
@@ -273,6 +274,7 @@ ChartEditor.ChartView3D.Menu.Convert.SpikeHold,Spike Hold...
 ChartEditor.ChartView3D.Menu.Convert.SplitHold,Split Hold
 ChartEditor.ChartView3D.Menu.Convert.MergeHold,Merge Hold
 ChartEditor.ChartView3D.Menu.Settings,Chart View Settings
+ChartEditor.ChartView3D.Menu.Settings.ShowSpeedChanges,Show Speed Changes
 ChartEditor.ChartView3D.Menu.Settings.JudgementWindows,Judgement Windows
 ChartEditor.ChartView3D.Menu.Settings.ShowJudgementWindows,Show Judgement Windows
 ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows,Show Marvelous Windows
