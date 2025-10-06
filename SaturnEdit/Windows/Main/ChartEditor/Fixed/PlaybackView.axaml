@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="200"
-             x:Class="SaturnEdit.Windows.Main.ChartEditor.Tabs.PlaybackView"
+             x:Class="SaturnEdit.Windows.Main.ChartEditor.Fixed.PlaybackView"
              MinHeight="79"
              MaxHeight="79">
     <Grid RowDefinitions="1,Auto">
@@ -242,6 +242,7 @@
                                         <MenuItem Name="MenuItemQuantizedPauseOff" 
                                                   ToggleType="Radio"
                                                   GroupName="QuantizePause"
+                                                  StaysOpenOnClick="True"
                                                   IsChecked="True"
                                                   Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
@@ -251,6 +252,7 @@
                                         <MenuItem Name="MenuItemQuantizedPauseNearest"
                                                   ToggleType="Radio"
                                                   GroupName="QuantizePause"
+                                                  StaysOpenOnClick="True"
                                                   Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
                                                 <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseNearest}" />
@@ -259,6 +261,7 @@
                                         <MenuItem Name="MenuItemQuantizedPausePrevious"
                                                   ToggleType="Radio"
                                                   GroupName="QuantizePause"
+                                                  StaysOpenOnClick="True"
                                                   Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
                                                 <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPausePrevious}" />
@@ -267,6 +270,7 @@
                                         <MenuItem Name="MenuItemQuantizedPauseNext"
                                                   ToggleType="Radio"
                                                   GroupName="QuantizePause"
+                                                  StaysOpenOnClick="True"
                                                   Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
                                                 <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseNext}" />

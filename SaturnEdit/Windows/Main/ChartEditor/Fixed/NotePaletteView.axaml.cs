@@ -1,15 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
 
-namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
+namespace SaturnEdit.Windows.Main.ChartEditor.Fixed;
 
 public partial class NotePaletteView : UserControl
 {

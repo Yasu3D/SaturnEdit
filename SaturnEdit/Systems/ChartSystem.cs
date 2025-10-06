@@ -29,10 +29,14 @@ public static class ChartSystem
     
     private static void OnChartChanged(object? sender, EventArgs e)
     {
-        NotationUtils.GenerateAllMeasureLineAndSyncNotes(Chart, Entry.ChartEnd);
         NotationUtils.CalculateTime(Entry, Chart);
         NotationUtils.CalculateScaledTime(Chart);
         RecalculateChartEnd();
+        
+        // TODO: Find a way to optimize this.
+        NotationUtils.GenerateAllMeasureLineAndSyncNotes(Chart, Entry.ChartEnd);
+        NotationUtils.CalculateTime(Entry, Chart);
+        NotationUtils.CalculateScaledTime(Chart);
     }
 
     private static void OnAudioLoaded(object? sender, EventArgs e) => RecalculateChartEnd();

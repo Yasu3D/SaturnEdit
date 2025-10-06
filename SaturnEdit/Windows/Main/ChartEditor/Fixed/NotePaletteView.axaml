@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              d:DesignWidth="60"
              d:DesignHeight="750"
-             x:Class="SaturnEdit.Windows.Main.ChartEditor.Tabs.NotePaletteView">
+             x:Class="SaturnEdit.Windows.Main.ChartEditor.Fixed.NotePaletteView">
     <ScrollViewer Background="{DynamicResource BackgroundPrimary}">
         <StackPanel>
             <RadioButton Classes="Themed FillStandard"

@@ -13,7 +13,7 @@ using SaturnEdit.Systems;
 using SaturnView;
 using SkiaSharp;
 
-namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
+namespace SaturnEdit.Windows.Main.ChartEditor.Fixed;
 
 public partial class PlaybackView : UserControl
 {

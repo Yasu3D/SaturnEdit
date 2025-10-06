@@ -87,7 +87,7 @@ public static class TimeSystem
     /// <summary>
     /// <see cref="Timestamp"/> offset by <see cref="SaturnData.Notation.Core.Entry.AudioOffset"/>
     /// </summary>
-    public static float AudioTime => Timestamp.Time + ChartSystem.Entry.AudioOffset;
+    public static float AudioTime => Timestamp.Time - ChartSystem.Entry.AudioOffset;
 
     /// <summary>
     /// <see cref="Timestamp"/> with compensation for the sound card <see cref="AudioSystem.Latency"/>
@@ -272,7 +272,7 @@ public static class TimeSystem
         {
             // AudioSystem is playing audio.
             // ManagedBass is absolutely cracked at keeping time, so just sync directly to that.
-            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, (float)AudioSystem.AudioChannelAudio.Position, Division);
+            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, (float)AudioSystem.AudioChannelAudio.Position + ChartSystem.Entry.AudioOffset, Division);
         }
     }
 

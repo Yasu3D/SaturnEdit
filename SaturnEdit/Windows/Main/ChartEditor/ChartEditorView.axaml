@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:tabs="clr-namespace:SaturnEdit.Windows.Main.ChartEditor.Tabs"
+             xmlns:fixed="clr-namespace:SaturnEdit.Windows.Main.ChartEditor.Fixed"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
@@ -13,7 +14,7 @@
         <Grid Grid.Row="0"
               ColumnDefinitions="60,1, *">
 
-            <tabs:NotePaletteView Grid.Column="0" />
+            <fixed:NotePaletteView Grid.Column="0" />
 
             <Rectangle Grid.Column="1"
                        Fill="{DynamicResource SeparatorSecondary}" />
@@ -94,7 +95,7 @@
             </DockControl>
         </Grid>
 
-        <tabs:PlaybackView Grid.Row="1" />
+        <fixed:PlaybackView Grid.Row="1" />
 
     </Grid>
 </UserControl>
