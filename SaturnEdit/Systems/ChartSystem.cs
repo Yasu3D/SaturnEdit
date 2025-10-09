@@ -43,7 +43,7 @@ public static class ChartSystem
 
     private static void RecalculateChartEnd()
     {
-        Entry.ChartEnd = NotationUtils.CalculateIdealChartEnd(Chart, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0);
+        Entry.ChartEnd = NotationUtils.FindIdealChartEnd(Chart, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0);
     }
     
     public static event EventHandler? ChartChanged;
@@ -152,6 +152,8 @@ public static class ChartSystem
     {
         NotationSerializer.ToFile(path, Entry, Chart, args);
 
+        // TODO: DONT SILENTLY FAIL WHEN A WRITE DOESNT COMPLETE.
+        
         if (updatePath)
         {
             Entry.RootDirectory = Path.GetDirectoryName(path) ?? "";

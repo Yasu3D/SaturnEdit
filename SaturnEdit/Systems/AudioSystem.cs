@@ -13,6 +13,8 @@ namespace SaturnEdit.Systems;
 
 public static class AudioSystem
 {
+    // TODO: Chart Changed should invalidate hitsounds
+    
     public static void Initialize()
     {
         Bass.Init(Flags: DeviceInitFlags.Latency);
