@@ -13,8 +13,6 @@ namespace SaturnEdit.Systems;
 
 public static class AudioSystem
 {
-    // TODO: Chart Changed should invalidate hitsounds
-    
     public static void Initialize()
     {
         Bass.Init(Flags: DeviceInitFlags.Latency);
@@ -279,7 +277,7 @@ public static class AudioSystem
                 // Bonus effects on slide notes play hitsounds after a fancy animation. Account for the delay here before discarding passed notes.
                 if (note is SlideClockwiseNote or SlideCounterclockwiseNote && note is IPlayable playableSlide && playableSlide.BonusType == BonusType.Bonus && !PassedBonusSlides.Contains(note))
                 {
-                    float bpm = NotationUtils.LastTempoChange(ChartSystem.Chart, note.Timestamp.Time)?.Tempo ?? 120;
+                    float bpm = ChartSystem.Chart.LastTempoChange(note.Timestamp.Time)?.Tempo ?? 120;
                     int effectOffset = bpm > 200 ? 3840 : 1920;
                     
                     float bonusEffectTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, note.Timestamp + effectOffset);
@@ -419,10 +417,12 @@ public static class AudioSystem
 
                 if (note is SlideClockwiseNote or SlideCounterclockwiseNote && note is IPlayable playable && playable.BonusType == BonusType.Bonus)
                 {
-                    float bpm = NotationUtils.LastTempoChange(ChartSystem.Chart, timeable.Timestamp.Time)?.Tempo ?? 120;
-                    int effectOffset = bpm > 200 ? 3840 : 1920;
-                    
-                    float bonusEffectTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, timeable.Timestamp + effectOffset);
+                    float bpm = ChartSystem.Chart.LastTempoChange(timeable.Timestamp.Time)?.Tempo ?? 120;
+                    float effectOffset = bpm >= 200
+                            ? 480000 / bpm
+                            : 240000 / bpm;
+
+                    float bonusEffectTime = timeable.Timestamp.Time + effectOffset;
 
                     if (bonusEffectTime < TimeSystem.HitsoundTime)
                     {
@@ -445,7 +445,7 @@ public static class AudioSystem
     {
         if (time == 0) return Timestamp.Zero; // hacky but works!
         
-        MetreChangeEvent? metre = NotationUtils.LastMetreChange(ChartSystem.Chart, time);
+        MetreChangeEvent? metre = ChartSystem.Chart.LastMetreChange(time);
         if (metre == null) return null;
         
         int clicks = metre.Upper;

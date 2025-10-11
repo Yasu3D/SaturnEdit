@@ -26,25 +26,9 @@ public static class ChartSystem
     private static void OnEntryChanged(object? sender, EventArgs e) => EntryChanged?.Invoke(sender, e);
     private static void OnAudioChanged(object? sender, EventArgs e) => AudioChanged?.Invoke(sender, e);
     private static void OnJacketChanged(object? sender, EventArgs e) => JacketChanged?.Invoke(sender, e);
-    
-    private static void OnChartChanged(object? sender, EventArgs e)
-    {
-        NotationUtils.CalculateTime(Entry, Chart);
-        NotationUtils.CalculateScaledTime(Chart);
-        RecalculateChartEnd();
-        
-        // TODO: Find a way to optimize this.
-        NotationUtils.GenerateAllMeasureLineAndSyncNotes(Chart, Entry.ChartEnd);
-        NotationUtils.CalculateTime(Entry, Chart);
-        NotationUtils.CalculateScaledTime(Chart);
-    }
 
-    private static void OnAudioLoaded(object? sender, EventArgs e) => RecalculateChartEnd();
-
-    private static void RecalculateChartEnd()
-    {
-        Entry.ChartEnd = NotationUtils.FindIdealChartEnd(Chart, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0);
-    }
+    private static void OnChartChanged(object? sender, EventArgs e) => Chart.Build(Entry);
+    private static void OnAudioLoaded(object? sender, EventArgs e) => Chart.Build(Entry);
     
     public static event EventHandler? ChartChanged;
     public static event EventHandler? EntryChanged;
