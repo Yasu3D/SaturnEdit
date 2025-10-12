@@ -101,9 +101,9 @@ public partial class ChartView3D : UserControl
             return;
         }
 
-        if (menuItem == MenuItemShowSpeedChanges)
+        if (menuItem == MenuItemShowEffects)
         {
-            SettingsSystem.RenderSettings.ShowSpeedChanges = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowEffects = menuItem.IsChecked;
             return;
         }
         
@@ -274,7 +274,7 @@ public partial class ChartView3D : UserControl
     {
         blockEvents = true;
 
-        MenuItemShowSpeedChanges.IsChecked = SettingsSystem.RenderSettings.ShowSpeedChanges;
+        MenuItemShowEffects.IsChecked = SettingsSystem.RenderSettings.ShowEffects;
         MenuItemShowJudgementWindows.IsChecked = SettingsSystem.RenderSettings.ShowJudgementWindows;
         MenuItemShowMarvelousWindows.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousWindows;
         MenuItemShowGreatWindows.IsChecked = SettingsSystem.RenderSettings.ShowGreatWindows;
@@ -349,7 +349,7 @@ public partial class ChartView3D : UserControl
         MenuItemSplitHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SplitHold"].ToKeyGesture();
         MenuItemMergeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.MergeHold"].ToKeyGesture();
 
-        MenuItemShowSpeedChanges.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowSpeedChanges"].ToKeyGesture();
+        MenuItemShowEffects.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowEffects"].ToKeyGesture();
         MenuItemShowJudgementWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgementWindows"].ToKeyGesture();
         MenuItemShowMarvelousWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"].ToKeyGesture();
         MenuItemShowGreatWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"].ToKeyGesture();

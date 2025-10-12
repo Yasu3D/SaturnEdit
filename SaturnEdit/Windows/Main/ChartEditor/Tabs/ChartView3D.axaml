@@ -320,12 +320,12 @@
                         <icon:FluentIcon Icon="Settings" />
                         <Button.Flyout>
                             <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                                <MenuItem Name="MenuItemShowSpeedChanges"
+                                <MenuItem Name="MenuItemShowEffects"
                                           ToggleType="CheckBox"
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowSpeedChanges}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowEffects}" />
                                     </MenuItem.Header>
                                 </MenuItem>
 
