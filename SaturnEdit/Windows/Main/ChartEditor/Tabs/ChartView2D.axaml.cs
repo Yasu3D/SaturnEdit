@@ -23,7 +23,7 @@ public partial class ChartView2D : UserControl
     }
 
     private readonly CanvasInfo canvasInfo = new();
-    private SKColor clearColor;
+    private bool blockEvents = false;
 
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
@@ -41,12 +41,12 @@ public partial class ChartView2D : UserControl
             if (!Application.Current.TryGetResource("BackgroundSecondary", Application.Current.ActualThemeVariant, out object? resource)) return;
             if (resource is not SolidColorBrush brush) return;
 
-            clearColor = new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
+            canvasInfo.BackgroundColor = new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // classic error pink
-            clearColor = new(0xFF, 0x00, 0xFF, 0xFF);
+            canvasInfo.BackgroundColor = new(0xFF, 0x00, 0xFF, 0xFF);
         }
     }
 
@@ -62,12 +62,13 @@ public partial class ChartView2D : UserControl
         canvasInfo.Center = new(canvasInfo.Radius, canvasInfo.Radius);
     }
 
-    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => Renderer2D.Render(canvas, canvasInfo, clearColor);
+    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => Renderer2D.Render(canvas, canvasInfo);
 
     private void MenuItem_OnClick(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
         if (sender is not MenuItem menuItem) return;
-
+        
         if (menuItem == MenuItemShowJudgementWindows)
         {
             SettingsSystem.RenderSettings.ShowJudgementWindows = menuItem.IsChecked;
@@ -77,79 +78,79 @@ public partial class ChartView2D : UserControl
             MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowMarvelousWindows)
         {
             SettingsSystem.RenderSettings.ShowMarvelousWindows = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowGreatWindows)
         {
             SettingsSystem.RenderSettings.ShowGreatWindows = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowGoodWindows)
         {
             SettingsSystem.RenderSettings.ShowGoodWindows = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemSaturnJudgementWindows)
         {
             SettingsSystem.RenderSettings.SaturnJudgementWindows = menuItem.IsChecked;
             return;
         }
-
-        if (menuItem == MenuItemVisualizeHoldNoteWindows)
+        
+        if (menuItem == MenuItemVisualizeHoldNoteHitboxes)
         {
             SettingsSystem.RenderSettings.VisualizeHoldNoteWindows = menuItem.IsChecked;
             return;
         }
-
-        if (menuItem == MenuItemVisualizeSweepAnimations)
+        
+        if (menuItem == MenuItemVisualizeLaneSweeps)
         {
-            SettingsSystem.RenderSettings.VisualizeSweepAnimations = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.VisualizeLaneSweeps = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowTouchNotes)
         {
             SettingsSystem.RenderSettings.ShowTouchNotes = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowChainNotes)
         {
             SettingsSystem.RenderSettings.ShowChainNotes = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowHoldNotes)
         {
             SettingsSystem.RenderSettings.ShowHoldNotes = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowSlideClockwiseNotes)
         {
             SettingsSystem.RenderSettings.ShowSlideClockwiseNotes = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowSlideCounterclockwiseNotes)
         {
             SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowSnapForwardNotes)
         {
             SettingsSystem.RenderSettings.ShowSnapForwardNotes = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowSnapBackwardNotes)
         {
             SettingsSystem.RenderSettings.ShowSnapBackwardNotes = menuItem.IsChecked;
@@ -177,65 +178,84 @@ public partial class ChartView2D : UserControl
             SettingsSystem.RenderSettings.ShowLaneShowNotes = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowLaneHideNotes)
         {
             SettingsSystem.RenderSettings.ShowLaneHideNotes = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowTempoChangeEvents)
         {
             SettingsSystem.RenderSettings.ShowTempoChangeEvents = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowMetreChangeEvents)
         {
             SettingsSystem.RenderSettings.ShowMetreChangeEvents = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowSpeedChangeEvents)
         {
             SettingsSystem.RenderSettings.ShowSpeedChangeEvents = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowVisibilityChangeEvents)
         {
             SettingsSystem.RenderSettings.ShowVisibilityChangeEvents = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowReverseEffectEvents)
         {
             SettingsSystem.RenderSettings.ShowReverseEffectEvents = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowStopEffectEvents)
         {
             SettingsSystem.RenderSettings.ShowStopEffectEvents = menuItem.IsChecked;
             return;
         }
-
+        
         if (menuItem == MenuItemShowTutorialMarkerEvents)
         {
             SettingsSystem.RenderSettings.ShowTutorialMarkerEvents = menuItem.IsChecked;
             return;
         }
+        
+        if (menuItem == MenuItemHideEventMarkers)
+        {
+            SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback = menuItem.IsChecked;
+            return;
+        }
+        
+        if (menuItem == MenuItemHideLaneToggleNotes)
+        {
+            SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback = menuItem.IsChecked;
+            return;
+        }
+        
+        if (menuItem == MenuItemHideHoldControlPoints)
+        {
+            SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback = menuItem.IsChecked;
+        }
     }
 
     private void UpdateSettings()
     {
+        blockEvents = true;
+        
         MenuItemShowJudgementWindows.IsChecked = SettingsSystem.RenderSettings.ShowJudgementWindows;
         MenuItemShowMarvelousWindows.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousWindows;
         MenuItemShowGreatWindows.IsChecked = SettingsSystem.RenderSettings.ShowGreatWindows;
         MenuItemShowGoodWindows.IsChecked = SettingsSystem.RenderSettings.ShowGoodWindows;
         MenuItemSaturnJudgementWindows.IsChecked = SettingsSystem.RenderSettings.SaturnJudgementWindows;
-        MenuItemVisualizeHoldNoteWindows.IsChecked = SettingsSystem.RenderSettings.VisualizeHoldNoteWindows;
-        MenuItemVisualizeSweepAnimations.IsChecked = SettingsSystem.RenderSettings.VisualizeSweepAnimations;
+        MenuItemVisualizeHoldNoteHitboxes.IsChecked = SettingsSystem.RenderSettings.VisualizeHoldNoteWindows;
+        MenuItemVisualizeLaneSweeps.IsChecked = SettingsSystem.RenderSettings.VisualizeLaneSweeps;
         MenuItemShowTouchNotes.IsChecked = SettingsSystem.RenderSettings.ShowTouchNotes;
         MenuItemShowChainNotes.IsChecked = SettingsSystem.RenderSettings.ShowChainNotes;
         MenuItemShowHoldNotes.IsChecked = SettingsSystem.RenderSettings.ShowHoldNotes;
@@ -243,6 +263,9 @@ public partial class ChartView2D : UserControl
         MenuItemShowSlideCounterclockwiseNotes.IsChecked = SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes;
         MenuItemShowSnapForwardNotes.IsChecked = SettingsSystem.RenderSettings.ShowSnapForwardNotes;
         MenuItemShowSnapBackwardNotes.IsChecked = SettingsSystem.RenderSettings.ShowSnapBackwardNotes;
+        MenuItemShowSyncNotes.IsChecked = SettingsSystem.RenderSettings.ShowSyncNotes;
+        MenuItemShowMeasureLineNotes.IsChecked = SettingsSystem.RenderSettings.ShowMeasureLineNotes;
+        MenuItemShowBeatLineNotes.IsChecked = SettingsSystem.RenderSettings.ShowBeatLineNotes;
         MenuItemShowLaneShowNotes.IsChecked = SettingsSystem.RenderSettings.ShowLaneShowNotes;
         MenuItemShowLaneHideNotes.IsChecked = SettingsSystem.RenderSettings.ShowLaneHideNotes;
         MenuItemShowTempoChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowTempoChangeEvents;
@@ -253,9 +276,15 @@ public partial class ChartView2D : UserControl
         MenuItemShowStopEffectEvents.IsChecked = SettingsSystem.RenderSettings.ShowStopEffectEvents;
         MenuItemShowTutorialMarkerEvents.IsChecked = SettingsSystem.RenderSettings.ShowTutorialMarkerEvents;
 
+        MenuItemHideEventMarkers.IsChecked = SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback;
+        MenuItemHideLaneToggleNotes.IsChecked = SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback;
+        MenuItemHideHoldControlPoints.IsChecked = SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback;
+        
         MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
         MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
         MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+
+        blockEvents = false;
     }
 
     private void UpdateShortcuts()
@@ -294,14 +323,14 @@ public partial class ChartView2D : UserControl
         MenuItemSpikeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"].ToKeyGesture();
         MenuItemSplitHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SplitHold"].ToKeyGesture();
         MenuItemMergeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.MergeHold"].ToKeyGesture();
-        
+
         MenuItemShowJudgementWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgementWindows"].ToKeyGesture();
         MenuItemShowMarvelousWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"].ToKeyGesture();
         MenuItemShowGreatWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"].ToKeyGesture();
         MenuItemShowGoodWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodWindows"].ToKeyGesture();
         MenuItemSaturnJudgementWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgementWindows"].ToKeyGesture();
-        MenuItemVisualizeHoldNoteWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeHoldNoteWindows"].ToKeyGesture();
-        MenuItemVisualizeSweepAnimations.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeSweepAnimations"].ToKeyGesture();
+        MenuItemVisualizeHoldNoteHitboxes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeHoldNoteWindows"].ToKeyGesture();
+        MenuItemVisualizeLaneSweeps.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeLaneSweeps"].ToKeyGesture();
         MenuItemShowTouchNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"].ToKeyGesture();
         MenuItemShowChainNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapForward"].ToKeyGesture();
         MenuItemShowHoldNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapBackward"].ToKeyGesture();
@@ -309,6 +338,9 @@ public partial class ChartView2D : UserControl
         MenuItemShowSlideCounterclockwiseNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideCounterclockwise"].ToKeyGesture();
         MenuItemShowSnapForwardNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Chain"].ToKeyGesture();
         MenuItemShowSnapBackwardNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Hold"].ToKeyGesture();
+        MenuItemShowSyncNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Sync"].ToKeyGesture();
+        MenuItemShowMeasureLineNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MeasureLine"].ToKeyGesture();
+        MenuItemShowBeatLineNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.BeatLine"].ToKeyGesture();
         MenuItemShowLaneShowNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneShow"].ToKeyGesture();
         MenuItemShowLaneHideNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneHide"].ToKeyGesture();
         MenuItemShowTempoChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TempoChange"].ToKeyGesture();
@@ -319,5 +351,8 @@ public partial class ChartView2D : UserControl
         MenuItemShowStopEffectEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.StopEffect"].ToKeyGesture();
         MenuItemShowTutorialMarkerEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TutorialMarker"].ToKeyGesture();
 
+        MenuItemHideEventMarkers.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.EventMarkers"].ToKeyGesture();
+        MenuItemHideLaneToggleNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.LaneToggleNotes"].ToKeyGesture();
+        MenuItemHideHoldControlPoints.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.HoldControlPoints"].ToKeyGesture();
     }
 }

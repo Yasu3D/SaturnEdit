@@ -274,16 +274,22 @@ ChartEditor.ChartView3D.Menu.Convert.SpikeHold,Spike Hold...
 ChartEditor.ChartView3D.Menu.Convert.SplitHold,Split Hold
 ChartEditor.ChartView3D.Menu.Convert.MergeHold,Merge Hold
 ChartEditor.ChartView3D.Menu.Settings,Chart View Settings
-ChartEditor.ChartView3D.Menu.Settings.ShowEffects,Show Effects
-ChartEditor.ChartView3D.Menu.Settings.JudgementWindows,Judgement Windows
+ChartEditor.ChartView3D.Menu.Settings.ShowSpeedChanges,Show Speed Changes
+ChartEditor.ChartView3D.Menu.Settings.ShowVisibilityChanges,Show Visibility Changes
+ChartEditor.ChartView3D.Menu.Settings.ShowLaneToggleAnimations,Show Lane Toggle Animations
+ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteHitboxes,Visualize Hold Note Hitboxes
+ChartEditor.ChartView3D.Menu.Settings.VisualizeLaneSweeps,Visualize Lane Sweeps
+ChartEditor.ChartView3D.Menu.Settings.JudgementWindows,Judgement Windows...
 ChartEditor.ChartView3D.Menu.Settings.ShowJudgementWindows,Show Judgement Windows
 ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows,Show Marvelous Windows
 ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows,Show Great Windows
 ChartEditor.ChartView3D.Menu.Settings.ShowGoodWindows,Show Good Windows
 ChartEditor.ChartView3D.Menu.Settings.SaturnJudgementWindows,Saturn Judgement Windows
-ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteWindows,Visualize Hold Note Windows
-ChartEditor.ChartView3D.Menu.Settings.VisualizeSweepAnimations,Visualize Sweep Animations
-ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility,Toggle Visibility
+ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility,Toggle Visibility...
+ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback,Hide during Playback...
+ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.EventMarkers,Event Markers
+ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.LaneToggleNotes,Lane Toggle Notes
+ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.HoldControlPoints,Hold Control Points
 ChartEditor.ChartView3D.Menu.IncreaseNoteSpeed,Increase Note Speed
 ChartEditor.ChartView3D.Menu.DecreaseNoteSpeed,Decrease Note Speed
 ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim,Increase Background Dim
@@ -392,11 +398,7 @@ Settings.Rendering.JudgementLineColor.Version0,Version0
 Settings.Rendering.JudgementLineColor.Version1,Version1
 Settings.Rendering.JudgementLineColor.Version2,Version2
 Settings.Rendering.JudgementLineColor.Version3,Version3
-Settings.Rendering.DuringPlayback,During Playback...
-Settings.Rendering.HideEventMarkers,Hide Event Markers
-Settings.Rendering.HideLaneToggleNotes,Hide Lane Toggle Notes
-Settings.Rendering.HideHoldControlPoints,Hide Hold Control Points
-Settings.Rendering.IgnoreLaneToggleAnimations,Ignore Lane Toggle Animations
+Settings.Rendering.HiddenOpacity,Hidden Opacity
 Settings.Rendering.Notes,Notes
 Settings.Rendering.NoteThickness,Note Thickness:
 Settings.Rendering.NoteColorTouch,Touch Note Color:

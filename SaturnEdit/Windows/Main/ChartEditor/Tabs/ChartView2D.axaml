@@ -319,11 +319,31 @@
                     <icon:FluentIcon Icon="Settings" />
                     <Button.Flyout>
                         <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                            <MenuItem Name="MenuItemVisualizeHoldNoteHitboxes"
+                                      ToggleType="CheckBox"
+                                      StaysOpenOnClick="True"
+                                      Click="MenuItem_OnClick">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteHitboxes}" />
+                                </MenuItem.Header>
+                            </MenuItem>
+
+                            <MenuItem Name="MenuItemVisualizeLaneSweeps"
+                                      ToggleType="CheckBox"
+                                      StaysOpenOnClick="True"
+                                      Click="MenuItem_OnClick">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeLaneSweeps}" />
+                                </MenuItem.Header>
+                            </MenuItem>
+
+                            <Separator />
+                                
                             <MenuItem>
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.JudgementWindows}" />
                                 </MenuItem.Header>
-                                
+                                    
                                 <MenuItem Name="MenuItemShowJudgementWindows"
                                           ToggleType="CheckBox"
                                           StaysOpenOnClick="True"
@@ -374,26 +394,6 @@
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.SaturnJudgementWindows}" />
                                     </MenuItem.Header>
                                 </MenuItem>
-                            </MenuItem>
-
-                            <Separator />
-
-                            <MenuItem Name="MenuItemVisualizeHoldNoteWindows"
-                                      ToggleType="CheckBox"
-                                      StaysOpenOnClick="True"
-                                      Click="MenuItem_OnClick">
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteWindows}" />
-                                </MenuItem.Header>
-                            </MenuItem>
-
-                            <MenuItem Name="MenuItemVisualizeSweepAnimations"
-                                      ToggleType="CheckBox"
-                                      StaysOpenOnClick="True"
-                                      Click="MenuItem_OnClick">
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeSweepAnimations}" />
-                                </MenuItem.Header>
                             </MenuItem>
 
                             <Separator />
@@ -504,9 +504,9 @@
                                         <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.BeatLine}" />
                                     </MenuItem.Header>
                                 </MenuItem>
-                                
+                                    
                                 <Separator />
-                                
+                                    
                                 <MenuItem Name="MenuItemShowLaneShowNotes"
                                           ToggleType="CheckBox"
                                           IsChecked="True"
@@ -600,10 +600,45 @@
                                 </MenuItem>
 
                             </MenuItem>
+                                
+                            <MenuItem>
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback}" />
+                                </MenuItem.Header>
+                                    
+                                <MenuItem Name="MenuItemHideEventMarkers"
+                                          ToggleType="CheckBox"
+                                          IsChecked="True"
+                                          StaysOpenOnClick="True"
+                                          Click="MenuItem_OnClick">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.EventMarkers}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                    
+                                <MenuItem Name="MenuItemHideLaneToggleNotes"
+                                          ToggleType="CheckBox"
+                                          IsChecked="True"
+                                          StaysOpenOnClick="True"
+                                          Click="MenuItem_OnClick">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.LaneToggleNotes}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                    
+                                <MenuItem Name="MenuItemHideHoldControlPoints"
+                                          ToggleType="CheckBox"
+                                          IsChecked="True"
+                                          StaysOpenOnClick="True"
+                                          Click="MenuItem_OnClick">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.HoldControlPoints}" />
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </MenuItem>
                         </MenuFlyout>
                     </Button.Flyout>
                 </Button>
-
             </StackPanel>
 
             <!-- Tool Bar & Canvas-->

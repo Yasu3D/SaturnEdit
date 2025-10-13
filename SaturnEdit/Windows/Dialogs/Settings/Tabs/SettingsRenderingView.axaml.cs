@@ -28,12 +28,7 @@ public partial class SettingsRenderingView : UserControl
         ComboBoxGuideLineType.SelectedIndex = (int)SettingsSystem.RenderSettings.GuideLineType;
         ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
         ComboBoxJudgementLineColor.SelectedIndex = (int)SettingsSystem.RenderSettings.JudgementLineColor;
-        
-        CheckBoxIgnoreLaneToggleAnimations.IsChecked = SettingsSystem.RenderSettings.IgnoreLaneToggleAnimations;
-        
-        CheckBoxHideEventMarkersDuringPlayback.IsChecked = SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback;
-        CheckBoxHideLaneToggleNotesDuringPlayback.IsChecked = SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback;
-        CheckBoxHideHoldControlPointsDuringPlayback.IsChecked = SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback;
+        NumericUpDownHiddenOpacity.Value = SettingsSystem.RenderSettings.HiddenOpacity / 10.0m;
         
         ComboBoxNoteThickness.SelectedIndex = (int)SettingsSystem.RenderSettings.NoteThickness;
         
@@ -87,37 +82,13 @@ public partial class SettingsRenderingView : UserControl
 
         SettingsSystem.RenderSettings.JudgementLineColor = (RenderSettings.JudgementLineColorOption)ComboBoxJudgementLineColor.SelectedIndex;
     }
-
-    private void CheckBoxIgnoreLaneToggleAnimations_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    
+    private void NumericUpDownHiddenOpacity_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
         if (blockEvent) return;
-        if (CheckBoxIgnoreLaneToggleAnimations == null) return;
+        if (NumericUpDownHiddenOpacity == null) return;
 
-        SettingsSystem.RenderSettings.IgnoreLaneToggleAnimations = CheckBoxIgnoreLaneToggleAnimations.IsChecked ?? false;
-    }
-
-    private void CheckBoxHideEventMarkersDuringPlayback_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
-    {
-        if (blockEvent) return;
-        if (CheckBoxHideEventMarkersDuringPlayback == null) return;
-
-        SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback = CheckBoxHideEventMarkersDuringPlayback.IsChecked ?? false;
-    }
-
-    private void CheckBoxHideLaneToggleNotesDuringPlayback_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
-    {
-        if (blockEvent) return;
-        if (CheckBoxHideLaneToggleNotesDuringPlayback == null) return;
-
-        SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback = CheckBoxHideLaneToggleNotesDuringPlayback.IsChecked ?? false;
-    }
-
-    private void CheckBoxHideHoldControlPointsDuringPlayback_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
-    {
-        if (blockEvent) return;
-        if (CheckBoxHideHoldControlPointsDuringPlayback == null) return;
-
-        SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback = CheckBoxHideHoldControlPointsDuringPlayback.IsChecked ?? false;
+        SettingsSystem.RenderSettings.HiddenOpacity = (int)(NumericUpDownHiddenOpacity.Value * 10 ?? 10);
     }
 
     private void ComboBoxNoteThickness_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)

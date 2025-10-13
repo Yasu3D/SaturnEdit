@@ -27,8 +27,8 @@ public static class ChartSystem
     private static void OnAudioChanged(object? sender, EventArgs e) => AudioChanged?.Invoke(sender, e);
     private static void OnJacketChanged(object? sender, EventArgs e) => JacketChanged?.Invoke(sender, e);
 
-    private static void OnChartChanged(object? sender, EventArgs e) => Chart.Build(Entry);
-    private static void OnAudioLoaded(object? sender, EventArgs e) => Chart.Build(Entry);
+    private static void OnChartChanged(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0);
+    private static void OnAudioLoaded(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0);
     
     public static event EventHandler? ChartChanged;
     public static event EventHandler? EntryChanged;

@@ -873,14 +873,16 @@ public class ShortcutSettings
         ["Editor.IncreaseBackgroundDim"] = new(Key.PageUp,   false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim"),
         ["Editor.DecreaseBackgroundDim"] = new(Key.PageDown, false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.DecreaseBackgroundDim"),
 
-        ["Editor.Settings.ShowEffects"]              = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowEffects"),
+        ["Editor.Settings.ShowSpeedChanges"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowSpeedChanges"),
+        ["Editor.Settings.ShowVisibilityChanges"]    = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowVisibilityChanges"),
+        ["Editor.Settings.ShowLaneToggleAnimations"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowLaneToggleAnimations"),
+        ["Editor.Settings.VisualizeHoldNoteWindows"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteWindows"),
+        ["Editor.Settings.VisualizeLaneSweeps"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.VisualizeLaneSweeps"),
         ["Editor.Settings.ShowJudgementWindows"]     = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowJudgementWindows"),
         ["Editor.Settings.ShowMarvelousWindows"]     = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows"),
         ["Editor.Settings.ShowGreatWindows"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows"),
         ["Editor.Settings.ShowGoodWindows"]          = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowGoodWindows"),
         ["Editor.Settings.SaturnJudgementWindows"]   = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.SaturnJudgementWindows"),
-        ["Editor.Settings.VisualizeHoldNoteWindows"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteWindows"),
-        ["Editor.Settings.VisualizeSweepAnimations"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.VisualizeSweepAnimations"),
 
         ["Editor.Settings.ToggleVisibility.Touch"]                 = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.Touch"),
         ["Editor.Settings.ToggleVisibility.SnapForward"]           = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.SnapForward"),
@@ -901,7 +903,11 @@ public class ShortcutSettings
         ["Editor.Settings.ToggleVisibility.ReverseEffect"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.ReverseEffect"),
         ["Editor.Settings.ToggleVisibility.StopEffect"]            = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.StopEffect"),
         ["Editor.Settings.ToggleVisibility.TutorialMarker"]        = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.TutorialMarker"),
-
+        
+        ["Editor.Settings.HideDuringPlayback.EventMarkers"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback", "ChartEditor.General.Type.Value.EventMarkers"),
+        ["Editor.Settings.HideDuringPlayback.LaneToggleNotes"]   = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback", "ChartEditor.General.Type.Value.LaneToggleNotes"),
+        ["Editor.Settings.HideDuringPlayback.HoldControlPoints"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback", "ChartEditor.General.Type.Value.HoldControlPoints"),
+        
         ["Proofreader.Run"] = new(Key.P, true, false, false, "ChartEditor.Proofreader", "ChartEditor.Proofreader.ToolTip.Run"),
     };
 
