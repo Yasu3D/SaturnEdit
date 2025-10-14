@@ -82,7 +82,7 @@
             </Grid>
             
             <Grid ColumnDefinitions="250,*"
-                  Margin="0,0,0,10">
+                  Margin="0,20,0,10">
                 <TextBlock Grid.Column="0"
                            Text="{DynamicResource Settings.Rendering.GuideLineType}"
                            VerticalAlignment="Center"
@@ -124,7 +124,7 @@
             </Grid>
             
             <Grid ColumnDefinitions="250,*"
-                  Margin="0,10,0,10">
+                  Margin="0,20,0,10">
                 <TextBlock Grid.Column="0"
                            Text="{DynamicResource Settings.Rendering.HiddenOpacity}"
                            VerticalAlignment="Center"
@@ -139,6 +139,80 @@
                                Value="0.1"
                                FormatString="F1" 
                                ValueChanged="NumericUpDownHiddenOpacity_OnValueChanged"/>
+            </Grid>
+            
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,20,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.BonusEffectVisibility}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          Name="ComboBoxBonusEffectVisibility"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          SelectedIndex="0"
+                          SelectionChanged="ComboBoxShowBonusEffect_OnSelectionChanged">
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.AlwaysOn}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.AlwaysOff}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.OnlyWhenPlaying}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.OnlyWhenPaused}" />
+                </ComboBox>
+            </Grid>
+            
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.RNoteEffectVisibility}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          Name="ComboBoxRNoteEffectVisibility"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          SelectedIndex="0"
+                          SelectionChanged="ComboBoxShowRNoteEffect_OnSelectionChanged">
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.AlwaysOn}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.AlwaysOff}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.OnlyWhenPlaying}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.OnlyWhenPaused}" />
+                </ComboBox>
+            </Grid>
+            
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.RNoteEffectOpacity}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <NumericUpDown Grid.Column="1"
+                               Name="NumericUpDownRNoteEffectOpacity"
+                               HorizontalAlignment="Left"
+                               Width="130"
+                               Minimum="0.0"
+                               Maximum="1.0"
+                               Increment="0.1"
+                               Value="1.0"
+                               FormatString="F1" 
+                               ValueChanged="NumericUpDownRNoteEffectOpacity_OnValueChanged"/>
+            </Grid>
+            
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,20,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.ClearBackgroundVisibility}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          Name="ComboBoxClearBackgroundVisibility"
+                          HorizontalAlignment="Left"
+                          Width="130"
+                          SelectedIndex="0"
+                          SelectionChanged="ComboBoxClearBackgroundVisibility_OnSelectionChanged">
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.ClearBackgroundVisibility.ForceNormal}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.ClearBackgroundVisibility.ForceClear}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.ClearBackgroundVisibility.SimulateClear}" />
+                </ComboBox>
             </Grid>
             
             <!-- Notes -->

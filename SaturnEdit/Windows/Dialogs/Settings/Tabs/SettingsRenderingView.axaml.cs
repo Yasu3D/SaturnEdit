@@ -25,10 +25,18 @@ public partial class SettingsRenderingView : UserControl
         CheckBoxLowPerformanceMode.IsChecked = SettingsSystem.RenderSettings.LowPerformanceMode;
         
         NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed / 10.0m;
-        ComboBoxGuideLineType.SelectedIndex = (int)SettingsSystem.RenderSettings.GuideLineType;
         ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
+        
+        ComboBoxGuideLineType.SelectedIndex = (int)SettingsSystem.RenderSettings.GuideLineType;
         ComboBoxJudgementLineColor.SelectedIndex = (int)SettingsSystem.RenderSettings.JudgementLineColor;
+        
         NumericUpDownHiddenOpacity.Value = SettingsSystem.RenderSettings.HiddenOpacity / 10.0m;
+
+        ComboBoxBonusEffectVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.BonusEffectVisibility;
+        ComboBoxRNoteEffectVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.RNoteEffectVisibility;
+        NumericUpDownRNoteEffectOpacity.Value = SettingsSystem.RenderSettings.RNoteEffectOpacity / 10.0m;
+
+        ComboBoxClearBackgroundVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.ClearBackgroundVisibility;
         
         ComboBoxNoteThickness.SelectedIndex = (int)SettingsSystem.RenderSettings.NoteThickness;
         
@@ -89,6 +97,38 @@ public partial class SettingsRenderingView : UserControl
         if (NumericUpDownHiddenOpacity == null) return;
 
         SettingsSystem.RenderSettings.HiddenOpacity = (int)(NumericUpDownHiddenOpacity.Value * 10 ?? 10);
+    }
+    
+    private void ComboBoxShowBonusEffect_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvent) return;
+        if (ComboBoxBonusEffectVisibility == null) return;
+
+        SettingsSystem.RenderSettings.BonusEffectVisibility = (RenderSettings.EffectVisibilityOption)ComboBoxBonusEffectVisibility.SelectedIndex;
+    }
+    
+    private void ComboBoxShowRNoteEffect_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvent) return;
+        if (ComboBoxRNoteEffectVisibility == null) return;
+
+        SettingsSystem.RenderSettings.RNoteEffectVisibility = (RenderSettings.EffectVisibilityOption)ComboBoxRNoteEffectVisibility.SelectedIndex;
+    }
+    
+    private void NumericUpDownRNoteEffectOpacity_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
+    {
+        if (blockEvent) return;
+        if (NumericUpDownRNoteEffectOpacity == null) return;
+
+        SettingsSystem.RenderSettings.RNoteEffectOpacity = (int)(NumericUpDownRNoteEffectOpacity.Value * 10 ?? 30);
+    }
+    
+    private void ComboBoxClearBackgroundVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvent) return;
+        if (ComboBoxClearBackgroundVisibility == null) return;
+
+        SettingsSystem.RenderSettings.ClearBackgroundVisibility = (RenderSettings.ClearBackgroundVisibilityOption)ComboBoxClearBackgroundVisibility.SelectedIndex;
     }
 
     private void ComboBoxNoteThickness_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)

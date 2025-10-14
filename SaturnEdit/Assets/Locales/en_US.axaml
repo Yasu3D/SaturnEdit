@@ -402,6 +402,17 @@
     <system:String x:Key="Settings.Rendering.JudgementLineColor.Version2">Version2</system:String>
     <system:String x:Key="Settings.Rendering.JudgementLineColor.Version3">Version3</system:String>
     <system:String x:Key="Settings.Rendering.HiddenOpacity">Hidden Opacity</system:String>
+    <system:String x:Key="Settings.Rendering.BonusEffectVisibility">Bonus Effect Visibility</system:String>
+    <system:String x:Key="Settings.Rendering.RNoteEffectVisibility">R-Note Effect Visibility</system:String>
+    <system:String x:Key="Settings.Rendering.RNoteEffectOpacity">R-Note Effect Opacity</system:String>
+    <system:String x:Key="Settings.Rendering.EffectVisibility.AlwaysOn">Always On</system:String>
+    <system:String x:Key="Settings.Rendering.EffectVisibility.AlwaysOff">Always Off</system:String>
+    <system:String x:Key="Settings.Rendering.EffectVisibility.OnlyWhenPlaying">Only when Playing</system:String>
+    <system:String x:Key="Settings.Rendering.EffectVisibility.OnlyWhenPaused">Only when Paused</system:String>
+    <system:String x:Key="Settings.Rendering.ClearBackgroundVisibility">Clear Background Visibility</system:String>
+    <system:String x:Key="Settings.Rendering.ClearBackgroundVisibility.ForceNormal">Force Normal</system:String>
+    <system:String x:Key="Settings.Rendering.ClearBackgroundVisibility.ForceClear">Force Clear</system:String>
+    <system:String x:Key="Settings.Rendering.ClearBackgroundVisibility.SimulateClear">Simulate Clear</system:String>
     <system:String x:Key="Settings.Rendering.Notes">Notes</system:String>
     <system:String x:Key="Settings.Rendering.NoteThickness">Note Thickness:</system:String>
     <system:String x:Key="Settings.Rendering.NoteColorTouch">Touch Note Color:</system:String>
