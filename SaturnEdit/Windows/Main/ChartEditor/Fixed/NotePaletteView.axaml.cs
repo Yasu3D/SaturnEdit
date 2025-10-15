@@ -42,6 +42,7 @@ public partial class NotePaletteView : UserControl
     
     private void RadioButtonNoteType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
 
@@ -64,6 +65,7 @@ public partial class NotePaletteView : UserControl
 
     private void RadioButtonBonusType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
 
@@ -78,6 +80,7 @@ public partial class NotePaletteView : UserControl
 
     private void RadioButtonJudgementType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
 
@@ -92,6 +95,7 @@ public partial class NotePaletteView : UserControl
     
     private void RadioButtonHoldPointRenderType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
 
@@ -105,6 +109,7 @@ public partial class NotePaletteView : UserControl
 
     private void RadioButtonSweepDirection_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
 

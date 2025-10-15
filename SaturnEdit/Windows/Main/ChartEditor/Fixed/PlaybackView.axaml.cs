@@ -77,6 +77,8 @@ public partial class PlaybackView : UserControl
         {
             // classic error pink
             clearColor = new(0xFF, 0x00, 0xFF, 0xFF);
+            
+            Console.WriteLine(ex);
         }
     }
 

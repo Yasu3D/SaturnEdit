@@ -136,7 +136,6 @@ public partial class ChartStatisticsView : UserControl
             if (note is SnapBackwardNote)
             {
                 snapBackwardCount++;
-                continue;
             }
         }
 
@@ -178,7 +177,7 @@ public partial class ChartStatisticsView : UserControl
             eventCount++;
             if (@event is TempoChangeEvent) { tempoChangeCount++; continue; }
             if (@event is MetreChangeEvent) { metreChangeCount++; continue; }
-            if (@event is TutorialMarkerEvent) { tutorialMarkerCount++; continue; }
+            if (@event is TutorialMarkerEvent) { tutorialMarkerCount++; }
         }
         
         foreach (Layer layer in ChartSystem.Chart.Layers)
@@ -188,7 +187,7 @@ public partial class ChartStatisticsView : UserControl
             if (@event is SpeedChangeEvent) { speedChangeCount++; continue; }
             if (@event is VisibilityChangeEvent) { visibilityChangeCount++; continue; }
             if (@event is ReverseEffectEvent) { reverseEffectCount++; continue; }
-            if (@event is StopEffectEvent) { stopEffectCount++; continue; }
+            if (@event is StopEffectEvent) { stopEffectCount++; }
         }
 
         int normalNoteCount = 0;
@@ -226,13 +225,13 @@ public partial class ChartStatisticsView : UserControl
             if (note is SlideCounterclockwiseNote) { slideNoteCount++; slideCounterclockwiseNoteCount++; continue; }
 
             if (note is SnapForwardNote) { snapNoteCount++; snapForwardNoteCount++; continue; }
-            if (note is SnapBackwardNote) { snapNoteCount++; snapBackwardNoteCount++; continue; }
+            if (note is SnapBackwardNote) { snapNoteCount++; snapBackwardNoteCount++; }
         }
 
         foreach (Note note in ChartSystem.Chart.LaneToggles)
         {
             if (note is LaneShowNote) { laneToggleNoteCount++; laneShowNoteCount++; continue; }
-            if (note is LaneHideNote) { laneToggleNoteCount++; laneHideNoteCount++; continue; }
+            if (note is LaneHideNote) { laneToggleNoteCount++; laneHideNoteCount++; }
         }
 
         int maxCombo = normalNoteCount + bonusNoteCount + rNoteCount;

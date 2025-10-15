@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using ManagedBass;
 using SaturnEdit.Systems;
 using SaturnEdit.Windows.Dialogs;
 using SaturnEdit.Windows.Main.ChartEditor.Tabs;

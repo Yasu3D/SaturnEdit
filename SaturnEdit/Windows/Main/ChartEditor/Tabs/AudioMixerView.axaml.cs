@@ -8,7 +8,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
-using SaturnEdit.Audio;
 using SaturnEdit.Systems;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;

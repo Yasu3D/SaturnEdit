@@ -1,5 +1,4 @@
 using System;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using SaturnEdit.Systems;
@@ -33,7 +32,8 @@ public partial class ProofreaderView : UserControl
         }
         catch (Exception ex)
         {
-            // ignored.
+            // Don't throw.
+            Console.WriteLine(ex);
         }
     }
 }

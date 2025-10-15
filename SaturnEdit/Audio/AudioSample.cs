@@ -1,8 +1,4 @@
-using System;
-using System.Buffers;
 using ManagedBass;
-using ManagedBass.Flac;
-using ManagedBass.Fx;
 
 namespace SaturnEdit.Audio;
 

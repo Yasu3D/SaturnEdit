@@ -1,6 +1,4 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using SaturnEdit.Systems;
 
 namespace SaturnEdit.Controls;
@@ -13,6 +11,6 @@ public partial class ShortcutListItem : UserControl
     }
 
     public string Key { get; set; } = "";
-    
-    public Shortcut Shortcut { get; set; }
+
+    public Shortcut Shortcut { get; set; } = new(Avalonia.Input.Key.None, false, false, false, "", "");
 }

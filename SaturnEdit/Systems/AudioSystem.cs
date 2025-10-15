@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ManagedBass;
-using SaturnData.Notation;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
@@ -225,17 +224,17 @@ public static class AudioSystem
             }
         
             // Metronome clicks
-            if (nextMetronomeClick != null && nextMetronomeClick.Value.Time < TimeSystem.HitsoundTime)
+            if (nextMetronomeClick != null && nextMetronomeClick.Time < TimeSystem.HitsoundTime)
             {
-                if (AudioSampleStartClick != null && nextMetronomeClick.Value.Measure < 1)
+                if (AudioSampleStartClick != null && nextMetronomeClick.Measure < 1)
                 {
                     // Start clicks
-                    AudioSampleStartClick?.Play();
+                    AudioSampleStartClick.Play();
                 }
-                else if (SettingsSystem.AudioSettings.Metronome)
+                else if (SettingsSystem.AudioSettings.Metronome && AudioSampleMetronome != null)
                 {
                     // Constant metronome
-                    AudioSampleMetronome?.Play();
+                    AudioSampleMetronome.Play();
                 }
                 
                 nextMetronomeClick = GetNextClick(TimeSystem.HitsoundTime);

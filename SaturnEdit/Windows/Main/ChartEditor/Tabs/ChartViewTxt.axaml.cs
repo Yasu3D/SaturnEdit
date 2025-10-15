@@ -6,12 +6,8 @@ using Avalonia.Interactivity;
 using TextMateSharp.Grammars;
 using AvaloniaEdit.TextMate;
 using System.IO;
-using Avalonia.Platform.Storage;
-using FluentIcons.Common;
-using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
-using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 

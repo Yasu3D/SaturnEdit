@@ -1,8 +1,6 @@
 using System;
-using System.Diagnostics;
 using System.Threading;
 using SaturnData.Notation.Core;
-using SaturnEdit.Audio;
 
 namespace SaturnEdit.Systems;
 
@@ -82,7 +80,7 @@ public static class TimeSystem
             TimestampChanged?.Invoke(null, EventArgs.Empty);
         }
     }
-    private static Timestamp timestamp;
+    private static Timestamp timestamp = Timestamp.Zero;
 
     /// <summary>
     /// <see cref="Timestamp"/> offset by <see cref="SaturnData.Notation.Core.Entry.AudioOffset"/>

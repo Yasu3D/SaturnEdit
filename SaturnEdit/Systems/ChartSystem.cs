@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using SaturnData.Notation;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnData.Notation.Serialization;
@@ -35,7 +34,7 @@ public static class ChartSystem
     public static event EventHandler? JacketChanged;
     public static event EventHandler? AudioChanged;
     
-    public static Chart Chart { get; private set; } = new() { Events = [ new TempoChangeEvent(new(0), 120), new MetreChangeEvent(new(0), 4, 4) ] };
+    public static Chart Chart { get; private set; } = new() { Events = [ new TempoChangeEvent(Timestamp.Zero, 120), new MetreChangeEvent(Timestamp.Zero, 4, 4) ] };
     public static Entry Entry { get; private set; } = new();
 
     /// <summary>

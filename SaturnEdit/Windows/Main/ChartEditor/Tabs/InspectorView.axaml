@@ -185,7 +185,6 @@
 
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
-                               Grid.RowSpan="1"
                                Width="1"
                                HorizontalAlignment="Left"
                                Fill="{DynamicResource SeparatorPrimary}" />
@@ -221,7 +220,6 @@
 
                     <Rectangle Grid.Row="0"
                                Grid.Column="1"
-                               Grid.RowSpan="1"
                                Width="1"
                                HorizontalAlignment="Left"
                                Fill="{DynamicResource SeparatorPrimary}" />
