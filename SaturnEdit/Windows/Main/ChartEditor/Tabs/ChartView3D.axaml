@@ -688,7 +688,6 @@
                                    ValueChanged="NumericUpDownNoteSpeed_OnValueChanged" />
                     <ComboBox Name="ComboBoxBackgroundDim"
                               Width="110"
-                              SelectedIndex="0"
                               Classes="Outlined"
                               SelectionChanged="ComboBoxBackgroundDim_OnSelectionChanged">
                         <ComboBoxItem Content="{DynamicResource Settings.Rendering.BackgroundDim.Level0}" />
