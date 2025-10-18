@@ -18,6 +18,7 @@ public partial class SettingsRenderingView : UserControl
 
     private bool blockEvent = false;
     
+    // TODO: add UI visibility options
     private void OnSettingsChanged(object? sender, EventArgs empty)
     {
         blockEvent = true;

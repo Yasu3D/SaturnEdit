@@ -282,12 +282,12 @@
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowLaneToggleAnimations">Show Lane Toggle Animations</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteHitboxes">Visualize Hold Note Hitboxes</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.VisualizeLaneSweeps">Visualize Lane Sweeps</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.JudgementWindows">Judgement Windows...</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowJudgementWindows">Show Judgement Windows</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.JudgeAreas">Judge Areas...</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowJudgeAreas">Show Judge Areas</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows">Show Marvelous Windows</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows">Show Great Windows</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowGoodWindows">Show Good Windows</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.SaturnJudgementWindows">Saturn Judgement Windows</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.SaturnJudgeAreas">Saturn Judge Areas</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility">Toggle Visibility...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback">Hide during Playback...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.EventMarkers">Event Markers</system:String>

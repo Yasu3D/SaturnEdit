@@ -20,6 +20,7 @@ public partial class App : Application
         CursorSystem.Initialize();
         ChartSystem.Initialize();
         AudioSystem.Initialize();
+        EditorSystem.Initialize();
     }
     
     public override void OnFrameworkInitializationCompleted()

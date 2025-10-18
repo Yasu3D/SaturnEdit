@@ -1,11 +1,12 @@
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using Avalonia.Media.Imaging;
+using SaturnData.Notation.Core;
+using SaturnData.Notation.Interfaces;
 using SaturnEdit.Systems;
 using SaturnView;
 using SkiaSharp;
@@ -22,29 +23,10 @@ public partial class ChartView3D : UserControl
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
-        
-        //TODO: REMOVE THIS ONCE NO LONGER NEEDED
-        ChartSystem.JacketChanged += OnJacketChanged;
-        OnJacketChanged(null, EventArgs.Empty);
     }
 
     private readonly CanvasInfo canvasInfo = new();
     private bool blockEvents = false;
-    
-    private void OnJacketChanged(object? sender, EventArgs e)
-    {
-        try
-        {
-            bool jacketExists = File.Exists(ChartSystem.Entry.JacketPath);
-            DebugReferenceImage.Source = jacketExists ? new Bitmap(ChartSystem.Entry.JacketPath) : null;
-            DebugReferenceImage.IsVisible = jacketExists;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-            DebugReferenceImage.IsVisible = false;
-        }
-    }
     
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
@@ -83,7 +65,21 @@ public partial class ChartView3D : UserControl
         canvasInfo.Center = new(canvasInfo.Radius, canvasInfo.Radius);
     }
 
-    private void RenderCanvas_OnRenderAction(SKCanvas canvas) => Renderer3D.Render(canvas, canvasInfo, SettingsSystem.RenderSettings, ChartSystem.Chart, ChartSystem.Entry, TimeSystem.Timestamp.Time, TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview);
+    private void RenderCanvas_OnRenderAction(SKCanvas canvas)
+    {
+        Renderer3D.Render
+        (
+            canvas: canvas, 
+            canvasInfo: canvasInfo, 
+            settings: SettingsSystem.RenderSettings, 
+            chart: ChartSystem.Chart, 
+            entry: ChartSystem.Entry, 
+            time: TimeSystem.Timestamp.Time, 
+            playing: TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview,
+            selectedObjects: null,
+            pointerOverObject: EditorSystem.PointerOverObject
+        );
+    }
 
     private void MenuItem_OnClick(object? sender, RoutedEventArgs e)
     {
@@ -108,13 +104,13 @@ public partial class ChartView3D : UserControl
             return;
         }
         
-        if (menuItem == MenuItemShowJudgementWindows)
+        if (menuItem == MenuItemShowJudgeAreas)
         {
-            SettingsSystem.RenderSettings.ShowJudgementWindows = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowJudgeAreas = menuItem.IsChecked;
 
-            MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
-            MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
-            MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+            MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
             return;
         }
         
@@ -136,15 +132,9 @@ public partial class ChartView3D : UserControl
             return;
         }
         
-        if (menuItem == MenuItemSaturnJudgementWindows)
+        if (menuItem == MenuItemSaturnJudgeAreas)
         {
-            SettingsSystem.RenderSettings.SaturnJudgementWindows = menuItem.IsChecked;
-            return;
-        }
-        
-        if (menuItem == MenuItemVisualizeHoldNoteHitboxes)
-        {
-            SettingsSystem.RenderSettings.VisualizeHoldNoteWindows = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.SaturnJudgeAreas = menuItem.IsChecked;
             return;
         }
         
@@ -305,12 +295,11 @@ public partial class ChartView3D : UserControl
         MenuItemShowSpeedChanges.IsChecked = SettingsSystem.RenderSettings.ShowSpeedChanges;
         MenuItemShowVisibilityChanges.IsChecked = SettingsSystem.RenderSettings.ShowVisibilityChanges;
         MenuItemShowLaneToggleAnimations.IsChecked = SettingsSystem.RenderSettings.ShowLaneToggleAnimations;
-        MenuItemShowJudgementWindows.IsChecked = SettingsSystem.RenderSettings.ShowJudgementWindows;
+        MenuItemShowJudgeAreas.IsChecked = SettingsSystem.RenderSettings.ShowJudgeAreas;
         MenuItemShowMarvelousWindows.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousWindows;
         MenuItemShowGreatWindows.IsChecked = SettingsSystem.RenderSettings.ShowGreatWindows;
         MenuItemShowGoodWindows.IsChecked = SettingsSystem.RenderSettings.ShowGoodWindows;
-        MenuItemSaturnJudgementWindows.IsChecked = SettingsSystem.RenderSettings.SaturnJudgementWindows;
-        MenuItemVisualizeHoldNoteHitboxes.IsChecked = SettingsSystem.RenderSettings.VisualizeHoldNoteWindows;
+        MenuItemSaturnJudgeAreas.IsChecked = SettingsSystem.RenderSettings.SaturnJudgeAreas;
         MenuItemVisualizeLaneSweeps.IsChecked = SettingsSystem.RenderSettings.VisualizeLaneSweeps;
         MenuItemShowTouchNotes.IsChecked = SettingsSystem.RenderSettings.ShowTouchNotes;
         MenuItemShowChainNotes.IsChecked = SettingsSystem.RenderSettings.ShowChainNotes;
@@ -339,9 +328,9 @@ public partial class ChartView3D : UserControl
         NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed / 10.0m;
         ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
         
-        MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
-        MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
-        MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgementWindows.IsChecked;
+        MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+        MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+        MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
 
         blockEvents = false;
     }
@@ -386,12 +375,11 @@ public partial class ChartView3D : UserControl
         MenuItemShowSpeedChanges.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowSpeedChanges"].ToKeyGesture();
         MenuItemShowVisibilityChanges.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowVisibilityChanges"].ToKeyGesture();
         MenuItemShowLaneToggleAnimations.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowLaneToggleAnimations"].ToKeyGesture();
-        MenuItemShowJudgementWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgementWindows"].ToKeyGesture();
+        MenuItemShowJudgeAreas.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgeAreas"].ToKeyGesture();
         MenuItemShowMarvelousWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"].ToKeyGesture();
         MenuItemShowGreatWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"].ToKeyGesture();
         MenuItemShowGoodWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodWindows"].ToKeyGesture();
-        MenuItemSaturnJudgementWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgementWindows"].ToKeyGesture();
-        MenuItemVisualizeHoldNoteHitboxes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeHoldNoteWindows"].ToKeyGesture();
+        MenuItemSaturnJudgeAreas.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgeAreas"].ToKeyGesture();
         MenuItemVisualizeLaneSweeps.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeLaneSweeps"].ToKeyGesture();
         MenuItemShowTouchNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"].ToKeyGesture();
         MenuItemShowChainNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapForward"].ToKeyGesture();
@@ -416,5 +404,69 @@ public partial class ChartView3D : UserControl
         MenuItemHideEventMarkers.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.EventMarkers"].ToKeyGesture();
         MenuItemHideLaneToggleNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.LaneToggleNotes"].ToKeyGesture();
         MenuItemHideHoldControlPoints.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.HoldControlPoints"].ToKeyGesture();
+    }
+
+    private void Canvas_OnPointerMoved(object? sender, PointerEventArgs e)
+    {
+        PointerPoint point = e.GetCurrentPoint(sender as Control);
+
+        float radius = Renderer3D.GetHitTestPointerRadius(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
+        if (radius > 1.1f)
+        {
+            EditorSystem.PointerOverObject = null;
+            return;
+        }
+
+        int lane = Renderer3D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
+        float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
+        float threshold = Renderer3D.GetHitTestThreshold(canvasInfo, SettingsSystem.RenderSettings.NoteThickness);
+        
+        foreach (Layer layer in ChartSystem.Chart.Layers)
+        {
+            float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
+
+            foreach (Event @event in layer.Events)
+            {
+                if (Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings))
+                {
+                    EditorSystem.PointerOverObject = @event;
+                    return;
+                }
+            }
+            
+            foreach (Note note in layer.Notes)
+            {
+                if (Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings))
+                {
+                    EditorSystem.PointerOverObject = note;
+                    return;
+                }
+            }
+        }
+        
+        foreach (Note note in ChartSystem.Chart.LaneToggles)
+        {
+            if (Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings))
+            {
+                EditorSystem.PointerOverObject = note;
+                return;
+            }
+        }
+        
+        foreach (Event @event in ChartSystem.Chart.Events)
+        {
+            if (Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings))
+            {
+                EditorSystem.PointerOverObject = @event;
+                return;
+            }
+        }
+        
+        EditorSystem.PointerOverObject = null;
+    }
+
+    private void Canvas_OnPointerExited(object? sender, PointerEventArgs e)
+    {
+        EditorSystem.PointerOverObject = null;
     }
 }

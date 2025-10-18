@@ -15,9 +15,12 @@ public static class ChartSystem
         Entry.EntryChanged += OnEntryChanged;
         Entry.AudioChanged += OnAudioChanged;
         Entry.JacketChanged += OnJacketChanged;
+        Entry.ChartEndChanged += OnChartEndChanged;
+        
         ChartChanged += OnChartChanged;
         
         AudioSystem.AudioLoaded += OnAudioLoaded;
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
         
         OnChartChanged(null, EventArgs.Empty);
     }
@@ -26,8 +29,18 @@ public static class ChartSystem
     private static void OnAudioChanged(object? sender, EventArgs e) => AudioChanged?.Invoke(sender, e);
     private static void OnJacketChanged(object? sender, EventArgs e) => JacketChanged?.Invoke(sender, e);
 
-    private static void OnChartChanged(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0);
-    private static void OnAudioLoaded(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0);
+    private static void OnChartChanged(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
+    private static void OnAudioLoaded(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
+    private static void OnChartEndChanged(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
+
+    private static void OnSettingsChanged(object? sender, EventArgs e)
+    {
+        if (SettingsSystem.RenderSettings.SaturnJudgeAreas != saturnJudgeAreas)
+        {
+            saturnJudgeAreas = SettingsSystem.RenderSettings.SaturnJudgeAreas;
+            Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
+        }
+    }
     
     public static event EventHandler? ChartChanged;
     public static event EventHandler? EntryChanged;
@@ -37,6 +50,8 @@ public static class ChartSystem
     public static Chart Chart { get; private set; } = new() { Events = [ new TempoChangeEvent(Timestamp.Zero, 120), new MetreChangeEvent(Timestamp.Zero, 4, 4) ] };
     public static Entry Entry { get; private set; } = new();
 
+    private static bool saturnJudgeAreas;
+    
     /// <summary>
     /// Determines if the editor will prompt the user to save when a chart is closed.
     /// </summary>
@@ -50,6 +65,7 @@ public static class ChartSystem
         Entry.EntryChanged -= OnEntryChanged;
         Entry.AudioChanged -= OnAudioChanged;
         Entry.JacketChanged -= OnJacketChanged;
+        Entry.ChartEndChanged -= OnChartEndChanged;
         
         Chart = new();
         Entry = new();
@@ -57,6 +73,7 @@ public static class ChartSystem
         Entry.EntryChanged += OnEntryChanged;
         Entry.AudioChanged += OnAudioChanged;
         Entry.JacketChanged += OnJacketChanged;
+        Entry.ChartEndChanged += OnChartEndChanged;
         
         ChartChanged?.Invoke(null, EventArgs.Empty);
         EntryChanged?.Invoke(null, EventArgs.Empty);
@@ -74,6 +91,7 @@ public static class ChartSystem
         Entry.EntryChanged -= OnEntryChanged;
         Entry.AudioChanged -= OnAudioChanged;
         Entry.JacketChanged -= OnJacketChanged;
+        Entry.ChartEndChanged -= OnChartEndChanged;
 
         Entry = NotationSerializer.ToEntry(path, args, out _);
         Chart = NotationSerializer.ToChart(path, args, out _);
@@ -81,6 +99,7 @@ public static class ChartSystem
         Entry.EntryChanged += OnEntryChanged;
         Entry.AudioChanged += OnAudioChanged;
         Entry.JacketChanged += OnJacketChanged;
+        Entry.ChartEndChanged += OnChartEndChanged;
         
         ChartChanged?.Invoke(null, EventArgs.Empty);
         EntryChanged?.Invoke(null, EventArgs.Empty);
@@ -107,6 +126,7 @@ public static class ChartSystem
             Entry.EntryChanged -= OnEntryChanged;
             Entry.AudioChanged -= OnAudioChanged;
             Entry.JacketChanged -= OnJacketChanged;
+            Entry.ChartEndChanged -= OnChartEndChanged;
 
             Entry = entry;
             Chart = chart;
@@ -116,6 +136,7 @@ public static class ChartSystem
             Entry.EntryChanged += OnEntryChanged;
             Entry.AudioChanged += OnAudioChanged;
             Entry.JacketChanged += OnJacketChanged;
+            Entry.ChartEndChanged += OnChartEndChanged;
         
             ChartChanged?.Invoke(null, EventArgs.Empty);
             EntryChanged?.Invoke(null, EventArgs.Empty);

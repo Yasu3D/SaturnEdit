@@ -319,14 +319,6 @@
                     <icon:FluentIcon Icon="Settings" />
                     <Button.Flyout>
                         <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                            <MenuItem Name="MenuItemVisualizeHoldNoteHitboxes"
-                                      ToggleType="CheckBox"
-                                      StaysOpenOnClick="True"
-                                      Click="MenuItem_OnClick">
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteHitboxes}" />
-                                </MenuItem.Header>
-                            </MenuItem>
 
                             <MenuItem Name="MenuItemVisualizeLaneSweeps"
                                       ToggleType="CheckBox"
@@ -341,15 +333,15 @@
                                 
                             <MenuItem>
                                 <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.JudgementWindows}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.JudgeAreas}" />
                                 </MenuItem.Header>
                                     
-                                <MenuItem Name="MenuItemShowJudgementWindows"
+                                <MenuItem Name="MenuItemShowJudgeAreas"
                                           ToggleType="CheckBox"
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowJudgementWindows}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowJudgeAreas}" />
                                     </MenuItem.Header>
                                 </MenuItem>
 
@@ -385,13 +377,13 @@
 
                                 <Separator />
 
-                                <MenuItem Name="MenuItemSaturnJudgementWindows"
+                                <MenuItem Name="MenuItemSaturnJudgeAreas"
                                           ToggleType="CheckBox"
                                           IsChecked="True"
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.SaturnJudgementWindows}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.SaturnJudgeAreas}" />
                                     </MenuItem.Header>
                                 </MenuItem>
                             </MenuItem>
