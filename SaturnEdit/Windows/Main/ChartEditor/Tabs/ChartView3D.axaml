@@ -821,6 +821,7 @@
                                               RenderAction="RenderCanvas_OnRenderAction"
                                               PointerMoved="RenderCanvas_OnPointerMoved"
                                               PointerPressed="RenderCanvas_OnPointerPressed"
+                                              PointerReleased="RenderCanvas_OnPointerReleased"
                                               PointerExited="RenderCanvas_OnPointerExited"/>
                 </Panel>
             </Grid>
