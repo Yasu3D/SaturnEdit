@@ -9,6 +9,7 @@ using Avalonia.Media;
 using AvaloniaEdit.Utils;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
+using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
 using SaturnView;
 using SkiaSharp;
@@ -29,6 +30,7 @@ public partial class ChartView3D : UserControl
 
     private readonly CanvasInfo canvasInfo = new();
     private bool blockEvents = false;
+    private bool blockBoxSelect = false;
     
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
@@ -79,7 +81,8 @@ public partial class ChartView3D : UserControl
             time: TimeSystem.Timestamp.Time, 
             playing: TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview,
             selectedObjects: EditorSystem.SelectedObjects,
-            pointerOverObject: EditorSystem.PointerOverObject
+            pointerOverObject: EditorSystem.PointerOverObject,
+            boxSelect: new(EditorSystem.BoxSelectData.GlobalStartTime, EditorSystem.BoxSelectData.GlobalEndTime, EditorSystem.BoxSelectData.Position, EditorSystem.BoxSelectData.Size)
         );
     }
 
@@ -89,30 +92,56 @@ public partial class ChartView3D : UserControl
 
         float radius = Renderer3D.GetHitTestPointerRadius(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
         int lane = Renderer3D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
+        float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
 
-        boxSelect();
         pointerOver();
+        boxSelect();
         
         return;
 
         void boxSelect()
         {
             if (e.Properties.IsLeftButtonPressed == false) return;
+            if (blockBoxSelect) return;
+
+            float t = RenderUtils.InversePerspective(radius);
+            float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
             
-            if (EditorSystem.BoxSelectData.StartTimes.Count == 0)
+            if (EditorSystem.BoxSelectData.GlobalStartTime == null)
             {
                 // Box select has just started.
-                EditorSystem.BoxSelectData.StartTimes.Clear();
-                
-                
+                EditorSystem.BoxSelectData.NegativeSelection = e.KeyModifiers.HasFlag(KeyModifiers.Alt);
+                EditorSystem.BoxSelectData.PassedThroughSeam = false;
+                EditorSystem.BoxSelectData.GlobalStartTime = TimeSystem.Timestamp.Time + viewTime;
                 EditorSystem.BoxSelectData.StartLane = lane;
+                
+                EditorSystem.BoxSelectData.ScaledStartTimes.Clear();
+                foreach (Layer layer in ChartSystem.Chart.Layers)
+                {
+                    float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
+                    EditorSystem.BoxSelectData.ScaledStartTimes.Add(layer, scaledTime + viewTime);    
+                }
             }
             else
             {
                 // Box select already running.
-                //EditorSystem.BoxSelectData.EndTime = 2;
+                if (EditorSystem.BoxSelectData.EndLane != null && Math.Abs(lane - EditorSystem.BoxSelectData.EndLane.Value) > 30)
+                {
+                    EditorSystem.BoxSelectData.PassedThroughSeam = !EditorSystem.BoxSelectData.PassedThroughSeam;
+                }
+                
+                EditorSystem.BoxSelectData.GlobalEndTime = TimeSystem.Timestamp.Time + viewTime;
                 EditorSystem.BoxSelectData.EndLane = lane;
+                
+                EditorSystem.BoxSelectData.ScaledEndTimes.Clear();
+                foreach (Layer layer in ChartSystem.Chart.Layers)
+                {
+                    float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
+                    EditorSystem.BoxSelectData.ScaledEndTimes.Add(layer, scaledTime + viewTime);    
+                }
             }
+            
+            Console.WriteLine(EditorSystem.BoxSelectData.PassedThroughSeam);
         }
         
         void pointerOver()
@@ -123,7 +152,6 @@ public partial class ChartView3D : UserControl
                 return;
             }
             
-            float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
             float threshold = Renderer3D.GetHitTestThreshold(canvasInfo, SettingsSystem.RenderSettings.NoteThickness);
             
             foreach (Layer layer in ChartSystem.Chart.Layers)
@@ -183,10 +211,11 @@ public partial class ChartView3D : UserControl
     {
         if (!e.Properties.IsLeftButtonPressed) return;
         
-        bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
         bool control = e.KeyModifiers.HasFlag(KeyModifiers.Control);
-
-        if (!control && !shift)
+        bool alt = e.KeyModifiers.HasFlag(KeyModifiers.Alt);
+        bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
+        
+        if (!control && !shift && !alt)
         {
             EditorSystem.SelectedObjects.Clear();
             EditorSystem.LastSelectedObject = null;
@@ -194,6 +223,8 @@ public partial class ChartView3D : UserControl
         
         if (EditorSystem.PointerOverObject != null)
         {
+            blockBoxSelect = true;
+            
             if (shift && EditorSystem.LastSelectedObject != null)
             {
                 Timestamp start = Timestamp.Min(EditorSystem.LastSelectedObject.Timestamp, EditorSystem.PointerOverObject.Timestamp);
@@ -259,14 +290,117 @@ public partial class ChartView3D : UserControl
     private void RenderCanvas_OnPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
         if (e.InitialPressMouseButton != MouseButton.Left) return;
-        if (EditorSystem.BoxSelectData.StartTimes.Count == 0 || EditorSystem.BoxSelectData.EndTimes.Count == 0 || EditorSystem.BoxSelectData.StartLane == null || EditorSystem.BoxSelectData.EndLane == null) return;
-
-        Console.WriteLine($"BoxSelect! {EditorSystem.BoxSelectData.StartTimes} {EditorSystem.BoxSelectData.StartLane} | {EditorSystem.BoxSelectData.EndTimes} {EditorSystem.BoxSelectData.EndLane}");
         
-        EditorSystem.BoxSelectData.StartTimes.Clear();
-        EditorSystem.BoxSelectData.EndTimes.Clear();
-        EditorSystem.BoxSelectData.StartLane = null;
-        EditorSystem.BoxSelectData.EndLane = null;
+        blockBoxSelect = false;
+        
+        if (EditorSystem.BoxSelectData.GlobalStartTime != null
+            && EditorSystem.BoxSelectData.GlobalEndTime != null
+            && EditorSystem.BoxSelectData.ScaledStartTimes.Count != 0
+            && EditorSystem.BoxSelectData.ScaledEndTimes.Count != 0
+            && EditorSystem.BoxSelectData.StartLane != null
+            && EditorSystem.BoxSelectData.EndLane != null)
+        {
+            float globalMin = MathF.Min((float)EditorSystem.BoxSelectData.GlobalStartTime, (float)EditorSystem.BoxSelectData.GlobalEndTime);
+            float globalMax = MathF.Max((float)EditorSystem.BoxSelectData.GlobalStartTime, (float)EditorSystem.BoxSelectData.GlobalEndTime);
+            
+            foreach (Event @event in ChartSystem.Chart.Events)
+            {
+                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                if (@event.Timestamp.Time < globalMin) continue;
+                if (@event.Timestamp.Time > globalMax) continue;
+
+                if (EditorSystem.BoxSelectData.NegativeSelection)
+                {
+                    EditorSystem.SelectedObjects.Remove(@event);
+                }
+                else
+                {
+                    EditorSystem.SelectedObjects.Add(@event);
+                }
+            }
+
+            foreach (Note note in ChartSystem.Chart.LaneToggles)
+            {
+                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                if (note.Timestamp.Time < globalMin) continue;
+                if (note.Timestamp.Time > globalMax) continue;
+
+                if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, EditorSystem.BoxSelectData.Position ?? 0, EditorSystem.BoxSelectData.Size ?? 0)) continue;
+                
+                if (EditorSystem.BoxSelectData.NegativeSelection)
+                {
+                    EditorSystem.SelectedObjects.Remove(note);
+                }
+                else
+                {
+                    EditorSystem.SelectedObjects.Add(note);
+                }
+            }
+
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            {
+                foreach (Event @event in layer.Events)
+                {
+                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                    if (@event.Timestamp.Time < globalMin) continue;
+                    if (@event.Timestamp.Time > globalMax) continue;
+
+                    if (EditorSystem.BoxSelectData.NegativeSelection)
+                    {
+                        EditorSystem.SelectedObjects.Remove(@event);
+                    }
+                    else
+                    {
+                        EditorSystem.SelectedObjects.Add(@event);
+                    }
+                }
+                
+                foreach (Note note in layer.Notes)
+                {
+                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                    
+                    float min = MathF.Min(EditorSystem.BoxSelectData.ScaledStartTimes[layer], EditorSystem.BoxSelectData.ScaledEndTimes[layer]);
+                    float max = MathF.Max(EditorSystem.BoxSelectData.ScaledStartTimes[layer], EditorSystem.BoxSelectData.ScaledEndTimes[layer]);
+                    
+                    if (note is HoldNote holdNote && holdNote.Points.Count > 1)
+                    {
+                        if (holdNote.Points[^1].Timestamp.ScaledTime < min) continue;
+                        if (holdNote.Points[0].Timestamp.ScaledTime  > max) continue;
+
+                        bool overlap = false;
+                        foreach (HoldPointNote point in holdNote.Points)
+                        {
+                            if (point.Timestamp.ScaledTime < min) continue;
+                            if (point.Timestamp.ScaledTime > max) continue;
+                            if (!IPositionable.IsAnyOverlap(point.Position, point.Size, EditorSystem.BoxSelectData.Position ?? 0, EditorSystem.BoxSelectData.Size ?? 0)) continue;
+
+                            overlap = true;
+                            break;
+                        }
+                        
+                        if (!overlap) continue;
+                    }
+                    else
+                    {
+                        if (note.Timestamp.ScaledTime < min) continue;
+                        if (note.Timestamp.ScaledTime > max) continue;
+                        
+                        if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, EditorSystem.BoxSelectData.Position ?? 0, EditorSystem.BoxSelectData.Size ?? 0)) continue;
+                    }
+                    
+                    if (EditorSystem.BoxSelectData.NegativeSelection)
+                    {
+                        EditorSystem.SelectedObjects.Remove(note);
+                    }
+                    else
+                    {
+                        EditorSystem.SelectedObjects.Add(note);
+                    }
+                }
+            }
+        }
+
+        EditorSystem.BoxSelectData = new();
 
     }
     
