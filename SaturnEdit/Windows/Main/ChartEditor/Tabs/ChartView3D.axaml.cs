@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using AvaloniaEdit.Utils;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
 using SaturnEdit.Systems;
@@ -76,11 +78,152 @@ public partial class ChartView3D : UserControl
             entry: ChartSystem.Entry, 
             time: TimeSystem.Timestamp.Time, 
             playing: TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview,
-            selectedObjects: null,
+            selectedObjects: EditorSystem.SelectedObjects,
             pointerOverObject: EditorSystem.PointerOverObject
         );
     }
 
+    private void RenderCanvas_OnPointerMoved(object? sender, PointerEventArgs e)
+    {
+        PointerPoint point = e.GetCurrentPoint(sender as Control);
+
+        float radius = Renderer3D.GetHitTestPointerRadius(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
+        if (radius > 1.1f)
+        {
+            EditorSystem.PointerOverObject = null;
+            return;
+        }
+
+        int lane = Renderer3D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
+        float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
+        float threshold = Renderer3D.GetHitTestThreshold(canvasInfo, SettingsSystem.RenderSettings.NoteThickness);
+        
+        foreach (Layer layer in ChartSystem.Chart.Layers)
+        {
+            float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
+
+            foreach (Event @event in layer.Events)
+            {
+                if (Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings))
+                {
+                    EditorSystem.PointerOverObject = @event;
+                    return;
+                }
+            }
+            
+            foreach (Note note in layer.Notes)
+            {
+                if (Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings))
+                {
+                    EditorSystem.PointerOverObject = note;
+                    return;
+                }
+            }
+        }
+        
+        foreach (Note note in ChartSystem.Chart.LaneToggles)
+        {
+            if (Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings))
+            {
+                EditorSystem.PointerOverObject = note;
+                return;
+            }
+        }
+        
+        foreach (Event @event in ChartSystem.Chart.Events)
+        {
+            if (Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings))
+            {
+                EditorSystem.PointerOverObject = @event;
+                return;
+            }
+        }
+        
+        EditorSystem.PointerOverObject = null;
+    }
+
+    private void RenderCanvas_OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (!e.Properties.IsLeftButtonPressed) return;
+        
+        bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
+        bool control = e.KeyModifiers.HasFlag(KeyModifiers.Control);
+
+        if (!control)
+        {
+            EditorSystem.SelectedObjects.Clear();
+
+            if (!shift)
+            {
+                EditorSystem.LastSelectedObject = null;
+            }
+        }
+        
+        if (EditorSystem.PointerOverObject != null)
+        {
+            if (shift && EditorSystem.LastSelectedObject != null && EditorSystem.LastSelectedObject != EditorSystem.PointerOverObject)
+            {
+                Timestamp start = Timestamp.Min(EditorSystem.LastSelectedObject.Timestamp, EditorSystem.PointerOverObject.Timestamp);
+                Timestamp end = Timestamp.Max(EditorSystem.LastSelectedObject.Timestamp, EditorSystem.PointerOverObject.Timestamp);
+                List<ITimeable> objects = [];
+
+                foreach (Event @event in ChartSystem.Chart.Events)
+                {
+                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                    if (@event.Timestamp < start) continue;
+                    if (@event.Timestamp > end) continue;
+
+                    objects.Add(@event);
+                }
+
+                foreach (Note note in ChartSystem.Chart.LaneToggles)
+                {
+                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                    if (note.Timestamp < start) continue;
+                    if (note.Timestamp > end) continue;
+
+                    objects.Add(note);
+                }
+
+                foreach (Layer layer in ChartSystem.Chart.Layers)
+                {
+                    foreach (Event @event in layer.Events)
+                    {
+                        if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                        if (@event.Timestamp < start) continue;
+                        if (@event.Timestamp > end) continue;
+
+                        objects.Add(@event);
+                    }
+                    
+                    foreach (Note note in layer.Notes)
+                    {
+                        if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                        if (note.Timestamp < start) continue;
+                        if (note.Timestamp > end) continue;
+
+                        objects.Add(note);
+                    }
+                }
+
+                EditorSystem.SelectedObjects.AddRange(objects);
+                EditorSystem.SelectedObjects.Add(EditorSystem.LastSelectedObject);
+                EditorSystem.SelectedObjects.Add(EditorSystem.PointerOverObject);
+            }
+            else if (!EditorSystem.SelectedObjects.Add(EditorSystem.PointerOverObject))
+            {
+                EditorSystem.SelectedObjects.Remove(EditorSystem.PointerOverObject);
+            }
+            
+            EditorSystem.LastSelectedObject = EditorSystem.PointerOverObject;
+        }
+    }
+    
+    private void RenderCanvas_OnPointerExited(object? sender, PointerEventArgs e)
+    {
+        EditorSystem.PointerOverObject = null;
+    }
+    
     private void MenuItem_OnClick(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
@@ -404,69 +547,5 @@ public partial class ChartView3D : UserControl
         MenuItemHideEventMarkers.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.EventMarkers"].ToKeyGesture();
         MenuItemHideLaneToggleNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.LaneToggleNotes"].ToKeyGesture();
         MenuItemHideHoldControlPoints.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.HoldControlPoints"].ToKeyGesture();
-    }
-
-    private void Canvas_OnPointerMoved(object? sender, PointerEventArgs e)
-    {
-        PointerPoint point = e.GetCurrentPoint(sender as Control);
-
-        float radius = Renderer3D.GetHitTestPointerRadius(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
-        if (radius > 1.1f)
-        {
-            EditorSystem.PointerOverObject = null;
-            return;
-        }
-
-        int lane = Renderer3D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
-        float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
-        float threshold = Renderer3D.GetHitTestThreshold(canvasInfo, SettingsSystem.RenderSettings.NoteThickness);
-        
-        foreach (Layer layer in ChartSystem.Chart.Layers)
-        {
-            float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
-
-            foreach (Event @event in layer.Events)
-            {
-                if (Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings))
-                {
-                    EditorSystem.PointerOverObject = @event;
-                    return;
-                }
-            }
-            
-            foreach (Note note in layer.Notes)
-            {
-                if (Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings))
-                {
-                    EditorSystem.PointerOverObject = note;
-                    return;
-                }
-            }
-        }
-        
-        foreach (Note note in ChartSystem.Chart.LaneToggles)
-        {
-            if (Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings))
-            {
-                EditorSystem.PointerOverObject = note;
-                return;
-            }
-        }
-        
-        foreach (Event @event in ChartSystem.Chart.Events)
-        {
-            if (Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings))
-            {
-                EditorSystem.PointerOverObject = @event;
-                return;
-            }
-        }
-        
-        EditorSystem.PointerOverObject = null;
-    }
-
-    private void Canvas_OnPointerExited(object? sender, PointerEventArgs e)
-    {
-        EditorSystem.PointerOverObject = null;
     }
 }

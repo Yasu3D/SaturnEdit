@@ -819,8 +819,9 @@
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
                                               RenderAction="RenderCanvas_OnRenderAction"
-                                              PointerMoved="Canvas_OnPointerMoved"
-                                              PointerExited="Canvas_OnPointerExited"/>
+                                              PointerMoved="RenderCanvas_OnPointerMoved"
+                                              PointerPressed="RenderCanvas_OnPointerPressed"
+                                              PointerExited="RenderCanvas_OnPointerExited"/>
                 </Panel>
             </Grid>
         </Grid>

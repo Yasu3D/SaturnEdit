@@ -280,7 +280,6 @@
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowSpeedChanges">Show Speed Changes</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowVisibilityChanges">Show Visibility Changes</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowLaneToggleAnimations">Show Lane Toggle Animations</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.VisualizeHoldNoteHitboxes">Visualize Hold Note Hitboxes</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.VisualizeLaneSweeps">Visualize Lane Sweeps</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.JudgeAreas">Judge Areas...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowJudgeAreas">Show Judge Areas</system:String>
