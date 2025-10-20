@@ -9,123 +9,21 @@ public static class CursorSystem
 {
     public static void Initialize() { }
     
-    public static event EventHandler? ShapeChanged;
     public static event EventHandler? TypeChanged;
-    
-    /// <summary>
-    /// The position of the note cursor.<br/>
-    /// Follows standard note shape definitions.
-    /// </summary>
-    public static int Position
-    {
-        get => position;
-        set
-        {
-            if (position == value) return;
-            
-            position = value;
-            ShapeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private static int position = 30;
-    
-    /// <summary>
-    /// The size of the note cursor.<br/>
-    /// Follows standard note shape definitions.
-    /// </summary>
-    public static int Size
-    {
-        get => size;
-        set
-        {
-            if (size == value) return;
-            
-            size = value;
-            
-            if (currentNoteType != typeof(LaneShowNote) && 
-                currentNoteType != typeof(LaneHideNote) && 
-                currentNoteType != typeof(SyncNote))
-            {
-                size = Math.Max(3, size);
-            }
-            
-            ShapeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private static int size = 15;
 
-    public static Type CurrentNoteType
+    public static Note CursorNote
     {
-        get => currentNoteType;
+        get => cursorNote;
         set
         {
-            if (value.BaseType != typeof(Note)) return;
+            if (cursorNote == value) return;
+            
+            cursorNote = value;
+            TypeChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private static Note cursorNote = new TouchNote(Timestamp.Zero, 30, 15, BonusType.Normal, JudgementType.Normal);
 
-            if (currentNoteType == value) return;
-            
-            currentNoteType = value;
-            
-            if (currentNoteType != typeof(LaneShowNote) && 
-                currentNoteType != typeof(LaneHideNote) && 
-                currentNoteType != typeof(SyncNote))
-            {
-                size = Math.Max(3, size);
-            }
-            
-            TypeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private static Type currentNoteType = typeof(TouchNote);
-
-    public static BonusType CurrentBonusType
-    {
-        get => currentBonusType;
-        set
-        {
-            if (currentBonusType == value) return;
-            
-            currentBonusType = value;
-            TypeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private static BonusType currentBonusType = BonusType.Normal;
-    
-    public static HoldPointRenderType CurrentHoldPointRenderType
-    {
-        get => currentHoldPointRenderType;
-        set
-        {
-            if (currentHoldPointRenderType == value) return;
-            
-            currentHoldPointRenderType = value;
-            TypeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private static HoldPointRenderType currentHoldPointRenderType = HoldPointRenderType.Visible;
-    
-    public static JudgementType CurrentJudgementType
-    {
-        get => currentJudgementType;
-        set
-        {
-            if (currentJudgementType == value) return;
-            
-            currentJudgementType = value;
-            TypeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private static JudgementType currentJudgementType = JudgementType.Normal;
-    
-    public static LaneSweepDirection CurrentSweepDirection
-    {
-        get => currentSweepDirection;
-        set
-        {
-            if (currentSweepDirection == value) return;
-            
-            currentSweepDirection = value;
-            TypeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private static LaneSweepDirection currentSweepDirection = LaneSweepDirection.Center;
+    public static int BackupPosition { get; set; } = 30;
+    public static int BackupSize { get; set; } = 15;
 }

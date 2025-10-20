@@ -19,6 +19,11 @@ namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
 public partial class ChartView3D : UserControl
 {
+    // TODO:
+    // More refactoring
+    // Implement new cursor behaviour
+    // NotePalette ToolTips
+    
     public ChartView3D()
     {
         InitializeComponent();
@@ -41,7 +46,6 @@ public partial class ChartView3D : UserControl
     }
 
     private bool pointerOver = false;
-
     private readonly ClickDragHelper clickDrag = new();
     
     private void OnSettingsChanged(object? sender, EventArgs e)
@@ -94,7 +98,8 @@ public partial class ChartView3D : UserControl
             playing: TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview,
             selectedObjects: EditorSystem.SelectedObjects,
             pointerOverObject: EditorSystem.PointerOverObject,
-            boxSelect: new(EditorSystem.BoxSelectData.GlobalStartTime, EditorSystem.BoxSelectData.GlobalEndTime, EditorSystem.BoxSelectData.Position, EditorSystem.BoxSelectData.Size)
+            boxSelect: new(EditorSystem.BoxSelectData.GlobalStartTime, EditorSystem.BoxSelectData.GlobalEndTime, EditorSystem.BoxSelectData.Position, EditorSystem.BoxSelectData.Size),
+            cursorNote: CursorSystem.CursorNote
         );
     }
 
@@ -124,7 +129,8 @@ public partial class ChartView3D : UserControl
         void onMove()
         {
             pointerOver();
-            setCursor();
+            moveChartCursor();
+            setMouseCursor();
 
             return;
 
@@ -199,7 +205,15 @@ public partial class ChartView3D : UserControl
                 EditorSystem.PointerOverOverlap = IPositionable.OverlapResult.None;
             }
 
-            void setCursor()
+            void moveChartCursor()
+            {
+                if (e.Properties.IsRightButtonPressed) return;
+                if (CursorSystem.CursorNote is not IPositionable positionable) return;
+
+                positionable.Position = lane;
+            }
+            
+            void setMouseCursor()
             {
                 if (EditorSystem.PointerOverOverlap == IPositionable.OverlapResult.None)
                 {
@@ -310,19 +324,22 @@ public partial class ChartView3D : UserControl
         {
             if (e.Properties.IsRightButtonPressed == false) return;
 
-            if (cursorState == CursorState.None)
+            if (CursorSystem.CursorNote is IPositionable positionable)
             {
-                clickDrag.Reset(lane);
-                CursorSystem.Position = clickDrag.Position;
-                
-                cursorState = CursorState.DraggingCursor;
-            }
+                if (cursorState == CursorState.None)
+                {
+                    clickDrag.Reset(lane);
+                    positionable.Position = clickDrag.Position;
+                    
+                    cursorState = CursorState.DraggingCursor;
+                }
 
-            if (cursorState == CursorState.DraggingCursor)
-            {
-                clickDrag.EndLane = lane;
-                CursorSystem.Position = clickDrag.Position;
-                CursorSystem.Size = clickDrag.Size;
+                if (cursorState == CursorState.DraggingCursor)
+                {
+                    clickDrag.EndLane = lane;
+                    positionable.Position = clickDrag.Position;
+                    positionable.Size = clickDrag.Size;
+                }
             }
         }
     }

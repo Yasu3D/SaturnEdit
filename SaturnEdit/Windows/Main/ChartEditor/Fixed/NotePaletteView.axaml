@@ -11,6 +11,55 @@
         <StackPanel>
             <RadioButton Classes="Themed FillStandard"
                          GroupName="NoteType"
+                         Name="RadioButtonSelect"
+                         Width="60"
+                         Height="40"
+                         IsCheckedChanged="RadioButtonNoteType_OnIsCheckedChanged">
+                <icon:FluentIcon Icon="SelectObject"/>
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain}" />
+                            <TextBlock Name="TextBlockShortcutSelect"
+                                       Text="SHORTCUT"
+                                       Margin="15,0,0,0"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </RadioButton>
+
+            <RadioButton Classes="Themed FillStandard"
+                         GroupName="NoteType"
+                         Name="RadioButtonEraser"
+                         Width="60"
+                         Height="40"
+                         IsCheckedChanged="RadioButtonNoteType_OnIsCheckedChanged">
+                <icon:FluentIcon Icon="Eraser"/>
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold}" />
+                            <TextBlock Name="TextBlockShortcutEraser"
+                                       Text="SHORTCUT"
+                                       Margin="15,0,0,0"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                        <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </RadioButton>
+
+            <Rectangle Height="1"
+                       Width="30"
+                       Fill="{DynamicResource SeparatorPrimary}"
+                       Margin="0,10" />
+            
+            <RadioButton Classes="Themed FillStandard"
+                         GroupName="NoteType"
                          Name="RadioButtonTouch"
                          Width="60"
                          Height="40"
