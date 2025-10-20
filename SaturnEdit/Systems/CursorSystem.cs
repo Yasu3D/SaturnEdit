@@ -41,6 +41,14 @@ public static class CursorSystem
             if (size == value) return;
             
             size = value;
+            
+            if (currentNoteType != typeof(LaneShowNote) && 
+                currentNoteType != typeof(LaneHideNote) && 
+                currentNoteType != typeof(SyncNote))
+            {
+                size = Math.Max(3, size);
+            }
+            
             ShapeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
@@ -56,6 +64,14 @@ public static class CursorSystem
             if (currentNoteType == value) return;
             
             currentNoteType = value;
+            
+            if (currentNoteType != typeof(LaneShowNote) && 
+                currentNoteType != typeof(LaneHideNote) && 
+                currentNoteType != typeof(SyncNote))
+            {
+                size = Math.Max(3, size);
+            }
+            
             TypeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
