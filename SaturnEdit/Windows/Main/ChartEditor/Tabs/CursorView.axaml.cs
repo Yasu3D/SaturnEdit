@@ -122,6 +122,10 @@ public partial class CursorView : UserControl
         if (sender == null) return;
 
         int division = (int?)NumericUpDownDivision.Value ?? TimeSystem.DefaultDivision;
+        int measure = TimeSystem.Timestamp.Measure;
+        int beat = (int?)NumericUpDownBeat.Value ?? 0;
+        
         TimeSystem.Division = division;
+        TimeSystem.SeekMeasureTick(measure, beat * TimeSystem.DivisionInterval);
     }
 }
