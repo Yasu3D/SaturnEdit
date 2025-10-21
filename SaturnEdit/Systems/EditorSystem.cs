@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using AvaloniaEdit.Utils;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
+using SaturnData.Notation.Notes;
+using SaturnView;
 
 namespace SaturnEdit.Systems;
 
@@ -11,23 +14,353 @@ public static class EditorSystem
     {
         TimeSystem.PlaybackStateChanged += OnPlaybackStateChanged;
     }
-
-    private static void OnPlaybackStateChanged(object? sender, EventArgs e)
-    {
-        PointerOverObject = null;
-    }
-
+    
+    public static event EventHandler? PointerOverOverlapChanged;
+    
     // PointerOver
-    public static IPositionable.OverlapResult PointerOverOverlap { get; set; } = IPositionable.OverlapResult.None;
+    public static IPositionable.OverlapResult PointerOverOverlap
+    {
+        get => pointerOverOverlap;
+        set
+        {
+            if (pointerOverOverlap == value) return;
+            
+            pointerOverOverlap = value;
+            PointerOverOverlapChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private static IPositionable.OverlapResult pointerOverOverlap = IPositionable.OverlapResult.None;
+
     public static ITimeable? PointerOverObject { get; set; } = null;
     
     // Selection
     public static ITimeable? LastSelectedObject { get; set; } = null;
     public static HashSet<ITimeable> SelectedObjects { get; } = [];
     public static BoxSelectData BoxSelectData { get; set; } = new();
+
+    private static void OnPlaybackStateChanged(object? sender, EventArgs e)
+    {
+        PointerOverObject = null;
+    }
+    
+    public static void SetSelection(bool control, bool shift)
+    {
+        // None
+        // - clear
+        // - add pointerObj
+        if (!control && !shift)
+        {
+            SelectedObjects.Clear();
+            LastSelectedObject = null;
+
+            if (PointerOverObject == null) return;
+            
+            SelectedObjects.Add(PointerOverObject);
+            LastSelectedObject = PointerOverObject;
+        }
+        
+        // Ctrl
+        // - toggle pointerObj
+        if (control && !shift)
+        {
+            if (PointerOverObject == null) return;
+
+            if (!SelectedObjects.Add(PointerOverObject))
+            {
+                SelectedObjects.Remove(PointerOverObject);
+                LastSelectedObject = null;
+            }
+            else
+            {
+                LastSelectedObject = PointerOverObject;
+            }
+        }
+        
+        // Shift
+        // - clear
+        // - add from lastSelected to pointerObj
+        if (!control && shift)
+        {
+            if (PointerOverObject == null) return;
+
+            SelectedObjects.Clear();
+
+            Timestamp start;
+            Timestamp end;
+            
+            if (LastSelectedObject == null)
+            {
+                start = PointerOverObject.Timestamp;
+                end = PointerOverObject.Timestamp;
+            }
+            else
+            {
+                start = Timestamp.Min(LastSelectedObject.Timestamp, PointerOverObject.Timestamp);
+                end = Timestamp.Max(LastSelectedObject.Timestamp, PointerOverObject.Timestamp);
+            }
+
+            List<ITimeable> objects = [];
+
+            foreach (Event @event in ChartSystem.Chart.Events)
+            {
+                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                if (@event.Timestamp < start) continue;
+                if (@event.Timestamp > end) continue;
+
+                objects.Add(@event);
+            }
+
+            foreach (Note note in ChartSystem.Chart.LaneToggles)
+            {
+                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                if (note.Timestamp < start) continue;
+                if (note.Timestamp > end) continue;
+
+                objects.Add(note);
+            }
+
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            {
+                foreach (Event @event in layer.Events)
+                {
+                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                    if (@event.Timestamp < start) continue;
+                    if (@event.Timestamp > end) continue;
+
+                    objects.Add(@event);
+                }
+
+                foreach (Note note in layer.Notes)
+                {
+                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                    if (note.Timestamp < start) continue;
+                    if (note.Timestamp > end) continue;
+
+                    objects.Add(note);
+                }
+            }
+            
+            SelectedObjects.AddRange(objects);
+            SelectedObjects.Add(PointerOverObject);
+
+            if (LastSelectedObject != null)
+            {
+                SelectedObjects.Add(LastSelectedObject);
+            }
+        }
+        
+        // Ctrl + Shift
+        // - add from lastSelected to pointerObj
+        if (control && shift)
+        {
+            if (PointerOverObject == null) return;
+
+            Timestamp start;
+            Timestamp end;
+            
+            if (LastSelectedObject == null)
+            {
+                start = PointerOverObject.Timestamp;
+                end = PointerOverObject.Timestamp;
+            }
+            else
+            {
+                start = Timestamp.Min(LastSelectedObject.Timestamp, PointerOverObject.Timestamp);
+                end = Timestamp.Max(LastSelectedObject.Timestamp, PointerOverObject.Timestamp);
+            }
+
+            List<ITimeable> objects = [];
+
+            foreach (Event @event in ChartSystem.Chart.Events)
+            {
+                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                if (@event.Timestamp < start) continue;
+                if (@event.Timestamp > end) continue;
+
+                objects.Add(@event);
+            }
+
+            foreach (Note note in ChartSystem.Chart.LaneToggles)
+            {
+                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                if (note.Timestamp < start) continue;
+                if (note.Timestamp > end) continue;
+
+                objects.Add(note);
+            }
+
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            {
+                foreach (Event @event in layer.Events)
+                {
+                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                    if (@event.Timestamp < start) continue;
+                    if (@event.Timestamp > end) continue;
+
+                    objects.Add(@event);
+                }
+
+                foreach (Note note in layer.Notes)
+                {
+                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                    if (note.Timestamp < start) continue;
+                    if (note.Timestamp > end) continue;
+
+                    objects.Add(note);
+                }
+            }
+            
+            SelectedObjects.AddRange(objects);
+            SelectedObjects.Add(PointerOverObject);
+
+            if (LastSelectedObject != null)
+            {
+                SelectedObjects.Add(LastSelectedObject);
+            }
+        }
+    }
+
+    public static void SetBoxSelectionStart(bool negativeSelection, float viewTime)
+    {
+        BoxSelectData.NegativeSelection = negativeSelection;
+        BoxSelectData.GlobalStartTime = TimeSystem.Timestamp.Time + viewTime;
+        BoxSelectData.ScaledStartTimes.Clear();
+        foreach (Layer layer in ChartSystem.Chart.Layers)
+        {
+            float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
+            BoxSelectData.ScaledStartTimes.Add(layer, scaledTime + viewTime);
+        }
+    }
+
+    public static void SetBoxSelectionEnd(int position, int size, float viewTime)
+    {
+        BoxSelectData.GlobalEndTime = TimeSystem.Timestamp.Time + viewTime;
+        BoxSelectData.ScaledEndTimes.Clear();
+        foreach (Layer layer in ChartSystem.Chart.Layers)
+        {
+            float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
+            BoxSelectData.ScaledEndTimes.Add(layer, scaledTime + viewTime);    
+        }
+
+        BoxSelectData.Position = position;
+        BoxSelectData.Size = size;
+    }
+    
+    public static void ApplyBoxSelection()
+    {
+        if (BoxSelectData.GlobalStartTime == null 
+            || BoxSelectData.GlobalEndTime == null 
+            || BoxSelectData.ScaledStartTimes.Count == 0 
+            || BoxSelectData.ScaledEndTimes.Count == 0)
+        {
+            BoxSelectData = new();
+            return;
+        }
+    
+        float globalMin = MathF.Min((float)BoxSelectData.GlobalStartTime, (float)BoxSelectData.GlobalEndTime);
+        float globalMax = MathF.Max((float)BoxSelectData.GlobalStartTime, (float)BoxSelectData.GlobalEndTime);
+
+        foreach (Event @event in ChartSystem.Chart.Events)
+        {
+            if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+            if (@event.Timestamp.Time < globalMin) continue;
+            if (@event.Timestamp.Time > globalMax) continue;
+
+            if (BoxSelectData.NegativeSelection)
+            {
+                SelectedObjects.Remove(@event);
+            }
+            else
+            {
+                SelectedObjects.Add(@event);
+            }
+        }
+
+        foreach (Note note in ChartSystem.Chart.LaneToggles)
+        {
+            if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+            if (note.Timestamp.Time < globalMin) continue;
+            if (note.Timestamp.Time > globalMax) continue;
+
+            if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectData.Position, BoxSelectData.Size)) continue;
+
+            if (BoxSelectData.NegativeSelection)
+            {
+                SelectedObjects.Remove(note);
+            }
+            else
+            {
+                SelectedObjects.Add(note);
+            }
+        }
+
+        foreach (Layer layer in ChartSystem.Chart.Layers)
+        {
+            foreach (Event @event in layer.Events)
+            {
+                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                if (@event.Timestamp.Time < globalMin) continue;
+                if (@event.Timestamp.Time > globalMax) continue;
+
+                if (BoxSelectData.NegativeSelection)
+                {
+                    SelectedObjects.Remove(@event);
+                }
+                else
+                {
+                    SelectedObjects.Add(@event);
+                }
+            }
+
+            foreach (Note note in layer.Notes)
+            {
+                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+
+                float min = MathF.Min(BoxSelectData.ScaledStartTimes[layer], BoxSelectData.ScaledEndTimes[layer]);
+                float max = MathF.Max(BoxSelectData.ScaledStartTimes[layer], BoxSelectData.ScaledEndTimes[layer]);
+
+                if (note is HoldNote holdNote && holdNote.Points.Count > 1)
+                {
+                    if (holdNote.Points[^1].Timestamp.ScaledTime < min) continue;
+                    if (holdNote.Points[0].Timestamp.ScaledTime > max) continue;
+
+                    bool overlap = false;
+                    foreach (HoldPointNote point in holdNote.Points)
+                    {
+                        if (point.Timestamp.ScaledTime < min) continue;
+                        if (point.Timestamp.ScaledTime > max) continue;
+                        if (!IPositionable.IsAnyOverlap(point.Position, point.Size, BoxSelectData.Position, BoxSelectData.Size)) continue;
+
+                        overlap = true;
+                        break;
+                    }
+
+                    if (!overlap) continue;
+                }
+                else
+                {
+                    if (note.Timestamp.ScaledTime < min) continue;
+                    if (note.Timestamp.ScaledTime > max) continue;
+
+                    if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectData.Position, BoxSelectData.Size)) continue;
+                }
+
+                if (BoxSelectData.NegativeSelection)
+                {
+                    SelectedObjects.Remove(note);
+                }
+                else
+                {
+                    SelectedObjects.Add(note);
+                }
+            }
+        }
+
+        BoxSelectData = new();
+    }
 }
 
-public class BoxSelectData()
+public class BoxSelectData
 {
     public float? GlobalStartTime = null;
     public float? GlobalEndTime = null;

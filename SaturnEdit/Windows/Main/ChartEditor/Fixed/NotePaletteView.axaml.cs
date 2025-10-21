@@ -47,93 +47,72 @@ public partial class NotePaletteView : UserControl
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
         
-        BonusType bonusType = BonusType.Normal;
-        JudgementType judgementType = JudgementType.Fake;
-        LaneSweepDirection direction = LaneSweepDirection.Center;
-
-        if (CursorSystem.CursorNote is IPositionable positionable)
+        if (button.Name == "RadioButtonTouch" && CursorSystem.CurrentNote is not TouchNote)
         {
-            CursorSystem.BackupPosition = positionable.Position;
-            CursorSystem.BackupSize = positionable.Size;
-        }
-
-        if (CursorSystem.CursorNote is IPlayable playable)
-        {
-            bonusType = playable.BonusType;
-            judgementType = playable.JudgementType;
-        }
-
-        if (CursorSystem.CursorNote is ILaneToggle laneToggle)
-        {
-            direction = laneToggle.Direction;
-        }
-        
-        if (button.Name == "RadioButtonTouch" && CursorSystem.CursorNote is not TouchNote)
-        {
-            CursorSystem.CursorNote = new TouchNote(Timestamp.Zero, CursorSystem.BackupPosition, CursorSystem.BackupSize, bonusType, judgementType);
+            CursorSystem.CurrentNote = new TouchNote(Timestamp.Zero, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType);
             return;
         }
         
-        if (button.Name == "RadioButtonChain" && CursorSystem.CursorNote is not ChainNote)
+        if (button.Name == "RadioButtonChain" && CursorSystem.CurrentNote is not ChainNote)
         {
-            CursorSystem.CursorNote = new ChainNote(Timestamp.Zero, CursorSystem.BackupPosition, CursorSystem.BackupSize, bonusType, judgementType);
+            CursorSystem.CurrentNote = new ChainNote(Timestamp.Zero, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType);
             return;
         }
         
-        if (button.Name == "RadioButtonHold" && CursorSystem.CursorNote is not HoldNote)
+        if (button.Name == "RadioButtonHold" && CursorSystem.CurrentNote is not HoldNote)
         {
-            HoldNote holdNote = new(bonusType, judgementType);
-            holdNote.Points.Add(new(Timestamp.Zero, CursorSystem.BackupPosition, CursorSystem.BackupSize, holdNote, HoldPointRenderType.Visible));
+            HoldNote holdNote = new(CursorSystem.BonusType, CursorSystem.JudgementType);
+            holdNote.Points.Add(new(Timestamp.Zero, CursorSystem.Position, CursorSystem.Size, holdNote, HoldPointRenderType.Visible));
             
-            CursorSystem.CursorNote = holdNote;
+            CursorSystem.CurrentNote = holdNote;
             return;
         }
         
-        if (button.Name == "RadioButtonSlideClockwise" && CursorSystem.CursorNote is not SlideClockwiseNote)
+        if (button.Name == "RadioButtonSlideClockwise" && CursorSystem.CurrentNote is not SlideClockwiseNote)
         {
-            CursorSystem.CursorNote = new SlideClockwiseNote(Timestamp.Zero, CursorSystem.BackupPosition, CursorSystem.BackupSize, bonusType, judgementType);
+            CursorSystem.CurrentNote = new SlideClockwiseNote(Timestamp.Zero, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType);
             return;
         }
         
-        if (button.Name == "RadioButtonSlideCounterclockwise" && CursorSystem.CursorNote is not SlideCounterclockwiseNote)
+        if (button.Name == "RadioButtonSlideCounterclockwise" && CursorSystem.CurrentNote is not SlideCounterclockwiseNote)
         {
-            CursorSystem.CursorNote = new SlideCounterclockwiseNote(Timestamp.Zero, CursorSystem.BackupPosition, CursorSystem.BackupSize, bonusType, judgementType);
+            CursorSystem.CurrentNote = new SlideCounterclockwiseNote(Timestamp.Zero, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType);
             return;
         }
         
-        if (button.Name == "RadioButtonSnapForward" && CursorSystem.CursorNote is not SnapForwardNote)
+        if (button.Name == "RadioButtonSnapForward" && CursorSystem.CurrentNote is not SnapForwardNote)
         {
-            CursorSystem.CursorNote = new SnapForwardNote(Timestamp.Zero, CursorSystem.BackupPosition, CursorSystem.BackupSize, bonusType, judgementType);
+            CursorSystem.CurrentNote = new SnapForwardNote(Timestamp.Zero, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType);
             return;
         }
         
-        if (button.Name == "RadioButtonSnapBackward" && CursorSystem.CursorNote is not SnapBackwardNote)
+        if (button.Name == "RadioButtonSnapBackward" && CursorSystem.CurrentNote is not SnapBackwardNote)
         {
-            CursorSystem.CursorNote = new SnapBackwardNote(Timestamp.Zero, CursorSystem.BackupPosition, CursorSystem.BackupSize, bonusType, judgementType);
+            CursorSystem.CurrentNote = new SnapBackwardNote(Timestamp.Zero, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType);
             return;
         }
         
-        if (button.Name == "RadioButtonLaneShow" && CursorSystem.CursorNote is not LaneShowNote)
+        if (button.Name == "RadioButtonLaneShow" && CursorSystem.CurrentNote is not LaneShowNote)
         {
-            CursorSystem.CursorNote = new LaneShowNote(Timestamp.Zero, CursorSystem.BackupPosition, CursorSystem.BackupSize, direction);
+            CursorSystem.CurrentNote = new LaneShowNote(Timestamp.Zero, CursorSystem.Position, CursorSystem.Size, CursorSystem.Direction);
             return;
         }
         
-        if (button.Name == "RadioButtonLaneHide" && CursorSystem.CursorNote is not LaneHideNote)
+        if (button.Name == "RadioButtonLaneHide" && CursorSystem.CurrentNote is not LaneHideNote)
         {
-            CursorSystem.CursorNote = new LaneHideNote(Timestamp.Zero, CursorSystem.BackupPosition, CursorSystem.BackupSize, direction);
+            CursorSystem.CurrentNote = new LaneHideNote(Timestamp.Zero, CursorSystem.Position, CursorSystem.Size, CursorSystem.Direction);
             return;
         }
         
-        if (button.Name == "RadioButtonSync" && CursorSystem.CursorNote is not SyncNote)
+        if (button.Name == "RadioButtonSync" && CursorSystem.CurrentNote is not SyncNote)
         {
-            CursorSystem.CursorNote = new SyncNote(Timestamp.Zero, CursorSystem.BackupPosition, CursorSystem.BackupSize);
+            CursorSystem.CurrentNote = new SyncNote(Timestamp.Zero, CursorSystem.Position, CursorSystem.Size);
             return;
         }
         
-        if (button.Name == "RadioButtonMeasureLine" && CursorSystem.CursorNote is not MeasureLineNote)
+        if (button.Name == "RadioButtonMeasureLine" && CursorSystem.CurrentNote is not MeasureLineNote)
         {
-            CursorSystem.CursorNote = new MeasureLineNote(Timestamp.Zero, false);
+            CursorSystem.CurrentNote = new MeasureLineNote(Timestamp.Zero, false);
         }
     }
 
@@ -142,10 +121,8 @@ public partial class NotePaletteView : UserControl
         if (blockEvents) return;
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
-
-        if (CursorSystem.CursorNote is not IPlayable playable) return;
         
-        playable.BonusType = button.Name switch
+        CursorSystem.BonusType = button.Name switch
         {
             "RadioButtonBonusTypeNormal" => BonusType.Normal,
             "RadioButtonBonusTypeBonus" => BonusType.Bonus,
@@ -160,9 +137,7 @@ public partial class NotePaletteView : UserControl
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
 
-        if (CursorSystem.CursorNote is not IPlayable playable) return;
-        
-        playable.JudgementType = button.Name switch
+        CursorSystem.JudgementType = button.Name switch
         {
             "RadioButtonJudgementTypeNormal" => JudgementType.Normal,
             "RadioButtonJudgementTypeFake" => JudgementType.Fake,
@@ -177,9 +152,7 @@ public partial class NotePaletteView : UserControl
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
 
-        if (CursorSystem.CursorNote is not HoldPointNote holdPointNote) return;
-        
-        holdPointNote.RenderType = button.Name switch
+        CursorSystem.RenderType = button.Name switch
         {
             "RadioButtonHoldPointRenderTypeVisible" => HoldPointRenderType.Visible,
             "RadioButtonHoldPointRenderTypeHidden" => HoldPointRenderType.Hidden,
@@ -193,9 +166,7 @@ public partial class NotePaletteView : UserControl
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
 
-        if (CursorSystem.CursorNote is not ILaneToggle laneToggle) return;
-        
-        laneToggle.Direction = button.Name switch
+        CursorSystem.Direction = button.Name switch
         {
             "RadioButtonSweepDirectionCenter" => LaneSweepDirection.Center,
             "RadioButtonSweepDirectionClockwise" => LaneSweepDirection.Clockwise,
@@ -218,14 +189,14 @@ public partial class NotePaletteView : UserControl
 
     private void UpdateSubOptions()
     {
-        StackPanelBonusTypesJudgementTypes.IsVisible = CursorSystem.CursorNote is IPlayable;
-        StackPanelHoldPointRenderTypes.IsVisible = CursorSystem.CursorNote is HoldPointNote;
-        StackPanelSweepDirections.IsVisible = CursorSystem.CursorNote is ILaneToggle;
+        StackPanelBonusTypesJudgementTypes.IsVisible = CursorSystem.CurrentNote is IPlayable;
+        StackPanelHoldPointRenderTypes.IsVisible = CursorSystem.CurrentNote is HoldPointNote;
+        StackPanelSweepDirections.IsVisible = CursorSystem.CurrentNote is ILaneToggle;
     }
 
     private void UpdateBonusTypeIcons()
     {
-        int id = CursorSystem.CursorNote switch
+        int id = CursorSystem.CurrentNote switch
         {
             TouchNote => (int)SettingsSystem.RenderSettings.TouchNoteColor,
             ChainNote => (int)SettingsSystem.RenderSettings.ChainNoteColor,
@@ -237,7 +208,7 @@ public partial class NotePaletteView : UserControl
             _ => 0,
         };
 
-        string svgPath = CursorSystem.CursorNote switch
+        string svgPath = CursorSystem.CurrentNote switch
         {
             TouchNote => $"avares://SaturnEdit/Assets/Icons/Color/icon_touch_{id}.svg",
             ChainNote => $"avares://SaturnEdit/Assets/Icons/Color/icon_chain_{id}.svg",
@@ -289,42 +260,33 @@ public partial class NotePaletteView : UserControl
     {
         blockEvents = true;
         
-        if (CursorSystem.CursorNote is TouchNote) RadioButtonTouch.IsChecked = true;
-        if (CursorSystem.CursorNote is ChainNote) RadioButtonChain.IsChecked = true;
-        if (CursorSystem.CursorNote is HoldNote) RadioButtonHold.IsChecked = true;
-        if (CursorSystem.CursorNote is SlideClockwiseNote) RadioButtonSlideClockwise.IsChecked = true;
-        if (CursorSystem.CursorNote is SlideCounterclockwiseNote) RadioButtonSlideCounterclockwise.IsChecked = true;
-        if (CursorSystem.CursorNote is SnapForwardNote) RadioButtonSnapForward.IsChecked = true;
-        if (CursorSystem.CursorNote is SnapBackwardNote) RadioButtonSnapBackward.IsChecked = true;
-        if (CursorSystem.CursorNote is LaneShowNote) RadioButtonLaneShow.IsChecked = true;
-        if (CursorSystem.CursorNote is LaneHideNote) RadioButtonLaneHide.IsChecked = true;
-        if (CursorSystem.CursorNote is SyncNote) RadioButtonSync.IsChecked = true;
-        if (CursorSystem.CursorNote is MeasureLineNote) RadioButtonMeasureLine.IsChecked = true;
-
-        if (CursorSystem.CursorNote is IPlayable playable)
-        {
-            if (playable.BonusType == BonusType.Normal) RadioButtonBonusTypeNormal.IsChecked = true;
-            if (playable.BonusType == BonusType.R) RadioButtonBonusTypeR.IsChecked = true;
-            if (playable.BonusType == BonusType.Bonus) RadioButtonBonusTypeBonus.IsChecked = true;
-            
-            if (playable.JudgementType == JudgementType.Normal) RadioButtonJudgementTypeNormal.IsChecked = true;
-            if (playable.JudgementType == JudgementType.Fake) RadioButtonJudgementTypeFake.IsChecked = true;
-            if (playable.JudgementType == JudgementType.Autoplay) RadioButtonJudgementTypeAutoplay.IsChecked = true;
-        }
-
-        if (CursorSystem.CursorNote is HoldPointNote holdPoint)
-        {
-            if (holdPoint.RenderType == HoldPointRenderType.Visible) RadioButtonHoldPointRenderTypeVisible.IsChecked = true;
-            if (holdPoint.RenderType == HoldPointRenderType.Hidden) RadioButtonHoldPointRenderTypeHidden.IsChecked = true;
-        }
-
-        if (CursorSystem.CursorNote is ILaneToggle laneToggle)
-        {
-            if (laneToggle.Direction == LaneSweepDirection.Center) RadioButtonSweepDirectionCenter.IsChecked = true;
-            if (laneToggle.Direction == LaneSweepDirection.Clockwise) RadioButtonSweepDirectionClockwise.IsChecked = true;
-            if (laneToggle.Direction == LaneSweepDirection.Counterclockwise) RadioButtonSweepDirectionCounterclockwise.IsChecked = true;
-            if (laneToggle.Direction == LaneSweepDirection.Instant) RadioButtonSweepDirectionInstant.IsChecked = true;
-        }
+        if (CursorSystem.CurrentNote is TouchNote) RadioButtonTouch.IsChecked = true;
+        if (CursorSystem.CurrentNote is ChainNote) RadioButtonChain.IsChecked = true;
+        if (CursorSystem.CurrentNote is HoldNote) RadioButtonHold.IsChecked = true;
+        if (CursorSystem.CurrentNote is SlideClockwiseNote) RadioButtonSlideClockwise.IsChecked = true;
+        if (CursorSystem.CurrentNote is SlideCounterclockwiseNote) RadioButtonSlideCounterclockwise.IsChecked = true;
+        if (CursorSystem.CurrentNote is SnapForwardNote) RadioButtonSnapForward.IsChecked = true;
+        if (CursorSystem.CurrentNote is SnapBackwardNote) RadioButtonSnapBackward.IsChecked = true;
+        if (CursorSystem.CurrentNote is LaneShowNote) RadioButtonLaneShow.IsChecked = true;
+        if (CursorSystem.CurrentNote is LaneHideNote) RadioButtonLaneHide.IsChecked = true;
+        if (CursorSystem.CurrentNote is SyncNote) RadioButtonSync.IsChecked = true;
+        if (CursorSystem.CurrentNote is MeasureLineNote) RadioButtonMeasureLine.IsChecked = true;
+        
+        if (CursorSystem.BonusType == BonusType.Normal) RadioButtonBonusTypeNormal.IsChecked = true;
+        if (CursorSystem.BonusType == BonusType.R) RadioButtonBonusTypeR.IsChecked = true;
+        if (CursorSystem.BonusType == BonusType.Bonus) RadioButtonBonusTypeBonus.IsChecked = true;
+        
+        if (CursorSystem.JudgementType == JudgementType.Normal) RadioButtonJudgementTypeNormal.IsChecked = true;
+        if (CursorSystem.JudgementType == JudgementType.Fake) RadioButtonJudgementTypeFake.IsChecked = true;
+        if (CursorSystem.JudgementType == JudgementType.Autoplay) RadioButtonJudgementTypeAutoplay.IsChecked = true;
+        
+        if (CursorSystem.RenderType == HoldPointRenderType.Visible) RadioButtonHoldPointRenderTypeVisible.IsChecked = true;
+        if (CursorSystem.RenderType == HoldPointRenderType.Hidden) RadioButtonHoldPointRenderTypeHidden.IsChecked = true;
+        
+        if (CursorSystem.Direction == LaneSweepDirection.Center) RadioButtonSweepDirectionCenter.IsChecked = true;
+        if (CursorSystem.Direction == LaneSweepDirection.Clockwise) RadioButtonSweepDirectionClockwise.IsChecked = true;
+        if (CursorSystem.Direction == LaneSweepDirection.Counterclockwise) RadioButtonSweepDirectionCounterclockwise.IsChecked = true;
+        if (CursorSystem.Direction == LaneSweepDirection.Instant) RadioButtonSweepDirectionInstant.IsChecked = true;
 
         blockEvents = false;
     }

@@ -14,7 +14,7 @@ public partial class CursorView : UserControl
         
         TimeSystem.TimestampChanged += OnTimestampChanged;
         TimeSystem.DivisionChanged += OnDivisionChanged;
-        //CursorSystem.ShapeChanged += OnShapeChanged;
+        CursorSystem.ShapeChanged += OnShapeChanged;
         
         OnTimestampChanged(null, EventArgs.Empty);
         OnDivisionChanged(null, EventArgs.Empty);
@@ -57,8 +57,8 @@ public partial class CursorView : UserControl
     {
         blockEvents = true;
 
-        //SliderPosition.Value = CursorSystem.Position;
-        //SliderSize.Value = CursorSystem.Size;
+        SliderPosition.Value = CursorSystem.Position;
+        SliderSize.Value = CursorSystem.Size;
         
         blockEvents = false;
         
@@ -71,7 +71,7 @@ public partial class CursorView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
 
-        //CursorSystem.Position = (int)SliderPosition.Value;
+        CursorSystem.Position = (int)SliderPosition.Value;
     }
     
     private void SliderSize_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
@@ -79,7 +79,7 @@ public partial class CursorView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
 
-        //CursorSystem.Size = (int)SliderSize.Value;
+        CursorSystem.Size = (int)SliderSize.Value;
     }
 
     private void NumericUpDownMeasure_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)

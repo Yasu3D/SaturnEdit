@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
-using AvaloniaEdit.Utils;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
-using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnView;
@@ -19,11 +16,6 @@ namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
 public partial class ChartView3D : UserControl
 {
-    // TODO:
-    // More refactoring
-    // Implement new cursor behaviour
-    // NotePalette ToolTips
-    
     public ChartView3D()
     {
         InitializeComponent();
@@ -32,26 +24,143 @@ public partial class ChartView3D : UserControl
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
+
+        EditorSystem.PointerOverOverlapChanged += OnPointerOverOverlapChanged;
     }
 
     private readonly CanvasInfo canvasInfo = new();
     private bool blockEvents = false;
     
-    private CursorState cursorState = CursorState.None;
-    private enum CursorState
-    {
-        None = 0,
-        HoldingObject = 1,
-        DraggingCursor = 2,
-    }
-
-    private bool pointerOver = false;
-    private readonly ClickDragHelper clickDrag = new();
+    private bool isGrabbingObject = false;
+    
+    private readonly ClickDragHelper clickDragLeft = new();
+    private readonly ClickDragHelper clickDragRight = new();
     
     private void OnSettingsChanged(object? sender, EventArgs e)
+    { 
+        blockEvents = true;
+
+        MenuItemShowSpeedChanges.IsChecked = SettingsSystem.RenderSettings.ShowSpeedChanges;
+        MenuItemShowVisibilityChanges.IsChecked = SettingsSystem.RenderSettings.ShowVisibilityChanges;
+        MenuItemShowLaneToggleAnimations.IsChecked = SettingsSystem.RenderSettings.ShowLaneToggleAnimations;
+        MenuItemShowJudgeAreas.IsChecked = SettingsSystem.RenderSettings.ShowJudgeAreas;
+        MenuItemShowMarvelousWindows.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousWindows;
+        MenuItemShowGreatWindows.IsChecked = SettingsSystem.RenderSettings.ShowGreatWindows;
+        MenuItemShowGoodWindows.IsChecked = SettingsSystem.RenderSettings.ShowGoodWindows;
+        MenuItemSaturnJudgeAreas.IsChecked = SettingsSystem.RenderSettings.SaturnJudgeAreas;
+        MenuItemVisualizeLaneSweeps.IsChecked = SettingsSystem.RenderSettings.VisualizeLaneSweeps;
+        MenuItemShowTouchNotes.IsChecked = SettingsSystem.RenderSettings.ShowTouchNotes;
+        MenuItemShowChainNotes.IsChecked = SettingsSystem.RenderSettings.ShowChainNotes;
+        MenuItemShowHoldNotes.IsChecked = SettingsSystem.RenderSettings.ShowHoldNotes;
+        MenuItemShowSlideClockwiseNotes.IsChecked = SettingsSystem.RenderSettings.ShowSlideClockwiseNotes;
+        MenuItemShowSlideCounterclockwiseNotes.IsChecked = SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes;
+        MenuItemShowSnapForwardNotes.IsChecked = SettingsSystem.RenderSettings.ShowSnapForwardNotes;
+        MenuItemShowSnapBackwardNotes.IsChecked = SettingsSystem.RenderSettings.ShowSnapBackwardNotes;
+        MenuItemShowSyncNotes.IsChecked = SettingsSystem.RenderSettings.ShowSyncNotes;
+        MenuItemShowMeasureLineNotes.IsChecked = SettingsSystem.RenderSettings.ShowMeasureLineNotes;
+        MenuItemShowBeatLineNotes.IsChecked = SettingsSystem.RenderSettings.ShowBeatLineNotes;
+        MenuItemShowLaneShowNotes.IsChecked = SettingsSystem.RenderSettings.ShowLaneShowNotes;
+        MenuItemShowLaneHideNotes.IsChecked = SettingsSystem.RenderSettings.ShowLaneHideNotes;
+        MenuItemShowTempoChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowTempoChangeEvents;
+        MenuItemShowMetreChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowMetreChangeEvents;
+        MenuItemShowSpeedChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowSpeedChangeEvents;
+        MenuItemShowVisibilityChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowVisibilityChangeEvents;
+        MenuItemShowReverseEffectEvents.IsChecked = SettingsSystem.RenderSettings.ShowReverseEffectEvents;
+        MenuItemShowStopEffectEvents.IsChecked = SettingsSystem.RenderSettings.ShowStopEffectEvents;
+        MenuItemShowTutorialMarkerEvents.IsChecked = SettingsSystem.RenderSettings.ShowTutorialMarkerEvents;
+
+        MenuItemHideEventMarkers.IsChecked = SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback;
+        MenuItemHideLaneToggleNotes.IsChecked = SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback;
+        MenuItemHideHoldControlPoints.IsChecked = SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback;
+
+        NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed / 10.0m;
+        ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
+        
+        MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+        MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+        MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+
+        blockEvents = false;
+        
+        TextBlockShortcutBoxSelect.Text = SettingsSystem.ShortcutSettings.Shortcuts["Edit.BoxSelect"].ToString();
+        TextBlockShortcutEditType.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditType"].ToString();
+        TextBlockShortcutEditShape.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditShape"].ToString();
+        TextBlockShortcutDeleteSelection.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
+        TextBlockShortcutInsertNote.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.Insert"].ToString();
+        
+        MenuItemMoveSelectionBeatForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatForward"].ToKeyGesture();
+        MenuItemMoveSelectionBeatBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatBack"].ToKeyGesture();
+        MenuItemMoveSelectionMeasureForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureForward"].ToKeyGesture();
+        MenuItemMoveSelectionMeasureBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureBack"].ToKeyGesture();
+        MenuItemMoveClockwise.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwise"].ToKeyGesture();
+        MenuItemMoveCounterclockwise.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwise"].ToKeyGesture();
+        MenuItemIncreaseSize.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSize"].ToKeyGesture();
+        MenuItemDecreaseSize.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSize"].ToKeyGesture();
+        MenuItemMoveClockwiseIterative.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwiseIterative"].ToKeyGesture();
+        MenuItemMoveCounterclockwiseIterative.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwiseIterative"].ToKeyGesture();
+        MenuItemIncreaseSizeIterative.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSizeIterative"].ToKeyGesture();
+        MenuItemDecreaseSizeIterative.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSizeIterative"].ToKeyGesture();
+        MenuItemMirrorHorizontal.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorHorizontal"].ToKeyGesture();
+        MenuItemMirrorVertical.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorVertical"].ToKeyGesture();
+        MenuItemMirrorCustom.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorCustom"].ToKeyGesture();
+        MenuItemAdjustAxis.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.AdjustAxis"].ToKeyGesture();
+        MenuItemFlipDirection.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.FlipDirection"].ToKeyGesture();
+        MenuItemReverseSelection.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ReverseSelection"].ToKeyGesture();
+        MenuItemScaleSelection.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleSelection"].ToKeyGesture();
+        MenuItemOffsetChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.OffsetChart"].ToKeyGesture();
+        MenuItemScaleChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleChart"].ToKeyGesture();
+        MenuItemMirrorChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorChart"].ToKeyGesture();
+        MenuItemNotesToHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.NotesToHold"].ToKeyGesture();
+        MenuItemHoldToNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.HoldToNotes"].ToKeyGesture();
+        MenuItemHoldToHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.HoldToHold"].ToKeyGesture();
+        MenuItemSpikeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"].ToKeyGesture();
+        MenuItemSplitHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SplitHold"].ToKeyGesture();
+        MenuItemMergeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.MergeHold"].ToKeyGesture();
+
+        MenuItemShowSpeedChanges.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowSpeedChanges"].ToKeyGesture();
+        MenuItemShowVisibilityChanges.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowVisibilityChanges"].ToKeyGesture();
+        MenuItemShowLaneToggleAnimations.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowLaneToggleAnimations"].ToKeyGesture();
+        MenuItemShowJudgeAreas.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgeAreas"].ToKeyGesture();
+        MenuItemShowMarvelousWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"].ToKeyGesture();
+        MenuItemShowGreatWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"].ToKeyGesture();
+        MenuItemShowGoodWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodWindows"].ToKeyGesture();
+        MenuItemSaturnJudgeAreas.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgeAreas"].ToKeyGesture();
+        MenuItemVisualizeLaneSweeps.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeLaneSweeps"].ToKeyGesture();
+        MenuItemShowTouchNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"].ToKeyGesture();
+        MenuItemShowChainNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapForward"].ToKeyGesture();
+        MenuItemShowHoldNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapBackward"].ToKeyGesture();
+        MenuItemShowSlideClockwiseNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideClockwise"].ToKeyGesture();
+        MenuItemShowSlideCounterclockwiseNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideCounterclockwise"].ToKeyGesture();
+        MenuItemShowSnapForwardNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Chain"].ToKeyGesture();
+        MenuItemShowSnapBackwardNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Hold"].ToKeyGesture();
+        MenuItemShowSyncNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Sync"].ToKeyGesture();
+        MenuItemShowMeasureLineNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MeasureLine"].ToKeyGesture();
+        MenuItemShowBeatLineNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.BeatLine"].ToKeyGesture();
+        MenuItemShowLaneShowNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneShow"].ToKeyGesture();
+        MenuItemShowLaneHideNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneHide"].ToKeyGesture();
+        MenuItemShowTempoChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TempoChange"].ToKeyGesture();
+        MenuItemShowMetreChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MetreChange"].ToKeyGesture();
+        MenuItemShowSpeedChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SpeedChange"].ToKeyGesture();
+        MenuItemShowVisibilityChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.VisibilityChange"].ToKeyGesture();
+        MenuItemShowReverseEffectEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.ReverseEffect"].ToKeyGesture();
+        MenuItemShowStopEffectEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.StopEffect"].ToKeyGesture();
+        MenuItemShowTutorialMarkerEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TutorialMarker"].ToKeyGesture();
+
+        MenuItemHideEventMarkers.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.EventMarkers"].ToKeyGesture();
+        MenuItemHideLaneToggleNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.LaneToggleNotes"].ToKeyGesture();
+        MenuItemHideHoldControlPoints.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.HoldControlPoints"].ToKeyGesture();
+    }
+    
+    private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
-         UpdateSettings();
-         UpdateShortcuts();
+        double minimum = double.Min(PanelCanvasContainer.Bounds.Width, PanelCanvasContainer.Bounds.Height);
+        RenderCanvas.Width = minimum;
+        RenderCanvas.Height = minimum;
+
+        canvasInfo.Width = (float)RenderCanvas.Width;
+        canvasInfo.Height = (float)RenderCanvas.Height;
+        canvasInfo.Radius = canvasInfo.Width / 2;
+        canvasInfo.Center = new(canvasInfo.Radius, canvasInfo.Radius);
     }
 
     private async void OnActualThemeVariantChanged(object? sender, EventArgs e)
@@ -73,18 +182,74 @@ public partial class ChartView3D : UserControl
         }
     }
     
-    private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
+    private void OnPointerOverOverlapChanged(object? sender, EventArgs e)
     {
-        double minimum = double.Min(PanelCanvasContainer.Bounds.Width, PanelCanvasContainer.Bounds.Height);
-        RenderCanvas.Width = minimum;
-        RenderCanvas.Height = minimum;
+        // Default Cursor
+        // - No PointerOverObject
+        // - No PointerOverOverlap
+        if (EditorSystem.PointerOverObject == null 
+         || EditorSystem.PointerOverOverlap == IPositionable.OverlapResult.None)
+        {
+            RenderCanvas.Cursor = new(StandardCursorType.Arrow);
+            return;
+        }
+        
+        // Omnidirectional Cursor
+        // - PointerOverObject is not IPositionable
+        // - PointerOverOverlap is Body
+        if (EditorSystem.PointerOverObject is not IPositionable positionable || EditorSystem.PointerOverOverlap == IPositionable.OverlapResult.Body)
+        {
+            RenderCanvas.Cursor = new(StandardCursorType.SizeAll);
+            return;
+        }
+        
+        // Directional Cursor
+        bool rightEdge = EditorSystem.PointerOverOverlap == IPositionable.OverlapResult.RightEdge;
+        int lane = rightEdge ? (positionable.Position + positionable.Size - 1) % 60 : positionable.Position;
+        
+        if (lane is >= 0 and <= 3
+            or >= 56 and <= 59)
+        {
+            RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopSide) : new(StandardCursorType.BottomSide);
+        }
 
-        canvasInfo.Width = (float)RenderCanvas.Width;
-        canvasInfo.Height = (float)RenderCanvas.Height;
-        canvasInfo.Radius = canvasInfo.Width / 2;
-        canvasInfo.Center = new(canvasInfo.Radius, canvasInfo.Radius);
+        if (lane is >= 4 and <= 10)
+        {
+            RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomRightCorner) : new(StandardCursorType.TopLeftCorner);
+        }
+
+        if (lane is >= 11 and <= 18)
+        {
+            RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.LeftSide) : new(StandardCursorType.RightSide);
+        }
+            
+        if (lane is >= 19 and <= 25)
+        {
+            RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomLeftCorner) : new(StandardCursorType.TopRightCorner);
+        }
+            
+        if (lane is >= 26 and <= 33)
+        {
+            RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomSide) : new(StandardCursorType.TopSide);
+        }
+            
+        if (lane is >= 34 and <= 40)
+        {
+            RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopLeftCorner) : new(StandardCursorType.BottomRightCorner);
+        }
+            
+        if (lane is >= 41 and <= 48)
+        {
+            RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.RightSide) : new(StandardCursorType.LeftSide);
+        }
+            
+        if (lane is >= 49 and <= 55)
+        {
+            RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopLeftCorner) : new(StandardCursorType.BottomLeftCorner);
+        }
     }
-
+    
+    
     private void RenderCanvas_OnRenderAction(SKCanvas canvas)
     {
         Renderer3D.Render
@@ -99,7 +264,7 @@ public partial class ChartView3D : UserControl
             selectedObjects: EditorSystem.SelectedObjects,
             pointerOverObject: EditorSystem.PointerOverObject,
             boxSelect: new(EditorSystem.BoxSelectData.GlobalStartTime, EditorSystem.BoxSelectData.GlobalEndTime, EditorSystem.BoxSelectData.Position, EditorSystem.BoxSelectData.Size),
-            cursorNote: CursorSystem.CursorNote
+            cursorNote: CursorSystem.CurrentNote
         );
     }
 
@@ -110,88 +275,31 @@ public partial class ChartView3D : UserControl
         float radius = Renderer3D.GetHitTestPointerRadius(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
         int lane = Renderer3D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
         float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
-
-        pointerOver = radius <= 1.1;
         
         onMove();
-        
-        if (e.Properties.IsLeftButtonPressed) 
-        {
-            onLeftDrag();
-        }
-        else if (e.Properties.IsRightButtonPressed) 
-        {
-            onRightDrag();
-        }
+        onLeftDrag();
+        onRightDrag();
 
         return;
 
         void onMove()
         {
-            pointerOver();
-            moveChartCursor();
-            setMouseCursor();
-
-            return;
-
-            void pointerOver()
+            if (radius > 1.1f)
             {
-                if (radius > 1.1f)
-                {
-                    EditorSystem.PointerOverObject = null;
-                    return;
-                }
+                EditorSystem.PointerOverObject = null;
+                return;
+            }
+        
+            float threshold = Renderer3D.GetHitTestThreshold(canvasInfo, SettingsSystem.RenderSettings.NoteThickness);
             
-                float threshold = Renderer3D.GetHitTestThreshold(canvasInfo, SettingsSystem.RenderSettings.NoteThickness);
-                
-                foreach (Layer layer in ChartSystem.Chart.Layers)
-                {
-                    float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            {
+                float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
 
-                    foreach (Event @event in layer.Events)
-                    {
-                        if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
-                        
-                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings);
-                        if (hitTestResult != IPositionable.OverlapResult.None)
-                        {
-                            EditorSystem.PointerOverObject = @event;
-                            EditorSystem.PointerOverOverlap = hitTestResult;
-                            return;
-                        }
-                    }
-                    
-                    foreach (Note note in layer.Notes)
-                    {
-                        if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
-                        
-                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings);
-                        if (hitTestResult != IPositionable.OverlapResult.None)
-                        {
-                            EditorSystem.PointerOverObject = note;
-                            EditorSystem.PointerOverOverlap = hitTestResult;
-                            return;
-                        }
-                    }
-                }
-                
-                foreach (Note note in ChartSystem.Chart.LaneToggles)
-                {
-                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
-
-                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings);
-                    if (hitTestResult != IPositionable.OverlapResult.None)
-                    {
-                        EditorSystem.PointerOverObject = note;
-                        EditorSystem.PointerOverOverlap = hitTestResult;
-                        return;
-                    }
-                }
-                
-                foreach (Event @event in ChartSystem.Chart.Events)
+                foreach (Event @event in layer.Events)
                 {
                     if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
-
+                    
                     IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings);
                     if (hitTestResult != IPositionable.OverlapResult.None)
                     {
@@ -201,120 +309,70 @@ public partial class ChartView3D : UserControl
                     }
                 }
                 
-                EditorSystem.PointerOverObject = null;
-                EditorSystem.PointerOverOverlap = IPositionable.OverlapResult.None;
-            }
-
-            void moveChartCursor()
-            {
-                if (e.Properties.IsRightButtonPressed) return;
-                if (CursorSystem.CursorNote is not IPositionable positionable) return;
-
-                positionable.Position = lane;
+                foreach (Note note in layer.Notes)
+                {
+                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                    
+                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings);
+                    if (hitTestResult != IPositionable.OverlapResult.None)
+                    {
+                        EditorSystem.PointerOverObject = note;
+                        EditorSystem.PointerOverOverlap = hitTestResult;
+                        return;
+                    }
+                }
             }
             
-            void setMouseCursor()
+            foreach (Note note in ChartSystem.Chart.LaneToggles)
             {
-                if (EditorSystem.PointerOverOverlap == IPositionable.OverlapResult.None)
-                {
-                    RenderCanvas.Cursor = new(StandardCursorType.Arrow);
-                }
-                else if (EditorSystem.PointerOverOverlap == IPositionable.OverlapResult.Body)
-                {
-                    RenderCanvas.Cursor = new(StandardCursorType.SizeAll);
-                }
-                else
-                {
-                    bool rightEdge = EditorSystem.PointerOverOverlap == IPositionable.OverlapResult.RightEdge;
-                    
-                    if (lane is >= 0 and <= 3
-                        or >= 56 and <= 59)
-                    {
-                        RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopSide) : new(StandardCursorType.BottomSide);
-                    }
+                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
 
-                    if (lane is >= 4 and <= 10)
-                    {
-                        RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomRightCorner) : new(StandardCursorType.TopLeftCorner);
-                    }
-
-                    if (lane is >= 11 and <= 18)
-                    {
-                        RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.LeftSide) : new(StandardCursorType.RightSide);
-                    }
-                    
-                    if (lane is >= 19 and <= 25)
-                    {
-                        RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomLeftCorner) : new(StandardCursorType.TopRightCorner);
-                    }
-                    
-                    if (lane is >= 26 and <= 33)
-                    {
-                        RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomSide) : new(StandardCursorType.TopSide);
-                    }
-                    
-                    if (lane is >= 34 and <= 40)
-                    {
-                        RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopLeftCorner) : new(StandardCursorType.BottomRightCorner);
-                    }
-                    
-                    if (lane is >= 41 and <= 48)
-                    {
-                        RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.RightSide) : new(StandardCursorType.LeftSide);
-                    }
-                    
-                    if (lane is >= 49 and <= 55)
-                    {
-                        RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopLeftCorner) : new(StandardCursorType.BottomLeftCorner);
-                    }
+                IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings);
+                if (hitTestResult != IPositionable.OverlapResult.None)
+                {
+                    EditorSystem.PointerOverObject = note;
+                    EditorSystem.PointerOverOverlap = hitTestResult;
+                    return;
                 }
             }
+            
+            foreach (Event @event in ChartSystem.Chart.Events)
+            {
+                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+
+                IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings);
+                if (hitTestResult != IPositionable.OverlapResult.None)
+                {
+                    EditorSystem.PointerOverObject = @event;
+                    EditorSystem.PointerOverOverlap = hitTestResult;
+                    return;
+                }
+            }
+            
+            EditorSystem.PointerOverObject = null;
+            EditorSystem.PointerOverOverlap = IPositionable.OverlapResult.None;
         }
         
         void onLeftDrag()
         {
-            if (e.Properties.IsLeftButtonPressed == false) return;
+            if (!e.Properties.IsLeftButtonPressed) return;
+            if (!clickDragLeft.DragActive(point)) return;
 
-            if (cursorState == CursorState.None)
+            clickDragLeft.EndLane = lane;
+            
+            // Box Select
+            if (!isGrabbingObject)
             {
                 float t = RenderUtils.InversePerspective(radius);
                 float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
                 
-                if (EditorSystem.BoxSelectData.GlobalStartTime == null)
-                {
-                    // Box select has just started.
-                    EditorSystem.BoxSelectData.NegativeSelection = e.KeyModifiers.HasFlag(KeyModifiers.Alt);
-                    EditorSystem.BoxSelectData.GlobalStartTime = TimeSystem.Timestamp.Time + viewTime;
-                    clickDrag.Reset(lane);
-                    
-                    EditorSystem.BoxSelectData.ScaledStartTimes.Clear();
-                    foreach (Layer layer in ChartSystem.Chart.Layers)
-                    {
-                        float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
-                        EditorSystem.BoxSelectData.ScaledStartTimes.Add(layer, scaledTime + viewTime);    
-                    }
-                }
-                else
-                {
-                    // Box select already running.
-                    clickDrag.EndLane = lane;
-                    
-                    EditorSystem.BoxSelectData.GlobalEndTime = TimeSystem.Timestamp.Time + viewTime;
-                    EditorSystem.BoxSelectData.ScaledEndTimes.Clear();
-                    foreach (Layer layer in ChartSystem.Chart.Layers)
-                    {
-                        float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
-                        EditorSystem.BoxSelectData.ScaledEndTimes.Add(layer, scaledTime + viewTime);    
-                    }
-                }
-
-                EditorSystem.BoxSelectData.Position = clickDrag.Position;
-                EditorSystem.BoxSelectData.Size = clickDrag.Size;
+                EditorSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
                 
                 return;
             }
 
-            if (cursorState == CursorState.HoldingObject)
+            // Drag Object
+            if (isGrabbingObject)
             {
                 Console.WriteLine("Dragging object");
             }
@@ -322,30 +380,22 @@ public partial class ChartView3D : UserControl
 
         void onRightDrag()
         {
-            if (e.Properties.IsRightButtonPressed == false) return;
-
-            if (CursorSystem.CursorNote is IPositionable positionable)
-            {
-                if (cursorState == CursorState.None)
-                {
-                    clickDrag.Reset(lane);
-                    positionable.Position = clickDrag.Position;
-                    
-                    cursorState = CursorState.DraggingCursor;
-                }
-
-                if (cursorState == CursorState.DraggingCursor)
-                {
-                    clickDrag.EndLane = lane;
-                    positionable.Position = clickDrag.Position;
-                    positionable.Size = clickDrag.Size;
-                }
-            }
+            if (!e.Properties.IsRightButtonPressed) return;
+            if (!clickDragRight.DragActive(point)) return;
+            
+            clickDragRight.EndLane = lane;
+            CursorSystem.Position = clickDragRight.Position;
+            CursorSystem.Size = clickDragRight.Size;
         }
     }
 
     private void RenderCanvas_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
+        PointerPoint point = e.GetCurrentPoint(sender as Control);
+        float radius = Renderer3D.GetHitTestPointerRadius(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
+        int lane = Renderer3D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
+        float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
+
         onLeftClick();
         onRightClick();
         
@@ -354,86 +404,41 @@ public partial class ChartView3D : UserControl
         void onLeftClick()
         {
             if (!e.Properties.IsLeftButtonPressed) return;
+            clickDragLeft.Reset(point, lane);
+
+            isGrabbingObject = EditorSystem.PointerOverObject != null;
             
-            bool control = e.KeyModifiers.HasFlag(KeyModifiers.Control);
-            bool alt = e.KeyModifiers.HasFlag(KeyModifiers.Alt);
-            bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
+            boxSelect();
+            normalSelect();
+
+            return;
             
-            if (!control && !shift && !alt)
+            void boxSelect()
             {
-                EditorSystem.SelectedObjects.Clear();
-                EditorSystem.LastSelectedObject = null;
-            }
-            
-            if (EditorSystem.PointerOverObject != null)
-            {
-                cursorState = CursorState.HoldingObject;
+                float t = RenderUtils.InversePerspective(radius);
+                float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
                 
-                if (shift && EditorSystem.LastSelectedObject != null)
-                {
-                    Timestamp start = Timestamp.Min(EditorSystem.LastSelectedObject.Timestamp, EditorSystem.PointerOverObject.Timestamp);
-                    Timestamp end = Timestamp.Max(EditorSystem.LastSelectedObject.Timestamp, EditorSystem.PointerOverObject.Timestamp);
-                    List<ITimeable> objects = [];
+                EditorSystem.SetBoxSelectionStart(
+                    negativeSelection: e.KeyModifiers.HasFlag(KeyModifiers.Alt),
+                    viewTime: viewTime);
+            }
 
-                    foreach (Event @event in ChartSystem.Chart.Events)
-                    {
-                        if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
-                        if (@event.Timestamp < start) continue;
-                        if (@event.Timestamp > end) continue;
+            void normalSelect()
+            {
+                bool control = e.KeyModifiers.HasFlag(KeyModifiers.Control);
+                bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
 
-                        objects.Add(@event);
-                    }
-
-                    foreach (Note note in ChartSystem.Chart.LaneToggles)
-                    {
-                        if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
-                        if (note.Timestamp < start) continue;
-                        if (note.Timestamp > end) continue;
-
-                        objects.Add(note);
-                    }
-
-                    foreach (Layer layer in ChartSystem.Chart.Layers)
-                    {
-                        foreach (Event @event in layer.Events)
-                        {
-                            if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
-                            if (@event.Timestamp < start) continue;
-                            if (@event.Timestamp > end) continue;
-
-                            objects.Add(@event);
-                        }
-                        
-                        foreach (Note note in layer.Notes)
-                        {
-                            if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
-                            if (note.Timestamp < start) continue;
-                            if (note.Timestamp > end) continue;
-
-                            objects.Add(note);
-                        }
-                    }
-
-                    EditorSystem.SelectedObjects.Clear();
-                    EditorSystem.SelectedObjects.AddRange(objects);
-                    EditorSystem.SelectedObjects.Add(EditorSystem.LastSelectedObject);
-                    EditorSystem.SelectedObjects.Add(EditorSystem.PointerOverObject);
-                }
-                else
-                {
-                    if (!EditorSystem.SelectedObjects.Add(EditorSystem.PointerOverObject))
-                    {
-                        EditorSystem.SelectedObjects.Remove(EditorSystem.PointerOverObject);
-                    }
-                    
-                    EditorSystem.LastSelectedObject = EditorSystem.PointerOverObject;
-                }
+                EditorSystem.SetSelection(control, shift);
             }
         }
 
         void onRightClick()
         {
             if (!e.Properties.IsRightButtonPressed) return;
+
+            clickDragRight.Reset(point, lane);
+            
+            CursorSystem.Position = clickDragRight.Position;
         }
     }
     
@@ -447,122 +452,17 @@ public partial class ChartView3D : UserControl
         void onLeftReleased()
         {
             if (e.InitialPressMouseButton != MouseButton.Left) return;
+            clickDragLeft.Reset(null, 0);
 
-            cursorState = CursorState.None;
+            isGrabbingObject = false;
             
-            if (EditorSystem.BoxSelectData.GlobalStartTime != null
-                && EditorSystem.BoxSelectData.GlobalEndTime != null
-                && EditorSystem.BoxSelectData.ScaledStartTimes.Count != 0
-                && EditorSystem.BoxSelectData.ScaledEndTimes.Count != 0)
-            {
-                float globalMin = MathF.Min((float)EditorSystem.BoxSelectData.GlobalStartTime, (float)EditorSystem.BoxSelectData.GlobalEndTime);
-                float globalMax = MathF.Max((float)EditorSystem.BoxSelectData.GlobalStartTime, (float)EditorSystem.BoxSelectData.GlobalEndTime);
-                
-                foreach (Event @event in ChartSystem.Chart.Events)
-                {
-                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
-                    if (@event.Timestamp.Time < globalMin) continue;
-                    if (@event.Timestamp.Time > globalMax) continue;
-
-                    if (EditorSystem.BoxSelectData.NegativeSelection)
-                    {
-                        EditorSystem.SelectedObjects.Remove(@event);
-                    }
-                    else
-                    {
-                        EditorSystem.SelectedObjects.Add(@event);
-                    }
-                }
-
-                foreach (Note note in ChartSystem.Chart.LaneToggles)
-                {
-                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
-                    if (note.Timestamp.Time < globalMin) continue;
-                    if (note.Timestamp.Time > globalMax) continue;
-
-                    if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, EditorSystem.BoxSelectData.Position, EditorSystem.BoxSelectData.Size)) continue;
-                    
-                    if (EditorSystem.BoxSelectData.NegativeSelection)
-                    {
-                        EditorSystem.SelectedObjects.Remove(note);
-                    }
-                    else
-                    {
-                        EditorSystem.SelectedObjects.Add(note);
-                    }
-                }
-
-                foreach (Layer layer in ChartSystem.Chart.Layers)
-                {
-                    foreach (Event @event in layer.Events)
-                    {
-                        if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
-                        if (@event.Timestamp.Time < globalMin) continue;
-                        if (@event.Timestamp.Time > globalMax) continue;
-
-                        if (EditorSystem.BoxSelectData.NegativeSelection)
-                        {
-                            EditorSystem.SelectedObjects.Remove(@event);
-                        }
-                        else
-                        {
-                            EditorSystem.SelectedObjects.Add(@event);
-                        }
-                    }
-                    
-                    foreach (Note note in layer.Notes)
-                    {
-                        if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
-                        
-                        float min = MathF.Min(EditorSystem.BoxSelectData.ScaledStartTimes[layer], EditorSystem.BoxSelectData.ScaledEndTimes[layer]);
-                        float max = MathF.Max(EditorSystem.BoxSelectData.ScaledStartTimes[layer], EditorSystem.BoxSelectData.ScaledEndTimes[layer]);
-                        
-                        if (note is HoldNote holdNote && holdNote.Points.Count > 1)
-                        {
-                            if (holdNote.Points[^1].Timestamp.ScaledTime < min) continue;
-                            if (holdNote.Points[0].Timestamp.ScaledTime  > max) continue;
-
-                            bool overlap = false;
-                            foreach (HoldPointNote point in holdNote.Points)
-                            {
-                                if (point.Timestamp.ScaledTime < min) continue;
-                                if (point.Timestamp.ScaledTime > max) continue;
-                                if (!IPositionable.IsAnyOverlap(point.Position, point.Size, EditorSystem.BoxSelectData.Position, EditorSystem.BoxSelectData.Size)) continue;
-
-                                overlap = true;
-                                break;
-                            }
-                            
-                            if (!overlap) continue;
-                        }
-                        else
-                        {
-                            if (note.Timestamp.ScaledTime < min) continue;
-                            if (note.Timestamp.ScaledTime > max) continue;
-                            
-                            if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, EditorSystem.BoxSelectData.Position, EditorSystem.BoxSelectData.Size)) continue;
-                        }
-                        
-                        if (EditorSystem.BoxSelectData.NegativeSelection)
-                        {
-                            EditorSystem.SelectedObjects.Remove(note);
-                        }
-                        else
-                        {
-                            EditorSystem.SelectedObjects.Add(note);
-                        }
-                    }
-                }
-            }
-
-            EditorSystem.BoxSelectData = new();
+            EditorSystem.ApplyBoxSelection();
         }
 
         void onRightReleased()
         {
             if (e.InitialPressMouseButton != MouseButton.Right) return;
-
-            cursorState = CursorState.None;
+            clickDragRight.Reset(null, 0);
         }
     }
     
@@ -570,6 +470,7 @@ public partial class ChartView3D : UserControl
     {
         EditorSystem.PointerOverObject = null;
     }
+    
     
     private void MenuItem_OnClick(object? sender, RoutedEventArgs e)
     {
@@ -776,123 +677,5 @@ public partial class ChartView3D : UserControl
         if (blockEvents) return;
         if (sender is not ComboBox comboBox) return;
         SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)comboBox.SelectedIndex;
-    }
-    
-    private void UpdateSettings()
-    {
-        blockEvents = true;
-
-        MenuItemShowSpeedChanges.IsChecked = SettingsSystem.RenderSettings.ShowSpeedChanges;
-        MenuItemShowVisibilityChanges.IsChecked = SettingsSystem.RenderSettings.ShowVisibilityChanges;
-        MenuItemShowLaneToggleAnimations.IsChecked = SettingsSystem.RenderSettings.ShowLaneToggleAnimations;
-        MenuItemShowJudgeAreas.IsChecked = SettingsSystem.RenderSettings.ShowJudgeAreas;
-        MenuItemShowMarvelousWindows.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousWindows;
-        MenuItemShowGreatWindows.IsChecked = SettingsSystem.RenderSettings.ShowGreatWindows;
-        MenuItemShowGoodWindows.IsChecked = SettingsSystem.RenderSettings.ShowGoodWindows;
-        MenuItemSaturnJudgeAreas.IsChecked = SettingsSystem.RenderSettings.SaturnJudgeAreas;
-        MenuItemVisualizeLaneSweeps.IsChecked = SettingsSystem.RenderSettings.VisualizeLaneSweeps;
-        MenuItemShowTouchNotes.IsChecked = SettingsSystem.RenderSettings.ShowTouchNotes;
-        MenuItemShowChainNotes.IsChecked = SettingsSystem.RenderSettings.ShowChainNotes;
-        MenuItemShowHoldNotes.IsChecked = SettingsSystem.RenderSettings.ShowHoldNotes;
-        MenuItemShowSlideClockwiseNotes.IsChecked = SettingsSystem.RenderSettings.ShowSlideClockwiseNotes;
-        MenuItemShowSlideCounterclockwiseNotes.IsChecked = SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes;
-        MenuItemShowSnapForwardNotes.IsChecked = SettingsSystem.RenderSettings.ShowSnapForwardNotes;
-        MenuItemShowSnapBackwardNotes.IsChecked = SettingsSystem.RenderSettings.ShowSnapBackwardNotes;
-        MenuItemShowSyncNotes.IsChecked = SettingsSystem.RenderSettings.ShowSyncNotes;
-        MenuItemShowMeasureLineNotes.IsChecked = SettingsSystem.RenderSettings.ShowMeasureLineNotes;
-        MenuItemShowBeatLineNotes.IsChecked = SettingsSystem.RenderSettings.ShowBeatLineNotes;
-        MenuItemShowLaneShowNotes.IsChecked = SettingsSystem.RenderSettings.ShowLaneShowNotes;
-        MenuItemShowLaneHideNotes.IsChecked = SettingsSystem.RenderSettings.ShowLaneHideNotes;
-        MenuItemShowTempoChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowTempoChangeEvents;
-        MenuItemShowMetreChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowMetreChangeEvents;
-        MenuItemShowSpeedChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowSpeedChangeEvents;
-        MenuItemShowVisibilityChangeEvents.IsChecked = SettingsSystem.RenderSettings.ShowVisibilityChangeEvents;
-        MenuItemShowReverseEffectEvents.IsChecked = SettingsSystem.RenderSettings.ShowReverseEffectEvents;
-        MenuItemShowStopEffectEvents.IsChecked = SettingsSystem.RenderSettings.ShowStopEffectEvents;
-        MenuItemShowTutorialMarkerEvents.IsChecked = SettingsSystem.RenderSettings.ShowTutorialMarkerEvents;
-
-        MenuItemHideEventMarkers.IsChecked = SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback;
-        MenuItemHideLaneToggleNotes.IsChecked = SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback;
-        MenuItemHideHoldControlPoints.IsChecked = SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback;
-
-        NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed / 10.0m;
-        ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
-        
-        MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
-        MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
-        MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
-
-        blockEvents = false;
-    }
-
-    private void UpdateShortcuts()
-    {
-        TextBlockShortcutBoxSelect.Text = SettingsSystem.ShortcutSettings.Shortcuts["Edit.BoxSelect"].ToString();
-        TextBlockShortcutEditType.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditType"].ToString();
-        TextBlockShortcutEditShape.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditShape"].ToString();
-        TextBlockShortcutDeleteSelection.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
-        TextBlockShortcutInsertNote.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.Insert"].ToString();
-        
-        MenuItemMoveSelectionBeatForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatForward"].ToKeyGesture();
-        MenuItemMoveSelectionBeatBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatBack"].ToKeyGesture();
-        MenuItemMoveSelectionMeasureForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureForward"].ToKeyGesture();
-        MenuItemMoveSelectionMeasureBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureBack"].ToKeyGesture();
-        MenuItemMoveClockwise.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwise"].ToKeyGesture();
-        MenuItemMoveCounterclockwise.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwise"].ToKeyGesture();
-        MenuItemIncreaseSize.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSize"].ToKeyGesture();
-        MenuItemDecreaseSize.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSize"].ToKeyGesture();
-        MenuItemMoveClockwiseIterative.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwiseIterative"].ToKeyGesture();
-        MenuItemMoveCounterclockwiseIterative.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwiseIterative"].ToKeyGesture();
-        MenuItemIncreaseSizeIterative.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSizeIterative"].ToKeyGesture();
-        MenuItemDecreaseSizeIterative.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSizeIterative"].ToKeyGesture();
-        MenuItemMirrorHorizontal.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorHorizontal"].ToKeyGesture();
-        MenuItemMirrorVertical.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorVertical"].ToKeyGesture();
-        MenuItemMirrorCustom.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorCustom"].ToKeyGesture();
-        MenuItemAdjustAxis.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.AdjustAxis"].ToKeyGesture();
-        MenuItemFlipDirection.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.FlipDirection"].ToKeyGesture();
-        MenuItemReverseSelection.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ReverseSelection"].ToKeyGesture();
-        MenuItemScaleSelection.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleSelection"].ToKeyGesture();
-        MenuItemOffsetChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.OffsetChart"].ToKeyGesture();
-        MenuItemScaleChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleChart"].ToKeyGesture();
-        MenuItemMirrorChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorChart"].ToKeyGesture();
-        MenuItemNotesToHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.NotesToHold"].ToKeyGesture();
-        MenuItemHoldToNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.HoldToNotes"].ToKeyGesture();
-        MenuItemHoldToHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.HoldToHold"].ToKeyGesture();
-        MenuItemSpikeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"].ToKeyGesture();
-        MenuItemSplitHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SplitHold"].ToKeyGesture();
-        MenuItemMergeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.MergeHold"].ToKeyGesture();
-
-        MenuItemShowSpeedChanges.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowSpeedChanges"].ToKeyGesture();
-        MenuItemShowVisibilityChanges.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowVisibilityChanges"].ToKeyGesture();
-        MenuItemShowLaneToggleAnimations.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowLaneToggleAnimations"].ToKeyGesture();
-        MenuItemShowJudgeAreas.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgeAreas"].ToKeyGesture();
-        MenuItemShowMarvelousWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"].ToKeyGesture();
-        MenuItemShowGreatWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"].ToKeyGesture();
-        MenuItemShowGoodWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodWindows"].ToKeyGesture();
-        MenuItemSaturnJudgeAreas.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgeAreas"].ToKeyGesture();
-        MenuItemVisualizeLaneSweeps.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeLaneSweeps"].ToKeyGesture();
-        MenuItemShowTouchNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"].ToKeyGesture();
-        MenuItemShowChainNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapForward"].ToKeyGesture();
-        MenuItemShowHoldNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapBackward"].ToKeyGesture();
-        MenuItemShowSlideClockwiseNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideClockwise"].ToKeyGesture();
-        MenuItemShowSlideCounterclockwiseNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideCounterclockwise"].ToKeyGesture();
-        MenuItemShowSnapForwardNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Chain"].ToKeyGesture();
-        MenuItemShowSnapBackwardNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Hold"].ToKeyGesture();
-        MenuItemShowSyncNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Sync"].ToKeyGesture();
-        MenuItemShowMeasureLineNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MeasureLine"].ToKeyGesture();
-        MenuItemShowBeatLineNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.BeatLine"].ToKeyGesture();
-        MenuItemShowLaneShowNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneShow"].ToKeyGesture();
-        MenuItemShowLaneHideNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneHide"].ToKeyGesture();
-        MenuItemShowTempoChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TempoChange"].ToKeyGesture();
-        MenuItemShowMetreChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MetreChange"].ToKeyGesture();
-        MenuItemShowSpeedChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SpeedChange"].ToKeyGesture();
-        MenuItemShowVisibilityChangeEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.VisibilityChange"].ToKeyGesture();
-        MenuItemShowReverseEffectEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.ReverseEffect"].ToKeyGesture();
-        MenuItemShowStopEffectEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.StopEffect"].ToKeyGesture();
-        MenuItemShowTutorialMarkerEvents.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TutorialMarker"].ToKeyGesture();
-
-        MenuItemHideEventMarkers.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.EventMarkers"].ToKeyGesture();
-        MenuItemHideLaneToggleNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.LaneToggleNotes"].ToKeyGesture();
-        MenuItemHideHoldControlPoints.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.HoldControlPoints"].ToKeyGesture();
     }
 }

@@ -1,9 +1,20 @@
 using System;
+using Avalonia.Input;
 
 namespace SaturnEdit.Utilities;
 
 public class ClickDragHelper
-{ 
+{
+    public PointerPoint? StartPoint { get; private set; } = null;
+
+    public bool DragActive(PointerPoint other)
+    {
+        if (StartPoint == null) return false;
+
+        double distance = Math.Max(Math.Abs(StartPoint.Value.Position.X - other.Position.X), Math.Abs(StartPoint.Value.Position.Y - other.Position.Y));
+        return distance > 10;
+    }
+    
     public int StartLane { get; set; } = 0;
 
     public int EndLane 
@@ -42,8 +53,9 @@ public class ClickDragHelper
         }
     }
 
-    public void Reset(int lane)
+    public void Reset(PointerPoint? startPoint, int lane)
     {
+        StartPoint = startPoint;
         StartLane = lane;
         endLane = lane;
         PassedThroughSeam = false;
