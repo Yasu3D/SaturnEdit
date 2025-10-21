@@ -252,6 +252,8 @@ public partial class ChartView3D : UserControl
     
     private void RenderCanvas_OnRenderAction(SKCanvas canvas)
     {
+        bool playing = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview;
+        
         Renderer3D.Render
         (
             canvas: canvas, 
@@ -260,11 +262,11 @@ public partial class ChartView3D : UserControl
             chart: ChartSystem.Chart, 
             entry: ChartSystem.Entry, 
             time: TimeSystem.Timestamp.Time, 
-            playing: TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview,
+            playing: playing,
             selectedObjects: EditorSystem.SelectedObjects,
             pointerOverObject: EditorSystem.PointerOverObject,
             boxSelect: new(EditorSystem.BoxSelectData.GlobalStartTime, EditorSystem.BoxSelectData.GlobalEndTime, EditorSystem.BoxSelectData.Position, EditorSystem.BoxSelectData.Size),
-            cursorNote: CursorSystem.CurrentNote
+            cursorNote: playing ? null : CursorSystem.CurrentNote
         );
     }
 
