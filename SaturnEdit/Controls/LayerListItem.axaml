@@ -25,7 +25,7 @@
                      Background="Transparent"
                      Height="30"
                      CornerRadius="3"
-                     VerticalContentAlignment="Center" 
+                     VerticalContentAlignment="Center"  
                      TextChanged="TextBoxLayerName_OnTextChanged"/>
         </Grid>
 </UserControl>

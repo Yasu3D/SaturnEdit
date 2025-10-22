@@ -32,7 +32,7 @@ public partial class ChartViewTxt : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
-        ChartSystem.ChartChanged += OnChartChanged;
+        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         ChartSystem.EntryChanged += OnEntryChanged;
         UpdateTextFromChart();
     }
@@ -48,7 +48,7 @@ public partial class ChartViewTxt : UserControl
         ToggleButtonSyntaxHighlighting.IsChecked = SettingsSystem.EditorSettings.ChartViewTxtSyntaxHighlighting;
     }
     
-    private void OnChartChanged(object? sender, EventArgs e) => UpdateTextFromChart();
+    private void OnOperationHistoryChanged(object? sender, EventArgs e) => UpdateTextFromChart();
 
     private void OnEntryChanged(object? sender, EventArgs e) => UpdateTextFromChart();
     

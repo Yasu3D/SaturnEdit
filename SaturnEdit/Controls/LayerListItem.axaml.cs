@@ -12,12 +12,6 @@ public partial class LayerListItem : UserControl
     {
         InitializeComponent();
     }
-    
-    public LayerListItem(Layer layer)
-    {
-        InitializeComponent();
-        SetLayer(layer);
-    }
 
     public event EventHandler? NameChanged;
     public event EventHandler? VisibilityChanged;

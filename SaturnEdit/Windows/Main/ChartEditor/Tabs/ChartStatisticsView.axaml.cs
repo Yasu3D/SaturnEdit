@@ -21,15 +21,15 @@ public partial class ChartStatisticsView : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
-        ChartSystem.ChartChanged += OnChartChanged;
-        OnChartChanged(null, EventArgs.Empty);
+        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
+        OnOperationHistoryChanged(null, EventArgs.Empty);
         
         SizeChanged += OnSizeChanged;
     }
 
     private void OnSizeChanged(object? sender, SizeChangedEventArgs e) => UpdateGraph();
 
-    private void OnChartChanged(object? sender, EventArgs e)
+    private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         UpdateGraph();
         UpdateStatistics();

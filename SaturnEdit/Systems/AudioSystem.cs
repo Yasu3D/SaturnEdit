@@ -25,9 +25,8 @@ public static class AudioSystem
         OnAudioChanged(null, EventArgs.Empty);
 
         ChartSystem.EntryChanged += OnEntryChanged;
-
-        ChartSystem.ChartChanged += OnChartChanged;
-
+        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
+        
         SettingsSystem.AudioSettings.VolumeChanged += OnVolumeChanged;
         OnVolumeChanged(null, EventArgs.Empty);
 
@@ -157,7 +156,7 @@ public static class AudioSystem
         AudioChannelAudio.Position = TimeSystem.AudioTime;
     }
 
-    private static void OnChartChanged(object? sender, EventArgs e)
+    private static void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         RefreshHitsounds();
     }

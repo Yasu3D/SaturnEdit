@@ -23,10 +23,12 @@ public partial class ChartPropertiesView : UserControl
         InitializeComponent();
 
         ChartSystem.EntryChanged += OnEntryChanged;
-        ChartSystem.ChartChanged += OnChartChanged;
         ChartSystem.JacketChanged += OnJacketChanged;
         OnEntryChanged(null, EventArgs.Empty);
-        OnChartChanged(null, EventArgs.Empty);
+        OnJacketChanged(null, EventArgs.Empty);
+
+        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
+        OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvent = false;
@@ -87,7 +89,7 @@ public partial class ChartPropertiesView : UserControl
         blockEvent = false;
     }
 
-    private void OnChartChanged(object? sender, EventArgs e)
+    private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         if (ChartSystem.Entry.AutoBpmMessage)
         {
@@ -107,8 +109,6 @@ public partial class ChartPropertiesView : UserControl
                 Console.WriteLine(ex);
             }
         }
-
-        // TODO: Implement Auto BPM
     }
 
     private void OnJacketChanged(object? sender, EventArgs e)

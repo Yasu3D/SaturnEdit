@@ -19,23 +19,10 @@ public static class SelectionSystem
     }
     
     public static event EventHandler? PointerOverOverlapChanged;
-    public static event EventHandler? SelectionChanged;
-    public static event EventHandler? LayerChanged;
     
     // Layer
-    public static Layer? SelectedLayer
-    {
-        get => selectedLayer;
-        set
-        {
-            if (selectedLayer == value) return;
+    public static Layer? SelectedLayer { get; set; } = null;
 
-            selectedLayer = value;
-            LayerChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private static Layer? selectedLayer = null;
-    
     // PointerOver
     public static IPositionable.OverlapResult PointerOverOverlap
     {
@@ -239,7 +226,6 @@ public static class SelectionSystem
         }
         
         UndoRedoSystem.Push(new CompositeOperation(operations));
-        SelectionChanged?.Invoke(null, EventArgs.Empty);
     }
 
     public static void SetBoxSelectionStart(bool negativeSelection, float viewTime)
@@ -389,7 +375,6 @@ public static class SelectionSystem
         }
 
         UndoRedoSystem.Push(new CompositeOperation(operations));
-        SelectionChanged?.Invoke(null, EventArgs.Empty);
         
         BoxSelectData = new();
     }

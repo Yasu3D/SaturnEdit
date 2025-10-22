@@ -1,11 +1,14 @@
 using System;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using SaturnData.Notation.Core;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
+using SaturnEdit.UndoRedo.Operations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
+
+// TODO: This is kinda broken rn.
+// Make events shut up
 
 public partial class LayerListView : UserControl
 {
@@ -16,24 +19,12 @@ public partial class LayerListView : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
-        SelectionSystem.SelectionChanged += OnSelectionChanged;
-        SelectionSystem.LayerChanged += OnLayerChanged;
-        ChartSystem.ChartChanged += OnChartChanged;
+        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         
         RefreshLayers();
     }
-
-    private void OnChartChanged(object? sender, EventArgs e)
-    {
-        RefreshLayers();
-    }
-
-    private void OnLayerChanged(object? sender, EventArgs e)
-    {
-        RefreshLayers();
-    }
-
-    private void OnSelectionChanged(object? sender, EventArgs e)
+    
+    private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         RefreshLayers();
     }
@@ -52,24 +43,26 @@ public partial class LayerListView : UserControl
         TextBlockShortcutMoveItemDown3.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
     }
 
-    private void OnNameChanged(object? sender, EventArgs e)
+    private void LayerItem_OnNameChanged(object? sender, EventArgs e)
     {
         if (sender is not LayerListItem item) return;
-
-        item.Layer.Name = string.IsNullOrWhiteSpace(item.TextBoxLayerName.Text) 
-            ? "Unnamed Layer" 
-            : item.TextBoxLayerName.Text;
         
-        ChartSystem.InvokeChartChanged();
+        string oldName = item.Layer.Name;
+        string newName = item.TextBoxLayerName.Text ?? "Unnamed Layer";
+        
+        Console.WriteLine($"NameChanged \"{oldName}\" \"{newName}\"");
+        
+        UndoRedoSystem.Push(new LayerNameEditOperation(item.Layer, oldName, newName));
     }
     
-    private void OnVisibilityChanged(object? sender, EventArgs e)
+    private void LayerItem_OnVisibilityChanged(object? sender, EventArgs e)
     {
         if (sender is not LayerListItem item) return;
 
-        item.Layer.Visible = !item.Layer.Visible;
+        bool oldVisibility = item.Layer.Visible;
+        bool newVisibility = !item.Layer.Visible;
         
-        ChartSystem.InvokeChartChanged();
+        UndoRedoSystem.Push(new LayerVisibilityEditOperation(item.Layer, oldVisibility, newVisibility));
     }
     
     private void RefreshLayers()
@@ -88,9 +81,11 @@ public partial class LayerListView : UserControl
             else
             {
                 // Create new item.
-                LayerListItem item = new(layer);
-                item.NameChanged += OnNameChanged;
-                item.VisibilityChanged += OnVisibilityChanged;
+                LayerListItem item = new();
+                item.SetLayer(layer);
+                
+                item.NameChanged += LayerItem_OnNameChanged;
+                item.VisibilityChanged += LayerItem_OnVisibilityChanged;
                 
                 ListBoxLayers.Items.Add(item);
             }
@@ -101,8 +96,8 @@ public partial class LayerListView : UserControl
         {
             if (ListBoxLayers.Items[i] is not LayerListItem item) continue;
 
-            item.NameChanged -= OnNameChanged;
-            item.VisibilityChanged -= OnVisibilityChanged;
+            item.NameChanged -= LayerItem_OnNameChanged;
+            item.VisibilityChanged -= LayerItem_OnVisibilityChanged;
             
             ListBoxLayers.Items.Remove(item);
         }

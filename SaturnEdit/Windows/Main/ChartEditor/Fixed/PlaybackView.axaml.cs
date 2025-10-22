@@ -38,10 +38,11 @@ public partial class PlaybackView : UserControl
         TimeSystem.LoopChanged += OnLoopChanged;
         OnLoopChanged(null, EventArgs.Empty);
 
-        ChartSystem.ChartChanged += OnEntryChanged;
-        ChartSystem.EntryChanged += OnChartChanged;
+        ChartSystem.EntryChanged += OnEntryChanged;
         AudioSystem.AudioLoaded += OnAudioLoaded;
         UpdateSeekSlider();
+        
+        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         
         SizeChanged += OnSizeChanged;
         OnSizeChanged(null, new(null));
@@ -90,7 +91,7 @@ public partial class PlaybackView : UserControl
         UpdateLoopMarkers();
     }
 
-    private void OnChartChanged(object? sender, EventArgs e)
+    private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         UpdateSeekSlider();
         UpdateLoopMarkers();

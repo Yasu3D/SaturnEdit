@@ -244,7 +244,7 @@ public partial class ChartView3D : UserControl
             
         if (lane is >= 49 and <= 55)
         {
-            RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopLeftCorner) : new(StandardCursorType.BottomLeftCorner);
+            RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopRightCorner) : new(StandardCursorType.BottomLeftCorner);
         }
     }
     
