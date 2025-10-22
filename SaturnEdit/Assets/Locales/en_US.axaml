@@ -234,8 +234,6 @@
     <system:String x:Key="ChartEditor.ChartView3D">Chart View (3D)</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Mode.NoteEditMode">Note Edit Mode</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Mode.HoldEditMode">Hold Edit Mode</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.ToolTip.BoxSelect">Box Select</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.ToolTip.BoxSelect.Description">Defines a box-shaped area, then selects all objects that overlap with the area.</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.EditType">Edit Type</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.EditType.Description">Changes the type of all selected notes to the current note type.</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.EditShape">Edit Shape</system:String>
@@ -342,7 +340,6 @@
     <system:String x:Key="Menu.Edit.Paste">Paste</system:String>
     <system:String x:Key="Menu.Edit.SelectAll">Select All</system:String>
     <system:String x:Key="Menu.Edit.DeselectAll">Deselect All</system:String>
-    <system:String x:Key="Menu.Edit.BoxSelect">Box Select</system:String>
     <system:String x:Key="Menu.Edit.CheckerDeselect">Checker Deselect...</system:String>
     <system:String x:Key="Menu.Edit.SelectSimilar">Select Similar...</system:String>
     <system:String x:Key="Menu.View">View</system:String>
@@ -412,6 +409,12 @@
     <system:String x:Key="Settings.Rendering.ClearBackgroundVisibility.ForceNormal">Force Normal</system:String>
     <system:String x:Key="Settings.Rendering.ClearBackgroundVisibility.ForceClear">Force Clear</system:String>
     <system:String x:Key="Settings.Rendering.ClearBackgroundVisibility.SimulateClear">Simulate Clear</system:String>
+    <system:String x:Key="Settings.Rendering.InterfaceVisibilityOption.Hidden">Hidden</system:String>
+    <system:String x:Key="Settings.Rendering.InterfaceVisibilityOption.Obscured">Obscured</system:String>
+    <system:String x:Key="Settings.Rendering.InterfaceVisibilityOption.Visible">Visible</system:String>
+    <system:String x:Key="Settings.Rendering.DifficultyDisplayVisibility">Difficulty Display Visibility</system:String>
+    <system:String x:Key="Settings.Rendering.LevelDisplayVisibility">Level Display Visibility</system:String>
+    <system:String x:Key="Settings.Rendering.TitleDisplayVisibility">Title Display Visibility</system:String>
     <system:String x:Key="Settings.Rendering.Notes">Notes</system:String>
     <system:String x:Key="Settings.Rendering.NoteThickness">Note Thickness:</system:String>
     <system:String x:Key="Settings.Rendering.NoteColorTouch">Touch Note Color:</system:String>

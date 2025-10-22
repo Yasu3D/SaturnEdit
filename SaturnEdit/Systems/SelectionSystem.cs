@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AvaloniaEdit.Utils;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
@@ -8,14 +9,31 @@ using SaturnView;
 
 namespace SaturnEdit.Systems;
 
-public static class EditorSystem
+public static class SelectionSystem
 {
     public static void Initialize()
     {
         TimeSystem.PlaybackStateChanged += OnPlaybackStateChanged;
+        SelectedLayer = ChartSystem.Chart.Layers.FirstOrDefault();
     }
     
     public static event EventHandler? PointerOverOverlapChanged;
+    public static event EventHandler? SelectionChanged;
+    public static event EventHandler? LayerChanged;
+    
+    // Layer
+    public static Layer? SelectedLayer
+    {
+        get => selectedLayer;
+        set
+        {
+            if (selectedLayer == value) return;
+
+            selectedLayer = value;
+            LayerChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private static Layer? selectedLayer = null;
     
     // PointerOver
     public static IPositionable.OverlapResult PointerOverOverlap
@@ -218,6 +236,8 @@ public static class EditorSystem
                 SelectedObjects.Add(LastSelectedObject);
             }
         }
+        
+        SelectionChanged?.Invoke(null, EventArgs.Empty);
     }
 
     public static void SetBoxSelectionStart(bool negativeSelection, float viewTime)
@@ -357,6 +377,7 @@ public static class EditorSystem
         }
 
         BoxSelectData = new();
+        SelectionChanged?.Invoke(null, EventArgs.Empty);
     }
 }
 

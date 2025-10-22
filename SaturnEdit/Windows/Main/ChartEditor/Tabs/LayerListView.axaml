@@ -99,12 +99,11 @@
                        Fill="{DynamicResource SeparatorPrimary}" />
 
             <ScrollViewer Grid.Row="2">
-                <ListBox Background="{DynamicResource BackgroundSecondary}"
+                <ListBox Name="ListBoxLayers" 
+                         SelectionMode="AlwaysSelected"
+                         Background="{DynamicResource BackgroundSecondary}"
                          MinHeight="200"
                          MaxHeight="350">
-                    <ListBoxItem Content="Layer 1" />
-                    <ListBoxItem Content="Layer 2" />
-                    <ListBoxItem Content="Layer 3" />
                 </ListBox>
             </ScrollViewer>
 
@@ -269,7 +268,8 @@
                            Fill="{DynamicResource SeparatorPrimary}" />
 
                 <ScrollViewer Grid.Row="2">
-                    <ListBox Background="{DynamicResource BackgroundSecondary}">
+                    <ListBox Background="{DynamicResource BackgroundSecondary}"
+                             SelectionMode="Multiple">
                         <ListBoxItem Content="Speed Change" />
                         <ListBoxItem Content="Speed Change" />
                         <ListBoxItem Content="Speed Change" />

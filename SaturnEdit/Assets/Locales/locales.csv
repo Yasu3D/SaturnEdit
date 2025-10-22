@@ -231,8 +231,6 @@ ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes,...of those Lane Hide:
 ChartEditor.ChartView3D,Chart View (3D)
 ChartEditor.ChartView3D.Mode.NoteEditMode,Note Edit Mode
 ChartEditor.ChartView3D.Mode.HoldEditMode,Hold Edit Mode
-ChartEditor.ChartView3D.ToolTip.BoxSelect,Box Select
-ChartEditor.ChartView3D.ToolTip.BoxSelect.Description,"Defines a box-shaped area, then selects all objects that overlap with the area."
 ChartEditor.ChartView3D.ToolTip.EditType,Edit Type
 ChartEditor.ChartView3D.ToolTip.EditType.Description,Changes the type of all selected notes to the current note type.
 ChartEditor.ChartView3D.ToolTip.EditShape,Edit Shape
@@ -339,7 +337,6 @@ Menu.Edit.Copy,Copy
 Menu.Edit.Paste,Paste
 Menu.Edit.SelectAll,Select All
 Menu.Edit.DeselectAll,Deselect All
-Menu.Edit.BoxSelect,Box Select
 Menu.Edit.CheckerDeselect,Checker Deselect...
 Menu.Edit.SelectSimilar,Select Similar...
 Menu.View,View
@@ -409,6 +406,12 @@ Settings.Rendering.ClearBackgroundVisibility,Clear Background Visibility
 Settings.Rendering.ClearBackgroundVisibility.ForceNormal,Force Normal
 Settings.Rendering.ClearBackgroundVisibility.ForceClear,Force Clear
 Settings.Rendering.ClearBackgroundVisibility.SimulateClear,Simulate Clear
+Settings.Rendering.InterfaceVisibilityOption.Hidden,Hidden
+Settings.Rendering.InterfaceVisibilityOption.Obscured,Obscured
+Settings.Rendering.InterfaceVisibilityOption.Visible,Visible
+Settings.Rendering.DifficultyDisplayVisibility,Difficulty Display Visibility
+Settings.Rendering.LevelDisplayVisibility,Level Display Visibility
+Settings.Rendering.TitleDisplayVisibility,Title Display Visibility
 Settings.Rendering.Notes,Notes
 Settings.Rendering.NoteThickness,Note Thickness:
 Settings.Rendering.NoteColorTouch,Touch Note Color:

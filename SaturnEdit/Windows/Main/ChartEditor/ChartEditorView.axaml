@@ -82,6 +82,9 @@
                         
                         <!-- Right Panel - ChartProperties/ChartStatistics -->
                         <ToolDock>
+                            <Tool Title="LayerList">
+                                <tabs:LayerListView />
+                            </Tool>
                             <Tool Title="ChartProperties">
                                 <tabs:ChartPropertiesView />
                             </Tool>

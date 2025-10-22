@@ -775,7 +775,6 @@ public class ShortcutSettings
         ["Edit.Paste"]           = new(Key.V,    true,  false, false, "Menu.Edit", "Menu.Edit.Paste"),
         ["Edit.SelectAll"]       = new(Key.A,    true,  false, false, "Menu.Edit", "Menu.Edit.SelectAll"),
         ["Edit.DeselectAll"]     = new(Key.A,    false, true,  false, "Menu.Edit", "Menu.Edit.DeselectAll"),
-        ["Edit.BoxSelect"]       = new(Key.B,    true,  false, false, "Menu.Edit", "Menu.Edit.BoxSelect"),
         ["Edit.CheckerDeselect"] = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.CheckerDeselect"),
         ["Edit.SelectSimilar"]   = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.SelectSimilar"),
 

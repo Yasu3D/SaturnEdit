@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             mc:Ignorable="d"
+             d:DesignWidth="250"
+             d:DesignHeight="40"
+             x:Class="SaturnEdit.Controls.LayerListItem">
+    <Grid ColumnDefinitions="40,*">
+            <Button Grid.Column="0" 
+                    Name="ButtonLayerVisibility" 
+                    Classes="Themed Square Standard"
+                    Margin="5"
+                    CornerRadius="3"
+                    Click="ButtonLayerVisibility_OnClick">
+                <icon:FluentIcon Name="IconLayerVisibility"
+                                 Icon="Eye" />
+            </Button>
+            <TextBox Grid.Column="1"
+                     Name="TextBoxLayerName"
+                     Text="Layer"
+                     HorizontalAlignment="Left"
+                     BorderBrush="Transparent"
+                     Background="Transparent"
+                     Height="30"
+                     CornerRadius="3"
+                     VerticalContentAlignment="Center" 
+                     TextChanged="TextBoxLayerName_OnTextChanged"/>
+        </Grid>
+</UserControl>

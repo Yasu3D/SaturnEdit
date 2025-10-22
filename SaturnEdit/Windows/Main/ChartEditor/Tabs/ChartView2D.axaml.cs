@@ -282,7 +282,6 @@ public partial class ChartView2D : UserControl
 
     private void UpdateShortcuts()
     {
-        TextBlockShortcutBoxSelect.Text = SettingsSystem.ShortcutSettings.Shortcuts["Edit.BoxSelect"].ToString();
         TextBlockShortcutEditType.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditType"].ToString();
         TextBlockShortcutEditShape.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditShape"].ToString();
         TextBlockShortcutDeleteSelection.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();

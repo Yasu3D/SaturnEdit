@@ -25,7 +25,7 @@ public partial class ChartView3D : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
-        EditorSystem.PointerOverOverlapChanged += OnPointerOverOverlapChanged;
+        SelectionSystem.PointerOverOverlapChanged += OnPointerOverOverlapChanged;
     }
 
     private readonly CanvasInfo canvasInfo = new();
@@ -82,7 +82,6 @@ public partial class ChartView3D : UserControl
 
         blockEvents = false;
         
-        TextBlockShortcutBoxSelect.Text = SettingsSystem.ShortcutSettings.Shortcuts["Edit.BoxSelect"].ToString();
         TextBlockShortcutEditType.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditType"].ToString();
         TextBlockShortcutEditShape.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditShape"].ToString();
         TextBlockShortcutDeleteSelection.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
@@ -187,8 +186,8 @@ public partial class ChartView3D : UserControl
         // Default Cursor
         // - No PointerOverObject
         // - No PointerOverOverlap
-        if (EditorSystem.PointerOverObject == null 
-         || EditorSystem.PointerOverOverlap == IPositionable.OverlapResult.None)
+        if (SelectionSystem.PointerOverObject == null 
+         || SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.None)
         {
             RenderCanvas.Cursor = new(StandardCursorType.Arrow);
             return;
@@ -197,14 +196,14 @@ public partial class ChartView3D : UserControl
         // Omnidirectional Cursor
         // - PointerOverObject is not IPositionable
         // - PointerOverOverlap is Body
-        if (EditorSystem.PointerOverObject is not IPositionable positionable || EditorSystem.PointerOverOverlap == IPositionable.OverlapResult.Body)
+        if (SelectionSystem.PointerOverObject is not IPositionable positionable || SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.Body)
         {
             RenderCanvas.Cursor = new(StandardCursorType.SizeAll);
             return;
         }
         
         // Directional Cursor
-        bool rightEdge = EditorSystem.PointerOverOverlap == IPositionable.OverlapResult.RightEdge;
+        bool rightEdge = SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.RightEdge;
         int lane = rightEdge ? (positionable.Position + positionable.Size - 1) % 60 : positionable.Position;
         
         if (lane is >= 0 and <= 3
@@ -263,9 +262,9 @@ public partial class ChartView3D : UserControl
             entry: ChartSystem.Entry, 
             time: TimeSystem.Timestamp.Time, 
             playing: playing,
-            selectedObjects: EditorSystem.SelectedObjects,
-            pointerOverObject: EditorSystem.PointerOverObject,
-            boxSelect: new(EditorSystem.BoxSelectData.GlobalStartTime, EditorSystem.BoxSelectData.GlobalEndTime, EditorSystem.BoxSelectData.Position, EditorSystem.BoxSelectData.Size),
+            selectedObjects: SelectionSystem.SelectedObjects,
+            pointerOverObject: SelectionSystem.PointerOverObject,
+            boxSelect: new(SelectionSystem.BoxSelectData.GlobalStartTime, SelectionSystem.BoxSelectData.GlobalEndTime, SelectionSystem.BoxSelectData.Position, SelectionSystem.BoxSelectData.Size),
             cursorNote: playing ? null : CursorSystem.CurrentNote
         );
     }
@@ -288,7 +287,7 @@ public partial class ChartView3D : UserControl
         {
             if (radius > 1.1f)
             {
-                EditorSystem.PointerOverObject = null;
+                SelectionSystem.PointerOverObject = null;
                 return;
             }
         
@@ -305,8 +304,8 @@ public partial class ChartView3D : UserControl
                     IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings);
                     if (hitTestResult != IPositionable.OverlapResult.None)
                     {
-                        EditorSystem.PointerOverObject = @event;
-                        EditorSystem.PointerOverOverlap = hitTestResult;
+                        SelectionSystem.PointerOverObject = @event;
+                        SelectionSystem.PointerOverOverlap = hitTestResult;
                         return;
                     }
                 }
@@ -318,8 +317,8 @@ public partial class ChartView3D : UserControl
                     IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings);
                     if (hitTestResult != IPositionable.OverlapResult.None)
                     {
-                        EditorSystem.PointerOverObject = note;
-                        EditorSystem.PointerOverOverlap = hitTestResult;
+                        SelectionSystem.PointerOverObject = note;
+                        SelectionSystem.PointerOverOverlap = hitTestResult;
                         return;
                     }
                 }
@@ -332,8 +331,8 @@ public partial class ChartView3D : UserControl
                 IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings);
                 if (hitTestResult != IPositionable.OverlapResult.None)
                 {
-                    EditorSystem.PointerOverObject = note;
-                    EditorSystem.PointerOverOverlap = hitTestResult;
+                    SelectionSystem.PointerOverObject = note;
+                    SelectionSystem.PointerOverOverlap = hitTestResult;
                     return;
                 }
             }
@@ -345,14 +344,14 @@ public partial class ChartView3D : UserControl
                 IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings);
                 if (hitTestResult != IPositionable.OverlapResult.None)
                 {
-                    EditorSystem.PointerOverObject = @event;
-                    EditorSystem.PointerOverOverlap = hitTestResult;
+                    SelectionSystem.PointerOverObject = @event;
+                    SelectionSystem.PointerOverOverlap = hitTestResult;
                     return;
                 }
             }
             
-            EditorSystem.PointerOverObject = null;
-            EditorSystem.PointerOverOverlap = IPositionable.OverlapResult.None;
+            SelectionSystem.PointerOverObject = null;
+            SelectionSystem.PointerOverOverlap = IPositionable.OverlapResult.None;
         }
         
         void onLeftDrag()
@@ -368,7 +367,7 @@ public partial class ChartView3D : UserControl
                 float t = RenderUtils.InversePerspective(radius);
                 float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
                 
-                EditorSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
+                SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
                 
                 return;
             }
@@ -408,7 +407,7 @@ public partial class ChartView3D : UserControl
             if (!e.Properties.IsLeftButtonPressed) return;
             clickDragLeft.Reset(point, lane);
 
-            isGrabbingObject = EditorSystem.PointerOverObject != null;
+            isGrabbingObject = SelectionSystem.PointerOverObject != null;
             
             boxSelect();
             normalSelect();
@@ -420,7 +419,7 @@ public partial class ChartView3D : UserControl
                 float t = RenderUtils.InversePerspective(radius);
                 float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
                 
-                EditorSystem.SetBoxSelectionStart(
+                SelectionSystem.SetBoxSelectionStart(
                     negativeSelection: e.KeyModifiers.HasFlag(KeyModifiers.Alt),
                     viewTime: viewTime);
             }
@@ -430,7 +429,7 @@ public partial class ChartView3D : UserControl
                 bool control = e.KeyModifiers.HasFlag(KeyModifiers.Control);
                 bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
 
-                EditorSystem.SetSelection(control, shift);
+                SelectionSystem.SetSelection(control, shift);
             }
         }
 
@@ -458,7 +457,7 @@ public partial class ChartView3D : UserControl
 
             isGrabbingObject = false;
             
-            EditorSystem.ApplyBoxSelection();
+            SelectionSystem.ApplyBoxSelection();
         }
 
         void onRightReleased()
@@ -470,7 +469,7 @@ public partial class ChartView3D : UserControl
     
     private void RenderCanvas_OnPointerExited(object? sender, PointerEventArgs e)
     {
-        EditorSystem.PointerOverObject = null;
+        SelectionSystem.PointerOverObject = null;
     }
     
     

@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using SaturnEdit.UndoRedo;
+
+namespace SaturnEdit.Systems;
+
+public static class UndoRedoSystem
+{
+    public static void Initialize()
+    {
+        ChartSystem.ChartLoaded += OnChartLoaded;
+    }
+
+    public static event EventHandler? OperationHistoryChanged;
+    
+    private static readonly Stack<IOperation> UndoStack = new();
+    private static readonly Stack<IOperation> RedoStack = new();
+
+    public static bool CanUndo => UndoStack.Count > 0;
+    public static bool CanRedo => RedoStack.Count > 0;
+    
+    private static void OnChartLoaded(object? sender, EventArgs e)
+    {
+        UndoStack.Clear();
+        RedoStack.Clear();
+        OperationHistoryChanged?.Invoke(null, EventArgs.Empty);
+    }
+
+    public static void Push(IOperation operation)
+    {
+        operation.Apply();
+        UndoStack.Push(operation);
+        RedoStack.Clear();
+        OperationHistoryChanged?.Invoke(null, EventArgs.Empty);
+    }
+
+    public static IOperation? Undo()
+    {
+        if (!CanUndo) return null;
+        IOperation operation = UndoStack.Pop();
+        
+        operation.Revert();
+        RedoStack.Push(operation);
+        OperationHistoryChanged?.Invoke(null, EventArgs.Empty);
+
+        return operation;
+    }
+
+    public static IOperation? Redo()
+    {
+        if (!CanRedo) return null;
+        IOperation operation = RedoStack.Pop();
+        
+        operation.Apply();
+        UndoStack.Push(operation);
+        OperationHistoryChanged?.Invoke(null, EventArgs.Empty);
+
+        return operation;
+    }
+}

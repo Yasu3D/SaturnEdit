@@ -15,10 +15,24 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         SettingsSystem.SettingsChanged += OnSettingsChanged;
-        ChartSystem.EntryChanged += OnEntryChanged;
         OnSettingsChanged(null, EventArgs.Empty);
+        
+        ChartSystem.EntryChanged += OnEntryChanged;
         OnEntryChanged(null, EventArgs.Empty);
+
+        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
+        OnOperationHistoryChanged(null, EventArgs.Empty);
+        
         Closed += AudioSystem.OnClosed;
+    }
+
+    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    {
+        ButtonUndo.IsEnabled = UndoRedoSystem.CanUndo;
+        ButtonRedo.IsEnabled = UndoRedoSystem.CanRedo;
+
+        MenuItemChartEditorUndo.IsEnabled = UndoRedoSystem.CanUndo;
+        MenuItemChartEditorRedo.IsEnabled = UndoRedoSystem.CanRedo;
     }
 
     private void OnEntryChanged(object? sender, EventArgs e)
@@ -50,7 +64,6 @@ public partial class MainWindow : Window
         MenuItemChartEditorPaste.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Paste"].ToKeyGesture();
         MenuItemChartEditorSelectAll.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectAll"].ToKeyGesture();
         MenuItemChartEditorDeselectAll.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.DeselectAll"].ToKeyGesture();
-        MenuItemChartEditorBoxSelect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.BoxSelect"].ToKeyGesture();
         MenuItemChartEditorCheckerDeselect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.CheckerDeselect"].ToKeyGesture();
         MenuItemChartEditorSelectSimilar.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectSimilar"].ToKeyGesture();
         
@@ -104,16 +117,10 @@ public partial class MainWindow : Window
         
     }
     
-    private void ButtonUndo_OnClick(object? sender, RoutedEventArgs e)
-    {
-        
-    }
-    
-    private void ButtonRedo_OnClick(object? sender, RoutedEventArgs e)
-    {
-        
-    }
-    
+    private void ButtonUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Undo();
+
+    private void ButtonRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
+
     public async void ShowSettingsWindow()
     {
         try

@@ -18,7 +18,6 @@ public partial class SettingsRenderingView : UserControl
 
     private bool blockEvent = false;
     
-    // TODO: add UI visibility options
     private void OnSettingsChanged(object? sender, EventArgs empty)
     {
         blockEvent = true;
@@ -38,6 +37,10 @@ public partial class SettingsRenderingView : UserControl
         NumericUpDownRNoteEffectOpacity.Value = SettingsSystem.RenderSettings.RNoteEffectOpacity / 10.0m;
 
         ComboBoxClearBackgroundVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.ClearBackgroundVisibility;
+
+        ComboBoxDifficultyDisplayVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.DifficultyDisplayVisibility;
+        ComboBoxLevelDisplayVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.LevelDisplayVisibility;
+        ComboBoxTitleDisplayVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.TitleDisplayVisibility;
         
         ComboBoxNoteThickness.SelectedIndex = (int)SettingsSystem.RenderSettings.NoteThickness;
         
@@ -131,6 +134,31 @@ public partial class SettingsRenderingView : UserControl
 
         SettingsSystem.RenderSettings.ClearBackgroundVisibility = (RenderSettings.ClearBackgroundVisibilityOption)ComboBoxClearBackgroundVisibility.SelectedIndex;
     }
+    
+    private void ComboBoxDifficultyDisplayVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvent) return;
+        if (ComboBoxDifficultyDisplayVisibility == null) return;
+
+        SettingsSystem.RenderSettings.DifficultyDisplayVisibility = (RenderSettings.InterfaceVisibilityOption)ComboBoxDifficultyDisplayVisibility.SelectedIndex;
+    }
+        
+    private void ComboBoxLevelDisplayVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvent) return;
+        if (ComboBoxLevelDisplayVisibility == null) return;
+
+        SettingsSystem.RenderSettings.LevelDisplayVisibility = (RenderSettings.InterfaceVisibilityOption)ComboBoxLevelDisplayVisibility.SelectedIndex;
+    }
+
+    private void ComboBoxTitleDisplayVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvent) return;
+        if (ComboBoxTitleDisplayVisibility == null) return;
+
+        SettingsSystem.RenderSettings.TitleDisplayVisibility = (RenderSettings.InterfaceVisibilityOption)ComboBoxTitleDisplayVisibility.SelectedIndex;
+    }
+
 
     private void ComboBoxNoteThickness_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {

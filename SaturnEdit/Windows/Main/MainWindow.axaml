@@ -272,17 +272,6 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemChartEditorBoxSelect">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource Menu.Edit.BoxSelect}" />
-                            </MenuItem.Header>
-                            <MenuItem.Icon>
-                                <icon:FluentIcon Icon="SelectObject" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-
-                        <Separator />
-
                         <MenuItem Name="MenuItemChartEditorCheckerDeselect">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.CheckerDeselect}" />

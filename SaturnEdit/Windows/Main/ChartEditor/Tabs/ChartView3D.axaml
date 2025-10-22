@@ -705,32 +705,6 @@
                         <ToolTip.Tip>
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.BoxSelect}" />
-                                    <TextBlock Name="TextBlockShortcutBoxSelect"
-                                               Text="SHORTCUT"
-                                               Margin="15,0,0,0"
-                                               HorizontalAlignment="Right"
-                                               Foreground="{DynamicResource ForegroundSecondary}" />
-                                </StackPanel>
-
-                                <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.BoxSelect.Description}"
-                                           Foreground="{DynamicResource ForegroundSecondary}" />
-                            </StackPanel>
-                        </ToolTip.Tip>
-                        <icon:FluentIcon Icon="SelectObject" />
-                    </Button>
-
-                    <Rectangle Height="1"
-                               Fill="{DynamicResource SeparatorPrimary}"
-                               Margin="5">
-                    </Rectangle>
-
-                    <Button Classes="Themed Outlined"
-                            Width="40"
-                            Height="40">
-                        <ToolTip.Tip>
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.EditType}" />
                                     <TextBlock Name="TextBlockShortcutEditType"
                                                Text="SHORTCUT"

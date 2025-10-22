@@ -25,6 +25,8 @@ public static class ChartSystem
         OnChartChanged(null, EventArgs.Empty);
     }
 
+    public static void InvokeChartChanged() => ChartChanged?.Invoke(null, EventArgs.Empty);
+    
     private static void OnEntryChanged(object? sender, EventArgs e) => EntryChanged?.Invoke(sender, e);
     private static void OnAudioChanged(object? sender, EventArgs e) => AudioChanged?.Invoke(sender, e);
     private static void OnJacketChanged(object? sender, EventArgs e) => JacketChanged?.Invoke(sender, e);
@@ -41,13 +43,24 @@ public static class ChartSystem
             Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
         }
     }
+
+    public static event EventHandler? ChartLoaded;
     
     public static event EventHandler? ChartChanged;
     public static event EventHandler? EntryChanged;
     public static event EventHandler? JacketChanged;
     public static event EventHandler? AudioChanged;
     
-    public static Chart Chart { get; private set; } = new() { Events = [ new TempoChangeEvent(Timestamp.Zero, 120), new MetreChangeEvent(Timestamp.Zero, 4, 4) ] };
+    public static Chart Chart { get; private set; } = new()
+    {
+        Events = 
+        [ 
+            new TempoChangeEvent(Timestamp.Zero, 120), 
+            new MetreChangeEvent(Timestamp.Zero, 4, 4),
+        ],
+        
+        Layers = [ new("Main Layer") ],
+    };
     public static Entry Entry { get; private set; } = new();
 
     private static bool saturnJudgeAreas;
@@ -79,6 +92,8 @@ public static class ChartSystem
         EntryChanged?.Invoke(null, EventArgs.Empty);
         AudioChanged?.Invoke(null, EventArgs.Empty);
         JacketChanged?.Invoke(null, EventArgs.Empty);
+        
+        ChartLoaded?.Invoke(null, EventArgs.Empty);
     }
 
     /// <summary>
@@ -105,6 +120,8 @@ public static class ChartSystem
         EntryChanged?.Invoke(null, EventArgs.Empty);
         AudioChanged?.Invoke(null, EventArgs.Empty);
         JacketChanged?.Invoke(null, EventArgs.Empty);
+        
+        ChartLoaded?.Invoke(null, EventArgs.Empty);
     }
     
     /// <summary>
@@ -142,6 +159,8 @@ public static class ChartSystem
             EntryChanged?.Invoke(null, EventArgs.Empty);
             AudioChanged?.Invoke(null, EventArgs.Empty);
             JacketChanged?.Invoke(null, EventArgs.Empty);
+            
+            ChartLoaded?.Invoke(null, EventArgs.Empty);
         }
     }
 
