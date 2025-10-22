@@ -8,6 +8,11 @@ namespace SaturnEdit.Controls;
 
 public partial class LayerListItem : UserControl
 {
+    public LayerListItem()
+    {
+        InitializeComponent();
+    }
+    
     public LayerListItem(Layer layer)
     {
         InitializeComponent();
