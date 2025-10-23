@@ -1,4 +1,4 @@
-namespace SaturnEdit.UndoRedo.Operations;
+namespace SaturnEdit.UndoRedo.LayerOperations;
 
 public class LayerSelectionOperation : IOperation
 {

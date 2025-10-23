@@ -1,7 +1,7 @@
 using SaturnData.Notation.Interfaces;
 using SaturnEdit.Systems;
 
-namespace SaturnEdit.UndoRedo.Operations;
+namespace SaturnEdit.UndoRedo.SelectionOperations;
 
 public class RemoveSelectionOperation(ITimeable obj, ITimeable? lastSelectedObject) : IOperation
 {

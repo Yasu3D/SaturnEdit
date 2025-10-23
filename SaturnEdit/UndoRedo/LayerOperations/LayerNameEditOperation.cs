@@ -1,6 +1,6 @@
 using SaturnData.Notation.Core;
 
-namespace SaturnEdit.UndoRedo.Operations;
+namespace SaturnEdit.UndoRedo.LayerOperations;
 
 public class LayerNameEditOperation(Layer layer, string oldName, string newName) : IOperation
 {

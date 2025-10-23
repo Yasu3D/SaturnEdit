@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using SaturnData.Notation.Core;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
-using SaturnEdit.UndoRedo.Operations;
+using SaturnEdit.UndoRedo.LayerOperations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -45,6 +45,7 @@ public partial class LayerListView : UserControl
 
     private void LayerItem_OnNameChanged(object? sender, EventArgs e)
     {
+        return;
         if (sender is not LayerListItem item) return;
         
         string oldName = item.Layer.Name;
@@ -57,6 +58,7 @@ public partial class LayerListView : UserControl
     
     private void LayerItem_OnVisibilityChanged(object? sender, EventArgs e)
     {
+        return;
         if (sender is not LayerListItem item) return;
 
         bool oldVisibility = item.Layer.Visible;
@@ -67,6 +69,7 @@ public partial class LayerListView : UserControl
     
     private void RefreshLayers()
     {
+        return;
         for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
         {
             Layer layer = ChartSystem.Chart.Layers[i];

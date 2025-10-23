@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -10,8 +9,9 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using FluentIcons.Common;
 using SaturnData.Notation.Core;
-using SaturnData.Notation.Events;
 using SaturnEdit.Systems;
+using SaturnEdit.UndoRedo;
+using SaturnEdit.UndoRedo.EntryOperations;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
@@ -21,31 +21,19 @@ public partial class ChartPropertiesView : UserControl
     public ChartPropertiesView()
     {
         InitializeComponent();
-
-        ChartSystem.EntryChanged += OnEntryChanged;
+        
         ChartSystem.JacketChanged += OnJacketChanged;
-        OnEntryChanged(null, EventArgs.Empty);
         OnJacketChanged(null, EventArgs.Empty);
 
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
-    private bool blockEvent = false;
+    private bool blockEvents = false;
     
-    private async void OnEntryChanged(object? sender, EventArgs e)
+    private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
-        if (ChartSystem.Entry.AutoReading)
-        {
-            ChartSystem.Entry.Reading = await ChartSystem.Entry.GetAutoReading();
-        }
-
-        if (ChartSystem.Entry.AutoClearThreshold)
-        {
-            ChartSystem.Entry.ClearThreshold = ChartSystem.Entry.GetAutoClearThreshold();
-        }
-        
-        blockEvent = true;
+        blockEvents = true;
 
         TextBoxTitle.Text = ChartSystem.Entry.Title;
         TextBoxReading.Text = ChartSystem.Entry.Reading;
@@ -86,29 +74,7 @@ public partial class ChartPropertiesView : UserControl
         IconAudioFileNotFoundWarning.IsVisible =  ChartSystem.Entry.AudioFile  != "" && !File.Exists(ChartSystem.Entry.AudioPath);
         IconVideoFileNotFoundWarning.IsVisible =  ChartSystem.Entry.VideoFile  != "" && !File.Exists(ChartSystem.Entry.VideoPath);
         
-        blockEvent = false;
-    }
-
-    private void OnOperationHistoryChanged(object? sender, EventArgs e)
-    {
-        if (ChartSystem.Entry.AutoBpmMessage)
-        {
-            try
-            {
-                List<Event> tempoChanges = ChartSystem.Chart.Events.Where(x => x is TempoChangeEvent).ToList();
-                float minTempo = tempoChanges.Min(x => ((TempoChangeEvent)x).Tempo);
-                float maxTempo = tempoChanges.Max(x => ((TempoChangeEvent)x).Tempo);
-
-                ChartSystem.Entry.BpmMessage = minTempo == maxTempo 
-                    ? $"{minTempo}" 
-                    : $"{minTempo} - {maxTempo}";
-            }
-            catch (Exception ex)
-            {
-                // don't throw
-                Console.WriteLine(ex);
-            }
-        }
+        blockEvents = false;
     }
 
     private void OnJacketChanged(object? sender, EventArgs e)
@@ -129,99 +95,111 @@ public partial class ChartPropertiesView : UserControl
         }
     }
     
-    private void TextBoxTitle_OnTextChanged(object? sender, TextChangedEventArgs e)
+    private void TextBoxTitle_OnLostFocus(object? sender, RoutedEventArgs routedEventArgs)
     {
-        try
-        {
-            if (blockEvent) return;
-            if (sender == null) return;
-        
-            ChartSystem.Entry.Title = TextBoxTitle.Text ?? "";
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
-    }
-
-    private void TextBoxReading_OnTextChanged(object? sender, TextChangedEventArgs e)
-    {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.Reading = TextBoxReading.Text ?? "";
+        string oldValue = ChartSystem.Entry.Title;
+        string newValue = TextBoxTitle.Text ?? "";
+        UndoRedoSystem.Push(new TitleEditOperation(oldValue, newValue));
+    }
+
+    private void TextBoxReading_OnLostFocus(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (sender == null) return;
+
+        string oldValue = ChartSystem.Entry.Reading;
+        string newValue = TextBoxReading.Text ?? "";
+        UndoRedoSystem.Push(new ReadingEditOperation(oldValue, newValue));
     }
 
     private void ToggleButtonAutoReading_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.AutoReading = ToggleButtonAutoReading.IsChecked ?? false;
+        bool oldValue = ChartSystem.Entry.AutoReading;
+        bool newValue = ToggleButtonAutoReading.IsChecked ?? false;
+        UndoRedoSystem.Push(new AutoReadingEditOperation(oldValue, newValue));
     }
 
-    private void TextBoxArtist_OnTextChanged(object? sender, TextChangedEventArgs e)
+    private void TextBoxArtist_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.Artist = TextBoxArtist.Text ?? "";
+        string oldValue = ChartSystem.Entry.Artist;
+        string newValue = TextBoxArtist.Text ?? "";
+        UndoRedoSystem.Push(new ArtistEditOperation(oldValue, newValue));
     }
 
-    private void TextBoxBpmMessage_OnTextChanged(object? sender, TextChangedEventArgs e)
+    private void TextBoxBpmMessage_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.BpmMessage = TextBoxBpmMessage.Text ?? "";
+        string oldValue = ChartSystem.Entry.BpmMessage;
+        string newValue = TextBoxBpmMessage.Text ?? "";
+        UndoRedoSystem.Push(new BpmMessageEditOperation(oldValue, newValue));
     }
 
     private void ToggleButtonAutoBpmMessage_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.AutoBpmMessage = ToggleButtonAutoBpmMessage.IsChecked ?? false;
+        bool oldValue = ChartSystem.Entry.AutoBpmMessage;
+        bool newValue = ToggleButtonAutoBpmMessage.IsChecked ?? false;
+        UndoRedoSystem.Push(new AutoBpmMessageEditOperation(oldValue, newValue));
     }
 
-    private void TextBoxRevision_OnTextChanged(object? sender, TextChangedEventArgs e)
+    private void TextBoxRevision_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.Revision = TextBoxRevision.Text ?? "";
+        string oldValue = ChartSystem.Entry.Revision;
+        string newValue = TextBoxRevision.Text ?? "";
+        UndoRedoSystem.Push(new RevisionEditOperation(oldValue, newValue));
     }
 
-    private void TextBoxNotesDesigner_OnTextChanged(object? sender, TextChangedEventArgs e)
+    private void TextBoxNotesDesigner_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.NotesDesigner = TextBoxNotesDesigner.Text ?? "";
+        string oldValue = ChartSystem.Entry.NotesDesigner;
+        string newValue = TextBoxNotesDesigner.Text ?? "";
+        UndoRedoSystem.Push(new NotesDesignerEditOperation(oldValue, newValue));
     }
 
     private void ComboBoxDifficulty_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.Difficulty = (Difficulty)ComboBoxDifficulty.SelectedIndex;
+        Difficulty oldValue = ChartSystem.Entry.Difficulty;
+        Difficulty newValue = (Difficulty)ComboBoxDifficulty.SelectedIndex;
+        UndoRedoSystem.Push(new DifficultyEditOperation(oldValue, newValue));
     }
 
     private void TextBoxLevel_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
         
         try
         {
-            ChartSystem.Entry.Level = Convert.ToDouble(TextBoxLevel.Text ?? "", CultureInfo.InvariantCulture);
+            double oldValue = ChartSystem.Entry.Level;
+            double newValue = Convert.ToDouble(TextBoxLevel.Text ?? "", CultureInfo.InvariantCulture);
+            UndoRedoSystem.Push(new LevelEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            ChartSystem.Entry.Level = 0;
-            OnEntryChanged(null, EventArgs.Empty);
+            UndoRedoSystem.Push(new LevelEditOperation(ChartSystem.Entry.Level, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -232,18 +210,19 @@ public partial class ChartPropertiesView : UserControl
 
     private void TextBoxClearThreshold_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
         try
         {
-            ChartSystem.Entry.ClearThreshold = Convert.ToSingle(TextBoxClearThreshold.Text ?? "", CultureInfo.InvariantCulture);
+            float oldValue = ChartSystem.Entry.ClearThreshold;
+            float newValue = Convert.ToSingle(TextBoxClearThreshold.Text ?? "", CultureInfo.InvariantCulture);
+            UndoRedoSystem.Push(new ClearThresholdEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            ChartSystem.Entry.ClearThreshold = ChartSystem.Entry.GetAutoClearThreshold();
-            OnEntryChanged(null, EventArgs.Empty);
+            UndoRedoSystem.Push(new ClearThresholdEditOperation(ChartSystem.Entry.ClearThreshold, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -254,60 +233,51 @@ public partial class ChartPropertiesView : UserControl
 
     private void ToggleButtonAutoClearThreshold_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.AutoClearThreshold = ToggleButtonAutoClearThreshold.IsChecked ?? false;
+        bool oldValue = ChartSystem.Entry.AutoClearThreshold;
+        bool newValue = ToggleButtonAutoClearThreshold.IsChecked ?? false;
+        UndoRedoSystem.Push(new AutoClearThresholdEditOperation(oldValue, newValue));
     }
 
     private void NumericUpDownChartEndMeasure_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
         
         int measure = (int?)NumericUpDownChartEndMeasure.Value ?? 0;
         int tick = (int?)NumericUpDownChartEndTick.Value ?? 0;
-        
-        Timestamp chartEnd = new(measure, tick);
-        chartEnd.Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, chartEnd);
 
-        ChartSystem.Entry.ChartEnd = chartEnd;
+        Timestamp oldValue = ChartSystem.Entry.ChartEnd;
+        Timestamp newValue = new(measure, tick);
+        
+        UndoRedoSystem.Push(new ChartEndEditOperation(oldValue, newValue));
     }
 
     private void NumericUpDownChartEndTick_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
         
-        blockEvent = true;
-        if (NumericUpDownChartEndTick.Value == -1)
-        {
-            NumericUpDownChartEndMeasure.Value -= 1;
-            NumericUpDownChartEndTick.Value = 1919;
-        }
-
-        if (NumericUpDownChartEndTick.Value == 1920)
-        {
-            NumericUpDownChartEndMeasure.Value += 1;
-            NumericUpDownChartEndTick.Value = 0;
-        }
-        blockEvent = false;
-
         int measure = (int?)NumericUpDownChartEndMeasure.Value ?? 0;
         int tick = (int?)NumericUpDownChartEndTick.Value ?? 0;
+        int fullTick = measure * 1920 + tick;
         
-        Timestamp chartEnd = new(measure, tick);
-        chartEnd.Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, chartEnd);
-
-        ChartSystem.Entry.ChartEnd = chartEnd;
+        Timestamp oldValue = ChartSystem.Entry.ChartEnd;
+        Timestamp newValue = new(fullTick);
+        
+        UndoRedoSystem.Push(new ChartEndEditOperation(oldValue, newValue));
     }
 
     private void ToggleButtonAutoChartEnd_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.AutoChartEnd = ToggleButtonAutoChartEnd.IsChecked ?? false;
+        bool oldValue = ChartSystem.Entry.AutoChartEnd;
+        bool newValue = ToggleButtonAutoChartEnd.IsChecked ?? false;
+        UndoRedoSystem.Push(new AutoChartEndEditOperation(oldValue, newValue));
     }
 
     private void ButtonPlayPreview_OnClick(object? sender, RoutedEventArgs e)
@@ -320,18 +290,19 @@ public partial class ChartPropertiesView : UserControl
     
     private void TextBoxPreviewBegin_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
         
         try
         {
-            ChartSystem.Entry.PreviewBegin = 1000 * Convert.ToSingle(TextBoxPreviewBegin.Text ?? "", CultureInfo.InvariantCulture);
+            float oldValue = ChartSystem.Entry.PreviewBegin;
+            float newValue = 1000 * Convert.ToSingle(TextBoxPreviewBegin.Text ?? "", CultureInfo.InvariantCulture);
+            UndoRedoSystem.Push(new PreviewBeginEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            ChartSystem.Entry.PreviewBegin = 0;
-            OnEntryChanged(null, EventArgs.Empty);
+            UndoRedoSystem.Push(new PreviewBeginEditOperation(ChartSystem.Entry.PreviewBegin, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -342,18 +313,19 @@ public partial class ChartPropertiesView : UserControl
 
     private void TextBoxPreviewLength_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
         
         try
         {
-            ChartSystem.Entry.PreviewLength = 1000 * Convert.ToSingle(TextBoxPreviewLength.Text ?? "", CultureInfo.InvariantCulture);
+            float oldValue = ChartSystem.Entry.PreviewLength;
+            float newValue = 1000 * Convert.ToSingle(TextBoxPreviewLength.Text ?? "", CultureInfo.InvariantCulture);
+            UndoRedoSystem.Push(new PreviewBeginEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            ChartSystem.Entry.PreviewLength = 10000;
-            OnEntryChanged(null, EventArgs.Empty);
+            UndoRedoSystem.Push(new PreviewBeginEditOperation(ChartSystem.Entry.PreviewLength, 10000));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -364,70 +336,81 @@ public partial class ChartPropertiesView : UserControl
 
     private void ComboBoxBackground_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.Background = (BackgroundOption)ComboBoxBackground.SelectedIndex;
+        BackgroundOption oldValue = ChartSystem.Entry.Background;
+        BackgroundOption newValue = (BackgroundOption)ComboBoxBackground.SelectedIndex;
+        UndoRedoSystem.Push(new BackgroundEditOperation(oldValue, newValue));
     }
 
     private void ComboBoxTutorialMode_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
-        ChartSystem.Entry.TutorialMode = ComboBoxTutorialMode.SelectedIndex == 1;
+        bool oldValue = ChartSystem.Entry.TutorialMode;
+        bool newValue = ComboBoxTutorialMode.SelectedIndex == 1;
+        UndoRedoSystem.Push(new TutorialModeEditOperation(oldValue, newValue));
     }
 
     private void TextBoxJacket_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
         
         // JacketChanged gets invoked even when the value doesn't change to allow re-loading the same file.
         // This would be a bit unintuitive here, because clicking out of the textbox without making any changes would still reload the Jacket.
         if (ChartSystem.Entry.JacketFile == TextBoxJacket.Text) return;
-        
-        ChartSystem.Entry.JacketFile = TextBoxJacket.Text ?? "";
+
+        string oldValue = ChartSystem.Entry.JacketFile;
+        string newValue = TextBoxJacket.Text ?? "";
+        UndoRedoSystem.Push(new JacketEditOperation(oldValue, newValue));
     }
 
     private void TextBoxAudio_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
         
         // AudioChanged gets invoked even when the value doesn't change to allow re-loading the same file.
         // This would be a bit unintuitive here, because clicking out of the textbox without making any changes would still reload the Audio.
         if (ChartSystem.Entry.AudioFile == TextBoxAudio.Text) return;
 
-        ChartSystem.Entry.AudioFile = TextBoxAudio.Text ?? "";
+        string oldValue = ChartSystem.Entry.AudioFile;
+        string newValue = TextBoxAudio.Text ?? "";
+        UndoRedoSystem.Push(new AudioEditOperation(oldValue, newValue));
     }
 
     private void TextBoxVideo_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
         
         // VideoChanged gets invoked even when the value doesn't change to allow re-loading the same file.
         // This would be a bit unintuitive here, because clicking out of the textbox without making any changes would still reload the Video.
         if (ChartSystem.Entry.VideoFile == TextBoxVideo.Text) return;
 
-        ChartSystem.Entry.VideoFile = TextBoxVideo.Text ?? "";
+        string oldValue = ChartSystem.Entry.VideoFile;
+        string newValue = TextBoxVideo.Text ?? "";
+        UndoRedoSystem.Push(new VideoEditOperation(oldValue, newValue));
     }
 
     private void TextBoxAudioOffset_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
 
         try
         {
-            ChartSystem.Entry.AudioOffset = 1000 * Convert.ToSingle(TextBoxAudioOffset.Text ?? "", CultureInfo.InvariantCulture);
+            float oldValue = ChartSystem.Entry.AudioOffset;
+            float newValue = 1000 * Convert.ToSingle(TextBoxAudioOffset.Text ?? "", CultureInfo.InvariantCulture);
+            UndoRedoSystem.Push(new AudioOffsetEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            ChartSystem.Entry.AudioOffset = 0;
-            OnEntryChanged(null, EventArgs.Empty);
+            UndoRedoSystem.Push(new AudioOffsetEditOperation(ChartSystem.Entry.AudioOffset, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -438,18 +421,19 @@ public partial class ChartPropertiesView : UserControl
 
     private void TextBoxVideoOffset_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender == null) return;
         
         try
         {
-            ChartSystem.Entry.VideoOffset = 1000 * Convert.ToSingle(TextBoxVideoOffset.Text ?? "", CultureInfo.InvariantCulture);
+            float oldValue = ChartSystem.Entry.VideoOffset;
+            float newValue = 1000 * Convert.ToSingle(TextBoxVideoOffset.Text ?? "", CultureInfo.InvariantCulture);
+            UndoRedoSystem.Push(new VideoOffsetEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            ChartSystem.Entry.VideoOffset = 0;
-            OnEntryChanged(null, EventArgs.Empty);
+            UndoRedoSystem.Push(new VideoOffsetEditOperation(ChartSystem.Entry.VideoOffset, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -482,8 +466,9 @@ public partial class ChartPropertiesView : UserControl
             if (ChartSystem.Entry.RootDirectory == "")
             {
                 // Define new root directory.
-                ChartSystem.Entry.RootDirectory = Path.GetDirectoryName(files[0].Path.LocalPath) ?? "";
-                ChartSystem.Entry.JacketFile = Path.GetFileName(files[0].Path.LocalPath);
+                RootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
+                JacketEditOperation op1 = new(ChartSystem.Entry.JacketFile, Path.GetFileName(files[0].Path.LocalPath));
+                UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
             }
             else
             {
@@ -494,7 +479,7 @@ public partial class ChartPropertiesView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                ChartSystem.Entry.JacketFile = filename;
+                UndoRedoSystem.Push(new JacketEditOperation(ChartSystem.Entry.JacketFile, filename));
             }
         }
         catch (Exception ex)
@@ -528,8 +513,9 @@ public partial class ChartPropertiesView : UserControl
             if (ChartSystem.Entry.RootDirectory == "")
             {
                 // Define new root directory.
-                ChartSystem.Entry.RootDirectory = Path.GetDirectoryName(files[0].Path.LocalPath) ?? "";
-                ChartSystem.Entry.AudioFile = Path.GetFileName(files[0].Path.LocalPath);
+                RootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
+                AudioEditOperation op1 = new(ChartSystem.Entry.AudioFile, Path.GetFileName(files[0].Path.LocalPath));
+                UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
             }
             else
             {
@@ -540,7 +526,7 @@ public partial class ChartPropertiesView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                ChartSystem.Entry.AudioFile = filename;
+                UndoRedoSystem.Push(new AudioEditOperation(ChartSystem.Entry.AudioFile, filename));
             }
         }
         catch (Exception ex)
@@ -574,8 +560,9 @@ public partial class ChartPropertiesView : UserControl
             if (ChartSystem.Entry.RootDirectory == "")
             {
                 // Define new root directory.
-                ChartSystem.Entry.RootDirectory = Path.GetDirectoryName(files[0].Path.LocalPath) ?? "";
-                ChartSystem.Entry.VideoFile = Path.GetFileName(files[0].Path.LocalPath);
+                RootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
+                VideoEditOperation op1 = new(ChartSystem.Entry.VideoFile, Path.GetFileName(files[0].Path.LocalPath));
+                UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
             }
             else
             {
@@ -586,7 +573,7 @@ public partial class ChartPropertiesView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
                 
-                ChartSystem.Entry.VideoFile = filename;
+                UndoRedoSystem.Push(new VideoEditOperation(ChartSystem.Entry.VideoFile, filename));
             }
         }
         catch (Exception ex)

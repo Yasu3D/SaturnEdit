@@ -5,7 +5,7 @@ using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.Operations;
+using SaturnEdit.UndoRedo.SelectionOperations;
 using SaturnView;
 
 namespace SaturnEdit.Systems;

@@ -1,6 +1,6 @@
 using SaturnData.Notation.Core;
 
-namespace SaturnEdit.UndoRedo.Operations;
+namespace SaturnEdit.UndoRedo.LayerOperations;
 
 public class LayerVisibilityEditOperation(Layer layer, bool oldVisibility, bool newVisibility) : IOperation
 {

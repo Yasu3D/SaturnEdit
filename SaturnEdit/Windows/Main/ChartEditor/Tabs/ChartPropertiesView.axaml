@@ -34,7 +34,7 @@
                              Grid.Column="2"
                              Name="TextBoxTitle"
                              VerticalAlignment="Center"
-                             TextChanged="TextBoxTitle_OnTextChanged" />
+                             LostFocus="TextBoxTitle_OnLostFocus" />
 
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
@@ -45,7 +45,7 @@
                              Name="TextBoxReading"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Stretch"
-                             TextChanged="TextBoxReading_OnTextChanged"/>
+                             LostFocus="TextBoxReading_OnLostFocus"/>
                     <ToggleButton Grid.Row="1"
                                   Grid.Column="3"
                                   Name="ToggleButtonAutoReading"
@@ -71,7 +71,7 @@
                              Grid.Column="2"
                              Name="TextBoxArtist"
                              VerticalAlignment="Center"
-                             TextChanged="TextBoxArtist_OnTextChanged" />
+                             LostFocus="TextBoxArtist_OnLostFocus" />
 
                     <TextBlock Grid.Row="3"
                                Grid.Column="0"
@@ -82,7 +82,7 @@
                              Name="TextBoxBpmMessage"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Stretch"
-                             TextChanged="TextBoxBpmMessage_OnTextChanged"/>
+                             LostFocus="TextBoxBpmMessage_OnLostFocus"/>
                     <ToggleButton Grid.Row="3"
                                   Grid.Column="3"
                                   Name="ToggleButtonAutoBpmMessage"
@@ -131,7 +131,7 @@
                              Grid.Column="2"
                              Name="TextBoxRevision"
                              VerticalAlignment="Center"
-                             TextChanged="TextBoxRevision_OnTextChanged"/>
+                             LostFocus="TextBoxRevision_OnLostFocus"/>
 
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
@@ -141,7 +141,7 @@
                              Grid.Column="2"
                              Name="TextBoxNotesDesigner"
                              VerticalAlignment="Center"
-                             TextChanged="TextBoxNotesDesigner_OnTextChanged"/>
+                             LostFocus="TextBoxNotesDesigner_OnLostFocus"/>
 
                     <TextBlock Grid.Row="2"
                                Grid.Column="0"

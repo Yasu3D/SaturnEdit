@@ -29,7 +29,6 @@ public static class ChartSystem
     
     private static void OnAudioLoaded(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
     private static void OnChartEndChanged(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
-    
     private static void OnOperationHistoryChanged(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
     
     private static void OnSettingsChanged(object? sender, EventArgs e)

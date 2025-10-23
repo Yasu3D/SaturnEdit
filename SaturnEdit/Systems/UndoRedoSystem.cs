@@ -26,6 +26,9 @@ public static class UndoRedoSystem
         OperationHistoryChanged?.Invoke(null, EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Applies an <see cref="IOperation"/> and pushes to the UndoRedo stack.
+    /// </summary>
     public static void Push(IOperation operation)
     {
         operation.Apply();
@@ -34,6 +37,36 @@ public static class UndoRedoSystem
         OperationHistoryChanged?.Invoke(null, EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Applies an <see cref="IOperation"/> and silently appends it to the last operation on the UndoRedo stack.
+    /// </summary>
+    public static void Append(IOperation operation)
+    {
+        if (UndoStack.Count == 0)
+        {
+            Push(operation);
+            return;
+        }
+
+        IOperation sourceOperation = UndoStack.Pop();
+        sourceOperation.Revert();
+
+        if (sourceOperation is CompositeOperation sourceCompositeOperation)
+        {
+            sourceCompositeOperation.Operations.Add(operation);
+            sourceCompositeOperation.Apply();
+            
+            UndoStack.Push(sourceCompositeOperation);
+        }
+        else
+        {
+            CompositeOperation compositeOperation = new([sourceOperation, operation]);
+            compositeOperation.Apply();
+
+            UndoStack.Push(compositeOperation);
+        }
+    }
+    
     public static IOperation? Undo()
     {
         if (!CanUndo) return null;
