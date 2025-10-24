@@ -3,15 +3,15 @@ using SaturnEdit.Systems;
 
 namespace SaturnEdit.UndoRedo.LayerOperations;
 
-public class LayerSelectionOperation(Layer? oldLayer, Layer? newLayer) : IOperation
+public class LayerDeleteOperation(Layer layer, int index) : IOperation
 {
     public void Revert()
     {
-        SelectionSystem.SelectedLayer = oldLayer;
+        ChartSystem.Chart.Layers.Insert(index, layer);
     }
 
     public void Apply()
     {
-        SelectionSystem.SelectedLayer = newLayer;
+        ChartSystem.Chart.Layers.Remove(layer);
     }
 }

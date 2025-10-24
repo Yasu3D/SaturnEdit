@@ -26,7 +26,8 @@
                 <Button Classes="Themed Standard"
                         CornerRadius="3"
                         Width="22"
-                        Height="22">
+                        Height="22"
+                        Click="ButtonMoveItemUp_Click">
                     <icon:FluentIcon Icon="ArrowUpload"
                                      FontSize="16"
                                      Foreground="{DynamicResource ForegroundPrimary}" />
@@ -44,7 +45,8 @@
                 <Button Classes="Themed Standard"
                         CornerRadius="3"
                         Width="22"
-                        Height="22">
+                        Height="22"
+                        Click="ButtonMoveItemDown_Click">
                     <icon:FluentIcon Icon="ArrowDownload"
                                      FontSize="16"
                                      Foreground="{DynamicResource ForegroundPrimary}" />
@@ -67,7 +69,8 @@
                 <Button Classes="Themed Standard"
                         CornerRadius="3"
                         Width="22"
-                        Height="22">
+                        Height="22"
+                        Click="ButtonDeleteSelection_Click">
                     <icon:FluentIcon Icon="Delete"
                                      FontSize="16"
                                      Foreground="{DynamicResource ForegroundPrimary}" />
@@ -85,7 +88,8 @@
                 <Button Classes="Themed Standard"
                         CornerRadius="3"
                         Width="22"
-                        Height="22">
+                        Height="22"
+                        Click="ButtonAddNew_Click">
                     <icon:FluentIcon Icon="Add"
                                      FontSize="16"
                                      Foreground="{DynamicResource ForegroundPrimary}" />
@@ -103,7 +107,9 @@
                          SelectionMode="AlwaysSelected"
                          Background="{DynamicResource BackgroundSecondary}"
                          MinHeight="200"
-                         MaxHeight="350">
+                         MaxHeight="350"
+                         SelectionChanged="ListBoxLayers_OnSelectionChanged"
+                         KeyDown="ListBoxLayers_OnKeyDown">
                 </ListBox>
             </ScrollViewer>
 

@@ -931,37 +931,57 @@ public class ShortcutSettings
 }
 
 [Serializable]
-public class Shortcut(Key key, bool control, bool alt, bool shift, string groupMessage, string actionMessage)
+public class Shortcut
 {
     /// <summary>
     /// The key to press.
     /// </summary>
-    public Key Key { get; set; } = key;
+    public Key Key { get; set; }
 
     /// <summary>
     /// Is the control key pressed?
     /// </summary>
-    public bool Control { get; set; } = control;
+    public bool Control { get; set; }
     
     /// <summary>
     /// Is the alt key pressed?
     /// </summary>
-    public bool Alt { get; set; } = alt;
+    public bool Alt { get; set; }
     
     /// <summary>
     /// Is the shift key pressed?
     /// </summary>
-    public bool Shift { get; set; } = shift;
+    public bool Shift { get; set; }
 
     /// <summary>
     /// The group message to display.
     /// </summary>
-    public string GroupMessage = groupMessage;
+    public string GroupMessage;
     
     /// <summary>
     /// The action message to display.
     /// </summary>
-    public string ActionMessage = actionMessage;
+    public string ActionMessage;
+
+    public Shortcut(Key key, bool control, bool alt, bool shift)
+    {
+        Key = key;
+        Control = control;
+        Alt = alt;
+        Shift = shift;
+        GroupMessage = "";
+        ActionMessage = "";
+    }
+    
+    public Shortcut(Key key, bool control, bool alt, bool shift, string groupMessage, string actionMessage)
+    {
+        Key = key;
+        Control = control;
+        Alt = alt;
+        Shift = shift;
+        GroupMessage = groupMessage;
+        ActionMessage = actionMessage;
+    }
 
     public override string ToString()
     {

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
@@ -15,7 +14,7 @@ public static class SelectionSystem
     public static void Initialize()
     {
         TimeSystem.PlaybackStateChanged += OnPlaybackStateChanged;
-        SelectedLayer = ChartSystem.Chart.Layers.FirstOrDefault();
+        SelectedLayer = ChartSystem.Chart.Layers.Count == 0 ? null : ChartSystem.Chart.Layers[0];
     }
     
     public static event EventHandler? PointerOverOverlapChanged;

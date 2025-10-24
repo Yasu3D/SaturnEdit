@@ -29,8 +29,7 @@ public partial class LayerListItem : UserControl
 
         blockEvents = false;
     }
-
-
+    
     private void ButtonLayerVisibility_OnClick(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
@@ -39,7 +38,7 @@ public partial class LayerListItem : UserControl
         VisibilityChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    private void TextBoxLayerName_OnTextChanged(object? sender, TextChangedEventArgs e)
+    private void TextBoxLayerName_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
         if (TextBoxLayerName == null) return;

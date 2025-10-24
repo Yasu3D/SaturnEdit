@@ -26,6 +26,6 @@
                      Height="30"
                      CornerRadius="3"
                      VerticalContentAlignment="Center"  
-                     TextChanged="TextBoxLayerName_OnTextChanged"/>
+                     LostFocus="TextBoxLayerName_OnLostFocus"/>
         </Grid>
 </UserControl>

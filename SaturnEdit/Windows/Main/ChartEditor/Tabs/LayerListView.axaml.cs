@@ -1,14 +1,14 @@
 using System;
+using System.Linq;
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using SaturnData.Notation.Core;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo.LayerOperations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
-
-// TODO: This is kinda broken rn.
-// Make events shut up
 
 public partial class LayerListView : UserControl
 {
@@ -20,56 +20,15 @@ public partial class LayerListView : UserControl
         OnSettingsChanged(null, EventArgs.Empty);
 
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
-        
-        RefreshLayers();
+        OnOperationHistoryChanged(null, EventArgs.Empty);
     }
+
+    private bool blockEvents = false;
     
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
-        RefreshLayers();
-    }
-
-    private void OnSettingsChanged(object? sender, EventArgs e)
-    {
-        TextBlockShortcutMoveItemUp1.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
-        TextBlockShortcutMoveItemDown1.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
-        TextBlockShortcutDeleteSelection1.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
+        blockEvents = true;
         
-        TextBlockShortcutMoveItemUp2.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
-        TextBlockShortcutMoveItemDown2.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
-        TextBlockShortcutDeleteSelection2.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
-        
-        TextBlockShortcutMoveItemUp3.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
-        TextBlockShortcutMoveItemDown3.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
-    }
-
-    private void LayerItem_OnNameChanged(object? sender, EventArgs e)
-    {
-        return;
-        if (sender is not LayerListItem item) return;
-        
-        string oldName = item.Layer.Name;
-        string newName = item.TextBoxLayerName.Text ?? "Unnamed Layer";
-        
-        Console.WriteLine($"NameChanged \"{oldName}\" \"{newName}\"");
-        
-        UndoRedoSystem.Push(new LayerNameEditOperation(item.Layer, oldName, newName));
-    }
-    
-    private void LayerItem_OnVisibilityChanged(object? sender, EventArgs e)
-    {
-        return;
-        if (sender is not LayerListItem item) return;
-
-        bool oldVisibility = item.Layer.Visible;
-        bool newVisibility = !item.Layer.Visible;
-        
-        UndoRedoSystem.Push(new LayerVisibilityEditOperation(item.Layer, oldVisibility, newVisibility));
-    }
-    
-    private void RefreshLayers()
-    {
-        return;
         for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
         {
             Layer layer = ChartSystem.Chart.Layers[i];
@@ -104,5 +63,139 @@ public partial class LayerListView : UserControl
             
             ListBoxLayers.Items.Remove(item);
         }
+
+        // Set selection.
+        ListBoxLayers.SelectedItem = ListBoxLayers.Items.FirstOrDefault(x => x is LayerListItem item && item.Layer == SelectionSystem.SelectedLayer);
+
+        blockEvents = false;
+    }
+
+    private void OnSettingsChanged(object? sender, EventArgs e)
+    {
+        TextBlockShortcutMoveItemUp1.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
+        TextBlockShortcutMoveItemDown1.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
+        TextBlockShortcutDeleteSelection1.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
+        
+        TextBlockShortcutMoveItemUp2.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
+        TextBlockShortcutMoveItemDown2.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
+        TextBlockShortcutDeleteSelection2.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
+        
+        TextBlockShortcutMoveItemUp3.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
+        TextBlockShortcutMoveItemDown3.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
+    }
+
+    private void LayerItem_OnNameChanged(object? sender, EventArgs e)
+    {
+        if (blockEvents) return;
+        if (sender is not LayerListItem item) return;
+        
+        string oldName = item.Layer.Name;
+        string newName = item.TextBoxLayerName.Text ?? "Unnamed Layer";
+        if (oldName == newName) return;
+        
+        UndoRedoSystem.Push(new LayerNameEditOperation(item.Layer, oldName, newName));
+    }
+    
+    private void LayerItem_OnVisibilityChanged(object? sender, EventArgs e)
+    {
+        if (blockEvents) return;
+        if (sender is not LayerListItem item) return;
+
+        bool oldVisibility = item.Layer.Visible;
+        bool newVisibility = !item.Layer.Visible;
+        if (oldVisibility == newVisibility) return;
+        
+        UndoRedoSystem.Push(new LayerVisibilityEditOperation(item.Layer, oldVisibility, newVisibility));
+    }
+    
+    private void ListBoxLayers_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (ListBoxLayers == null) return;
+  
+        Layer? oldLayer = SelectionSystem.SelectedLayer;
+        Layer? newLayer = ListBoxLayers.SelectedItem is LayerListItem item ? item.Layer : null;
+        if (oldLayer == newLayer) return;
+        
+        UndoRedoSystem.Push(new LayerSelectionOperation(oldLayer, newLayer));
+    }
+    
+    private void ListBoxLayers_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (blockEvents) return;
+        Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Control));
+
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"]))
+        {
+            DeleteLayer();
+            e.Handled = true;
+        }
+        
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"]))
+        {
+            MoveLayerUp();
+            e.Handled = true;
+        }
+        
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"]))
+        {
+            MoveLayerDown();
+            e.Handled = true;
+        }
+    }
+    
+    private void ButtonMoveItemUp_Click(object? sender, RoutedEventArgs e) => MoveLayerUp();
+
+    private void ButtonMoveItemDown_Click(object? sender, RoutedEventArgs e) => MoveLayerDown();
+
+    private void ButtonDeleteSelection_Click(object? sender, RoutedEventArgs e) => DeleteLayer();
+
+    private void ButtonAddNew_Click(object? sender, RoutedEventArgs e) => AddLayer();
+
+    private void MoveLayerUp()
+    {
+        if (ListBoxLayers.SelectedItem is not LayerListItem item) return;
+
+        int indexA = ChartSystem.Chart.Layers.IndexOf(item.Layer);
+        if (indexA == -1) return;
+
+        int indexB = indexA - 1;
+        if (indexB < 0) return;
+
+        Layer layerA = ChartSystem.Chart.Layers[indexA];
+        Layer layerB = ChartSystem.Chart.Layers[indexB];
+
+        UndoRedoSystem.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
+    }
+
+    private void MoveLayerDown()
+    {
+        if (ListBoxLayers.SelectedItem is not LayerListItem item) return;
+
+        int indexA = ChartSystem.Chart.Layers.IndexOf(item.Layer);
+        if (indexA == -1) return;
+
+        int indexB = indexA + 1;
+        if (indexB >= ChartSystem.Chart.Layers.Count) return;
+
+        Layer layerA = ChartSystem.Chart.Layers[indexA];
+        Layer layerB = ChartSystem.Chart.Layers[indexB];
+
+        UndoRedoSystem.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
+    }
+    
+    private void DeleteLayer()
+    {
+        if (ListBoxLayers.SelectedItem is not LayerListItem item) return;
+
+        int index = ChartSystem.Chart.Layers.IndexOf(item.Layer);
+        UndoRedoSystem.Push(new LayerDeleteOperation(item.Layer, index));
+    }
+    
+    private void AddLayer()
+    {
+        Layer layer = new("New Layer");
+        int index = ChartSystem.Chart.Layers.Count;
+        UndoRedoSystem.Push(new LayerAddOperation(layer, index));
     }
 }
