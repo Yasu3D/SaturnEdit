@@ -52,17 +52,20 @@ public partial class PlaybackView : UserControl
     private SKColor clearColor;
     private SKColor waveformColor;
     private float[]? waveform = null;
+    private float sliderMaximum = 0;
     
     private bool blockEvents;
     
 #region Methods
     private void UpdateSeekSlider()
     {
+        sliderMaximum = ChartSystem.Entry.ChartEnd.Time;
+        
         Dispatcher.UIThread.Post(() =>
         {
             blockEvents = true;
             
-            SliderSeek.Maximum = ChartSystem.Entry.ChartEnd.Time;
+            SliderSeek.Maximum = sliderMaximum;
             SliderSeek.Value = TimeSystem.Timestamp.Time;
             
             blockEvents = false;
@@ -80,14 +83,14 @@ public partial class PlaybackView : UserControl
 
             if (TimeSystem.LoopStart != -1)
             {
-                double start = Math.Clamp(TimeSystem.LoopStart / SliderSeek.Maximum, 0, 1);
+                double start = Math.Clamp(TimeSystem.LoopStart / sliderMaximum, 0, 1);
                 start = start * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * start;
                 LoopMarkerStart.Margin = new(start, 0, 0, 0);
             }
 
             if (TimeSystem.LoopEnd != -1)
             {
-                double end = Math.Clamp(TimeSystem.LoopEnd / SliderSeek.Maximum, 0, 1);
+                double end = Math.Clamp(TimeSystem.LoopEnd / sliderMaximum, 0, 1);
                 end = end * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * end;
                 LoopMarkerEnd.Margin = new(end, 0, 0, 0);
             }
@@ -251,7 +254,7 @@ public partial class PlaybackView : UserControl
             waveform: waveform,
             audioOffset: ChartSystem.Entry.AudioOffset,
             audioLength: (float?)AudioSystem.AudioChannelAudio?.Length ?? 0,
-            sliderLength: (float)SliderSeek.Maximum
+            sliderLength: sliderMaximum
         );
     }
     
