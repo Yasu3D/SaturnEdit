@@ -275,6 +275,22 @@ public partial class ChartView3D : UserControl
             boxSelect: new(SelectionSystem.BoxSelectData.GlobalStartTime, SelectionSystem.BoxSelectData.GlobalEndTime, SelectionSystem.BoxSelectData.Position, SelectionSystem.BoxSelectData.Size),
             cursorNote: playing ? null : CursorSystem.CurrentNote
         );
+
+        // Hook into render function to update box selection during playback,
+        // even when the pointer is not being moved.
+        if (playing && clickDragLeft.IsDragActive && !isGrabbingObject)
+        {
+            _ = Task.Run(() =>
+            {
+                float radius = Renderer3D.GetHitTestPointerRadius(canvasInfo, (float)clickDragLeft.EndPoint!.Value.Position.X, (float)clickDragLeft.EndPoint!.Value.Position.Y);
+                float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
+            
+                float t = RenderUtils.InversePerspective(radius);
+                float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
+                
+                SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
+            });
+        }
     }
 
     private void RenderCanvas_OnPointerMoved(object? sender, PointerEventArgs e)
@@ -367,7 +383,9 @@ public partial class ChartView3D : UserControl
             void onLeftDrag()
             {
                 if (!e.Properties.IsLeftButtonPressed) return;
-                if (!clickDragLeft.IsDragActive(point)) return;
+
+                clickDragLeft.EndPoint = point;
+                if (!clickDragLeft.IsDragActive) return;
 
                 clickDragLeft.EndLane = lane;
                 
@@ -392,7 +410,9 @@ public partial class ChartView3D : UserControl
             void onRightDrag()
             {
                 if (!e.Properties.IsRightButtonPressed) return;
-                if (!clickDragRight.IsDragActive(point)) return;
+
+                clickDragRight.EndPoint = point;
+                if (!clickDragRight.IsDragActive) return;
                 
                 clickDragRight.EndLane = lane;
                 CursorSystem.Position = clickDragRight.Position;
@@ -419,7 +439,7 @@ public partial class ChartView3D : UserControl
             void onLeftClick()
             {
                 if (!e.Properties.IsLeftButtonPressed) return;
-                clickDragLeft.Reset(point, lane);
+                clickDragLeft.Reset(point, point, lane);
 
                 isGrabbingObject = SelectionSystem.PointerOverObject != null;
                     
@@ -451,7 +471,7 @@ public partial class ChartView3D : UserControl
             {
                 if (!e.Properties.IsRightButtonPressed) return;
 
-                clickDragRight.Reset(point, lane);
+                clickDragRight.Reset(point, point, lane);
                     
                 CursorSystem.Position = clickDragRight.Position;
             }
@@ -470,7 +490,7 @@ public partial class ChartView3D : UserControl
             void onLeftReleased()
             {
                 if (e.InitialPressMouseButton != MouseButton.Left) return;
-                clickDragLeft.Reset(null, 0);
+                clickDragLeft.Reset(null, null, 0);
 
                 isGrabbingObject = false;
                     
@@ -480,7 +500,7 @@ public partial class ChartView3D : UserControl
             void onRightReleased()
             {
                 if (e.InitialPressMouseButton != MouseButton.Right) return;
-                clickDragRight.Reset(null, 0);
+                clickDragRight.Reset(null, null, 0);
             }
         });
     }
