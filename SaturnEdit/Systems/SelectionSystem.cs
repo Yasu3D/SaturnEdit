@@ -235,7 +235,7 @@ public static class SelectionSystem
         foreach (Layer layer in ChartSystem.Chart.Layers)
         {
             float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
-            BoxSelectData.ScaledStartTimes.Add(layer, scaledTime + viewTime);
+            BoxSelectData.ScaledStartTimes[layer] = scaledTime + viewTime;
         }
     }
 
@@ -246,7 +246,7 @@ public static class SelectionSystem
         foreach (Layer layer in ChartSystem.Chart.Layers)
         {
             float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
-            BoxSelectData.ScaledEndTimes.Add(layer, scaledTime + viewTime);    
+            BoxSelectData.ScaledEndTimes[layer] = scaledTime + viewTime;
         }
 
         BoxSelectData.Position = position;

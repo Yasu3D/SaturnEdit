@@ -6,6 +6,7 @@ using Avalonia.Interactivity;
 using SaturnData.Notation.Core;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
+using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.LayerOperations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
@@ -189,13 +190,30 @@ public partial class LayerListView : UserControl
         if (ListBoxLayers.SelectedItem is not LayerListItem item) return;
 
         int index = ChartSystem.Chart.Layers.IndexOf(item.Layer);
-        UndoRedoSystem.Push(new LayerDeleteOperation(item.Layer, index));
+        
+        Layer? newSelection = null;
+
+        if (ChartSystem.Chart.Layers.Count > 1)
+        {
+            newSelection = index == 0
+                ? ChartSystem.Chart.Layers[1]
+                : ChartSystem.Chart.Layers[index - 1];
+        }
+
+        LayerDeleteOperation op0 = new(item.Layer, index);
+        LayerSelectionOperation op1 = new(item.Layer, newSelection);
+
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
     
     private void AddLayer()
     {
         Layer layer = new("New Layer");
         int index = ChartSystem.Chart.Layers.Count;
-        UndoRedoSystem.Push(new LayerAddOperation(layer, index));
+
+        LayerAddOperation op0 = new(layer, index);
+        LayerSelectionOperation op1 = new(SelectionSystem.SelectedLayer, layer); 
+        
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 }
