@@ -7,6 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
 using FluentIcons.Common;
 using SaturnData.Notation.Core;
 using SaturnEdit.Systems;
@@ -33,68 +34,73 @@ public partial class ChartPropertiesView : UserControl
     
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
-        blockEvents = true;
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
 
-        TextBoxTitle.Text = ChartSystem.Entry.Title;
-        TextBoxReading.Text = ChartSystem.Entry.Reading;
-        TextBoxArtist.Text = ChartSystem.Entry.Artist;
-        TextBoxBpmMessage.Text = ChartSystem.Entry.BpmMessage;
-        
-        TextBoxRevision.Text = ChartSystem.Entry.Revision;
-        TextBoxNotesDesigner.Text = ChartSystem.Entry.NotesDesigner;
-        ComboBoxDifficulty.SelectedIndex = (int)ChartSystem.Entry.Difficulty;
-        TextBoxLevel.Text = ChartSystem.Entry.Level.ToString("F1", CultureInfo.InvariantCulture);
-        TextBoxClearThreshold.Text = ChartSystem.Entry.ClearThreshold.ToString("F2", CultureInfo.InvariantCulture);
-        NumericUpDownChartEndMeasure.Value = ChartSystem.Entry.ChartEnd.Measure;
-        NumericUpDownChartEndTick.Value = ChartSystem.Entry.ChartEnd.Tick;
-        
-        TextBoxPreviewBegin.Text = (ChartSystem.Entry.PreviewBegin / 1000).ToString("F3", CultureInfo.InvariantCulture);
-        TextBoxPreviewLength.Text = (ChartSystem.Entry.PreviewLength / 1000).ToString("F3", CultureInfo.InvariantCulture);
-        ComboBoxBackground.SelectedIndex = (int)ChartSystem.Entry.Background;
-        ComboBoxTutorialMode.SelectedIndex = ChartSystem.Entry.TutorialMode ? 1 : 0;
+            TextBoxTitle.Text = ChartSystem.Entry.Title;
+            TextBoxReading.Text = ChartSystem.Entry.Reading;
+            TextBoxArtist.Text = ChartSystem.Entry.Artist;
+            TextBoxBpmMessage.Text = ChartSystem.Entry.BpmMessage;
+            
+            TextBoxRevision.Text = ChartSystem.Entry.Revision;
+            TextBoxNotesDesigner.Text = ChartSystem.Entry.NotesDesigner;
+            ComboBoxDifficulty.SelectedIndex = (int)ChartSystem.Entry.Difficulty;
+            TextBoxLevel.Text = ChartSystem.Entry.Level.ToString("F1", CultureInfo.InvariantCulture);
+            TextBoxClearThreshold.Text = ChartSystem.Entry.ClearThreshold.ToString("F2", CultureInfo.InvariantCulture);
+            NumericUpDownChartEndMeasure.Value = ChartSystem.Entry.ChartEnd.Measure;
+            NumericUpDownChartEndTick.Value = ChartSystem.Entry.ChartEnd.Tick;
+            
+            TextBoxPreviewBegin.Text = (ChartSystem.Entry.PreviewBegin / 1000).ToString("F3", CultureInfo.InvariantCulture);
+            TextBoxPreviewLength.Text = (ChartSystem.Entry.PreviewLength / 1000).ToString("F3", CultureInfo.InvariantCulture);
+            ComboBoxBackground.SelectedIndex = (int)ChartSystem.Entry.Background;
+            ComboBoxTutorialMode.SelectedIndex = ChartSystem.Entry.TutorialMode ? 1 : 0;
 
-        TextBoxJacket.Text = ChartSystem.Entry.JacketFile;
-        TextBoxAudio.Text = ChartSystem.Entry.AudioFile;
-        TextBoxVideo.Text = ChartSystem.Entry.VideoFile;
-        TextBoxAudioOffset.Text = (ChartSystem.Entry.AudioOffset / 1000).ToString("F3", CultureInfo.InvariantCulture);
-        TextBoxVideoOffset.Text = (ChartSystem.Entry.VideoOffset / 1000).ToString("F3", CultureInfo.InvariantCulture);
-        
-        ToggleButtonAutoReading.IsChecked = ChartSystem.Entry.AutoReading;
-        ToggleButtonAutoBpmMessage.IsChecked = ChartSystem.Entry.AutoBpmMessage;
-        ToggleButtonAutoClearThreshold.IsChecked = ChartSystem.Entry.AutoClearThreshold;
-        ToggleButtonAutoChartEnd.IsChecked = ChartSystem.Entry.AutoChartEnd;
+            TextBoxJacket.Text = ChartSystem.Entry.JacketFile;
+            TextBoxAudio.Text = ChartSystem.Entry.AudioFile;
+            TextBoxVideo.Text = ChartSystem.Entry.VideoFile;
+            TextBoxAudioOffset.Text = (ChartSystem.Entry.AudioOffset / 1000).ToString("F3", CultureInfo.InvariantCulture);
+            TextBoxVideoOffset.Text = (ChartSystem.Entry.VideoOffset / 1000).ToString("F3", CultureInfo.InvariantCulture);
+            
+            ToggleButtonAutoReading.IsChecked = ChartSystem.Entry.AutoReading;
+            ToggleButtonAutoBpmMessage.IsChecked = ChartSystem.Entry.AutoBpmMessage;
+            ToggleButtonAutoClearThreshold.IsChecked = ChartSystem.Entry.AutoClearThreshold;
+            ToggleButtonAutoChartEnd.IsChecked = ChartSystem.Entry.AutoChartEnd;
 
-        TextBoxReading.IsEnabled = !ChartSystem.Entry.AutoReading;
-        TextBoxBpmMessage.IsEnabled = !ChartSystem.Entry.AutoBpmMessage;
-        TextBoxClearThreshold.IsEnabled = !ChartSystem.Entry.AutoClearThreshold;
-        NumericUpDownChartEndMeasure.IsEnabled = !ChartSystem.Entry.AutoChartEnd;
-        NumericUpDownChartEndTick.IsEnabled = !ChartSystem.Entry.AutoChartEnd;
+            TextBoxReading.IsEnabled = !ChartSystem.Entry.AutoReading;
+            TextBoxBpmMessage.IsEnabled = !ChartSystem.Entry.AutoBpmMessage;
+            TextBoxClearThreshold.IsEnabled = !ChartSystem.Entry.AutoClearThreshold;
+            NumericUpDownChartEndMeasure.IsEnabled = !ChartSystem.Entry.AutoChartEnd;
+            NumericUpDownChartEndTick.IsEnabled = !ChartSystem.Entry.AutoChartEnd;
 
-        IconJacketFileNotFoundWarning.IsVisible = ChartSystem.Entry.JacketFile != "" && !File.Exists(ChartSystem.Entry.JacketPath);
-        IconAudioFileNotFoundWarning.IsVisible =  ChartSystem.Entry.AudioFile  != "" && !File.Exists(ChartSystem.Entry.AudioPath);
-        IconVideoFileNotFoundWarning.IsVisible =  ChartSystem.Entry.VideoFile  != "" && !File.Exists(ChartSystem.Entry.VideoPath);
-        
-        blockEvents = false;
+            IconJacketFileNotFoundWarning.IsVisible = ChartSystem.Entry.JacketFile != "" && !File.Exists(ChartSystem.Entry.JacketPath);
+            IconAudioFileNotFoundWarning.IsVisible =  ChartSystem.Entry.AudioFile  != "" && !File.Exists(ChartSystem.Entry.AudioPath);
+            IconVideoFileNotFoundWarning.IsVisible =  ChartSystem.Entry.VideoFile  != "" && !File.Exists(ChartSystem.Entry.VideoPath);
+            
+            blockEvents = false;
+        });
     }
 
     private void OnJacketChanged(object? sender, EventArgs e)
     {
-        try
+        Dispatcher.UIThread.Post(() =>
         {
-            bool jacketExists = File.Exists(ChartSystem.Entry.JacketPath);
-            ImageJacket.Source = jacketExists ? new Bitmap(ChartSystem.Entry.JacketPath) : null;
-            
-            ImageJacketPlaceholder.IsVisible = !jacketExists;
-            ImageJacket.IsVisible = jacketExists;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-            ImageJacketPlaceholder.IsVisible = true;
-            ImageJacket.IsVisible = false;
-        }
+            try
+            {
+                bool jacketExists = File.Exists(ChartSystem.Entry.JacketPath);
+                ImageJacket.Source = jacketExists ? new Bitmap(ChartSystem.Entry.JacketPath) : null;
+                
+                ImageJacketPlaceholder.IsVisible = !jacketExists;
+                ImageJacket.IsVisible = jacketExists;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                ImageJacketPlaceholder.IsVisible = true;
+                ImageJacket.IsVisible = false;
+            }
+        });
     }
-    
     
     
     private void TextBoxTitle_OnLostFocus(object? sender, RoutedEventArgs routedEventArgs)

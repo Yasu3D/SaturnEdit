@@ -132,43 +132,48 @@ public partial class PlaybackView : UserControl
     
     private void UpdateSeekSlider()
     {
-        sliderMaximum = ChartSystem.Entry.ChartEnd.Time;
+        Dispatcher.UIThread.Post(() =>
+        {
+            sliderMaximum = ChartSystem.Entry.ChartEnd.Time;
         
-        blockEvents = true;
-        
-        SliderSeek.Maximum = sliderMaximum;
-        SliderSeek.Value = TimeSystem.Timestamp.Time;
-        
-        blockEvents = false;
+            blockEvents = true;
+            
+            SliderSeek.Maximum = sliderMaximum;
+            SliderSeek.Value = TimeSystem.Timestamp.Time;
+            
+            blockEvents = false;
+        });
     }
     
     private void UpdateLoopMarkers()
     {
-        LoopMarkerStart.IsVisible = TimeSystem.LoopStart != -1 && SettingsSystem.AudioSettings.LoopPlayback;
-        LoopMarkerEnd.IsVisible   = TimeSystem.LoopEnd   != -1 && SettingsSystem.AudioSettings.LoopPlayback;
-        
-        if (!SettingsSystem.AudioSettings.LoopPlayback || (TimeSystem.LoopStart == -1 && TimeSystem.LoopEnd == -1)) return;
-        
-        double max = sliderMaximum;
-
-        if (TimeSystem.LoopStart != -1)
+        Dispatcher.UIThread.Post(() =>
         {
-            double start = Math.Clamp(TimeSystem.LoopStart / max, 0, 1);
-            start = start * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * start;
-            LoopMarkerStart.Margin = new(start, 0, 0, 0);
-        }
+            LoopMarkerStart.IsVisible = TimeSystem.LoopStart != -1 && SettingsSystem.AudioSettings.LoopPlayback;
+            LoopMarkerEnd.IsVisible   = TimeSystem.LoopEnd   != -1 && SettingsSystem.AudioSettings.LoopPlayback;
+            
+            if (!SettingsSystem.AudioSettings.LoopPlayback || (TimeSystem.LoopStart == -1 && TimeSystem.LoopEnd == -1)) return;
+            
+            double max = sliderMaximum;
 
-        if (TimeSystem.LoopEnd != -1)
-        {
-            double end   = Math.Clamp(TimeSystem.LoopEnd   / max, 0, 1);
-            end = end * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * end;
-            LoopMarkerEnd.Margin   = new(end,   0, 0, 0);
-        }
+            if (TimeSystem.LoopStart != -1)
+            {
+                double start = Math.Clamp(TimeSystem.LoopStart / max, 0, 1);
+                start = start * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * start;
+                LoopMarkerStart.Margin = new(start, 0, 0, 0);
+            }
+
+            if (TimeSystem.LoopEnd != -1)
+            {
+                double end   = Math.Clamp(TimeSystem.LoopEnd   / max, 0, 1);
+                end = end * SliderSeek.Bounds.Width - LoopMarkerEnd.Width * end;
+                LoopMarkerEnd.Margin   = new(end,   0, 0, 0);
+            }
+        });
     }
     
     private void OnTimestampChanged(object? sender, EventArgs e)
     {
-        
         Dispatcher.UIThread.Post(() =>
         {
             blockEvents = true;
@@ -198,38 +203,44 @@ public partial class PlaybackView : UserControl
     
     private void OnPlaybackSpeedChanged(object? sender, EventArgs e)
     {
-        blockEvents = true;
-        
-        TextBlockPlaybackSpeed.Text = $"{TimeSystem.PlaybackSpeed.ToString(CultureInfo.InvariantCulture)}%";
-        SliderPlaybackSpeed.Value = TimeSystem.PlaybackSpeed;
-        
-        blockEvents = false;
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
+            
+            TextBlockPlaybackSpeed.Text = $"{TimeSystem.PlaybackSpeed.ToString(CultureInfo.InvariantCulture)}%";
+            SliderPlaybackSpeed.Value = TimeSystem.PlaybackSpeed;
+            
+            blockEvents = false;
+        });
     }
 
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
-        TextBlockShortcutPlay.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Play"].ToString();
-        TextBlockShortcutPause.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Pause"].ToString();
-        TextBlockShortcutIncreasePlaybackSpeed.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.IncreasePlaybackSpeed"].ToString();
-        TextBlockShortcutDecreasePlaybackSpeed.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.DecreasePlaybackSpeed"].ToString();
-        TextBlockShortcutLoop.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.LoopPlayback"].ToString();
-        TextBlockShortcutSetLoopStart.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.SetLoopMarkerStart"].ToString();
-        TextBlockShortcutSetLoopEnd.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.SetLoopMarkerEnd"].ToString();
+        Dispatcher.UIThread.Post(() =>
+        {
+            TextBlockShortcutPlay.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Play"].ToString();
+            TextBlockShortcutPause.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Pause"].ToString();
+            TextBlockShortcutIncreasePlaybackSpeed.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.IncreasePlaybackSpeed"].ToString();
+            TextBlockShortcutDecreasePlaybackSpeed.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.DecreasePlaybackSpeed"].ToString();
+            TextBlockShortcutLoop.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.LoopPlayback"].ToString();
+            TextBlockShortcutSetLoopStart.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.SetLoopMarkerStart"].ToString();
+            TextBlockShortcutSetLoopEnd.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.SetLoopMarkerEnd"].ToString();
 
-        UpdateLoopMarkers();
-        
-        blockEvents = true;
+            UpdateLoopMarkers();
+            
+            blockEvents = true;
 
-        ToggleButtonLoop.IsChecked = SettingsSystem.AudioSettings.LoopPlayback;
-        ToggleButtonMetronome.IsChecked = SettingsSystem.AudioSettings.Metronome;
+            ToggleButtonLoop.IsChecked = SettingsSystem.AudioSettings.LoopPlayback;
+            ToggleButtonMetronome.IsChecked = SettingsSystem.AudioSettings.Metronome;
 
-        MenuItemQuantizedPauseOff.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Off;
-        MenuItemQuantizedPauseNearest.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Nearest;
-        MenuItemQuantizedPausePrevious.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Previous;
-        MenuItemQuantizedPauseNext.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Next;
-        MenuItemLoopToStart.IsChecked = SettingsSystem.AudioSettings.LoopToStart;
-        
-        blockEvents = false;
+            MenuItemQuantizedPauseOff.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Off;
+            MenuItemQuantizedPauseNearest.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Nearest;
+            MenuItemQuantizedPausePrevious.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Previous;
+            MenuItemQuantizedPauseNext.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Next;
+            MenuItemLoopToStart.IsChecked = SettingsSystem.AudioSettings.LoopToStart;
+            
+            blockEvents = false;
+        });
     }
 
     private void ToggleButtonPlay_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
