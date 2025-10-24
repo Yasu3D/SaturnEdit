@@ -1,11 +1,13 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using SaturnEdit.Systems;
 using SaturnEdit.Windows.Dialogs.ProofreaderCriteria;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
+// TODO.
 public partial class ProofreaderView : UserControl
 {
     public ProofreaderView()
@@ -16,11 +18,17 @@ public partial class ProofreaderView : UserControl
         OnSettingsChanged(null, EventArgs.Empty);
     }
 
+#region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
-        TextBlockShortcutRunProofreader.Text = SettingsSystem.ShortcutSettings.Shortcuts["Proofreader.Run"].ToString();
+        Dispatcher.UIThread.Post(() =>
+        {
+            TextBlockShortcutRunProofreader.Text = SettingsSystem.ShortcutSettings.Shortcuts["Proofreader.Run"].ToString();
+        });
     }
+#endregion System Event Delegates
 
+#region UI Event Delegates
     private async void ButtonProofreadCriteria_OnClick(object? sender, RoutedEventArgs e)
     {
         try
@@ -36,4 +44,5 @@ public partial class ProofreaderView : UserControl
             Console.WriteLine(ex);
         }
     }
+#endregion UI Event Delegates
 }

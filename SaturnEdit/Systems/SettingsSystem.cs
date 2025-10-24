@@ -21,13 +21,6 @@ public static class SettingsSystem
         shortcutSettings.PropertyChanged += OnPropertyChanged;
     }
     
-    private static string SettingsPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Settings");
-
-    private static AudioSettings audioSettings = new();
-    private static ShortcutSettings shortcutSettings = new();
-    private static EditorSettings editorSettings = new();
-    private static RenderSettings renderSettings = new();
-
     public static event EventHandler? SettingsChanged;
     
     public static RenderSettings RenderSettings
@@ -42,6 +35,7 @@ public static class SettingsSystem
             SettingsChanged?.Invoke(null, EventArgs.Empty);
         }
     }
+    private static RenderSettings renderSettings = new();
     
     public static EditorSettings EditorSettings
     {
@@ -55,6 +49,7 @@ public static class SettingsSystem
             SettingsChanged?.Invoke(null, EventArgs.Empty);
         }
     }
+    private static EditorSettings editorSettings = new();
     
     public static AudioSettings AudioSettings
     {
@@ -68,6 +63,7 @@ public static class SettingsSystem
             SettingsChanged?.Invoke(null, EventArgs.Empty);
         }
     }
+    private static AudioSettings audioSettings = new();
     
     public static ShortcutSettings ShortcutSettings
     {
@@ -81,15 +77,11 @@ public static class SettingsSystem
             SettingsChanged?.Invoke(null, EventArgs.Empty);
         }
     }
+    private static ShortcutSettings shortcutSettings = new();
     
-    private static void OnPropertyChanged(object? sender, EventArgs e)
-    {
-        SettingsChanged?.Invoke(null, EventArgs.Empty);
-        SaveSettings();
-        
-        Console.WriteLine("SettingsChanged");
-    }
-    
+    private static string SettingsPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Settings");
+
+#region Methods
     public static void LoadSettings()
     {
         try
@@ -152,6 +144,15 @@ public static class SettingsSystem
         File.WriteAllText(Path.Combine(SettingsPath, "audio_settings.toml"), Toml.FromModel(AudioSettings));
         File.WriteAllText(Path.Combine(SettingsPath, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
     }
+#endregion Methods
+    
+#region Internal Event Delegates
+    private static void OnPropertyChanged(object? sender, EventArgs e)
+    {
+        SettingsChanged?.Invoke(null, EventArgs.Empty);
+        SaveSettings();
+    }
+#endregion Internal Event Delegates
 }
 
 public class EditorSettings

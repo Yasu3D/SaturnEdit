@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
@@ -18,96 +19,100 @@ public partial class ExportArgsWindow : Window
 
     public static string? DefaultExportWatermark => new NotationWriteArgs().ExportWatermark;
     public NotationWriteArgs NotationWriteArgs = new();
-    
     public ModalDialogResult DialogResult = ModalDialogResult.Cancel;
-    
     private bool blockEvents = false;
-
+    
+#region System Event Delegates
     private void OnArgsChanged()
     {
-        blockEvents = true;
-
-        ComboBoxFileType.SelectedIndex = (int)NotationWriteArgs.FormatVersion;
-        
-        // Only set Watermark Text if it's different to the default watermark text.
-        TextBoxWatermark.Text = NotationWriteArgs.ExportWatermark == DefaultExportWatermark ? null : NotationWriteArgs.ExportWatermark;
-        ComboBoxFakeNotes.SelectedIndex = (int)NotationWriteArgs.ConvertFakeNotes;
-        ComboBoxAutoplayNotes.SelectedIndex = (int)NotationWriteArgs.ConvertAutoplayNotes;
-        ComboBoxExtraLayers.SelectedIndex = (int)NotationWriteArgs.MergeExtraLayers;
-        ComboBoxExtendedBonusTypes.SelectedIndex = (int)NotationWriteArgs.ConvertExtendedBonusTypes;
-        ComboBoxWriteMusicPath.SelectedIndex = (int)NotationWriteArgs.WriteMusicFilePath;
-
-        switch (NotationWriteArgs.FormatVersion)
+        Dispatcher.UIThread.Post(() =>
         {
-            case FormatVersion.Mer:
-            {
-                GroupSatArgs.IsVisible = false;
-                OptionWatermark.IsVisible = false;
+            blockEvents = true;
 
-                GroupBackwardsCompatibilityArgs.IsVisible = true;
-                OptionFakeNotes.IsVisible = true;
-                OptionAutoplayNotes.IsVisible = true;
-                OptionExtraLayers.IsVisible = true;
-                OptionExtendedBonusTypes.IsVisible = true;
+            ComboBoxFileType.SelectedIndex = (int)NotationWriteArgs.FormatVersion;
+            
+            // Only set Watermark Text if it's different to the default watermark text.
+            TextBoxWatermark.Text = NotationWriteArgs.ExportWatermark == DefaultExportWatermark ? null : NotationWriteArgs.ExportWatermark;
+            ComboBoxFakeNotes.SelectedIndex = (int)NotationWriteArgs.ConvertFakeNotes;
+            ComboBoxAutoplayNotes.SelectedIndex = (int)NotationWriteArgs.ConvertAutoplayNotes;
+            ComboBoxExtraLayers.SelectedIndex = (int)NotationWriteArgs.MergeExtraLayers;
+            ComboBoxExtendedBonusTypes.SelectedIndex = (int)NotationWriteArgs.ConvertExtendedBonusTypes;
+            ComboBoxWriteMusicPath.SelectedIndex = (int)NotationWriteArgs.WriteMusicFilePath;
+
+            switch (NotationWriteArgs.FormatVersion)
+            {
+                case FormatVersion.Mer:
+                {
+                    GroupSatArgs.IsVisible = false;
+                    OptionWatermark.IsVisible = false;
+
+                    GroupBackwardsCompatibilityArgs.IsVisible = true;
+                    OptionFakeNotes.IsVisible = true;
+                    OptionAutoplayNotes.IsVisible = true;
+                    OptionExtraLayers.IsVisible = true;
+                    OptionExtendedBonusTypes.IsVisible = true;
+                    
+                    GroupMerArgs.IsVisible = true;
+                    OptionWriteMusicPath.IsVisible = true;
+                    break;
+                }
                 
-                GroupMerArgs.IsVisible = true;
-                OptionWriteMusicPath.IsVisible = true;
-                break;
+                case FormatVersion.SatV1:
+                {
+                    GroupSatArgs.IsVisible = true;
+                    OptionWatermark.IsVisible = true;
+
+                    GroupBackwardsCompatibilityArgs.IsVisible = true;
+                    OptionFakeNotes.IsVisible = true;
+                    OptionAutoplayNotes.IsVisible = true;
+                    OptionExtraLayers.IsVisible = true;
+                    OptionExtendedBonusTypes.IsVisible = false;
+                    
+                    GroupMerArgs.IsVisible = false;
+                    OptionWriteMusicPath.IsVisible = false;
+                    break;
+                }
+                
+                case FormatVersion.SatV2:
+                {
+                    GroupSatArgs.IsVisible = true;
+                    OptionWatermark.IsVisible = true;
+
+                    GroupBackwardsCompatibilityArgs.IsVisible = true;
+                    OptionFakeNotes.IsVisible = true;
+                    OptionAutoplayNotes.IsVisible = true;
+                    OptionExtraLayers.IsVisible = false;
+                    OptionExtendedBonusTypes.IsVisible = false;
+                    
+                    GroupMerArgs.IsVisible = false;
+                    OptionWriteMusicPath.IsVisible = false;
+                    break;
+                }
+                
+                case FormatVersion.SatV3:
+                {
+                    GroupSatArgs.IsVisible = true;
+                    OptionWatermark.IsVisible = true;
+
+                    GroupBackwardsCompatibilityArgs.IsVisible = false;
+                    OptionFakeNotes.IsVisible = false;
+                    OptionAutoplayNotes.IsVisible = false;
+                    OptionExtraLayers.IsVisible = false;
+                    OptionExtendedBonusTypes.IsVisible = false;
+                    
+                    GroupMerArgs.IsVisible = false;
+                    OptionWriteMusicPath.IsVisible = false;
+                    break;
+                }
+                default: throw new ArgumentOutOfRangeException();
             }
             
-            case FormatVersion.SatV1:
-            {
-                GroupSatArgs.IsVisible = true;
-                OptionWatermark.IsVisible = true;
-
-                GroupBackwardsCompatibilityArgs.IsVisible = true;
-                OptionFakeNotes.IsVisible = true;
-                OptionAutoplayNotes.IsVisible = true;
-                OptionExtraLayers.IsVisible = true;
-                OptionExtendedBonusTypes.IsVisible = false;
-                
-                GroupMerArgs.IsVisible = false;
-                OptionWriteMusicPath.IsVisible = false;
-                break;
-            }
-            
-            case FormatVersion.SatV2:
-            {
-                GroupSatArgs.IsVisible = true;
-                OptionWatermark.IsVisible = true;
-
-                GroupBackwardsCompatibilityArgs.IsVisible = true;
-                OptionFakeNotes.IsVisible = true;
-                OptionAutoplayNotes.IsVisible = true;
-                OptionExtraLayers.IsVisible = false;
-                OptionExtendedBonusTypes.IsVisible = false;
-                
-                GroupMerArgs.IsVisible = false;
-                OptionWriteMusicPath.IsVisible = false;
-                break;
-            }
-            
-            case FormatVersion.SatV3:
-            {
-                GroupSatArgs.IsVisible = true;
-                OptionWatermark.IsVisible = true;
-
-                GroupBackwardsCompatibilityArgs.IsVisible = false;
-                OptionFakeNotes.IsVisible = false;
-                OptionAutoplayNotes.IsVisible = false;
-                OptionExtraLayers.IsVisible = false;
-                OptionExtendedBonusTypes.IsVisible = false;
-                
-                GroupMerArgs.IsVisible = false;
-                OptionWriteMusicPath.IsVisible = false;
-                break;
-            }
-            default: throw new ArgumentOutOfRangeException();
-        }
-        
-        blockEvents = false;
+            blockEvents = false;
+        });
     }
+#endregion System Event Delegates
     
+#region UI Event Delegates
     private void ComboBoxFileType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
@@ -178,7 +183,6 @@ public partial class ExportArgsWindow : Window
         OnArgsChanged();
     }
     
-    
     private void ButtonExport_OnClick(object? sender, RoutedEventArgs e)
     {
         DialogResult = ModalDialogResult.Primary;
@@ -198,4 +202,5 @@ public partial class ExportArgsWindow : Window
         
         OnArgsChanged();
     }
+#endregion UI Event Delegates
 }

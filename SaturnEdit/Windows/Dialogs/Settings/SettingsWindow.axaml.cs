@@ -35,7 +35,8 @@ public partial class SettingsWindow : Window
     private readonly SettingsShortcutsView settingsShortcutsView = new();
 
     private bool saveSettings = false;
-
+    
+#region UI Event Delegates
     private void SettingsTab_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (sender is not RadioButton button) return;
@@ -79,4 +80,5 @@ public partial class SettingsWindow : Window
             SettingsSystem.ShortcutSettings = Toml.ToModel<ShortcutSettings>(shortcutSettingsBackup);
         }
     }
+#endregion UI Event Delegates
 }

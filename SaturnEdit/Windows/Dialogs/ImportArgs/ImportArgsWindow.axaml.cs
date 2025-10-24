@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
@@ -14,22 +15,26 @@ public partial class ImportArgsWindow : Window
     }
     
     public NotationReadArgs NotationReadArgs = new();
-    
     public ModalDialogResult DialogResult = ModalDialogResult.Cancel;
-    
     private bool blockEvents = false;
 
+#region System Event Delegates
     private void OnArgsChanged()
     {
-        blockEvents = true;
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
         
-        CheckBoxSortCollections.IsChecked = NotationReadArgs.SortCollections;
-        CheckBoxOptimizeHoldNotes.IsChecked = NotationReadArgs.OptimizeHoldNotes;
-        CheckBoxInferClearThresholdFromDifficulty.IsChecked = NotationReadArgs.InferClearThresholdFromDifficulty;
-        
-        blockEvents = false;
+            CheckBoxSortCollections.IsChecked = NotationReadArgs.SortCollections;
+            CheckBoxOptimizeHoldNotes.IsChecked = NotationReadArgs.OptimizeHoldNotes;
+            CheckBoxInferClearThresholdFromDifficulty.IsChecked = NotationReadArgs.InferClearThresholdFromDifficulty;
+            
+            blockEvents = false;
+        });
     }
+#endregion System Event Delegates
     
+#region UI Event Delegates
     private void CheckBoxSortCollections_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
@@ -57,7 +62,6 @@ public partial class ImportArgsWindow : Window
         OnArgsChanged();
     }
     
-    
     private void ButtonOpen_OnClick(object? sender, RoutedEventArgs e)
     {
         DialogResult = ModalDialogResult.Primary;
@@ -75,4 +79,5 @@ public partial class ImportArgsWindow : Window
         NotationReadArgs = new();
         OnArgsChanged();
     }
+#endregion UI Event Delegates
 }

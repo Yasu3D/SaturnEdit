@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using SaturnEdit.Systems;
 
 namespace SaturnEdit.Windows.Dialogs.Settings.Tabs;
@@ -17,22 +18,28 @@ public partial class SettingsAppearanceView : UserControl
 
     private bool blockEvent = false;
 
+#region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
-        blockEvent = true;
-        
-        if (SettingsSystem.EditorSettings.Theme == EditorSettings.EditorThemeOptions.Light)
+        Dispatcher.UIThread.Post(() =>
         {
-            RadioButtonThemeLight.IsChecked = true;
-        }
-        else
-        {
-            RadioButtonThemeDark.IsChecked = true;
-        }
+            blockEvent = true;
         
-        blockEvent = false;
+            if (SettingsSystem.EditorSettings.Theme == EditorSettings.EditorThemeOptions.Light)
+            {
+                RadioButtonThemeLight.IsChecked = true;
+            }
+            else
+            {
+                RadioButtonThemeDark.IsChecked = true;
+            }
+            
+            blockEvent = false;
+        });
     }
+#endregion System Event Delegates
 
+#region UI Event Delegates
     private void RadioButtonTheme_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (blockEvent) return;
@@ -47,4 +54,5 @@ public partial class SettingsAppearanceView : UserControl
             _ => SettingsSystem.EditorSettings.Theme,
         };
     }
+#endregion UI Event Delegates
 }

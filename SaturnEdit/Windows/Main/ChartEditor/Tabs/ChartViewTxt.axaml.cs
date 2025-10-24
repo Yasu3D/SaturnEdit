@@ -6,6 +6,7 @@ using Avalonia.Interactivity;
 using TextMateSharp.Grammars;
 using AvaloniaEdit.TextMate;
 using System.IO;
+using Avalonia.Threading;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
 
@@ -38,10 +39,38 @@ public partial class ChartViewTxt : UserControl
     }
     
     private readonly TextMate.Installation? installation;
-
     private readonly NotationWriteArgs writeArgs;
     private readonly NotationReadArgs readArgs;
     
+#region Methods
+    private void UpdateChartFromText()
+    {
+        ChartSystem.ReadChartEditorTxt(TextEditorChart.Text, ChartSystem.Entry.RootDirectory, readArgs, out List<Exception> exceptions);
+        
+        Dispatcher.UIThread.Post(() =>
+        {
+            ErrorList.IsVisible = exceptions.Count > 0;
+            TextBlockErrorCount.Text = $"Errors found in file : {exceptions.Count}";
+            TextBlockErrorList.Text = "";
+            foreach (Exception exception in exceptions)
+            {
+                TextBlockErrorList.Text += exception.Message + "\n";
+            }
+        });
+    }
+    
+    private void UpdateTextFromChart()
+    {
+        string text = NotationSerializer.ToString(ChartSystem.Entry, ChartSystem.Chart, writeArgs);
+        
+        Dispatcher.UIThread.Post(() =>
+        {
+            TextEditorChart.Text = text;
+        });
+    }
+#endregion Methods
+
+#region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         ToggleButtonShowSpaces.IsChecked = SettingsSystem.EditorSettings.ChartViewTxtShowSpaces;
@@ -51,7 +80,9 @@ public partial class ChartViewTxt : UserControl
     private void OnOperationHistoryChanged(object? sender, EventArgs e) => UpdateTextFromChart();
 
     private void OnEntryChanged(object? sender, EventArgs e) => UpdateTextFromChart();
-    
+#endregion System Event Delegates
+
+#region UI Event Delegates
     private void ButtonApplyChanges_OnClick(object? sender, RoutedEventArgs e) => UpdateChartFromText();
     
     private void ToggleButtonShowSpaces_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -84,22 +115,5 @@ public partial class ChartViewTxt : UserControl
             Console.WriteLine(ex);
         }
     }
-
-    private void UpdateChartFromText()
-    {
-        ChartSystem.ReadChartEditorTxt(TextEditorChart.Text, ChartSystem.Entry.RootDirectory, readArgs, out List<Exception> exceptions);
-        
-        ErrorList.IsVisible = exceptions.Count > 0;
-        TextBlockErrorCount.Text = $"Errors found in file : {exceptions.Count}";
-        TextBlockErrorList.Text = "";
-        foreach (Exception exception in exceptions)
-        {
-            TextBlockErrorList.Text += exception.Message + "\n";
-        }
-    }
-    
-    private void UpdateTextFromChart()
-    {
-        TextEditorChart.Text = NotationSerializer.ToString(ChartSystem.Entry, ChartSystem.Chart, writeArgs);
-    }
+#endregion UI Event Delegates
 }

@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using SaturnEdit.Systems;
 using SaturnView;
 
@@ -18,43 +19,49 @@ public partial class SettingsRenderingView : UserControl
 
     private bool blockEvent = false;
     
+#region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs empty)
     {
-        blockEvent = true;
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvent = true;
         
-        CheckBoxLowPerformanceMode.IsChecked = SettingsSystem.RenderSettings.LowPerformanceMode;
-        
-        NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed / 10.0m;
-        ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
-        
-        ComboBoxGuideLineType.SelectedIndex = (int)SettingsSystem.RenderSettings.GuideLineType;
-        ComboBoxJudgementLineColor.SelectedIndex = (int)SettingsSystem.RenderSettings.JudgementLineColor;
-        
-        NumericUpDownHiddenOpacity.Value = SettingsSystem.RenderSettings.HiddenOpacity / 10.0m;
+            CheckBoxLowPerformanceMode.IsChecked = SettingsSystem.RenderSettings.LowPerformanceMode;
+            
+            NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed / 10.0m;
+            ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
+            
+            ComboBoxGuideLineType.SelectedIndex = (int)SettingsSystem.RenderSettings.GuideLineType;
+            ComboBoxJudgementLineColor.SelectedIndex = (int)SettingsSystem.RenderSettings.JudgementLineColor;
+            
+            NumericUpDownHiddenOpacity.Value = SettingsSystem.RenderSettings.HiddenOpacity / 10.0m;
 
-        ComboBoxBonusEffectVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.BonusEffectVisibility;
-        ComboBoxRNoteEffectVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.RNoteEffectVisibility;
-        NumericUpDownRNoteEffectOpacity.Value = SettingsSystem.RenderSettings.RNoteEffectOpacity / 10.0m;
+            ComboBoxBonusEffectVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.BonusEffectVisibility;
+            ComboBoxRNoteEffectVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.RNoteEffectVisibility;
+            NumericUpDownRNoteEffectOpacity.Value = SettingsSystem.RenderSettings.RNoteEffectOpacity / 10.0m;
 
-        ComboBoxClearBackgroundVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.ClearBackgroundVisibility;
+            ComboBoxClearBackgroundVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.ClearBackgroundVisibility;
 
-        ComboBoxDifficultyDisplayVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.DifficultyDisplayVisibility;
-        ComboBoxLevelDisplayVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.LevelDisplayVisibility;
-        ComboBoxTitleDisplayVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.TitleDisplayVisibility;
-        
-        ComboBoxNoteThickness.SelectedIndex = (int)SettingsSystem.RenderSettings.NoteThickness;
-        
-        ComboBoxNoteColorTouch.SelectedIndex = (int)SettingsSystem.RenderSettings.TouchNoteColor;
-        ComboBoxNoteColorChain.SelectedIndex = (int)SettingsSystem.RenderSettings.ChainNoteColor;
-        ComboBoxNoteColorHold.SelectedIndex = (int)SettingsSystem.RenderSettings.HoldNoteColor;
-        ComboBoxNoteColorSlideClockwise.SelectedIndex = (int)SettingsSystem.RenderSettings.SlideClockwiseNoteColor;
-        ComboBoxNoteColorSlideCounterclockwise.SelectedIndex = (int)SettingsSystem.RenderSettings.SlideCounterclockwiseNoteColor;
-        ComboBoxNoteColorSnapForward.SelectedIndex = (int)SettingsSystem.RenderSettings.SnapForwardNoteColor;
-        ComboBoxNoteColorSnapBackward.SelectedIndex = (int)SettingsSystem.RenderSettings.SnapBackwardNoteColor;
+            ComboBoxDifficultyDisplayVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.DifficultyDisplayVisibility;
+            ComboBoxLevelDisplayVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.LevelDisplayVisibility;
+            ComboBoxTitleDisplayVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.TitleDisplayVisibility;
+            
+            ComboBoxNoteThickness.SelectedIndex = (int)SettingsSystem.RenderSettings.NoteThickness;
+            
+            ComboBoxNoteColorTouch.SelectedIndex = (int)SettingsSystem.RenderSettings.TouchNoteColor;
+            ComboBoxNoteColorChain.SelectedIndex = (int)SettingsSystem.RenderSettings.ChainNoteColor;
+            ComboBoxNoteColorHold.SelectedIndex = (int)SettingsSystem.RenderSettings.HoldNoteColor;
+            ComboBoxNoteColorSlideClockwise.SelectedIndex = (int)SettingsSystem.RenderSettings.SlideClockwiseNoteColor;
+            ComboBoxNoteColorSlideCounterclockwise.SelectedIndex = (int)SettingsSystem.RenderSettings.SlideCounterclockwiseNoteColor;
+            ComboBoxNoteColorSnapForward.SelectedIndex = (int)SettingsSystem.RenderSettings.SnapForwardNoteColor;
+            ComboBoxNoteColorSnapBackward.SelectedIndex = (int)SettingsSystem.RenderSettings.SnapBackwardNoteColor;
 
-        blockEvent = false;
+            blockEvent = false;
+        });
     }
+#endregion System Event Delegates
 
+#region UI Event Delegates
     private void CheckBoxLowPerformanceMode_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (blockEvent) return;
@@ -158,8 +165,7 @@ public partial class SettingsRenderingView : UserControl
 
         SettingsSystem.RenderSettings.TitleDisplayVisibility = (RenderSettings.InterfaceVisibilityOption)ComboBoxTitleDisplayVisibility.SelectedIndex;
     }
-
-
+    
     private void ComboBoxNoteThickness_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvent) return;
@@ -210,4 +216,5 @@ public partial class SettingsRenderingView : UserControl
             SettingsSystem.RenderSettings.SnapBackwardNoteColor = color;
         }
     }
+#endregion UI Event Delegates
 }

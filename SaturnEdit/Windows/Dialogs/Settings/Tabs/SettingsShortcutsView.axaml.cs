@@ -7,6 +7,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Media;
+using Avalonia.Threading;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 
@@ -21,19 +22,169 @@ public partial class SettingsShortcutsView : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
         
-        ListBoxShortcuts.AddHandler(KeyDownEvent, OnKeyDown, RoutingStrategies.Tunnel);
+        ListBoxShortcuts.AddHandler(KeyDownEvent, ListBoxShortcuts_OnKeyDown, RoutingStrategies.Tunnel);
     }
 
+    public bool DefiningShortcut = false; 
+    
+    private ShortcutListItem? currentItem = null;
+    
+#region Methods
+    private void StartDefiningShortcut(ShortcutListItem item)
+    {
+        // stop previous definition if it's still going.
+        if (DefiningShortcut && currentItem != null)
+        {
+            StopDefiningShortcut();
+        }
+        
+        DefiningShortcut = true;
+        currentItem = item;
+        
+        currentItem.TextBlockShortcut.IsVisible = false;
+        currentItem.TextBlockWaitingForInput.IsVisible = true;
+    }
+
+    public void StopDefiningShortcut()
+    {
+        // reset previous item
+        if (currentItem != null)
+        {
+            currentItem.TextBlockShortcut.IsVisible = true;
+            currentItem.TextBlockWaitingForInput.IsVisible = false;
+        }
+        
+        DefiningShortcut = false;
+        currentItem = null;
+    }
+
+    private void ClearShortcut(ShortcutListItem item)
+    {
+        if (DefiningShortcut)
+        {
+            StopDefiningShortcut();
+        }
+        
+        SettingsSystem.ShortcutSettings.SetShortcut(item.Key, new(Key.None, false, false, false, item.Shortcut.GroupMessage, item.Shortcut.ActionMessage));
+    }
+
+    private void ResetShortcut(ShortcutListItem item)
+    {
+        if (DefiningShortcut)
+        {
+            StopDefiningShortcut();
+        }
+
+        // Very primitive and dumb solution, but it works (:
+        ShortcutSettings tempShortcutSettings = new();
+        SettingsSystem.ShortcutSettings.SetShortcut(item.Key, tempShortcutSettings.Shortcuts[item.Key]);
+    }
+    
+    private void GenerateList(string query)
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            if (Application.Current == null) return;
+        
+            if (DefiningShortcut)
+            {
+                StopDefiningShortcut();
+            }
+        
+            string[] queryParts = query.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        
+            List<KeyValuePair<string, Shortcut>> shortcuts = query == ""
+                ? SettingsSystem.ShortcutSettings.Shortcuts.ToList()
+                : SettingsSystem.ShortcutSettings.Shortcuts.Where(x =>
+                {
+                    foreach (string queryPart in queryParts)
+                    {
+                        bool group = Application.Current.TryGetResource(x.Value.GroupMessage, Application.Current.ActualThemeVariant, out object? groupResource)
+                                     && groupResource is string groupName
+                                     && groupName.Contains(queryPart, StringComparison.OrdinalIgnoreCase);
+                    
+                        bool action = Application.Current.TryGetResource(x.Value.ActionMessage, Application.Current.ActualThemeVariant, out object? actionResource)
+                                      && actionResource is string actionName
+                                      && actionName.Contains(queryPart, StringComparison.OrdinalIgnoreCase);
+
+                        bool shortcut = x.Value.ToString().Contains(queryPart, StringComparison.OrdinalIgnoreCase);
+
+                        if (group || action || shortcut)
+                        {
+                            return true;
+                        }
+                    }
+                
+                    return false;
+                }).ToList();    
+        
+            for (int i = 0; i < shortcuts.Count; i++)
+            {
+                if (i < ListBoxShortcuts.Items.Count)
+                {
+                    // Modify existing items
+                    if (ListBoxShortcuts.Items[i] is not ShortcutListItem item) continue;
+                
+                    item.Key = shortcuts[i].Key;
+                    item.Shortcut = shortcuts[i].Value;
+                    item.TextBlockGroup.Bind(TextBlock.TextProperty, new DynamicResourceExtension(shortcuts[i].Value.GroupMessage));
+                    item.TextBlockAction.Bind(TextBlock.TextProperty, new DynamicResourceExtension(shortcuts[i].Value.ActionMessage));
+                    item.TextBlockShortcut.Text = shortcuts[i].Value.ToString();
+
+                    if (i % 2 != 0)
+                    {
+                        item.Bind(BackgroundProperty, new DynamicResourceExtension("ButtonSecondaryPointerOver"));
+                    }
+                    else
+                    {
+                        item.Background = new SolidColorBrush(Colors.Transparent);
+                    }
+                }
+                else
+                {
+                    // Create new item
+                    ShortcutListItem newItem = new()
+                    {
+                        Key = shortcuts[i].Key,
+                        Shortcut = shortcuts[i].Value,
+                    };
+                
+                    newItem.TextBlockGroup.Bind(TextBlock.TextProperty, new DynamicResourceExtension(newItem.Shortcut.GroupMessage));
+                    newItem.TextBlockAction.Bind(TextBlock.TextProperty, new DynamicResourceExtension(newItem.Shortcut.ActionMessage));
+                    newItem.TextBlockShortcut.Text = newItem.Shortcut.ToString();
+
+                    if (i % 2 != 0)
+                    {
+                        newItem.Bind(BackgroundProperty, new DynamicResourceExtension("ButtonSecondaryPointerOver"));
+                    }
+                    else
+                    {
+                        newItem.Background = new SolidColorBrush(Colors.Transparent);
+                    }
+                
+                    ListBoxShortcuts.Items.Add(newItem);
+                }
+            }
+
+            for (int i = ListBoxShortcuts.Items.Count - 1; i >= shortcuts.Count; i--)
+            {
+                if (ListBoxShortcuts.Items[i] is not ShortcutListItem item) continue;
+            
+                ListBoxShortcuts.Items.Remove(item);
+            }
+        });
+    }
+#endregion Methods
+
+#region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         GenerateList(TextBoxSearch?.Text ?? "");
     }
-    
-    public bool DefiningShortcut = false; 
-    
-    private ShortcutListItem? currentItem = null;
+#endregion System Event Delegates
 
-    public void OnKeyDown(object? sender, KeyEventArgs e)
+#region UI Event Delegates
+    private void ListBoxShortcuts_OnKeyDown(object? sender, KeyEventArgs e)
     {
         if (!DefiningShortcut) return;
         if (currentItem == null) return;
@@ -133,146 +284,5 @@ public partial class SettingsShortcutsView : UserControl
         if (TextBoxSearch == null) return;
         GenerateList(TextBoxSearch.Text ?? "");
     }
-    
-    private void StartDefiningShortcut(ShortcutListItem item)
-    {
-        // stop previous definition if it's still going.
-        if (DefiningShortcut && currentItem != null)
-        {
-            StopDefiningShortcut();
-        }
-        
-        DefiningShortcut = true;
-        currentItem = item;
-        
-        currentItem.TextBlockShortcut.IsVisible = false;
-        currentItem.TextBlockWaitingForInput.IsVisible = true;
-    }
-
-    public void StopDefiningShortcut()
-    {
-        // reset previous item
-        if (currentItem != null)
-        {
-            currentItem.TextBlockShortcut.IsVisible = true;
-            currentItem.TextBlockWaitingForInput.IsVisible = false;
-        }
-        
-        DefiningShortcut = false;
-        currentItem = null;
-    }
-
-    private void ClearShortcut(ShortcutListItem item)
-    {
-        if (DefiningShortcut)
-        {
-            StopDefiningShortcut();
-        }
-        
-        SettingsSystem.ShortcutSettings.SetShortcut(item.Key, new(Key.None, false, false, false, item.Shortcut.GroupMessage, item.Shortcut.ActionMessage));
-    }
-
-    private void ResetShortcut(ShortcutListItem item)
-    {
-        if (DefiningShortcut)
-        {
-            StopDefiningShortcut();
-        }
-
-        // Very primitive and dumb solution, but it works (:
-        ShortcutSettings tempShortcutSettings = new();
-        SettingsSystem.ShortcutSettings.SetShortcut(item.Key, tempShortcutSettings.Shortcuts[item.Key]);
-    }
-    
-    private void GenerateList(string query)
-    {
-        if (Application.Current == null) return;
-        
-        if (DefiningShortcut)
-        {
-            StopDefiningShortcut();
-        }
-        
-        string[] queryParts = query.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        
-        List<KeyValuePair<string, Shortcut>> shortcuts = query == ""
-            ? SettingsSystem.ShortcutSettings.Shortcuts.ToList()
-            : SettingsSystem.ShortcutSettings.Shortcuts.Where(x =>
-            {
-                foreach (string queryPart in queryParts)
-                {
-                    bool group = Application.Current.TryGetResource(x.Value.GroupMessage, Application.Current.ActualThemeVariant, out object? groupResource)
-                              && groupResource is string groupName
-                              && groupName.Contains(queryPart, StringComparison.OrdinalIgnoreCase);
-                    
-                    bool action = Application.Current.TryGetResource(x.Value.ActionMessage, Application.Current.ActualThemeVariant, out object? actionResource)
-                              && actionResource is string actionName
-                              && actionName.Contains(queryPart, StringComparison.OrdinalIgnoreCase);
-
-                    bool shortcut = x.Value.ToString().Contains(queryPart, StringComparison.OrdinalIgnoreCase);
-
-                    if (group || action || shortcut)
-                    {
-                        return true;
-                    }
-                }
-                
-                return false;
-            }).ToList();    
-        
-        for (int i = 0; i < shortcuts.Count; i++)
-        {
-            if (i < ListBoxShortcuts.Items.Count)
-            {
-                // Modify existing items
-                if (ListBoxShortcuts.Items[i] is not ShortcutListItem item) continue;
-                
-                item.Key = shortcuts[i].Key;
-                item.Shortcut = shortcuts[i].Value;
-                item.TextBlockGroup.Bind(TextBlock.TextProperty, new DynamicResourceExtension(shortcuts[i].Value.GroupMessage));
-                item.TextBlockAction.Bind(TextBlock.TextProperty, new DynamicResourceExtension(shortcuts[i].Value.ActionMessage));
-                item.TextBlockShortcut.Text = shortcuts[i].Value.ToString();
-
-                if (i % 2 != 0)
-                {
-                    item.Bind(BackgroundProperty, new DynamicResourceExtension("ButtonSecondaryPointerOver"));
-                }
-                else
-                {
-                    item.Background = new SolidColorBrush(Colors.Transparent);
-                }
-            }
-            else
-            {
-                // Create new item
-                ShortcutListItem newItem = new()
-                {
-                    Key = shortcuts[i].Key,
-                    Shortcut = shortcuts[i].Value,
-                };
-                
-                newItem.TextBlockGroup.Bind(TextBlock.TextProperty, new DynamicResourceExtension(newItem.Shortcut.GroupMessage));
-                newItem.TextBlockAction.Bind(TextBlock.TextProperty, new DynamicResourceExtension(newItem.Shortcut.ActionMessage));
-                newItem.TextBlockShortcut.Text = newItem.Shortcut.ToString();
-
-                if (i % 2 != 0)
-                {
-                    newItem.Bind(BackgroundProperty, new DynamicResourceExtension("ButtonSecondaryPointerOver"));
-                }
-                else
-                {
-                    newItem.Background = new SolidColorBrush(Colors.Transparent);
-                }
-                
-                ListBoxShortcuts.Items.Add(newItem);
-            }
-        }
-
-        for (int i = ListBoxShortcuts.Items.Count - 1; i >= shortcuts.Count; i--)
-        {
-            if (ListBoxShortcuts.Items[i] is not ShortcutListItem item) continue;
-            
-            ListBoxShortcuts.Items.Remove(item);
-        }
-    }
+#endregion UI Event Delegates
 }

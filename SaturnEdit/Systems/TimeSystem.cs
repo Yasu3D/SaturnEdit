@@ -22,20 +22,13 @@ public static class TimeSystem
         OnPlaybackStateChanged(null, EventArgs.Empty);
     }
     
-    public const float TickInterval = 1000.0f / 120.0f;
-    public static readonly Timer UpdateTimer = new(UpdateTimer_OnTick, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(TickInterval));
-    
     public static event EventHandler? UpdateTick;
-    
     public static event EventHandler? TimestampChanged;
     public static event EventHandler? TimestampSeeked;
-    
     public static event EventHandler? PlaybackStateChanged;
     public static event EventHandler? PlaybackSpeedChanged;
     public static event EventHandler? DivisionChanged;
     public static event EventHandler? LoopChanged;
-    
-    public const int DefaultDivision = 8;
     
     /// <summary>
     /// The current playback state of the playhead.
@@ -146,7 +139,32 @@ public static class TimeSystem
         }
     }
     private static float loopEnd = -1;
+    
+    public const float TickInterval = 1000.0f / 120.0f;
+    public const int DefaultDivision = 8;
+    
+    public static readonly Timer UpdateTimer = new(UpdateTimer_OnTick, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(TickInterval));
 
+#region Methods
+    public static void SeekMeasureTick(int measure, int tick)
+    {
+        Timestamp t = new(measure, tick);
+        t.Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, t);
+
+        Timestamp = t;
+        TimestampSeeked?.Invoke(null, EventArgs.Empty);
+    }
+
+    public static void SeekTime(float time, int div)
+    {
+        Timestamp t = Timestamp.TimestampFromTime(ChartSystem.Chart, time, div);
+
+        Timestamp = t;
+        TimestampSeeked?.Invoke(null, EventArgs.Empty);
+    }
+#endregion Methods
+
+#region System Event Delegates
     private static void OnEntryChanged(object? sender, EventArgs e)
     {
         LoopEnd = Math.Min(LoopEnd, ChartSystem.Entry.ChartEnd.Time);
@@ -197,7 +215,9 @@ public static class TimeSystem
             }
         }
     }
+#endregion System Event Delegates
 
+#region Internal Event Delegates
     private static void UpdateTimer_OnTick(object? sender)
     {
         UpdateTick?.Invoke(null, EventArgs.Empty);
@@ -273,21 +293,5 @@ public static class TimeSystem
             Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, (float)AudioSystem.AudioChannelAudio.Position + ChartSystem.Entry.AudioOffset, Division);
         }
     }
-
-    public static void SeekMeasureTick(int measure, int tick)
-    {
-        Timestamp t = new(measure, tick);
-        t.Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, t);
-
-        Timestamp = t;
-        TimestampSeeked?.Invoke(null, EventArgs.Empty);
-    }
-
-    public static void SeekTime(float time, int div)
-    {
-        Timestamp t = Timestamp.TimestampFromTime(ChartSystem.Chart, time, div);
-
-        Timestamp = t;
-        TimestampSeeked?.Invoke(null, EventArgs.Empty);
-    }
+#endregion Internal Event Delegates
 }

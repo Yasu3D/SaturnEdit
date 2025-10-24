@@ -3,6 +3,7 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using SaturnData.Notation.Core;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
@@ -26,65 +27,140 @@ public partial class LayerListView : UserControl
 
     private bool blockEvents = false;
     
+#region Methods
+    private void MoveLayerUp()
+    {
+        if (ListBoxLayers.SelectedItem is not LayerListItem item) return;
+
+        int indexA = ChartSystem.Chart.Layers.IndexOf(item.Layer);
+        if (indexA == -1) return;
+
+        int indexB = indexA - 1;
+        if (indexB < 0) return;
+
+        Layer layerA = ChartSystem.Chart.Layers[indexA];
+        Layer layerB = ChartSystem.Chart.Layers[indexB];
+
+        UndoRedoSystem.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
+    }
+
+    private void MoveLayerDown()
+    {
+        if (ListBoxLayers.SelectedItem is not LayerListItem item) return;
+
+        int indexA = ChartSystem.Chart.Layers.IndexOf(item.Layer);
+        if (indexA == -1) return;
+
+        int indexB = indexA + 1;
+        if (indexB >= ChartSystem.Chart.Layers.Count) return;
+
+        Layer layerA = ChartSystem.Chart.Layers[indexA];
+        Layer layerB = ChartSystem.Chart.Layers[indexB];
+
+        UndoRedoSystem.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
+    }
+    
+    private void DeleteLayer()
+    {
+        if (ListBoxLayers.SelectedItem is not LayerListItem item) return;
+
+        int index = ChartSystem.Chart.Layers.IndexOf(item.Layer);
+        
+        Layer? newSelection = null;
+
+        if (ChartSystem.Chart.Layers.Count > 1)
+        {
+            newSelection = index == 0
+                ? ChartSystem.Chart.Layers[1]
+                : ChartSystem.Chart.Layers[index - 1];
+        }
+
+        LayerDeleteOperation op0 = new(item.Layer, index);
+        LayerSelectionOperation op1 = new(item.Layer, newSelection);
+
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+    }
+    
+    private void AddLayer()
+    {
+        Layer layer = new("New Layer");
+        int index = ChartSystem.Chart.Layers.Count;
+
+        LayerAddOperation op0 = new(layer, index);
+        LayerSelectionOperation op1 = new(SelectionSystem.SelectedLayer, layer); 
+        
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+    }
+#endregion Methods
+
+#region System Event Delegates
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
-        blockEvents = true;
-        
-        for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
+        Dispatcher.UIThread.Post(() =>
         {
-            Layer layer = ChartSystem.Chart.Layers[i];
+            blockEvents = true;
             
-            if (i < ListBoxLayers.Items.Count)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                // Modify existing item.
+                Layer layer = ChartSystem.Chart.Layers[i];
+                
+                if (i < ListBoxLayers.Items.Count)
+                {
+                    // Modify existing item.
+                    if (ListBoxLayers.Items[i] is not LayerListItem item) continue;
+
+                    item.SetLayer(layer);
+                }
+                else
+                {
+                    // Create new item.
+                    LayerListItem item = new();
+                    item.SetLayer(layer);
+                    
+                    item.NameChanged += LayerItem_OnNameChanged;
+                    item.VisibilityChanged += LayerItem_OnVisibilityChanged;
+                    
+                    ListBoxLayers.Items.Add(item);
+                }
+            }
+            
+            // Delete redundant items.
+            for (int i = ListBoxLayers.Items.Count - 1; i >= ChartSystem.Chart.Layers.Count; i--)
+            {
                 if (ListBoxLayers.Items[i] is not LayerListItem item) continue;
 
-                item.SetLayer(layer);
-            }
-            else
-            {
-                // Create new item.
-                LayerListItem item = new();
-                item.SetLayer(layer);
+                item.NameChanged -= LayerItem_OnNameChanged;
+                item.VisibilityChanged -= LayerItem_OnVisibilityChanged;
                 
-                item.NameChanged += LayerItem_OnNameChanged;
-                item.VisibilityChanged += LayerItem_OnVisibilityChanged;
-                
-                ListBoxLayers.Items.Add(item);
+                ListBoxLayers.Items.Remove(item);
             }
-        }
-        
-        // Delete redundant items.
-        for (int i = ListBoxLayers.Items.Count - 1; i >= ChartSystem.Chart.Layers.Count; i--)
-        {
-            if (ListBoxLayers.Items[i] is not LayerListItem item) continue;
-
-            item.NameChanged -= LayerItem_OnNameChanged;
-            item.VisibilityChanged -= LayerItem_OnVisibilityChanged;
             
-            ListBoxLayers.Items.Remove(item);
-        }
-
-        // Set selection.
-        ListBoxLayers.SelectedItem = ListBoxLayers.Items.FirstOrDefault(x => x is LayerListItem item && item.Layer == SelectionSystem.SelectedLayer);
-
-        blockEvents = false;
+            // Set selection.
+            ListBoxLayers.SelectedItem = ListBoxLayers.Items.FirstOrDefault(x => x is LayerListItem item && item.Layer == SelectionSystem.SelectedLayer);
+            
+            blockEvents = false;
+        });
     }
 
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
-        TextBlockShortcutMoveItemUp1.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
-        TextBlockShortcutMoveItemDown1.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
-        TextBlockShortcutDeleteSelection1.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
-        
-        TextBlockShortcutMoveItemUp2.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
-        TextBlockShortcutMoveItemDown2.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
-        TextBlockShortcutDeleteSelection2.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
-        
-        TextBlockShortcutMoveItemUp3.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
-        TextBlockShortcutMoveItemDown3.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
+        Dispatcher.UIThread.Post(() =>
+        {
+            TextBlockShortcutMoveItemUp1.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
+            TextBlockShortcutMoveItemDown1.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
+            TextBlockShortcutDeleteSelection1.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
+            
+            TextBlockShortcutMoveItemUp2.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
+            TextBlockShortcutMoveItemDown2.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
+            TextBlockShortcutDeleteSelection2.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
+            
+            TextBlockShortcutMoveItemUp3.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
+            TextBlockShortcutMoveItemDown3.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
+        });
     }
+#endregion System Event Delegates
 
+#region UI Event Delegates
     private void LayerItem_OnNameChanged(object? sender, EventArgs e)
     {
         if (blockEvents) return;
@@ -152,68 +228,5 @@ public partial class LayerListView : UserControl
     private void ButtonDeleteSelection_Click(object? sender, RoutedEventArgs e) => DeleteLayer();
 
     private void ButtonAddNew_Click(object? sender, RoutedEventArgs e) => AddLayer();
-
-    private void MoveLayerUp()
-    {
-        if (ListBoxLayers.SelectedItem is not LayerListItem item) return;
-
-        int indexA = ChartSystem.Chart.Layers.IndexOf(item.Layer);
-        if (indexA == -1) return;
-
-        int indexB = indexA - 1;
-        if (indexB < 0) return;
-
-        Layer layerA = ChartSystem.Chart.Layers[indexA];
-        Layer layerB = ChartSystem.Chart.Layers[indexB];
-
-        UndoRedoSystem.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
-    }
-
-    private void MoveLayerDown()
-    {
-        if (ListBoxLayers.SelectedItem is not LayerListItem item) return;
-
-        int indexA = ChartSystem.Chart.Layers.IndexOf(item.Layer);
-        if (indexA == -1) return;
-
-        int indexB = indexA + 1;
-        if (indexB >= ChartSystem.Chart.Layers.Count) return;
-
-        Layer layerA = ChartSystem.Chart.Layers[indexA];
-        Layer layerB = ChartSystem.Chart.Layers[indexB];
-
-        UndoRedoSystem.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
-    }
-    
-    private void DeleteLayer()
-    {
-        if (ListBoxLayers.SelectedItem is not LayerListItem item) return;
-
-        int index = ChartSystem.Chart.Layers.IndexOf(item.Layer);
-        
-        Layer? newSelection = null;
-
-        if (ChartSystem.Chart.Layers.Count > 1)
-        {
-            newSelection = index == 0
-                ? ChartSystem.Chart.Layers[1]
-                : ChartSystem.Chart.Layers[index - 1];
-        }
-
-        LayerDeleteOperation op0 = new(item.Layer, index);
-        LayerSelectionOperation op1 = new(item.Layer, newSelection);
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
-    }
-    
-    private void AddLayer()
-    {
-        Layer layer = new("New Layer");
-        int index = ChartSystem.Chart.Layers.Count;
-
-        LayerAddOperation op0 = new(layer, index);
-        LayerSelectionOperation op1 = new(SelectionSystem.SelectedLayer, layer); 
-        
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
-    }
+#endregion UI Event Delegates
 }

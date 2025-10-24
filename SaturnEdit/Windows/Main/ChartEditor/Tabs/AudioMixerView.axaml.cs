@@ -22,6 +22,9 @@ public partial class AudioMixerView : UserControl
         TimeSystem.UpdateTick += OnUpdateTick;
     }
 
+    private bool blockEvents = false;
+    
+#region Methods
     private async void InitChannels()
     {
         ChannelMaster.SliderVolume.ValueChanged     += ChannelSliderVolume_OnValueChanged;
@@ -57,14 +60,28 @@ public partial class AudioMixerView : UserControl
         ChannelStartClick.ButtonSound.Click += ChannelButtonSound_OnClick;
         ChannelMetronome.ButtonSound.Click  += ChannelButtonSound_OnClick;
         
-        // race conditions, part 2 (:
+        // race conditions (:
         await Task.Delay(1);
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
     }
-
-    private bool blockEvents = false;
     
+    private static int SliderValueToDecibels(double value)
+    {
+        return value > 24
+            ? (int)(value - 36)
+            : (int)(2 * value - 60);
+    }
+
+    private static double DecibelsToSliderValue(int value)
+    {
+        return value < -12
+            ? 0.5 * value + 30
+            : value + 36;
+    }
+#endregion Methods
+
+#region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         blockEvents = true;
@@ -174,20 +191,22 @@ public partial class AudioMixerView : UserControl
             
             ChannelMaster.MixerVolumeBarLeft.Height = masterRmsLeft * masterVolume;
             ChannelMaster.MixerVolumeBarRight.Height = masterRmsRight * masterVolume;
-        });
-        
-        return;
 
-        double getLevel(float? level, double? volume, double currentHeight)
-        {
-            const double maxHeight = 175;
+            return;
             
-            currentHeight = Math.Max(currentHeight, maxHeight * (level ?? 0) * (volume ?? 0));
-            currentHeight -= TimeSystem.TickInterval * 0.2f;
-            return Math.Clamp(currentHeight, 0, maxHeight);
-        }
+            double getLevel(float? level, double? volume, double currentHeight)
+            {
+                const double maxHeight = 175;
+                
+                currentHeight = Math.Max(currentHeight, maxHeight * (level ?? 0) * (volume ?? 0));
+                currentHeight -= TimeSystem.TickInterval * 0.2f;
+                return Math.Clamp(currentHeight, 0, maxHeight);
+            }
+        });
     }
-    
+#endregion System Event Delegates
+
+#region UI Event Delegates
     private void ChannelSliderVolume_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
     {
         if (blockEvents) return;
@@ -228,61 +247,80 @@ public partial class AudioMixerView : UserControl
     
     private async void ChannelButtonSound_OnClick(object? sender, RoutedEventArgs e)
     {
-        if (blockEvents) return;
-        if (sender == null) return;
-
-        string path = "";
-        
         try
         {
-            TopLevel? topLevel = TopLevel.GetTopLevel(this);
-            if (topLevel == null) return;
+            if (blockEvents) return;
+            if (sender == null) return;
 
-            // Open file picker.
-            IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
+            string path = "";
+
+            try
             {
-                AllowMultiple = false,
-                FileTypeFilter =
-                [
-                    new("Audio Files")
-                    {
-                        Patterns = ["*.wav", "*.mp3", "*.ogg", "*.flac"],
-                    },
-                ],
-            });
-            if (files.Count != 1) return;
+                TopLevel? topLevel = TopLevel.GetTopLevel(this);
+                if (topLevel == null) return;
 
-            path = files[0].Path.LocalPath;
+                // Open file picker.
+                IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
+                {
+                    AllowMultiple = false,
+                    FileTypeFilter =
+                    [
+                        new("Audio Files")
+                        {
+                            Patterns = ["*.wav", "*.mp3", "*.ogg", "*.flac"],
+                        },
+                    ],
+                });
+                if (files.Count != 1) return;
+
+                path = files[0].Path.LocalPath;
+            }
+            catch (Exception ex)
+            {
+                // don't throw
+                Console.WriteLine(ex);
+            }
+
+            if (!File.Exists(path)) return;
+
+            if (ReferenceEquals(sender, ChannelGuide.ButtonSound))
+            {
+                SettingsSystem.AudioSettings.HitsoundGuidePath = path;
+            }
+            else if (ReferenceEquals(sender, ChannelTouch.ButtonSound))
+            {
+                SettingsSystem.AudioSettings.HitsoundTouchPath = path;
+            }
+            else if (ReferenceEquals(sender, ChannelHoldLoop.ButtonSound))
+            {
+                SettingsSystem.AudioSettings.HitsoundHoldLoopPath = path;
+            }
+            else if (ReferenceEquals(sender, ChannelSlide.ButtonSound))
+            {
+                SettingsSystem.AudioSettings.HitsoundSlidePath = path;
+            }
+            else if (ReferenceEquals(sender, ChannelBonus.ButtonSound))
+            {
+                SettingsSystem.AudioSettings.HitsoundBonusPath = path;
+            }
+            else if (ReferenceEquals(sender, ChannelR.ButtonSound))
+            {
+                SettingsSystem.AudioSettings.HitsoundRPath = path;
+            }
+            else if (ReferenceEquals(sender, ChannelStartClick.ButtonSound))
+            {
+                SettingsSystem.AudioSettings.HitsoundStartClickPath = path;
+            }
+            else if (ReferenceEquals(sender, ChannelMetronome.ButtonSound))
+            {
+                SettingsSystem.AudioSettings.HitsoundMetronomePath = path;
+            }
         }
         catch (Exception ex)
         {
-            // don't throw
+            // Don't throw.
             Console.WriteLine(ex);
         }
-
-        if (!File.Exists(path)) return;
-        
-        if      (ReferenceEquals(sender, ChannelGuide.ButtonSound))      { SettingsSystem.AudioSettings.HitsoundGuidePath      = path; }
-        else if (ReferenceEquals(sender, ChannelTouch.ButtonSound))      { SettingsSystem.AudioSettings.HitsoundTouchPath      = path; }
-        else if (ReferenceEquals(sender, ChannelHoldLoop.ButtonSound))   { SettingsSystem.AudioSettings.HitsoundHoldLoopPath   = path; }
-        else if (ReferenceEquals(sender, ChannelSlide.ButtonSound))      { SettingsSystem.AudioSettings.HitsoundSlidePath      = path; }
-        else if (ReferenceEquals(sender, ChannelBonus.ButtonSound))      { SettingsSystem.AudioSettings.HitsoundBonusPath      = path; }
-        else if (ReferenceEquals(sender, ChannelR.ButtonSound))          { SettingsSystem.AudioSettings.HitsoundRPath          = path; }
-        else if (ReferenceEquals(sender, ChannelStartClick.ButtonSound)) { SettingsSystem.AudioSettings.HitsoundStartClickPath = path; }
-        else if (ReferenceEquals(sender, ChannelMetronome.ButtonSound))  { SettingsSystem.AudioSettings.HitsoundMetronomePath  = path; }
     }
-    
-    private int SliderValueToDecibels(double value)
-    {
-        return value > 24
-            ? (int)(value - 36)
-            : (int)(2 * value - 60);
-    }
-
-    private double DecibelsToSliderValue(int value)
-    {
-        return value < -12
-            ? 0.5 * value + 30
-            : value + 36;
-    }
+#endregion UI Event Delegates
 }

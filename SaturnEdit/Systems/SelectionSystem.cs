@@ -19,10 +19,8 @@ public static class SelectionSystem
     
     public static event EventHandler? PointerOverOverlapChanged;
     
-    // Layer
     public static Layer? SelectedLayer { get; set; } = null;
-
-    // PointerOver
+    
     public static IPositionable.OverlapResult PointerOverOverlap
     {
         get => pointerOverOverlap;
@@ -35,23 +33,19 @@ public static class SelectionSystem
         }
     }
     private static IPositionable.OverlapResult pointerOverOverlap = IPositionable.OverlapResult.None;
-
+    
     public static ITimeable? PointerOverObject { get; set; } = null;
     
-    // Selection
     public static ITimeable? LastSelectedObject { get; set; } = null;
     public static HashSet<ITimeable> SelectedObjects { get; } = [];
+    
     public static BoxSelectData BoxSelectData { get; set; } = new();
 
-    private static void OnPlaybackStateChanged(object? sender, EventArgs e)
-    {
-        PointerOverObject = null;
-    }
-    
+#region Methods
     public static void SetSelection(bool control, bool shift)
     {
         List<IOperation> operations = [];
-        
+            
         // None
         // - clear
         // - add pointerObj
@@ -67,7 +61,7 @@ public static class SelectionSystem
                 operations.Add(new AddSelectionOperation(PointerOverObject, LastSelectedObject));
             }
         }
-        
+            
         // Ctrl
         // - toggle pointerObj
         if (control && !shift)
@@ -83,7 +77,7 @@ public static class SelectionSystem
                 operations.Add(new AddSelectionOperation(PointerOverObject, LastSelectedObject));
             }
         }
-        
+            
         // Shift
         // - clear
         // - add from lastSelected to pointerObj
@@ -98,7 +92,7 @@ public static class SelectionSystem
 
             Timestamp start;
             Timestamp end;
-            
+                
             if (LastSelectedObject == null)
             {
                 start = PointerOverObject.Timestamp;
@@ -109,7 +103,7 @@ public static class SelectionSystem
                 start = Timestamp.Min(LastSelectedObject.Timestamp, PointerOverObject.Timestamp);
                 end = Timestamp.Max(LastSelectedObject.Timestamp, PointerOverObject.Timestamp);
             }
-            
+                
             foreach (Event @event in ChartSystem.Chart.Events)
             {
                 if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
@@ -148,7 +142,7 @@ public static class SelectionSystem
                     operations.Add(new AddSelectionOperation(note, LastSelectedObject));
                 }
             }
-            
+                
             operations.Add(new AddSelectionOperation(PointerOverObject, LastSelectedObject));
 
             if (LastSelectedObject != null)
@@ -156,7 +150,7 @@ public static class SelectionSystem
                 operations.Add(new AddSelectionOperation(LastSelectedObject, LastSelectedObject));
             }
         }
-        
+            
         // Ctrl + Shift
         // - add from lastSelected to pointerObj
         if (control && shift)
@@ -165,7 +159,7 @@ public static class SelectionSystem
 
             Timestamp start;
             Timestamp end;
-            
+                
             if (LastSelectedObject == null)
             {
                 start = PointerOverObject.Timestamp;
@@ -176,7 +170,7 @@ public static class SelectionSystem
                 start = Timestamp.Min(LastSelectedObject.Timestamp, PointerOverObject.Timestamp);
                 end = Timestamp.Max(LastSelectedObject.Timestamp, PointerOverObject.Timestamp);
             }
-            
+                
             foreach (Event @event in ChartSystem.Chart.Events)
             {
                 if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
@@ -215,7 +209,7 @@ public static class SelectionSystem
                     operations.Add(new AddSelectionOperation(note, LastSelectedObject));
                 }
             }
-            
+                
             operations.Add(new AddSelectionOperation(PointerOverObject, LastSelectedObject));
 
             if (LastSelectedObject != null)
@@ -223,7 +217,7 @@ public static class SelectionSystem
                 operations.Add(new AddSelectionOperation(LastSelectedObject, LastSelectedObject));
             }
         }
-        
+            
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -377,6 +371,14 @@ public static class SelectionSystem
         
         BoxSelectData = new();
     }
+#endregion Methods
+    
+#region System Event Delegates
+    private static void OnPlaybackStateChanged(object? sender, EventArgs e)
+    {
+        PointerOverObject = null;
+    }
+#endregion System Event Delegates
 }
 
 public class BoxSelectData

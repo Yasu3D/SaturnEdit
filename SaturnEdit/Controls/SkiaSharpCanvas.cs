@@ -20,10 +20,10 @@ public class SkiaSharpCanvas : UserControl
     
     public SkiaSharpCanvas()
     {
-        SizeChanged += OnSizeChanged;
+        SizeChanged += Control_OnSizeChanged;
     }
 
-    private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
+    private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
         CanvasWidth = (float)Bounds.Width;
         CanvasHeight = (float)Bounds.Height;

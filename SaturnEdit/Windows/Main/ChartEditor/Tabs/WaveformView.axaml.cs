@@ -8,15 +8,17 @@ public partial class WaveformView : UserControl
     public WaveformView()
     {
         InitializeComponent();
-        SizeChanged += OnSizeChanged;
+        SizeChanged += Control_OnSizeChanged;
     }
 
-    private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
+#region UI Event Delegates
+    private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
         double minimum = double.Min(Bounds.Width, Bounds.Height);
         RenderCanvas.Width = minimum;
         RenderCanvas.Height = minimum;
     }
-
+    
     private void RenderCanvas_OnRenderAction(SKCanvas canvas) { }
+#endregion UI Event Delegates
 }

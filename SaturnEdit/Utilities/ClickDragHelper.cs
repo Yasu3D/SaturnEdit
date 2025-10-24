@@ -6,14 +6,6 @@ namespace SaturnEdit.Utilities;
 public class ClickDragHelper
 {
     public PointerPoint? StartPoint { get; private set; } = null;
-
-    public bool DragActive(PointerPoint other)
-    {
-        if (StartPoint == null) return false;
-
-        double distance = Math.Max(Math.Abs(StartPoint.Value.Position.X - other.Position.X), Math.Abs(StartPoint.Value.Position.Y - other.Position.Y));
-        return distance > 10;
-    }
     
     public int StartLane { get; set; } = 0;
 
@@ -36,9 +28,18 @@ public class ClickDragHelper
     
     public bool PassedThroughSeam { get; private set; }= false;
 
-    public int Position => PassedThroughSeam
-        ? Math.Max(StartLane, EndLane)
-        : Math.Min(StartLane, EndLane);
+    public int Position
+    {
+        get
+        {
+            if (PassedThroughSeam)
+            {
+                return Math.Max(StartLane, EndLane);
+            }
+
+            return Math.Min(StartLane, EndLane);
+        }
+    }
 
     public int Size
     {
@@ -53,6 +54,7 @@ public class ClickDragHelper
         }
     }
 
+#region Methods
     public void Reset(PointerPoint? startPoint, int lane)
     {
         StartPoint = startPoint;
@@ -60,4 +62,13 @@ public class ClickDragHelper
         endLane = lane;
         PassedThroughSeam = false;
     }
+    
+    public bool IsDragActive(PointerPoint other)
+    {
+        if (StartPoint == null) return false;
+
+        double distance = Math.Max(Math.Abs(StartPoint.Value.Position.X - other.Position.X), Math.Abs(StartPoint.Value.Position.Y - other.Position.Y));
+        return distance > 10;
+    }
+#endregion Methods
 }

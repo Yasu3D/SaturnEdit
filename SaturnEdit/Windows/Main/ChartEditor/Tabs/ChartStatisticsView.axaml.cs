@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using Avalonia.Controls;
 using Avalonia.Media;
+using Avalonia.Threading;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
@@ -24,62 +25,10 @@ public partial class ChartStatisticsView : UserControl
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         OnOperationHistoryChanged(null, EventArgs.Empty);
         
-        SizeChanged += OnSizeChanged;
+        SizeChanged += Control_OnSizeChanged;
     }
 
-    private void OnSizeChanged(object? sender, SizeChangedEventArgs e) => UpdateGraph();
-
-    private void OnOperationHistoryChanged(object? sender, EventArgs e)
-    {
-        UpdateGraph();
-        UpdateStatistics();
-    }
-
-    private void OnSettingsChanged(object? sender, EventArgs e)
-    {
-        uint colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.TouchNoteColor);
-        Color backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
-        Color borderColor = Color.FromUInt32(colorCode);
-        GraphTouchNote.Background = new SolidColorBrush(backgroundColor);
-        GraphTouchNote.BorderBrush = new SolidColorBrush(borderColor);
-        
-        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.ChainNoteColor);
-        backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
-        borderColor = Color.FromUInt32(colorCode);
-        GraphChainNote.Background = new SolidColorBrush(backgroundColor);
-        GraphChainNote.BorderBrush = new SolidColorBrush(borderColor);
-        
-        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.HoldNoteColor);
-        backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
-        borderColor = Color.FromUInt32(colorCode);
-        GraphHoldNote.Background = new SolidColorBrush(backgroundColor);
-        GraphHoldNote.BorderBrush = new SolidColorBrush(borderColor);
-        
-        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SlideClockwiseNoteColor);
-        backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
-        borderColor = Color.FromUInt32(colorCode);
-        GraphSlideClockwiseNote.Background = new SolidColorBrush(backgroundColor);
-        GraphSlideClockwiseNote.BorderBrush = new SolidColorBrush(borderColor);
-        
-        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SlideCounterclockwiseNoteColor);
-        backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
-        borderColor = Color.FromUInt32(colorCode);
-        GraphSlideCounterclockwiseNote.Background = new SolidColorBrush(backgroundColor);
-        GraphSlideCounterclockwiseNote.BorderBrush = new SolidColorBrush(borderColor);
-        
-        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SnapForwardNoteColor);
-        backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
-        borderColor = Color.FromUInt32(colorCode);
-        GraphSnapForwardNote.Background = new SolidColorBrush(backgroundColor);
-        GraphSnapForwardNote.BorderBrush = new SolidColorBrush(borderColor);
-        
-        colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SnapBackwardNoteColor);
-        backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
-        borderColor = Color.FromUInt32(colorCode);
-        GraphSnapBackwardNote.Background = new SolidColorBrush(backgroundColor);
-        GraphSnapBackwardNote.BorderBrush = new SolidColorBrush(borderColor);
-    }
-
+#region Methods
     private void UpdateGraph()
     {
         double fullHeight = StackPanelGraph.Bounds.Height;
@@ -139,26 +88,29 @@ public partial class ChartStatisticsView : UserControl
             }
         }
 
-        GraphTouchNote.IsVisible = touchCount > 0;
-        GraphTouchNote.Height = fullHeight * ((double)touchCount / totalCount);
+        Dispatcher.UIThread.Post(() =>
+        {
+            GraphTouchNote.IsVisible = touchCount > 0;
+            GraphTouchNote.Height = fullHeight * ((double)touchCount / totalCount);
 
-        GraphChainNote.IsVisible = chainCount > 0;
-        GraphChainNote.Height = fullHeight * ((double)chainCount / totalCount);
+            GraphChainNote.IsVisible = chainCount > 0;
+            GraphChainNote.Height = fullHeight * ((double)chainCount / totalCount);
 
-        GraphHoldNote.IsVisible = holdCount > 0;
-        GraphHoldNote.Height = fullHeight * ((double)holdCount / totalCount);
+            GraphHoldNote.IsVisible = holdCount > 0;
+            GraphHoldNote.Height = fullHeight * ((double)holdCount / totalCount);
 
-        GraphSlideClockwiseNote.IsVisible = slideClockwiseCount > 0;
-        GraphSlideClockwiseNote.Height = fullHeight * ((double)slideClockwiseCount / totalCount);
+            GraphSlideClockwiseNote.IsVisible = slideClockwiseCount > 0;
+            GraphSlideClockwiseNote.Height = fullHeight * ((double)slideClockwiseCount / totalCount);
 
-        GraphSlideCounterclockwiseNote.IsVisible = slideCounterclockwiseCount > 0;
-        GraphSlideCounterclockwiseNote.Height = fullHeight * ((double)slideCounterclockwiseCount / totalCount);
+            GraphSlideCounterclockwiseNote.IsVisible = slideCounterclockwiseCount > 0;
+            GraphSlideCounterclockwiseNote.Height = fullHeight * ((double)slideCounterclockwiseCount / totalCount);
 
-        GraphSnapForwardNote.IsVisible = snapForwardCount > 0;
-        GraphSnapForwardNote.Height = fullHeight * ((double)snapForwardCount / totalCount);
+            GraphSnapForwardNote.IsVisible = snapForwardCount > 0;
+            GraphSnapForwardNote.Height = fullHeight * ((double)snapForwardCount / totalCount);
 
-        GraphSnapBackwardNote.IsVisible = snapBackwardCount > 0;
-        GraphSnapBackwardNote.Height = fullHeight * ((double)snapBackwardCount / totalCount);
+            GraphSnapBackwardNote.IsVisible = snapBackwardCount > 0;
+            GraphSnapBackwardNote.Height = fullHeight * ((double)snapBackwardCount / totalCount);
+        });
     }
 
     private void UpdateStatistics()
@@ -238,42 +190,109 @@ public partial class ChartStatisticsView : UserControl
         int effectiveNoteCount = normalNoteCount + bonusNoteCount + rNoteCount * 2;
         decimal scorePerNote = effectiveNoteCount == 0 ? 0 : 1_000_000.0m / effectiveNoteCount;
         
-        TextBlockFileName.Text = Path.GetFileName(ChartSystem.Entry.ChartFile);
+        Dispatcher.UIThread.Post(() =>
+        {
+            TextBlockFileName.Text = Path.GetFileName(ChartSystem.Entry.ChartFile);
 
-        TextBlockMaxCombo.Text = maxCombo.ToString();
-        TextBlockScorePerNote.Text = scorePerNote == 0 ? "/" : scorePerNote.ToString("F2", CultureInfo.InvariantCulture);
-        TextBlockScorePerRNote.Text = rNoteCount == 0 ? "/" : (scorePerNote * 2).ToString("F2", CultureInfo.InvariantCulture);
-        
-        TextBlockLayerCount.Text = ChartSystem.Chart.Layers.Count.ToString();
-        
-        TextBlockEventCount.Text = eventCount.ToString();
-        TextBlockTempoChangeCount.Text = tempoChangeCount.ToString();
-        TextBlockMetreChangeCount.Text = metreChangeCount.ToString();
-        TextBlockTutorialMarkerCount.Text = tutorialMarkerCount.ToString();
-        
-        TextBlockSpeedChangeCount.Text = speedChangeCount.ToString();
-        TextBlockVisibilityChangeCount.Text = visibilityChangeCount.ToString();
-        TextBlockReverseEffectCount.Text = reverseEffectCount.ToString();
-        TextBlockStopEffectCount.Text = stopEffectCount.ToString();
-        
-        TextBlockNormalNoteCount.Text = normalNoteCount.ToString();
-        TextBlockBonusNoteCount.Text = bonusNoteCount.ToString();
-        TextBlockRNoteCount.Text = rNoteCount.ToString();
-        
-        TextBlockTouchNoteCount.Text = touchNoteCount.ToString();
-        TextBlockChainNoteCount.Text = chainNoteCount.ToString();
-        TextBlockHoldNoteCount.Text = holdNoteCount.ToString();
-        
-        TextBlockSlideNoteCount.Text = slideNoteCount.ToString();
-        TextBlockSlideClockwiseNoteCount.Text = slideClockwiseNoteCount.ToString();
-        TextBlockSlideCounterclockwiseNoteCount.Text = slideCounterclockwiseNoteCount.ToString();
-        
-        TextBlockSnapNoteCount.Text = snapNoteCount.ToString();
-        TextBlockSnapForwardNoteCount.Text = snapForwardNoteCount.ToString();
-        TextBlockSnapBackwardNoteCount.Text = snapBackwardNoteCount.ToString();
-        
-        TextBlockLaneToggleNoteCount.Text = laneToggleNoteCount.ToString();
-        TextBlockLaneShowNoteCount.Text = laneShowNoteCount.ToString();
-        TextBlockLaneHideNoteCount.Text = laneHideNoteCount.ToString();
+            TextBlockMaxCombo.Text = maxCombo.ToString();
+            TextBlockScorePerNote.Text = scorePerNote == 0 ? "/" : scorePerNote.ToString("F2", CultureInfo.InvariantCulture);
+            TextBlockScorePerRNote.Text = rNoteCount == 0 ? "/" : (scorePerNote * 2).ToString("F2", CultureInfo.InvariantCulture);
+            
+            TextBlockLayerCount.Text = ChartSystem.Chart.Layers.Count.ToString();
+            
+            TextBlockEventCount.Text = eventCount.ToString();
+            TextBlockTempoChangeCount.Text = tempoChangeCount.ToString();
+            TextBlockMetreChangeCount.Text = metreChangeCount.ToString();
+            TextBlockTutorialMarkerCount.Text = tutorialMarkerCount.ToString();
+            
+            TextBlockSpeedChangeCount.Text = speedChangeCount.ToString();
+            TextBlockVisibilityChangeCount.Text = visibilityChangeCount.ToString();
+            TextBlockReverseEffectCount.Text = reverseEffectCount.ToString();
+            TextBlockStopEffectCount.Text = stopEffectCount.ToString();
+            
+            TextBlockNormalNoteCount.Text = normalNoteCount.ToString();
+            TextBlockBonusNoteCount.Text = bonusNoteCount.ToString();
+            TextBlockRNoteCount.Text = rNoteCount.ToString();
+            
+            TextBlockTouchNoteCount.Text = touchNoteCount.ToString();
+            TextBlockChainNoteCount.Text = chainNoteCount.ToString();
+            TextBlockHoldNoteCount.Text = holdNoteCount.ToString();
+            
+            TextBlockSlideNoteCount.Text = slideNoteCount.ToString();
+            TextBlockSlideClockwiseNoteCount.Text = slideClockwiseNoteCount.ToString();
+            TextBlockSlideCounterclockwiseNoteCount.Text = slideCounterclockwiseNoteCount.ToString();
+            
+            TextBlockSnapNoteCount.Text = snapNoteCount.ToString();
+            TextBlockSnapForwardNoteCount.Text = snapForwardNoteCount.ToString();
+            TextBlockSnapBackwardNoteCount.Text = snapBackwardNoteCount.ToString();
+            
+            TextBlockLaneToggleNoteCount.Text = laneToggleNoteCount.ToString();
+            TextBlockLaneShowNoteCount.Text = laneShowNoteCount.ToString();
+            TextBlockLaneHideNoteCount.Text = laneHideNoteCount.ToString();
+        });
     }
+#endregion Methods
+
+#region System Event Delegates
+    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    {
+        UpdateGraph();
+        UpdateStatistics();
+    }
+    
+    private void OnSettingsChanged(object? sender, EventArgs e)
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            uint colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.TouchNoteColor);
+            Color backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
+            Color borderColor = Color.FromUInt32(colorCode);
+            GraphTouchNote.Background = new SolidColorBrush(backgroundColor);
+            GraphTouchNote.BorderBrush = new SolidColorBrush(borderColor);
+            
+            colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.ChainNoteColor);
+            backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
+            borderColor = Color.FromUInt32(colorCode);
+            GraphChainNote.Background = new SolidColorBrush(backgroundColor);
+            GraphChainNote.BorderBrush = new SolidColorBrush(borderColor);
+            
+            colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.HoldNoteColor);
+            backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
+            borderColor = Color.FromUInt32(colorCode);
+            GraphHoldNote.Background = new SolidColorBrush(backgroundColor);
+            GraphHoldNote.BorderBrush = new SolidColorBrush(borderColor);
+            
+            colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SlideClockwiseNoteColor);
+            backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
+            borderColor = Color.FromUInt32(colorCode);
+            GraphSlideClockwiseNote.Background = new SolidColorBrush(backgroundColor);
+            GraphSlideClockwiseNote.BorderBrush = new SolidColorBrush(borderColor);
+            
+            colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SlideCounterclockwiseNoteColor);
+            backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
+            borderColor = Color.FromUInt32(colorCode);
+            GraphSlideCounterclockwiseNote.Background = new SolidColorBrush(backgroundColor);
+            GraphSlideCounterclockwiseNote.BorderBrush = new SolidColorBrush(borderColor);
+            
+            colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SnapForwardNoteColor);
+            backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
+            borderColor = Color.FromUInt32(colorCode);
+            GraphSnapForwardNote.Background = new SolidColorBrush(backgroundColor);
+            GraphSnapForwardNote.BorderBrush = new SolidColorBrush(borderColor);
+            
+            colorCode = NoteColors.AverageNoteColorFromId((int)SettingsSystem.RenderSettings.SnapBackwardNoteColor);
+            backgroundColor = Color.FromUInt32(colorCode - 0xA0000000);
+            borderColor = Color.FromUInt32(colorCode);
+            GraphSnapBackwardNote.Background = new SolidColorBrush(backgroundColor);
+            GraphSnapBackwardNote.BorderBrush = new SolidColorBrush(borderColor);
+        });
+    }
+#endregion System Event Delegates
+
+#region UI Event Delegates
+    private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
+    {
+        UpdateGraph();
+    }
+#endregion UI Event Delegates
 }

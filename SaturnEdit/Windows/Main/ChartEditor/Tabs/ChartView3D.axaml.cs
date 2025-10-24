@@ -31,12 +31,11 @@ public partial class ChartView3D : UserControl
 
     private readonly CanvasInfo canvasInfo = new();
     private bool blockEvents = false;
-    
     private bool isGrabbingObject = false;
-    
     private readonly ClickDragHelper clickDragLeft = new();
     private readonly ClickDragHelper clickDragRight = new();
-    
+
+#region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs e)
     { 
         Dispatcher.UIThread.Post(() =>
@@ -154,37 +153,6 @@ public partial class ChartView3D : UserControl
         });
     }
     
-    private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
-    {
-        double minimum = double.Min(PanelCanvasContainer.Bounds.Width, PanelCanvasContainer.Bounds.Height);
-        RenderCanvas.Width = minimum;
-        RenderCanvas.Height = minimum;
-
-        canvasInfo.Width = (float)RenderCanvas.Width;
-        canvasInfo.Height = (float)RenderCanvas.Height;
-        canvasInfo.Radius = canvasInfo.Width / 2;
-        canvasInfo.Center = new(canvasInfo.Radius, canvasInfo.Radius);
-    }
-
-    private async void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
-    {
-        try
-        {
-            await Task.Delay(1);
-
-            if (Application.Current == null) return;
-            if (!Application.Current.TryGetResource("BackgroundSecondary", Application.Current.ActualThemeVariant, out object? resource)) return;
-            if (resource is not SolidColorBrush brush) return;
-        
-            canvasInfo.BackgroundColor= new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
-        }
-        catch (Exception)
-        {
-            // classic error pink
-            canvasInfo.BackgroundColor = new(0xFF, 0x00, 0xFF, 0xFF);
-        }
-    }
-    
     private void OnPointerOverOverlapChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -253,6 +221,39 @@ public partial class ChartView3D : UserControl
                 RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopRightCorner) : new(StandardCursorType.BottomLeftCorner);
             }
         });
+    }
+#endregion System Event Delegates
+
+#region UI Event Delegates
+    private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
+    {
+        double minimum = double.Min(PanelCanvasContainer.Bounds.Width, PanelCanvasContainer.Bounds.Height);
+        RenderCanvas.Width = minimum;
+        RenderCanvas.Height = minimum;
+
+        canvasInfo.Width = (float)RenderCanvas.Width;
+        canvasInfo.Height = (float)RenderCanvas.Height;
+        canvasInfo.Radius = canvasInfo.Width / 2;
+        canvasInfo.Center = new(canvasInfo.Radius, canvasInfo.Radius);
+    }
+
+    private async void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
+    {
+        try
+        {
+            await Task.Delay(1);
+
+            if (Application.Current == null) return;
+            if (!Application.Current.TryGetResource("BackgroundSecondary", Application.Current.ActualThemeVariant, out object? resource)) return;
+            if (resource is not SolidColorBrush brush) return;
+        
+            canvasInfo.BackgroundColor= new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
+        }
+        catch (Exception)
+        {
+            // classic error pink
+            canvasInfo.BackgroundColor = new(0xFF, 0x00, 0xFF, 0xFF);
+        }
     }
     
     
@@ -366,7 +367,7 @@ public partial class ChartView3D : UserControl
             void onLeftDrag()
             {
                 if (!e.Properties.IsLeftButtonPressed) return;
-                if (!clickDragLeft.DragActive(point)) return;
+                if (!clickDragLeft.IsDragActive(point)) return;
 
                 clickDragLeft.EndLane = lane;
                 
@@ -391,7 +392,7 @@ public partial class ChartView3D : UserControl
             void onRightDrag()
             {
                 if (!e.Properties.IsRightButtonPressed) return;
-                if (!clickDragRight.DragActive(point)) return;
+                if (!clickDragRight.IsDragActive(point)) return;
                 
                 clickDragRight.EndLane = lane;
                 CursorSystem.Position = clickDragRight.Position;
@@ -696,4 +697,5 @@ public partial class ChartView3D : UserControl
         if (sender is not ComboBox comboBox) return;
         SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)comboBox.SelectedIndex;
     }
+#endregion UI Event Delegates
 }

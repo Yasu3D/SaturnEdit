@@ -27,6 +27,22 @@ public partial class MainWindow : Window
         Closed += AudioSystem.OnClosed;
     }
 
+#region Methods
+    public async void ShowSettingsWindow()
+    {
+        try
+        {
+            SettingsWindow settingsWindow = new();
+            await settingsWindow.ShowDialog(this);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+#endregion Methods
+
+#region System Event Delegates
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -88,7 +104,9 @@ public partial class MainWindow : Window
             MenuItemChartEditorHalveBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.HalveBeatDivision"].ToKeyGesture();
         });
     }
-     
+#endregion System Event Delegates
+
+#region UI Event Delegates
     private void EditorTabs_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (sender is not RadioButton button) return;
@@ -130,22 +148,7 @@ public partial class MainWindow : Window
     private void ButtonUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Undo();
 
     private void ButtonRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
-
-    public async void ShowSettingsWindow()
-    {
-        try
-        {
-            
-            
-            SettingsWindow settingsWindow = new();
-            await settingsWindow.ShowDialog(this);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
-    }
-
+    
     private void MenuItemChartEditorToolWindows_OnClick(object? sender, RoutedEventArgs e)
     {
         if (sender is not MenuItem menuItem) return;
@@ -185,4 +188,5 @@ public partial class MainWindow : Window
     private void MenuItemChartEditorExport_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileExport();
 
     private void MenuItemChartEditorQuit_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileQuit();
+#endregion UI Event Delegates
 }

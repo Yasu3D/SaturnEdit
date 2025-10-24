@@ -32,6 +32,77 @@ public partial class ChartPropertiesView : UserControl
 
     private bool blockEvents = false;
     
+#region Methods
+    private async Task<bool> PromptFileMoveAndOverwrite(string sourceFilePath, string projectFilePath)
+    {
+        if (sourceFilePath != projectFilePath)
+        {
+            ModalDialogResult moveResult = await promptFileMove();
+            if (moveResult is ModalDialogResult.Tertiary or ModalDialogResult.Cancel) return false;
+
+            // File already exists in root directory. Prompt to overwrite files.
+            if (File.Exists(projectFilePath))
+            {
+                ModalDialogResult overwriteResult = await promptFileOverwrite();
+                if (overwriteResult is ModalDialogResult.Secondary or ModalDialogResult.Cancel) return false;
+            }
+            
+            if (moveResult is ModalDialogResult.Primary)
+            {
+                // Copy
+                File.Copy(sourceFilePath, projectFilePath, true);
+            }
+            else if (moveResult is ModalDialogResult.Secondary)
+            {
+                // Move
+                File.Move(sourceFilePath, projectFilePath, true);
+            }
+        }
+
+        return true;
+        
+        async Task<ModalDialogResult> promptFileMove()
+        {
+            if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
+
+            ModalDialogWindow dialog = new()
+            {
+                DialogIcon = Icon.Warning,
+                WindowTitleKey = "ModalDialog.FileMovePrompt.Title",
+                HeaderKey = "ModalDialog.FileMovePrompt.Header",
+                ParagraphKey = "ModalDialog.FileMovePrompt.Paragraph",
+                ButtonPrimaryKey = "ModalDialog.FileMovePrompt.CopyFile",
+                ButtonSecondaryKey = "ModalDialog.FileMovePrompt.MoveFile",
+                ButtonTertiaryKey = "Generic.Cancel",
+            };
+
+            dialog.InitializeDialog();
+            await dialog.ShowDialog(rootWindow);
+            return dialog.Result;
+        }
+        
+        async Task<ModalDialogResult> promptFileOverwrite()
+        {
+            if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
+
+            ModalDialogWindow dialog = new()
+            {
+                DialogIcon = Icon.Warning,
+                WindowTitleKey = "ModalDialog.FileOverwritePrompt.Title",
+                HeaderKey = "ModalDialog.FileOverwritePrompt.Header",
+                ParagraphKey = "ModalDialog.FileOverwritePrompt.Paragraph",
+                ButtonPrimaryKey = "ModalDialog.FileOverwritePrompt.OverwriteFile",
+                ButtonSecondaryKey = "Generic.Cancel",
+            };
+
+            dialog.InitializeDialog();
+            await dialog.ShowDialog(rootWindow);
+            return dialog.Result;
+        }
+    }
+#endregion Methods
+
+#region System Event Delegates
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -101,8 +172,9 @@ public partial class ChartPropertiesView : UserControl
             }
         });
     }
-    
-    
+#endregion System Event Delegates
+
+#region UI Event Delegates
     private void TextBoxTitle_OnLostFocus(object? sender, RoutedEventArgs routedEventArgs)
     {
         if (blockEvents) return;
@@ -660,72 +732,5 @@ public partial class ChartPropertiesView : UserControl
             Console.WriteLine(ex);
         }
     }
-
-    private async Task<bool> PromptFileMoveAndOverwrite(string sourceFilePath, string projectFilePath)
-    {
-        if (sourceFilePath != projectFilePath)
-        {
-            ModalDialogResult moveResult = await promptFileMove();
-            if (moveResult is ModalDialogResult.Tertiary or ModalDialogResult.Cancel) return false;
-
-            // File already exists in root directory. Prompt to overwrite files.
-            if (File.Exists(projectFilePath))
-            {
-                ModalDialogResult overwriteResult = await promptFileOverwrite();
-                if (overwriteResult is ModalDialogResult.Secondary or ModalDialogResult.Cancel) return false;
-            }
-            
-            if (moveResult is ModalDialogResult.Primary)
-            {
-                // Copy
-                File.Copy(sourceFilePath, projectFilePath, true);
-            }
-            else if (moveResult is ModalDialogResult.Secondary)
-            {
-                // Move
-                File.Move(sourceFilePath, projectFilePath, true);
-            }
-        }
-
-        return true;
-        
-        async Task<ModalDialogResult> promptFileMove()
-        {
-            if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
-
-            ModalDialogWindow dialog = new()
-            {
-                DialogIcon = Icon.Warning,
-                WindowTitleKey = "ModalDialog.FileMovePrompt.Title",
-                HeaderKey = "ModalDialog.FileMovePrompt.Header",
-                ParagraphKey = "ModalDialog.FileMovePrompt.Paragraph",
-                ButtonPrimaryKey = "ModalDialog.FileMovePrompt.CopyFile",
-                ButtonSecondaryKey = "ModalDialog.FileMovePrompt.MoveFile",
-                ButtonTertiaryKey = "Generic.Cancel",
-            };
-
-            dialog.InitializeDialog();
-            await dialog.ShowDialog(rootWindow);
-            return dialog.Result;
-        }
-        
-        async Task<ModalDialogResult> promptFileOverwrite()
-        {
-            if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
-
-            ModalDialogWindow dialog = new()
-            {
-                DialogIcon = Icon.Warning,
-                WindowTitleKey = "ModalDialog.FileOverwritePrompt.Title",
-                HeaderKey = "ModalDialog.FileOverwritePrompt.Header",
-                ParagraphKey = "ModalDialog.FileOverwritePrompt.Paragraph",
-                ButtonPrimaryKey = "ModalDialog.FileOverwritePrompt.OverwriteFile",
-                ButtonSecondaryKey = "Generic.Cancel",
-            };
-
-            dialog.InitializeDialog();
-            await dialog.ShowDialog(rootWindow);
-            return dialog.Result;
-        }
-    }
+#endregion UI Event Delegates
 }

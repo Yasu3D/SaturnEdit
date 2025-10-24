@@ -12,20 +12,13 @@ public static class UndoRedoSystem
     }
 
     public static event EventHandler? OperationHistoryChanged;
-    
-    private static readonly Stack<IOperation> UndoStack = new();
-    private static readonly Stack<IOperation> RedoStack = new();
 
     public static bool CanUndo => UndoStack.Count > 0;
     public static bool CanRedo => RedoStack.Count > 0;
     
-    private static void OnChartLoaded(object? sender, EventArgs e)
-    {
-        UndoStack.Clear();
-        RedoStack.Clear();
-        OperationHistoryChanged?.Invoke(null, EventArgs.Empty);
-    }
-
+    private static readonly Stack<IOperation> UndoStack = new();
+    private static readonly Stack<IOperation> RedoStack = new();
+    
     /// <summary>
     /// Applies an <see cref="IOperation"/> and pushes to the UndoRedo stack.
     /// </summary>
@@ -90,4 +83,13 @@ public static class UndoRedoSystem
 
         return operation;
     }
+
+#region System Event Delegates
+    private static void OnChartLoaded(object? sender, EventArgs e)
+    {
+        UndoStack.Clear();
+        RedoStack.Clear();
+        OperationHistoryChanged?.Invoke(null, EventArgs.Empty);
+    }
+#endregion System Event Delegates
 }

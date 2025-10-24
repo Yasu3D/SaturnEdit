@@ -22,9 +22,6 @@ namespace SaturnEdit.Windows.ChartEditor;
 
 public partial class ChartEditorView : UserControl
 {
-    private readonly DockSerializer serializer;
-    private readonly DockState dockState;
-
     public ChartEditorView()
     {
         InitializeComponent();
@@ -39,36 +36,11 @@ public partial class ChartEditorView : UserControl
             dockState.Save(layout);
         }
     }
-
-    public void CreateNewFloatingTool(UserControl userControl)
-    {
-        if (DockControl.Factory == null) return;
-        if (RootDock.VisibleDockables == null) return;
-
-        Tool tool = new() { Content = userControl };
-
-        ToolDock toolDock = new()
-        {
-            VisibleDockables = DockControl.Factory?.CreateList<IDockable>(tool),
-            ActiveDockable = tool,
-        };
-
-        if (RootDock.VisibleDockables.Count != 0)
-        {
-            Console.WriteLine("RootDock contains dockables!");
-
-            //DockControl.Factory?.AddDockable(RootDock, toolDock);
-            //DockControl.Factory?.FloatDockable(toolDock);
-        }
-        else
-        {
-            Console.WriteLine("RootDock is empty!");
-
-            //DockControl.Factory?.AddDockable(RootDock, toolDock);
-            //DockControl.Factory?.InitLayout(RootDock);
-        }
-    }
-
+    
+    private readonly DockSerializer serializer;
+    private readonly DockState dockState;
+    
+#region Methods
     public async void FileNew()
     {
         // Prompt to save an unsaved chart first.
@@ -148,6 +120,8 @@ public partial class ChartEditorView : UserControl
                 if (VisualRoot is not Window rootWindow) return false;
                 ImportArgsWindow importArgsWindow = new();
                 await importArgsWindow.ShowDialog(rootWindow);
+
+                if (importArgsWindow.DialogResult != ModalDialogResult.Primary) return false;
                 
                 args = importArgsWindow.NotationReadArgs;
             }
@@ -399,4 +373,34 @@ public partial class ChartEditorView : UserControl
         await dialog.ShowDialog(rootWindow);
         return dialog.Result;
     }
+    
+    public void CreateNewFloatingTool(UserControl userControl)
+    {
+        if (DockControl.Factory == null) return;
+        if (RootDock.VisibleDockables == null) return;
+
+        Tool tool = new() { Content = userControl };
+
+        ToolDock toolDock = new()
+        {
+            VisibleDockables = DockControl.Factory?.CreateList<IDockable>(tool),
+            ActiveDockable = tool,
+        };
+
+        if (RootDock.VisibleDockables.Count != 0)
+        {
+            Console.WriteLine("RootDock contains dockables!");
+
+            //DockControl.Factory?.AddDockable(RootDock, toolDock);
+            //DockControl.Factory?.FloatDockable(toolDock);
+        }
+        else
+        {
+            Console.WriteLine("RootDock is empty!");
+
+            //DockControl.Factory?.AddDockable(RootDock, toolDock);
+            //DockControl.Factory?.InitLayout(RootDock);
+        }
+    }
+#endregion Methods
 }

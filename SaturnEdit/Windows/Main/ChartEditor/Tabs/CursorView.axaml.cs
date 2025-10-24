@@ -13,16 +13,18 @@ public partial class CursorView : UserControl
         InitializeComponent();
         
         TimeSystem.TimestampChanged += OnTimestampChanged;
-        TimeSystem.DivisionChanged += OnDivisionChanged;
-        CursorSystem.ShapeChanged += OnShapeChanged;
-        
         OnTimestampChanged(null, EventArgs.Empty);
+        
+        TimeSystem.DivisionChanged += OnDivisionChanged;
         OnDivisionChanged(null, EventArgs.Empty);
+        
+        CursorSystem.ShapeChanged += OnShapeChanged;
         OnShapeChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
-
+    
+#region System Event Delegates
     private void OnTimestampChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -40,32 +42,40 @@ public partial class CursorView : UserControl
 
     private void OnDivisionChanged(object? sender, EventArgs e)
     {
-        blockEvents = true;
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
         
-        NumericUpDownDivision.Value = TimeSystem.Division;
+            NumericUpDownDivision.Value = TimeSystem.Division;
 
-        blockEvents = false;
-        
-        NumericUpDownBeat.Value = Math.Clamp((int?)NumericUpDownBeat.Value ?? 0, 0, TimeSystem.Division - 1);
-        NumericUpDownBeat.Maximum = TimeSystem.Division + 1;
-        
-        bool oddDivision = 1920 % TimeSystem.Division != 0;
-        IconOddDivisionWarning.IsVisible = oddDivision;
+            blockEvents = false;
+            
+            NumericUpDownBeat.Value = Math.Clamp((int?)NumericUpDownBeat.Value ?? 0, 0, TimeSystem.Division - 1);
+            NumericUpDownBeat.Maximum = TimeSystem.Division + 1;
+            
+            bool oddDivision = 1920 % TimeSystem.Division != 0;
+            IconOddDivisionWarning.IsVisible = oddDivision;
+        });
     }
 
     private void OnShapeChanged(object? sender, EventArgs e)
     {
-        blockEvents = true;
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
 
-        SliderPosition.Value = CursorSystem.Position;
-        SliderSize.Value = CursorSystem.Size;
-        
-        blockEvents = false;
-        
-        TextBlockPosition.Text = $"{(int)SliderPosition.Value}";
-        TextBlockSize.Text = $"{(int)SliderSize.Value}";
+            SliderPosition.Value = CursorSystem.Position;
+            SliderSize.Value = CursorSystem.Size;
+            
+            blockEvents = false;
+            
+            TextBlockPosition.Text = $"{(int)SliderPosition.Value}";
+            TextBlockSize.Text = $"{(int)SliderSize.Value}";
+        });
     }
-    
+#endregion System Event Delegates
+
+#region UI Event Delegates
     private void SliderPosition_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
     {
         if (blockEvents) return;
@@ -128,4 +138,5 @@ public partial class CursorView : UserControl
         TimeSystem.Division = division;
         TimeSystem.SeekMeasureTick(measure, beat * TimeSystem.DivisionInterval);
     }
+#endregion UI Event Delegates
 }
