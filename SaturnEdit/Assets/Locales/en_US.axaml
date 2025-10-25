@@ -504,8 +504,12 @@
     <system:String x:Key="ModalDialog.FileOverwritePrompt.Header">Do you want to overwrite an existing file?</system:String>
     <system:String x:Key="ModalDialog.FileOverwritePrompt.Paragraph">A file with the same name already exists in the chart directory.</system:String>
     <system:String x:Key="ModalDialog.FileOverwritePrompt.OverwriteFile">Overwrite File</system:String>
+    <system:String x:Key="ModalDialog.FileWriteError.Title">File Write Error</system:String>
+    <system:String x:Key="ModalDialog.FileWriteError.Header">An error occurred during a file write.</system:String>
+    <system:String x:Key="ModalDialog.FileWriteError.Paragraph">Your changes have not been saved. Please confirm that you have enough space and that you have write-access to the directory, then try again.</system:String>
     <system:String x:Key="Generic.Enabled">Enabled</system:String>
     <system:String x:Key="Generic.Disabled">Disabled</system:String>
     <system:String x:Key="Generic.Cancel">Cancel</system:String>
     <system:String x:Key="Generic.PickFile">Pick File...</system:String>
+    <system:String x:Key="Generic.Ok">Ok</system:String>
 </ResourceDictionary>

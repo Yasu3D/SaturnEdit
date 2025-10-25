@@ -150,11 +150,18 @@ public static class ChartSystem
     /// <param name="args">Arguments for how the chart should be written.</param>
     /// <param name="markAsSaved">Should the chart be marked as saved?</param>
     /// <param name="updatePath">Should the <c>RootDirectory</c> and <c>ChartFile</c> paths get updated?</param>
-    public static void WriteChart(string path, NotationWriteArgs args, bool markAsSaved, bool updatePath)
+    public static bool WriteChart(string path, NotationWriteArgs args, bool markAsSaved, bool updatePath)
     {
-        NotationSerializer.ToFile(path, Entry, Chart, args);
-
-        // TODO: DONT SILENTLY FAIL WHEN A WRITE DOESNT COMPLETE.
+        try
+        {
+            NotationSerializer.ToFile(path, Entry, Chart, args);
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+            return false;
+        }
         
         if (updatePath)
         {
@@ -163,6 +170,7 @@ public static class ChartSystem
         }
         
         IsSaved = markAsSaved || IsSaved;
+        return true;
     }
 #endregion Methods
     

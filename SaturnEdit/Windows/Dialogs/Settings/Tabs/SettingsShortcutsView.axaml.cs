@@ -10,6 +10,7 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
+using SaturnEdit.Utilities;
 
 namespace SaturnEdit.Windows.Dialogs.Settings.Tabs;
 
@@ -188,6 +189,10 @@ public partial class SettingsShortcutsView : UserControl
     {
         if (!DefiningShortcut) return;
         if (currentItem == null) return;
+        
+        IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
+        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
         
         if (e.Key is Key.Escape)
         {

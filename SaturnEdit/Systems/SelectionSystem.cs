@@ -371,6 +371,21 @@ public static class SelectionSystem
         
         BoxSelectData = new();
     }
+
+    public static void SelectAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public static void DeselectAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public static void CheckerDeselect()
+    {
+        throw new NotImplementedException();
+    }
 #endregion Methods
     
 #region System Event Delegates

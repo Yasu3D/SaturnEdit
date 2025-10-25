@@ -501,7 +501,11 @@ ModalDialog.FileOverwritePrompt.Title,Overwrite existing file(s).
 ModalDialog.FileOverwritePrompt.Header,Do you want to overwrite an existing file?
 ModalDialog.FileOverwritePrompt.Paragraph,A file with the same name already exists in the chart directory.
 ModalDialog.FileOverwritePrompt.OverwriteFile,Overwrite File
+ModalDialog.FileWriteError.Title,File Write Error
+ModalDialog.FileWriteError.Header,An error occurred during a file write.
+ModalDialog.FileWriteError.Paragraph,"Your changes have not been saved. Please confirm that you have enough space and write-access to the directory, then try again."
 Generic.Enabled,Enabled
 Generic.Disabled,Disabled
 Generic.Cancel,Cancel
 Generic.PickFile,Pick File...
+Generic.Ok,Ok

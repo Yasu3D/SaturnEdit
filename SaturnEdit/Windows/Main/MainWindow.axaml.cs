@@ -5,6 +5,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnEdit.Systems;
+using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs;
 using SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -124,7 +125,7 @@ public partial class MainWindow : Window
             StageEditor.IsEnabled = button.Name == "TabStageEditor";
             StageEditor.IsVisible = button.Name == "TabStageEditor";
         }
-         
+        
         if (CosmeticsEditor != null)
         {
             CosmeticsEditor.IsEnabled = button.Name == "TabContentEditor";
@@ -192,20 +193,102 @@ public partial class MainWindow : Window
     
     private void Window_OnKeyDown(object? sender, KeyEventArgs e)
     {
-        if (GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox) return;
+        IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
+        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
         
-        Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Control));
-
+        Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
         
-        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Play"]) && TimeSystem.PlaybackState != PlaybackState.Playing)
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Pause"]) && TimeSystem.PlaybackState != PlaybackState.Stopped)
+        {
+            TimeSystem.PlaybackState = PlaybackState.Stopped;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Play"]) && TimeSystem.PlaybackState != PlaybackState.Playing)
         {
             TimeSystem.PlaybackState = PlaybackState.Playing;
             e.Handled = true;
         }
-        
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Pause"]) && TimeSystem.PlaybackState != PlaybackState.Stopped)
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.New"]))
         {
-            TimeSystem.PlaybackState = PlaybackState.Stopped;
+            ChartEditor.FileNew();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Open"]))
+        {
+            _ = ChartEditor.FileOpen();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Save"]))
+        {
+            _ = ChartEditor.FileSave();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.SaveAs"]))
+        {
+            _ = ChartEditor.FileSaveAs();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.ReloadFromDisk"]))
+        {
+            _ = ChartEditor.FileReloadFromDisk();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Export"]))
+        {
+            _ = ChartEditor.FileExport();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.RenderAsImage"]))
+        {
+            ChartEditor.FileRenderAsImage();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Quit"]))
+        {
+            ChartEditor.FileQuit();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"]))
+        {
+            UndoRedoSystem.Undo();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"]))
+        {
+            UndoRedoSystem.Redo();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Cut"]))
+        {
+            throw new NotImplementedException();
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Copy"]))
+        {
+            throw new NotImplementedException();
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Paste"]))
+        {
+            throw new NotImplementedException();
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectAll"]))
+        {
+            SelectionSystem.SelectAll();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.DeselectAll"]))
+        {
+            SelectionSystem.DeselectAll();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.CheckerDeselect"]))
+        {
+            SelectionSystem.CheckerDeselect();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectSimilar"]))
+        { 
+            ChartEditor.EditSelectSimilar();
             e.Handled = true;
         }
     }

@@ -4,11 +4,13 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
+using AvaloniaEdit.Editing;
 using SaturnData.Notation.Core;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.LayerOperations;
+using SaturnEdit.Utilities;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -83,7 +85,10 @@ public partial class LayerListView : UserControl
     
     private void AddLayer()
     {
-        Layer layer = new("New Layer");
+        Layer layer = ChartSystem.Chart.Layers.Count == 0 
+            ? new("Main Layer") 
+            : new("New Layer");
+        
         int index = ChartSystem.Chart.Layers.Count;
 
         LayerAddOperation op0 = new(layer, index);
@@ -200,9 +205,12 @@ public partial class LayerListView : UserControl
     private void ListBoxLayers_OnKeyDown(object? sender, KeyEventArgs e)
     {
         if (blockEvents) return;
-        if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox) return;
+
+        IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
+        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
         
-        Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Control));
+        Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
 
         if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"]))
         {
@@ -210,13 +218,13 @@ public partial class LayerListView : UserControl
             e.Handled = true;
         }
         
-        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"]))
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"]))
         {
             MoveLayerUp();
             e.Handled = true;
         }
         
-        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"]))
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"]))
         {
             MoveLayerDown();
             e.Handled = true;

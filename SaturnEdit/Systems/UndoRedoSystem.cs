@@ -24,6 +24,8 @@ public static class UndoRedoSystem
     /// </summary>
     public static void Push(IOperation operation)
     {
+        if (operation is CompositeOperation { Operations.Count: 0 }) return;
+        
         operation.Apply();
         UndoStack.Push(operation);
         RedoStack.Clear();
@@ -35,6 +37,8 @@ public static class UndoRedoSystem
     /// </summary>
     public static void Append(IOperation operation)
     {
+        if (operation is CompositeOperation { Operations.Count: 0 }) return;
+        
         if (UndoStack.Count == 0)
         {
             Push(operation);

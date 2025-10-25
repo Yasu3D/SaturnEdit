@@ -149,7 +149,12 @@ public partial class ChartEditorView : UserControl
 
             // Write chart to file.
             bool updatePath = !File.Exists(ChartSystem.Entry.ChartFile);
-            ChartSystem.WriteChart(ChartSystem.Entry.ChartFile, new(), true, updatePath);
+            if (!ChartSystem.WriteChart(ChartSystem.Entry.ChartFile, new(), true, updatePath))
+            {
+                ShowFileWriteError();
+                return false;
+            };
+
             return true;
         }
         catch (Exception ex)
@@ -192,7 +197,12 @@ public partial class ChartEditorView : UserControl
             if (file == null) return false;
 
             // Write chart to file.
-            ChartSystem.WriteChart(file.Path.LocalPath, new(), true, true);
+            if (!ChartSystem.WriteChart(file.Path.LocalPath, new(), true, true))
+            {
+                ShowFileWriteError();
+                return false;
+            };
+
             return true;
         }
         catch (Exception ex)
@@ -266,7 +276,12 @@ public partial class ChartEditorView : UserControl
             if (file == null) return false;
 
             // Write the chart to the defined path, with the defined notation arguments.
-            ChartSystem.WriteChart(file.Path.LocalPath, exportArgsWindow.NotationWriteArgs, true, true);
+            if (!ChartSystem.WriteChart(file.Path.LocalPath, exportArgsWindow.NotationWriteArgs, true, true))
+            {
+                ShowFileWriteError();
+                return false;
+            };
+
             return true;
         }
         catch (Exception ex)
@@ -276,6 +291,11 @@ public partial class ChartEditorView : UserControl
         }
     }
 
+    public void FileRenderAsImage()
+    {
+        throw new NotImplementedException();
+    }
+    
     public async void FileQuit()
     {
         TopLevel? topLevel = TopLevel.GetTopLevel(this);
@@ -304,6 +324,11 @@ public partial class ChartEditorView : UserControl
 
         if (VisualRoot is not Window rootWindow) return;
         rootWindow.Close();
+    }
+
+    public void EditSelectSimilar()
+    {
+        throw new NotImplementedException();
     }
     
     private FilePickerSaveOptions ExportFilePickerSaveOptions(NotationWriteArgs args)
@@ -372,6 +397,23 @@ public partial class ChartEditorView : UserControl
         dialog.InitializeDialog();
         await dialog.ShowDialog(rootWindow);
         return dialog.Result;
+    }
+
+    private void ShowFileWriteError()
+    {
+        if (VisualRoot is not Window rootWindow) return;
+        
+        ModalDialogWindow dialog = new()
+        {
+            DialogIcon = Icon.Warning,
+            WindowTitleKey = "ModalDialog.FileWriteError.Title",
+            HeaderKey = "ModalDialog.FileWriteError.Header",
+            ParagraphKey = "ModalDialog.FileWriteError.Paragraph",
+            ButtonPrimaryKey = "Generic.Ok",
+        };
+
+        dialog.InitializeDialog();
+        dialog.ShowDialog(rootWindow);
     }
     
     public void CreateNewFloatingTool(UserControl userControl)
