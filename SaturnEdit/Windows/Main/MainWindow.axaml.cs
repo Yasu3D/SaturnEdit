@@ -177,19 +177,37 @@ public partial class MainWindow : Window
         ChartEditor.CreateNewFloatingTool(userControl);
     }
 
-    private void MenuItemChartEditorNew_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileNew();
+    private void MenuItemChartEditorNew_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.File_New();
 
-    private void MenuItemChartEditorOpen_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileOpen();
+    private void MenuItemChartEditorOpen_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.File_Open();
 
-    private void MenuItemChartEditorSave_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileSave();
+    private void MenuItemChartEditorSave_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.File_Save();
 
-    private void MenuItemChartEditorSaveAs_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileSaveAs();
+    private void MenuItemChartEditorSaveAs_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.File_SaveAs();
 
-    private void MenuItemChartEditorReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileReloadFromDisk();
+    private void MenuItemChartEditorReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.File_ReloadFromDisk();
 
-    private void MenuItemChartEditorExport_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileExport();
+    private void MenuItemChartEditorExport_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.File_Export();
 
-    private void MenuItemChartEditorQuit_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileQuit();
+    private void MenuItemChartEditorQuit_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.File_Quit();
+    
+    private void MenuItemChartEditorUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Undo();
+
+    private void MenuItemChartEditorRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
+
+    private void MenuItemChartEditorCut_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
+
+    private void MenuItemChartEditorCopy_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
+
+    private void MenuItemChartEditorPaste_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
+
+    private void MenuItemChartEditorSelectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.SelectAll();
+
+    private void MenuItemChartEditorDeselectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.DeselectAll();
+
+    private void MenuItemChartEditorCheckerDeselect_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.CheckerDeselect();
+
+    private void MenuItemChartEditorSelectSimilar_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.Edit_SelectSimilar();
     
     private void Window_OnKeyDown(object? sender, KeyEventArgs e)
     {
@@ -211,42 +229,42 @@ public partial class MainWindow : Window
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.New"]))
         {
-            ChartEditor.FileNew();
+            ChartEditor.File_New();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Open"]))
         {
-            _ = ChartEditor.FileOpen();
+            _ = ChartEditor.File_Open();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Save"]))
         {
-            _ = ChartEditor.FileSave();
+            _ = ChartEditor.File_Save();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.SaveAs"]))
         {
-            _ = ChartEditor.FileSaveAs();
+            _ = ChartEditor.File_SaveAs();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.ReloadFromDisk"]))
         {
-            _ = ChartEditor.FileReloadFromDisk();
+            _ = ChartEditor.File_ReloadFromDisk();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Export"]))
         {
-            _ = ChartEditor.FileExport();
+            _ = ChartEditor.File_Export();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.RenderAsImage"]))
         {
-            ChartEditor.FileRenderAsImage();
+            ChartEditor.File_RenderAsImage();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Quit"]))
         {
-            ChartEditor.FileQuit();
+            ChartEditor.File_Quit();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"]))
@@ -288,7 +306,7 @@ public partial class MainWindow : Window
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectSimilar"]))
         { 
-            ChartEditor.EditSelectSimilar();
+            ChartEditor.Edit_SelectSimilar();
             e.Handled = true;
         }
     }

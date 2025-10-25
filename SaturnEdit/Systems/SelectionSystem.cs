@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
@@ -374,17 +375,80 @@ public static class SelectionSystem
 
     public static void SelectAll()
     {
-        throw new NotImplementedException();
+        List<IOperation> operations = [];
+
+        foreach (Event @event in ChartSystem.Chart.Events)
+        {
+            if (SelectedObjects.Contains(@event)) continue;
+            
+            operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+        }
+
+        foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+        {
+            if (SelectedObjects.Contains(laneToggle)) continue;
+            
+            operations.Add(new AddSelectionOperation(laneToggle, LastSelectedObject));
+        }
+        
+        foreach (Layer layer in ChartSystem.Chart.Layers)
+        {
+            foreach (Event @event in layer.Events)
+            {
+                if (SelectedObjects.Contains(@event)) continue;
+                
+                operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+            }
+                        
+            foreach (Note note in layer.Notes)
+            {
+                if (SelectedObjects.Contains(note)) continue;
+                
+                operations.Add(new AddSelectionOperation(note, LastSelectedObject));
+            }
+        }
+
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     public static void DeselectAll()
     {
-        throw new NotImplementedException();
+        if (SelectedObjects.Count == 0) return;
+        List<IOperation> operations = [];
+
+        foreach (ITimeable obj in SelectedObjects)
+        {
+            operations.Add(new RemoveSelectionOperation(obj, LastSelectedObject));
+        }
+
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     public static void CheckerDeselect()
     {
-        throw new NotImplementedException();
+        if (SelectedObjects.Count == 0) return;
+        List<ITimeable> objects = SelectedObjects.OrderBy(x => x.Timestamp.FullTick).ToList();
+        List<IOperation> operations = [];
+        
+        int lastTick = objects[0].Timestamp.FullTick;
+        bool keepSelected = true;
+        
+        for (int i = 0; i < objects.Count; i++)
+        {
+            ITimeable timeable = objects[i];
+
+            if (timeable.Timestamp.FullTick != lastTick)
+            {
+                keepSelected = !keepSelected;
+                lastTick = timeable.Timestamp.FullTick;
+            }
+
+            if (keepSelected) continue;
+
+            operations.Add(new RemoveSelectionOperation(timeable, LastSelectedObject));
+        }
+        
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 #endregion Methods
     

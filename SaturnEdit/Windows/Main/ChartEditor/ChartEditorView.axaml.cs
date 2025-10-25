@@ -41,7 +41,7 @@ public partial class ChartEditorView : UserControl
     private readonly DockState dockState;
     
 #region Methods
-    public async void FileNew()
+    public async void File_New()
     {
         // Prompt to save an unsaved chart first.
         if (!ChartSystem.IsSaved)
@@ -54,7 +54,7 @@ public partial class ChartEditorView : UserControl
             // Save
             if (result is ModalDialogResult.Primary)
             {
-                bool success = await FileSave();
+                bool success = await File_Save();
 
                 // Abort opening new file if save was unsuccessful.
                 if (!success) return;
@@ -69,7 +69,7 @@ public partial class ChartEditorView : UserControl
         // Create new chart.
     }
 
-    public async Task<bool> FileOpen()
+    public async Task<bool> File_Open()
     {
         try
         {
@@ -87,7 +87,7 @@ public partial class ChartEditorView : UserControl
                 // Save
                 if (result is ModalDialogResult.Primary)
                 {
-                    bool success = await FileSave();
+                    bool success = await File_Save();
 
                     // Abort opening new file if save was unsuccessful.
                     if (!success) return false;
@@ -137,14 +137,14 @@ public partial class ChartEditorView : UserControl
         }
     }
 
-    public async Task<bool> FileSave()
+    public async Task<bool> File_Save()
     {
         try
         {
             // Save As if chart file doesn't have a path yet.
             if (!File.Exists(ChartSystem.Entry.ChartFile))
             {
-                return await FileSaveAs();
+                return await File_SaveAs();
             }
 
             // Write chart to file.
@@ -153,7 +153,7 @@ public partial class ChartEditorView : UserControl
             {
                 ShowFileWriteError();
                 return false;
-            };
+            }
 
             return true;
         }
@@ -164,7 +164,7 @@ public partial class ChartEditorView : UserControl
         }
     }
 
-    public async Task<bool> FileSaveAs()
+    public async Task<bool> File_SaveAs()
     {
         try
         {
@@ -201,7 +201,7 @@ public partial class ChartEditorView : UserControl
             {
                 ShowFileWriteError();
                 return false;
-            };
+            }
 
             return true;
         }
@@ -212,7 +212,7 @@ public partial class ChartEditorView : UserControl
         }
     }
 
-    public async Task<bool> FileReloadFromDisk()
+    public async Task<bool> File_ReloadFromDisk()
     {
         try
         {
@@ -229,7 +229,7 @@ public partial class ChartEditorView : UserControl
                 // Save
                 if (result is ModalDialogResult.Primary)
                 {
-                    bool success = await FileSave();
+                    bool success = await File_Save();
 
                     // Abort opening new file if save was unsuccessful.
                     if (!success) return false;
@@ -256,7 +256,7 @@ public partial class ChartEditorView : UserControl
         }
     }
 
-    public async Task<bool> FileExport()
+    public async Task<bool> File_Export()
     {
         try
         {
@@ -280,7 +280,7 @@ public partial class ChartEditorView : UserControl
             {
                 ShowFileWriteError();
                 return false;
-            };
+            }
 
             return true;
         }
@@ -291,12 +291,12 @@ public partial class ChartEditorView : UserControl
         }
     }
 
-    public void FileRenderAsImage()
+    public void File_RenderAsImage()
     {
         throw new NotImplementedException();
     }
     
-    public async void FileQuit()
+    public async void File_Quit()
     {
         TopLevel? topLevel = TopLevel.GetTopLevel(this);
         if (topLevel == null) return;
@@ -312,7 +312,7 @@ public partial class ChartEditorView : UserControl
             // Save
             if (result is ModalDialogResult.Primary)
             {
-                bool success = await FileSave();
+                bool success = await File_Save();
 
                 // Abort quitting if save was unsuccessful.
                 if (!success) return;
@@ -326,7 +326,7 @@ public partial class ChartEditorView : UserControl
         rootWindow.Close();
     }
 
-    public void EditSelectSimilar()
+    public void Edit_SelectSimilar()
     {
         throw new NotImplementedException();
     }

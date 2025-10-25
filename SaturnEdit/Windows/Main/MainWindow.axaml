@@ -210,7 +210,8 @@
                             <TextBlock Text="{DynamicResource Menu.Edit}" />
                         </MenuItem.Header>
 
-                        <MenuItem Name="MenuItemChartEditorUndo">
+                        <MenuItem Name="MenuItemChartEditorUndo"
+                                  Click="MenuItemChartEditorUndo_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.Undo}" />
                             </MenuItem.Header>
@@ -219,7 +220,8 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemChartEditorRedo">
+                        <MenuItem Name="MenuItemChartEditorRedo"
+                                  Click="MenuItemChartEditorRedo_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.Redo}" />
                             </MenuItem.Header>
@@ -230,7 +232,8 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemChartEditorCut">
+                        <MenuItem Name="MenuItemChartEditorCut"
+                                  Click="MenuItemChartEditorCut_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.Cut}" />
                             </MenuItem.Header>
@@ -239,7 +242,8 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemChartEditorCopy">
+                        <MenuItem Name="MenuItemChartEditorCopy"
+                                  Click="MenuItemChartEditorCopy_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.Copy}" />
                             </MenuItem.Header>
@@ -248,7 +252,8 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemChartEditorPaste">
+                        <MenuItem Name="MenuItemChartEditorPaste"
+                                  Click="MenuItemChartEditorPaste_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.Paste}" />
                             </MenuItem.Header>
@@ -259,13 +264,15 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemChartEditorSelectAll">
+                        <MenuItem Name="MenuItemChartEditorSelectAll"
+                                  Click="MenuItemChartEditorSelectAll_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.SelectAll}" />
                             </MenuItem.Header>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemChartEditorDeselectAll">
+                        <MenuItem Name="MenuItemChartEditorDeselectAll"
+                                  Click="MenuItemChartEditorDeselectAll_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.DeselectAll}" />
                             </MenuItem.Header>
@@ -273,7 +280,8 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemChartEditorCheckerDeselect">
+                        <MenuItem Name="MenuItemChartEditorCheckerDeselect"
+                                  Click="MenuItemChartEditorCheckerDeselect_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.CheckerDeselect}" />
                             </MenuItem.Header>
@@ -282,7 +290,8 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemChartEditorSelectSimilar">
+                        <MenuItem Name="MenuItemChartEditorSelectSimilar"
+                                  Click="MenuItemChartEditorSelectSimilar_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.Edit.SelectSimilar}" />
                             </MenuItem.Header>
