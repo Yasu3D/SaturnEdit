@@ -22,6 +22,7 @@ public partial class App : Application
         AudioSystem.Initialize();
         SelectionSystem.Initialize();
         UndoRedoSystem.Initialize();
+        EditorSystem.Initialize();
     }
     
     public override void OnFrameworkInitializationCompleted()

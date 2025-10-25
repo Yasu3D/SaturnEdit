@@ -29,6 +29,7 @@ ChartEditor.General.Type.Value.VisibilityChange,Visibility Change
 ChartEditor.General.Type.Value.ReverseEffect,Reverse Effect
 ChartEditor.General.Type.Value.StopEffect,Stop Effect
 ChartEditor.General.Type.Value.TutorialMarker,Tutorial Marker
+ChartEditor.General.Type.Value.Bookmark,Bookmark
 ChartEditor.General.BonusType,Bonus Type
 ChartEditor.General.BonusType.Value.Normal,Normal
 ChartEditor.General.BonusType.Value.Bonus,Bonus
@@ -338,7 +339,7 @@ Menu.Edit.Paste,Paste
 Menu.Edit.SelectAll,Select All
 Menu.Edit.DeselectAll,Deselect All
 Menu.Edit.CheckerDeselect,Checker Deselect...
-Menu.Edit.SelectSimilar,Select Similar...
+Menu.Edit.SelectByCriteria,Select by Criteria...
 Menu.View,View
 Menu.View.ToolWindows,Tool Windows
 Menu.View.LayoutPresets,Layout Presets
@@ -488,6 +489,12 @@ Import.OptimizeHoldNotes,Optimize Hold Notes
 Import.OptimizeHoldNotes.Description,Should hidden hold note segments be removed?
 Import.InferClearThreshold,Infer Clear Threshold
 Import.InferClearThreshold.Description,Should the clear threshold be inferred from the chosen Difficulty instead of the value defined by the @CLEAR tag?
+SelectByCriteria.Window.Title,Select by Criteria
+SelectByCriteria.RunSelection,Run Selection
+SelectByCriteria.SelectIfObjectIs,Select if object is...
+SelectByCriteria.SizeVariance,Size Variance
+SelectByCriteria.PositionVariance,Position Variance
+SelectByCriteria.FilterSelection,Filter Selection
 ModalDialog.SavePrompt.Title,Save Chart
 ModalDialog.SavePrompt.Header,Do you want to save changes to your chart before closing?
 ModalDialog.SavePrompt.Paragraph,Your changes will be lost if you don't save them.

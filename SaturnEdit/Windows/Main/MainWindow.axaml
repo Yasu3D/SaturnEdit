@@ -290,10 +290,10 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemChartEditorSelectSimilar"
-                                  Click="MenuItemChartEditorSelectSimilar_OnClick">
+                        <MenuItem Name="MenuItemChartEditorSelectByCriteria"
+                                  Click="MenuItemChartEditorSelectByCriteria_OnClick">
                             <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource Menu.Edit.SelectSimilar}" />
+                                <TextBlock Text="{DynamicResource Menu.Edit.SelectByCriteria}" />
                             </MenuItem.Header>
                             <MenuItem.Icon>
                                 <icon:FluentIcon Icon="Search" />

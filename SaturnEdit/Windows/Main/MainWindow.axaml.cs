@@ -92,7 +92,7 @@ public partial class MainWindow : Window
             MenuItemChartEditorSelectAll.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectAll"].ToKeyGesture();
             MenuItemChartEditorDeselectAll.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.DeselectAll"].ToKeyGesture();
             MenuItemChartEditorCheckerDeselect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.CheckerDeselect"].ToKeyGesture();
-            MenuItemChartEditorSelectSimilar.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectSimilar"].ToKeyGesture();
+            MenuItemChartEditorSelectByCriteria.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectByCriteria"].ToKeyGesture();
             
             MenuItemChartEditorMoveBeatForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveBeatForward"].ToKeyGesture();
             MenuItemChartEditorMoveBeatBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveBeatBack"].ToKeyGesture();
@@ -195,11 +195,11 @@ public partial class MainWindow : Window
 
     private void MenuItemChartEditorRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
 
-    private void MenuItemChartEditorCut_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
+    private void MenuItemChartEditorCut_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Cut();
 
-    private void MenuItemChartEditorCopy_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
+    private void MenuItemChartEditorCopy_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Copy();
 
-    private void MenuItemChartEditorPaste_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
+    private void MenuItemChartEditorPaste_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Paste();
 
     private void MenuItemChartEditorSelectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.SelectAll();
 
@@ -207,7 +207,7 @@ public partial class MainWindow : Window
 
     private void MenuItemChartEditorCheckerDeselect_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.CheckerDeselect();
 
-    private void MenuItemChartEditorSelectSimilar_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.Edit_SelectSimilar();
+    private void MenuItemChartEditorSelectByCriteria_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.Edit_SelectByCriteria();
     
     private void Window_OnKeyDown(object? sender, KeyEventArgs e)
     {
@@ -279,15 +279,18 @@ public partial class MainWindow : Window
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Cut"]))
         {
-            throw new NotImplementedException();
+            EditorSystem.Cut();
+            e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Copy"]))
         {
-            throw new NotImplementedException();
+            EditorSystem.Copy();
+            e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Paste"]))
         {
-            throw new NotImplementedException();
+            EditorSystem.Paste();
+            e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectAll"]))
         {
@@ -304,9 +307,9 @@ public partial class MainWindow : Window
             SelectionSystem.CheckerDeselect();
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectSimilar"]))
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectByCriteria"]))
         { 
-            ChartEditor.Edit_SelectSimilar();
+            ChartEditor.Edit_SelectByCriteria();
             e.Handled = true;
         }
     }

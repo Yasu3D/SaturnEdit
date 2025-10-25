@@ -777,7 +777,7 @@ public class ShortcutSettings
         ["Edit.SelectAll"]       = new(Key.A,    true,  false, false, "Menu.Edit", "Menu.Edit.SelectAll"),
         ["Edit.DeselectAll"]     = new(Key.A,    false, true,  false, "Menu.Edit", "Menu.Edit.DeselectAll"),
         ["Edit.CheckerDeselect"] = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.CheckerDeselect"),
-        ["Edit.SelectSimilar"]   = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.SelectSimilar"),
+        ["Edit.SelectByCriteria"]   = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.SelectByCriteria"),
 
         ["Navigate.MoveBeatForward"]      = new(Key.Up,       false, false, false, "Menu.Navigate", "Menu.Navigate.MoveBeatForward"),
         ["Navigate.MoveBeatBack"]         = new(Key.Down,     false, false, false, "Menu.Navigate", "Menu.Navigate.MoveBeatBack"),

@@ -32,6 +32,7 @@
     <system:String x:Key="ChartEditor.General.Type.Value.ReverseEffect">Reverse Effect</system:String>
     <system:String x:Key="ChartEditor.General.Type.Value.StopEffect">Stop Effect</system:String>
     <system:String x:Key="ChartEditor.General.Type.Value.TutorialMarker">Tutorial Marker</system:String>
+    <system:String x:Key="ChartEditor.General.Type.Value.Bookmark">Bookmark</system:String>
     <system:String x:Key="ChartEditor.General.BonusType">Bonus Type</system:String>
     <system:String x:Key="ChartEditor.General.BonusType.Value.Normal">Normal</system:String>
     <system:String x:Key="ChartEditor.General.BonusType.Value.Bonus">Bonus</system:String>
@@ -341,7 +342,7 @@
     <system:String x:Key="Menu.Edit.SelectAll">Select All</system:String>
     <system:String x:Key="Menu.Edit.DeselectAll">Deselect All</system:String>
     <system:String x:Key="Menu.Edit.CheckerDeselect">Checker Deselect...</system:String>
-    <system:String x:Key="Menu.Edit.SelectSimilar">Select Similar...</system:String>
+    <system:String x:Key="Menu.Edit.SelectByCriteria">Select by Criteria...</system:String>
     <system:String x:Key="Menu.View">View</system:String>
     <system:String x:Key="Menu.View.ToolWindows">Tool Windows</system:String>
     <system:String x:Key="Menu.View.LayoutPresets">Layout Presets</system:String>
@@ -491,6 +492,12 @@
     <system:String x:Key="Import.OptimizeHoldNotes.Description">Should hidden hold note segments be removed?</system:String>
     <system:String x:Key="Import.InferClearThreshold">Infer Clear Threshold</system:String>
     <system:String x:Key="Import.InferClearThreshold.Description">Should the clear threshold be inferred from the chosen Difficulty instead of the value defined by the @CLEAR tag?</system:String>
+    <system:String x:Key="SelectByCriteria.Window.Title">Select by Criteria</system:String>
+    <system:String x:Key="SelectByCriteria.RunSelection">Run Selection</system:String>
+    <system:String x:Key="SelectByCriteria.SelectIfObjectIs">Select if object is...</system:String>
+    <system:String x:Key="SelectByCriteria.SizeVariance">Size Variance</system:String>
+    <system:String x:Key="SelectByCriteria.PositionVariance">Position Variance</system:String>
+    <system:String x:Key="SelectByCriteria.FilterSelection">Filter Selection</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Title">Save Chart</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Header">Do you want to save changes to your chart before closing?</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Paragraph">Your changes will be lost if you don't save them.</system:String>

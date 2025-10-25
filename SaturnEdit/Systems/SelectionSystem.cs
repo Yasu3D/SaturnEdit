@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.UndoRedo;
@@ -40,8 +41,9 @@ public static class SelectionSystem
     public static ITimeable? LastSelectedObject { get; set; } = null;
     public static HashSet<ITimeable> SelectedObjects { get; } = [];
     
-    public static BoxSelectData BoxSelectData { get; set; } = new();
-
+    public static BoxSelectArgs BoxSelectArgs { get; set; } = new();
+    public static SelectByCriteriaArgs SelectByCriteriaArgs { get; set; } = new();
+    
 #region Methods
     public static void SetSelection(bool control, bool shift)
     {
@@ -224,43 +226,43 @@ public static class SelectionSystem
 
     public static void SetBoxSelectionStart(bool negativeSelection, float viewTime)
     {
-        BoxSelectData.NegativeSelection = negativeSelection;
-        BoxSelectData.GlobalStartTime = TimeSystem.Timestamp.Time + viewTime;
-        BoxSelectData.ScaledStartTimes.Clear();
+        BoxSelectArgs.NegativeSelection = negativeSelection;
+        BoxSelectArgs.GlobalStartTime = TimeSystem.Timestamp.Time + viewTime;
+        BoxSelectArgs.ScaledStartTimes.Clear();
         foreach (Layer layer in ChartSystem.Chart.Layers)
         {
             float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
-            BoxSelectData.ScaledStartTimes[layer] = scaledTime + viewTime;
+            BoxSelectArgs.ScaledStartTimes[layer] = scaledTime + viewTime;
         }
     }
 
     public static void SetBoxSelectionEnd(int position, int size, float viewTime)
     {
-        BoxSelectData.GlobalEndTime = TimeSystem.Timestamp.Time + viewTime;
-        BoxSelectData.ScaledEndTimes.Clear();
+        BoxSelectArgs.GlobalEndTime = TimeSystem.Timestamp.Time + viewTime;
+        BoxSelectArgs.ScaledEndTimes.Clear();
         foreach (Layer layer in ChartSystem.Chart.Layers)
         {
             float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
-            BoxSelectData.ScaledEndTimes[layer] = scaledTime + viewTime;
+            BoxSelectArgs.ScaledEndTimes[layer] = scaledTime + viewTime;
         }
 
-        BoxSelectData.Position = position;
-        BoxSelectData.Size = size;
+        BoxSelectArgs.Position = position;
+        BoxSelectArgs.Size = size;
     }
     
     public static void ApplyBoxSelection()
     {
-        if (BoxSelectData.GlobalStartTime == null 
-            || BoxSelectData.GlobalEndTime == null 
-            || BoxSelectData.ScaledStartTimes.Count == 0 
-            || BoxSelectData.ScaledEndTimes.Count == 0)
+        if (BoxSelectArgs.GlobalStartTime == null 
+            || BoxSelectArgs.GlobalEndTime == null 
+            || BoxSelectArgs.ScaledStartTimes.Count == 0 
+            || BoxSelectArgs.ScaledEndTimes.Count == 0)
         {
-            BoxSelectData = new();
+            BoxSelectArgs = new();
             return;
         }
     
-        float globalMin = MathF.Min((float)BoxSelectData.GlobalStartTime, (float)BoxSelectData.GlobalEndTime);
-        float globalMax = MathF.Max((float)BoxSelectData.GlobalStartTime, (float)BoxSelectData.GlobalEndTime);
+        float globalMin = MathF.Min((float)BoxSelectArgs.GlobalStartTime, (float)BoxSelectArgs.GlobalEndTime);
+        float globalMax = MathF.Max((float)BoxSelectArgs.GlobalStartTime, (float)BoxSelectArgs.GlobalEndTime);
 
         List<IOperation> operations = [];
         
@@ -270,7 +272,7 @@ public static class SelectionSystem
             if (@event.Timestamp.Time < globalMin) continue;
             if (@event.Timestamp.Time > globalMax) continue;
 
-            if (BoxSelectData.NegativeSelection)
+            if (BoxSelectArgs.NegativeSelection)
             {
                 if (!SelectedObjects.Contains(@event)) continue;
                 operations.Add(new RemoveSelectionOperation(@event, LastSelectedObject));
@@ -288,9 +290,9 @@ public static class SelectionSystem
             if (note.Timestamp.Time < globalMin) continue;
             if (note.Timestamp.Time > globalMax) continue;
 
-            if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectData.Position, BoxSelectData.Size)) continue;
+            if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
 
-            if (BoxSelectData.NegativeSelection)
+            if (BoxSelectArgs.NegativeSelection)
             {
                 if (!SelectedObjects.Contains(note)) continue;
                 operations.Add(new RemoveSelectionOperation(note, LastSelectedObject));
@@ -310,7 +312,7 @@ public static class SelectionSystem
                 if (@event.Timestamp.Time < globalMin) continue;
                 if (@event.Timestamp.Time > globalMax) continue;
 
-                if (BoxSelectData.NegativeSelection)
+                if (BoxSelectArgs.NegativeSelection)
                 {
                     if (!SelectedObjects.Contains(@event)) continue;
                     operations.Add(new RemoveSelectionOperation(@event, LastSelectedObject));
@@ -326,8 +328,8 @@ public static class SelectionSystem
             {
                 if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
 
-                float min = MathF.Min(BoxSelectData.ScaledStartTimes[layer], BoxSelectData.ScaledEndTimes[layer]);
-                float max = MathF.Max(BoxSelectData.ScaledStartTimes[layer], BoxSelectData.ScaledEndTimes[layer]);
+                float min = MathF.Min(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
+                float max = MathF.Max(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
 
                 if (note is HoldNote holdNote && holdNote.Points.Count > 1)
                 {
@@ -339,7 +341,7 @@ public static class SelectionSystem
                     {
                         if (point.Timestamp.ScaledTime < min) continue;
                         if (point.Timestamp.ScaledTime > max) continue;
-                        if (!IPositionable.IsAnyOverlap(point.Position, point.Size, BoxSelectData.Position, BoxSelectData.Size)) continue;
+                        if (!IPositionable.IsAnyOverlap(point.Position, point.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
 
                         overlap = true;
                         break;
@@ -352,10 +354,10 @@ public static class SelectionSystem
                     if (note.Timestamp.ScaledTime < min) continue;
                     if (note.Timestamp.ScaledTime > max) continue;
 
-                    if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectData.Position, BoxSelectData.Size)) continue;
+                    if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
                 }
 
-                if (BoxSelectData.NegativeSelection)
+                if (BoxSelectArgs.NegativeSelection)
                 {
                     if (!SelectedObjects.Contains(note)) continue;
                     operations.Add(new RemoveSelectionOperation(note, LastSelectedObject));
@@ -370,7 +372,7 @@ public static class SelectionSystem
 
         UndoRedoSystem.Push(new CompositeOperation(operations));
         
-        BoxSelectData = new();
+        BoxSelectArgs = new();
     }
 
     public static void SelectAll()
@@ -384,6 +386,13 @@ public static class SelectionSystem
             operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
         }
 
+        foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+        {
+            if (SelectedObjects.Contains(bookmark)) continue;
+
+            operations.Add(new AddSelectionOperation(bookmark, LastSelectedObject));
+        }
+        
         foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
         {
             if (SelectedObjects.Contains(laneToggle)) continue;
@@ -450,6 +459,157 @@ public static class SelectionSystem
         
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
+
+    public static void SelectByCriteria()
+    {
+        if (SelectByCriteriaArgs.FilterSelection)
+        {
+            filterSelection();
+        }
+        else
+        {
+            selectByCriteria();
+        }
+
+        return;
+        
+        void selectByCriteria()
+        {
+            List<IOperation> operations = [];
+            
+            foreach (Event @event in ChartSystem.Chart.Events)
+            {
+                if (SelectedObjects.Contains(@event)) continue;
+                
+                if (@event is TempoChangeEvent    && !SelectByCriteriaArgs.IncludeTempoChangeEvents   ) continue;
+                if (@event is MetreChangeEvent    && !SelectByCriteriaArgs.IncludeMetreChangeEvents   ) continue;
+                if (@event is TutorialMarkerEvent && !SelectByCriteriaArgs.IncludeTutorialMarkerEvents) continue;
+                
+                operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+            }
+
+            if (SelectByCriteriaArgs.IncludeBookmarks)
+            {
+                foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+                {
+                    if (SelectedObjects.Contains(bookmark)) continue;
+
+                    operations.Add(new AddSelectionOperation(bookmark, LastSelectedObject));
+                }
+            }
+            
+            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            {
+                if (SelectedObjects.Contains(laneToggle)) continue;
+                
+                if (laneToggle is LaneShowNote && !SelectByCriteriaArgs.IncludeLaneShowNotes) continue;
+                if (laneToggle is LaneHideNote && !SelectByCriteriaArgs.IncludeLaneHideNotes) continue;
+                
+                if (laneToggle is IPositionable positionable)
+                {
+                    int positionDifference = Math.Abs(positionable.Position - SelectByCriteriaArgs.Position);
+                    positionDifference = positionDifference > 30 ? 60 - positionDifference : positionDifference;
+                    
+                    int sizeDifference = Math.Abs(positionable.Size - SelectByCriteriaArgs.Size);
+                    
+                    if (positionDifference > SelectByCriteriaArgs.PositionVariance) continue;
+                    if (sizeDifference > SelectByCriteriaArgs.SizeVariance) continue;
+                }
+                
+                operations.Add(new AddSelectionOperation(laneToggle, LastSelectedObject));
+            }
+            
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            {
+                foreach (Event @event in layer.Events)
+                {
+                    if (SelectedObjects.Contains(@event)) continue;
+                    
+                    if (@event is SpeedChangeEvent          && !SelectByCriteriaArgs.IncludeSpeedChangeEvents         ) continue;
+                    if (@event is VisibilityChangeEvent     && !SelectByCriteriaArgs.IncludeVisibilityChangeEvents    ) continue;
+                    if (@event is ReverseEffectEvent        && !SelectByCriteriaArgs.IncludeReverseEffectEvents       ) continue;
+                    if (@event is StopEffectEvent           && !SelectByCriteriaArgs.IncludeStopEffectEvents          ) continue;
+                    
+                    operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+                }
+                            
+                foreach (Note note in layer.Notes)
+                {
+                    if (SelectedObjects.Contains(note)) continue;
+                    
+                    if (note is TouchNote                 && !SelectByCriteriaArgs.IncludeTouchNotes                ) continue;
+                    if (note is ChainNote                 && !SelectByCriteriaArgs.IncludeChainNotes                ) continue;
+                    if (note is HoldNote                  && !SelectByCriteriaArgs.IncludeHoldNotes                 ) continue;
+                    if (note is SlideClockwiseNote        && !SelectByCriteriaArgs.IncludeSlideClockwiseNotes       ) continue;
+                    if (note is SlideCounterclockwiseNote && !SelectByCriteriaArgs.IncludeSlideCounterclockwiseNotes) continue;
+                    if (note is SnapForwardNote           && !SelectByCriteriaArgs.IncludeSnapForwardNotes          ) continue;
+                    if (note is SnapBackwardNote          && !SelectByCriteriaArgs.IncludeSnapBackwardNotes         ) continue;
+                    if (note is SyncNote                  && !SelectByCriteriaArgs.IncludeSyncNotes                 ) continue;
+                    if (note is MeasureLineNote           && !SelectByCriteriaArgs.IncludeMeasureLineNotes          ) continue;
+                    
+                    if (note is IPositionable positionable)
+                    {
+                        int positionDifference = Math.Abs(positionable.Position - SelectByCriteriaArgs.Position);
+                        positionDifference = positionDifference > 30 ? 60 - positionDifference : positionDifference;
+                        
+                        int sizeDifference = Math.Abs(positionable.Size - SelectByCriteriaArgs.Size);
+                        
+                        if (positionDifference > SelectByCriteriaArgs.PositionVariance) continue;
+                        if (sizeDifference > SelectByCriteriaArgs.SizeVariance) continue;
+                    }
+                    
+                    operations.Add(new AddSelectionOperation(note, LastSelectedObject));
+                }
+            }
+            
+            UndoRedoSystem.Push(new CompositeOperation(operations));
+        }
+        
+        void filterSelection()
+        {
+            if (SelectedObjects.Count == 0) return;
+
+            List<IOperation> operations = [];
+
+            foreach (ITimeable obj in SelectedObjects)
+            {
+                if (obj is Bookmark                  && !SelectByCriteriaArgs.IncludeBookmarks                 ) continue;
+                if (obj is TouchNote                 && !SelectByCriteriaArgs.IncludeTouchNotes                ) continue;
+                if (obj is ChainNote                 && !SelectByCriteriaArgs.IncludeChainNotes                ) continue;
+                if (obj is HoldNote                  && !SelectByCriteriaArgs.IncludeHoldNotes                 ) continue;
+                if (obj is SlideClockwiseNote        && !SelectByCriteriaArgs.IncludeSlideClockwiseNotes       ) continue;
+                if (obj is SlideCounterclockwiseNote && !SelectByCriteriaArgs.IncludeSlideCounterclockwiseNotes) continue;
+                if (obj is SnapForwardNote           && !SelectByCriteriaArgs.IncludeSnapForwardNotes          ) continue;
+                if (obj is SnapBackwardNote          && !SelectByCriteriaArgs.IncludeSnapBackwardNotes         ) continue;
+                if (obj is SyncNote                  && !SelectByCriteriaArgs.IncludeSyncNotes                 ) continue;
+                if (obj is MeasureLineNote           && !SelectByCriteriaArgs.IncludeMeasureLineNotes          ) continue;
+                if (obj is LaneShowNote              && !SelectByCriteriaArgs.IncludeLaneShowNotes             ) continue;
+                if (obj is LaneHideNote              && !SelectByCriteriaArgs.IncludeLaneHideNotes             ) continue;
+                if (obj is TempoChangeEvent          && !SelectByCriteriaArgs.IncludeTempoChangeEvents         ) continue;
+                if (obj is MetreChangeEvent          && !SelectByCriteriaArgs.IncludeMetreChangeEvents         ) continue;
+                if (obj is TutorialMarkerEvent       && !SelectByCriteriaArgs.IncludeTutorialMarkerEvents      ) continue;
+                if (obj is SpeedChangeEvent          && !SelectByCriteriaArgs.IncludeSpeedChangeEvents         ) continue;
+                if (obj is VisibilityChangeEvent     && !SelectByCriteriaArgs.IncludeVisibilityChangeEvents    ) continue;
+                if (obj is ReverseEffectEvent        && !SelectByCriteriaArgs.IncludeReverseEffectEvents       ) continue;
+                if (obj is StopEffectEvent           && !SelectByCriteriaArgs.IncludeStopEffectEvents          ) continue;
+
+                if (obj is IPositionable positionable)
+                {
+                    int positionDifference = Math.Abs(positionable.Position - SelectByCriteriaArgs.Position);
+                    positionDifference = positionDifference > 30 ? 60 - positionDifference : positionDifference;
+                    
+                    int sizeDifference = Math.Abs(positionable.Size - SelectByCriteriaArgs.Size);
+                    
+                    if (positionDifference > SelectByCriteriaArgs.PositionVariance) continue;
+                    if (sizeDifference > SelectByCriteriaArgs.SizeVariance) continue;
+                }
+                
+                operations.Add(new RemoveSelectionOperation(obj, LastSelectedObject));
+            }
+            
+            UndoRedoSystem.Push(new CompositeOperation(operations));
+        }
+    }
 #endregion Methods
     
 #region System Event Delegates
@@ -460,7 +620,7 @@ public static class SelectionSystem
 #endregion System Event Delegates
 }
 
-public class BoxSelectData
+public class BoxSelectArgs
 {
     public float? GlobalStartTime = null;
     public float? GlobalEndTime = null;
@@ -470,4 +630,34 @@ public class BoxSelectData
 
     public int Position = 0;
     public int Size = 0;
+}
+
+public class SelectByCriteriaArgs
+{
+    public int Position = 0;
+    public int PositionVariance = 0;
+    public int Size = 15;
+    public int SizeVariance = 0;
+
+    public bool FilterSelection = false;
+
+    public bool IncludeTouchNotes = false;
+    public bool IncludeChainNotes = false;
+    public bool IncludeHoldNotes = false;
+    public bool IncludeSlideClockwiseNotes = false;
+    public bool IncludeSlideCounterclockwiseNotes = false;
+    public bool IncludeSnapForwardNotes = false;
+    public bool IncludeSnapBackwardNotes = false;
+    public bool IncludeSyncNotes = false;
+    public bool IncludeMeasureLineNotes = false;
+    public bool IncludeLaneShowNotes = false;
+    public bool IncludeLaneHideNotes = false;
+    public bool IncludeTempoChangeEvents = false;
+    public bool IncludeMetreChangeEvents = false;
+    public bool IncludeSpeedChangeEvents = false;
+    public bool IncludeVisibilityChangeEvents = false;
+    public bool IncludeReverseEffectEvents = false;
+    public bool IncludeStopEffectEvents = false;
+    public bool IncludeTutorialMarkerEvents = false;
+    public bool IncludeBookmarks = false;
 }

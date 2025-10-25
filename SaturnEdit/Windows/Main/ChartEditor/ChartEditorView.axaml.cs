@@ -17,6 +17,7 @@ using SaturnEdit.Systems;
 using SaturnEdit.Windows.Dialogs.ExportArgs;
 using SaturnEdit.Windows.Dialogs.ImportArgs;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
+using SaturnEdit.Windows.Dialogs.SelectByCriteria;
 
 namespace SaturnEdit.Windows.ChartEditor;
 
@@ -298,37 +299,51 @@ public partial class ChartEditorView : UserControl
     
     public async void File_Quit()
     {
-        TopLevel? topLevel = TopLevel.GetTopLevel(this);
-        if (topLevel == null) return;
-
-        // Prompt to save an unsaved chart first.
-        if (!ChartSystem.IsSaved)
+        try
         {
-            ModalDialogResult result = await PromptSave();
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return;
 
-            // Cancel
-            if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
-
-            // Save
-            if (result is ModalDialogResult.Primary)
+            // Prompt to save an unsaved chart first.
+            if (!ChartSystem.IsSaved)
             {
-                bool success = await File_Save();
+                ModalDialogResult result = await PromptSave();
 
-                // Abort quitting if save was unsuccessful.
-                if (!success) return;
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort quitting if save was unsuccessful.
+                    if (!success) return;
+                }
+
+                // Don't Save
+                // Continue as normal.
             }
 
-            // Don't Save
-            // Continue as normal.
+            if (VisualRoot is not Window rootWindow) return;
+            rootWindow.Close();
         }
-
-        if (VisualRoot is not Window rootWindow) return;
-        rootWindow.Close();
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
     }
 
-    public void Edit_SelectSimilar()
+    public async void Edit_SelectByCriteria()
     {
-        throw new NotImplementedException();
+        if (VisualRoot is not Window rootWindow) return;
+
+        SelectByCriteriaWindow selectByCriteriaWindow = new();
+        await selectByCriteriaWindow.ShowDialog(rootWindow);
+
+        if (selectByCriteriaWindow.Result != ModalDialogResult.Primary) return;
+        SelectionSystem.SelectByCriteria();
     }
     
     private FilePickerSaveOptions ExportFilePickerSaveOptions(NotationWriteArgs args)

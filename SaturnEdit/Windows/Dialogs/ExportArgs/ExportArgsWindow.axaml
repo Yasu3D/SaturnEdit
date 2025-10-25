@@ -370,7 +370,7 @@
 
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Right">
-                        <Button Name="ButtonSave"
+                        <Button Name="ButtonExport"
                                 Classes="Themed AccentFull"
                                 Height="28"
                                 Margin="11,11,9,11"

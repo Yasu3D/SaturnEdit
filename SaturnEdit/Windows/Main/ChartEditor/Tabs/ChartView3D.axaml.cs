@@ -272,7 +272,7 @@ public partial class ChartView3D : UserControl
             playing: playing,
             selectedObjects: SelectionSystem.SelectedObjects,
             pointerOverObject: SelectionSystem.PointerOverObject,
-            boxSelect: new(SelectionSystem.BoxSelectData.GlobalStartTime, SelectionSystem.BoxSelectData.GlobalEndTime, SelectionSystem.BoxSelectData.Position, SelectionSystem.BoxSelectData.Size),
+            boxSelect: new(SelectionSystem.BoxSelectArgs.GlobalStartTime, SelectionSystem.BoxSelectArgs.GlobalEndTime, SelectionSystem.BoxSelectArgs.Position, SelectionSystem.BoxSelectArgs.Size),
             cursorNote: playing ? null : CursorSystem.CurrentNote
         );
 
