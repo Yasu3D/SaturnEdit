@@ -200,6 +200,8 @@ public partial class LayerListView : UserControl
     private void ListBoxLayers_OnKeyDown(object? sender, KeyEventArgs e)
     {
         if (blockEvents) return;
+        if (TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox) return;
+        
         Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Control));
 
         if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"]))

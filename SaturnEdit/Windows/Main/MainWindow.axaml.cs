@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnEdit.Systems;
@@ -188,5 +189,25 @@ public partial class MainWindow : Window
     private void MenuItemChartEditorExport_OnClick(object? sender, RoutedEventArgs e) => _ = ChartEditor.FileExport();
 
     private void MenuItemChartEditorQuit_OnClick(object? sender, RoutedEventArgs e) => ChartEditor.FileQuit();
+    
+    private void Window_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (GetTopLevel(this)?.FocusManager?.GetFocusedElement() is TextBox) return;
+        
+        Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Control));
+
+        
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Play"]) && TimeSystem.PlaybackState != PlaybackState.Playing)
+        {
+            TimeSystem.PlaybackState = PlaybackState.Playing;
+            e.Handled = true;
+        }
+        
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Pause"]) && TimeSystem.PlaybackState != PlaybackState.Stopped)
+        {
+            TimeSystem.PlaybackState = PlaybackState.Stopped;
+            e.Handled = true;
+        }
+    }
 #endregion UI Event Delegates
 }
