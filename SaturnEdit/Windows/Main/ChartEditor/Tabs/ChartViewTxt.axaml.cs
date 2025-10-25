@@ -9,6 +9,7 @@ using System.IO;
 using Avalonia.Threading;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
+using TextMateSharp.Themes;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -21,9 +22,7 @@ public partial class ChartViewTxt : UserControl
         writeArgs = new();
         readArgs = new();
 
-        RegistryOptions registryOptions = new(ThemeName.DarkPlus); // TODO: Light/Dark Mode support!
-        installation = TextEditorChart.InstallTextMate(registryOptions);
-        installation.SetGrammarFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/sat.tmLanguage.json"));
+        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
         
         TextEditorChart.Options.ConvertTabsToSpaces = true;
         TextEditorChart.Options.EnableTextDragDrop = true;
@@ -38,7 +37,7 @@ public partial class ChartViewTxt : UserControl
         UpdateTextFromChart();
     }
     
-    private readonly TextMate.Installation? installation;
+    private TextMate.Installation? installation;
     private readonly NotationWriteArgs writeArgs;
     private readonly NotationReadArgs readArgs;
     
@@ -83,6 +82,20 @@ public partial class ChartViewTxt : UserControl
 #endregion System Event Delegates
 
 #region UI Event Delegates
+    private void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
+    {
+        ThemeName themeName = SettingsSystem.EditorSettings.Theme switch
+        {
+            EditorSettings.EditorThemeOptions.Light => ThemeName.LightPlus,
+            EditorSettings.EditorThemeOptions.Dark => ThemeName.DarkPlus,
+            _ => ThemeName.DarkPlus,
+        };
+        
+        RegistryOptions registryOptions = new(themeName);
+        installation = TextEditorChart.InstallTextMate(registryOptions);
+        installation.SetGrammarFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets/sat.tmLanguage.json"));
+    }
+    
     private void ButtonApplyChanges_OnClick(object? sender, RoutedEventArgs e) => UpdateChartFromText();
     
     private void ToggleButtonShowSpaces_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
