@@ -68,6 +68,7 @@
     <system:String x:Key="ChartEditor.Playback.ToolTip.IncreasePlaybackSpeed">Increase Playback Speed</system:String>
     <system:String x:Key="ChartEditor.Playback.ToolTip.DecreasePlaybackSpeed">Decrease Playback Speed</system:String>
     <system:String x:Key="ChartEditor.Inspector">Inspector</system:String>
+    <system:String x:Key="ChartEditor.Inspector.NothingSelected">Nothing selected.</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.General">General</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.Layers">Layers</system:String>
     <system:String x:Key="ChartEditor.Inspector.Header.Shape">Shape</system:String>

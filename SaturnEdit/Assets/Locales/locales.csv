@@ -65,6 +65,7 @@ ChartEditor.Playback.ToolTip.PlaybackSpeed.Description,Adjust playback speed in 
 ChartEditor.Playback.ToolTip.IncreasePlaybackSpeed,Increase Playback Speed
 ChartEditor.Playback.ToolTip.DecreasePlaybackSpeed,Decrease Playback Speed
 ChartEditor.Inspector,Inspector
+ChartEditor.Inspector.NothingSelected,Nothing selected.
 ChartEditor.Inspector.Header.General,General
 ChartEditor.Inspector.Header.Layers,Layers
 ChartEditor.Inspector.Header.Shape,Shape
