@@ -46,6 +46,9 @@ ChartEditor.General.SweepDirection.Value.Instant,Instant
 ChartEditor.General.SweepDirection.Value.Clockwise,Clockwise
 ChartEditor.General.SweepDirection.Value.Counterclockwise,Counterclockwise
 ChartEditor.General.SweepDirection.Value.Center,Center
+ChartEditor.General.Visibility,Visibility
+ChartEditor.General.Visibility.Value.Visible,Visible
+ChartEditor.General.Visibility.Value.Hidden,Hidden
 ChartEditor.Playback,Playback
 ChartEditor.Playback.ToolTip.Play,Play
 ChartEditor.Playback.ToolTip.Pause,Pause
@@ -63,10 +66,24 @@ ChartEditor.Playback.ToolTip.IncreasePlaybackSpeed,Increase Playback Speed
 ChartEditor.Playback.ToolTip.DecreasePlaybackSpeed,Decrease Playback Speed
 ChartEditor.Inspector,Inspector
 ChartEditor.Inspector.Header.General,General
+ChartEditor.Inspector.Header.Layers,Layers
 ChartEditor.Inspector.Header.Shape,Shape
 ChartEditor.Inspector.Header.Judgement,Judgement
 ChartEditor.Inspector.Header.Hold,Hold
-ChartEditor.Inspector.Header.LaneToggles,Lane Toggles
+ChartEditor.Inspector.Header.LaneToggle,Lane Toggle
+ChartEditor.Inspector.Header.TempoChange,Tempo Change
+ChartEditor.Inspector.Header.MetreChange,Metre Change
+ChartEditor.Inspector.Header.SpeedChange,Speed Change
+ChartEditor.Inspector.Header.VisibilityChange,Visibility Change
+ChartEditor.Inspector.Header.TutorialMarker,Tutorial Marker
+ChartEditor.Inspector.Header.Bookmark,Bookmark
+ChartEditor.Inspector.Label.Tempo,Tempo
+ChartEditor.Inspector.Label.Metre,Metre
+ChartEditor.Inspector.Label.Speed,Speed
+ChartEditor.Inspector.Label.Visibility,Visibility
+ChartEditor.Inspector.Label.Key,Key
+ChartEditor.Inspector.Label.Color,Color
+ChartEditor.Inspector.Label.Message,Message
 ChartEditor.EventList,Event List
 ChartEditor.EventList.Header.Events,Events
 ChartEditor.List,List

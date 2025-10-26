@@ -15,6 +15,7 @@
         <StyleInclude Source="Styles/ColorStyles.axaml" />
         <StyleInclude Source="Styles/DockStyles.axaml" />
         <StyleInclude Source="Styles/IconStyles.axaml" />
+        <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
         
         <!-- Window -->
         <Style Selector="Window">

@@ -299,7 +299,7 @@ public static class SelectionSystem
             }
             else
             {
-                if (!SelectedObjects.Contains(note)) continue;
+                if (SelectedObjects.Contains(note)) continue;
                 operations.Add(new AddSelectionOperation(note, LastSelectedObject));
             }
         }
