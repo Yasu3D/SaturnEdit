@@ -77,8 +77,8 @@ public partial class LayerListView : UserControl
                 : ChartSystem.Chart.Layers[index - 1];
         }
 
-        LayerDeleteOperation op0 = new(item.Layer, index);
-        LayerSelectionOperation op1 = new(item.Layer, newSelection);
+        LayerRemoveOperation op0 = new(item.Layer, index);
+        LayerSelectOperation op1 = new(item.Layer, newSelection);
 
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
@@ -92,7 +92,7 @@ public partial class LayerListView : UserControl
         int index = ChartSystem.Chart.Layers.Count;
 
         LayerAddOperation op0 = new(layer, index);
-        LayerSelectionOperation op1 = new(SelectionSystem.SelectedLayer, layer); 
+        LayerSelectOperation op1 = new(SelectionSystem.SelectedLayer, layer); 
         
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
@@ -175,7 +175,7 @@ public partial class LayerListView : UserControl
         string newName = item.TextBoxLayerName.Text ?? "Unnamed Layer";
         if (oldName == newName) return;
         
-        UndoRedoSystem.Push(new LayerNameEditOperation(item.Layer, oldName, newName));
+        UndoRedoSystem.Push(new LayerRenameOperation(item.Layer, oldName, newName));
     }
     
     private void LayerItem_OnVisibilityChanged(object? sender, EventArgs e)
@@ -187,7 +187,7 @@ public partial class LayerListView : UserControl
         bool newVisibility = !item.Layer.Visible;
         if (oldVisibility == newVisibility) return;
         
-        UndoRedoSystem.Push(new LayerVisibilityEditOperation(item.Layer, oldVisibility, newVisibility));
+        UndoRedoSystem.Push(new LayerShowHideOperation(item.Layer, oldVisibility, newVisibility));
     }
     
     private void ListBoxLayers_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -199,7 +199,7 @@ public partial class LayerListView : UserControl
         Layer? newLayer = ListBoxLayers.SelectedItem is LayerListItem item ? item.Layer : null;
         if (oldLayer == newLayer) return;
         
-        UndoRedoSystem.Push(new LayerSelectionOperation(oldLayer, newLayer));
+        UndoRedoSystem.Push(new LayerSelectOperation(oldLayer, newLayer));
     }
     
     private void ListBoxLayers_OnKeyDown(object? sender, KeyEventArgs e)

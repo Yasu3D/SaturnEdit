@@ -56,12 +56,12 @@ public static class SelectionSystem
         {
             foreach (ITimeable obj in SelectedObjects)
             {
-                operations.Add(new RemoveSelectionOperation(obj, LastSelectedObject));
+                operations.Add(new SelectionRemoveOperation(obj, LastSelectedObject));
             }
 
             if (PointerOverObject != null)
             {
-                operations.Add(new AddSelectionOperation(PointerOverObject, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(PointerOverObject, LastSelectedObject));
             }
         }
             
@@ -73,11 +73,11 @@ public static class SelectionSystem
 
             if (SelectedObjects.Contains(PointerOverObject))
             {
-                operations.Add(new RemoveSelectionOperation(PointerOverObject, LastSelectedObject));
+                operations.Add(new SelectionRemoveOperation(PointerOverObject, LastSelectedObject));
             }
             else
             {
-                operations.Add(new AddSelectionOperation(PointerOverObject, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(PointerOverObject, LastSelectedObject));
             }
         }
             
@@ -90,7 +90,7 @@ public static class SelectionSystem
 
             foreach (ITimeable obj in SelectedObjects)
             {
-                operations.Add(new RemoveSelectionOperation(obj, LastSelectedObject));
+                operations.Add(new SelectionRemoveOperation(obj, LastSelectedObject));
             }
 
             Timestamp start;
@@ -113,7 +113,7 @@ public static class SelectionSystem
                 if (@event.Timestamp < start) continue;
                 if (@event.Timestamp > end) continue;
 
-                operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
             }
 
             foreach (Note note in ChartSystem.Chart.LaneToggles)
@@ -122,7 +122,7 @@ public static class SelectionSystem
                 if (note.Timestamp < start) continue;
                 if (note.Timestamp > end) continue;
 
-                operations.Add(new AddSelectionOperation(note, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(note, LastSelectedObject));
             }
 
             foreach (Layer layer in ChartSystem.Chart.Layers)
@@ -133,7 +133,7 @@ public static class SelectionSystem
                     if (@event.Timestamp < start) continue;
                     if (@event.Timestamp > end) continue;
 
-                    operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
                 }
 
                 foreach (Note note in layer.Notes)
@@ -142,15 +142,15 @@ public static class SelectionSystem
                     if (note.Timestamp < start) continue;
                     if (note.Timestamp > end) continue;
 
-                    operations.Add(new AddSelectionOperation(note, LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(note, LastSelectedObject));
                 }
             }
                 
-            operations.Add(new AddSelectionOperation(PointerOverObject, LastSelectedObject));
+            operations.Add(new SelectionAddOperation(PointerOverObject, LastSelectedObject));
 
             if (LastSelectedObject != null)
             {
-                operations.Add(new AddSelectionOperation(LastSelectedObject, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(LastSelectedObject, LastSelectedObject));
             }
         }
             
@@ -180,7 +180,7 @@ public static class SelectionSystem
                 if (@event.Timestamp < start) continue;
                 if (@event.Timestamp > end) continue;
 
-                operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
             }
 
             foreach (Note note in ChartSystem.Chart.LaneToggles)
@@ -189,7 +189,7 @@ public static class SelectionSystem
                 if (note.Timestamp < start) continue;
                 if (note.Timestamp > end) continue;
 
-                operations.Add(new AddSelectionOperation(note, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(note, LastSelectedObject));
             }
 
             foreach (Layer layer in ChartSystem.Chart.Layers)
@@ -200,7 +200,7 @@ public static class SelectionSystem
                     if (@event.Timestamp < start) continue;
                     if (@event.Timestamp > end) continue;
 
-                    operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
                 }
 
                 foreach (Note note in layer.Notes)
@@ -209,15 +209,15 @@ public static class SelectionSystem
                     if (note.Timestamp < start) continue;
                     if (note.Timestamp > end) continue;
 
-                    operations.Add(new AddSelectionOperation(note, LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(note, LastSelectedObject));
                 }
             }
                 
-            operations.Add(new AddSelectionOperation(PointerOverObject, LastSelectedObject));
+            operations.Add(new SelectionAddOperation(PointerOverObject, LastSelectedObject));
 
             if (LastSelectedObject != null)
             {
-                operations.Add(new AddSelectionOperation(LastSelectedObject, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(LastSelectedObject, LastSelectedObject));
             }
         }
             
@@ -275,12 +275,12 @@ public static class SelectionSystem
             if (BoxSelectArgs.NegativeSelection)
             {
                 if (!SelectedObjects.Contains(@event)) continue;
-                operations.Add(new RemoveSelectionOperation(@event, LastSelectedObject));
+                operations.Add(new SelectionRemoveOperation(@event, LastSelectedObject));
             }
             else
             {
                 if (SelectedObjects.Contains(@event)) continue;
-                operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
             }
         }
 
@@ -295,12 +295,12 @@ public static class SelectionSystem
             if (BoxSelectArgs.NegativeSelection)
             {
                 if (!SelectedObjects.Contains(note)) continue;
-                operations.Add(new RemoveSelectionOperation(note, LastSelectedObject));
+                operations.Add(new SelectionRemoveOperation(note, LastSelectedObject));
             }
             else
             {
                 if (SelectedObjects.Contains(note)) continue;
-                operations.Add(new AddSelectionOperation(note, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(note, LastSelectedObject));
             }
         }
 
@@ -315,12 +315,12 @@ public static class SelectionSystem
                 if (BoxSelectArgs.NegativeSelection)
                 {
                     if (!SelectedObjects.Contains(@event)) continue;
-                    operations.Add(new RemoveSelectionOperation(@event, LastSelectedObject));
+                    operations.Add(new SelectionRemoveOperation(@event, LastSelectedObject));
                 }
                 else
                 {
                     if (SelectedObjects.Contains(@event)) continue;
-                    operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
                 }
             }
 
@@ -360,12 +360,12 @@ public static class SelectionSystem
                 if (BoxSelectArgs.NegativeSelection)
                 {
                     if (!SelectedObjects.Contains(note)) continue;
-                    operations.Add(new RemoveSelectionOperation(note, LastSelectedObject));
+                    operations.Add(new SelectionRemoveOperation(note, LastSelectedObject));
                 }
                 else
                 {
                     if (SelectedObjects.Contains(note)) continue;
-                    operations.Add(new AddSelectionOperation(note, LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(note, LastSelectedObject));
                 }
             }
         }
@@ -383,21 +383,21 @@ public static class SelectionSystem
         {
             if (SelectedObjects.Contains(@event)) continue;
             
-            operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+            operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
         }
 
         foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
         {
             if (SelectedObjects.Contains(bookmark)) continue;
 
-            operations.Add(new AddSelectionOperation(bookmark, LastSelectedObject));
+            operations.Add(new SelectionAddOperation(bookmark, LastSelectedObject));
         }
         
         foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
         {
             if (SelectedObjects.Contains(laneToggle)) continue;
             
-            operations.Add(new AddSelectionOperation(laneToggle, LastSelectedObject));
+            operations.Add(new SelectionAddOperation(laneToggle, LastSelectedObject));
         }
         
         foreach (Layer layer in ChartSystem.Chart.Layers)
@@ -406,14 +406,14 @@ public static class SelectionSystem
             {
                 if (SelectedObjects.Contains(@event)) continue;
                 
-                operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
             }
                         
             foreach (Note note in layer.Notes)
             {
                 if (SelectedObjects.Contains(note)) continue;
                 
-                operations.Add(new AddSelectionOperation(note, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(note, LastSelectedObject));
             }
         }
 
@@ -427,7 +427,7 @@ public static class SelectionSystem
 
         foreach (ITimeable obj in SelectedObjects)
         {
-            operations.Add(new RemoveSelectionOperation(obj, LastSelectedObject));
+            operations.Add(new SelectionRemoveOperation(obj, LastSelectedObject));
         }
 
         UndoRedoSystem.Push(new CompositeOperation(operations));
@@ -454,7 +454,7 @@ public static class SelectionSystem
 
             if (keepSelected) continue;
 
-            operations.Add(new RemoveSelectionOperation(timeable, LastSelectedObject));
+            operations.Add(new SelectionRemoveOperation(timeable, LastSelectedObject));
         }
         
         UndoRedoSystem.Push(new CompositeOperation(operations));
@@ -485,7 +485,7 @@ public static class SelectionSystem
                 if (@event is MetreChangeEvent    && !SelectByCriteriaArgs.IncludeMetreChangeEvents   ) continue;
                 if (@event is TutorialMarkerEvent && !SelectByCriteriaArgs.IncludeTutorialMarkerEvents) continue;
                 
-                operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
             }
 
             if (SelectByCriteriaArgs.IncludeBookmarks)
@@ -494,7 +494,7 @@ public static class SelectionSystem
                 {
                     if (SelectedObjects.Contains(bookmark)) continue;
 
-                    operations.Add(new AddSelectionOperation(bookmark, LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(bookmark, LastSelectedObject));
                 }
             }
             
@@ -516,7 +516,7 @@ public static class SelectionSystem
                     if (sizeDifference > SelectByCriteriaArgs.SizeVariance) continue;
                 }
                 
-                operations.Add(new AddSelectionOperation(laneToggle, LastSelectedObject));
+                operations.Add(new SelectionAddOperation(laneToggle, LastSelectedObject));
             }
             
             foreach (Layer layer in ChartSystem.Chart.Layers)
@@ -530,7 +530,7 @@ public static class SelectionSystem
                     if (@event is ReverseEffectEvent        && !SelectByCriteriaArgs.IncludeReverseEffectEvents       ) continue;
                     if (@event is StopEffectEvent           && !SelectByCriteriaArgs.IncludeStopEffectEvents          ) continue;
                     
-                    operations.Add(new AddSelectionOperation(@event, LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
                 }
                             
                 foreach (Note note in layer.Notes)
@@ -558,7 +558,7 @@ public static class SelectionSystem
                         if (sizeDifference > SelectByCriteriaArgs.SizeVariance) continue;
                     }
                     
-                    operations.Add(new AddSelectionOperation(note, LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(note, LastSelectedObject));
                 }
             }
             
@@ -604,7 +604,7 @@ public static class SelectionSystem
                     if (sizeDifference > SelectByCriteriaArgs.SizeVariance) continue;
                 }
                 
-                operations.Add(new RemoveSelectionOperation(obj, LastSelectedObject));
+                operations.Add(new SelectionRemoveOperation(obj, LastSelectedObject));
             }
             
             UndoRedoSystem.Push(new CompositeOperation(operations));

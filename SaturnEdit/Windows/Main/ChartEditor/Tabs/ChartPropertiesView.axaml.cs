@@ -184,7 +184,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxTitle.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new TitleEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryTitleEditOperation(oldValue, newValue));
     }
 
     private void TextBoxReading_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -196,7 +196,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxReading.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new ReadingEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryReadingEditOperation(oldValue, newValue));
     }
 
     private void ToggleButtonAutoReading_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -210,13 +210,13 @@ public partial class ChartPropertiesView : UserControl
 
         if (newValue == true)
         {
-            AutoReadingEditOperation op0 = new(oldValue, newValue);
+            EntryAutoReadingEditOperation op0 = new(oldValue, newValue);
             BuildChartOperation op1 = new();
             UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
         }
         else
         {
-            UndoRedoSystem.Push(new AutoReadingEditOperation(oldValue, newValue));
+            UndoRedoSystem.Push(new EntryAutoReadingEditOperation(oldValue, newValue));
         }
     }
 
@@ -229,7 +229,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxArtist.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new ArtistEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryArtistEditOperation(oldValue, newValue));
     }
 
     private void TextBoxBpmMessage_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -241,7 +241,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxBpmMessage.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new BpmMessageEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryBpmMessageEditOperation(oldValue, newValue));
     }
 
     private void ToggleButtonAutoBpmMessage_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -255,13 +255,13 @@ public partial class ChartPropertiesView : UserControl
         
         if (newValue == true)
         {
-            AutoBpmMessageEditOperation op0 = new (oldValue, newValue);
+            EntryAutoBpmMessageEditOperation op0 = new (oldValue, newValue);
             BuildChartOperation op1 = new();
             UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
         }
         else
         {
-            UndoRedoSystem.Push(new AutoBpmMessageEditOperation(oldValue, newValue));
+            UndoRedoSystem.Push(new EntryAutoBpmMessageEditOperation(oldValue, newValue));
         }
     }
 
@@ -274,7 +274,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxRevision.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new RevisionEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryRevisionEditOperation(oldValue, newValue));
     }
 
     private void TextBoxNotesDesigner_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -286,7 +286,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxNotesDesigner.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new NotesDesignerEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryNotesDesignerEditOperation(oldValue, newValue));
     }
 
     private void ComboBoxDifficulty_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -298,7 +298,7 @@ public partial class ChartPropertiesView : UserControl
         Difficulty newValue = (Difficulty)ComboBoxDifficulty.SelectedIndex;
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new DifficultyEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryDifficultyEditOperation(oldValue, newValue));
     }
 
     private void TextBoxLevel_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -312,12 +312,12 @@ public partial class ChartPropertiesView : UserControl
             double newValue = Convert.ToDouble(TextBoxLevel.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
-            UndoRedoSystem.Push(new LevelEditOperation(oldValue, newValue));
+            UndoRedoSystem.Push(new EntryLevelEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.Push(new LevelEditOperation(ChartSystem.Entry.Level, 0));
+            UndoRedoSystem.Push(new EntryLevelEditOperation(ChartSystem.Entry.Level, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -337,12 +337,12 @@ public partial class ChartPropertiesView : UserControl
             float newValue = Convert.ToSingle(TextBoxClearThreshold.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
-            UndoRedoSystem.Push(new ClearThresholdEditOperation(oldValue, newValue));
+            UndoRedoSystem.Push(new EntryClearThresholdEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.Push(new ClearThresholdEditOperation(ChartSystem.Entry.ClearThreshold, 0));
+            UndoRedoSystem.Push(new EntryClearThresholdEditOperation(ChartSystem.Entry.ClearThreshold, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -362,13 +362,13 @@ public partial class ChartPropertiesView : UserControl
         
         if (newValue == true)
         {
-            AutoClearThresholdEditOperation op0 = new (oldValue, newValue);
+            EntryAutoClearThresholdEditOperation op0 = new (oldValue, newValue);
             BuildChartOperation op1 = new();
             UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
         }
         else
         {
-            UndoRedoSystem.Push(new AutoClearThresholdEditOperation(oldValue, newValue));
+            UndoRedoSystem.Push(new EntryAutoClearThresholdEditOperation(oldValue, newValue));
         }
     }
 
@@ -384,7 +384,7 @@ public partial class ChartPropertiesView : UserControl
         Timestamp newValue = new(measure, tick);
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new ChartEndEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryChartEndEditOperation(oldValue, newValue));
     }
 
     private void NumericUpDownChartEndTick_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -400,7 +400,7 @@ public partial class ChartPropertiesView : UserControl
         Timestamp newValue = new(fullTick);
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new ChartEndEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryChartEndEditOperation(oldValue, newValue));
     }
 
     private void ToggleButtonAutoChartEnd_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -414,13 +414,13 @@ public partial class ChartPropertiesView : UserControl
         
         if (newValue == true)
         {
-            AutoChartEndEditOperation op0 = new (oldValue, newValue);
+            EntryAutoChartEndEditOperation op0 = new (oldValue, newValue);
             BuildChartOperation op1 = new();
             UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
         }
         else
         {
-            UndoRedoSystem.Push(new AutoChartEndEditOperation(oldValue, newValue));
+            UndoRedoSystem.Push(new EntryAutoChartEndEditOperation(oldValue, newValue));
         }
     }
 
@@ -443,12 +443,12 @@ public partial class ChartPropertiesView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxPreviewBegin.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
-            UndoRedoSystem.Push(new PreviewBeginEditOperation(oldValue, newValue));
+            UndoRedoSystem.Push(new EntryPreviewBeginEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.Push(new PreviewBeginEditOperation(ChartSystem.Entry.PreviewBegin, 0));
+            UndoRedoSystem.Push(new EntryPreviewBeginEditOperation(ChartSystem.Entry.PreviewBegin, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -468,12 +468,12 @@ public partial class ChartPropertiesView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxPreviewLength.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
-            UndoRedoSystem.Push(new PreviewBeginEditOperation(oldValue, newValue));
+            UndoRedoSystem.Push(new EntryPreviewBeginEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.Push(new PreviewBeginEditOperation(ChartSystem.Entry.PreviewLength, 10000));
+            UndoRedoSystem.Push(new EntryPreviewBeginEditOperation(ChartSystem.Entry.PreviewLength, 10000));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -491,7 +491,7 @@ public partial class ChartPropertiesView : UserControl
         BackgroundOption newValue = (BackgroundOption)ComboBoxBackground.SelectedIndex;
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new BackgroundEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryBackgroundEditOperation(oldValue, newValue));
     }
 
     private void ComboBoxTutorialMode_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -503,7 +503,7 @@ public partial class ChartPropertiesView : UserControl
         bool newValue = ComboBoxTutorialMode.SelectedIndex == 1;
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new TutorialModeEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryTutorialModeEditOperation(oldValue, newValue));
     }
 
     private void TextBoxJacket_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -515,7 +515,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxJacket.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new JacketEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryJacketEditOperation(oldValue, newValue));
     }
 
     private void TextBoxAudio_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -527,7 +527,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxAudio.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new AudioEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryAudioEditOperation(oldValue, newValue));
     }
 
     private void TextBoxVideo_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -539,7 +539,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxVideo.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.Push(new VideoEditOperation(oldValue, newValue));
+        UndoRedoSystem.Push(new EntryVideoEditOperation(oldValue, newValue));
     }
 
     private void TextBoxAudioOffset_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -553,12 +553,12 @@ public partial class ChartPropertiesView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxAudioOffset.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
-            UndoRedoSystem.Push(new AudioOffsetEditOperation(oldValue, newValue));
+            UndoRedoSystem.Push(new EntryAudioOffsetEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.Push(new AudioOffsetEditOperation(ChartSystem.Entry.AudioOffset, 0));
+            UndoRedoSystem.Push(new EntryAudioOffsetEditOperation(ChartSystem.Entry.AudioOffset, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -578,12 +578,12 @@ public partial class ChartPropertiesView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxVideoOffset.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
-            UndoRedoSystem.Push(new VideoOffsetEditOperation(oldValue, newValue));
+            UndoRedoSystem.Push(new EntryVideoOffsetEditOperation(oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.Push(new VideoOffsetEditOperation(ChartSystem.Entry.VideoOffset, 0));
+            UndoRedoSystem.Push(new EntryVideoOffsetEditOperation(ChartSystem.Entry.VideoOffset, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -616,8 +616,8 @@ public partial class ChartPropertiesView : UserControl
             if (ChartSystem.Entry.RootDirectory == "")
             {
                 // Define new root directory.
-                RootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
-                JacketEditOperation op1 = new(ChartSystem.Entry.JacketFile, Path.GetFileName(files[0].Path.LocalPath));
+                EntryRootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
+                EntryJacketEditOperation op1 = new(ChartSystem.Entry.JacketFile, Path.GetFileName(files[0].Path.LocalPath));
                 UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
             }
             else
@@ -629,7 +629,7 @@ public partial class ChartPropertiesView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.Push(new JacketEditOperation(ChartSystem.Entry.JacketFile, filename));
+                UndoRedoSystem.Push(new EntryJacketEditOperation(ChartSystem.Entry.JacketFile, filename));
             }
         }
         catch (Exception ex)
@@ -663,8 +663,8 @@ public partial class ChartPropertiesView : UserControl
             if (ChartSystem.Entry.RootDirectory == "")
             {
                 // Define new root directory.
-                RootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
-                AudioEditOperation op1 = new(ChartSystem.Entry.AudioFile, Path.GetFileName(files[0].Path.LocalPath));
+                EntryRootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
+                EntryAudioEditOperation op1 = new(ChartSystem.Entry.AudioFile, Path.GetFileName(files[0].Path.LocalPath));
                 UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
             }
             else
@@ -676,7 +676,7 @@ public partial class ChartPropertiesView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.Push(new AudioEditOperation(ChartSystem.Entry.AudioFile, filename));
+                UndoRedoSystem.Push(new EntryAudioEditOperation(ChartSystem.Entry.AudioFile, filename));
             }
         }
         catch (Exception ex)
@@ -710,8 +710,8 @@ public partial class ChartPropertiesView : UserControl
             if (ChartSystem.Entry.RootDirectory == "")
             {
                 // Define new root directory.
-                RootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
-                VideoEditOperation op1 = new(ChartSystem.Entry.VideoFile, Path.GetFileName(files[0].Path.LocalPath));
+                EntryRootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
+                EntryVideoEditOperation op1 = new(ChartSystem.Entry.VideoFile, Path.GetFileName(files[0].Path.LocalPath));
                 UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
             }
             else
@@ -723,7 +723,7 @@ public partial class ChartPropertiesView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
                 
-                UndoRedoSystem.Push(new VideoEditOperation(ChartSystem.Entry.VideoFile, filename));
+                UndoRedoSystem.Push(new EntryVideoEditOperation(ChartSystem.Entry.VideoFile, filename));
             }
         }
         catch (Exception ex)
