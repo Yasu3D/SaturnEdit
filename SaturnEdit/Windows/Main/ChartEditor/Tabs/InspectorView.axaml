@@ -65,14 +65,12 @@
                             <Grid Grid.Column="2"
                                   Grid.Row="1"
                                   ColumnDefinitions="*,15,*">
-                                <NumericUpDown Grid.Column="0"
-                                               Name="NumericUpDownMeasure"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Stretch"
-                                               Minimum="0"
-                                               Watermark="-"
-                                               FormatString="0"
-                                               ValueChanged="NumericUpDownMeasure_OnValueChanged"/>
+                                <TextBox Grid.Column="0"
+                                         Name="TextBoxMeasure"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Stretch"
+                                         Watermark="-"
+                                         LostFocus="TextBoxMeasure_OnLostFocus" />
 
                                 <Rectangle Grid.Column="1"
                                            Fill="{DynamicResource SeparatorPrimary}"
@@ -80,28 +78,24 @@
                                            Margin="0,5"
                                            HorizontalAlignment="Center" />
 
-                                <NumericUpDown Grid.Column="2"
-                                               Name="NumericUpDownTick"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Stretch"
-                                               Minimum="-1"
-                                               Maximum="1920"
-                                               Watermark="-"
-                                               FormatString="0"
-                                               ValueChanged="NumericUpDownTick_OnValueChanged"/>
+                                <TextBox Grid.Column="2"
+                                         Name="TextBoxTick"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Stretch"
+                                         Watermark="-"
+                                         LostFocus="TextBoxTick_OnLostFocus"/>
                             </Grid>
 
                             <TextBlock Grid.Column="0"
                                        Grid.Row="2"
                                        Text="{DynamicResource ChartEditor.General.Ticks}"
                                        VerticalAlignment="Center" />
-                            <NumericUpDown Grid.Column="2"
-                                           Grid.Row="2"
-                                           Name="NumericUpDownFullTick"
-                                           VerticalAlignment="Center"
-                                           Watermark="-"
-                                           FormatString="0"
-                                           ValueChanged="NumericUpDownFullTick_OnValueChanged"/>
+                            <TextBox Grid.Column="2"
+                                     Grid.Row="2"
+                                     Name="TextBoxFullTick"
+                                     VerticalAlignment="Center"
+                                     Watermark="-"
+                                     LostFocus="TextBoxFullTick_OnLostFocus"/>
                         </Grid>
                     </Expander>
 
@@ -315,10 +309,10 @@
                                       Name="ComboBoxSweepDirection"
                                       PlaceholderText="-"
                                       SelectionChanged="ComboBoxSweepDirection_OnSelectionChanged">
-                                <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Instant}" />
-                                <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Clockwise}" />
                                 <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Counterclockwise}" />
+                                <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Clockwise}" />
                                 <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Center}" />
+                                <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Instant}" />
                             </ComboBox>
                         </Grid>
                     </Expander>

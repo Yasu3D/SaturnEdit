@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -9,6 +10,14 @@ using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
+using SaturnEdit.UndoRedo;
+using SaturnEdit.UndoRedo.BookmarkOperations;
+using SaturnEdit.UndoRedo.EventOperations;
+using SaturnEdit.UndoRedo.HoldNoteOperations;
+using SaturnEdit.UndoRedo.NoteOperations;
+using SaturnEdit.UndoRedo.PlayableOperations;
+using SaturnEdit.UndoRedo.PositionableOperations;
+using SaturnEdit.UndoRedo.TimeableOperations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -92,8 +101,14 @@ public partial class InspectorView : UserControl
         bool sameType = true;
         Type? sharedType = null;
 
-        bool sameTimestamp = true;
-        Timestamp? sharedTimestamp = null;
+        bool sameMeasure = true;
+        int? sharedMeasure = null;
+        
+        bool sameTick = true;
+        int? sharedTick = null;
+        
+        bool sameFullTick = true;
+        int? sharedFullTick = null;
 
         bool sameLayer = true;
         Layer? sharedLayer = null;
@@ -147,8 +162,14 @@ public partial class InspectorView : UserControl
             sameType = sameType && obj.GetType() == sharedType;
             
             // Check if all objects are on the same timestamp.
-            sharedTimestamp ??= obj.Timestamp;
-            sameTimestamp = sameTimestamp && obj.Timestamp == sharedTimestamp;
+            sharedMeasure ??= obj.Timestamp.Measure;
+            sameMeasure = sameMeasure && obj.Timestamp.Measure == sharedMeasure;
+            
+            sharedTick ??= obj.Timestamp.Tick;
+            sameTick = sameTick && obj.Timestamp.Tick == sharedTick;
+            
+            sharedFullTick ??= obj.Timestamp.FullTick;
+            sameFullTick = sameFullTick && obj.Timestamp.FullTick == sharedFullTick;
             
             if (obj is not (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent or ILaneToggle or Bookmark))
             {
@@ -348,36 +369,28 @@ public partial class InspectorView : UserControl
             {
                 ComboBoxType.SelectedIndex = -1;
             }
+            
+            TextBoxMeasure.Text = sameMeasure && sharedMeasure != null ? sharedMeasure.Value.ToString(CultureInfo.InvariantCulture) : null;
+            TextBoxTick.Text = sameTick && sharedTick != null ? sharedTick.Value.ToString(CultureInfo.InvariantCulture) : null;
+            TextBoxFullTick.Text = sameFullTick && sharedFullTick != null ? sharedFullTick.Value.ToString(CultureInfo.InvariantCulture) : null;
 
-            if (sameTimestamp && sharedTimestamp != null)
-            {
-                NumericUpDownMeasure.Value = sharedTimestamp!.Measure;
-                NumericUpDownTick.Value = sharedTimestamp!.Tick;
-                NumericUpDownFullTick.Value = sharedTimestamp!.FullTick;
-            }
-            else
-            {
-                NumericUpDownMeasure.Value = null;
-                NumericUpDownTick.Value = null;
-                NumericUpDownFullTick.Value = null;
-            }
             
             // Set layer group values.
-            ComboBoxLayers.SelectedIndex = sameLayer && sharedLayer != null ? ChartSystem.Chart.Layers.IndexOf(sharedLayer!) : -1;
+            ComboBoxLayers.SelectedIndex = sameLayer && sharedLayer != null ? ChartSystem.Chart.Layers.IndexOf(sharedLayer) : -1;
 
             // Set shape group values.
             TextBoxPosition.Text = samePosition && sharedPosition != null ? sharedPosition.Value.ToString(CultureInfo.InvariantCulture) : null;
             TextBoxSize.Text = sameSize && sharedSize != null ? sharedSize.Value.ToString(CultureInfo.InvariantCulture) : null;
             
             // Set judgement group values.
-            ComboBoxBonusType.SelectedIndex = sameBonusType && sharedBonusType != null ? (int)sharedBonusType! : -1;
-            ComboBoxJudgementType.SelectedIndex = sameJudgementType && sharedJudgementType != null ? (int)sharedJudgementType! : -1;
+            ComboBoxBonusType.SelectedIndex = sameBonusType && sharedBonusType != null ? (int)sharedBonusType : -1;
+            ComboBoxJudgementType.SelectedIndex = sameJudgementType && sharedJudgementType != null ? (int)sharedJudgementType : -1;
             
             // Set hold group values.
-            ComboBoxRenderType.SelectedIndex = sameHoldPointRenderType && sharedHoldPointRenderType != null ? (int)sharedHoldPointRenderType! : -1;
+            ComboBoxRenderType.SelectedIndex = sameHoldPointRenderType && sharedHoldPointRenderType != null ? (int)sharedHoldPointRenderType : -1;
 
             // Set lane toggle group values.
-            ComboBoxSweepDirection.SelectedIndex = sameLaneSweepDirection && sharedLaneSweepDirection != null ? (int)sharedLaneSweepDirection! : -1;
+            ComboBoxSweepDirection.SelectedIndex = sameLaneSweepDirection && sharedLaneSweepDirection != null ? (int)sharedLaneSweepDirection : -1;
             
             // Set tempo change group values.
             TextBoxTempo.Text = sameTempo && sharedTempo != null ? sharedTempo.Value.ToString("0.000000", CultureInfo.InvariantCulture) : null;
@@ -420,112 +433,768 @@ public partial class InspectorView : UserControl
         Console.WriteLine("A");
     }
 
-    private void NumericUpDownMeasure_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
+    private void TextBoxMeasure_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (TextBoxMeasure == null) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        if (string.IsNullOrWhiteSpace(TextBoxMeasure.Text))
+        {
+            blockEvents = true;
+
+            TextBoxMeasure.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+
+        int newValue = 0;
+
+        try
+        {
+            newValue = Convert.ToInt32(TextBoxMeasure.Text, CultureInfo.InvariantCulture);
+            newValue = Math.Max(0, newValue);
+            newValue *= 1920;
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable timeable in SelectionSystem.SelectedObjects)
+        {
+            if (timeable is HoldNote holdNote)
+            {
+                if (holdNote.Points.Count == 0) continue;
+                
+                int oldStartFullTick = holdNote.Points[0].Timestamp.FullTick;
+                int newStartFullTick = newValue + holdNote.Points[0].Timestamp.Tick;
+                
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    int oldFullTick = point.Timestamp.FullTick;
+                    int newFullTick = oldFullTick + (newStartFullTick - oldStartFullTick);
+                    
+                    operations.Add(new TimeableEditOperation(point, oldFullTick, newFullTick));
+                }
+            }
+            else if (timeable is StopEffectEvent stopEffectEvent)
+            {
+                int oldStartTick = stopEffectEvent.SubEvents[0].Timestamp.FullTick;
+                int newStartTick = newValue + stopEffectEvent.SubEvents[0].Timestamp.Tick;
+                
+                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                {
+                    int oldFullTick = subEvent.Timestamp.FullTick;
+                    int newFullTick = oldFullTick + (newStartTick - oldStartTick);
+                    
+                    operations.Add(new TimeableEditOperation(subEvent, oldFullTick, newFullTick));
+                }
+            }
+            else if (timeable is ReverseEffectEvent reverseEffectEvent)
+            {
+                int oldStartTick = reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
+                int newStartTick = newValue + reverseEffectEvent.SubEvents[0].Timestamp.Tick;
+                
+                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                {
+                    int oldFullTick = subEvent.Timestamp.FullTick;
+                    int newFullTick = oldFullTick + (newStartTick - oldStartTick);
+                    
+                    operations.Add(new TimeableEditOperation(subEvent, oldFullTick, newFullTick));
+                }
+            }
+            else
+            {
+                int oldFullTick = timeable.Timestamp.FullTick;
+                int newFullTick = newValue + timeable.Timestamp.Tick;
+                
+                operations.Add(new TimeableEditOperation(timeable, oldFullTick, newFullTick));
+            }
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
-    private void NumericUpDownTick_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
+    private void TextBoxTick_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (TextBoxTick == null) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        
+        if (string.IsNullOrWhiteSpace(TextBoxTick.Text))
+        {
+            blockEvents = true;
+
+            TextBoxTick.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+        
+        int newValue = 0;
+
+        try
+        {
+            newValue = Convert.ToInt32(TextBoxTick.Text, CultureInfo.InvariantCulture);
+            newValue = Math.Max(0, newValue);
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable timeable in SelectionSystem.SelectedObjects)
+        {
+            if (timeable is HoldNote holdNote)
+            {
+                if (holdNote.Points.Count == 0) continue;
+                
+                int oldStartTick = holdNote.Points[0].Timestamp.FullTick;
+                int newStartTick = holdNote.Points[0].Timestamp.Measure * 1920 + newValue;
+                
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    int oldFullTick = point.Timestamp.FullTick;
+                    int newFullTick = oldFullTick + (newStartTick - oldStartTick);
+                    
+                    operations.Add(new TimeableEditOperation(point, oldFullTick, newFullTick));
+                }
+            }
+            else if (timeable is StopEffectEvent stopEffectEvent)
+            {
+                int oldStartTick = stopEffectEvent.SubEvents[0].Timestamp.FullTick;
+                int newStartTick = stopEffectEvent.SubEvents[0].Timestamp.Measure * 1920 + newValue;
+                
+                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                {
+                    int oldFullTick = subEvent.Timestamp.FullTick;
+                    int newFullTick = oldFullTick + (newStartTick - oldStartTick);
+                    
+                    operations.Add(new TimeableEditOperation(subEvent, oldFullTick, newFullTick));
+                }
+            }
+            else if (timeable is ReverseEffectEvent reverseEffectEvent)
+            {
+                int oldStartTick = reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
+                int newStartTick = reverseEffectEvent.SubEvents[0].Timestamp.Measure * 1920 + newValue;
+                
+                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                {
+                    int oldFullTick = subEvent.Timestamp.FullTick;
+                    int newFullTick = oldFullTick + (newStartTick - oldStartTick);
+                    
+                    operations.Add(new TimeableEditOperation(subEvent, oldFullTick, newFullTick));
+                }
+            }
+            else
+            {
+                int oldFullTick = timeable.Timestamp.FullTick;
+                int newFullTick = timeable.Timestamp.Measure * 1920 + newValue;
+                
+                operations.Add(new TimeableEditOperation(timeable, oldFullTick, newFullTick));
+            }
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
-    private void NumericUpDownFullTick_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
+    private void TextBoxFullTick_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
-    }
+        if (TextBoxFullTick == null) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        
+        if (string.IsNullOrWhiteSpace(TextBoxFullTick.Text))
+        {
+            blockEvents = true;
 
+            TextBoxFullTick.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+        
+        int newValue = 0;
+
+        try
+        {
+            newValue = Convert.ToInt32(TextBoxFullTick.Text, CultureInfo.InvariantCulture);
+            newValue = Math.Max(0, newValue);
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable timeable in SelectionSystem.SelectedObjects)
+        {
+            if (timeable is HoldNote holdNote)
+            {
+                if (holdNote.Points.Count == 0) continue;
+                
+                int oldStartTick = holdNote.Points[0].Timestamp.FullTick;
+                
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    int oldPointFullTick = point.Timestamp.FullTick;
+                    int newPointFullTick = oldPointFullTick + (newValue - oldStartTick);
+                    
+                    operations.Add(new TimeableEditOperation(point, oldPointFullTick, newPointFullTick));
+                }
+            }
+            else if (timeable is StopEffectEvent stopEffectEvent)
+            {
+                int oldStartTick = stopEffectEvent.SubEvents[0].Timestamp.FullTick;
+                
+                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                {
+                    int oldPointFullTick = subEvent.Timestamp.FullTick;
+                    int newPointFullTick = oldPointFullTick + (newValue - oldStartTick);
+                    
+                    operations.Add(new TimeableEditOperation(subEvent, oldPointFullTick, newPointFullTick));
+                }
+            }
+            else if (timeable is ReverseEffectEvent reverseEffectEvent)
+            {
+                int oldStartTick = reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
+                
+                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                {
+                    int oldPointFullTick = subEvent.Timestamp.FullTick;
+                    int newPointFullTick = oldPointFullTick + (newValue - oldStartTick);
+                    
+                    operations.Add(new TimeableEditOperation(subEvent, oldPointFullTick, newPointFullTick));
+                }
+            }
+            else
+            {
+                int oldFullTick = timeable.Timestamp.FullTick;
+                
+                operations.Add(new TimeableEditOperation(timeable, oldFullTick, newValue));
+            }
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+    }
+    
     private void ComboBoxLayers_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        if (ComboBoxLayers.SelectedIndex < 0 || ComboBoxLayers.SelectedIndex > ChartSystem.Chart.Layers.Count) return;
+        
+        Layer newLayer = ChartSystem.Chart.Layers[ComboBoxLayers.SelectedIndex];
+
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            Layer? parentLayer = ChartSystem.Chart.ParentLayer(obj);
+            if (parentLayer == null) continue;
+            if (parentLayer == newLayer) continue;
+
+            if (obj is Note note)
+            {
+                int index = parentLayer.Notes.IndexOf(note);
+                operations.Add(new NoteRemoveOperation(parentLayer, note, index));
+                operations.Add(new NoteAddOperation(newLayer, note, 0));
+            }
+            else if (obj is Event @event)
+            {
+                int index = parentLayer.Events.IndexOf(@event);
+                operations.Add(new EventRemoveOperation(parentLayer, @event, index));
+                operations.Add(new EventAddOperation(newLayer, @event, index));
+            }
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxPosition_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (TextBoxPosition == null) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        
+        if (string.IsNullOrWhiteSpace(TextBoxPosition.Text))
+        {
+            blockEvents = true;
+
+            TextBoxPosition.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+        
+        int newValue = 0;
+
+        try
+        {
+            newValue = Convert.ToInt32(TextBoxPosition.Text, CultureInfo.InvariantCulture);
+            newValue = Math.Clamp(newValue, 0, 59);
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not IPositionable positionable) continue;
+
+            if (obj is HoldNote holdNote)
+            {
+                if (holdNote.Points.Count == 0) continue;
+
+                int diff = newValue - holdNote.Points[0].Position;
+
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    int newPosition = (point.Position + diff + 60) % 60;
+                    operations.Add(new PositionableEditOperation(point, point.Position, newPosition, point.Size, point.Size));
+                }
+            }
+            else
+            {
+                operations.Add(new PositionableEditOperation(positionable, positionable.Position, newValue, positionable.Size, positionable.Size));
+            }
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxSize_OnLostFocus(object? sender, RoutedEventArgs e)
-    {
+    { 
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (TextBoxSize == null) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        
+        if (string.IsNullOrWhiteSpace(TextBoxSize.Text))
+        {
+            blockEvents = true;
+
+            TextBoxSize.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+        
+        int newValue = 0;
+
+        try
+        {
+            newValue = Convert.ToInt32(TextBoxSize.Text, CultureInfo.InvariantCulture);
+            newValue = Math.Clamp(newValue, 1, 60);
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not IPositionable positionable) continue;
+            
+            if (obj is HoldNote holdNote)
+            {
+                if (holdNote.Points.Count == 0) continue;
+
+                int diff = newValue - holdNote.Points[0].Size;
+
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    int newSize = Math.Clamp(point.Size + diff, 1, 60);
+                    operations.Add(new PositionableEditOperation(point, point.Position, point.Position, point.Size, newSize));
+                }
+            }
+            else
+            {
+                operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, positionable.Size, newValue));
+            }
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void ComboBoxBonusType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (ComboBoxBonusType == null) return;
+
+        if (ComboBoxBonusType.SelectedIndex == -1) return;
+
+        BonusType newBonusType = (BonusType)ComboBoxBonusType.SelectedIndex;
+
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not IPlayable playable) continue;
+
+            operations.Add(new PlayableEditOperation(playable, playable.BonusType, newBonusType, playable.JudgementType, playable.JudgementType));
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void ComboBoxJudgementType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (ComboBoxJudgementType == null) return;
+
+        if (ComboBoxJudgementType.SelectedIndex == -1) return;
+
+        JudgementType newJudgementType = (JudgementType)ComboBoxJudgementType.SelectedIndex;
+
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not IPlayable playable) continue;
+
+            operations.Add(new PlayableEditOperation(playable, playable.BonusType, playable.BonusType, playable.JudgementType, newJudgementType));
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void ComboBoxRenderType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (ComboBoxRenderType == null) return;
+
+        if (ComboBoxRenderType.SelectedIndex == -1) return;
+
+        HoldPointRenderType newRenderType = (HoldPointRenderType)ComboBoxRenderType.SelectedIndex;
+
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not HoldPointNote point) continue;
+
+            operations.Add(new HoldPointNoteRenderTypeEditOperation(point, point.RenderType, newRenderType));
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void ComboBoxSweepDirection_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (ComboBoxSweepDirection == null) return;
+        
+        if (ComboBoxSweepDirection.SelectedIndex == -1) return;
+        
+        LaneSweepDirection newDirection = (LaneSweepDirection)ComboBoxSweepDirection.SelectedIndex;
+
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not ILaneToggle laneToggle) continue;
+            
+            operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, newDirection));
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxTempo_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (TextBoxTempo == null) return;
+        
+        if (string.IsNullOrWhiteSpace(TextBoxTempo.Text))
+        {
+            blockEvents = true;
+
+            TextBoxTempo.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+        
+        float newValue = 0;
+
+        try
+        {
+            newValue = Convert.ToSingle(TextBoxTempo.Text, CultureInfo.InvariantCulture);
+            newValue = Math.Max(0, newValue);
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not TempoChangeEvent tempoChangeEvent) continue;
+            
+            operations.Add(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, newValue));
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxUpper_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (TextBoxUpper == null) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        
+        if (string.IsNullOrWhiteSpace(TextBoxUpper.Text))
+        {
+            blockEvents = true;
+
+            TextBoxUpper.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+        
+        int newValue = 0;
+
+        try
+        {
+            newValue = Convert.ToInt32(TextBoxUpper.Text, CultureInfo.InvariantCulture);
+            newValue = Math.Max(1, newValue);
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not MetreChangeEvent metreChangeEvent) continue;
+            
+            operations.Add(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, newValue, metreChangeEvent.Lower, metreChangeEvent.Lower));
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxLower_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (TextBoxLower == null) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        
+        if (string.IsNullOrWhiteSpace(TextBoxLower.Text))
+        {
+            blockEvents = true;
+
+            TextBoxLower.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+        
+        int newValue = 0;
+
+        try
+        {
+            newValue = Convert.ToInt32(TextBoxLower.Text, CultureInfo.InvariantCulture);
+            newValue = Math.Max(1, newValue);
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not MetreChangeEvent metreChangeEvent) continue;
+            
+            operations.Add(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, metreChangeEvent.Upper, metreChangeEvent.Lower, newValue));
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxSpeed_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (TextBoxSpeed == null) return;
+        
+        if (string.IsNullOrWhiteSpace(TextBoxSpeed.Text))
+        {
+            blockEvents = true;
+
+            TextBoxSpeed.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+        
+        float newValue = 0;
+
+        try
+        {
+            newValue = Convert.ToSingle(TextBoxSpeed.Text, CultureInfo.InvariantCulture);
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not SpeedChangeEvent speedChangeEvent) continue;
+            
+            operations.Add(new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, newValue));
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void ComboBoxVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (ComboBoxVisibility == null) return;
+
+        if (ComboBoxVisibility.SelectedIndex == -1) return;
+
+        bool newVisibility = ComboBoxVisibility.SelectedIndex != 0;
+
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not VisibilityChangeEvent visibilityChange) continue;
+
+            operations.Add(new VisibilityChangeEditOperation(visibilityChange, visibilityChange.Visibility, newVisibility));
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxTutorialMarkerKey_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (TextBoxTutorialMarkerKey == null) return;
+        
+        if (TextBoxTutorialMarkerKey.Text == null)
+        {
+            blockEvents = true;
+
+            TextBoxTutorialMarkerKey.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+
+        string newValue = TextBoxTutorialMarkerKey.Text ?? "";
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not TutorialMarkerEvent tutorialMarkerEvent) continue;
+
+            operations.Add(new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, newValue));
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxBookmarkColor_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (TextBoxBookmarkColor == null) return;
+        
+        if (string.IsNullOrWhiteSpace(TextBoxBookmarkColor.Text))
+        {
+            blockEvents = true;
+
+            TextBoxBookmarkColor.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+        
+        uint newValue = 0xFFFFFFFF; // TODO.
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not Bookmark bookmark) continue;
+            
+            operations.Add(new BookmarkEditOperation(bookmark, bookmark.Color, newValue, bookmark.Message, bookmark.Message));
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxBookmarkMessage_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (TextBoxBookmarkMessage == null) return;
+        
+        if (TextBoxBookmarkMessage.Text == null)
+        {
+            blockEvents = true;
+
+            TextBoxBookmarkMessage.Text = null;
+            
+            blockEvents = false;
+            return;
+        }
+
+        string newValue = TextBoxBookmarkMessage.Text ?? "";
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not Bookmark bookmark) continue;
+            
+            operations.Add(new BookmarkEditOperation(bookmark, bookmark.Color, bookmark.Color, bookmark.Message, newValue));
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 #endregion UI Event Delegates
 }
