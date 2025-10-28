@@ -34,7 +34,6 @@ public partial class InspectorView : UserControl
     }
 
     private bool blockEvents = false;
-    private static IEnumerable<ITimeable> Objects => SelectionSystem.SelectedObjects.OrderBy(x => x.Timestamp.FullTick);
     
 #region System Event Delegates
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
@@ -437,9 +436,9 @@ public partial class InspectorView : UserControl
         if (ComboBoxType.SelectedIndex == -1) return;
         if (SelectionSystem.SelectedObjects.Count == 0) return;
         if (ChartSystem.Chart.Layers.Count == 0) return;
-
-        List<ITimeable> objects = Objects.ToList();
+        
         List<IOperation> operations = [];
+        List<ITimeable> objects = SelectionSystem.OrderedSelectedObjects;
 
         if (ComboBoxType.SelectedIndex == 2)
         {
@@ -909,7 +908,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is HoldNote holdNote)
             {
@@ -995,7 +994,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is HoldNote holdNote)
             {
@@ -1081,7 +1080,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable timeable in Objects)
+        foreach (ITimeable timeable in SelectionSystem.OrderedSelectedObjects)
         {
             if (timeable is HoldNote holdNote)
             {
@@ -1143,7 +1142,7 @@ public partial class InspectorView : UserControl
         Layer newLayer = ChartSystem.Chart.Layers[ComboBoxLayers.SelectedIndex];
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             Layer? parentLayer = ChartSystem.Chart.ParentLayer(obj);
             if (parentLayer == null) continue;
@@ -1197,7 +1196,7 @@ public partial class InspectorView : UserControl
         }
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not IPositionable positionable) continue;
 
@@ -1253,7 +1252,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not IPositionable positionable) continue;
             
@@ -1290,7 +1289,7 @@ public partial class InspectorView : UserControl
         BonusType newBonusType = (BonusType)ComboBoxBonusType.SelectedIndex;
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not IPlayable playable) continue;
 
@@ -1312,7 +1311,7 @@ public partial class InspectorView : UserControl
         JudgementType newJudgementType = (JudgementType)ComboBoxJudgementType.SelectedIndex;
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not IPlayable playable) continue;
 
@@ -1334,7 +1333,7 @@ public partial class InspectorView : UserControl
         HoldPointRenderType newRenderType = (HoldPointRenderType)ComboBoxRenderType.SelectedIndex;
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not HoldPointNote point) continue;
 
@@ -1356,7 +1355,7 @@ public partial class InspectorView : UserControl
         LaneSweepDirection newDirection = (LaneSweepDirection)ComboBoxSweepDirection.SelectedIndex;
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not ILaneToggle laneToggle) continue;
             
@@ -1397,7 +1396,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not TempoChangeEvent tempoChangeEvent) continue;
             
@@ -1438,7 +1437,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not MetreChangeEvent metreChangeEvent) continue;
             
@@ -1479,7 +1478,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not MetreChangeEvent metreChangeEvent) continue;
             
@@ -1519,7 +1518,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not SpeedChangeEvent speedChangeEvent) continue;
             
@@ -1541,7 +1540,7 @@ public partial class InspectorView : UserControl
         bool newVisibility = ComboBoxVisibility.SelectedIndex != 0;
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not VisibilityChangeEvent visibilityChange) continue;
 
@@ -1571,7 +1570,7 @@ public partial class InspectorView : UserControl
         string newValue = TextBoxTutorialMarkerKey.Text ?? "";
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not TutorialMarkerEvent tutorialMarkerEvent) continue;
 
@@ -1601,7 +1600,7 @@ public partial class InspectorView : UserControl
         uint newValue = uint.TryParse(TextBoxBookmarkColor.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not Bookmark bookmark) continue;
             
@@ -1631,7 +1630,7 @@ public partial class InspectorView : UserControl
         string newValue = TextBoxBookmarkMessage.Text ?? "";
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in Objects)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not Bookmark bookmark) continue;
             

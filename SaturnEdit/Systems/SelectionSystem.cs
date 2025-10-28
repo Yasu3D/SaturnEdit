@@ -43,6 +43,7 @@ public static class SelectionSystem
     
     public static ITimeable? LastSelectedObject { get; set; } = null;
     public static HashSet<ITimeable> SelectedObjects { get; } = [];
+    public static List<ITimeable> OrderedSelectedObjects => SelectedObjects.OrderBy(x => x.Timestamp.FullTick).ToList();
     
     public static BoxSelectArgs BoxSelectArgs { get; set; } = new();
     public static SelectByCriteriaArgs SelectByCriteriaArgs { get; set; } = new();
