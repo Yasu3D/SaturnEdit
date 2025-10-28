@@ -8,7 +8,9 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
 using FluentIcons.Common;
+using SaturnData.Notation.Core;
 using SaturnEdit.Audio;
+using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnView;
 using SkiaSharp;
@@ -96,6 +98,45 @@ public partial class PlaybackView : UserControl
             }
         });
     }
+
+    private void UpdateBookmarks()
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
+            {
+                Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
+                
+                if (i < PanelBookmarks.Children.Count)
+                {
+                    // Modify existing item.
+                    if (PanelBookmarks.Children[i] is not BookmarkMarker marker) continue;
+
+                    marker.SetBookmark(bookmark, SliderSeek.Bounds.Width, sliderMaximum);
+                }
+                else
+                {
+                    // Create new item.
+                    BookmarkMarker marker = new();
+                    marker.SetBookmark(bookmark, SliderSeek.Bounds.Width, sliderMaximum);
+
+                    marker.Click += BookmarkMarker_OnClick;
+                    
+                    PanelBookmarks.Children.Add(marker);
+                }
+            }
+            
+            // Delete redundant items.
+            for (int i =PanelBookmarks.Children.Count - 1; i >= ChartSystem.Chart.Bookmarks.Count; i--)
+            {
+                if (PanelBookmarks.Children[i] is not BookmarkMarker marker) continue;
+
+                marker.Click -= BookmarkMarker_OnClick;
+                
+                PanelBookmarks.Children.Remove(marker);
+            }
+        });
+    }
 #endregion Methods
 
 #region System Event Delegates
@@ -103,18 +144,21 @@ public partial class PlaybackView : UserControl
     {
         UpdateSeekSlider();
         UpdateLoopMarkers();
+        UpdateBookmarks();
     }
 
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         UpdateSeekSlider();
         UpdateLoopMarkers();
+        UpdateBookmarks();
     }
 
     private void OnAudioLoaded(object? sender, EventArgs e)
     {
         UpdateSeekSlider();
         UpdateLoopMarkers();
+        UpdateBookmarks();
         waveform = AudioChannel.GetWaveformData(ChartSystem.Entry.AudioPath);
     }
 
@@ -241,6 +285,7 @@ public partial class PlaybackView : UserControl
         canvasInfo.Height = (float)PanelCanvasContainer.Bounds.Height;
         
         UpdateLoopMarkers();
+        UpdateBookmarks();
     }
     
     private void RenderCanvas_OnRenderAction(SKCanvas canvas)
@@ -331,6 +376,14 @@ public partial class PlaybackView : UserControl
         if (sender is not MenuItem item) return;
 
         SettingsSystem.AudioSettings.LoopToStart = item.IsChecked;
+    }
+
+    private void BookmarkMarker_OnClick(object? sender, EventArgs e)
+    {
+        if (sender is not BookmarkMarker marker) return;
+        if (marker.Bookmark == null) return;
+
+        TimeSystem.SeekTime(marker.Bookmark.Timestamp.Time, TimeSystem.Division);
     }
 #endregion UI Event Delegates
 }

@@ -903,9 +903,10 @@ public class ShortcutSettings
         ["Editor.Settings.ToggleVisibility.StopEffect"]            = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.StopEffect"),
         ["Editor.Settings.ToggleVisibility.TutorialMarker"]        = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.TutorialMarker"),
         
-        ["Editor.Settings.HideDuringPlayback.EventMarkers"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback", "ChartEditor.General.Type.Value.EventMarkers"),
-        ["Editor.Settings.HideDuringPlayback.LaneToggleNotes"]   = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback", "ChartEditor.General.Type.Value.LaneToggleNotes"),
-        ["Editor.Settings.HideDuringPlayback.HoldControlPoints"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback", "ChartEditor.General.Type.Value.HoldControlPoints"),
+        ["Editor.Settings.HideDuringPlayback.EventMarkers"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback", "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.EventMarkers"),
+        ["Editor.Settings.HideDuringPlayback.LaneToggleNotes"]   = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback", "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.LaneToggleNotes"),
+        ["Editor.Settings.HideDuringPlayback.HoldControlPoints"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback", "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.HoldControlPoints"),
+        ["Editor.Settings.HideDuringPlayback.Bookmarks"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback", "ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.Bookmarks"),
         
         ["Proofreader.Run"] = new(Key.P, true, false, false, "ChartEditor.Proofreader", "ChartEditor.Proofreader.ToolTip.Run"),
     };

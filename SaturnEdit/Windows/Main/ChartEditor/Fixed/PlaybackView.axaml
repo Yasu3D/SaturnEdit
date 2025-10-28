@@ -335,6 +335,10 @@
                     Classes="Wide"
                     Minimum="0"
                     ValueChanged="SliderSeek_OnValueChanged" />
+            
+            <!-- Bookmarks -->
+            <Panel Grid.Column="1"
+                   Name="PanelBookmarks"/>
         </Grid>
     </Grid>
 </UserControl>

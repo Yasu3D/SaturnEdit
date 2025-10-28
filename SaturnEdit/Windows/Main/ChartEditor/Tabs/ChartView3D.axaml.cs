@@ -70,10 +70,12 @@ public partial class ChartView3D : UserControl
             MenuItemShowReverseEffectEvents.IsChecked = SettingsSystem.RenderSettings.ShowReverseEffectEvents;
             MenuItemShowStopEffectEvents.IsChecked = SettingsSystem.RenderSettings.ShowStopEffectEvents;
             MenuItemShowTutorialMarkerEvents.IsChecked = SettingsSystem.RenderSettings.ShowTutorialMarkerEvents;
+            MenuItemShowBookmarks.IsChecked = SettingsSystem.RenderSettings.ShowBookmarks;
 
             MenuItemHideEventMarkers.IsChecked = SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback;
             MenuItemHideLaneToggleNotes.IsChecked = SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback;
             MenuItemHideHoldControlPoints.IsChecked = SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback;
+            MenuItemHideBookmarks.IsChecked = SettingsSystem.RenderSettings.HideBookmarksDuringPlayback;
 
             NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed / 10.0m;
             ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
@@ -150,6 +152,7 @@ public partial class ChartView3D : UserControl
             MenuItemHideEventMarkers.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.EventMarkers"].ToKeyGesture();
             MenuItemHideLaneToggleNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.LaneToggleNotes"].ToKeyGesture();
             MenuItemHideHoldControlPoints.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.HoldControlPoints"].ToKeyGesture();
+            MenuItemHideBookmarks.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.Bookmarks"].ToKeyGesture();
         });
     }
     
@@ -358,6 +361,19 @@ public partial class ChartView3D : UserControl
                     if (hitTestResult != IPositionable.OverlapResult.None)
                     {
                         SelectionSystem.PointerOverObject = note;
+                        SelectionSystem.PointerOverOverlap = hitTestResult;
+                        return;
+                    }
+                }
+
+                foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+                {
+                    if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings)) continue;
+
+                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(bookmark, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings);
+                    if (hitTestResult != IPositionable.OverlapResult.None)
+                    {
+                        SelectionSystem.PointerOverObject = bookmark;
                         SelectionSystem.PointerOverOverlap = hitTestResult;
                         return;
                     }
@@ -685,6 +701,11 @@ public partial class ChartView3D : UserControl
             SettingsSystem.RenderSettings.ShowTutorialMarkerEvents = menuItem.IsChecked;
             return;
         }
+
+        if (menuItem == MenuItemShowBookmarks)
+        {
+            SettingsSystem.RenderSettings.ShowBookmarks = menuItem.IsChecked;
+        }
         
         if (menuItem == MenuItemHideEventMarkers)
         {
@@ -701,6 +722,11 @@ public partial class ChartView3D : UserControl
         if (menuItem == MenuItemHideHoldControlPoints)
         {
             SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback = menuItem.IsChecked;
+        }
+
+        if (menuItem == MenuItemHideBookmarks)
+        {
+            SettingsSystem.RenderSettings.HideBookmarksDuringPlayback = menuItem.IsChecked;
         }
     }
 

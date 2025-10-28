@@ -58,10 +58,12 @@ public partial class ChartView2D : UserControl
             MenuItemShowReverseEffectEvents.IsChecked = SettingsSystem.RenderSettings.ShowReverseEffectEvents;
             MenuItemShowStopEffectEvents.IsChecked = SettingsSystem.RenderSettings.ShowStopEffectEvents;
             MenuItemShowTutorialMarkerEvents.IsChecked = SettingsSystem.RenderSettings.ShowTutorialMarkerEvents;
+            MenuItemShowBookmarks.IsChecked = SettingsSystem.RenderSettings.ShowBookmarks;
 
             MenuItemHideEventMarkers.IsChecked = SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback;
             MenuItemHideLaneToggleNotes.IsChecked = SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback;
             MenuItemHideHoldControlPoints.IsChecked = SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback;
+            MenuItemHideBookmarks.IsChecked = SettingsSystem.RenderSettings.HideBookmarksDuringPlayback;
         
             MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
             MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
@@ -132,6 +134,7 @@ public partial class ChartView2D : UserControl
             MenuItemHideEventMarkers.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.EventMarkers"].ToKeyGesture();
             MenuItemHideLaneToggleNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.LaneToggleNotes"].ToKeyGesture();
             MenuItemHideHoldControlPoints.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.HoldControlPoints"].ToKeyGesture();
+            MenuItemHideBookmarks.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.Bookmarks"].ToKeyGesture();
         });
     }
 #endregion System Event Delegates
@@ -327,6 +330,11 @@ public partial class ChartView2D : UserControl
             return;
         }
         
+        if (menuItem == MenuItemShowBookmarks)
+        {
+            SettingsSystem.RenderSettings.ShowBookmarks = menuItem.IsChecked;
+        }
+        
         if (menuItem == MenuItemHideEventMarkers)
         {
             SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback = menuItem.IsChecked;
@@ -342,6 +350,11 @@ public partial class ChartView2D : UserControl
         if (menuItem == MenuItemHideHoldControlPoints)
         {
             SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback = menuItem.IsChecked;
+        }
+
+        if (menuItem == MenuItemHideBookmarks)
+        {
+            SettingsSystem.RenderSettings.HideBookmarksDuringPlayback = menuItem.IsChecked;
         }
     }
 #endregion UI Event Delegates

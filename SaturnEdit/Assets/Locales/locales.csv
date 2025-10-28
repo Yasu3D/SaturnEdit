@@ -306,6 +306,7 @@ ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback,Hide during Playback...
 ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.EventMarkers,Event Markers
 ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.LaneToggleNotes,Lane Toggle Notes
 ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.HoldControlPoints,Hold Control Points
+ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.Bookmarks,Bookmarks
 ChartEditor.ChartView3D.Menu.IncreaseNoteSpeed,Increase Note Speed
 ChartEditor.ChartView3D.Menu.DecreaseNoteSpeed,Decrease Note Speed
 ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim,Increase Background Dim

@@ -309,6 +309,7 @@
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.EventMarkers">Event Markers</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.LaneToggleNotes">Lane Toggle Notes</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.HoldControlPoints">Hold Control Points</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.Bookmarks">Bookmarks</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.IncreaseNoteSpeed">Increase Note Speed</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.DecreaseNoteSpeed">Decrease Note Speed</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim">Increase Background Dim</system:String>

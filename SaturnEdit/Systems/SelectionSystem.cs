@@ -120,6 +120,15 @@ public static class SelectionSystem
                 operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
             }
 
+            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            {
+                if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings)) continue;
+                if (bookmark.Timestamp < start) continue;
+                if (bookmark.Timestamp > end) continue;
+
+                operations.Add(new SelectionAddOperation(bookmark, LastSelectedObject));
+            }
+            
             foreach (Note note in ChartSystem.Chart.LaneToggles)
             {
                 if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
@@ -187,6 +196,15 @@ public static class SelectionSystem
                 operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
             }
 
+            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            {
+                if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings)) continue;
+                if (bookmark.Timestamp < start) continue;
+                if (bookmark.Timestamp > end) continue;
+
+                operations.Add(new SelectionAddOperation(bookmark, LastSelectedObject));
+            }
+            
             foreach (Note note in ChartSystem.Chart.LaneToggles)
             {
                 if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
@@ -233,6 +251,7 @@ public static class SelectionSystem
         BoxSelectArgs.NegativeSelection = negativeSelection;
         BoxSelectArgs.GlobalStartTime = TimeSystem.Timestamp.Time + viewTime;
         BoxSelectArgs.ScaledStartTimes.Clear();
+        
         foreach (Layer layer in ChartSystem.Chart.Layers)
         {
             float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
@@ -244,6 +263,7 @@ public static class SelectionSystem
     {
         BoxSelectArgs.GlobalEndTime = TimeSystem.Timestamp.Time + viewTime;
         BoxSelectArgs.ScaledEndTimes.Clear();
+        
         foreach (Layer layer in ChartSystem.Chart.Layers)
         {
             float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
@@ -288,6 +308,24 @@ public static class SelectionSystem
             }
         }
 
+        foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+        {
+            if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings)) continue;
+            if (bookmark.Timestamp.Time < globalMin) continue;
+            if (bookmark.Timestamp.Time > globalMax) continue;
+
+            if (BoxSelectArgs.NegativeSelection)
+            {
+                if (!SelectedObjects.Contains(bookmark)) continue;
+                operations.Add(new SelectionRemoveOperation(bookmark, LastSelectedObject));
+            }
+            else
+            {
+                if (SelectedObjects.Contains(bookmark)) continue;
+                operations.Add(new SelectionAddOperation(bookmark, LastSelectedObject));
+            }
+        }
+    
         foreach (Note note in ChartSystem.Chart.LaneToggles)
         {
             if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
@@ -474,7 +512,6 @@ public static class SelectionSystem
         {
             selectByCriteria();
         }
-
         return;
         
         void selectByCriteria()

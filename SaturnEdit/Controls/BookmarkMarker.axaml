@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             Width="11"
+             Height="78"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Bottom"
+             x:Class="SaturnEdit.Controls.BookmarkMarker"
+             PointerPressed="Control_OnPointerPressed">
+    <Border Name="BorderMarker"
+            Width="5"
+            Background="#80FFFFFF"
+            BorderBrush="#FFFFFFFF"
+            BorderThickness="1"
+            VerticalAlignment="Stretch"
+            CornerRadius="0.5"
+            ToolTip.VerticalOffset="-10"
+            ToolTip.Placement="Top"
+            ToolTip.ShowDelay="0">
+        <ToolTip.Tip>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Bookmark}"
+                               Foreground="{DynamicResource ForegroundPrimary}"
+                               Margin="0,0,10,0" />
+                    <TextBlock Name="TextBlockColor"
+                               Text="#000000"
+                               Foreground="{DynamicResource ForegroundTertiary}" />
+                </StackPanel>
+                <TextBlock Name="TextBlockMessage"
+                           Text="Message"
+                           Foreground="{DynamicResource ForegroundSecondary}" />
+            </StackPanel>
+        </ToolTip.Tip>
+    </Border>
+</UserControl>

@@ -328,7 +328,7 @@
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowSpeedChanges}" />
                                     </MenuItem.Header>
                                 </MenuItem>
-                                
+
                                 <MenuItem Name="MenuItemShowVisibilityChanges"
                                           ToggleType="CheckBox"
                                           StaysOpenOnClick="True"
@@ -337,7 +337,7 @@
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowVisibilityChanges}" />
                                     </MenuItem.Header>
                                 </MenuItem>
-                                
+
                                 <MenuItem Name="MenuItemShowLaneToggleAnimations"
                                           ToggleType="CheckBox"
                                           StaysOpenOnClick="True"
@@ -359,12 +359,12 @@
                                 </MenuItem>
 
                                 <Separator />
-                                
+
                                 <MenuItem>
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.JudgeAreas}" />
                                     </MenuItem.Header>
-                                    
+
                                     <MenuItem Name="MenuItemShowJudgeAreas"
                                               ToggleType="CheckBox"
                                               StaysOpenOnClick="True"
@@ -525,9 +525,9 @@
                                             <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.BeatLine}" />
                                         </MenuItem.Header>
                                     </MenuItem>
-                                    
+
                                     <Separator />
-                                    
+
                                     <MenuItem Name="MenuItemShowLaneShowNotes"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
@@ -620,13 +620,23 @@
                                         </MenuItem.Header>
                                     </MenuItem>
 
+                                    <MenuItem Name="MenuItemShowBookmarks"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Bookmark}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
                                 </MenuItem>
-                                
+
                                 <MenuItem>
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback}" />
                                     </MenuItem.Header>
-                                    
+
                                     <MenuItem Name="MenuItemHideEventMarkers"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
@@ -636,7 +646,7 @@
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.EventMarkers}" />
                                         </MenuItem.Header>
                                     </MenuItem>
-                                    
+
                                     <MenuItem Name="MenuItemHideLaneToggleNotes"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
@@ -646,7 +656,7 @@
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.LaneToggleNotes}" />
                                         </MenuItem.Header>
                                     </MenuItem>
-                                    
+
                                     <MenuItem Name="MenuItemHideHoldControlPoints"
                                               ToggleType="CheckBox"
                                               IsChecked="True"
@@ -654,6 +664,16 @@
                                               Click="MenuItem_OnClick">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.HoldControlPoints}" />
+                                        </MenuItem.Header>
+                                    </MenuItem>
+
+                                    <MenuItem Name="MenuItemHideBookmarks"
+                                              ToggleType="CheckBox"
+                                              IsChecked="True"
+                                              StaysOpenOnClick="True"
+                                              Click="MenuItem_OnClick">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.Bookmarks}" />
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </MenuItem>
@@ -796,7 +816,7 @@
                                               PointerMoved="RenderCanvas_OnPointerMoved"
                                               PointerPressed="RenderCanvas_OnPointerPressed"
                                               PointerReleased="RenderCanvas_OnPointerReleased"
-                                              PointerExited="RenderCanvas_OnPointerExited"/>
+                                              PointerExited="RenderCanvas_OnPointerExited" />
                 </Panel>
             </Grid>
         </Grid>
