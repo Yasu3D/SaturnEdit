@@ -414,7 +414,7 @@ public partial class InspectorView : UserControl
             TextBoxTutorialMarkerKey.Text = sameKey && sharedKey != null ? sharedKey : null;
             
             // Set bookmark group values.
-            TextBoxBookmarkColor.Text = sameColor && sharedColor != null ? $"{sharedColor - 0xFF000000:X}" : null;
+            TextBoxBookmarkColor.Text = sameColor && sharedColor != null ? $"{sharedColor - 0xFF000000:X6}" : null;
             TextBoxBookmarkMessage.Text = sameMessage && sharedMessage != null ? sharedMessage : null;
             BorderBookmarkColor.IsVisible = sameColor;
             BorderBookmarkColorPlaceholder.IsVisible = !sameColor;
@@ -1578,7 +1578,7 @@ public partial class InspectorView : UserControl
             return;
         }
         
-        uint newValue = 0xFFFFFFFF; // TODO.
+        uint newValue = uint.TryParse(TextBoxBookmarkColor.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
         
         List<IOperation> operations = [];
         foreach (ITimeable obj in SelectionSystem.SelectedObjects)
