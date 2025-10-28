@@ -23,7 +23,6 @@ using SaturnEdit.UndoRedo.TimeableOperations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
-// TODO: orderby fulltick when enumerating selection
 public partial class InspectorView : UserControl
 {
     public InspectorView()
@@ -35,6 +34,7 @@ public partial class InspectorView : UserControl
     }
 
     private bool blockEvents = false;
+    private static IEnumerable<ITimeable> Objects => SelectionSystem.SelectedObjects.OrderBy(x => x.Timestamp.FullTick);
     
 #region System Event Delegates
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
@@ -438,7 +438,7 @@ public partial class InspectorView : UserControl
         if (SelectionSystem.SelectedObjects.Count == 0) return;
         if (ChartSystem.Chart.Layers.Count == 0) return;
 
-        List<ITimeable> objects = SelectionSystem.SelectedObjects.OrderBy(x => x.Timestamp.FullTick).ToList();
+        List<ITimeable> objects = Objects.ToList();
         List<IOperation> operations = [];
 
         if (ComboBoxType.SelectedIndex == 2)
@@ -520,26 +520,46 @@ public partial class InspectorView : UserControl
         else if (ComboBoxType.SelectedIndex == 15)
         {
             // Convert to Stop Effect Event
-            
-            foreach (ITimeable obj in objects)
+            if (SelectionSystem.SelectedObjects.Count < 2) return;
+            if (SelectionSystem.SelectedLayer == null) return;
+
+            StopEffectEvent stopEffectEvent = new();
+
+            for (int i = 0; i < 2; i++)
             {
+                ITimeable obj = objects[i];
                 Layer layer = ChartSystem.Chart.ParentLayer(obj) ?? ChartSystem.Chart.Layers[0];
                 
                 // Remove original object.
                 removeObject(obj, layer);
+                
+                // Add sub-event
+                stopEffectEvent.SubEvents[i] = new(new(obj.Timestamp.FullTick), stopEffectEvent);
             }
+
+            operations.Add(new EventAddOperation(SelectionSystem.SelectedLayer, stopEffectEvent, 0));
         }
         else if (ComboBoxType.SelectedIndex == 16)
         {
             // Convert to Reverse Effect Event
-            
-            foreach (ITimeable obj in objects)
+            if (SelectionSystem.SelectedObjects.Count < 3) return;
+            if (SelectionSystem.SelectedLayer == null) return;
+
+            ReverseEffectEvent reverseEffectEvent = new();
+
+            for (int i = 0; i < 3; i++)
             {
+                ITimeable obj = objects[i];
                 Layer layer = ChartSystem.Chart.ParentLayer(obj) ?? ChartSystem.Chart.Layers[0];
                 
                 // Remove original object.
                 removeObject(obj, layer);
+                
+                // Add sub-event
+                reverseEffectEvent.SubEvents[i] = new(new(obj.Timestamp.FullTick), reverseEffectEvent);
             }
+
+            operations.Add(new EventAddOperation(SelectionSystem.SelectedLayer, reverseEffectEvent, 0));
         }
         else
         {
@@ -863,7 +883,7 @@ public partial class InspectorView : UserControl
         if (blockEvents) return;
         if (TextBoxMeasure == null) return;
         if (SelectionSystem.SelectedObjects.Count == 0) return;
-
+        
         if (string.IsNullOrWhiteSpace(TextBoxMeasure.Text))
         {
             blockEvents = true;
@@ -889,9 +909,9 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable timeable in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
-            if (timeable is HoldNote holdNote)
+            if (obj is HoldNote holdNote)
             {
                 if (holdNote.Points.Count == 0) continue;
                 
@@ -906,7 +926,7 @@ public partial class InspectorView : UserControl
                     operations.Add(new TimeableEditOperation(point, oldFullTick, newFullTick));
                 }
             }
-            else if (timeable is StopEffectEvent stopEffectEvent)
+            else if (obj is StopEffectEvent stopEffectEvent)
             {
                 int oldStartTick = stopEffectEvent.SubEvents[0].Timestamp.FullTick;
                 int newStartTick = newValue + stopEffectEvent.SubEvents[0].Timestamp.Tick;
@@ -919,7 +939,7 @@ public partial class InspectorView : UserControl
                     operations.Add(new TimeableEditOperation(subEvent, oldFullTick, newFullTick));
                 }
             }
-            else if (timeable is ReverseEffectEvent reverseEffectEvent)
+            else if (obj is ReverseEffectEvent reverseEffectEvent)
             {
                 int oldStartTick = reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
                 int newStartTick = newValue + reverseEffectEvent.SubEvents[0].Timestamp.Tick;
@@ -934,10 +954,10 @@ public partial class InspectorView : UserControl
             }
             else
             {
-                int oldFullTick = timeable.Timestamp.FullTick;
-                int newFullTick = newValue + timeable.Timestamp.Tick;
+                int oldFullTick = obj.Timestamp.FullTick;
+                int newFullTick = newValue + obj.Timestamp.Tick;
                 
-                operations.Add(new TimeableEditOperation(timeable, oldFullTick, newFullTick));
+                operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
             }
         }
         
@@ -975,9 +995,9 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable timeable in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
-            if (timeable is HoldNote holdNote)
+            if (obj is HoldNote holdNote)
             {
                 if (holdNote.Points.Count == 0) continue;
                 
@@ -992,7 +1012,7 @@ public partial class InspectorView : UserControl
                     operations.Add(new TimeableEditOperation(point, oldFullTick, newFullTick));
                 }
             }
-            else if (timeable is StopEffectEvent stopEffectEvent)
+            else if (obj is StopEffectEvent stopEffectEvent)
             {
                 int oldStartTick = stopEffectEvent.SubEvents[0].Timestamp.FullTick;
                 int newStartTick = stopEffectEvent.SubEvents[0].Timestamp.Measure * 1920 + newValue;
@@ -1005,7 +1025,7 @@ public partial class InspectorView : UserControl
                     operations.Add(new TimeableEditOperation(subEvent, oldFullTick, newFullTick));
                 }
             }
-            else if (timeable is ReverseEffectEvent reverseEffectEvent)
+            else if (obj is ReverseEffectEvent reverseEffectEvent)
             {
                 int oldStartTick = reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
                 int newStartTick = reverseEffectEvent.SubEvents[0].Timestamp.Measure * 1920 + newValue;
@@ -1020,10 +1040,10 @@ public partial class InspectorView : UserControl
             }
             else
             {
-                int oldFullTick = timeable.Timestamp.FullTick;
-                int newFullTick = timeable.Timestamp.Measure * 1920 + newValue;
+                int oldFullTick = obj.Timestamp.FullTick;
+                int newFullTick = obj.Timestamp.Measure * 1920 + newValue;
                 
-                operations.Add(new TimeableEditOperation(timeable, oldFullTick, newFullTick));
+                operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
             }
         }
         
@@ -1061,7 +1081,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable timeable in SelectionSystem.SelectedObjects)
+        foreach (ITimeable timeable in Objects)
         {
             if (timeable is HoldNote holdNote)
             {
@@ -1123,7 +1143,7 @@ public partial class InspectorView : UserControl
         Layer newLayer = ChartSystem.Chart.Layers[ComboBoxLayers.SelectedIndex];
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             Layer? parentLayer = ChartSystem.Chart.ParentLayer(obj);
             if (parentLayer == null) continue;
@@ -1177,7 +1197,7 @@ public partial class InspectorView : UserControl
         }
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not IPositionable positionable) continue;
 
@@ -1233,7 +1253,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not IPositionable positionable) continue;
             
@@ -1270,7 +1290,7 @@ public partial class InspectorView : UserControl
         BonusType newBonusType = (BonusType)ComboBoxBonusType.SelectedIndex;
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not IPlayable playable) continue;
 
@@ -1292,7 +1312,7 @@ public partial class InspectorView : UserControl
         JudgementType newJudgementType = (JudgementType)ComboBoxJudgementType.SelectedIndex;
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not IPlayable playable) continue;
 
@@ -1314,7 +1334,7 @@ public partial class InspectorView : UserControl
         HoldPointRenderType newRenderType = (HoldPointRenderType)ComboBoxRenderType.SelectedIndex;
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not HoldPointNote point) continue;
 
@@ -1336,7 +1356,7 @@ public partial class InspectorView : UserControl
         LaneSweepDirection newDirection = (LaneSweepDirection)ComboBoxSweepDirection.SelectedIndex;
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not ILaneToggle laneToggle) continue;
             
@@ -1377,7 +1397,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not TempoChangeEvent tempoChangeEvent) continue;
             
@@ -1418,7 +1438,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not MetreChangeEvent metreChangeEvent) continue;
             
@@ -1459,7 +1479,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not MetreChangeEvent metreChangeEvent) continue;
             
@@ -1499,7 +1519,7 @@ public partial class InspectorView : UserControl
         }
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not SpeedChangeEvent speedChangeEvent) continue;
             
@@ -1521,7 +1541,7 @@ public partial class InspectorView : UserControl
         bool newVisibility = ComboBoxVisibility.SelectedIndex != 0;
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not VisibilityChangeEvent visibilityChange) continue;
 
@@ -1551,7 +1571,7 @@ public partial class InspectorView : UserControl
         string newValue = TextBoxTutorialMarkerKey.Text ?? "";
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not TutorialMarkerEvent tutorialMarkerEvent) continue;
 
@@ -1581,7 +1601,7 @@ public partial class InspectorView : UserControl
         uint newValue = uint.TryParse(TextBoxBookmarkColor.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not Bookmark bookmark) continue;
             
@@ -1611,7 +1631,7 @@ public partial class InspectorView : UserControl
         string newValue = TextBoxBookmarkMessage.Text ?? "";
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in Objects)
         {
             if (obj is not Bookmark bookmark) continue;
             
