@@ -6,7 +6,14 @@ public class EventRemoveOperation(Layer layer, Event @event, int index) : IOpera
 {
     public void Revert()
     {
-        layer.Events.Insert(index, @event);
+        if (index < 0 || index >= layer.Events.Count)
+        {
+            layer.Events.Add(@event);
+        }
+        else
+        {
+            layer.Events.Insert(index, @event);
+        }
     }
 
     public void Apply()

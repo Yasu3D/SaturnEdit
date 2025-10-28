@@ -8,7 +8,14 @@ public class LaneToggleRemoveOperation(Note note, int index) : IOperation
 {
     public void Revert()
     {
-        ChartSystem.Chart.LaneToggles.Insert(index, note);
+        if (index < 0 || index >= ChartSystem.Chart.LaneToggles.Count)
+        {
+            ChartSystem.Chart.LaneToggles.Add(note);
+        }
+        else
+        {
+            ChartSystem.Chart.LaneToggles.Insert(index, note);
+        }
     }
 
     public void Apply()

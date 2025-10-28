@@ -12,6 +12,13 @@ public class LayerAddOperation(Layer layer, int index) : IOperation
 
     public void Apply()
     {
-        ChartSystem.Chart.Layers.Insert(index, layer);
+        if (index < 0 || index >= ChartSystem.Chart.Layers.Count)
+        {
+            ChartSystem.Chart.Layers.Add(layer);
+        }
+        else
+        {
+            ChartSystem.Chart.Layers.Insert(index, layer);
+        }
     }
 }

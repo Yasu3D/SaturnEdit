@@ -16,7 +16,10 @@ public static class SelectionSystem
     public static void Initialize()
     {
         TimeSystem.PlaybackStateChanged += OnPlaybackStateChanged;
-        SelectedLayer = ChartSystem.Chart.Layers.Count == 0 ? null : ChartSystem.Chart.Layers[0];
+        OnPlaybackStateChanged(null, EventArgs.Empty);
+        
+        ChartSystem.ChartLoaded += OnChartLoaded;
+        OnChartLoaded(null, EventArgs.Empty);
     }
     
     public static event EventHandler? PointerOverOverlapChanged;
@@ -616,6 +619,11 @@ public static class SelectionSystem
     private static void OnPlaybackStateChanged(object? sender, EventArgs e)
     {
         PointerOverObject = null;
+    }
+
+    private static void OnChartLoaded(object? sender, EventArgs e)
+    {
+        SelectedLayer = ChartSystem.Chart.Layers.Count == 0 ? null : ChartSystem.Chart.Layers[0];
     }
 #endregion System Event Delegates
 }

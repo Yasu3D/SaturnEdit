@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
@@ -17,10 +18,12 @@ using SaturnEdit.UndoRedo.HoldNoteOperations;
 using SaturnEdit.UndoRedo.NoteOperations;
 using SaturnEdit.UndoRedo.PlayableOperations;
 using SaturnEdit.UndoRedo.PositionableOperations;
+using SaturnEdit.UndoRedo.SelectionOperations;
 using SaturnEdit.UndoRedo.TimeableOperations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
+// TODO: orderby fulltick when enumerating selection
 public partial class InspectorView : UserControl
 {
     public InspectorView()
@@ -346,22 +349,22 @@ public partial class InspectorView : UserControl
             if (sameType)
             {
                 if      (sharedType == typeof(TouchNote))                 { ComboBoxType.SelectedIndex =  0; }
-                else if (sharedType == typeof(SnapForwardNote))           { ComboBoxType.SelectedIndex =  1; }
-                else if (sharedType == typeof(SnapBackwardNote))          { ComboBoxType.SelectedIndex =  2; }
+                else if (sharedType == typeof(ChainNote))                 { ComboBoxType.SelectedIndex =  1; }
+                else if (sharedType == typeof(HoldNote))                  { ComboBoxType.SelectedIndex =  2; }
                 else if (sharedType == typeof(SlideClockwiseNote))        { ComboBoxType.SelectedIndex =  3; }
                 else if (sharedType == typeof(SlideCounterclockwiseNote)) { ComboBoxType.SelectedIndex =  4; }
-                else if (sharedType == typeof(ChainNote))                 { ComboBoxType.SelectedIndex =  5; }
-                else if (sharedType == typeof(HoldNote))                  { ComboBoxType.SelectedIndex =  6; }
+                else if (sharedType == typeof(SnapForwardNote))           { ComboBoxType.SelectedIndex =  5; }
+                else if (sharedType == typeof(SnapBackwardNote))          { ComboBoxType.SelectedIndex =  6; }
                 else if (sharedType == typeof(LaneShowNote))              { ComboBoxType.SelectedIndex =  7; }
                 else if (sharedType == typeof(LaneHideNote))              { ComboBoxType.SelectedIndex =  8; }
-                else if (sharedType == typeof(MeasureLineNote))           { ComboBoxType.SelectedIndex =  9; }
-                else if (sharedType == typeof(SyncNote))                  { ComboBoxType.SelectedIndex = 10; }
+                else if (sharedType == typeof(SyncNote))                  { ComboBoxType.SelectedIndex =  9; }
+                else if (sharedType == typeof(MeasureLineNote))           { ComboBoxType.SelectedIndex = 10; }
                 else if (sharedType == typeof(TempoChangeEvent))          { ComboBoxType.SelectedIndex = 11; }
                 else if (sharedType == typeof(MetreChangeEvent))          { ComboBoxType.SelectedIndex = 12; }
                 else if (sharedType == typeof(SpeedChangeEvent))          { ComboBoxType.SelectedIndex = 13; }
                 else if (sharedType == typeof(VisibilityChangeEvent))     { ComboBoxType.SelectedIndex = 14; }
-                else if (sharedType == typeof(ReverseEffectEvent))        { ComboBoxType.SelectedIndex = 15; }
-                else if (sharedType == typeof(StopEffectEvent))           { ComboBoxType.SelectedIndex = 16; }
+                else if (sharedType == typeof(StopEffectEvent))           { ComboBoxType.SelectedIndex = 15; }
+                else if (sharedType == typeof(ReverseEffectEvent))        { ComboBoxType.SelectedIndex = 16; }
                 else if (sharedType == typeof(TutorialMarkerEvent))       { ComboBoxType.SelectedIndex = 17; }
                 else if (sharedType == typeof(Bookmark))                  { ComboBoxType.SelectedIndex = 18; }
             }
@@ -430,7 +433,429 @@ public partial class InspectorView : UserControl
     private void ComboBoxType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
-        Console.WriteLine("A");
+        if (ComboBoxType == null) return;
+        if (ComboBoxType.SelectedIndex == -1) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (ChartSystem.Chart.Layers.Count == 0) return;
+
+        List<ITimeable> objects = SelectionSystem.SelectedObjects.OrderBy(x => x.Timestamp.FullTick).ToList();
+        List<IOperation> operations = [];
+
+        if (ComboBoxType.SelectedIndex == 2)
+        {
+            if (objects.Count < 2) return;
+            if (SelectionSystem.SelectedLayer == null) return;
+            
+            // Convert to Hold Note
+            BonusType bonusType = BonusType.Normal;
+            JudgementType judgementType = JudgementType.Normal;
+
+            if (objects[0] is IPlayable playable)
+            {
+                bonusType = playable.BonusType;
+                judgementType = playable.JudgementType;
+            }
+            
+            HoldNote holdNote = new(bonusType, judgementType);
+            foreach (ITimeable obj in objects)
+            {
+                Layer layer = ChartSystem.Chart.ParentLayer(obj) ?? ChartSystem.Chart.Layers[0];
+                
+                // Remove original object.
+                removeObject(obj, layer);
+
+                if (obj is HoldNote sourceHoldNote)
+                {
+                    foreach (HoldPointNote point in sourceHoldNote.Points)
+                    {
+                        HoldPointNote newHoldPoint = new(new(point.Timestamp.FullTick), point.Position, point.Size, holdNote, point.RenderType);
+                        holdNote.Points.Add(newHoldPoint);
+                    }
+                }
+                else if (obj is StopEffectEvent sourceStopEffectEvent)
+                {
+                    foreach (EffectSubEvent subEvent in sourceStopEffectEvent.SubEvents)
+                    {
+                        holdNote.Points.Add(new(new(subEvent.Timestamp.FullTick), 0, 60, holdNote, HoldPointRenderType.Visible));
+                    }
+                }
+                else if (obj is ReverseEffectEvent sourceReverseEffectEvent)
+                {
+                    foreach (EffectSubEvent subEvent in sourceReverseEffectEvent.SubEvents)
+                    {
+                        holdNote.Points.Add(new(new(subEvent.Timestamp.FullTick), 0, 60, holdNote, HoldPointRenderType.Visible));
+                    }
+                }
+                else
+                {
+                    int position = 0;
+                    int size = 60;
+                    HoldPointRenderType renderType = HoldPointRenderType.Visible;
+
+                    if (obj is IPositionable positionable)
+                    {
+                        position = positionable.Position;
+                        size = positionable.Size;
+                    }
+
+                    if (obj is HoldPointNote holdPointNote)
+                    {
+                        renderType = holdPointNote.RenderType;
+                    }
+
+                    HoldPointNote newHoldPoint = new(new(obj.Timestamp.FullTick), position, size, holdNote, renderType);
+                    holdNote.Points.Add(newHoldPoint);
+                }
+            }
+
+            holdNote.Points = holdNote.Points.OrderBy(x => x.Timestamp.FullTick).ToList();
+
+            if (!objects.Any(x => x is HoldPointNote))
+            {
+                operations.Add(new SelectionAddOperation(holdNote, SelectionSystem.LastSelectedObject));
+            }
+
+            operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, holdNote, 0));
+        }
+        else if (ComboBoxType.SelectedIndex == 15)
+        {
+            // Convert to Stop Effect Event
+            
+            foreach (ITimeable obj in objects)
+            {
+                Layer layer = ChartSystem.Chart.ParentLayer(obj) ?? ChartSystem.Chart.Layers[0];
+                
+                // Remove original object.
+                removeObject(obj, layer);
+            }
+        }
+        else if (ComboBoxType.SelectedIndex == 16)
+        {
+            // Convert to Reverse Effect Event
+            
+            foreach (ITimeable obj in objects)
+            {
+                Layer layer = ChartSystem.Chart.ParentLayer(obj) ?? ChartSystem.Chart.Layers[0];
+                
+                // Remove original object.
+                removeObject(obj, layer);
+            }
+        }
+        else
+        {
+            // Convert to all other types.
+            foreach (ITimeable obj in objects)
+            {
+                Layer layer = ChartSystem.Chart.ParentLayer(obj) ?? ChartSystem.Chart.Layers[0];
+                
+                // Remove original object.
+                removeObject(obj, layer);
+                
+                // Add new object(s).
+                if (obj is HoldNote holdNote)
+                {
+                    // Convert all hold note points to new objects.
+                    foreach (HoldPointNote point in holdNote.Points)
+                    {
+                        Timestamp timestamp = new(point.Timestamp.FullTick);
+                        ITimeable? newObject = ComboBoxType.SelectedIndex switch
+                        {
+                            0  => new TouchNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            1  => new ChainNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            // 2 is skipped. (Hold Note)
+                            3  => new SlideClockwiseNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            4  => new SlideCounterclockwiseNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            5  => new SnapForwardNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            6  => new SnapBackwardNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            7  => new LaneShowNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
+                            8  => new LaneHideNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
+                            9  => new SyncNote(timestamp, point.Position, point.Size),
+                            10 => new MeasureLineNote(timestamp, false),
+                            11 => new TempoChangeEvent(timestamp, 120),
+                            12 => new MetreChangeEvent(timestamp, 4, 4),
+                            13 => new SpeedChangeEvent(timestamp, 1),
+                            14 => new VisibilityChangeEvent(timestamp, true),
+                            // 15 is skipped. (Stop Effect Event)
+                            // 16 is skipped. (Reverse Effect Event)
+                            17 => new TutorialMarkerEvent(timestamp, ""),
+                            18 => new Bookmark(timestamp, 0xFFDDDDDD, ""),
+                            _  => null,
+                        };
+
+                        if (newObject == null) continue;
+
+                        operations.Add(new SelectionAddOperation(newObject, SelectionSystem.LastSelectedObject));
+                        
+                        if (newObject is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event newGlobalEvent)
+                        {
+                            operations.Add(new GlobalEventAddOperation(newGlobalEvent, 0));
+                        }
+                        else if (newObject is ILaneToggle and Note newLaneToggle)
+                        {
+                            operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                        }
+                        else if (newObject is Bookmark bookmark)
+                        {
+                            operations.Add(new BookmarkAddOperation(bookmark, 0));
+                        }
+                        else if (newObject is Event newEvent)
+                        {
+                            operations.Add(new EventAddOperation(layer, newEvent, 0));
+                        }
+                        else if (newObject is Note newNote)
+                        {
+                            operations.Add(new NoteAddOperation(layer, newNote, 0));
+                        }
+                    }
+                }
+                else if (obj is StopEffectEvent stopEffectEvent)
+                {
+                    // Convert all stop effect sub-events to new objects.
+                    foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                    {
+                        Timestamp timestamp = new(subEvent.Timestamp.FullTick);
+                        ITimeable? newObject = ComboBoxType.SelectedIndex switch
+                        {
+                            0  => new TouchNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            1  => new ChainNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            // 2 is skipped. (Hold Note)
+                            3  => new SlideClockwiseNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            4  => new SlideCounterclockwiseNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            5  => new SnapForwardNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            6  => new SnapBackwardNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            7  => new LaneShowNote(timestamp, 0, 60, LaneSweepDirection.Instant),
+                            8  => new LaneHideNote(timestamp, 0, 60, LaneSweepDirection.Instant),
+                            9  => new SyncNote(timestamp, 0, 60),
+                            10 => new MeasureLineNote(timestamp, false),
+                            11 => new TempoChangeEvent(timestamp, 120),
+                            12 => new MetreChangeEvent(timestamp, 4, 4),
+                            13 => new SpeedChangeEvent(timestamp, 1),
+                            14 => new VisibilityChangeEvent(timestamp, true),
+                            // 15 is skipped. (Stop Effect Event)
+                            // 16 is skipped. (Reverse Effect Event)
+                            17 => new TutorialMarkerEvent(timestamp, ""),
+                            18 => new Bookmark(timestamp, 0xFFDDDDDD, ""),
+                            _  => null,
+                        };
+
+                        if (newObject == null) continue;
+
+                        operations.Add(new SelectionAddOperation(newObject, SelectionSystem.LastSelectedObject));
+                        
+                        if (newObject is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event newGlobalEvent)
+                        {
+                            operations.Add(new GlobalEventAddOperation(newGlobalEvent, 0));
+                        }
+                        else if (newObject is ILaneToggle and Note newLaneToggle)
+                        {
+                            operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                        }
+                        else if (newObject is Bookmark bookmark)
+                        {
+                            operations.Add(new BookmarkAddOperation(bookmark, 0));
+                        }
+                        else if (newObject is Event newEvent)
+                        {
+                            operations.Add(new EventAddOperation(layer, newEvent, 0));
+                        }
+                        else if (newObject is Note newNote)
+                        {
+                            operations.Add(new NoteAddOperation(layer, newNote, 0));
+                        }
+                    }
+                }
+                else if (obj is ReverseEffectEvent reverseEffectEvent)
+                {
+                    // Convert all reverse effect sub-events to new objects.
+                    foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                    {
+                        Timestamp timestamp = new(subEvent.Timestamp.FullTick);
+                        ITimeable? newObject = ComboBoxType.SelectedIndex switch
+                        {
+                            0  => new TouchNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            1  => new ChainNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            // 2 is skipped. (Hold Note)
+                            3  => new SlideClockwiseNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            4  => new SlideCounterclockwiseNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            5  => new SnapForwardNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            6  => new SnapBackwardNote(timestamp, 0, 60, BonusType.Normal, JudgementType.Normal),
+                            7  => new LaneShowNote(timestamp, 0, 60, LaneSweepDirection.Instant),
+                            8  => new LaneHideNote(timestamp, 0, 60, LaneSweepDirection.Instant),
+                            9  => new SyncNote(timestamp, 0, 60),
+                            10 => new MeasureLineNote(timestamp, false),
+                            11 => new TempoChangeEvent(timestamp, 120),
+                            12 => new MetreChangeEvent(timestamp, 4, 4),
+                            13 => new SpeedChangeEvent(timestamp, 1),
+                            14 => new VisibilityChangeEvent(timestamp, true),
+                            // 15 is skipped. (Stop Effect Event)
+                            // 16 is skipped. (Reverse Effect Event)
+                            17 => new TutorialMarkerEvent(timestamp, ""),
+                            18 => new Bookmark(timestamp, 0xFFDDDDDD, ""),
+                            _  => null,
+                        };
+
+                        if (newObject == null) continue;
+
+                        operations.Add(new SelectionAddOperation(newObject, SelectionSystem.LastSelectedObject));
+                        
+                        if (newObject is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event newGlobalEvent)
+                        {
+                            operations.Add(new GlobalEventAddOperation(newGlobalEvent, 0));
+                        }
+                        else if (newObject is ILaneToggle and Note newLaneToggle)
+                        {
+                            operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                        }
+                        else if (newObject is Bookmark bookmark)
+                        {
+                            operations.Add(new BookmarkAddOperation(bookmark, 0));
+                        }
+                        else if (newObject is Event newEvent)
+                        {
+                            operations.Add(new EventAddOperation(layer, newEvent, 0));
+                        }
+                        else if (newObject is Note newNote)
+                        {
+                            operations.Add(new NoteAddOperation(layer, newNote, 0));
+                        }
+                    }
+                }
+                else
+                {
+                    // Convert standard object to new object.
+                    int position = 0;
+                    int size = 60;
+
+                    BonusType bonusType = BonusType.Normal;
+                    JudgementType judgementType = JudgementType.Normal;
+                    LaneSweepDirection laneSweepDirection = LaneSweepDirection.Instant;
+
+                    if (obj is IPositionable positionable)
+                    {
+                        position = positionable.Position;
+                        size = positionable.Size;
+                    }
+
+                    if (obj is IPlayable playable)
+                    {
+                        bonusType = playable.BonusType;
+                        judgementType = playable.JudgementType;
+                    }
+
+                    if (obj is ILaneToggle laneToggle)
+                    {
+                        laneSweepDirection = laneToggle.Direction;
+                    }
+                
+                    Timestamp timestamp = new(obj.Timestamp.FullTick);
+                    ITimeable? newObject = ComboBoxType.SelectedIndex switch
+                    {
+                        0  => new TouchNote(timestamp, position, size, bonusType, judgementType),
+                        1  => new ChainNote(timestamp, position, size, bonusType, judgementType),
+                        // 2 is skipped. (Hold Note)
+                        3  => new SlideClockwiseNote(timestamp, position, size, bonusType, judgementType),
+                        4  => new SlideCounterclockwiseNote(timestamp, position, size, bonusType, judgementType),
+                        5  => new SnapForwardNote(timestamp, position, size, bonusType, judgementType),
+                        6  => new SnapBackwardNote(timestamp, position, size, bonusType, judgementType),
+                        7  => new LaneShowNote(timestamp, position, size, laneSweepDirection),
+                        8  => new LaneHideNote(timestamp, position, size, laneSweepDirection),
+                        9  => new SyncNote(timestamp, position, size),
+                        10 => new MeasureLineNote(timestamp, false),
+                        11 => new TempoChangeEvent(timestamp, 120),
+                        12 => new MetreChangeEvent(timestamp, 4, 4),
+                        13 => new SpeedChangeEvent(timestamp, 1),
+                        14 => new VisibilityChangeEvent(timestamp, true),
+                        // 15 is skipped. (Stop Effect Event)
+                        // 16 is skipped. (Reverse Effect Event)
+                        17 => new TutorialMarkerEvent(timestamp, ""),
+                        18 => new Bookmark(timestamp, 0xFFDDDDDD, ""),
+                        _  => null,
+                    };
+                    
+                    if (newObject == null) continue;
+
+                    // Only re-select newly generated object if it wasn't a hold point note or effect sub-event before the conversion.
+                    // If it was one of the filtered types before the conversion, then the editor is currently in hold- or event-edit mode
+                    // and no selections outside the hold note or event should be made. 
+                    if (obj is not (HoldPointNote or EffectSubEvent))
+                    {
+                        operations.Add(new SelectionAddOperation(newObject, SelectionSystem.LastSelectedObject));
+                    }
+                    
+                    if (newObject is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event newGlobalEvent)
+                    {
+                        operations.Add(new GlobalEventAddOperation(newGlobalEvent, 0));
+                    }
+                    else if (newObject is ILaneToggle and Note newLaneToggle)
+                    {
+                        operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                    }
+                    else if (newObject is Bookmark bookmark)
+                    {
+                        operations.Add(new BookmarkAddOperation(bookmark, 0));
+                    }
+                    else if (newObject is Event newEvent)
+                    {
+                        operations.Add(new EventAddOperation(layer, newEvent, 0));
+                    }
+                    else if (newObject is Note newNote)
+                    {
+                        operations.Add(new NoteAddOperation(layer, newNote, 0));
+                    }
+                }
+            }
+        }
+        
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+        return;
+
+        void removeObject(ITimeable obj, Layer layer)
+        {
+            operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
+            if (obj is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event globalEvent)
+            {
+                int index = ChartSystem.Chart.Events.IndexOf(globalEvent);
+                if (index == -1) return;
+                
+                operations.Add(new GlobalEventRemoveOperation(globalEvent, index));
+            }
+            else if (obj is ILaneToggle and Note laneToggle)
+            {
+                int index = ChartSystem.Chart.LaneToggles.IndexOf(laneToggle);
+                if (index == -1) return;
+                
+                operations.Add(new LaneToggleRemoveOperation(laneToggle, index));
+            }
+            else if (obj is Bookmark bookmark)
+            {
+                int index = ChartSystem.Chart.Bookmarks.IndexOf(bookmark);
+                if (index == -1) return;
+                
+                operations.Add(new BookmarkRemoveOperation(bookmark, index));
+            }
+            else if (obj is HoldPointNote holdPointNote)
+            {
+                int index = holdPointNote.Parent.Points.IndexOf(holdPointNote);
+                if (index == -1) return;
+                
+                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, index));
+            }
+            else if (obj is Event @event)
+            {
+                int index = layer.Events.IndexOf(@event);
+                if (index == -1) return;
+                
+                operations.Add(new EventRemoveOperation(layer, @event, index));
+            }
+            else if (obj is Note note)
+            {
+                int index = layer.Notes.IndexOf(note);
+                if (index == -1) return;
+                
+                operations.Add(new NoteRemoveOperation(layer, note, index));
+            }
+        }
     }
 
     private void TextBoxMeasure_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -693,7 +1118,7 @@ public partial class InspectorView : UserControl
         if (blockEvents) return;
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
-        if (ComboBoxLayers.SelectedIndex < 0 || ComboBoxLayers.SelectedIndex > ChartSystem.Chart.Layers.Count) return;
+        if (ComboBoxLayers.SelectedIndex < 0 || ComboBoxLayers.SelectedIndex >= ChartSystem.Chart.Layers.Count) return;
         
         Layer newLayer = ChartSystem.Chart.Layers[ComboBoxLayers.SelectedIndex];
 

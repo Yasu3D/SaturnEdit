@@ -13,6 +13,13 @@ public class GlobalEventAddOperation(Event @event, int index) : IOperation
 
     public void Apply()
     {
-        ChartSystem.Chart.Events.Insert(index, @event);
+        if (index < 0 || index >= ChartSystem.Chart.Events.Count)
+        {
+            ChartSystem.Chart.Events.Add(@event);
+        }
+        else
+        {
+            ChartSystem.Chart.Events.Insert(index, @event);
+        }
     }
 }

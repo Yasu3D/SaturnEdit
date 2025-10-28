@@ -7,7 +7,14 @@ public class LayerRemoveOperation(Layer layer, int index) : IOperation
 {
     public void Revert()
     {
-        ChartSystem.Chart.Layers.Insert(index, layer);
+        if (index < 0 || index >= ChartSystem.Chart.Bookmarks.Count)
+        {
+            ChartSystem.Chart.Layers.Add(layer);
+        }
+        else
+        {
+            ChartSystem.Chart.Layers.Insert(index, layer);
+        }
     }
 
     public void Apply()

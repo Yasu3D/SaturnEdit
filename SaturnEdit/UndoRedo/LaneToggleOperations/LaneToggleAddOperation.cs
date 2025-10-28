@@ -13,6 +13,13 @@ public class LaneToggleAddOperation(Note note, int index) : IOperation
 
     public void Apply()
     {
-        ChartSystem.Chart.LaneToggles.Insert(index, note);
+        if (index < 0 || index >= ChartSystem.Chart.LaneToggles.Count)
+        {
+            ChartSystem.Chart.LaneToggles.Add(note);
+        }
+        else
+        {
+            ChartSystem.Chart.LaneToggles.Insert(index, note);
+        }
     }
 }
