@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using FluentIcons.Common;
 using SaturnData.Notation.Core;
 
@@ -21,13 +22,16 @@ public partial class LayerListItem : UserControl
 
     public void SetLayer(Layer layer)
     {
-        blockEvents = true;
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            blockEvents = true;
         
-        Layer = layer;
-        TextBoxLayerName.Text = layer.Name;
-        IconLayerVisibility.Icon = layer.Visible ? Icon.Eye : Icon.EyeOff;
+            Layer = layer;
+            TextBoxLayerName.Text = layer.Name;
+            IconLayerVisibility.Icon = layer.Visible ? Icon.Eye : Icon.EyeOff;
 
-        blockEvents = false;
+            blockEvents = false;
+        });
     }
     
     private void ButtonLayerVisibility_OnClick(object? sender, RoutedEventArgs e)

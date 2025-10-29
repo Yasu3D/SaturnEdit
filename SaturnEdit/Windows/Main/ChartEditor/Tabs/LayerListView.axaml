@@ -27,14 +27,15 @@
                         CornerRadius="3"
                         Width="22"
                         Height="22"
-                        Click="ButtonMoveItemUp_Click">
+                        Click="ButtonMoveLayerUp_Click">
                     <icon:FluentIcon Icon="ArrowUpload"
                                      FontSize="16"
                                      Foreground="{DynamicResource ForegroundPrimary}" />
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemUp}" />
-                            <TextBlock Name="TextBlockShortcutMoveItemUp1" Text="SHORTCUT"
+                            <TextBlock Name="TextBlockShortcutMoveItemUp1"
+                                       Text="SHORTCUT"
                                        Margin="15,0,0,0"
                                        HorizontalAlignment="Right"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
@@ -46,14 +47,15 @@
                         CornerRadius="3"
                         Width="22"
                         Height="22"
-                        Click="ButtonMoveItemDown_Click">
+                        Click="ButtonMoveLayerDown_Click">
                     <icon:FluentIcon Icon="ArrowDownload"
                                      FontSize="16"
                                      Foreground="{DynamicResource ForegroundPrimary}" />
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemDown}" />
-                            <TextBlock Name="TextBlockShortcutMoveItemDown1" Text="SHORTCUT"
+                            <TextBlock Name="TextBlockShortcutMoveItemDown1"
+                                       Text="SHORTCUT"
                                        Margin="15,0,0,0"
                                        HorizontalAlignment="Right"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
@@ -70,14 +72,15 @@
                         CornerRadius="3"
                         Width="22"
                         Height="22"
-                        Click="ButtonDeleteSelection_Click">
+                        Click="ButtonDeleteLayer_Click">
                     <icon:FluentIcon Icon="Delete"
                                      FontSize="16"
                                      Foreground="{DynamicResource ForegroundPrimary}" />
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
-                            <TextBlock Name="TextBlockShortcutDeleteSelection1" Text="SHORTCUT"
+                            <TextBlock Name="TextBlockShortcutDeleteSelection1"
+                                       Text="SHORTCUT"
                                        Margin="15,0,0,0"
                                        HorizontalAlignment="Right"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
@@ -89,7 +92,7 @@
                         CornerRadius="3"
                         Width="22"
                         Height="22"
-                        Click="ButtonAddNew_Click">
+                        Click="ButtonAddNewLayer_Click">
                     <icon:FluentIcon Icon="Add"
                                      FontSize="16"
                                      Foreground="{DynamicResource ForegroundPrimary}" />
@@ -103,14 +106,11 @@
                        Fill="{DynamicResource SeparatorPrimary}" />
 
             <ScrollViewer Grid.Row="2">
-                <ListBox Name="ListBoxLayers" 
+                <ListBox Name="ListBoxLayers"
                          SelectionMode="AlwaysSelected"
                          Background="{DynamicResource BackgroundSecondary}"
-                         MinHeight="200"
-                         MaxHeight="350"
                          SelectionChanged="ListBoxLayers_OnSelectionChanged"
-                         KeyDown="ListBoxLayers_OnKeyDown">
-                </ListBox>
+                         KeyDown="ListBoxLayers_OnKeyDown" />
             </ScrollViewer>
 
             <Border Grid.Row="3"
@@ -126,19 +126,15 @@
             </Border>
         </Grid>
 
-        <!-- Layer Contents -->
+        <!-- Layer Events -->
         <Grid Grid.Row="1"
-              RowDefinitions="*,*"
               ColumnDefinitions="10,1,*">
-            <Border Grid.RowSpan="2"
-                    Grid.Column="0"
+            <Border Grid.Column="0"
                     Background="{DynamicResource BackgroundPrimary}"
                     BorderBrush="{DynamicResource SeparatorPrimary}"
                     BorderThickness="0,0,1,0" />
             
-            <!-- LayerEvents -->
-            <Grid Grid.Row="0"
-                  Grid.Column="2"
+            <Grid Grid.Column="2"
                   RowDefinitions="40,1,*,31">
                 <TextBlock Grid.Row="0"
                            Text="{DynamicResource ChartEditor.LayerList.Header.LayerEvents}"
@@ -154,14 +150,16 @@
                     <Button Classes="Themed Standard"
                             CornerRadius="3"
                             Width="22"
-                            Height="22">
+                            Height="22"
+                            Click="ButtonMoveEventUp_OnClick">
                         <icon:FluentIcon Icon="ArrowUpload"
                                          FontSize="16"
                                          Foreground="{DynamicResource ForegroundPrimary}" />
                         <ToolTip.Tip>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemUp}" />
-                                <TextBlock Name="TextBlockShortcutMoveItemUp2" Text="SHORTCUT"
+                                <TextBlock Name="TextBlockShortcutMoveItemUp2"
+                                           Text="SHORTCUT"
                                            Margin="15,0,0,0"
                                            HorizontalAlignment="Right"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
@@ -172,14 +170,16 @@
                     <Button Classes="Themed Standard"
                             CornerRadius="3"
                             Width="22"
-                            Height="22">
+                            Height="22"
+                            Click="ButtonMoveEventDown_OnClick">
                         <icon:FluentIcon Icon="ArrowDownload"
                                          FontSize="16"
                                          Foreground="{DynamicResource ForegroundPrimary}" />
                         <ToolTip.Tip>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemDown}" />
-                                <TextBlock Name="TextBlockShortcutMoveItemDown2" Text="SHORTCUT"
+                                <TextBlock Name="TextBlockShortcutMoveItemDown2"
+                                           Text="SHORTCUT"
                                            Margin="15,0,0,0"
                                            HorizontalAlignment="Right"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
@@ -195,14 +195,16 @@
                     <Button Classes="Themed Standard"
                             CornerRadius="3"
                             Width="22"
-                            Height="22">
+                            Height="22"
+                            Click="ButtonDeleteEvent_OnClick">
                         <icon:FluentIcon Icon="Delete"
                                          FontSize="16"
                                          Foreground="{DynamicResource ForegroundPrimary}" />
                         <ToolTip.Tip>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
-                                <TextBlock Name="TextBlockShortcutDeleteSelection2" Text="SHORTCUT"
+                                <TextBlock Name="TextBlockShortcutDeleteSelection2"
+                                           Text="SHORTCUT"
                                            Margin="15,0,0,0"
                                            HorizontalAlignment="Right"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
@@ -219,7 +221,7 @@
                                          Foreground="{DynamicResource ForegroundPrimary}" />
                         <Button.Flyout>
                             <MenuFlyout>
-                                <MenuItem>
+                                <MenuItem Click="MenuItemAddSpeedChange_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SpeedChange}"
                                                    Foreground="{DynamicResource ForegroundPrimary}" />
@@ -230,7 +232,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem>
+                                <MenuItem Click="MenuItemAddVisibilityChange_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.VisibilityChange}"
                                                    Foreground="{DynamicResource ForegroundPrimary}" />
@@ -241,7 +243,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem>
+                                <MenuItem Click="MenuItemAddReverseEffect_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.ReverseEffect}"
                                                    Foreground="{DynamicResource ForegroundPrimary}" />
@@ -252,7 +254,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem>
+                                <MenuItem Click="MenuItemAddStopEffect_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.StopEffect}"
                                                    Foreground="{DynamicResource ForegroundPrimary}" />
@@ -274,12 +276,11 @@
                            Fill="{DynamicResource SeparatorPrimary}" />
 
                 <ScrollViewer Grid.Row="2">
-                    <ListBox Background="{DynamicResource BackgroundSecondary}"
-                             SelectionMode="Multiple">
-                        <ListBoxItem Content="Speed Change" />
-                        <ListBoxItem Content="Speed Change" />
-                        <ListBoxItem Content="Speed Change" />
-                    </ListBox>
+                    <ListBox Name="ListBoxEvents"
+                             Background="{DynamicResource BackgroundSecondary}"
+                             SelectionMode="Multiple" 
+                             SelectionChanged="ListBoxEvents_OnSelectionChanged"
+                             KeyDown="ListBoxEvents_OnKeyDown"/>
                 </ScrollViewer>
 
                 <Border Grid.Row="3"
@@ -288,81 +289,6 @@
                         Background="{DynamicResource BackgroundSecondary}"
                         BorderBrush="{DynamicResource SeparatorPrimary}"
                         BorderThickness="0,0,0,1">
-                    <Rectangle Height="1"
-                               Fill="{DynamicResource SeparatorPrimary}"
-                               Margin="15"
-                               VerticalAlignment="Bottom" />
-                </Border>
-            </Grid>
-
-            <!-- LayerNotes -->
-            <Grid Grid.Row="1"
-                  Grid.Column="2"
-                  RowDefinitions="40,1,*,31">
-                <TextBlock Grid.Row="0"
-                           Text="{DynamicResource ChartEditor.LayerList.Header.LayerNotes}"
-                           FontWeight="Regular"
-                           Foreground="{DynamicResource ForegroundPrimary}"
-                           Margin="10" />
-
-                <StackPanel Grid.Row="0"
-                            Orientation="Horizontal"
-                            Spacing="5"
-                            Margin="9,0"
-                            HorizontalAlignment="Right">
-                    <Button Classes="Themed Standard"
-                            CornerRadius="3"
-                            Width="22"
-                            Height="22">
-                        <icon:FluentIcon Icon="ArrowUpload"
-                                         FontSize="16"
-                                         Foreground="{DynamicResource ForegroundPrimary}" />
-                        <ToolTip.Tip>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemUp}" />
-                                <TextBlock Name="TextBlockShortcutMoveItemUp3" Text="SHORTCUT"
-                                           Margin="15,0,0,0"
-                                           HorizontalAlignment="Right"
-                                           Foreground="{DynamicResource ForegroundSecondary}" />
-                            </StackPanel>
-                        </ToolTip.Tip>
-                    </Button>
-
-                    <Button Classes="Themed Standard"
-                            CornerRadius="3"
-                            Width="22"
-                            Height="22">
-                        <icon:FluentIcon Icon="ArrowDownload"
-                                         FontSize="16"
-                                         Foreground="{DynamicResource ForegroundPrimary}" />
-                        <ToolTip.Tip>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemDown}" />
-                                <TextBlock Name="TextBlockShortcutMoveItemDown3" Text="SHORTCUT"
-                                           Margin="15,0,0,0"
-                                           HorizontalAlignment="Right"
-                                           Foreground="{DynamicResource ForegroundSecondary}" />
-                            </StackPanel>
-                        </ToolTip.Tip>
-                    </Button>
-                </StackPanel>
-
-                <Rectangle Grid.Row="1"
-                           Fill="{DynamicResource SeparatorPrimary}" />
-
-                <ScrollViewer Grid.Row="2">
-                    <ListBox Background="{DynamicResource BackgroundSecondary}">
-                        <ListBoxItem Content="Touch Note" />
-                        <ListBoxItem Content="Touch Note" />
-                        <ListBoxItem Content="Touch Note" />
-                    </ListBox>
-
-                </ScrollViewer>
-
-                <Border Grid.Row="3"
-                        VerticalAlignment="Bottom"
-                        Height="31"
-                        Background="{DynamicResource BackgroundSecondary}">
                     <Rectangle Height="1"
                                Fill="{DynamicResource SeparatorPrimary}"
                                Margin="15"
