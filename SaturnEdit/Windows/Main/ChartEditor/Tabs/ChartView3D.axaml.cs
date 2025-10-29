@@ -238,6 +238,9 @@ public partial class ChartView3D : UserControl
         canvasInfo.Height = (float)RenderCanvas.Height;
         canvasInfo.Radius = canvasInfo.Width / 2;
         canvasInfo.Center = new(canvasInfo.Radius, canvasInfo.Radius);
+
+        NumericUpDownNoteSpeed.IsVisible = Bounds.Width > 507;
+        ComboBoxBackgroundDim.IsVisible = Bounds.Width > 620;
     }
 
     private async void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
