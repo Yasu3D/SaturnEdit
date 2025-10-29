@@ -6,6 +6,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Events;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
@@ -16,7 +17,6 @@ using SaturnEdit.Utilities;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
-// TODO: Implement moving events and adding new events
 public partial class LayerListView : UserControl
 {
     public LayerListView()
@@ -212,16 +212,6 @@ public partial class LayerListView : UserControl
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
-    private static void MoveEventUp()
-    {
-        
-    }
-
-    private static void MoveEventDown()
-    {
-        
-    }
-
     private static void DeleteEvent()
     {
         if (SelectionSystem.SelectedLayer == null) return;
@@ -245,22 +235,72 @@ public partial class LayerListView : UserControl
 
     private static void AddSpeedChange()
     {
+        if (SelectionSystem.SelectedLayer == null) return;
         
+        SpeedChangeEvent speedChangeEvent = new(new(TimeSystem.Timestamp.FullTick), 1.000000f);
+        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= speedChangeEvent.Timestamp.FullTick);
+
+        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, speedChangeEvent, index);
+        SelectionAddOperation op1 = new(speedChangeEvent, SelectionSystem.LastSelectedObject);
+        BuildChartOperation op2 = new();
+        
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
     }
 
     private static void AddVisibilityChange()
     {
+        if (SelectionSystem.SelectedLayer == null) return;
         
+        VisibilityChangeEvent visibilityChangeEvent = new(new(TimeSystem.Timestamp.FullTick), true);
+        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= visibilityChangeEvent.Timestamp.FullTick);
+
+        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, visibilityChangeEvent, index);
+        SelectionAddOperation op1 = new(visibilityChangeEvent, SelectionSystem.LastSelectedObject);
+        BuildChartOperation op2 = new();
+        
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
     }
 
     private static void AddReverseEffect()
     {
+        if (SelectionSystem.SelectedLayer == null) return;
+
+        Timestamp start = new(TimeSystem.Timestamp.FullTick);
+        Timestamp middle = new(start.FullTick + 1920);
+        Timestamp end = new(middle.FullTick + 1920);
         
+        ReverseEffectEvent reverseEffectEvent = new();
+        reverseEffectEvent.SubEvents[0] = new(start, reverseEffectEvent);
+        reverseEffectEvent.SubEvents[1] = new(middle, reverseEffectEvent);
+        reverseEffectEvent.SubEvents[2] = new(end, reverseEffectEvent);
+        
+        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= reverseEffectEvent.Timestamp.FullTick);
+        
+        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, reverseEffectEvent, index);
+        SelectionAddOperation op1 = new(reverseEffectEvent, SelectionSystem.LastSelectedObject);
+        BuildChartOperation op2 = new();
+        
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
     }
 
     private static void AddStopEffect()
     {
+        if (SelectionSystem.SelectedLayer == null) return;
+
+        Timestamp start = new(TimeSystem.Timestamp.FullTick);
+        Timestamp end = new(start.FullTick + 1920);
         
+        StopEffectEvent stopEffectEvent = new();
+        stopEffectEvent.SubEvents[0] = new(start, stopEffectEvent);
+        stopEffectEvent.SubEvents[1] = new(end, stopEffectEvent);
+        
+        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= stopEffectEvent.Timestamp.FullTick);
+        
+        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, stopEffectEvent, index);
+        SelectionAddOperation op1 = new(stopEffectEvent, SelectionSystem.LastSelectedObject);
+        BuildChartOperation op2 = new();
+        
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
     }
 #endregion Methods
 
@@ -278,9 +318,6 @@ public partial class LayerListView : UserControl
             TextBlockShortcutMoveItemUp1.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
             TextBlockShortcutMoveItemDown1.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
             TextBlockShortcutDeleteSelection1.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
-            
-            TextBlockShortcutMoveItemUp2.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"].ToString();
-            TextBlockShortcutMoveItemDown2.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
             TextBlockShortcutDeleteSelection2.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
         });
     }
@@ -401,23 +438,7 @@ public partial class LayerListView : UserControl
             DeleteEvent();
             e.Handled = true;
         }
-        
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"]))
-        {
-            MoveEventUp();
-            e.Handled = true;
-        }
-        
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"]))
-        {
-            MoveEventDown();
-            e.Handled = true;
-        }
     }
-
-    private void ButtonMoveEventUp_OnClick(object? sender, RoutedEventArgs e) => MoveEventUp();
-
-    private void ButtonMoveEventDown_OnClick(object? sender, RoutedEventArgs e) => MoveEventDown();
 
     private void ButtonDeleteEvent_OnClick(object? sender, RoutedEventArgs e) => DeleteEvent();
 
@@ -428,5 +449,21 @@ public partial class LayerListView : UserControl
     private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => AddReverseEffect();
 
     private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => AddStopEffect();
+    
+    private void ListBoxEvents_OnDoubleTapped(object? sender, TappedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (e.KeyModifiers.HasFlag(KeyModifiers.Control)) return;
+        if (e.KeyModifiers.HasFlag(KeyModifiers.Shift)) return;
+        if (SelectionSystem.SelectedLayer == null) return;
+        
+        foreach (Event @event in SelectionSystem.SelectedLayer.Events)
+        {
+            if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
+            
+            TimeSystem.SeekTime(@event.Timestamp.Time, TimeSystem.Division);
+            return;
+        }
+    }
 #endregion UI Event Delegates
 }
