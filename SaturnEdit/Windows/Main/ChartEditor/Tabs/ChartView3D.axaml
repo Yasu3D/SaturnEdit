@@ -268,18 +268,18 @@
 
                                 <Separator />
 
-                                <MenuItem Name="MenuItemSplitHold">
+                                <MenuItem Name="MenuItemCutHold">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.SplitHold}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.CutHold}" />
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
                                         <icon:FluentIcon Icon="FilmstripSplit" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Name="MenuItemMergeHold">
+                                <MenuItem Name="MenuItemJoinHold">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.MergeHold}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.JoinHold}" />
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
                                         <icon:FluentIcon Icon="Filmstrip" />

@@ -1,14 +1,11 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
 using SaturnEdit.Systems;
-using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs;
-using SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
 namespace SaturnEdit;
 
