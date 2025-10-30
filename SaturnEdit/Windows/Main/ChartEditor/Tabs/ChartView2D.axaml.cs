@@ -355,19 +355,19 @@ public partial class ChartView2D : UserControl
         }
     }
 
-    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddTempoChange();
+    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddTempoChange();
 
-    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddMetreChange();
+    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddMetreChange();
 
-    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddTutorialMarker();
+    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddTutorialMarker();
 
-    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddSpeedChange();
+    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddSpeedChange();
 
-    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddVisibilityChange();
+    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddVisibilityChange();
 
-    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddStopEffect();
+    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddStopEffect();
 
-    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddReverseEffect();
+    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddReverseEffect();
 
     private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveSelectionBeatForward();
 

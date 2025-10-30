@@ -180,12 +180,27 @@ public partial class EventListView : UserControl
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
         if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
         if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
-        
+
         Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
 
         if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"]))
         {
             DeleteEvent();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
+        {
+            AddTempoChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"]))
+        {
+            AddMetreChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"]))
+        {
+            AddTutorialMarker();
             e.Handled = true;
         }
     }

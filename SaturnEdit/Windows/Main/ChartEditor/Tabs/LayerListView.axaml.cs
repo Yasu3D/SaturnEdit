@@ -444,6 +444,26 @@ public partial class LayerListView : UserControl
             DeleteEvent();
             e.Handled = true;
         }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"]))
+        {
+            AddSpeedChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"]))
+        {
+            AddVisibilityChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"]))
+        {
+            AddStopEffect();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"]))
+        {
+            AddReverseEffect();
+            e.Handled = true;
+        }
     }
 
     private void ButtonDeleteEvent_OnClick(object? sender, RoutedEventArgs e) => DeleteEvent();

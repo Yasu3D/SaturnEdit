@@ -700,35 +700,6 @@ public partial class ChartEditorView : UserControl
             Edit_SelectByCriteria();
             e.Handled = true;
         }
-        
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
-        {
-            EventListView.AddTempoChange();
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"]))
-        {
-            EventListView.AddMetreChange();
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"]))
-        {
-            EventListView.AddTutorialMarker();
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"]))
-        {
-            LayerListView.AddSpeedChange();
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"]))
-        {
-            LayerListView.AddVisibilityChange();
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"]))
-        {
-            LayerListView.AddStopEffect();
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"]))
-        {
-            LayerListView.AddReverseEffect();
-        }
     }
 #endregion UI Event Delegates
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -36,41 +37,6 @@ public partial class ChartView3D : UserControl
     private readonly ClickDragHelper clickDragRight = new();
 
 #region Methods
-    public static void AddTempoChange()
-    {
-        
-    }
-
-    public static void AddMetreChange()
-    {
-        
-    }
-
-    public static void AddTutorialMarker()
-    {
-        
-    }
-
-    public static void AddSpeedChange()
-    {
-        
-    }
-
-    public static void AddVisibilityChange()
-    {
-        
-    }
-
-    public static void AddStopEffect()
-    {
-        
-    }
-
-    public static void AddReverseEffect()
-    {
-        
-    }
-
     public static void MoveSelectionBeatForward()
     {
         
@@ -907,19 +873,19 @@ public partial class ChartView3D : UserControl
     }
 
     
-    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => AddTempoChange();
+    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddTempoChange();
 
-    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => AddMetreChange();
+    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddMetreChange();
 
-    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => AddTutorialMarker();
+    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddTutorialMarker();
 
-    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => AddSpeedChange();
+    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddSpeedChange();
 
-    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => AddVisibilityChange();
+    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddVisibilityChange();
 
-    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => AddStopEffect();
+    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddStopEffect();
 
-    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => AddReverseEffect();
+    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddReverseEffect();
 
     private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => MoveSelectionBeatForward();
 
@@ -970,5 +936,342 @@ public partial class ChartView3D : UserControl
     private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => CutHold();
 
     private void MenuItemJoinHold_OnClick(object? sender, RoutedEventArgs e) => JoinHold();
+    
+    private void Control_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
+        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+        
+        Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
+        
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
+        {
+            EventListView.AddTempoChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"]))
+        {
+            EventListView.AddMetreChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"]))
+        {
+            EventListView.AddTutorialMarker();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"]))
+        {
+            LayerListView.AddSpeedChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"]))
+        {
+            LayerListView.AddVisibilityChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"]))
+        {
+            LayerListView.AddStopEffect();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"]))
+        {
+            LayerListView.AddReverseEffect();
+            e.Handled = true;
+        }
+        
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatForward"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatBack"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureForward"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureBack"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwise"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwise"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSize"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSize"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwiseIterative"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwiseIterative"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSizeIterative"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSizeIterative"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorHorizontal"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorVertical"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorCustom"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.AdjustAxis"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.FlipDirection"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ReverseSelection"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleSelection"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.OffsetChart"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleChart"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorChart"])) 
+        {
+            
+            e.Handled = true;
+        }
+            
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.CutHold"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.JoinHold"]))
+        {
+            
+            e.Handled = true;
+        }
+            
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.IncreaseNoteSpeed"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseNoteSpeed"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.IncreaseBackgroundDim"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseBackgroundDim"]))
+        {
+            
+            e.Handled = true;
+        }
+            
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowSpeedChanges"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowVisibilityChanges"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowLaneToggleAnimations"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeLaneSweeps"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgeAreas"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodWindows"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgeAreas"]))
+        {
+            
+            e.Handled = true;
+        }
+            
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapForward"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapBackward"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideClockwise"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideCounterclockwise"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Chain"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Hold"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Sync"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MeasureLine"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.BeatLine"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneShow"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneHide"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TempoChange"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MetreChange"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SpeedChange"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.VisibilityChange"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.ReverseEffect"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.StopEffect"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TutorialMarker"]))
+        {
+            e.Handled = true;
+        }
+            
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.EventMarkers"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.LaneToggleNotes"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.HoldControlPoints"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.Bookmarks"]))
+        {
+            
+            e.Handled = true;
+        }
+    }
 #endregion UI Event Delegates
 }

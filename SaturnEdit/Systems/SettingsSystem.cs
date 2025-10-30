@@ -838,6 +838,14 @@ public class ShortcutSettings
         ["Editor.NoteEditMode"] = new(Key.Tab, false, false, false, "ChartEditor.General.Editor", "ChartEditor.ChartView3D.Mode.NoteEditMode"),
         ["Editor.HoldEditMode"] = new(Key.Tab, false, false, false, "ChartEditor.General.Editor", "ChartEditor.ChartView3D.Mode.HoldEditMode"),
 
+        ["Editor.Insert.TempoChange"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.TempoChange"),
+        ["Editor.Insert.MetreChange"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.MetreChange"),
+        ["Editor.Insert.TutorialMarker"]   = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.TutorialMarker"),
+        ["Editor.Insert.SpeedChange"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.SpeedChange"),
+        ["Editor.Insert.VisibilityChange"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.VisibilityChange"),
+        ["Editor.Insert.StopEffect"]       = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.StopEffect"),
+        ["Editor.Insert.ReverseEffect"]    = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.ReverseEffect"),
+        
         ["Editor.Transform.MoveBeatForward"]               = new(Key.Up,    true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveSelectionBeatForward"),
         ["Editor.Transform.MoveBeatBack"]                  = new(Key.Down,  true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveSelectionBeatBack"),
         ["Editor.Transform.MoveMeasureForward"]            = new(Key.Right, true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveSelectionMeasureForward"),
@@ -860,14 +868,6 @@ public class ShortcutSettings
         ["Editor.Transform.OffsetChart"]                   = new(Key.None,  false, false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.OffsetChart"),
         ["Editor.Transform.ScaleChart"]                    = new(Key.None,  false, false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.ScaleChart"),
         ["Editor.Transform.MirrorChart"]                   = new(Key.None,  false, false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MirrorChart"),
-        
-        ["Editor.Insert.TempoChange"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.TempoChange"),
-        ["Editor.Insert.MetreChange"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.MetreChange"),
-        ["Editor.Insert.TutorialMarker"]   = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.TutorialMarker"),
-        ["Editor.Insert.SpeedChange"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.SpeedChange"),
-        ["Editor.Insert.VisibilityChange"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.VisibilityChange"),
-        ["Editor.Insert.StopEffect"]       = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.StopEffect"),
-        ["Editor.Insert.ReverseEffect"]    = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.ReverseEffect"),
         
         ["Editor.Convert.SpikeHold"]   = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.SpikeHold"),
         ["Editor.Convert.CutHold"]   = new(Key.H, false, true,  false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.CutHold"),

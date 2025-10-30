@@ -11,7 +11,8 @@
              x:Class="SaturnEdit.Windows.Main.ChartEditor.Tabs.ChartView3D">
     <Border Background="{DynamicResource BackgroundSecondary}"
             BorderBrush="{DynamicResource SeparatorPrimary}"
-            BorderThickness="1,0">
+            BorderThickness="1,0"
+            KeyDown="Control_OnKeyDown">
         <Grid RowDefinitions="38,*">
 
             <!-- Menu Bar -->
