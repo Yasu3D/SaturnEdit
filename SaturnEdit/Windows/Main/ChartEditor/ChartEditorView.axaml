@@ -44,8 +44,8 @@
                                 <Tool Title="Inspector">
                                     <tabs:InspectorView />
                                 </Tool>
-                                <Tool Title="LayerList">
-                                    <tabs:LayerListView />
+                                <Tool Title="EventList">
+                                    <tabs:EventListView />
                                 </Tool>
                             </ToolDock>
                             

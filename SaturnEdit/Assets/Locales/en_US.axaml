@@ -286,6 +286,14 @@
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform.OffsetChart">Offset Chart...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform.ScaleChart">Scale Chart...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform.MirrorChart">Mirror Chart...</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert">Insert</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.TempoChange">Add Tempo Change</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.MetreChange">Add Metre Change</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.TutorialMarker">Add Tutorial Marker</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.SpeedChange">Add Speed Change</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.VisibilityChange">Add Visibility Change</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.StopEffect">Add Stop Effect</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.ReverseEffect">Add Reverse Effect</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert">Convert</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert.NotesToHold">Notes to Hold...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert.HoldToNotes">Hold to Notes...</system:String>

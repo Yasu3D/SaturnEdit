@@ -64,7 +64,7 @@ public partial class EventListItem : UserControl
             {
                 GroupStandardEvent.IsVisible = true;
                 
-                TextBoxFloatValue.IsVisible = false;
+                TextBoxTextValue.IsVisible = false;
                 GroupMetreInput.IsVisible = false;
                 ComboBoxVisibility.IsVisible = false;
 
@@ -113,13 +113,18 @@ public partial class EventListItem : UserControl
 
                 if (Event is TempoChangeEvent tempoChangeEvent)
                 {
-                    TextBoxFloatValue.IsVisible = true;
-                    TextBoxFloatValue.Text = tempoChangeEvent.Tempo.ToString("F6", CultureInfo.InvariantCulture);
+                    TextBoxTextValue.IsVisible = true;
+                    TextBoxTextValue.Text = tempoChangeEvent.Tempo.ToString("F6", CultureInfo.InvariantCulture);
                 }
                 else if (Event is SpeedChangeEvent speedChangeEvent)
                 {
-                    TextBoxFloatValue.IsVisible = true;
-                    TextBoxFloatValue.Text = speedChangeEvent.Speed.ToString("F6", CultureInfo.InvariantCulture);
+                    TextBoxTextValue.IsVisible = true;
+                    TextBoxTextValue.Text = speedChangeEvent.Speed.ToString("F6", CultureInfo.InvariantCulture);
+                }
+                else if (Event is TutorialMarkerEvent tutorialMarkerEvent)
+                {
+                    TextBoxTextValue.IsVisible = true;
+                    TextBoxTextValue.Text = tutorialMarkerEvent.Key;
                 }
                 else if (Event is MetreChangeEvent metreChangeEvent)
                 {
@@ -213,41 +218,58 @@ public partial class EventListItem : UserControl
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
-    private void TextBoxFloatValue_OnLostFocus(object? sender, RoutedEventArgs e)
+    private void TextBoxTextValue_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        if (Event is not (TempoChangeEvent or SpeedChangeEvent)) return;
-        if (string.IsNullOrWhiteSpace(TextBoxFloatValue.Text))
+        if (Event is not (TempoChangeEvent or SpeedChangeEvent or TutorialMarkerEvent)) return;
+        if (string.IsNullOrWhiteSpace(TextBoxTextValue.Text))
         {
             blockEvents = true;
 
-            TextBoxFloatValue.Text = null;
+            TextBoxTextValue.Text = null;
             
             blockEvents = false;
             return;
         }
-
-        float newValue = 0;
-
-        try
-        {
-            newValue = Convert.ToSingle(TextBoxFloatValue.Text, CultureInfo.InvariantCulture);
-        }
-        catch (Exception ex)
-        {
-            // Don't throw.
-            Console.WriteLine(ex);
-        }
-
+        
         IOperation op0;
 
         if (Event is TempoChangeEvent tempoChangeEvent)
         {
+            float newValue = 0;
+
+            try
+            {
+                newValue = Convert.ToSingle(TextBoxTextValue.Text, CultureInfo.InvariantCulture);
+            }
+            catch (Exception ex)
+            {
+                // Don't throw.
+                Console.WriteLine(ex);
+            }
+
             op0 = new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, newValue);
         }
         else if (Event is SpeedChangeEvent speedChangeEvent)
-        {
+        { 
+            float newValue = 0;
+
+            try
+            {
+                newValue = Convert.ToSingle(TextBoxTextValue.Text, CultureInfo.InvariantCulture);
+            }
+            catch (Exception ex)
+            {
+                // Don't throw.
+                Console.WriteLine(ex);
+            }
+            
             op0 = new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, newValue);
+        }
+        else if (Event is TutorialMarkerEvent tutorialMarkerEvent)
+        {
+            if (tutorialMarkerEvent.Key == TextBoxTextValue.Text) return;
+            op0 = new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, TextBoxTextValue.Text);
         }
         else
         {

@@ -227,6 +227,7 @@ public partial class MainWindow : Window
             TimeSystem.PlaybackState = PlaybackState.Playing;
             e.Handled = true;
         }
+        
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.New"]))
         {
             ChartEditor.File_New();
@@ -267,6 +268,7 @@ public partial class MainWindow : Window
             ChartEditor.File_Quit();
             e.Handled = true;
         }
+        
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"]))
         {
             UndoRedoSystem.Undo();
@@ -311,6 +313,35 @@ public partial class MainWindow : Window
         { 
             ChartEditor.Edit_SelectByCriteria();
             e.Handled = true;
+        }
+        
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
+        {
+            EventListView.AddTempoChange();
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"]))
+        {
+            EventListView.AddMetreChange();
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"]))
+        {
+            EventListView.AddTutorialMarker();
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"]))
+        {
+            LayerListView.AddSpeedChange();
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"]))
+        {
+            LayerListView.AddVisibilityChange();
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"]))
+        {
+            LayerListView.AddStopEffect();
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"]))
+        {
+            LayerListView.AddReverseEffect();
         }
     }
 #endregion UI Event Delegates

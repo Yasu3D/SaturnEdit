@@ -24,48 +24,8 @@
             <Button Classes="Themed Standard"
                     CornerRadius="3"
                     Width="22"
-                    Height="22">
-                <icon:FluentIcon Icon="ArrowUpload"
-                                 FontSize="16"
-                                 Foreground="{DynamicResource ForegroundPrimary}" />
-                <ToolTip.Tip>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemUp}" />
-                        <TextBlock Name="TextBlockShortcutMoveItemUp" Text="SHORTCUT"
-                                   Margin="15,0,0,0"
-                                   HorizontalAlignment="Right"
-                                   Foreground="{DynamicResource ForegroundSecondary}" />
-                    </StackPanel>
-                </ToolTip.Tip>
-            </Button>
-
-            <Button Classes="Themed Standard"
-                    CornerRadius="3"
-                    Width="22"
-                    Height="22">
-                <icon:FluentIcon Icon="ArrowDownload"
-                                 FontSize="16"
-                                 Foreground="{DynamicResource ForegroundPrimary}" />
-                <ToolTip.Tip>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemDown}" />
-                        <TextBlock Name="TextBlockShortcutMoveItemDown" Text="SHORTCUT"
-                                   Margin="15,0,0,0"
-                                   HorizontalAlignment="Right"
-                                   Foreground="{DynamicResource ForegroundSecondary}" />
-                    </StackPanel>
-                </ToolTip.Tip>
-            </Button>
-
-            <Rectangle Width="1"
-                       Height="25"
-                       Margin="3"
-                       Fill="{DynamicResource SeparatorPrimary}" />
-
-            <Button Classes="Themed Standard"
-                    CornerRadius="3"
-                    Width="22"
-                    Height="22">
+                    Height="22"
+                    Click="ButtonDeleteEvent_OnClick">
                 <icon:FluentIcon Icon="Delete"
                                  FontSize="16"
                                  Foreground="{DynamicResource ForegroundPrimary}" />
@@ -89,7 +49,8 @@
                                  Foreground="{DynamicResource ForegroundPrimary}" />
                 <Button.Flyout>
                     <MenuFlyout>
-                        <MenuItem>
+                        <MenuItem Name="MenuItemAddTempoChange"
+                                  Click="MenuItemAddTempoChange_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TempoChange}"
                                            Foreground="{DynamicResource ForegroundPrimary}" />
@@ -100,7 +61,8 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem>
+                        <MenuItem Name="MenuItemAddMetreChange"
+                                  Click="MenuItemAddMetreChange_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.MetreChange}"
                                            Foreground="{DynamicResource ForegroundPrimary}" />
@@ -111,7 +73,8 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem>
+                        <MenuItem Name="MenuItemAddTutorialMarker"
+                                  Click="MenuItemAddTutorialMarker_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TutorialMarker}"
                                            Foreground="{DynamicResource ForegroundPrimary}" />
@@ -133,11 +96,12 @@
                    Fill="{DynamicResource SeparatorPrimary}" />
 
         <ScrollViewer Grid.Row="2">
-            <ListBox Background="{DynamicResource BackgroundSecondary}">
-                <ListBoxItem Content="Tempo Change" />
-                <ListBoxItem Content="Metre Change" />
-                <ListBoxItem Content="Metre Change" />
-            </ListBox>
+            <ListBox Name="ListBoxEvents"
+                     Background="{DynamicResource BackgroundSecondary}"
+                     SelectionMode="Multiple" 
+                     SelectionChanged="ListBoxEvents_OnSelectionChanged"
+                     DoubleTapped="ListBoxEvents_OnDoubleTapped"
+                     KeyDown="ListBoxEvents_OnKeyDown"/>
         </ScrollViewer>
 
         <Border Grid.Row="3"

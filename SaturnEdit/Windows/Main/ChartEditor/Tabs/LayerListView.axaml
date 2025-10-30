@@ -176,7 +176,8 @@
                                          Foreground="{DynamicResource ForegroundPrimary}" />
                         <Button.Flyout>
                             <MenuFlyout>
-                                <MenuItem Click="MenuItemAddSpeedChange_OnClick">
+                                <MenuItem Name="MenuItemAddSpeedChange"
+                                          Click="MenuItemAddSpeedChange_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SpeedChange}"
                                                    Foreground="{DynamicResource ForegroundPrimary}" />
@@ -187,7 +188,8 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Click="MenuItemAddVisibilityChange_OnClick">
+                                <MenuItem Name="MenuItemAddVisibilityChange"
+                                          Click="MenuItemAddVisibilityChange_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.VisibilityChange}"
                                                    Foreground="{DynamicResource ForegroundPrimary}" />
@@ -198,7 +200,8 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Click="MenuItemAddReverseEffect_OnClick">
+                                <MenuItem Name="MenuItemAddReverseEffect"
+                                          Click="MenuItemAddReverseEffect_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.ReverseEffect}"
                                                    Foreground="{DynamicResource ForegroundPrimary}" />
@@ -209,7 +212,8 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Click="MenuItemAddStopEffect_OnClick">
+                                <MenuItem Name="MenuItemAddStopEffect"
+                                          Click="MenuItemAddStopEffect_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.StopEffect}"
                                                    Foreground="{DynamicResource ForegroundPrimary}" />

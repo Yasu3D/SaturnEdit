@@ -52,8 +52,7 @@
                        Fill="{DynamicResource SeparatorPrimary}" />
 
             <TextBox Grid.Column="5"
-                     Name="TextBoxFloatValue"
-                     Text="0.000000"
+                     Name="TextBoxTextValue"
                      HorizontalAlignment="Stretch"
                      BorderBrush="Transparent"
                      Background="Transparent"
@@ -63,7 +62,7 @@
                      TextAlignment="Right"
                      Margin="0,0,5,0"
                      IsVisible="False"
-                     LostFocus="TextBoxFloatValue_OnLostFocus" />
+                     LostFocus="TextBoxTextValue_OnLostFocus" />
 
             <Grid Grid.Column="5"
                   Name="GroupMetreInput"

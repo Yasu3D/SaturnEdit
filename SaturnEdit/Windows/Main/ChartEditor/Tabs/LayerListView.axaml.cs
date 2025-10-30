@@ -224,6 +224,7 @@ public partial class LayerListView : UserControl
             if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
 
             int index = SelectionSystem.SelectedLayer.Events.IndexOf(@event);
+            if (index == -1) continue;
             
             operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
             operations.Add(new EventRemoveOperation(SelectionSystem.SelectedLayer, @event, index));
@@ -233,7 +234,7 @@ public partial class LayerListView : UserControl
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
-    private static void AddSpeedChange()
+    public static void AddSpeedChange()
     {
         if (SelectionSystem.SelectedLayer == null) return;
         
@@ -247,7 +248,7 @@ public partial class LayerListView : UserControl
         UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
     }
 
-    private static void AddVisibilityChange()
+    public static void AddVisibilityChange()
     {
         if (SelectionSystem.SelectedLayer == null) return;
         
@@ -261,7 +262,7 @@ public partial class LayerListView : UserControl
         UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
     }
 
-    private static void AddReverseEffect()
+    public static void AddReverseEffect()
     {
         if (SelectionSystem.SelectedLayer == null) return;
 
@@ -283,7 +284,7 @@ public partial class LayerListView : UserControl
         UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
     }
 
-    private static void AddStopEffect()
+    public static void AddStopEffect()
     {
         if (SelectionSystem.SelectedLayer == null) return;
 
@@ -319,6 +320,11 @@ public partial class LayerListView : UserControl
             TextBlockShortcutMoveItemDown1.Text = SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"].ToString();
             TextBlockShortcutDeleteSelection1.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
             TextBlockShortcutDeleteSelection2.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
+
+            MenuItemAddSpeedChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"].ToKeyGesture();
+            MenuItemAddVisibilityChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"].ToKeyGesture();
+            MenuItemAddStopEffect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"].ToKeyGesture();
+            MenuItemAddReverseEffect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"].ToKeyGesture();
         });
     }
 #endregion System Event Delegates
