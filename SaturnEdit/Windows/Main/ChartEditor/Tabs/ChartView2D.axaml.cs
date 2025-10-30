@@ -98,9 +98,6 @@ public partial class ChartView2D : UserControl
             MenuItemOffsetChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.OffsetChart"].ToKeyGesture();
             MenuItemScaleChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleChart"].ToKeyGesture();
             MenuItemMirrorChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorChart"].ToKeyGesture();
-            MenuItemNotesToHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.NotesToHold"].ToKeyGesture();
-            MenuItemHoldToNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.HoldToNotes"].ToKeyGesture();
-            MenuItemHoldToHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.HoldToHold"].ToKeyGesture();
             MenuItemSpikeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"].ToKeyGesture();
             MenuItemSplitHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SplitHold"].ToKeyGesture();
             MenuItemMergeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.MergeHold"].ToKeyGesture();

@@ -93,10 +93,6 @@ ChartEditor.List.ToolTip.AddNewEllipsis,Add New...
 ChartEditor.List.ToolTip.DeleteSelection,Delete Selection
 ChartEditor.List.ToolTip.MoveItemUp,Move Item Up
 ChartEditor.List.ToolTip.MoveItemDown,Move Item Down
-ChartEditor.LaneToggleList,Lane Toggle List
-ChartEditor.LaneToggleList.Header.LaneToggles,Lane Toggles
-ChartEditor.BookmarkList,Bookmark List
-ChartEditor.BookmarkList.Header.Bookmarks,Bookmarks
 ChartEditor.LayerList,Layer List
 ChartEditor.LayerList.Header.Layers,Layers
 ChartEditor.LayerList.Header.LayerEvents,Layer Events
@@ -292,9 +288,6 @@ ChartEditor.ChartView3D.Menu.Insert.VisibilityChange,Add Visibility Change
 ChartEditor.ChartView3D.Menu.Insert.StopEffect,Add Stop Effect
 ChartEditor.ChartView3D.Menu.Insert.ReverseEffect,Add Reverse Effect
 ChartEditor.ChartView3D.Menu.Convert,Convert
-ChartEditor.ChartView3D.Menu.Convert.NotesToHold,Notes to Hold...
-ChartEditor.ChartView3D.Menu.Convert.HoldToNotes,Hold to Notes...
-ChartEditor.ChartView3D.Menu.Convert.HoldToHold,Hold to Hold...
 ChartEditor.ChartView3D.Menu.Convert.SpikeHold,Spike Hold...
 ChartEditor.ChartView3D.Menu.Convert.SplitHold,Split Hold
 ChartEditor.ChartView3D.Menu.Convert.MergeHold,Merge Hold

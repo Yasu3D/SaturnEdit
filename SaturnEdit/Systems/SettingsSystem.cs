@@ -869,9 +869,6 @@ public class ShortcutSettings
         ["Editor.Insert.StopEffect"]       = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.StopEffect"),
         ["Editor.Insert.ReverseEffect"]    = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.ReverseEffect"),
         
-        ["Editor.Convert.NotesToHold"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.NotesToHold"),
-        ["Editor.Convert.HoldToNotes"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.HoldToNotes"),
-        ["Editor.Convert.HoldToHold"]  = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.HoldToHold"),
         ["Editor.Convert.SpikeHold"]   = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.SpikeHold"),
         ["Editor.Convert.SplitHold"]   = new(Key.H, false, true,  false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.SplitHold"),
         ["Editor.Convert.MergeHold"]   = new(Key.H, true,  false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.MergeHold"),

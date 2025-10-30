@@ -256,26 +256,6 @@
                     <Button.Flyout>
                         <MenuFlyout Placement="BottomEdgeAlignedLeft">
 
-                            <MenuItem Name="MenuItemNotesToHold">
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.NotesToHold}" />
-                                </MenuItem.Header>
-                            </MenuItem>
-
-                            <MenuItem Name="MenuItemHoldToNotes">
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.HoldToNotes}" />
-                                </MenuItem.Header>
-                            </MenuItem>
-
-                            <MenuItem Name="MenuItemHoldToHold">
-                                <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.HoldToHold}" />
-                                </MenuItem.Header>
-                            </MenuItem>
-
-                            <Separator />
-
                             <MenuItem Name="MenuItemSpikeHold">
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.SpikeHold}" />
