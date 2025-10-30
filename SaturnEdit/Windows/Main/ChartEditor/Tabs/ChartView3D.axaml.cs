@@ -35,6 +35,168 @@ public partial class ChartView3D : UserControl
     private readonly ClickDragHelper clickDragLeft = new();
     private readonly ClickDragHelper clickDragRight = new();
 
+#region Methods
+    public static void AddTempoChange()
+    {
+        
+    }
+
+    public static void AddMetreChange()
+    {
+        
+    }
+
+    public static void AddTutorialMarker()
+    {
+        
+    }
+
+    public static void AddSpeedChange()
+    {
+        
+    }
+
+    public static void AddVisibilityChange()
+    {
+        
+    }
+
+    public static void AddStopEffect()
+    {
+        
+    }
+
+    public static void AddReverseEffect()
+    {
+        
+    }
+
+    public static void MoveSelectionBeatForward()
+    {
+        
+    }
+
+    public static void MoveSelectionBeatBack()
+    {
+        
+    }
+
+    public static void MoveSelectionMeasureForward()
+    {
+        
+    }
+
+    public static void MoveSelectionMeasureBack()
+    {
+        
+    }
+
+    public static void MoveClockwise()
+    {
+        
+    }
+
+    public static void MoveCounterclockwise()
+    {
+        
+    }
+
+    public static void IncreaseSize()
+    {
+        
+    }
+
+    public static void DecreaseSize()
+    {
+        
+    }
+
+    public static void MoveClockwiseIterative()
+    {
+        
+    }
+
+    public static void MoveCounterclockwiseIterative()
+    {
+        
+    }
+
+    public static void IncreaseSizeIterative()
+    {
+        
+    }
+
+    public static void DecreaseSizeIterative()
+    {
+        
+    }
+
+    public static void MirrorHorizontal()
+    {
+        
+    }
+
+    public static void MirrorVertical()
+    {
+        
+    }
+
+    public static void MirrorCustom()
+    {
+        
+    }
+
+    public static void AdjustAxis()
+    {
+        
+    }
+
+    public static void FlipDirection()
+    {
+        
+    }
+
+    public static void ReverseSelection()
+    {
+        
+    }
+
+    public static void ScaleSelection()
+    {
+        
+    }
+
+    public static void OffsetChart()
+    {
+        
+    }
+
+    public static void ScaleChart()
+    {
+        
+    }
+
+    public static void MirrorChart()
+    {
+        
+    }
+
+    public static void SpikeHold()
+    {
+        
+    }
+
+    public static void CutHold()
+    {
+        
+    }
+
+    public static void JoinHold()
+    {
+        
+    }
+#endregion Methods
+    
 #region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs e)
     { 
@@ -527,7 +689,7 @@ public partial class ChartView3D : UserControl
     }
     
     
-    private void MenuItem_OnClick(object? sender, RoutedEventArgs e)
+    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
         if (sender is not MenuItem menuItem) return;
@@ -729,7 +891,7 @@ public partial class ChartView3D : UserControl
             SettingsSystem.RenderSettings.HideBookmarksDuringPlayback = menuItem.IsChecked;
         }
     }
-
+    
     private void NumericUpDownNoteSpeed_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
         if (blockEvents) return;
@@ -743,5 +905,70 @@ public partial class ChartView3D : UserControl
         if (sender is not ComboBox comboBox) return;
         SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)comboBox.SelectedIndex;
     }
+
+    
+    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => AddTempoChange();
+
+    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => AddMetreChange();
+
+    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => AddTutorialMarker();
+
+    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => AddSpeedChange();
+
+    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => AddVisibilityChange();
+
+    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => AddStopEffect();
+
+    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => AddReverseEffect();
+
+    private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => MoveSelectionBeatForward();
+
+    private void MenuItemMoveSelectionBeatBack_OnClick(object? sender, RoutedEventArgs e) => MoveSelectionBeatBack();
+
+    private void MenuItemMoveSelectionMeasureForward_OnClick(object? sender, RoutedEventArgs e) => MoveSelectionMeasureForward();
+
+    private void MenuItemMoveSelectionMeasureBack_OnClick(object? sender, RoutedEventArgs e) => MoveSelectionMeasureBack();
+
+    private void MenuItemMoveClockwise_OnClick(object? sender, RoutedEventArgs e) => MoveClockwise();
+
+    private void MenuItemMoveCounterclockwise_OnClick(object? sender, RoutedEventArgs e) => MoveCounterclockwise();
+
+    private void MenuItemIncreaseSize_OnClick(object? sender, RoutedEventArgs e) => IncreaseSize();
+
+    private void MenuItemDecreaseSize_OnClick(object? sender, RoutedEventArgs e) => DecreaseSize();
+
+    private void MenuItemMoveClockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => MoveClockwiseIterative();
+
+    private void MenuItemMoveCounterclockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => MoveCounterclockwiseIterative();
+
+    private void MenuItemIncreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => IncreaseSizeIterative();
+
+    private void MenuItemDecreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => DecreaseSizeIterative();
+
+    private void MenuItemMirrorHorizontal_OnClick(object? sender, RoutedEventArgs e) => MirrorHorizontal();
+
+    private void MenuItemMirrorVertical_OnClick(object? sender, RoutedEventArgs e) => MirrorVertical();
+
+    private void MenuItemMirrorCustom_OnClick(object? sender, RoutedEventArgs e) => MirrorCustom();
+
+    private void MenuItemAdjustAxis_OnClick(object? sender, RoutedEventArgs e) => AdjustAxis();
+
+    private void MenuItemFlipDirection_OnClick(object? sender, RoutedEventArgs e) => FlipDirection();
+
+    private void MenuItemReverseSelection_OnClick(object? sender, RoutedEventArgs e) => ReverseSelection();
+
+    private void MenuItemScaleSelection_OnClick(object? sender, RoutedEventArgs e) => ScaleSelection();
+
+    private void MenuItemOffsetChart_OnClick(object? sender, RoutedEventArgs e) => OffsetChart();
+
+    private void MenuItemScaleChart_OnClick(object? sender, RoutedEventArgs e) => ScaleChart();
+
+    private void MenuItemMirrorChart_OnClick(object? sender, RoutedEventArgs e) => MirrorChart();
+
+    private void MenuItemSpikeHold_OnClick(object? sender, RoutedEventArgs e) => SpikeHold();
+
+    private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => CutHold();
+
+    private void MenuItemJoinHold_OnClick(object? sender, RoutedEventArgs e) => JoinHold();
 #endregion UI Event Delegates
 }

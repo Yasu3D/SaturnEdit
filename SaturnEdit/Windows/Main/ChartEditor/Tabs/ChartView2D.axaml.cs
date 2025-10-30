@@ -354,5 +354,69 @@ public partial class ChartView2D : UserControl
             SettingsSystem.RenderSettings.HideBookmarksDuringPlayback = menuItem.IsChecked;
         }
     }
+
+    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddTempoChange();
+
+    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddMetreChange();
+
+    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddTutorialMarker();
+
+    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddSpeedChange();
+
+    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddVisibilityChange();
+
+    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddStopEffect();
+
+    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AddReverseEffect();
+
+    private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveSelectionBeatForward();
+
+    private void MenuItemMoveSelectionBeatBack_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveSelectionBeatBack();
+
+    private void MenuItemMoveSelectionMeasureForward_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveSelectionMeasureForward();
+
+    private void MenuItemMoveSelectionMeasureBack_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveSelectionMeasureBack();
+
+    private void MenuItemMoveClockwise_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveClockwise();
+
+    private void MenuItemMoveCounterclockwise_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveCounterclockwise();
+
+    private void MenuItemIncreaseSize_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.IncreaseSize();
+
+    private void MenuItemDecreaseSize_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.DecreaseSize();
+
+    private void MenuItemMoveClockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveClockwiseIterative();
+
+    private void MenuItemMoveCounterclockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveCounterclockwiseIterative();
+
+    private void MenuItemIncreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.IncreaseSizeIterative();
+
+    private void MenuItemDecreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.DecreaseSizeIterative();
+
+    private void MenuItemMirrorHorizontal_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MirrorHorizontal();
+
+    private void MenuItemMirrorVertical_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MirrorVertical();
+
+    private void MenuItemMirrorCustom_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MirrorCustom();
+
+    private void MenuItemAdjustAxis_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AdjustAxis();
+
+    private void MenuItemFlipDirection_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.FlipDirection();
+
+    private void MenuItemReverseSelection_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.ReverseSelection();
+
+    private void MenuItemScaleSelection_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.ScaleSelection();
+
+    private void MenuItemOffsetChart_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.OffsetChart();
+
+    private void MenuItemScaleChart_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.ScaleChart();
+
+    private void MenuItemMirrorChart_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MirrorChart();
+
+    private void MenuItemSpikeHold_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.SpikeHold();
+
+    private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.CutHold();
+
+    private void MenuItemJoinHold_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.JoinHold();
 #endregion UI Event Delegates
 }

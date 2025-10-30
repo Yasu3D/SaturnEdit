@@ -6,8 +6,8 @@
              xmlns:fixed="clr-namespace:SaturnEdit.Windows.Main.ChartEditor.Fixed"
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
+             d:DesignWidth="1400"
+             d:DesignHeight="900"
              x:Class="SaturnEdit.Windows.ChartEditor.ChartEditorView"
              KeyDown="Control_OnKeyDown">
     <Grid RowDefinitions="40,1,*,79">

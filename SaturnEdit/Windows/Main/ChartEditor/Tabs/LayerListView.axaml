@@ -200,18 +200,6 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Name="MenuItemAddReverseEffect"
-                                          Click="MenuItemAddReverseEffect_OnClick">
-                                    <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.ReverseEffect}"
-                                                   Foreground="{DynamicResource ForegroundPrimary}" />
-                                    </MenuItem.Header>
-                                    <MenuItem.Icon>
-                                        <icon:FluentIcon Icon="Rewind"
-                                                         Foreground="{DynamicResource ForegroundPrimary}" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-
                                 <MenuItem Name="MenuItemAddStopEffect"
                                           Click="MenuItemAddStopEffect_OnClick">
                                     <MenuItem.Header>
@@ -220,6 +208,18 @@
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
                                         <icon:FluentIcon Icon="Pause"
+                                                         Foreground="{DynamicResource ForegroundPrimary}" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
+                                <MenuItem Name="MenuItemAddReverseEffect"
+                                          Click="MenuItemAddReverseEffect_OnClick">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.ReverseEffect}"
+                                                   Foreground="{DynamicResource ForegroundPrimary}" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <icon:FluentIcon Icon="Rewind"
                                                          Foreground="{DynamicResource ForegroundPrimary}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
