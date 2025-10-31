@@ -1,0 +1,116 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:SaturnEdit.Controls"
+        mc:Ignorable="d"
+        d:DesignWidth="320"
+        d:DesignHeight="456"
+        Width="320"
+        Height="456"
+        x:Class="SaturnEdit.Windows.Dialogs.AdjustMirrorAxis.AdjustMirrorAxisWindow"
+        Title="Adjust Mirror Axis"
+        CanResize="False">
+    <Panel>
+        <controls:WindowChrome Name="WindowChrome"
+                               ZIndex="99"
+                               Classes="ShowCloseOnly"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Top" />
+
+        <Grid RowDefinitions="41,*,51">
+            <!-- Header -->
+            <Grid Grid.Row="0">
+                <Border Background="{DynamicResource BackgroundPrimary}"
+                        BorderThickness="0,0,0,1"
+                        BorderBrush="{DynamicResource SeparatorSecondary}"
+                        IsHitTestVisible="False">
+                    <TextBlock Name="TextBlockWindowTitle"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Margin="10,0"
+                               Text="{DynamicResource AdjustMirrorAxis.Window.Title}" />
+                </Border>
+            </Grid>
+
+            <!-- Content -->
+            <Border Grid.Row="1"
+                    Background="{DynamicResource BackgroundPrimary}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+                <StackPanel Margin="10">
+                    <controls:SkiaSharpCanvas
+                        Height="300"
+                        Width="300"
+                        RenderAction="RenderCanvas_OnRenderAction"/>
+
+                    <Panel Margin="0,10,0,0">
+                        <Rectangle Width="1"
+                                   Height="25"
+                                   Margin="77.5,0,0,0"
+                                   HorizontalAlignment="Left"
+                                   Fill="{DynamicResource SeparatorPrimary}" />
+                        
+                        <Rectangle Width="1"
+                                   Height="25"
+                                   Margin="149.5,0,0,0"
+                                   HorizontalAlignment="Left"
+                                   Fill="{DynamicResource SeparatorPrimary}" />
+                        
+                        <Rectangle Width="1"
+                                   Height="25"
+                                   Margin="222,0,0,0"
+                                   HorizontalAlignment="Left"
+                                   Fill="{DynamicResource SeparatorPrimary}" />
+                        
+                        <TextBlock Name="TextBlockAxis"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
+                                   Margin="10,0"
+                                   FontSize="15"
+                                   FontFamily="Consolas,Cascadia Code,Monospace"
+                                   Text="30" />
+                        <Slider Name="SliderAxis"
+                                Classes="Wide"
+                                Minimum="0"
+                                Maximum="60"
+                                TickFrequency="1"
+                                IsSnapToTickEnabled="True"
+                                ValueChanged="SliderAxis_OnValueChanged" />
+                    </Panel>
+                </StackPanel>
+            </Border>
+
+            <!-- Footer -->
+            <Border Grid.Row="2"
+                    Background="{DynamicResource BackgroundPrimary}"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="{DynamicResource SeparatorPrimary}">
+                <Panel>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Button Name="ButtonOk"
+                                Classes="Themed AccentFull"
+                                Height="28"
+                                Margin="11,11,9,11"
+                                Width="80"
+                                Click="ButtonOk_OnClick">
+                            <TextBlock Name="TextBlockButtonPrimary"
+                                       Text="{DynamicResource Generic.Ok}" />
+                        </Button>
+                        
+                        <Button Name="ButtonCancel"
+                                Classes="Themed Outlined"
+                                Height="28"
+                                Margin="9,11,11,11"
+                                Width="80"
+                                Click="ButtonCancel_OnClick">
+                            <TextBlock Name="TextBlockButtonTertiary"
+                                       Text="{DynamicResource Generic.Cancel}" />
+                        </Button>
+                    </StackPanel>
+                </Panel>
+            </Border>
+        </Grid>
+    </Panel>
+</Window>

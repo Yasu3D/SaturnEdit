@@ -5,7 +5,6 @@ using System.Linq;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnData.Notation.Serialization;
-using SaturnEdit.UndoRedo.EntryOperations;
 
 namespace SaturnEdit.Systems;
 

@@ -518,6 +518,7 @@
     <system:String x:Key="SelectByCriteria.SizeVariance">Size Variance</system:String>
     <system:String x:Key="SelectByCriteria.PositionVariance">Position Variance</system:String>
     <system:String x:Key="SelectByCriteria.FilterSelection">Filter Selection</system:String>
+    <system:String x:Key="AdjustMirrorAxis.Window.Title">Adjust Mirror Axis</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Title">Save Chart</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Header">Do you want to save changes to your chart before closing?</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Paragraph">Your changes will be lost if you don't save them.</system:String>

@@ -515,6 +515,7 @@ SelectByCriteria.SelectIfObjectIs,Select if object is...
 SelectByCriteria.SizeVariance,Size Variance
 SelectByCriteria.PositionVariance,Position Variance
 SelectByCriteria.FilterSelection,Filter Selection
+AdjustMirrorAxis.Window.Title,Adjust Mirror Axis
 ModalDialog.SavePrompt.Title,Save Chart
 ModalDialog.SavePrompt.Header,Do you want to save changes to your chart before closing?
 ModalDialog.SavePrompt.Paragraph,Your changes will be lost if you don't save them.

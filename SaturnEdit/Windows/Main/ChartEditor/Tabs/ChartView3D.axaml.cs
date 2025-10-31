@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -8,21 +7,16 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
-using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
-using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
-using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.PositionableOperations;
-using SaturnEdit.UndoRedo.TimeableOperations;
 using SaturnEdit.Utilities;
+using SaturnEdit.Windows.Dialogs.AdjustMirrorAxis;
+using SaturnEdit.Windows.Dialogs.ModalDialog;
 using SaturnView;
 using SkiaSharp;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
-// TODO: Finish transform and convert implementations
-// TODO: Move chart edit code to static class
 public partial class ChartView3D : UserControl
 {
     public ChartView3D()
@@ -48,9 +42,17 @@ public partial class ChartView3D : UserControl
     private readonly ClickDragHelper clickDragRight = new();
    
 #region Methods
-    private void AdjustAxis()
+    private async void AdjustAxis()
     {
-        // TODO.
+        if (VisualRoot is not Window window) return;
+            
+        AdjustMirrorAxisWindow adjustMirrorAxisWindow = new();
+        await adjustMirrorAxisWindow.ShowDialog(window);
+
+        if (adjustMirrorAxisWindow.Result == ModalDialogResult.Primary)
+        {
+            EditorSystem.MirrorAxis = adjustMirrorAxisWindow.Axis;
+        }
     }
 
     private void ScaleSelection()
@@ -385,7 +387,7 @@ public partial class ChartView3D : UserControl
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorCustom"])) 
         {
-            
+            EditorSystem.Transform_MirrorCustom();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.AdjustAxis"])) 

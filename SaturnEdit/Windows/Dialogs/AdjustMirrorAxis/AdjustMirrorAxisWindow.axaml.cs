@@ -1,0 +1,141 @@
+using System;
+using System.Globalization;
+using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
+using Avalonia.Media;
+using SaturnEdit.Systems;
+using SaturnEdit.Windows.Dialogs.ModalDialog;
+using SaturnView;
+using SkiaSharp;
+
+namespace SaturnEdit.Windows.Dialogs.AdjustMirrorAxis;
+
+public partial class AdjustMirrorAxisWindow : Window
+{
+    public AdjustMirrorAxisWindow()
+    {
+        InitializeComponent();
+        
+        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
+        Control_OnActualThemeVariantChanged(null, EventArgs.Empty);
+        
+        InitializeDialog();
+    }
+
+    public int Axis { get; private set; } = 0;
+    public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
+
+    private bool blockEvents = false;
+    
+    private SKColor backgroundColor = new(0xFF000000);
+    
+    private readonly SKPaint linePaint = new()
+    {
+        Color = 0xFFFFFFFF,
+        StrokeWidth = 1.5f,
+        IsAntialias = true,
+        Style = SKPaintStyle.Stroke,
+    };
+
+    private readonly SKPaint axisPaint = new()
+    {
+        Color = 0xFFFF0000,
+        StrokeWidth = 3,
+        IsAntialias = true,
+        Style = SKPaintStyle.Stroke,
+    };
+
+#region Methods
+    private void InitializeDialog()
+    {
+        blockEvents = true;
+
+        Axis = EditorSystem.MirrorAxis;
+
+        SliderAxis.Value = Axis;
+        TextBlockAxis.Text = Axis.ToString(CultureInfo.InvariantCulture);
+        
+        blockEvents = false;
+    }
+#endregion Methods
+    
+#region UI Event Handlers
+    private async void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
+    {
+        try
+        {
+            await Task.Delay(1);
+
+            if (Application.Current == null) return;
+            if (!Application.Current.TryGetResource("BackgroundPrimary", Application.Current.ActualThemeVariant, out object? resource)) return;
+            if (resource is not SolidColorBrush brush) return;
+        
+            backgroundColor = new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
+            
+            if (!Application.Current.TryGetResource("ForegroundSecondary", Application.Current.ActualThemeVariant, out resource)) return;
+            if (resource is not SolidColorBrush brush2) return;
+            
+            linePaint.Color = new(brush2.Color.R, brush2.Color.G, brush2.Color.B, brush2.Color.A);
+            
+            if (!Application.Current.TryGetResource("ButtonAccent", Application.Current.ActualThemeVariant, out resource)) return;
+            if (resource is not SolidColorBrush brush3) return;
+            
+            axisPaint.Color = new(brush3.Color.R, brush3.Color.G, brush3.Color.B, brush3.Color.A);
+        }
+        catch (Exception)
+        {
+            backgroundColor = new(0xFFFF00FF);
+            linePaint.Color = new(0xFFFF00FF);
+            axisPaint.Color = new(0xFFFF00FF);
+        }
+    }
+    
+    private void RenderCanvas_OnRenderAction(SKCanvas canvas)
+    {
+        canvas.Clear(backgroundColor);
+        canvas.DrawCircle(150, 150, 140, linePaint);
+
+        for (int i = 0; i < 60; i++)
+        {
+            float angle = i * -6;
+            float radius = i % 5 == 0 ? 120 : 135;
+            
+            SKPoint p0 = RenderUtils.PointOnArc(150, 150, 145, angle);
+            SKPoint p1 = RenderUtils.PointOnArc(150, 150, radius, angle);
+            
+            canvas.DrawLine(p0, p1, linePaint);
+        }
+
+        float axisAngle = Axis * -3;
+        
+        SKPoint axis0 = RenderUtils.PointOnArc(150, 150, 150, axisAngle);
+        SKPoint axis1 = RenderUtils.PointOnArc(150, 150, 150, axisAngle + 180);
+        
+        canvas.DrawLine(axis0, axis1, axisPaint);
+    }
+    
+    private void SliderAxis_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (SliderAxis == null) return;
+
+        Axis = (int)SliderAxis.Value;
+        TextBlockAxis.Text = Axis.ToString(CultureInfo.InvariantCulture);
+    }
+    
+    private void ButtonOk_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Result = ModalDialogResult.Primary;
+        Close();
+    }
+    
+    private void ButtonCancel_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Result = ModalDialogResult.Cancel;
+        Close();
+    }
+#endregion UI Event Handlers
+}
