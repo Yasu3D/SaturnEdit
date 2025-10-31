@@ -166,11 +166,43 @@ public partial class EventListView : UserControl
     private void ListBoxEvents_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
+        if (ListBoxEvents?.SelectedItems == null) return;
+
+        List<IOperation> operations = [];
+        
+        foreach (object? obj in e.AddedItems)
+        {
+            if (obj is not EventListItem item) continue;
+            if (item.Event == null) continue;
+
+            operations.Add(new SelectionAddOperation(item.Event, SelectionSystem.LastSelectedObject));
+        }
+
+        foreach (object? obj in e.RemovedItems)
+        {
+            if (obj is not EventListItem item) continue;
+            if (item.Event == null) continue;
+
+            operations.Add(new SelectionRemoveOperation(item.Event, SelectionSystem.LastSelectedObject));
+        }
+
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     private void ListBoxEvents_OnDoubleTapped(object? sender, TappedEventArgs e)
     {
         if (blockEvents) return;
+        if (e.KeyModifiers.HasFlag(KeyModifiers.Control)) return;
+        if (e.KeyModifiers.HasFlag(KeyModifiers.Shift)) return;
+        if (SelectionSystem.SelectedLayer == null) return;
+        
+        foreach (Event @event in ChartSystem.Chart.Events)
+        {
+            if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
+            
+            TimeSystem.SeekTime(@event.Timestamp.Time, TimeSystem.Division);
+            return;
+        }
     }
 
     private void ListBoxEvents_OnKeyDown(object? sender, KeyEventArgs e)
