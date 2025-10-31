@@ -181,6 +181,8 @@ public static class EditorSystem
             int oldFullTick = obj.Timestamp.FullTick;
             int newFullTick = oldFullTick + TimeSystem.DivisionInterval;
 
+            newFullTick = Math.Max(0, newFullTick);
+            
             operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
         }
     }
@@ -227,6 +229,8 @@ public static class EditorSystem
             int oldFullTick = obj.Timestamp.FullTick;
             int newFullTick = oldFullTick - TimeSystem.DivisionInterval;
 
+            newFullTick = Math.Max(0, newFullTick);
+            
             operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
         }
     }
@@ -273,6 +277,8 @@ public static class EditorSystem
             int oldFullTick = obj.Timestamp.FullTick;
             int newFullTick = oldFullTick + 1920;
 
+            newFullTick = Math.Max(0, newFullTick);
+            
             operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
         }
     }
@@ -319,6 +325,8 @@ public static class EditorSystem
             int oldFullTick = obj.Timestamp.FullTick;
             int newFullTick = oldFullTick - 1920;
 
+            newFullTick = Math.Max(0, newFullTick);
+            
             operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
         }
     }
@@ -896,7 +904,7 @@ public static class EditorSystem
             }
         }
         
-        if (operations.Count == 0) return;
+        if (operations.Count < 2) return;
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -905,10 +913,44 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
-
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        List<ITimeable> objects = SelectionSystem.OrderedSelectedObjects;
+        
+        int min = objects[0].Timestamp.FullTick;
+        
+        foreach (ITimeable obj in objects)
         {
-            
+            if (obj is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    int newFullTick = (int)Math.Round(min + (point.Timestamp.FullTick - min) * scale);
+                    operations.Add(new TimeableEditOperation(point, point.Timestamp.FullTick, newFullTick));
+                }
+            }
+            else if (obj is StopEffectEvent stopEffectEvent)
+            {
+                int newFullTick = (int)Math.Round(min + (stopEffectEvent.SubEvents[0].Timestamp.FullTick - min) * scale);
+                operations.Add(new TimeableEditOperation(stopEffectEvent.SubEvents[0], stopEffectEvent.SubEvents[0].Timestamp.FullTick, newFullTick));
+                
+                newFullTick = (int)Math.Round(min + (stopEffectEvent.SubEvents[1].Timestamp.FullTick - min) * scale);
+                operations.Add(new TimeableEditOperation(stopEffectEvent.SubEvents[1], stopEffectEvent.SubEvents[1].Timestamp.FullTick, newFullTick));
+            }
+            else if (obj is ReverseEffectEvent reverseEffectEvent)
+            {
+                int newFullTick = (int)Math.Round(min + (reverseEffectEvent.SubEvents[0].Timestamp.FullTick - min) * scale);
+                operations.Add(new TimeableEditOperation(reverseEffectEvent.SubEvents[0], reverseEffectEvent.SubEvents[0].Timestamp.FullTick, newFullTick));
+                
+                newFullTick = (int)Math.Round(min + (reverseEffectEvent.SubEvents[1].Timestamp.FullTick - min) * scale);
+                operations.Add(new TimeableEditOperation(reverseEffectEvent.SubEvents[1], reverseEffectEvent.SubEvents[1].Timestamp.FullTick, newFullTick));
+                
+                newFullTick = (int)Math.Round(min + (reverseEffectEvent.SubEvents[2].Timestamp.FullTick - min) * scale);
+                operations.Add(new TimeableEditOperation(reverseEffectEvent.SubEvents[2], reverseEffectEvent.SubEvents[2].Timestamp.FullTick, newFullTick));
+            }
+            else
+            {
+                int newFullTick = (int)Math.Round(min + (obj.Timestamp.FullTick - min) * scale);
+                operations.Add(new TimeableEditOperation(obj, obj.Timestamp.FullTick, newFullTick));
+            }
         }
         
         if (operations.Count == 0) return;
@@ -917,14 +959,263 @@ public static class EditorSystem
 
     public static void Transform_OffsetChart(int offset)
     {
+        List<IOperation> operations = [];
+
+        foreach (Event @event in ChartSystem.Chart.Events)
+        {
+            if (@event is TempoChangeEvent && @event.Timestamp.FullTick == 0) continue;
+            if (@event is MetreChangeEvent && @event.Timestamp.FullTick == 0) continue;
+            
+            addOperation(@event);
+        }
+
+        foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+        {
+            addOperation(laneToggle);
+        }
+
+        foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+        {
+            addOperation(bookmark);
+        }
+
+        foreach (Layer layer in ChartSystem.Chart.Layers)
+        {
+            foreach (Event @event in layer.Events)
+            {
+                if (@event is StopEffectEvent stopEffectEvent)
+                {
+                    addOperation(stopEffectEvent.SubEvents[0]);
+                    addOperation(stopEffectEvent.SubEvents[1]);
+                }
+                else if (@event is ReverseEffectEvent reverseEffectEvent)
+                {
+                    addOperation(reverseEffectEvent.SubEvents[0]);
+                    addOperation(reverseEffectEvent.SubEvents[1]);
+                    addOperation(reverseEffectEvent.SubEvents[2]);
+                }
+                else
+                {
+                    addOperation(@event);
+                }
+            }
+
+            foreach (Note note in layer.Notes)
+            {
+                if (note is HoldNote holdNote)
+                {
+                    foreach (HoldPointNote point in holdNote.Points)
+                    {
+                        addOperation(point);
+                    }
+                }
+                else
+                {
+                    addOperation(note);
+                }
+            }
+        }
+        
+        if (operations.Count == 0) return;
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+
+        return;
+
+        void addOperation(ITimeable obj)
+        {
+            int oldFullTick = obj.Timestamp.FullTick;
+            int newFullTick = oldFullTick + offset;
+
+            newFullTick = Math.Max(0, newFullTick);
+            
+            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+        }
     }
 
     public static void Transform_ScaleChart(double scale)
     {
+        List<IOperation> operations = [];
+
+        foreach (Event @event in ChartSystem.Chart.Events)
+        {
+            addOperation(@event);
+        }
+
+        foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+        {
+            addOperation(laneToggle);
+        }
+
+        foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+        {
+            addOperation(bookmark);
+        }
+
+        foreach (Layer layer in ChartSystem.Chart.Layers)
+        {
+            foreach (Event @event in layer.Events)
+            {
+                if (@event is StopEffectEvent stopEffectEvent)
+                {
+                    addOperation(stopEffectEvent.SubEvents[0]);
+                    addOperation(stopEffectEvent.SubEvents[1]);
+                }
+                else if (@event is ReverseEffectEvent reverseEffectEvent)
+                {
+                    addOperation(reverseEffectEvent.SubEvents[0]);
+                    addOperation(reverseEffectEvent.SubEvents[1]);
+                    addOperation(reverseEffectEvent.SubEvents[2]);
+                }
+                else
+                {
+                    addOperation(@event);
+                }
+            }
+
+            foreach (Note note in layer.Notes)
+            {
+                if (note is HoldNote holdNote)
+                {
+                    foreach (HoldPointNote point in holdNote.Points)
+                    {
+                        addOperation(point);
+                    }
+                }
+                else
+                {
+                    addOperation(note);
+                }
+            }
+        }
+        
+        if (operations.Count == 0) return;
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+
+        return;
+
+        void addOperation(ITimeable obj)
+        {
+            int oldFullTick = obj.Timestamp.FullTick;
+            int newFullTick = (int)Math.Round(oldFullTick * scale);
+
+            newFullTick = Math.Max(0, newFullTick);
+            
+            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+        }
     }
 
     public static void Transform_MirrorChart(int axis)
     {
+        List<IOperation> operations = [];
+                
+        foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+        {
+            if (laneToggle is not IPositionable positionable) continue;
+            
+            addOperation(positionable);
+        }
+
+        foreach (Layer layer in ChartSystem.Chart.Layers)
+        foreach (Note note in layer.Notes)
+        {
+            if (note is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point);
+                }
+            }
+            else if (note is IPositionable positionable)
+            {
+                addOperation(positionable);
+            }
+        }
+        
+        if (operations.Count == 0) return;
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+
+        return;
+
+        void addOperation(IPositionable positionable)
+        {
+            if (positionable is SlideClockwiseNote sourceClw)
+            {
+                Layer? layer = ChartSystem.Chart.ParentLayer(sourceClw);
+                if (layer == null) return;
+
+                int index = layer.Notes.IndexOf(sourceClw);
+                int newPosition = axis - sourceClw.Size - sourceClw.Position;
+                
+                SlideCounterclockwiseNote newNote = new
+                (
+                    timestamp:     new(sourceClw.Timestamp.FullTick),
+                    position:      newPosition,
+                    size:          sourceClw.Size,
+                    bonusType:     sourceClw.BonusType,
+                    judgementType: sourceClw.JudgementType
+                );
+                
+                operations.Add(new NoteRemoveOperation(layer, sourceClw, index));
+                operations.Add(new NoteAddOperation(layer, newNote, index));
+
+                if (SelectionSystem.SelectedObjects.Contains(sourceClw))
+                {
+                    operations.Add(new SelectionRemoveOperation(sourceClw, SelectionSystem.LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(newNote, SelectionSystem.LastSelectedObject));
+                }
+            }
+            else if (positionable is SlideCounterclockwiseNote sourceCcw)
+            {
+                Layer? layer = ChartSystem.Chart.ParentLayer(sourceCcw);
+                if (layer == null) return;
+
+                int index = layer.Notes.IndexOf(sourceCcw);
+                int newPosition = axis - sourceCcw.Size - sourceCcw.Position;
+                
+                SlideClockwiseNote newNote = new
+                (
+                    timestamp:     new(sourceCcw.Timestamp.FullTick),
+                    position:      newPosition,
+                    size:          sourceCcw.Size,
+                    bonusType:     sourceCcw.BonusType,
+                    judgementType: sourceCcw.JudgementType
+                );
+                
+                operations.Add(new NoteRemoveOperation(layer, sourceCcw, index));
+                operations.Add(new NoteAddOperation(layer, newNote, index));
+
+                if (SelectionSystem.SelectedObjects.Contains(sourceCcw))
+                {
+                    operations.Add(new SelectionRemoveOperation(sourceCcw, SelectionSystem.LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(newNote, SelectionSystem.LastSelectedObject));
+                }
+            }
+            else if (positionable is HoldNote sourceHoldNote)
+            {
+                foreach (HoldPointNote holdPointNote in sourceHoldNote.Points)
+                {
+                    int newPosition = axis - holdPointNote.Size - holdPointNote.Position;
+                    operations.Add(new PositionableEditOperation(holdPointNote, holdPointNote.Position, newPosition, holdPointNote.Size, holdPointNote.Size));
+                }
+            }
+            else
+            {
+                int newPosition = axis - positionable.Size - positionable.Position;
+                operations.Add(new PositionableEditOperation(positionable, positionable.Position, newPosition, positionable.Size, positionable.Size));
+            }
+
+            if (positionable is ILaneToggle laneToggle)
+            {
+                if (laneToggle.Direction == LaneSweepDirection.Clockwise)
+                {
+                    operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, LaneSweepDirection.Counterclockwise));
+                }
+                else if (laneToggle.Direction == LaneSweepDirection.Counterclockwise)
+                {
+                    operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, LaneSweepDirection.Clockwise));
+                }
+            }
+        }
     }
 
     

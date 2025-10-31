@@ -281,8 +281,18 @@ public partial class ChartPropertiesView : UserControl
         bool oldValue = ChartSystem.Entry.AutoBpmMessage;
         bool newValue = ToggleButtonAutoBpmMessage.IsChecked ?? false;
         if (oldValue == newValue) return;
-        
-        UndoRedoSystem.Push(new EntryAutoBpmMessageEditOperation(oldValue, newValue));
+
+        if (newValue == true)
+        {
+            EntryAutoBpmMessageEditOperation op0 = new(oldValue, newValue);
+            EntryBpmMessageEditOperation op1 = new(ChartSystem.Entry.BpmMessage, ChartSystem.Chart.GetAutoBpmMessage());
+            
+            UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        }
+        else
+        {
+            UndoRedoSystem.Push(new EntryAutoBpmMessageEditOperation(oldValue, newValue));
+        }
     }
 
     private void TextBoxRevision_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -444,8 +454,18 @@ public partial class ChartPropertiesView : UserControl
         bool oldValue = ChartSystem.Entry.AutoChartEnd;
         bool newValue = ToggleButtonAutoChartEnd.IsChecked ?? false;
         if (oldValue == newValue) return;
-        
-        UndoRedoSystem.Push(new EntryAutoChartEndEditOperation(oldValue, newValue));
+
+        if (newValue == true)
+        {
+            EntryAutoChartEndEditOperation op0 = new(oldValue, newValue);
+            EntryChartEndEditOperation op1 = new(ChartSystem.Entry.ChartEnd, ChartSystem.Chart.FindIdealChartEnd((float?)AudioSystem.AudioChannelAudio?.Length ?? 0));
+            
+            UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        }
+        else
+        {
+            UndoRedoSystem.Push(new EntryAutoChartEndEditOperation(oldValue, newValue));
+        }
     }
 
     private void ButtonPlayPreview_OnClick(object? sender, RoutedEventArgs e)

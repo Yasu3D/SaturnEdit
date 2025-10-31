@@ -179,16 +179,10 @@ public static class ChartSystem
         Timestamp oldChartEnd = Entry.ChartEnd;
         
         Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
-
-        if (Entry.AutoChartEnd)
-        {
-            // This is kinda awkward, but i cornered myself into this solution. Ah well.
-            UndoRedoSystem.Append(new EntryChartEndEditOperation(oldChartEnd, Entry.ChartEnd));
-        }
         
         if (Entry.AutoBpmMessage)
         {
-            UndoRedoSystem.Append(new EntryBpmMessageEditOperation(Entry.BpmMessage, Chart.GetAutoBpmMessage()));
+            Entry.BpmMessage = Chart.GetAutoBpmMessage();
         }
         
         IsSaved = false;
