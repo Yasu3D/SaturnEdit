@@ -368,10 +368,10 @@
                     <Button.Flyout>
                         <MenuFlyout Placement="BottomEdgeAlignedLeft">
 
-                            <MenuItem Name="MenuItemSpikeHold"
-                                      Click="MenuItemSpikeHold_OnClick">
+                            <MenuItem Name="MenuItemZigZagHold"
+                                      Click="MenuItemZigZagHold_OnClick">
                                 <MenuItem.Header>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.SpikeHold}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.ZigZagHold}" />
                                 </MenuItem.Header>
                                 <MenuItem.Icon>
                                     <icon:FluentIcon Icon="HapticStrong" />

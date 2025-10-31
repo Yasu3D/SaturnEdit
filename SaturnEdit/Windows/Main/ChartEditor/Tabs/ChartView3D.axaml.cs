@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -6,12 +7,17 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
+using FluentIcons.Common;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
+using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
-using SaturnEdit.Windows.Dialogs.AdjustMirrorAxis;
+using SaturnEdit.Windows.Dialogs.ChooseMirrorAxis;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
+using SaturnEdit.Windows.Dialogs.SelectOffset;
+using SaturnEdit.Windows.Dialogs.SelectScale;
+using SaturnEdit.Windows.Dialogs.ZigZagHoldArgs;
 using SaturnView;
 using SkiaSharp;
 
@@ -46,38 +52,95 @@ public partial class ChartView3D : UserControl
     {
         if (VisualRoot is not Window window) return;
             
-        AdjustMirrorAxisWindow adjustMirrorAxisWindow = new();
-        await adjustMirrorAxisWindow.ShowDialog(window);
+        SelectMirrorAxisWindow selectMirrorAxisWindow = new();
+        await selectMirrorAxisWindow.ShowDialog(window);
 
-        if (adjustMirrorAxisWindow.Result == ModalDialogResult.Primary)
+        if (selectMirrorAxisWindow.Result == ModalDialogResult.Primary)
         {
-            EditorSystem.MirrorAxis = adjustMirrorAxisWindow.Axis;
+            EditorSystem.MirrorAxis = selectMirrorAxisWindow.Axis;
         }
     }
 
-    private void ScaleSelection()
+    private async void ScaleSelection()
     {
-        // TODO.
+        if (VisualRoot is not Window window) return;
+            
+        SelectScaleWindow selectScaleWindow = new();
+        await selectScaleWindow.ShowDialog(window);
+
+        if (selectScaleWindow.Result == ModalDialogResult.Primary)
+        {
+            EditorSystem.Transform_ScaleSelection(selectScaleWindow.Scale);
+        }
     }
 
-    private void OffsetChart()
+    private async void OffsetChart()
     {
-        // TODO.
+        if (VisualRoot is not Window window) return;
+            
+        SelectOffsetWindow selectOffsetWindow = new();
+        await selectOffsetWindow.ShowDialog(window);
+
+        if (selectOffsetWindow.Result == ModalDialogResult.Primary)
+        {
+            EditorSystem.Transform_OffsetChart(selectOffsetWindow.Offset);
+        }
     }
 
-    private void ScaleChart()
+    private async void ScaleChart()
     {
-        // TODO.
+        if (VisualRoot is not Window window) return;
+            
+        SelectScaleWindow selectScaleWindow = new();
+        await selectScaleWindow.ShowDialog(window);
+
+        if (selectScaleWindow.Result == ModalDialogResult.Primary)
+        {
+            EditorSystem.Transform_ScaleChart(selectScaleWindow.Scale);
+        }
     }
 
-    private void MirrorChart()
+    private async void MirrorChart()
     {
-        // TODO.
+        if (VisualRoot is not Window window) return;
+            
+        SelectMirrorAxisWindow selectMirrorAxisWindow = new();
+        await selectMirrorAxisWindow.ShowDialog(window);
+
+        if (selectMirrorAxisWindow.Result == ModalDialogResult.Primary)
+        {
+            EditorSystem.Transform_MirrorChart(selectMirrorAxisWindow.Axis);
+        }
     }
     
-    private void SpikeHold()
+    private async void ZigZagHold()
     {
-        // TODO.
+        if (VisualRoot is not Window window) return;
+        
+        if (!SelectionSystem.SelectedObjects.Any(x => x is HoldNote))
+        {
+            ModalDialogWindow modalDialog = new()
+            {
+                DialogIcon = Icon.Warning,
+                WindowTitleKey = "ModalDialog.ZigZagHoldWarning.Title",
+                HeaderKey = "ModalDialog.ZigZagHoldWarning.Header",
+                ParagraphKey = "ModalDialog.ZigZagHoldWarning.Paragraph",
+                ButtonPrimaryKey = "Generic.Ok",
+            };
+            
+            modalDialog.InitializeDialog();
+            await modalDialog.ShowDialog(window);
+            
+            return;
+        }
+            
+        ZigZagHoldArgsWindow zigZagHoldArgsWindow = new();
+        await zigZagHoldArgsWindow.ShowDialog(window);
+
+        if (zigZagHoldArgsWindow.Result == ModalDialogResult.Primary)
+        {
+            EditorSystem.Convert_ZigZagHold();
+        }
     }
 #endregion Methods
     
@@ -159,7 +222,7 @@ public partial class ChartView3D : UserControl
             MenuItemOffsetChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.OffsetChart"].ToKeyGesture();
             MenuItemScaleChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleChart"].ToKeyGesture();
             MenuItemMirrorChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorChart"].ToKeyGesture();
-            MenuItemSpikeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"].ToKeyGesture();
+            MenuItemZigZagHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.ZigZagHold"].ToKeyGesture();
             MenuItemCutHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.CutHold"].ToKeyGesture();
             MenuItemJoinHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.JoinHold"].ToKeyGesture();
 
@@ -426,9 +489,9 @@ public partial class ChartView3D : UserControl
             e.Handled = true;
         }
             
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"]))
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.ZigZagHold"]))
         {
-            EditorSystem.Convert_SpikeHold();
+            EditorSystem.Convert_ZigZagHold();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.CutHold"]))
@@ -1188,7 +1251,7 @@ public partial class ChartView3D : UserControl
 
     private void MenuItemMirrorChart_OnClick(object? sender, RoutedEventArgs e) => MirrorChart();
 
-    private void MenuItemSpikeHold_OnClick(object? sender, RoutedEventArgs e) => SpikeHold();
+    private void MenuItemZigZagHold_OnClick(object? sender, RoutedEventArgs e) => ZigZagHold();
 
     private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Convert_CutHold();
 

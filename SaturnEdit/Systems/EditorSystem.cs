@@ -14,6 +14,13 @@ using SaturnEdit.UndoRedo.TimeableOperations;
 
 namespace SaturnEdit.Systems;
 
+public enum EditorEditMode
+{
+    NoteEditMode = 0,
+    HoldEditMode = 1,
+    EventEditMode = 2,
+}
+
 public static class EditorSystem
 {
     public static void Initialize()
@@ -21,6 +28,7 @@ public static class EditorSystem
     }
 
     public static int MirrorAxis { get; set; } = 0;
+    public static EditorEditMode EditMode { get; set; }= EditorEditMode.NoteEditMode;
 
 #region Methods
     
@@ -1219,7 +1227,7 @@ public static class EditorSystem
     }
 
     
-    public static void Convert_SpikeHold()
+    public static void Convert_ZigZagHold()
     {
     }
 

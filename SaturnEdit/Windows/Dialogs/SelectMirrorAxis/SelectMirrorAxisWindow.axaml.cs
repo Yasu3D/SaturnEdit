@@ -11,11 +11,11 @@ using SaturnEdit.Windows.Dialogs.ModalDialog;
 using SaturnView;
 using SkiaSharp;
 
-namespace SaturnEdit.Windows.Dialogs.AdjustMirrorAxis;
+namespace SaturnEdit.Windows.Dialogs.ChooseMirrorAxis;
 
-public partial class AdjustMirrorAxisWindow : Window
+public partial class SelectMirrorAxisWindow : Window
 {
-    public AdjustMirrorAxisWindow()
+    public SelectMirrorAxisWindow()
     {
         InitializeComponent();
         

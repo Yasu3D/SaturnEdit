@@ -288,7 +288,7 @@ ChartEditor.ChartView3D.Menu.Insert.VisibilityChange,Add Visibility Change
 ChartEditor.ChartView3D.Menu.Insert.StopEffect,Add Stop Effect
 ChartEditor.ChartView3D.Menu.Insert.ReverseEffect,Add Reverse Effect
 ChartEditor.ChartView3D.Menu.Convert,Convert
-ChartEditor.ChartView3D.Menu.Convert.SpikeHold,Spike Hold...
+ChartEditor.ChartView3D.Menu.Convert.ZigZagHold,Zig-Zag Hold...
 ChartEditor.ChartView3D.Menu.Convert.CutHold,Cut Hold
 ChartEditor.ChartView3D.Menu.Convert.JoinHold,Join Hold
 ChartEditor.ChartView3D.Menu.Settings,Chart View Settings
@@ -515,7 +515,10 @@ SelectByCriteria.SelectIfObjectIs,Select if object is...
 SelectByCriteria.SizeVariance,Size Variance
 SelectByCriteria.PositionVariance,Position Variance
 SelectByCriteria.FilterSelection,Filter Selection
-AdjustMirrorAxis.Window.Title,Adjust Mirror Axis
+SelectMirrorAxis.Window.Title,Select Mirror Axis
+SelectScale.Window.Title,Select Scale
+SelectOffset.Window.Title,Select Offset
+ZigZagHoldArgs.Window.Title,Zig-Zag Hold Arguments
 ModalDialog.SavePrompt.Title,Save Chart
 ModalDialog.SavePrompt.Header,Do you want to save changes to your chart before closing?
 ModalDialog.SavePrompt.Paragraph,Your changes will be lost if you don't save them.
@@ -532,6 +535,9 @@ ModalDialog.FileOverwritePrompt.OverwriteFile,Overwrite File
 ModalDialog.FileWriteError.Title,File Write Error
 ModalDialog.FileWriteError.Header,An error occurred during a file write.
 ModalDialog.FileWriteError.Paragraph,"Your changes have not been saved. Please confirm that you have enough space and write-access to the directory, then try again."
+ModalDialog.ZigZagHoldWarning.Title,Zig-Zag Hold Error
+ModalDialog.ZigZagHoldWarning.Header,Unable to create a Zig-Zag Hold Note.
+ModalDialog.ZigZagHoldWarning.Paragraph,Please select one or more hold notes or hold points you wish to convert.
 Generic.Enabled,Enabled
 Generic.Disabled,Disabled
 Generic.Cancel,Cancel

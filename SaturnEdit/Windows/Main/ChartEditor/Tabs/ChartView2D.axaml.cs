@@ -52,7 +52,7 @@ public partial class ChartView2D : UserControl
         // TODO.
     }
 
-    private void SpikeHold()
+    private void ZigZagHold()
     {
         // TODO.
     }
@@ -130,7 +130,7 @@ public partial class ChartView2D : UserControl
             MenuItemOffsetChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.OffsetChart"].ToKeyGesture();
             MenuItemScaleChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleChart"].ToKeyGesture();
             MenuItemMirrorChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorChart"].ToKeyGesture();
-            MenuItemSpikeHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"].ToKeyGesture();
+            MenuItemZigZagHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.ZigZagHold"].ToKeyGesture();
             MenuItemCutHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.CutHold"].ToKeyGesture();
             MenuItemJoinHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.JoinHold"].ToKeyGesture();
 
@@ -445,7 +445,7 @@ public partial class ChartView2D : UserControl
 
     private void MenuItemMirrorChart_OnClick(object? sender, RoutedEventArgs e) => MirrorChart();
 
-    private void MenuItemSpikeHold_OnClick(object? sender, RoutedEventArgs e) => SpikeHold();
+    private void MenuItemZigZagHold_OnClick(object? sender, RoutedEventArgs e) => ZigZagHold();
 
     private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Convert_CutHold();
 

@@ -291,7 +291,7 @@
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.StopEffect">Add Stop Effect</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.ReverseEffect">Add Reverse Effect</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert">Convert</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert.SpikeHold">Spike Hold...</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert.ZigZagHold">Zig-Zag Hold...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert.CutHold">Cut Hold</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert.JoinHold">Join Hold</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings">Chart View Settings</system:String>
@@ -518,7 +518,10 @@
     <system:String x:Key="SelectByCriteria.SizeVariance">Size Variance</system:String>
     <system:String x:Key="SelectByCriteria.PositionVariance">Position Variance</system:String>
     <system:String x:Key="SelectByCriteria.FilterSelection">Filter Selection</system:String>
-    <system:String x:Key="AdjustMirrorAxis.Window.Title">Adjust Mirror Axis</system:String>
+    <system:String x:Key="SelectMirrorAxis.Window.Title">Select Mirror Axis</system:String>
+    <system:String x:Key="SelectScale.Window.Title">Select Scale</system:String>
+    <system:String x:Key="SelectOffset.Window.Title">Select Offset</system:String>
+    <system:String x:Key="ZigZagHoldArgs.Window.Title">Zig-Zag Hold Arguments</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Title">Save Chart</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Header">Do you want to save changes to your chart before closing?</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Paragraph">Your changes will be lost if you don't save them.</system:String>
@@ -535,6 +538,9 @@
     <system:String x:Key="ModalDialog.FileWriteError.Title">File Write Error</system:String>
     <system:String x:Key="ModalDialog.FileWriteError.Header">An error occurred during a file write.</system:String>
     <system:String x:Key="ModalDialog.FileWriteError.Paragraph">Your changes have not been saved. Please confirm that you have enough space and write-access to the directory, then try again.</system:String>
+    <system:String x:Key="ModalDialog.ZigZagHoldWarning.Title">Zig-Zag Hold Error</system:String>
+    <system:String x:Key="ModalDialog.ZigZagHoldWarning.Header">Unable to create a Zig-Zag Hold Note.</system:String>
+    <system:String x:Key="ModalDialog.ZigZagHoldWarning.Paragraph">Please select one or more hold notes or hold points you wish to convert.</system:String>
     <system:String x:Key="Generic.Enabled">Enabled</system:String>
     <system:String x:Key="Generic.Disabled">Disabled</system:String>
     <system:String x:Key="Generic.Cancel">Cancel</system:String>
