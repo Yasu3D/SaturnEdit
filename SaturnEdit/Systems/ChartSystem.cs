@@ -19,6 +19,8 @@ public static class ChartSystem
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         OnOperationHistoryChanged(null, EventArgs.Empty);
+
+        IsSaved = true;
     }
     
     public static event EventHandler? ChartLoaded;

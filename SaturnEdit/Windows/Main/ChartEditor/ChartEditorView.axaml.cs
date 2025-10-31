@@ -413,7 +413,7 @@ public partial class ChartEditorView : UserControl
         };
     }
 
-    private async Task<ModalDialogResult> PromptSave()
+    public async Task<ModalDialogResult> PromptSave()
     {
         if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
 

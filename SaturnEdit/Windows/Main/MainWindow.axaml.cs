@@ -6,6 +6,7 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using SaturnEdit.Systems;
 using SaturnEdit.Windows.Dialogs;
+using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit;
 
@@ -24,6 +25,7 @@ public partial class MainWindow : Window
         OnOperationHistoryChanged(null, EventArgs.Empty);
         
         Closed += AudioSystem.OnClosed;
+        Closing += Window_OnClosing;
 
         if (Application.Current != null)
         {
@@ -43,6 +45,10 @@ public partial class MainWindow : Window
     private readonly IBrush? chartEditorChromeGradient = null;
     private readonly IBrush? stageEditorChromeGradient = null;
     private readonly IBrush? cosmeticsEditorChromeGradient = null;
+
+    private bool bypassChartSave = false;
+    private bool bypassStageSave = false;
+    private bool bypassCosmeticsSave = false;
     
 #region Methods
     public async void ShowSettingsWindow()
@@ -131,5 +137,58 @@ public partial class MainWindow : Window
     private void ButtonUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Undo();
 
     private void ButtonRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
+    
+    private async void Window_OnClosing(object? sender, WindowClosingEventArgs e)
+    {
+        try
+        {
+            // Prompt the user to save unsaved work in...
+
+            // Chart Editor
+            if (!bypassChartSave && !ChartSystem.IsSaved)
+            {
+                e.Cancel = true;
+                ModalDialogResult result = await ChartEditor.PromptSave();
+
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool saved = await ChartEditor.File_Save();
+
+                    if (saved)
+                    {
+                        Close();
+                        return;
+                    }
+                }
+                else if (result is ModalDialogResult.Secondary)
+                {
+                    bypassChartSave = true;
+                    Close();
+                    return;
+                }
+            }
+
+            // TODO: Stage Editor
+            if (!bypassStageSave)
+            {
+                
+            }
+
+            // TODO: Cosmetics Editor
+            if (!bypassCosmeticsSave)
+            {
+                
+            }
+            
+            bypassChartSave = false;
+            bypassStageSave = false;
+            bypassCosmeticsSave = false;
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+    }
 #endregion UI Event Delegates
 }
