@@ -46,9 +46,8 @@ public static class EditorSystem
 
         GlobalEventAddOperation op0 = new(tempoChangeEvent, index);
         SelectionAddOperation op1 = new(tempoChangeEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void Insert_AddMetreChange()
@@ -58,9 +57,8 @@ public static class EditorSystem
 
         GlobalEventAddOperation op0 = new(metreChangeEvent, index);
         SelectionAddOperation op1 = new(metreChangeEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void Insert_AddTutorialMarker()
@@ -70,9 +68,8 @@ public static class EditorSystem
 
         GlobalEventAddOperation op0 = new(tutorialMarkerEvent, index);
         SelectionAddOperation op1 = new(tutorialMarkerEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
     
     public static void Insert_AddSpeedChange()
@@ -84,9 +81,8 @@ public static class EditorSystem
 
         EventAddOperation op0 = new(SelectionSystem.SelectedLayer, speedChangeEvent, index);
         SelectionAddOperation op1 = new(speedChangeEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void Insert_AddVisibilityChange()
@@ -98,9 +94,8 @@ public static class EditorSystem
 
         EventAddOperation op0 = new(SelectionSystem.SelectedLayer, visibilityChangeEvent, index);
         SelectionAddOperation op1 = new(visibilityChangeEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void Insert_AddReverseEffect()
@@ -120,9 +115,8 @@ public static class EditorSystem
         
         EventAddOperation op0 = new(SelectionSystem.SelectedLayer, reverseEffectEvent, index);
         SelectionAddOperation op1 = new(reverseEffectEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void Insert_AddStopEffect()
@@ -140,9 +134,8 @@ public static class EditorSystem
         
         EventAddOperation op0 = new(SelectionSystem.SelectedLayer, stopEffectEvent, index);
         SelectionAddOperation op1 = new(stopEffectEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
     
@@ -179,7 +172,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -226,7 +218,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -273,7 +264,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -320,7 +310,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -356,7 +345,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -392,7 +380,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -428,7 +415,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -464,7 +450,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -514,7 +499,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -564,7 +548,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -614,7 +597,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -664,7 +646,6 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
@@ -777,7 +758,6 @@ public static class EditorSystem
         }
         
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -847,7 +827,6 @@ public static class EditorSystem
         }
         
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -918,7 +897,6 @@ public static class EditorSystem
         }
         
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -934,7 +912,6 @@ public static class EditorSystem
         }
         
         if (operations.Count == 0) return;
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -982,7 +959,6 @@ public static class EditorSystem
             operations.Add(new GlobalEventRemoveOperation(@event, index));
         }
 
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1072,7 +1048,6 @@ public static class EditorSystem
             operations.Add(new EventRemoveOperation(SelectionSystem.SelectedLayer, @event, index));
         }
 
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 

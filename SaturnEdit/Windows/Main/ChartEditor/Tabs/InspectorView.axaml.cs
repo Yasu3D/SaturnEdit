@@ -825,7 +825,6 @@ public partial class InspectorView : UserControl
             }
         }
         
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
         return;
 
@@ -959,8 +958,7 @@ public partial class InspectorView : UserControl
                 operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
             }
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1045,8 +1043,7 @@ public partial class InspectorView : UserControl
                 operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
             }
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1127,8 +1124,7 @@ public partial class InspectorView : UserControl
                 operations.Add(new TimeableEditOperation(timeable, oldFullTick, newValue));
             }
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
     
@@ -1161,8 +1157,7 @@ public partial class InspectorView : UserControl
                 operations.Add(new EventAddOperation(newLayer, @event, index));
             }
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1217,8 +1212,7 @@ public partial class InspectorView : UserControl
                 operations.Add(new PositionableEditOperation(positionable, positionable.Position, newValue, positionable.Size, positionable.Size));
             }
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1273,8 +1267,7 @@ public partial class InspectorView : UserControl
                 operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, positionable.Size, newValue));
             }
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1296,7 +1289,6 @@ public partial class InspectorView : UserControl
             operations.Add(new PlayableEditOperation(playable, playable.BonusType, newBonusType, playable.JudgementType, playable.JudgementType));
         }
 
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1318,7 +1310,6 @@ public partial class InspectorView : UserControl
             operations.Add(new PlayableEditOperation(playable, playable.BonusType, playable.BonusType, playable.JudgementType, newJudgementType));
         }
 
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1340,7 +1331,6 @@ public partial class InspectorView : UserControl
             operations.Add(new HoldPointNoteRenderTypeEditOperation(point, point.RenderType, newRenderType));
         }
 
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1361,8 +1351,7 @@ public partial class InspectorView : UserControl
             
             operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, newDirection));
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1402,8 +1391,7 @@ public partial class InspectorView : UserControl
             
             operations.Add(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, newValue));
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1443,8 +1431,7 @@ public partial class InspectorView : UserControl
             
             operations.Add(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, newValue, metreChangeEvent.Lower, metreChangeEvent.Lower));
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1484,8 +1471,7 @@ public partial class InspectorView : UserControl
             
             operations.Add(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, metreChangeEvent.Upper, metreChangeEvent.Lower, newValue));
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1524,8 +1510,7 @@ public partial class InspectorView : UserControl
             
             operations.Add(new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, newValue));
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1547,7 +1532,6 @@ public partial class InspectorView : UserControl
             operations.Add(new VisibilityChangeEditOperation(visibilityChange, visibilityChange.Visibility, newVisibility));
         }
 
-        operations.Add(new BuildChartOperation());
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1576,8 +1560,7 @@ public partial class InspectorView : UserControl
 
             operations.Add(new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, newValue));
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1606,8 +1589,7 @@ public partial class InspectorView : UserControl
             
             operations.Add(new BookmarkEditOperation(bookmark, bookmark.Color, newValue, bookmark.Message, bookmark.Message));
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
@@ -1636,8 +1618,7 @@ public partial class InspectorView : UserControl
             
             operations.Add(new BookmarkEditOperation(bookmark, bookmark.Color, bookmark.Color, bookmark.Message, newValue));
         }
-        
-        operations.Add(new BuildChartOperation());
+
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 #endregion UI Event Delegates

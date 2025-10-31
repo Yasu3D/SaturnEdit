@@ -175,16 +175,34 @@ public partial class ChartPropertiesView : UserControl
 #endregion System Event Delegates
 
 #region UI Event Delegates
-    private void TextBoxTitle_OnLostFocus(object? sender, RoutedEventArgs routedEventArgs)
+    private async void TextBoxTitle_OnLostFocus(object? sender, RoutedEventArgs routedEventArgs)
     {
-        if (blockEvents) return;
-        if (sender == null) return;
-        
-        string oldValue = ChartSystem.Entry.Title;
-        string newValue = TextBoxTitle.Text ?? "";
-        if (oldValue == newValue) return;
-        
-        UndoRedoSystem.Push(new EntryTitleEditOperation(oldValue, newValue));
+        try
+        {
+            if (blockEvents) return;
+            if (sender == null) return;
+
+            string oldValue = ChartSystem.Entry.Title;
+            string newValue = TextBoxTitle.Text ?? "";
+            if (oldValue == newValue) return;
+
+            if (ChartSystem.Entry.AutoReading)
+            {
+                EntryTitleEditOperation op0 = new(oldValue, newValue);
+                EntryReadingEditOperation op1 = new(ChartSystem.Entry.Reading, await Entry.GetAutoReading(newValue));
+
+                UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+            }
+            else
+            {
+                UndoRedoSystem.Push(new EntryTitleEditOperation(oldValue, newValue));
+            }
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
     }
 
     private void TextBoxReading_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -199,24 +217,35 @@ public partial class ChartPropertiesView : UserControl
         UndoRedoSystem.Push(new EntryReadingEditOperation(oldValue, newValue));
     }
 
-    private void ToggleButtonAutoReading_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    private async void ToggleButtonAutoReading_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        if (blockEvents) return;
-        if (sender == null) return;
-
-        bool oldValue = ChartSystem.Entry.AutoReading;
-        bool newValue = ToggleButtonAutoReading.IsChecked ?? false;
-        if (oldValue == newValue) return;
-
-        if (newValue == true)
+        try
         {
-            EntryAutoReadingEditOperation op0 = new(oldValue, newValue);
-            BuildChartOperation op1 = new();
-            UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+            if (blockEvents) return;
+            if (sender == null) return;
+
+            bool oldValue = ChartSystem.Entry.AutoReading;
+            bool newValue = ToggleButtonAutoReading.IsChecked ?? false;
+            if (oldValue == newValue) return;
+
+            if (newValue == true)
+            {
+                string reading = await Entry.GetAutoReading(ChartSystem.Entry.Title);
+
+                EntryAutoReadingEditOperation op0 = new(oldValue, newValue);
+                EntryReadingEditOperation op1 = new(ChartSystem.Entry.Reading, reading);
+
+                UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+            }
+            else
+            {
+                UndoRedoSystem.Push(new EntryAutoReadingEditOperation(oldValue, newValue));
+            }
         }
-        else
+        catch (Exception ex)
         {
-            UndoRedoSystem.Push(new EntryAutoReadingEditOperation(oldValue, newValue));
+            // Don't throw.
+            Console.WriteLine(ex);
         }
     }
 
@@ -253,16 +282,7 @@ public partial class ChartPropertiesView : UserControl
         bool newValue = ToggleButtonAutoBpmMessage.IsChecked ?? false;
         if (oldValue == newValue) return;
         
-        if (newValue == true)
-        {
-            EntryAutoBpmMessageEditOperation op0 = new (oldValue, newValue);
-            BuildChartOperation op1 = new();
-            UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
-        }
-        else
-        {
-            UndoRedoSystem.Push(new EntryAutoBpmMessageEditOperation(oldValue, newValue));
-        }
+        UndoRedoSystem.Push(new EntryAutoBpmMessageEditOperation(oldValue, newValue));
     }
 
     private void TextBoxRevision_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -297,8 +317,18 @@ public partial class ChartPropertiesView : UserControl
         Difficulty oldValue = ChartSystem.Entry.Difficulty;
         Difficulty newValue = (Difficulty)ComboBoxDifficulty.SelectedIndex;
         if (oldValue == newValue) return;
-        
-        UndoRedoSystem.Push(new EntryDifficultyEditOperation(oldValue, newValue));
+
+        if (ChartSystem.Entry.AutoClearThreshold)
+        {
+            EntryDifficultyEditOperation op0 = new(oldValue, newValue);
+            EntryClearThresholdEditOperation op1 = new(ChartSystem.Entry.ClearThreshold, Entry.GetAutoClearThreshold(newValue));
+            
+            UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        }
+        else
+        {
+            UndoRedoSystem.Push(new EntryDifficultyEditOperation(oldValue, newValue));
+        }
     }
 
     private void TextBoxLevel_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -362,8 +392,11 @@ public partial class ChartPropertiesView : UserControl
         
         if (newValue == true)
         {
-            EntryAutoClearThresholdEditOperation op0 = new (oldValue, newValue);
-            BuildChartOperation op1 = new();
+            float clearThreshold = Entry.GetAutoClearThreshold(ChartSystem.Entry.Difficulty);
+
+            EntryAutoClearThresholdEditOperation op0 = new(oldValue, newValue);
+            EntryClearThresholdEditOperation op1 = new(ChartSystem.Entry.ClearThreshold, clearThreshold);
+
             UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
         }
         else
@@ -412,16 +445,7 @@ public partial class ChartPropertiesView : UserControl
         bool newValue = ToggleButtonAutoChartEnd.IsChecked ?? false;
         if (oldValue == newValue) return;
         
-        if (newValue == true)
-        {
-            EntryAutoChartEndEditOperation op0 = new (oldValue, newValue);
-            BuildChartOperation op1 = new();
-            UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
-        }
-        else
-        {
-            UndoRedoSystem.Push(new EntryAutoChartEndEditOperation(oldValue, newValue));
-        }
+        UndoRedoSystem.Push(new EntryAutoChartEndEditOperation(oldValue, newValue));
     }
 
     private void ButtonPlayPreview_OnClick(object? sender, RoutedEventArgs e)

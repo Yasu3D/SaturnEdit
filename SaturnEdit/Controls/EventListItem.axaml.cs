@@ -176,10 +176,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = Event.Timestamp.FullTick;
         int newFullTick = newValue + Event.Timestamp.Tick;
         
-        TimeableEditOperation op0 = new(Event, oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(Event, oldFullTick, newFullTick));
     }
 
     private void TextBoxTick_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -212,10 +209,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = Event.Timestamp.FullTick;
         int newFullTick = newValue + Event.Timestamp.Measure * 1920;
         
-        TimeableEditOperation op0 = new(Event, oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(Event, oldFullTick, newFullTick));
     }
 
     private void TextBoxTextValue_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -232,8 +226,6 @@ public partial class EventListItem : UserControl
             return;
         }
         
-        IOperation op0;
-
         if (Event is TempoChangeEvent tempoChangeEvent)
         {
             float newValue = 0;
@@ -248,7 +240,7 @@ public partial class EventListItem : UserControl
                 Console.WriteLine(ex);
             }
 
-            op0 = new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, newValue);
+            UndoRedoSystem.Push(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, newValue));
         }
         else if (Event is SpeedChangeEvent speedChangeEvent)
         { 
@@ -264,21 +256,13 @@ public partial class EventListItem : UserControl
                 Console.WriteLine(ex);
             }
             
-            op0 = new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, newValue);
+            UndoRedoSystem.Push(new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, newValue));
         }
         else if (Event is TutorialMarkerEvent tutorialMarkerEvent)
         {
             if (tutorialMarkerEvent.Key == TextBoxTextValue.Text) return;
-            op0 = new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, TextBoxTextValue.Text);
+            UndoRedoSystem.Push(new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, TextBoxTextValue.Text));
         }
-        else
-        {
-            return;
-        }
-        
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
     private void TextBoxMetreUpper_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -308,10 +292,7 @@ public partial class EventListItem : UserControl
             Console.WriteLine(ex);
         }
         
-        MetreChangeEditOperation op0 = new(metreChangeEvent, metreChangeEvent.Upper, newValue, metreChangeEvent.Lower, metreChangeEvent.Lower);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, newValue, metreChangeEvent.Lower, metreChangeEvent.Lower));
     }
 
     private void TextBoxMetreLower_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -341,10 +322,7 @@ public partial class EventListItem : UserControl
             Console.WriteLine(ex);
         }
         
-        MetreChangeEditOperation op0 = new(metreChangeEvent, metreChangeEvent.Upper, metreChangeEvent.Upper, metreChangeEvent.Lower, newValue);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, metreChangeEvent.Upper, metreChangeEvent.Lower, newValue));
     }
     
     private void ComboBoxVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -353,11 +331,8 @@ public partial class EventListItem : UserControl
         if (Event is not VisibilityChangeEvent visibilityChangeEvent) return;
 
         bool newValue = ComboBoxVisibility.SelectedIndex != 0;
-
-        VisibilityChangeEditOperation op0 = new(visibilityChangeEvent, visibilityChangeEvent.Visibility, newValue);
-        BuildChartOperation op1 = new();
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new VisibilityChangeEditOperation(visibilityChangeEvent, visibilityChangeEvent.Visibility, newValue));
     }
     
     private void TextBoxStopMeasure0_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -391,10 +366,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = stopEffectEvent.SubEvents[0].Timestamp.FullTick;
         int newFullTick = newValue + stopEffectEvent.SubEvents[0].Timestamp.Tick;
         
-        TimeableEditOperation op0 = new(stopEffectEvent.SubEvents[0], oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(stopEffectEvent.SubEvents[0], oldFullTick, newFullTick));
     }
 
     private void TextBoxStopTick0_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -427,10 +399,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = stopEffectEvent.SubEvents[0].Timestamp.FullTick;
         int newFullTick = newValue + stopEffectEvent.SubEvents[0].Timestamp.Measure * 1920;
         
-        TimeableEditOperation op0 = new(stopEffectEvent.SubEvents[0], oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(stopEffectEvent.SubEvents[0], oldFullTick, newFullTick));
     }
 
     private void TextBoxStopMeasure1_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -464,10 +433,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = stopEffectEvent.SubEvents[1].Timestamp.FullTick;
         int newFullTick = newValue + stopEffectEvent.SubEvents[1].Timestamp.Tick;
         
-        TimeableEditOperation op0 = new(stopEffectEvent.SubEvents[1], oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(stopEffectEvent.SubEvents[1], oldFullTick, newFullTick));
     }
 
     private void TextBoxStopTick1_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -500,10 +466,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = stopEffectEvent.SubEvents[1].Timestamp.FullTick;
         int newFullTick = newValue + stopEffectEvent.SubEvents[1].Timestamp.Measure * 1920;
         
-        TimeableEditOperation op0 = new(stopEffectEvent.SubEvents[1], oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(stopEffectEvent.SubEvents[1], oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseMeasure0_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -537,10 +500,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[0].Timestamp.Tick;
         
-        TimeableEditOperation op0 = new(reverseEffectEvent.SubEvents[0], oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[0], oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseTick0_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -573,10 +533,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[0].Timestamp.Measure * 1920;
         
-        TimeableEditOperation op0 = new(reverseEffectEvent.SubEvents[0], oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[0], oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseMeasure1_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -610,10 +567,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[1].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[1].Timestamp.Tick;
         
-        TimeableEditOperation op0 = new(reverseEffectEvent.SubEvents[1], oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[1], oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseTick1_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -646,10 +600,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[1].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[1].Timestamp.Measure * 1920;
         
-        TimeableEditOperation op0 = new(reverseEffectEvent.SubEvents[1], oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[1], oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseMeasure2_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -683,10 +634,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[2].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[2].Timestamp.Tick;
         
-        TimeableEditOperation op0 = new(reverseEffectEvent.SubEvents[2], oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[2], oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseTick2_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -719,10 +667,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[2].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[2].Timestamp.Measure * 1920;
         
-        TimeableEditOperation op0 = new(reverseEffectEvent.SubEvents[2], oldFullTick, newFullTick);
-        BuildChartOperation op1 = new();
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[2], oldFullTick, newFullTick));
     }
 #endregion UI Event Delegates
 }
