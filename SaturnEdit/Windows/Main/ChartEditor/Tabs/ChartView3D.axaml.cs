@@ -21,6 +21,8 @@ using SkiaSharp;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
+// TODO: Finish transform and convert implementations
+// TODO: Move chart edit code to static class
 public partial class ChartView3D : UserControl
 {
     public ChartView3D()
@@ -44,591 +46,36 @@ public partial class ChartView3D : UserControl
     private bool isGrabbingObject = false;
     private readonly ClickDragHelper clickDragLeft = new();
     private readonly ClickDragHelper clickDragRight = new();
-
+   
 #region Methods
-    public static void MoveSelectionBeatForward()
+    private void AdjustAxis()
     {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-        
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point);
-                }
-            }
-            else if (obj is StopEffectEvent stopEffectEvent)
-            {
-                addOperation(stopEffectEvent.SubEvents[0]);
-                addOperation(stopEffectEvent.SubEvents[1]);
-            }
-            else if (obj is ReverseEffectEvent reverseEffectEvent)
-            {
-                addOperation(reverseEffectEvent.SubEvents[0]);
-                addOperation(reverseEffectEvent.SubEvents[1]);
-                addOperation(reverseEffectEvent.SubEvents[2]);
-            }
-            else
-            {
-                addOperation(obj);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(ITimeable obj)
-        {
-            int oldFullTick = obj.Timestamp.FullTick;
-            int newFullTick = oldFullTick + TimeSystem.DivisionInterval;
-
-            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
-        }
+        // TODO.
     }
 
-    public static void MoveSelectionBeatBack()
+    private void ScaleSelection()
     {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-        
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point);
-                }
-            }
-            else if (obj is StopEffectEvent stopEffectEvent)
-            {
-                addOperation(stopEffectEvent.SubEvents[0]);
-                addOperation(stopEffectEvent.SubEvents[1]);
-            }
-            else if (obj is ReverseEffectEvent reverseEffectEvent)
-            {
-                addOperation(reverseEffectEvent.SubEvents[0]);
-                addOperation(reverseEffectEvent.SubEvents[1]);
-                addOperation(reverseEffectEvent.SubEvents[2]);
-            }
-            else
-            {
-                addOperation(obj);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(ITimeable obj)
-        {
-            int oldFullTick = obj.Timestamp.FullTick;
-            int newFullTick = oldFullTick - TimeSystem.DivisionInterval;
-
-            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
-        }
+        // TODO.
     }
 
-    public static void MoveSelectionMeasureForward()
+    private void OffsetChart()
     {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-        
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point);
-                }
-            }
-            else if (obj is StopEffectEvent stopEffectEvent)
-            {
-                addOperation(stopEffectEvent.SubEvents[0]);
-                addOperation(stopEffectEvent.SubEvents[1]);
-            }
-            else if (obj is ReverseEffectEvent reverseEffectEvent)
-            {
-                addOperation(reverseEffectEvent.SubEvents[0]);
-                addOperation(reverseEffectEvent.SubEvents[1]);
-                addOperation(reverseEffectEvent.SubEvents[2]);
-            }
-            else
-            {
-                addOperation(obj);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(ITimeable obj)
-        {
-            int oldFullTick = obj.Timestamp.FullTick;
-            int newFullTick = oldFullTick + 1920;
-
-            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
-        }
+        // TODO.
     }
 
-    public static void MoveSelectionMeasureBack()
+    private void ScaleChart()
     {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-        
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point);
-                }
-            }
-            else if (obj is StopEffectEvent stopEffectEvent)
-            {
-                addOperation(stopEffectEvent.SubEvents[0]);
-                addOperation(stopEffectEvent.SubEvents[1]);
-            }
-            else if (obj is ReverseEffectEvent reverseEffectEvent)
-            {
-                addOperation(reverseEffectEvent.SubEvents[0]);
-                addOperation(reverseEffectEvent.SubEvents[1]);
-                addOperation(reverseEffectEvent.SubEvents[2]);
-            }
-            else
-            {
-                addOperation(obj);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(ITimeable obj)
-        {
-            int oldFullTick = obj.Timestamp.FullTick;
-            int newFullTick = oldFullTick - 1920;
-
-            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
-        }
+        // TODO.
     }
 
-    public static void MoveClockwise()
+    private void MirrorChart()
     {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-        
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point);
-                }
-            }
-            else if (obj is IPositionable positionable)
-            {
-                addOperation(positionable);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(IPositionable positionable)
-        {
-            int oldPosition = positionable.Position;
-            int newPosition = oldPosition - 1;
-
-            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
-        }
+        // TODO.
     }
-
-    public static void MoveCounterclockwise()
+    
+    private void SpikeHold()
     {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-        
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point);
-                }
-            }
-            else if (obj is IPositionable positionable)
-            {
-                addOperation(positionable);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(IPositionable positionable)
-        {
-            int oldPosition = positionable.Position;
-            int newPosition = oldPosition + 1;
-
-            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
-        }
-    }
-
-    public static void IncreaseSize()
-    {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-        
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point);
-                }
-            }
-            else if (obj is IPositionable positionable)
-            {
-                addOperation(positionable);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(IPositionable positionable)
-        {
-            int oldSize = positionable.Size;
-            int newSize = oldSize + 1;
-
-            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
-        }
-    }
-
-    public static void DecreaseSize()
-    {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-        
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point);
-                }
-            }
-            else if (obj is IPositionable positionable)
-            {
-                addOperation(positionable);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(IPositionable positionable)
-        {
-            int oldSize = positionable.Size;
-            int newSize = oldSize - 1;
-
-            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
-        }
-    }
-
-    public static void MoveClockwiseIterative()
-    {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-
-        int step = 0;
-        int lastFullTick = -1;
-        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                if (holdNote.Timestamp.FullTick != lastFullTick)
-                {
-                    step++;
-                    lastFullTick = holdNote.Timestamp.FullTick;
-                }
-                
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point, step);
-                }
-            }
-            else if (obj is IPositionable positionable)
-            {
-                if (obj.Timestamp.FullTick != lastFullTick)
-                {
-                    step++;
-                    lastFullTick = obj.Timestamp.FullTick;
-                }
-                
-                addOperation(positionable, step);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(IPositionable positionable, int offset)
-        {
-            int oldPosition = positionable.Position;
-            int newPosition = oldPosition - offset;
-
-            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
-        }
-    }
-
-    public static void MoveCounterclockwiseIterative()
-    {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-
-        int step = 0;
-        int lastFullTick = -1;
-        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                if (holdNote.Timestamp.FullTick != lastFullTick)
-                {
-                    step++;
-                    lastFullTick = holdNote.Timestamp.FullTick;
-                }
-                
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point, step);
-                }
-            }
-            else if (obj is IPositionable positionable)
-            {
-                if (obj.Timestamp.FullTick != lastFullTick)
-                {
-                    step++;
-                    lastFullTick = obj.Timestamp.FullTick;
-                }
-                
-                addOperation(positionable, step);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(IPositionable positionable, int offset)
-        {
-            int oldPosition = positionable.Position;
-            int newPosition = oldPosition + offset;
-
-            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
-        }
-    }
-
-    public static void IncreaseSizeIterative()
-    {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-
-        int step = 0;
-        int lastFullTick = -1;
-        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                if (holdNote.Timestamp.FullTick != lastFullTick)
-                {
-                    step++;
-                    lastFullTick = holdNote.Timestamp.FullTick;
-                }
-                
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point, step);
-                }
-            }
-            else if (obj is IPositionable positionable)
-            {
-                if (obj.Timestamp.FullTick != lastFullTick)
-                {
-                    step++;
-                    lastFullTick = obj.Timestamp.FullTick;
-                }
-                
-                addOperation(positionable, step);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(IPositionable positionable, int offset)
-        {
-            int oldSize = positionable.Size;
-            int newSize = oldSize + offset;
-
-            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
-        }
-    }
-
-    public static void DecreaseSizeIterative()
-    {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-
-        int step = 0;
-        int lastFullTick = -1;
-        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
-        {
-            if (obj is HoldNote holdNote)
-            {
-                if (holdNote.Timestamp.FullTick != lastFullTick)
-                {
-                    step++;
-                    lastFullTick = holdNote.Timestamp.FullTick;
-                }
-                
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    addOperation(point, step);
-                }
-            }
-            else if (obj is IPositionable positionable)
-            {
-                if (obj.Timestamp.FullTick != lastFullTick)
-                {
-                    step++;
-                    lastFullTick = obj.Timestamp.FullTick;
-                }
-                
-                addOperation(positionable, step);
-            }
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-        
-        return;
-
-        void addOperation(IPositionable positionable, int offset)
-        {
-            int oldSize = positionable.Size;
-            int newSize = oldSize - offset;
-
-            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
-        }
-    }
-
-    public static void MirrorHorizontal()
-    {
-        
-    }
-
-    public static void MirrorVertical()
-    {
-        
-    }
-
-    public static void MirrorCustom()
-    {
-        
-    }
-
-    public static void AdjustAxis()
-    {
-        
-    }
-
-    public static void FlipDirection()
-    {
-        
-    }
-
-    public static void ReverseSelection()
-    {
-        
-    }
-
-    public static void ScaleSelection()
-    {
-        
-    }
-
-    public static void OffsetChart()
-    {
-        
-    }
-
-    public static void ScaleChart()
-    {
-        
-    }
-
-    public static void MirrorChart()
-    {
-        
-    }
-
-    public static void SpikeHold()
-    {
-        
-    }
-
-    public static void CutHold()
-    {
-        
-    }
-
-    public static void JoinHold()
-    {
-        
+        // TODO.
     }
 #endregion Methods
     
@@ -832,108 +279,108 @@ public partial class ChartView3D : UserControl
         
         if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
         {
-            EventListView.AddTempoChange();
+            EditorSystem.Insert_AddTempoChange();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"]))
         {
-            EventListView.AddMetreChange();
+            EditorSystem.Insert_AddMetreChange();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"]))
         {
-            EventListView.AddTutorialMarker();
+            EditorSystem.Insert_AddTutorialMarker();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"]))
         {
-            LayerListView.AddSpeedChange();
+            EditorSystem.Insert_AddSpeedChange();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"]))
         {
-            LayerListView.AddVisibilityChange();
+            EditorSystem.Insert_AddVisibilityChange();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"]))
         {
-            LayerListView.AddStopEffect();
+            EditorSystem.Insert_AddStopEffect();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"]))
         {
-            LayerListView.AddReverseEffect();
+            EditorSystem.Insert_AddReverseEffect();
             e.Handled = true;
         }
         
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatForward"])) 
         {
-            MoveSelectionBeatForward();
+            EditorSystem.Transform_MoveSelectionBeatForward();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatBack"])) 
         {
-            MoveSelectionBeatBack();
+            EditorSystem.Transform_MoveSelectionBeatBack();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureForward"])) 
         {
-            MoveSelectionMeasureForward();
+            EditorSystem.Transform_MoveSelectionMeasureForward();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureBack"])) 
         {
-            MoveSelectionMeasureBack();
+            EditorSystem.Transform_MoveSelectionMeasureBack();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwise"])) 
         {
-            MoveClockwise();
+            EditorSystem.Transform_MoveClockwise();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwise"])) 
         {
-            MoveCounterclockwise();
+            EditorSystem.Transform_MoveCounterclockwise();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSize"])) 
         {
-            IncreaseSize();
+            EditorSystem.Transform_IncreaseSize();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSize"])) 
         {
-            DecreaseSize();
+            EditorSystem.Transform_DecreaseSize();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwiseIterative"])) 
         {
-            MoveClockwiseIterative();
+            EditorSystem.Transform_MoveClockwiseIterative();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwiseIterative"])) 
         {
-            MoveCounterclockwiseIterative();
+            EditorSystem.Transform_MoveCounterclockwiseIterative();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSizeIterative"])) 
         {
-            IncreaseSizeIterative();
+            EditorSystem.Transform_IncreaseSizeIterative();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSizeIterative"])) 
         {
-            DecreaseSizeIterative();
+            EditorSystem.Transform_DecreaseSizeIterative();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorHorizontal"])) 
         {
-            
+            EditorSystem.Transform_MirrorHorizontal();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorVertical"])) 
         {
-            
+            EditorSystem.Transform_MirrorVertical();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorCustom"])) 
@@ -943,53 +390,53 @@ public partial class ChartView3D : UserControl
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.AdjustAxis"])) 
         {
-            
+            AdjustAxis();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.FlipDirection"])) 
         {
-            
+            EditorSystem.Transform_FlipDirection();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ReverseSelection"])) 
         {
-            
+            EditorSystem.Transform_ReverseSelection();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleSelection"])) 
         {
-            
+            ScaleSelection();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.OffsetChart"])) 
         {
-            
+            OffsetChart();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleChart"])) 
         {
-            
+            ScaleChart();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorChart"])) 
         {
-            
+            MirrorChart();
             e.Handled = true;
         }
             
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"]))
         {
-            
+            EditorSystem.Convert_SpikeHold();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.CutHold"]))
         {
-            
+            EditorSystem.Convert_CutHold();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.JoinHold"]))
         {
-            
+            EditorSystem.Convert_JoinHold();
             e.Handled = true;
         }
             
@@ -1681,55 +1128,55 @@ public partial class ChartView3D : UserControl
     }
 
     
-    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddTempoChange();
+    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTempoChange();
 
-    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddMetreChange();
+    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddMetreChange();
 
-    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddTutorialMarker();
+    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTutorialMarker();
 
-    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddSpeedChange();
+    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddSpeedChange();
 
-    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddVisibilityChange();
+    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddVisibilityChange();
 
-    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddStopEffect();
+    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddStopEffect();
 
-    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddReverseEffect();
+    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddReverseEffect();
 
-    private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => MoveSelectionBeatForward();
+    private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionBeatForward();
 
-    private void MenuItemMoveSelectionBeatBack_OnClick(object? sender, RoutedEventArgs e) => MoveSelectionBeatBack();
+    private void MenuItemMoveSelectionBeatBack_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionBeatBack();
 
-    private void MenuItemMoveSelectionMeasureForward_OnClick(object? sender, RoutedEventArgs e) => MoveSelectionMeasureForward();
+    private void MenuItemMoveSelectionMeasureForward_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionMeasureForward();
 
-    private void MenuItemMoveSelectionMeasureBack_OnClick(object? sender, RoutedEventArgs e) => MoveSelectionMeasureBack();
+    private void MenuItemMoveSelectionMeasureBack_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionMeasureBack();
 
-    private void MenuItemMoveClockwise_OnClick(object? sender, RoutedEventArgs e) => MoveClockwise();
+    private void MenuItemMoveClockwise_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveClockwise();
 
-    private void MenuItemMoveCounterclockwise_OnClick(object? sender, RoutedEventArgs e) => MoveCounterclockwise();
+    private void MenuItemMoveCounterclockwise_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveCounterclockwise();
 
-    private void MenuItemIncreaseSize_OnClick(object? sender, RoutedEventArgs e) => IncreaseSize();
+    private void MenuItemIncreaseSize_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_IncreaseSize();
 
-    private void MenuItemDecreaseSize_OnClick(object? sender, RoutedEventArgs e) => DecreaseSize();
+    private void MenuItemDecreaseSize_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_DecreaseSize();
 
-    private void MenuItemMoveClockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => MoveClockwiseIterative();
+    private void MenuItemMoveClockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveClockwiseIterative();
 
-    private void MenuItemMoveCounterclockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => MoveCounterclockwiseIterative();
+    private void MenuItemMoveCounterclockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveCounterclockwiseIterative();
 
-    private void MenuItemIncreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => IncreaseSizeIterative();
+    private void MenuItemIncreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_IncreaseSizeIterative();
 
-    private void MenuItemDecreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => DecreaseSizeIterative();
+    private void MenuItemDecreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_DecreaseSizeIterative();
 
-    private void MenuItemMirrorHorizontal_OnClick(object? sender, RoutedEventArgs e) => MirrorHorizontal();
+    private void MenuItemMirrorHorizontal_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MirrorHorizontal();
 
-    private void MenuItemMirrorVertical_OnClick(object? sender, RoutedEventArgs e) => MirrorVertical();
+    private void MenuItemMirrorVertical_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MirrorVertical();
 
-    private void MenuItemMirrorCustom_OnClick(object? sender, RoutedEventArgs e) => MirrorCustom();
+    private void MenuItemMirrorCustom_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MirrorCustom();
 
     private void MenuItemAdjustAxis_OnClick(object? sender, RoutedEventArgs e) => AdjustAxis();
 
-    private void MenuItemFlipDirection_OnClick(object? sender, RoutedEventArgs e) => FlipDirection();
+    private void MenuItemFlipDirection_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_FlipDirection();
 
-    private void MenuItemReverseSelection_OnClick(object? sender, RoutedEventArgs e) => ReverseSelection();
+    private void MenuItemReverseSelection_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_ReverseSelection();
 
     private void MenuItemScaleSelection_OnClick(object? sender, RoutedEventArgs e) => ScaleSelection();
 
@@ -1741,8 +1188,8 @@ public partial class ChartView3D : UserControl
 
     private void MenuItemSpikeHold_OnClick(object? sender, RoutedEventArgs e) => SpikeHold();
 
-    private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => CutHold();
+    private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Convert_CutHold();
 
-    private void MenuItemJoinHold_OnClick(object? sender, RoutedEventArgs e) => JoinHold();
+    private void MenuItemJoinHold_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Convert_JoinHold();
 #endregion UI Event Delegates
 }

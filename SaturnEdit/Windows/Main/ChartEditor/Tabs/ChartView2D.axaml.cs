@@ -26,6 +26,38 @@ public partial class ChartView2D : UserControl
     private readonly CanvasInfo canvasInfo = new();
     private bool blockEvents = false;
     
+#region Methods
+    private void AdjustAxis()
+    {
+        // TODO.
+    }
+
+    private void ScaleSelection()
+    {
+        // TODO.
+    }
+    
+    private void OffsetChart()
+    {
+        // TODO.
+    }
+
+    private void ScaleChart()
+    {
+        // TODO.
+    }
+
+    private void MirrorChart()
+    {
+        // TODO.
+    }
+
+    private void SpikeHold()
+    {
+        // TODO.
+    }
+#endregion Methods
+    
 #region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
@@ -355,68 +387,68 @@ public partial class ChartView2D : UserControl
         }
     }
 
-    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddTempoChange();
+    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTempoChange();
 
-    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddMetreChange();
+    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddMetreChange();
 
-    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EventListView.AddTutorialMarker();
+    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTutorialMarker();
 
-    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddSpeedChange();
+    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddSpeedChange();
 
-    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddVisibilityChange();
+    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddVisibilityChange();
 
-    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddStopEffect();
+    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddStopEffect();
 
-    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => LayerListView.AddReverseEffect();
+    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddReverseEffect();
 
-    private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveSelectionBeatForward();
+    private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionBeatForward();
 
-    private void MenuItemMoveSelectionBeatBack_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveSelectionBeatBack();
+    private void MenuItemMoveSelectionBeatBack_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionBeatBack();
 
-    private void MenuItemMoveSelectionMeasureForward_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveSelectionMeasureForward();
+    private void MenuItemMoveSelectionMeasureForward_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionMeasureForward();
 
-    private void MenuItemMoveSelectionMeasureBack_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveSelectionMeasureBack();
+    private void MenuItemMoveSelectionMeasureBack_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionMeasureBack();
 
-    private void MenuItemMoveClockwise_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveClockwise();
+    private void MenuItemMoveClockwise_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveClockwise();
 
-    private void MenuItemMoveCounterclockwise_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveCounterclockwise();
+    private void MenuItemMoveCounterclockwise_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveCounterclockwise();
 
-    private void MenuItemIncreaseSize_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.IncreaseSize();
+    private void MenuItemIncreaseSize_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_IncreaseSize();
 
-    private void MenuItemDecreaseSize_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.DecreaseSize();
+    private void MenuItemDecreaseSize_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_DecreaseSize();
 
-    private void MenuItemMoveClockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveClockwiseIterative();
+    private void MenuItemMoveClockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveClockwiseIterative();
 
-    private void MenuItemMoveCounterclockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MoveCounterclockwiseIterative();
+    private void MenuItemMoveCounterclockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveCounterclockwiseIterative();
 
-    private void MenuItemIncreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.IncreaseSizeIterative();
+    private void MenuItemIncreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_IncreaseSizeIterative();
 
-    private void MenuItemDecreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.DecreaseSizeIterative();
+    private void MenuItemDecreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_DecreaseSizeIterative();
 
-    private void MenuItemMirrorHorizontal_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MirrorHorizontal();
+    private void MenuItemMirrorHorizontal_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MirrorHorizontal();
 
-    private void MenuItemMirrorVertical_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MirrorVertical();
+    private void MenuItemMirrorVertical_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MirrorVertical();
 
-    private void MenuItemMirrorCustom_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MirrorCustom();
+    private void MenuItemMirrorCustom_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MirrorCustom();
 
-    private void MenuItemAdjustAxis_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.AdjustAxis();
+    private void MenuItemAdjustAxis_OnClick(object? sender, RoutedEventArgs e) => AdjustAxis();
 
-    private void MenuItemFlipDirection_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.FlipDirection();
+    private void MenuItemFlipDirection_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_FlipDirection();
 
-    private void MenuItemReverseSelection_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.ReverseSelection();
+    private void MenuItemReverseSelection_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_ReverseSelection();
 
-    private void MenuItemScaleSelection_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.ScaleSelection();
+    private void MenuItemScaleSelection_OnClick(object? sender, RoutedEventArgs e) => ScaleSelection();
 
-    private void MenuItemOffsetChart_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.OffsetChart();
+    private void MenuItemOffsetChart_OnClick(object? sender, RoutedEventArgs e) => OffsetChart();
 
-    private void MenuItemScaleChart_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.ScaleChart();
+    private void MenuItemScaleChart_OnClick(object? sender, RoutedEventArgs e) => ScaleChart();
 
-    private void MenuItemMirrorChart_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.MirrorChart();
+    private void MenuItemMirrorChart_OnClick(object? sender, RoutedEventArgs e) => MirrorChart();
 
-    private void MenuItemSpikeHold_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.SpikeHold();
+    private void MenuItemSpikeHold_OnClick(object? sender, RoutedEventArgs e) => SpikeHold();
 
-    private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.CutHold();
+    private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Convert_CutHold();
 
-    private void MenuItemJoinHold_OnClick(object? sender, RoutedEventArgs e) => ChartView3D.JoinHold();
+    private void MenuItemJoinHold_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Convert_JoinHold();
 #endregion UI Event Delegates
 }

@@ -84,63 +84,6 @@ public partial class EventListView : UserControl
             blockEvents = false;
         });
     }
-
-    private static void DeleteEvent()
-    {
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-        
-        foreach (Event @event in ChartSystem.Chart.Events)
-        {
-            if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
-
-            int index = ChartSystem.Chart.Events.IndexOf(@event);
-            if (index == -1) continue;
-            
-            operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
-            operations.Add(new GlobalEventRemoveOperation(@event, index));
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-    }
-
-    public static void AddTempoChange()
-    {
-        TempoChangeEvent tempoChangeEvent = new(new(TimeSystem.Timestamp.FullTick), 120.000000f);
-        int index = ChartSystem.Chart.Events.FindLastIndex(x => x.Timestamp.FullTick <= tempoChangeEvent.Timestamp.FullTick);
-
-        GlobalEventAddOperation op0 = new(tempoChangeEvent, index);
-        SelectionAddOperation op1 = new(tempoChangeEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
-        
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
-    }
-
-    public static void AddMetreChange()
-    {
-        MetreChangeEvent metreChangeEvent = new(new(TimeSystem.Timestamp.FullTick), 4, 4);
-        int index = ChartSystem.Chart.Events.FindLastIndex(x => x.Timestamp.FullTick <= metreChangeEvent.Timestamp.FullTick);
-
-        GlobalEventAddOperation op0 = new(metreChangeEvent, index);
-        SelectionAddOperation op1 = new(metreChangeEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
-        
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
-    }
-
-    public static void AddTutorialMarker()
-    {
-        TutorialMarkerEvent tutorialMarkerEvent = new(new(TimeSystem.Timestamp.FullTick), "KEY");
-        int index = ChartSystem.Chart.Events.FindLastIndex(x => x.Timestamp.FullTick <= tutorialMarkerEvent.Timestamp.FullTick);
-
-        GlobalEventAddOperation op0 = new(tutorialMarkerEvent, index);
-        SelectionAddOperation op1 = new(tutorialMarkerEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
-        
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
-    }
 #endregion Methods
     
 #region System Event Delegates
@@ -217,32 +160,32 @@ public partial class EventListView : UserControl
 
         if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"]))
         {
-            DeleteEvent();
+            EditorSystem.EventList_DeleteGlobalEvents();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
         {
-            AddTempoChange();
+            EditorSystem.Insert_AddTempoChange();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"]))
         {
-            AddMetreChange();
+            EditorSystem.Insert_AddMetreChange();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"]))
         {
-            AddTutorialMarker();
+            EditorSystem.Insert_AddTutorialMarker();
             e.Handled = true;
         }
     }
     
-    private void ButtonDeleteEvent_OnClick(object? sender, RoutedEventArgs e) => DeleteEvent();
+    private void ButtonDeleteEvent_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.EventList_DeleteGlobalEvents();
 
-    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => AddTempoChange();
+    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTempoChange();
 
-    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => AddMetreChange();
+    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddMetreChange();
 
-    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => AddTutorialMarker();
+    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTutorialMarker();
 #endregion UI Event Delegates
 }

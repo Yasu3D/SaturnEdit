@@ -6,11 +6,9 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
-using SaturnData.Notation.Events;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.LayerOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
 using SaturnEdit.Utilities;
@@ -144,165 +142,6 @@ public partial class LayerListView : UserControl
             blockEvents = false;
         });
     }
-    
-    private static void MoveLayerUp()
-    {
-        if (SelectionSystem.SelectedLayer == null) return;
-
-        int indexA = ChartSystem.Chart.Layers.IndexOf(SelectionSystem.SelectedLayer);
-        if (indexA == -1) return;
-
-        int indexB = indexA - 1;
-        if (indexB < 0) return;
-
-        Layer layerA = ChartSystem.Chart.Layers[indexA];
-        Layer layerB = ChartSystem.Chart.Layers[indexB];
-
-        UndoRedoSystem.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
-    }
-
-    private static void MoveLayerDown()
-    {
-        if (SelectionSystem.SelectedLayer == null) return;
-
-        int indexA = ChartSystem.Chart.Layers.IndexOf(SelectionSystem.SelectedLayer);
-        if (indexA == -1) return;
-
-        int indexB = indexA + 1;
-        if (indexB >= ChartSystem.Chart.Layers.Count) return;
-
-        Layer layerA = ChartSystem.Chart.Layers[indexA];
-        Layer layerB = ChartSystem.Chart.Layers[indexB];
-
-        UndoRedoSystem.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
-    }
-    
-    private static void DeleteLayer()
-    {
-        if (SelectionSystem.SelectedLayer == null) return;
-
-        int index = ChartSystem.Chart.Layers.IndexOf(SelectionSystem.SelectedLayer);
-        
-        Layer? newSelection = null;
-
-        if (ChartSystem.Chart.Layers.Count > 1)
-        {
-            newSelection = index == 0
-                ? ChartSystem.Chart.Layers[1]
-                : ChartSystem.Chart.Layers[index - 1];
-        }
-
-        LayerRemoveOperation op0 = new(SelectionSystem.SelectedLayer, index);
-        LayerSelectOperation op1 = new(SelectionSystem.SelectedLayer, newSelection);
-
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
-    }
-    
-    private static void AddLayer()
-    {
-        Layer layer = ChartSystem.Chart.Layers.Count == 0 
-            ? new("Main Layer") 
-            : new("New Layer");
-        
-        int index = ChartSystem.Chart.Layers.Count;
-
-        LayerAddOperation op0 = new(layer, index);
-        LayerSelectOperation op1 = new(SelectionSystem.SelectedLayer, layer); 
-        
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
-    }
-
-    private static void DeleteEvent()
-    {
-        if (SelectionSystem.SelectedLayer == null) return;
-        if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-        
-        foreach (Event @event in SelectionSystem.SelectedLayer.Events)
-        {
-            if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
-
-            int index = SelectionSystem.SelectedLayer.Events.IndexOf(@event);
-            if (index == -1) continue;
-            
-            operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
-            operations.Add(new EventRemoveOperation(SelectionSystem.SelectedLayer, @event, index));
-        }
-
-        operations.Add(new BuildChartOperation());
-        UndoRedoSystem.Push(new CompositeOperation(operations));
-    }
-
-    public static void AddSpeedChange()
-    {
-        if (SelectionSystem.SelectedLayer == null) return;
-        
-        SpeedChangeEvent speedChangeEvent = new(new(TimeSystem.Timestamp.FullTick), 1.000000f);
-        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= speedChangeEvent.Timestamp.FullTick);
-
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, speedChangeEvent, index);
-        SelectionAddOperation op1 = new(speedChangeEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
-        
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
-    }
-
-    public static void AddVisibilityChange()
-    {
-        if (SelectionSystem.SelectedLayer == null) return;
-        
-        VisibilityChangeEvent visibilityChangeEvent = new(new(TimeSystem.Timestamp.FullTick), true);
-        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= visibilityChangeEvent.Timestamp.FullTick);
-
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, visibilityChangeEvent, index);
-        SelectionAddOperation op1 = new(visibilityChangeEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
-        
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
-    }
-
-    public static void AddReverseEffect()
-    {
-        if (SelectionSystem.SelectedLayer == null) return;
-
-        Timestamp start = new(TimeSystem.Timestamp.FullTick);
-        Timestamp middle = new(start.FullTick + 1920);
-        Timestamp end = new(middle.FullTick + 1920);
-        
-        ReverseEffectEvent reverseEffectEvent = new();
-        reverseEffectEvent.SubEvents[0] = new(start, reverseEffectEvent);
-        reverseEffectEvent.SubEvents[1] = new(middle, reverseEffectEvent);
-        reverseEffectEvent.SubEvents[2] = new(end, reverseEffectEvent);
-        
-        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= reverseEffectEvent.Timestamp.FullTick);
-        
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, reverseEffectEvent, index);
-        SelectionAddOperation op1 = new(reverseEffectEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
-        
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
-    }
-
-    public static void AddStopEffect()
-    {
-        if (SelectionSystem.SelectedLayer == null) return;
-
-        Timestamp start = new(TimeSystem.Timestamp.FullTick);
-        Timestamp end = new(start.FullTick + 1920);
-        
-        StopEffectEvent stopEffectEvent = new();
-        stopEffectEvent.SubEvents[0] = new(start, stopEffectEvent);
-        stopEffectEvent.SubEvents[1] = new(end, stopEffectEvent);
-        
-        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= stopEffectEvent.Timestamp.FullTick);
-        
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, stopEffectEvent, index);
-        SelectionAddOperation op1 = new(stopEffectEvent, SelectionSystem.LastSelectedObject);
-        BuildChartOperation op2 = new();
-        
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1, op2]));
-    }
 #endregion Methods
 
 #region System Event Delegates
@@ -378,30 +217,30 @@ public partial class LayerListView : UserControl
 
         if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"]))
         {
-            DeleteLayer();
+            EditorSystem.LayerList_DeleteLayer();
             e.Handled = true;
         }
         
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemUp"]))
         {
-            MoveLayerUp();
+            EditorSystem.LayerList_MoveLayerUp();
             e.Handled = true;
         }
         
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["List.MoveItemDown"]))
         {
-            MoveLayerDown();
+            EditorSystem.LayerList_MoveLayerDown();
             e.Handled = true;
         }
     }
     
-    private void ButtonMoveLayerUp_Click(object? sender, RoutedEventArgs e) => MoveLayerUp();
+    private void ButtonMoveLayerUp_Click(object? sender, RoutedEventArgs e) => EditorSystem.LayerList_MoveLayerUp();
 
-    private void ButtonMoveLayerDown_Click(object? sender, RoutedEventArgs e) => MoveLayerDown();
+    private void ButtonMoveLayerDown_Click(object? sender, RoutedEventArgs e) => EditorSystem.LayerList_MoveLayerDown();
 
-    private void ButtonDeleteLayer_Click(object? sender, RoutedEventArgs e) => DeleteLayer();
+    private void ButtonDeleteLayer_Click(object? sender, RoutedEventArgs e) => EditorSystem.LayerList_DeleteLayer();
 
-    private void ButtonAddNewLayer_Click(object? sender, RoutedEventArgs e) => AddLayer();
+    private void ButtonAddNewLayer_Click(object? sender, RoutedEventArgs e) => EditorSystem.LayerList_AddLayer();
     
     private void ListBoxEvents_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
@@ -441,40 +280,40 @@ public partial class LayerListView : UserControl
 
         if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"]))
         {
-            DeleteEvent();
+            EditorSystem.LayerList_DeleteEvents();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"]))
         {
-            AddSpeedChange();
+            EditorSystem.Insert_AddSpeedChange();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"]))
         {
-            AddVisibilityChange();
+            EditorSystem.Insert_AddVisibilityChange();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"]))
         {
-            AddStopEffect();
+            EditorSystem.Insert_AddStopEffect();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"]))
         {
-            AddReverseEffect();
+            EditorSystem.Insert_AddReverseEffect();
             e.Handled = true;
         }
     }
 
-    private void ButtonDeleteEvent_OnClick(object? sender, RoutedEventArgs e) => DeleteEvent();
+    private void ButtonDeleteEvent_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.LayerList_DeleteEvents();
 
-    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => AddSpeedChange();
+    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddSpeedChange();
 
-    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => AddVisibilityChange();
+    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddVisibilityChange();
 
-    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => AddReverseEffect();
+    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddReverseEffect();
 
-    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => AddStopEffect();
+    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddStopEffect();
     
     private void ListBoxEvents_OnDoubleTapped(object? sender, TappedEventArgs e)
     {
