@@ -11,8 +11,7 @@
              x:Class="SaturnEdit.Windows.Main.ChartEditor.Tabs.ChartView3D">
     <Border Background="{DynamicResource BackgroundSecondary}"
             BorderBrush="{DynamicResource SeparatorPrimary}"
-            BorderThickness="1,0"
-            KeyDown="Control_OnKeyDown">
+            BorderThickness="1,0">
         <Grid RowDefinitions="38,*">
 
             <!-- Menu Bar -->
@@ -181,6 +180,7 @@
                                 <Separator />
 
                                 <MenuItem Name="MenuItemMoveClockwise"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemMoveClockwise_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveClockwise}" />
@@ -191,6 +191,7 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemMoveCounterclockwise"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemMoveCounterclockwise_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwise}" />
@@ -201,6 +202,7 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemIncreaseSize"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemIncreaseSize_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.IncreaseSize}" />
@@ -211,6 +213,7 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemDecreaseSize"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemDecreaseSize_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.DecreaseSize}" />
@@ -223,6 +226,7 @@
                                 <Separator />
 
                                 <MenuItem Name="MenuItemMoveClockwiseIterative"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemMoveClockwiseIterative_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveClockwiseIterative}" />
@@ -230,6 +234,7 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemMoveCounterclockwiseIterative"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemMoveCounterclockwiseIterative_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwiseIterative}" />
@@ -237,6 +242,7 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemIncreaseSizeIterative"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemIncreaseSizeIterative_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.IncreaseSizeIterative}" />
@@ -244,6 +250,7 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemDecreaseSizeIterative"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemDecreaseSizeIterative_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.DecreaseSizeIterative}" />
@@ -258,6 +265,7 @@
                                     </MenuItem.Header>
 
                                     <MenuItem Name="MenuItemMirrorHorizontal"
+                                              StaysOpenOnClick="True"
                                               Click="MenuItemMirrorHorizontal_OnClick">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal}" />
@@ -268,6 +276,7 @@
                                     </MenuItem>
 
                                     <MenuItem Name="MenuItemMirrorVertical"
+                                              StaysOpenOnClick="True"
                                               Click="MenuItemMirrorVertical_OnClick">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorVertical}" />
@@ -280,6 +289,7 @@
                                     <Separator />
 
                                     <MenuItem Name="MenuItemMirrorCustom"
+                                              StaysOpenOnClick="True"
                                               Click="MenuItemMirrorCustom_OnClick">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorCustom}" />
@@ -287,6 +297,7 @@
                                     </MenuItem>
 
                                     <MenuItem Name="MenuItemAdjustAxis"
+                                              StaysOpenOnClick="True"
                                               Click="MenuItemAdjustAxis_OnClick">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.AdjustAxis}" />
@@ -297,6 +308,7 @@
                                 <Separator />
 
                                 <MenuItem Name="MenuItemFlipDirection"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemFlipDirection_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.FlipDirection}" />
@@ -307,6 +319,7 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemReverseSelection"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemReverseSelection_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ReverseSelection}" />
@@ -317,6 +330,7 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemScaleSelection"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemScaleSelection_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ScaleSelection}" />
@@ -329,6 +343,7 @@
                                 <Separator />
 
                                 <MenuItem Name="MenuItemOffsetChart"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemOffsetChart_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.OffsetChart}" />
@@ -339,6 +354,7 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemScaleChart"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemScaleChart_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ScaleChart}" />
@@ -349,6 +365,7 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemMirrorChart"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemMirrorChart_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorChart}" />
@@ -371,6 +388,7 @@
                             <MenuFlyout Placement="BottomEdgeAlignedLeft">
 
                                 <MenuItem Name="MenuItemSpikeHold"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemSpikeHold_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.SpikeHold}" />
@@ -383,6 +401,7 @@
                                 <Separator />
 
                                 <MenuItem Name="MenuItemCutHold"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemCutHold_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.CutHold}" />
@@ -393,6 +412,7 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemJoinHold"
+                                          StaysOpenOnClick="True"
                                           Click="MenuItemJoinHold_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.JoinHold}" />
@@ -912,7 +932,7 @@
                                               PointerMoved="RenderCanvas_OnPointerMoved"
                                               PointerPressed="RenderCanvas_OnPointerPressed"
                                               PointerReleased="RenderCanvas_OnPointerReleased"
-                                              PointerExited="RenderCanvas_OnPointerExited" />
+                                              PointerExited="RenderCanvas_OnPointerExited"/>
                 </Panel>
             </Grid>
         </Grid>

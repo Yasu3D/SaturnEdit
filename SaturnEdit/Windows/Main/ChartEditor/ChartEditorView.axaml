@@ -8,8 +8,7 @@
              mc:Ignorable="d"
              d:DesignWidth="1400"
              d:DesignHeight="900"
-             x:Class="SaturnEdit.Windows.ChartEditor.ChartEditorView"
-             KeyDown="Control_OnKeyDown">
+             x:Class="SaturnEdit.Windows.ChartEditor.ChartEditorView">
     <Grid RowDefinitions="40,1,*,79">
 
         <!-- Menu Bar -->

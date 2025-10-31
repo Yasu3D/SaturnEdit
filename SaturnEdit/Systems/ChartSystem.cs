@@ -15,9 +15,7 @@ public static class ChartSystem
         Entry.EntryChanged += OnInternalEntryChanged;
         Entry.AudioChanged += OnInternalAudioChanged;
         Entry.JacketChanged += OnInternalJacketChanged;
-        Entry.ChartEndChanged += OnChartEndChanged;
         
-        AudioSystem.AudioLoaded += OnAudioLoaded;
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         OnOperationHistoryChanged(null, EventArgs.Empty);
@@ -63,7 +61,6 @@ public static class ChartSystem
         Entry.EntryChanged -= OnInternalEntryChanged;
         Entry.AudioChanged -= OnInternalAudioChanged;
         Entry.JacketChanged -= OnInternalJacketChanged;
-        Entry.ChartEndChanged -= OnChartEndChanged;
         
         Chart = new();
         Entry = new();
@@ -71,7 +68,6 @@ public static class ChartSystem
         Entry.EntryChanged += OnInternalEntryChanged;
         Entry.AudioChanged += OnInternalAudioChanged;
         Entry.JacketChanged += OnInternalJacketChanged;
-        Entry.ChartEndChanged += OnChartEndChanged;
         
         ChartLoaded?.Invoke(null, EventArgs.Empty);
         EntryChanged?.Invoke(null, EventArgs.Empty);
@@ -89,7 +85,6 @@ public static class ChartSystem
         Entry.EntryChanged -= OnInternalEntryChanged;
         Entry.AudioChanged -= OnInternalAudioChanged;
         Entry.JacketChanged -= OnInternalJacketChanged;
-        Entry.ChartEndChanged -= OnChartEndChanged;
 
         Entry = NotationSerializer.ToEntry(path, args, out _);
         Chart = NotationSerializer.ToChart(path, args, out _);
@@ -97,7 +92,6 @@ public static class ChartSystem
         Entry.EntryChanged += OnInternalEntryChanged;
         Entry.AudioChanged += OnInternalAudioChanged;
         Entry.JacketChanged += OnInternalJacketChanged;
-        Entry.ChartEndChanged += OnChartEndChanged;
         
         ChartLoaded?.Invoke(null, EventArgs.Empty);
         EntryChanged?.Invoke(null, EventArgs.Empty);
@@ -124,7 +118,6 @@ public static class ChartSystem
             Entry.EntryChanged -= OnInternalEntryChanged;
             Entry.AudioChanged -= OnInternalAudioChanged;
             Entry.JacketChanged -= OnInternalJacketChanged;
-            Entry.ChartEndChanged -= OnChartEndChanged;
 
             Entry = entry;
             Chart = chart;
@@ -134,7 +127,6 @@ public static class ChartSystem
             Entry.EntryChanged += OnInternalEntryChanged;
             Entry.AudioChanged += OnInternalAudioChanged;
             Entry.JacketChanged += OnInternalJacketChanged;
-            Entry.ChartEndChanged += OnChartEndChanged;
         
             ChartLoaded?.Invoke(null, EventArgs.Empty);
             EntryChanged?.Invoke(null, EventArgs.Empty);
@@ -179,10 +171,12 @@ public static class ChartSystem
     private static void OnInternalAudioChanged(object? sender, EventArgs e) => AudioChanged?.Invoke(sender, e);
     private static void OnInternalJacketChanged(object? sender, EventArgs e) => JacketChanged?.Invoke(sender, e);
     
-    private static void OnAudioLoaded(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
-    private static void OnChartEndChanged(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
-    private static void OnOperationHistoryChanged(object? sender, EventArgs e) => Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
-    
+    private static void OnOperationHistoryChanged(object? sender, EventArgs e)
+    {
+        Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
+        IsSaved = false;
+    }
+
     private static void OnSettingsChanged(object? sender, EventArgs e)
     {
         if (SettingsSystem.RenderSettings.SaturnJudgeAreas != saturnJudgeAreas)

@@ -8,8 +8,13 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
+using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
+using SaturnEdit.UndoRedo;
+using SaturnEdit.UndoRedo.PositionableOperations;
+using SaturnEdit.UndoRedo.TimeableOperations;
 using SaturnEdit.Utilities;
 using SaturnView;
 using SkiaSharp;
@@ -21,6 +26,10 @@ public partial class ChartView3D : UserControl
     public ChartView3D()
     {
         InitializeComponent();
+        
+        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        
         SizeChanged += Control_OnSizeChanged;
         ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
         
@@ -39,62 +48,522 @@ public partial class ChartView3D : UserControl
 #region Methods
     public static void MoveSelectionBeatForward()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
         
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point);
+                }
+            }
+            else if (obj is StopEffectEvent stopEffectEvent)
+            {
+                addOperation(stopEffectEvent.SubEvents[0]);
+                addOperation(stopEffectEvent.SubEvents[1]);
+            }
+            else if (obj is ReverseEffectEvent reverseEffectEvent)
+            {
+                addOperation(reverseEffectEvent.SubEvents[0]);
+                addOperation(reverseEffectEvent.SubEvents[1]);
+                addOperation(reverseEffectEvent.SubEvents[2]);
+            }
+            else
+            {
+                addOperation(obj);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+        
+        return;
+
+        void addOperation(ITimeable obj)
+        {
+            int oldFullTick = obj.Timestamp.FullTick;
+            int newFullTick = oldFullTick + TimeSystem.DivisionInterval;
+
+            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+        }
     }
 
     public static void MoveSelectionBeatBack()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
         
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point);
+                }
+            }
+            else if (obj is StopEffectEvent stopEffectEvent)
+            {
+                addOperation(stopEffectEvent.SubEvents[0]);
+                addOperation(stopEffectEvent.SubEvents[1]);
+            }
+            else if (obj is ReverseEffectEvent reverseEffectEvent)
+            {
+                addOperation(reverseEffectEvent.SubEvents[0]);
+                addOperation(reverseEffectEvent.SubEvents[1]);
+                addOperation(reverseEffectEvent.SubEvents[2]);
+            }
+            else
+            {
+                addOperation(obj);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+        
+        return;
+
+        void addOperation(ITimeable obj)
+        {
+            int oldFullTick = obj.Timestamp.FullTick;
+            int newFullTick = oldFullTick - TimeSystem.DivisionInterval;
+
+            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+        }
     }
 
     public static void MoveSelectionMeasureForward()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
         
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point);
+                }
+            }
+            else if (obj is StopEffectEvent stopEffectEvent)
+            {
+                addOperation(stopEffectEvent.SubEvents[0]);
+                addOperation(stopEffectEvent.SubEvents[1]);
+            }
+            else if (obj is ReverseEffectEvent reverseEffectEvent)
+            {
+                addOperation(reverseEffectEvent.SubEvents[0]);
+                addOperation(reverseEffectEvent.SubEvents[1]);
+                addOperation(reverseEffectEvent.SubEvents[2]);
+            }
+            else
+            {
+                addOperation(obj);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+        
+        return;
+
+        void addOperation(ITimeable obj)
+        {
+            int oldFullTick = obj.Timestamp.FullTick;
+            int newFullTick = oldFullTick + 1920;
+
+            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+        }
     }
 
     public static void MoveSelectionMeasureBack()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
         
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point);
+                }
+            }
+            else if (obj is StopEffectEvent stopEffectEvent)
+            {
+                addOperation(stopEffectEvent.SubEvents[0]);
+                addOperation(stopEffectEvent.SubEvents[1]);
+            }
+            else if (obj is ReverseEffectEvent reverseEffectEvent)
+            {
+                addOperation(reverseEffectEvent.SubEvents[0]);
+                addOperation(reverseEffectEvent.SubEvents[1]);
+                addOperation(reverseEffectEvent.SubEvents[2]);
+            }
+            else
+            {
+                addOperation(obj);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+        
+        return;
+
+        void addOperation(ITimeable obj)
+        {
+            int oldFullTick = obj.Timestamp.FullTick;
+            int newFullTick = oldFullTick - 1920;
+
+            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+        }
     }
 
     public static void MoveClockwise()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
         
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point);
+                }
+            }
+            else if (obj is IPositionable positionable)
+            {
+                addOperation(positionable);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+        
+        return;
+
+        void addOperation(IPositionable positionable)
+        {
+            int oldPosition = positionable.Position;
+            int newPosition = oldPosition - 1;
+
+            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
+        }
     }
 
     public static void MoveCounterclockwise()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
         
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point);
+                }
+            }
+            else if (obj is IPositionable positionable)
+            {
+                addOperation(positionable);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+        
+        return;
+
+        void addOperation(IPositionable positionable)
+        {
+            int oldPosition = positionable.Position;
+            int newPosition = oldPosition + 1;
+
+            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
+        }
     }
 
     public static void IncreaseSize()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
         
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point);
+                }
+            }
+            else if (obj is IPositionable positionable)
+            {
+                addOperation(positionable);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+        
+        return;
+
+        void addOperation(IPositionable positionable)
+        {
+            int oldSize = positionable.Size;
+            int newSize = oldSize + 1;
+
+            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
+        }
     }
 
     public static void DecreaseSize()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
         
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point);
+                }
+            }
+            else if (obj is IPositionable positionable)
+            {
+                addOperation(positionable);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+        
+        return;
+
+        void addOperation(IPositionable positionable)
+        {
+            int oldSize = positionable.Size;
+            int newSize = oldSize - 1;
+
+            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
+        }
     }
 
     public static void MoveClockwiseIterative()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
+
+        int step = 0;
+        int lastFullTick = -1;
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                if (holdNote.Timestamp.FullTick != lastFullTick)
+                {
+                    step++;
+                    lastFullTick = holdNote.Timestamp.FullTick;
+                }
+                
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point, step);
+                }
+            }
+            else if (obj is IPositionable positionable)
+            {
+                if (obj.Timestamp.FullTick != lastFullTick)
+                {
+                    step++;
+                    lastFullTick = obj.Timestamp.FullTick;
+                }
+                
+                addOperation(positionable, step);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
         
+        return;
+
+        void addOperation(IPositionable positionable, int offset)
+        {
+            int oldPosition = positionable.Position;
+            int newPosition = oldPosition - offset;
+
+            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
+        }
     }
 
     public static void MoveCounterclockwiseIterative()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
+
+        int step = 0;
+        int lastFullTick = -1;
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                if (holdNote.Timestamp.FullTick != lastFullTick)
+                {
+                    step++;
+                    lastFullTick = holdNote.Timestamp.FullTick;
+                }
+                
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point, step);
+                }
+            }
+            else if (obj is IPositionable positionable)
+            {
+                if (obj.Timestamp.FullTick != lastFullTick)
+                {
+                    step++;
+                    lastFullTick = obj.Timestamp.FullTick;
+                }
+                
+                addOperation(positionable, step);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
         
+        return;
+
+        void addOperation(IPositionable positionable, int offset)
+        {
+            int oldPosition = positionable.Position;
+            int newPosition = oldPosition + offset;
+
+            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
+        }
     }
 
     public static void IncreaseSizeIterative()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
+
+        int step = 0;
+        int lastFullTick = -1;
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                if (holdNote.Timestamp.FullTick != lastFullTick)
+                {
+                    step++;
+                    lastFullTick = holdNote.Timestamp.FullTick;
+                }
+                
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point, step);
+                }
+            }
+            else if (obj is IPositionable positionable)
+            {
+                if (obj.Timestamp.FullTick != lastFullTick)
+                {
+                    step++;
+                    lastFullTick = obj.Timestamp.FullTick;
+                }
+                
+                addOperation(positionable, step);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
         
+        return;
+
+        void addOperation(IPositionable positionable, int offset)
+        {
+            int oldSize = positionable.Size;
+            int newSize = oldSize + offset;
+
+            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
+        }
     }
 
     public static void DecreaseSizeIterative()
     {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
+
+        int step = 0;
+        int lastFullTick = -1;
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
+        {
+            if (obj is HoldNote holdNote)
+            {
+                if (holdNote.Timestamp.FullTick != lastFullTick)
+                {
+                    step++;
+                    lastFullTick = holdNote.Timestamp.FullTick;
+                }
+                
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    addOperation(point, step);
+                }
+            }
+            else if (obj is IPositionable positionable)
+            {
+                if (obj.Timestamp.FullTick != lastFullTick)
+                {
+                    step++;
+                    lastFullTick = obj.Timestamp.FullTick;
+                }
+                
+                addOperation(positionable, step);
+            }
+        }
+
+        operations.Add(new BuildChartOperation());
+        UndoRedoSystem.Push(new CompositeOperation(operations));
         
+        return;
+
+        void addOperation(IPositionable positionable, int offset)
+        {
+            int oldSize = positionable.Size;
+            int newSize = oldSize - offset;
+
+            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
+        }
     }
 
     public static void MirrorHorizontal()
@@ -353,6 +822,345 @@ public partial class ChartView3D : UserControl
 #endregion System Event Delegates
 
 #region UI Event Delegates
+    private void Control_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
+        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+        
+        Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
+        
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
+        {
+            EventListView.AddTempoChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"]))
+        {
+            EventListView.AddMetreChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"]))
+        {
+            EventListView.AddTutorialMarker();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"]))
+        {
+            LayerListView.AddSpeedChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"]))
+        {
+            LayerListView.AddVisibilityChange();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"]))
+        {
+            LayerListView.AddStopEffect();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"]))
+        {
+            LayerListView.AddReverseEffect();
+            e.Handled = true;
+        }
+        
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatForward"])) 
+        {
+            MoveSelectionBeatForward();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatBack"])) 
+        {
+            MoveSelectionBeatBack();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureForward"])) 
+        {
+            MoveSelectionMeasureForward();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureBack"])) 
+        {
+            MoveSelectionMeasureBack();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwise"])) 
+        {
+            MoveClockwise();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwise"])) 
+        {
+            MoveCounterclockwise();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSize"])) 
+        {
+            IncreaseSize();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSize"])) 
+        {
+            DecreaseSize();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwiseIterative"])) 
+        {
+            MoveClockwiseIterative();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwiseIterative"])) 
+        {
+            MoveCounterclockwiseIterative();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSizeIterative"])) 
+        {
+            IncreaseSizeIterative();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSizeIterative"])) 
+        {
+            DecreaseSizeIterative();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorHorizontal"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorVertical"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorCustom"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.AdjustAxis"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.FlipDirection"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ReverseSelection"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleSelection"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.OffsetChart"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleChart"])) 
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorChart"])) 
+        {
+            
+            e.Handled = true;
+        }
+            
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.CutHold"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.JoinHold"]))
+        {
+            
+            e.Handled = true;
+        }
+            
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.IncreaseNoteSpeed"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseNoteSpeed"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.IncreaseBackgroundDim"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseBackgroundDim"]))
+        {
+            
+            e.Handled = true;
+        }
+            
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowSpeedChanges"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowVisibilityChanges"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowLaneToggleAnimations"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeLaneSweeps"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgeAreas"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodWindows"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgeAreas"]))
+        {
+            
+            e.Handled = true;
+        }
+            
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapForward"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapBackward"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideClockwise"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideCounterclockwise"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Chain"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Hold"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Sync"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MeasureLine"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.BeatLine"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneShow"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneHide"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TempoChange"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MetreChange"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SpeedChange"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.VisibilityChange"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.ReverseEffect"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.StopEffect"]))
+        {
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TutorialMarker"]))
+        {
+            e.Handled = true;
+        }
+            
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.EventMarkers"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.LaneToggleNotes"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.HoldControlPoints"]))
+        {
+            
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.Bookmarks"]))
+        {
+            
+            e.Handled = true;
+        }
+    }
+
+    private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
+    
     private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
         double minimum = double.Min(PanelCanvasContainer.Bounds.Width, PanelCanvasContainer.Bounds.Height);
@@ -936,342 +1744,5 @@ public partial class ChartView3D : UserControl
     private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => CutHold();
 
     private void MenuItemJoinHold_OnClick(object? sender, RoutedEventArgs e) => JoinHold();
-    
-    private void Control_OnKeyDown(object? sender, KeyEventArgs e)
-    {
-        IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
-        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
-        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
-        
-        Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
-        
-        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
-        {
-            EventListView.AddTempoChange();
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"]))
-        {
-            EventListView.AddMetreChange();
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"]))
-        {
-            EventListView.AddTutorialMarker();
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"]))
-        {
-            LayerListView.AddSpeedChange();
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"]))
-        {
-            LayerListView.AddVisibilityChange();
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"]))
-        {
-            LayerListView.AddStopEffect();
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"]))
-        {
-            LayerListView.AddReverseEffect();
-            e.Handled = true;
-        }
-        
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatForward"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatBack"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureForward"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureBack"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwise"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwise"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSize"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSize"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwiseIterative"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwiseIterative"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSizeIterative"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSizeIterative"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorHorizontal"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorVertical"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorCustom"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.AdjustAxis"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.FlipDirection"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ReverseSelection"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleSelection"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.OffsetChart"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleChart"])) 
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorChart"])) 
-        {
-            
-            e.Handled = true;
-        }
-            
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.SpikeHold"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.CutHold"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.JoinHold"]))
-        {
-            
-            e.Handled = true;
-        }
-            
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.IncreaseNoteSpeed"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseNoteSpeed"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.IncreaseBackgroundDim"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseBackgroundDim"]))
-        {
-            
-            e.Handled = true;
-        }
-            
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowSpeedChanges"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowVisibilityChanges"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowLaneToggleAnimations"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeLaneSweeps"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgeAreas"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodWindows"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgeAreas"]))
-        {
-            
-            e.Handled = true;
-        }
-            
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapForward"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapBackward"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideClockwise"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideCounterclockwise"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Chain"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Hold"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Sync"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MeasureLine"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.BeatLine"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneShow"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneHide"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TempoChange"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MetreChange"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SpeedChange"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.VisibilityChange"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.ReverseEffect"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.StopEffect"]))
-        {
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TutorialMarker"]))
-        {
-            e.Handled = true;
-        }
-            
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.EventMarkers"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.LaneToggleNotes"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.HoldControlPoints"]))
-        {
-            
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.Bookmarks"]))
-        {
-            
-            e.Handled = true;
-        }
-    }
 #endregion UI Event Delegates
 }

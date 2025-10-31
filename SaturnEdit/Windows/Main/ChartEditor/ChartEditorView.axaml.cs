@@ -31,6 +31,9 @@ public partial class ChartEditorView : UserControl
     public ChartEditorView()
     {
         InitializeComponent();
+
+        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
@@ -534,67 +537,6 @@ public partial class ChartEditorView : UserControl
 #endregion System Event Delegates
     
 #region UI Event Delegates
-    private void MenuItemChartEditorToolWindows_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (sender is not MenuItem menuItem) return;
-        UserControl? userControl = menuItem.Name switch
-        {
-            "MenuItemChartEditorChartView3D" => new ChartView3D(),
-            "MenuItemChartEditorChartView2D" => new ChartView2D(),
-            "MenuItemChartEditorChartViewTxt" => new ChartViewTxt(),
-            "MenuItemChartEditorChartProperties" => new ChartPropertiesView(),
-            "MenuItemChartEditorChartStatistics" => new ChartStatisticsView(),
-            "MenuItemChartEditorProofreader" => new ProofreaderView(),
-            "MenuItemChartEditorEventList" => new EventListView(),
-            "MenuItemChartEditorLayerList" => new LayerListView(),
-            "MenuItemChartEditorInspector" => new InspectorView(),
-            "MenuItemChartEditorCursor" => new CursorView(),
-            "MenuItemChartEditorAudioMixer" => new AudioMixerView(),
-            "MenuItemChartEditorWaveform" => new WaveformView(),
-            _ => null,
-        };
-
-        if (userControl == null) return;
-        CreateNewFloatingTool(userControl);
-    }
-
-    private void MenuItemChartEditorNew_OnClick(object? sender, RoutedEventArgs e) => File_New();
-
-    private void MenuItemChartEditorOpen_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open();
-
-    private void MenuItemChartEditorSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_Save();
-
-    private void MenuItemChartEditorSaveAs_OnClick(object? sender, RoutedEventArgs e) => _ = File_SaveAs();
-
-    private void MenuItemChartEditorReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => _ = File_ReloadFromDisk();
-
-    private void MenuItemChartEditorExport_OnClick(object? sender, RoutedEventArgs e) => _ = File_Export();
-
-    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e)
-    {
-        mainWindow?.ShowSettingsWindow();
-    }
-
-    private void MenuItemChartEditorQuit_OnClick(object? sender, RoutedEventArgs e) => File_Quit();
-    
-    private void MenuItemChartEditorUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Undo();
-
-    private void MenuItemChartEditorRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
-
-    private void MenuItemChartEditorCut_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Cut();
-
-    private void MenuItemChartEditorCopy_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Copy();
-
-    private void MenuItemChartEditorPaste_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Paste();
-
-    private void MenuItemChartEditorSelectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.SelectAll();
-
-    private void MenuItemChartEditorDeselectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.DeselectAll();
-
-    private void MenuItemChartEditorCheckerDeselect_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.CheckerDeselect();
-
-    private void MenuItemChartEditorSelectByCriteria_OnClick(object? sender, RoutedEventArgs e) => Edit_SelectByCriteria();
-
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
@@ -701,5 +643,68 @@ public partial class ChartEditorView : UserControl
             e.Handled = true;
         }
     }
+    
+    private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
+    
+    private void MenuItemChartEditorToolWindows_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not MenuItem menuItem) return;
+        UserControl? userControl = menuItem.Name switch
+        {
+            "MenuItemChartEditorChartView3D" => new ChartView3D(),
+            "MenuItemChartEditorChartView2D" => new ChartView2D(),
+            "MenuItemChartEditorChartViewTxt" => new ChartViewTxt(),
+            "MenuItemChartEditorChartProperties" => new ChartPropertiesView(),
+            "MenuItemChartEditorChartStatistics" => new ChartStatisticsView(),
+            "MenuItemChartEditorProofreader" => new ProofreaderView(),
+            "MenuItemChartEditorEventList" => new EventListView(),
+            "MenuItemChartEditorLayerList" => new LayerListView(),
+            "MenuItemChartEditorInspector" => new InspectorView(),
+            "MenuItemChartEditorCursor" => new CursorView(),
+            "MenuItemChartEditorAudioMixer" => new AudioMixerView(),
+            "MenuItemChartEditorWaveform" => new WaveformView(),
+            _ => null,
+        };
+
+        if (userControl == null) return;
+        CreateNewFloatingTool(userControl);
+    }
+
+    private void MenuItemChartEditorNew_OnClick(object? sender, RoutedEventArgs e) => File_New();
+
+    private void MenuItemChartEditorOpen_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open();
+
+    private void MenuItemChartEditorSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_Save();
+
+    private void MenuItemChartEditorSaveAs_OnClick(object? sender, RoutedEventArgs e) => _ = File_SaveAs();
+
+    private void MenuItemChartEditorReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => _ = File_ReloadFromDisk();
+
+    private void MenuItemChartEditorExport_OnClick(object? sender, RoutedEventArgs e) => _ = File_Export();
+
+    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e)
+    {
+        mainWindow?.ShowSettingsWindow();
+    }
+
+    private void MenuItemChartEditorQuit_OnClick(object? sender, RoutedEventArgs e) => File_Quit();
+    
+    private void MenuItemChartEditorUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Undo();
+
+    private void MenuItemChartEditorRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
+
+    private void MenuItemChartEditorCut_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Cut();
+
+    private void MenuItemChartEditorCopy_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Copy();
+
+    private void MenuItemChartEditorPaste_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Paste();
+
+    private void MenuItemChartEditorSelectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.SelectAll();
+
+    private void MenuItemChartEditorDeselectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.DeselectAll();
+
+    private void MenuItemChartEditorCheckerDeselect_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.CheckerDeselect();
+
+    private void MenuItemChartEditorSelectByCriteria_OnClick(object? sender, RoutedEventArgs e) => Edit_SelectByCriteria();
 #endregion UI Event Delegates
 }
