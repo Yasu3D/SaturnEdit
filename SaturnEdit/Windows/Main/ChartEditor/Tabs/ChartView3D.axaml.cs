@@ -38,6 +38,9 @@ public partial class ChartView3D : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
+        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
+        OnOperationHistoryChanged(null, EventArgs.Empty);
+
         SelectionSystem.PointerOverOverlapChanged += OnPointerOverOverlapChanged;
     }
 
@@ -57,7 +60,7 @@ public partial class ChartView3D : UserControl
 
         if (selectMirrorAxisWindow.Result == ModalDialogResult.Primary)
         {
-            EditorSystem.MirrorAxis = selectMirrorAxisWindow.Axis;
+            _ = Task.Run(() => EditorSystem.MirrorAxis = selectMirrorAxisWindow.Axis);
         }
     }
 
@@ -70,7 +73,7 @@ public partial class ChartView3D : UserControl
 
         if (selectScaleWindow.Result == ModalDialogResult.Primary)
         {
-            EditorSystem.Transform_ScaleSelection(selectScaleWindow.Scale);
+            _ = Task.Run(() => EditorSystem.Transform_ScaleSelection(selectScaleWindow.Scale));
         }
     }
 
@@ -83,7 +86,7 @@ public partial class ChartView3D : UserControl
 
         if (selectOffsetWindow.Result == ModalDialogResult.Primary)
         {
-            EditorSystem.Transform_OffsetChart(selectOffsetWindow.Offset);
+            _ = Task.Run(() => EditorSystem.Transform_OffsetChart(selectOffsetWindow.Offset));
         }
     }
 
@@ -96,7 +99,7 @@ public partial class ChartView3D : UserControl
 
         if (selectScaleWindow.Result == ModalDialogResult.Primary)
         {
-            EditorSystem.Transform_ScaleChart(selectScaleWindow.Scale);
+            _ = Task.Run(() => EditorSystem.Transform_ScaleChart(selectScaleWindow.Scale));
         }
     }
 
@@ -109,7 +112,7 @@ public partial class ChartView3D : UserControl
 
         if (selectMirrorAxisWindow.Result == ModalDialogResult.Primary)
         {
-            EditorSystem.Transform_MirrorChart(selectMirrorAxisWindow.Axis);
+            _ = Task.Run(() => EditorSystem.Transform_MirrorChart(selectMirrorAxisWindow.Axis));
         }
     }
     
@@ -139,7 +142,15 @@ public partial class ChartView3D : UserControl
 
         if (zigZagHoldArgsWindow.Result == ModalDialogResult.Primary)
         {
-            EditorSystem.Convert_ZigZagHold();
+            _ = Task.Run(() => EditorSystem.Convert_ZigZagHold
+            (
+                beats:    zigZagHoldArgsWindow.Beats,
+                division: zigZagHoldArgsWindow.Division,
+                leftEdgeOffsetA:  zigZagHoldArgsWindow.LeftEdgeOffsetA,
+                leftEdgeOffsetB:  zigZagHoldArgsWindow.LeftEdgeOffsetB,
+                rightEdgeOffsetA: zigZagHoldArgsWindow.RightEdgeOffsetA,
+                rightEdgeOffsetB: zigZagHoldArgsWindow.RightEdgeOffsetB
+            ));
         }
     }
 #endregion Methods
@@ -331,6 +342,17 @@ public partial class ChartView3D : UserControl
             }
         });
     }
+    
+    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    {
+        ComboBoxEditMode.SelectedIndex = EditorSystem.EditMode switch
+        {
+            EditorEditMode.NoteEditMode => 0,
+            EditorEditMode.HoldEditMode => 1,
+            EditorEditMode.EventEditMode => 2,
+            _ => 0,
+        };
+    }
 #endregion System Event Delegates
 
 #region UI Event Delegates
@@ -344,113 +366,113 @@ public partial class ChartView3D : UserControl
         
         if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
         {
-            EditorSystem.Insert_AddTempoChange();
+            Task.Run(EditorSystem.Insert_AddTempoChange);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"]))
         {
-            EditorSystem.Insert_AddMetreChange();
+            Task.Run(EditorSystem.Insert_AddMetreChange);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"]))
         {
-            EditorSystem.Insert_AddTutorialMarker();
+            Task.Run(EditorSystem.Insert_AddTutorialMarker);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"]))
         {
-            EditorSystem.Insert_AddSpeedChange();
+            Task.Run(EditorSystem.Insert_AddSpeedChange);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"]))
         {
-            EditorSystem.Insert_AddVisibilityChange();
+            Task.Run(EditorSystem.Insert_AddVisibilityChange);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"]))
         {
-            EditorSystem.Insert_AddStopEffect();
+            Task.Run(EditorSystem.Insert_AddStopEffect);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"]))
         {
-            EditorSystem.Insert_AddReverseEffect();
+            Task.Run(EditorSystem.Insert_AddReverseEffect);
             e.Handled = true;
         }
         
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatForward"])) 
         {
-            EditorSystem.Transform_MoveSelectionBeatForward();
+            Task.Run(EditorSystem.Transform_MoveSelectionBeatForward);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatBack"])) 
         {
-            EditorSystem.Transform_MoveSelectionBeatBack();
+            Task.Run(EditorSystem.Transform_MoveSelectionBeatBack);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureForward"])) 
         {
-            EditorSystem.Transform_MoveSelectionMeasureForward();
+            Task.Run(EditorSystem.Transform_MoveSelectionMeasureForward);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureBack"])) 
         {
-            EditorSystem.Transform_MoveSelectionMeasureBack();
+            Task.Run(EditorSystem.Transform_MoveSelectionMeasureBack);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwise"])) 
         {
-            EditorSystem.Transform_MoveClockwise();
+            Task.Run(EditorSystem.Transform_MoveClockwise);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwise"])) 
         {
-            EditorSystem.Transform_MoveCounterclockwise();
+            Task.Run(EditorSystem.Transform_MoveCounterclockwise);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSize"])) 
         {
-            EditorSystem.Transform_IncreaseSize();
+            Task.Run(EditorSystem.Transform_IncreaseSize);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSize"])) 
         {
-            EditorSystem.Transform_DecreaseSize();
+            Task.Run(EditorSystem.Transform_DecreaseSize);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveClockwiseIterative"])) 
         {
-            EditorSystem.Transform_MoveClockwiseIterative();
+            Task.Run(EditorSystem.Transform_MoveClockwiseIterative);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveCounterclockwiseIterative"])) 
         {
-            EditorSystem.Transform_MoveCounterclockwiseIterative();
+            Task.Run(EditorSystem.Transform_MoveCounterclockwiseIterative);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.IncreaseSizeIterative"])) 
         {
-            EditorSystem.Transform_IncreaseSizeIterative();
+            Task.Run(EditorSystem.Transform_IncreaseSizeIterative);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.DecreaseSizeIterative"])) 
         {
-            EditorSystem.Transform_DecreaseSizeIterative();
+            Task.Run(EditorSystem.Transform_DecreaseSizeIterative);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorHorizontal"])) 
         {
-            EditorSystem.Transform_MirrorHorizontal();
+            Task.Run(EditorSystem.Transform_MirrorHorizontal);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorVertical"])) 
         {
-            EditorSystem.Transform_MirrorVertical();
+            Task.Run(EditorSystem.Transform_MirrorVertical);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorCustom"])) 
         {
-            EditorSystem.Transform_MirrorCustom();
+            Task.Run(EditorSystem.Transform_MirrorCustom);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.AdjustAxis"])) 
@@ -460,12 +482,12 @@ public partial class ChartView3D : UserControl
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.FlipDirection"])) 
         {
-            EditorSystem.Transform_FlipDirection();
+            Task.Run(EditorSystem.Transform_FlipDirection);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ReverseSelection"])) 
         {
-            EditorSystem.Transform_ReverseSelection();
+            Task.Run(EditorSystem.Transform_ReverseSelection);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleSelection"])) 
@@ -491,17 +513,17 @@ public partial class ChartView3D : UserControl
             
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.ZigZagHold"]))
         {
-            EditorSystem.Convert_ZigZagHold();
+            ZigZagHold();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.CutHold"]))
         {
-            EditorSystem.Convert_CutHold();
+            Task.Run(EditorSystem.Convert_CutHold);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.JoinHold"]))
         {
-            EditorSystem.Convert_JoinHold();
+            Task.Run(EditorSystem.Convert_JoinHold);
             e.Handled = true;
         }
             
@@ -1193,55 +1215,55 @@ public partial class ChartView3D : UserControl
     }
 
     
-    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTempoChange();
+    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddTempoChange);
 
-    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddMetreChange();
+    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddMetreChange);
 
-    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTutorialMarker();
+    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddTutorialMarker);
 
-    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddSpeedChange();
+    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddSpeedChange);
 
-    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddVisibilityChange();
+    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddVisibilityChange);
 
-    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddStopEffect();
+    private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddStopEffect);
 
-    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddReverseEffect();
+    private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddReverseEffect);
 
-    private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionBeatForward();
+    private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MoveSelectionBeatForward);
 
-    private void MenuItemMoveSelectionBeatBack_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionBeatBack();
+    private void MenuItemMoveSelectionBeatBack_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MoveSelectionBeatBack);
 
-    private void MenuItemMoveSelectionMeasureForward_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionMeasureForward();
+    private void MenuItemMoveSelectionMeasureForward_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MoveSelectionMeasureForward);
 
-    private void MenuItemMoveSelectionMeasureBack_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveSelectionMeasureBack();
+    private void MenuItemMoveSelectionMeasureBack_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MoveSelectionMeasureBack);
 
-    private void MenuItemMoveClockwise_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveClockwise();
+    private void MenuItemMoveClockwise_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MoveClockwise);
 
-    private void MenuItemMoveCounterclockwise_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveCounterclockwise();
+    private void MenuItemMoveCounterclockwise_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MoveCounterclockwise);
 
-    private void MenuItemIncreaseSize_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_IncreaseSize();
+    private void MenuItemIncreaseSize_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_IncreaseSize);
 
-    private void MenuItemDecreaseSize_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_DecreaseSize();
+    private void MenuItemDecreaseSize_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_DecreaseSize);
 
-    private void MenuItemMoveClockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveClockwiseIterative();
+    private void MenuItemMoveClockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MoveClockwiseIterative);
 
-    private void MenuItemMoveCounterclockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MoveCounterclockwiseIterative();
+    private void MenuItemMoveCounterclockwiseIterative_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MoveCounterclockwiseIterative);
 
-    private void MenuItemIncreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_IncreaseSizeIterative();
+    private void MenuItemIncreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_IncreaseSizeIterative);
 
-    private void MenuItemDecreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_DecreaseSizeIterative();
+    private void MenuItemDecreaseSizeIterative_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_DecreaseSizeIterative);
 
-    private void MenuItemMirrorHorizontal_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MirrorHorizontal();
+    private void MenuItemMirrorHorizontal_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MirrorHorizontal);
 
-    private void MenuItemMirrorVertical_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MirrorVertical();
+    private void MenuItemMirrorVertical_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MirrorVertical);
 
-    private void MenuItemMirrorCustom_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MirrorCustom();
+    private void MenuItemMirrorCustom_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MirrorCustom);
 
     private void MenuItemAdjustAxis_OnClick(object? sender, RoutedEventArgs e) => AdjustAxis();
 
-    private void MenuItemFlipDirection_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_FlipDirection();
+    private void MenuItemFlipDirection_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_FlipDirection);
 
-    private void MenuItemReverseSelection_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_ReverseSelection();
+    private void MenuItemReverseSelection_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_ReverseSelection);
 
     private void MenuItemScaleSelection_OnClick(object? sender, RoutedEventArgs e) => ScaleSelection();
 
@@ -1253,8 +1275,8 @@ public partial class ChartView3D : UserControl
 
     private void MenuItemZigZagHold_OnClick(object? sender, RoutedEventArgs e) => ZigZagHold();
 
-    private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Convert_CutHold();
+    private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Convert_CutHold);
 
-    private void MenuItemJoinHold_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Convert_JoinHold();
+    private void MenuItemJoinHold_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Convert_JoinHold);
 #endregion UI Event Delegates
 }

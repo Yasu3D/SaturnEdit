@@ -246,6 +246,7 @@ ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes,...of those Lane Hide:
 ChartEditor.ChartView3D,Chart View (3D)
 ChartEditor.ChartView3D.Mode.NoteEditMode,Note Edit Mode
 ChartEditor.ChartView3D.Mode.HoldEditMode,Hold Edit Mode
+ChartEditor.ChartView3D.Mode.EventEditMode,Event Edit Mode
 ChartEditor.ChartView3D.ToolTip.EditType,Edit Type
 ChartEditor.ChartView3D.ToolTip.EditType.Description,Changes the type of all selected notes to the current note type.
 ChartEditor.ChartView3D.ToolTip.EditShape,Edit Shape
@@ -517,8 +518,13 @@ SelectByCriteria.PositionVariance,Position Variance
 SelectByCriteria.FilterSelection,Filter Selection
 SelectMirrorAxis.Window.Title,Select Mirror Axis
 SelectScale.Window.Title,Select Scale
+SelectScale.Scale,Scale
 SelectOffset.Window.Title,Select Offset
-ZigZagHoldArgs.Window.Title,Zig-Zag Hold Arguments
+SelectOffset.Direction,Direction
+SelectOffset.Direction.Forward,Forward
+SelectOffset.Direction.Backward,Backward
+ZigZagHoldArgs.Window.Title,Zig-Zag Hold Generator
+ZigZagHoldArgs.Interval,Interval
 ModalDialog.SavePrompt.Title,Save Chart
 ModalDialog.SavePrompt.Header,Do you want to save changes to your chart before closing?
 ModalDialog.SavePrompt.Paragraph,Your changes will be lost if you don't save them.

@@ -1,3 +1,5 @@
+using System;
+using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
@@ -15,6 +17,27 @@ public partial class SelectScaleWindow : Window
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
 
 #region UI Event Delegates
+    private void TextBoxScale_OnLostFocus(object? sender, RoutedEventArgs e)
+    {
+        if (TextBoxScale == null) return;
+
+        try
+        {
+            Scale = Convert.ToDouble(TextBoxScale.Text, CultureInfo.InvariantCulture);
+            TextBoxScale.Text = Scale.ToString("F6", CultureInfo.InvariantCulture);
+        }
+        catch (Exception ex)
+        {
+            Scale = 1;
+            TextBoxScale.Text = Scale.ToString("F6", CultureInfo.InvariantCulture);
+                
+            if (ex is not (FormatException or OverflowException))
+            {
+                Console.WriteLine(ex);
+            }
+        }
+    }
+    
     private void ButtonOk_OnClick(object? sender, RoutedEventArgs e)
     {
         Result = ModalDialogResult.Primary;

@@ -4,8 +4,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:SaturnEdit.Controls"
         mc:Ignorable="d"
-        d:DesignWidth="800"
-        d:DesignHeight="450"
+        d:DesignWidth="500"
+        d:DesignHeight="645"
+        Width="500"
+        Height="645"
         x:Class="SaturnEdit.Windows.Dialogs.ZigZagHoldArgs.ZigZagHoldArgsWindow"
         Title="Zig-Zag Hold Arguments"
         CanResize="False">
@@ -15,7 +17,7 @@
                                Classes="ShowCloseOnly"
                                HorizontalAlignment="Right"
                                VerticalAlignment="Top" />
-
+        
         <Grid RowDefinitions="41,*,51">
             <!-- Header -->
             <Grid Grid.Row="0">
@@ -36,41 +38,169 @@
                     Background="{DynamicResource BackgroundPrimary}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch">
-                <StackPanel Margin="10">
-                    <Panel Margin="0,10,0,0">
-                        <Rectangle Width="1"
-                                   Height="25"
-                                   Margin="77.5,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   Fill="{DynamicResource SeparatorPrimary}" />
+                <Grid RowDefinitions="*,153">
+                    
+                    <!-- Canvas -->
+                    <controls:SkiaSharpCanvas Grid.Row="0"
+                                              RenderAction="RenderCanvas_OnRenderAction"
+                                              Width="500"
+                                              Height="405"/>
+
+                    <!-- Options -->
+                    <Grid Grid.Row="1"
+                          RowDefinitions="52,1,100"
+                          ColumnDefinitions="*,20,*">
                         
-                        <Rectangle Width="1"
-                                   Height="25"
-                                   Margin="149.5,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   Fill="{DynamicResource SeparatorPrimary}" />
+                        <!-- Division -->
+                        <Grid Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              ColumnDefinitions="*,*,10,*"
+                              Margin="10">
+                            <TextBlock Grid.Column="0"
+                                       Text="{DynamicResource ZigZagHoldArgs.Interval}"
+                                       VerticalAlignment="Center" />
+                            
+                            <NumericUpDown Grid.Column="1"
+                                           Name="NumericUpDownBeats"
+                                           Height="30"
+                                           Minimum="1"
+                                           Increment="1"
+                                           ValueChanged="NumericUpDownBeats_OnValueChanged"/>
+                            
+                            <Rectangle Grid.Column="2"
+                                       Width="1"
+                                       Height="20"
+                                       Fill="{DynamicResource SeparatorPrimary}"/>
+                            
+                            <NumericUpDown Grid.Column="3"
+                                           Name="NumericUpDownDivision"
+                                           Height="30"
+                                           Minimum="1"
+                                           Maximum="1920"
+                                           Increment="1"
+                                           ValueChanged="NumericUpDownDivision_OnValueChanged"/>
+                        </Grid>
                         
-                        <Rectangle Width="1"
-                                   Height="25"
-                                   Margin="222,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   Fill="{DynamicResource SeparatorPrimary}" />
+                        <!-- Horizontal Separator -->
+                        <Rectangle Grid.Row="1"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="3"
+                                   Height="1"
+                                   Fill="{DynamicResource SeparatorPrimary}"/>
                         
-                        <TextBlock Name="TextBlockAxis"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
-                                   Margin="10,0"
-                                   FontSize="15"
-                                   FontFamily="Consolas,Cascadia Code,Monospace"
-                                   Text="30" />
-                        <Slider Name="SliderAxis"
-                                Classes="Wide"
-                                Minimum="0"
-                                Maximum="60"
-                                TickFrequency="1"
-                                IsSnapToTickEnabled="True"/>
-                    </Panel>
-                </StackPanel>
+                        <!-- Left Sliders -->
+                        <Grid Grid.Row="2"
+                              Grid.Column="0"
+                              RowDefinitions="*,*"
+                              Margin="10,0,0,0">
+                            <Rectangle Grid.Row="0"
+                                       Width="1" 
+                                       Height="20"
+                                       Fill="{DynamicResource SeparatorPrimary}"/>
+                            
+                            <Rectangle Grid.Row="1"
+                                       Width="1" 
+                                       Height="20"
+                                       Fill="{DynamicResource SeparatorPrimary}"/>
+                            
+                            <TextBlock Grid.Row="0"
+                                       Name="TextBlockLeftEdgeOffsetA"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                       Margin="10,0"
+                                       FontSize="15"
+                                       FontFamily="Consolas,Cascadia Code,Monospace"
+                                       Text="0" />
+                            <TextBlock Grid.Row="1"
+                                       Name="TextBlockLeftEdgeOffsetB"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                       Margin="10,0"
+                                       FontSize="15"
+                                       FontFamily="Consolas,Cascadia Code,Monospace"
+                                       Text="0" />
+                            
+                            <Slider Grid.Row="0"
+                                    Name="SliderLeftEdgeOffsetA"
+                                    Classes="Wide"
+                                    Height="32"
+                                    Minimum="-30"
+                                    Maximum="30"
+                                    TickFrequency="1"
+                                    IsSnapToTickEnabled="True"
+                                    IsDirectionReversed="True"
+                                    ValueChanged="SliderLeftEdgeOffsetA_OnValueChanged" />
+                            <Slider Grid.Row="1"
+                                    Name="SliderLeftEdgeOffsetB"
+                                    Classes="Wide"
+                                    Height="32"
+                                    Minimum="-30"
+                                    Maximum="30"
+                                    TickFrequency="1"
+                                    IsSnapToTickEnabled="True"
+                                    IsDirectionReversed="True"
+                                    ValueChanged="SliderLeftEdgeOffsetB_OnValueChanged" />
+                        </Grid>
+
+                        <!-- Vertical Separator -->
+                        <Rectangle Grid.Row="2"
+                                   Grid.Column="1"
+                                   Fill="{DynamicResource SeparatorPrimary}"
+                                   Width="1" />
+                        
+                        <!-- Right Sliders -->
+                        <Grid Grid.Row="2"
+                              Grid.Column="2"
+                              RowDefinitions="*,*"
+                              Margin="0,0,10,0">
+                            <Rectangle Grid.Row="0"
+                                       Width="1" 
+                                       Height="20"
+                                       Fill="{DynamicResource SeparatorPrimary}"/>
+                            <Rectangle Grid.Row="1"
+                                       Width="1" 
+                                       Height="20"
+                                       Fill="{DynamicResource SeparatorPrimary}"/>
+                            
+                            <TextBlock Grid.Row="0"
+                                       Name="TextBlockRightEdgeOffsetA"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                       Margin="10,0"
+                                       FontSize="15"
+                                       FontFamily="Consolas,Cascadia Code,Monospace"
+                                       Text="0" />
+                            <TextBlock Grid.Row="1"
+                                       Name="TextBlockRightEdgeOffsetB"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                       Margin="10,0"
+                                       FontSize="15"
+                                       FontFamily="Consolas,Cascadia Code,Monospace"
+                                       Text="0" />
+                            
+                            <Slider Grid.Row="0"
+                                    Name="SliderRightEdgeOffsetA"
+                                    Classes="Wide"
+                                    Height="32"
+                                    Minimum="-30"
+                                    Maximum="30"
+                                    TickFrequency="1"
+                                    IsSnapToTickEnabled="True"
+                                    ValueChanged="SliderRightEdgeOffsetA_OnValueChanged" />
+                            <Slider Grid.Row="1"
+                                    Name="SliderRightEdgeOffsetB"
+                                    Classes="Wide"
+                                    Height="32"
+                                    Minimum="-30"
+                                    Maximum="30"
+                                    TickFrequency="1"
+                                    IsSnapToTickEnabled="True"
+                                    ValueChanged="SliderRightEdgeOffsetB_OnValueChanged" />
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Border>
 
             <!-- Footer -->

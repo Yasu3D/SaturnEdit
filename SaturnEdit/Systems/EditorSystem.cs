@@ -28,9 +28,57 @@ public static class EditorSystem
     }
 
     public static int MirrorAxis { get; set; } = 0;
-    public static EditorEditMode EditMode { get; set; }= EditorEditMode.NoteEditMode;
+    public static EditorEditMode EditMode { get; set; } = EditorEditMode.NoteEditMode;
+    public static ITimeable? ActiveSubObjectGroup = null;
 
 #region Methods
+    public static void SetEditMode(EditorEditMode newEditMode)
+    {
+        // TODO: finish this
+        if (EditMode == newEditMode) return;
+        
+        List<IOperation> operations = [];
+        List<ITimeable> objects = SelectionSystem.OrderedSelectedObjects;
+        
+        if (newEditMode is EditorEditMode.NoteEditMode)
+        {
+            
+        }
+        else if (newEditMode is EditorEditMode.HoldEditMode)
+        {
+            HoldNote? holdNote = null;
+            foreach (ITimeable obj in objects)
+            {
+                if (obj is not HoldNote h) continue;
+                
+                holdNote = h;
+                break;
+            }
+
+            if (holdNote == null) return;
+        }
+        else if (newEditMode is EditorEditMode.EventEditMode)
+        {
+            StopEffectEvent? stopEffectEvent = null;
+            ReverseEffectEvent? reverseEffectEvent = null;
+
+            foreach (ITimeable obj in objects)
+            {
+                if (obj is StopEffectEvent s)
+                {
+                    stopEffectEvent ??= s;
+                }
+                else if (obj is ReverseEffectEvent r)
+                {
+                    reverseEffectEvent ??= r;
+                }
+                
+                if (stopEffectEvent != null && reverseEffectEvent != null) break;
+            }
+        }
+        
+        //operations.Add(new EditModeChangeOperation(EditMode, newEditMode));
+    }
     
     public static void Edit_Cut()
     {
@@ -918,6 +966,7 @@ public static class EditorSystem
 
     public static void Transform_ScaleSelection(double scale)
     {
+        if (scale == 1) return;
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
@@ -967,6 +1016,8 @@ public static class EditorSystem
 
     public static void Transform_OffsetChart(int offset)
     {
+        if (offset == 0) return;
+        
         List<IOperation> operations = [];
 
         foreach (Event @event in ChartSystem.Chart.Events)
@@ -1042,6 +1093,8 @@ public static class EditorSystem
 
     public static void Transform_ScaleChart(double scale)
     {
+        if (scale == 1) return;
+        
         List<IOperation> operations = [];
 
         foreach (Event @event in ChartSystem.Chart.Events)
@@ -1227,16 +1280,100 @@ public static class EditorSystem
     }
 
     
-    public static void Convert_ZigZagHold()
+    public static void Convert_ZigZagHold(int beats, int division, int leftEdgeOffsetA, int leftEdgeOffsetB, int rightEdgeOffsetA,  int rightEdgeOffsetB)
     {
+        // TODO: implement algorithm for points and full holds.
+        List<IOperation> operations = [];
+
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            
+            
+            if (obj is not HoldNote holdNote) continue;
+
+            Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
+            if (layer == null) continue;
+            
+            processHoldNote(layer, holdNote);
+        }
+        
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+
+        return;
+
+        void processHoldNote(Layer layer, HoldNote holdNote)
+        {
+            
+        }
+
+        void processHoldPoint(HoldPointNote start, HoldPointNote end)
+        {
+            if (start.Parent != end.Parent) return;
+        }
     }
 
     public static void Convert_CutHold()
     {
+        if (EditMode != EditorEditMode.HoldEditMode) return;
+        
+        // TODO.
     }
 
     public static void Convert_JoinHold()
     {
+        if (EditMode != EditorEditMode.NoteEditMode) return;
+
+        List<IOperation> operations = [];
+        List<ITimeable> objects = SelectionSystem.OrderedSelectedObjects;
+
+        if (objects.Count < 2) return;
+        
+        bool bonusTypeSet = false;
+
+        Layer? rootLayer = null;
+        HoldNote newHoldNote = new(BonusType.Normal, JudgementType.Normal);
+
+        HashSet<(int, int, int)> alreadyExistingPoints = [];
+        
+        foreach (ITimeable obj in objects)
+        {
+            if (obj is not HoldNote h) continue;
+            
+            Layer? l = ChartSystem.Chart.ParentLayer(h);
+            if (l == null) continue;
+
+            rootLayer ??= l;
+            
+            if (!bonusTypeSet)
+            {
+                newHoldNote.BonusType = h.BonusType;
+                newHoldNote.JudgementType = h.JudgementType;
+                bonusTypeSet = true;
+            }
+            
+            foreach (HoldPointNote p in h.Points)
+            {
+                if (!alreadyExistingPoints.Add((p.Timestamp.FullTick, p.Position, p.Size))) continue;
+                
+                newHoldNote.Points.Add(new
+                (
+                    timestamp:  new(p.Timestamp.FullTick),
+                    position:   p.Position,
+                    size:       p.Size,
+                    parent:     newHoldNote,
+                    renderType: p.RenderType
+                ));
+            }
+            
+            int i = l.Notes.IndexOf(h);
+            operations.Add(new NoteRemoveOperation(l, h, i));
+            operations.Add(new SelectionRemoveOperation(h, SelectionSystem.LastSelectedObject));
+        }
+
+        if (rootLayer == null) return;
+
+        operations.Add(new NoteAddOperation(rootLayer, newHoldNote, 0));
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
 

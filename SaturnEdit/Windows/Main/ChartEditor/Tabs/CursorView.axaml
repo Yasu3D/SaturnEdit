@@ -5,7 +5,7 @@
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
              d:DesignWidth="350"
-             d:DesignHeight="180"
+             d:DesignHeight="190"
              Background="{DynamicResource BackgroundPrimary}"
              x:Class="SaturnEdit.Windows.Main.ChartEditor.Tabs.CursorView">
     <Grid Margin="16"
@@ -60,7 +60,7 @@
         
         <Grid Grid.Row="1"
               Grid.Column="2"
-              ColumnDefinitions="1*, 15, *">
+              ColumnDefinitions="*, 15, *">
             <NumericUpDown Grid.Column="0"
                            Name="NumericUpDownBeat"
                            VerticalAlignment="Center"

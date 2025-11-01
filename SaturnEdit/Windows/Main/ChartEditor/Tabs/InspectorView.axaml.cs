@@ -442,10 +442,10 @@ public partial class InspectorView : UserControl
 
         if (ComboBoxType.SelectedIndex == 2)
         {
+            // Convert to Hold Note
             if (objects.Count < 2) return;
             if (SelectionSystem.SelectedLayer == null) return;
             
-            // Convert to Hold Note
             BonusType bonusType = BonusType.Normal;
             JudgementType judgementType = JudgementType.Normal;
 

@@ -3,9 +3,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:SaturnEdit.Controls"
+        xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
         mc:Ignorable="d"
-        d:DesignWidth="800"
-        d:DesignHeight="450"
+        d:DesignWidth="350"
+        d:DesignHeight="232"
+        Width="350"
+        Height="232"
         x:Class="SaturnEdit.Windows.Dialogs.SelectOffset.SelectOffsetWindow"
         Title="Select Offset"
         CanResize="False">
@@ -36,41 +39,92 @@
                     Background="{DynamicResource BackgroundPrimary}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch">
-                <StackPanel Margin="10">
-                    <Panel Margin="0,10,0,0">
-                        <Rectangle Width="1"
-                                   Height="25"
-                                   Margin="77.5,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   Fill="{DynamicResource SeparatorPrimary}" />
-                        
-                        <Rectangle Width="1"
-                                   Height="25"
-                                   Margin="149.5,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   Fill="{DynamicResource SeparatorPrimary}" />
-                        
-                        <Rectangle Width="1"
-                                   Height="25"
-                                   Margin="222,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   Fill="{DynamicResource SeparatorPrimary}" />
-                        
-                        <TextBlock Name="TextBlockAxis"
+                <Grid Margin="16"
+                      ColumnDefinitions="80,20,*"
+                      RowDefinitions="30, 30, 30"
+                      RowSpacing="10">
+
+                    <Rectangle Grid.Column="1"
+                               Grid.RowSpan="3"
+                               Fill="{DynamicResource SeparatorPrimary}"
+                               Width="1"
+                               HorizontalAlignment="Left" />
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource ChartEditor.General.Measure}" />
+                    <NumericUpDown Grid.Row="0"
+                                   Grid.Column="2"
+                                   Name="NumericUpDownMeasure"
                                    VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
-                                   Margin="10,0"
-                                   FontSize="15"
-                                   FontFamily="Consolas,Cascadia Code,Monospace"
-                                   Text="30" />
-                        <Slider Name="SliderAxis"
-                                Classes="Wide"
-                                Minimum="0"
-                                Maximum="60"
-                                TickFrequency="1"
-                                IsSnapToTickEnabled="True"/>
-                    </Panel>
-                </StackPanel>
+                                   HorizontalAlignment="Stretch"
+                                   Minimum="0"
+                                   FormatString="0"/>
+                    
+                    <Grid Row="1"
+                          Column="0"
+                          ColumnDefinitions="*,30"
+                          Margin="0,0,5,0">
+                        <TextBlock Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Text="{DynamicResource ChartEditor.General.Beat}" />
+
+                        <icon:FluentIcon Grid.Column="1"
+                                         Name="IconOddDivisionWarning"
+                                         IsVisible="True"
+                                         Icon="Warning"
+                                         Foreground="{DynamicResource ForegroundWarning}">
+                            <ToolTip.Tip>
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource ChartEditor.Cursor.OddBeatDivisionWarning}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.Cursor.OddBeatDivisionWarning.Description}"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                            </ToolTip.Tip>
+                        </icon:FluentIcon>
+                    </Grid>
+                    <Grid Grid.Row="1"
+                          Grid.Column="2"
+                          ColumnDefinitions="*, 15, *">
+                        <NumericUpDown Grid.Column="0"
+                                       Name="NumericUpDownBeat"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       Increment="1"
+                                       Minimum="-1"
+                                       FormatString="0"
+                                       ValueChanged="NumericUpDownBeat_OnValueChanged" />
+
+                        <Rectangle Grid.Column="1"
+                                   Fill="{DynamicResource SeparatorPrimary}"
+                                   Width="1"
+                                   Margin="0,5"
+                                   HorizontalAlignment="Center" />
+
+                        <NumericUpDown Grid.Column="2"
+                                       Name="NumericUpDownDivision"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       Minimum="1"
+                                       Maximum="1920"
+                                       Increment="1"
+                                       FormatString="0"
+                                       ValueChanged="NumericUpDownDivision_OnValueChanged" />
+                    </Grid>
+                    
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource SelectOffset.Direction}"/>
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="2"
+                              Name="ComboBoxDirection"
+                              SelectionChanged="ComboBoxDirection_OnSelectionChanged">
+                        <ComboBoxItem Content="{DynamicResource SelectOffset.Direction.Forward}"/>
+                        <ComboBoxItem Content="{DynamicResource SelectOffset.Direction.Backward}"/>
+                    </ComboBox>
+                </Grid>
             </Border>
 
             <!-- Footer -->

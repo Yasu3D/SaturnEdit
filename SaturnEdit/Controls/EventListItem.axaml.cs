@@ -3,6 +3,7 @@ using System.Globalization;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
@@ -82,23 +83,7 @@ public partial class EventListItem : UserControl
                         _ => throw new(),
                     };
                     
-                    if (Application.Current != null && Application.Current.TryGetResource(key, Application.Current.ActualThemeVariant, out object? resource))
-                    {
-                        if (resource is string s)
-                        {
-                            TextBlockEventType.Text = s;
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Resource '{key}' was not a string.");
-                            TextBlockEventType.Text = "UNKNOWN TYPE";
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Resource '{key}' could not be found.");
-                        TextBlockEventType.Text = "UNKNOWN TYPE";
-                    }
+                    TextBlockEventType.Bind(TextBlock.TextProperty, new DynamicResourceExtension(key));
                 }
                 catch (Exception ex)
                 {

@@ -80,13 +80,16 @@ public partial class SelectMirrorAxisWindow : Window
             
             linePaint.Color = new(brush2.Color.R, brush2.Color.G, brush2.Color.B, brush2.Color.A);
             
-            if (!Application.Current.TryGetResource("ButtonAccent", Application.Current.ActualThemeVariant, out resource)) return;
+            if (!Application.Current.TryGetResource("MirrorAxis", Application.Current.ActualThemeVariant, out resource)) return;
             if (resource is not SolidColorBrush brush3) return;
             
             axisPaint.Color = new(brush3.Color.R, brush3.Color.G, brush3.Color.B, brush3.Color.A);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            // Don't throw.
+            Console.WriteLine(ex);
+            
             backgroundColor = new(0xFFFF00FF);
             linePaint.Color = new(0xFFFF00FF);
             axisPaint.Color = new(0xFFFF00FF);

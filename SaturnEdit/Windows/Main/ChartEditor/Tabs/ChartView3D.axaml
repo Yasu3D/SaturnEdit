@@ -19,20 +19,15 @@
                 <StackPanel Orientation="Horizontal"
                             Margin="5"
                             Spacing="5">
-                    <ComboBox Classes="Outlined"
+                    <ComboBox Name="ComboBoxEditMode"
+                              Classes="Outlined"
                               Height="32"
                               Width="150"
                               CornerRadius="7"
                               SelectedIndex="0">
-                        <ComboBoxItem>
-                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Mode.NoteEditMode}"
-                                       VerticalAlignment="Center" />
-                        </ComboBoxItem>
-
-                        <ComboBoxItem>
-                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Mode.HoldEditMode}"
-                                       VerticalAlignment="Center" />
-                        </ComboBoxItem>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartView3D.Mode.NoteEditMode}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartView3D.Mode.HoldEditMode}"/>
+                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartView3D.Mode.EventEditMode}"/>
                     </ComboBox>
 
                     <Rectangle Width="1"
@@ -265,7 +260,6 @@
                                     </MenuItem.Header>
 
                                     <MenuItem Name="MenuItemMirrorHorizontal"
-                                              StaysOpenOnClick="True"
                                               Click="MenuItemMirrorHorizontal_OnClick">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal}" />
@@ -276,7 +270,6 @@
                                     </MenuItem>
 
                                     <MenuItem Name="MenuItemMirrorVertical"
-                                              StaysOpenOnClick="True"
                                               Click="MenuItemMirrorVertical_OnClick">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorVertical}" />
@@ -289,7 +282,6 @@
                                     <Separator />
 
                                     <MenuItem Name="MenuItemMirrorCustom"
-                                              StaysOpenOnClick="True"
                                               Click="MenuItemMirrorCustom_OnClick">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorCustom}" />
@@ -297,7 +289,6 @@
                                     </MenuItem>
 
                                     <MenuItem Name="MenuItemAdjustAxis"
-                                              StaysOpenOnClick="True"
                                               Click="MenuItemAdjustAxis_OnClick">
                                         <MenuItem.Header>
                                             <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.AdjustAxis}" />
@@ -308,7 +299,6 @@
                                 <Separator />
 
                                 <MenuItem Name="MenuItemFlipDirection"
-                                          StaysOpenOnClick="True"
                                           Click="MenuItemFlipDirection_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.FlipDirection}" />
@@ -319,7 +309,6 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemReverseSelection"
-                                          StaysOpenOnClick="True"
                                           Click="MenuItemReverseSelection_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ReverseSelection}" />
@@ -330,7 +319,6 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemScaleSelection"
-                                          StaysOpenOnClick="True"
                                           Click="MenuItemScaleSelection_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ScaleSelection}" />
@@ -343,7 +331,6 @@
                                 <Separator />
 
                                 <MenuItem Name="MenuItemOffsetChart"
-                                          StaysOpenOnClick="True"
                                           Click="MenuItemOffsetChart_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.OffsetChart}" />
@@ -354,7 +341,6 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemScaleChart"
-                                          StaysOpenOnClick="True"
                                           Click="MenuItemScaleChart_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.ScaleChart}" />
@@ -365,7 +351,6 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemMirrorChart"
-                                          StaysOpenOnClick="True"
                                           Click="MenuItemMirrorChart_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.MirrorChart}" />
@@ -388,7 +373,6 @@
                             <MenuFlyout Placement="BottomEdgeAlignedLeft">
 
                                 <MenuItem Name="MenuItemZigZagHold"
-                                          StaysOpenOnClick="True"
                                           Click="MenuItemZigZagHold_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.ZigZagHold}" />
@@ -401,7 +385,6 @@
                                 <Separator />
 
                                 <MenuItem Name="MenuItemCutHold"
-                                          StaysOpenOnClick="True"
                                           Click="MenuItemCutHold_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.CutHold}" />
@@ -412,7 +395,6 @@
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemJoinHold"
-                                          StaysOpenOnClick="True"
                                           Click="MenuItemJoinHold_OnClick">
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Convert.JoinHold}" />
