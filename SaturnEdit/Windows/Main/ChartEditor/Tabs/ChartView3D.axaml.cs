@@ -9,6 +9,7 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using FluentIcons.Common;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
@@ -41,6 +42,9 @@ public partial class ChartView3D : UserControl
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         OnOperationHistoryChanged(null, EventArgs.Empty);
 
+        EditorSystem.EditModeChangeAttempted += OnEditModeChangeAttempted;
+        OnEditModeChangeAttempted(null, EventArgs.Empty);
+
         SelectionSystem.PointerOverOverlapChanged += OnPointerOverOverlapChanged;
     }
 
@@ -51,6 +55,29 @@ public partial class ChartView3D : UserControl
     private readonly ClickDragHelper clickDragRight = new();
    
 #region Methods
+    private static void AutoEditMode()
+    {
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
+        {
+            if (obj is HoldNote && EditorSystem.EditMode != EditorEditMode.HoldEditMode)
+            {
+                EditorSystem.ChangeEditMode(EditorEditMode.HoldEditMode);
+                return;
+            }
+
+            if (obj is StopEffectEvent or ReverseEffectEvent && EditorSystem.EditMode != EditorEditMode.EventEditMode)
+            {
+                EditorSystem.ChangeEditMode(EditorEditMode.EventEditMode);
+                return;
+            }
+        }
+        
+        if (EditorSystem.EditMode != EditorEditMode.NoteEditMode)
+        {
+            EditorSystem.ChangeEditMode(EditorEditMode.NoteEditMode);
+        }
+    }
+    
     private async void AdjustAxis()
     {
         if (VisualRoot is not Window window) return;
@@ -345,13 +372,36 @@ public partial class ChartView3D : UserControl
     
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
-        ComboBoxEditMode.SelectedIndex = EditorSystem.EditMode switch
+        bool holdEditModeAvailable = EditorSystem.EditMode == EditorEditMode.HoldEditMode || EditorSystem.HoldEditModeAvailable;
+        bool eventEditModeAvailable = EditorSystem.EditMode == EditorEditMode.EventEditMode || EditorSystem.EventEditModeAvailable;
+        
+        Dispatcher.UIThread.Post(() =>
         {
-            EditorEditMode.NoteEditMode => 0,
-            EditorEditMode.HoldEditMode => 1,
-            EditorEditMode.EventEditMode => 2,
-            _ => 0,
-        };
+            ComboBoxEditMode.SelectedIndex = EditorSystem.EditMode switch
+            {
+                EditorEditMode.NoteEditMode => 0,
+                EditorEditMode.HoldEditMode => 1,
+                EditorEditMode.EventEditMode => 2,
+                _ => 0,
+            };
+            
+            ComboBoxItemHoldEditMode.IsEnabled = holdEditModeAvailable;
+            ComboBoxItemEventEditMode.IsEnabled = eventEditModeAvailable;
+        });
+    }
+
+    private void OnEditModeChangeAttempted(object? sender, EventArgs e)
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            ComboBoxEditMode.SelectedIndex = EditorSystem.EditMode switch
+            {
+                EditorEditMode.NoteEditMode => 0,
+                EditorEditMode.HoldEditMode => 1,
+                EditorEditMode.EventEditMode => 2,
+                _ => 0,
+            };
+        });
     }
 #endregion System Event Delegates
 
@@ -363,8 +413,30 @@ public partial class ChartView3D : UserControl
         if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
         
         Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
+
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.AutoEditMode"]))
+        {
+            AutoEditMode();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.NoteEditMode"]))
+        {
+            EditorSystem.ChangeEditMode(EditorEditMode.NoteEditMode);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.HoldEditMode"]))
+        {
+            EditorSystem.ChangeEditMode(EditorEditMode.HoldEditMode);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.EventEditMode"]))
+        {
+            EditorSystem.ChangeEditMode(EditorEditMode.EventEditMode);
+            e.Handled = true;
+        }
         
-        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
+        
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
         {
             Task.Run(EditorSystem.Insert_AddTempoChange);
             e.Handled = true;
@@ -995,7 +1067,15 @@ public partial class ChartView3D : UserControl
     {
         SelectionSystem.PointerOverObject = null;
     }
-    
+
+
+    private void ComboBoxEditMode_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (ComboBoxEditMode == null) return;
+
+        Task.Run(() => EditorSystem.ChangeEditMode((EditorEditMode)ComboBoxEditMode.SelectedIndex));
+    }
     
     private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e)
     {

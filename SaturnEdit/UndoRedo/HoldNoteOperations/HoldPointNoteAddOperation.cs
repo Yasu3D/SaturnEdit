@@ -6,6 +6,11 @@ public class HoldPointNoteAddOperation(HoldNote holdNote, HoldPointNote holdPoin
 {
     public void Revert()
     {
+        holdNote.Points.Remove(holdPointNote);
+    }
+
+    public void Apply()
+    {
         if (index < 0 || index >= holdNote.Points.Count)
         {
             holdNote.Points.Add(holdPointNote);
@@ -14,10 +19,5 @@ public class HoldPointNoteAddOperation(HoldNote holdNote, HoldPointNote holdPoin
         {
             holdNote.Points.Insert(index, holdPointNote);
         }
-    }
-
-    public void Apply()
-    {
-        holdNote.Points.Remove(holdPointNote);
     }
 }

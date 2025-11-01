@@ -244,6 +244,7 @@ ChartEditor.ChartStatistics.Label.NumberOfLaneToggleNotes,# of Lane Toggles:
 ChartEditor.ChartStatistics.Label.NumberOfLaneShowNotes,...of those Lane Show:
 ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes,...of those Lane Hide:
 ChartEditor.ChartView3D,Chart View (3D)
+ChartEditor.ChartView3D.Mode.AutoEditMode,Change Edit Mode (Auto)
 ChartEditor.ChartView3D.Mode.NoteEditMode,Note Edit Mode
 ChartEditor.ChartView3D.Mode.HoldEditMode,Hold Edit Mode
 ChartEditor.ChartView3D.Mode.EventEditMode,Event Edit Mode

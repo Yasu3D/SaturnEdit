@@ -1,16 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.UndoRedo;
+using SaturnEdit.UndoRedo.EditModeOperations;
 using SaturnEdit.UndoRedo.EventOperations;
+using SaturnEdit.UndoRedo.HoldNoteOperations;
 using SaturnEdit.UndoRedo.LayerOperations;
 using SaturnEdit.UndoRedo.NoteOperations;
 using SaturnEdit.UndoRedo.PositionableOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
 using SaturnEdit.UndoRedo.TimeableOperations;
+using SaturnView;
 
 namespace SaturnEdit.Systems;
 
@@ -27,25 +31,60 @@ public static class EditorSystem
     {
     }
 
+    public static event EventHandler? EditModeChangeAttempted;
+    
     public static int MirrorAxis { get; set; } = 0;
     public static EditorEditMode EditMode { get; set; } = EditorEditMode.NoteEditMode;
     public static ITimeable? ActiveSubObjectGroup = null;
 
+    public static bool HoldEditModeAvailable => SelectionSystem.SelectedObjects.Any(x => x is HoldNote);
+    public static bool EventEditModeAvailable => SelectionSystem.SelectedObjects.Any(x => x is StopEffectEvent or ReverseEffectEvent);
+
 #region Methods
-    public static void SetEditMode(EditorEditMode newEditMode)
+    public static void ChangeEditMode(EditorEditMode newEditMode)
     {
-        // TODO: finish this
-        if (EditMode == newEditMode) return;
+        EditModeChangeAttempted?.Invoke(null, EventArgs.Empty);
+        
+        CompositeOperation? op = GetEditModeChangeOperation(newEditMode);
+        if (op == null || op.Operations.Count == 0) return;
+
+        UndoRedoSystem.Push(op);
+    }
+    
+    private static CompositeOperation? GetEditModeChangeOperation(EditorEditMode newEditMode)
+    {
+        if (EditMode == newEditMode) return null;
         
         List<IOperation> operations = [];
         List<ITimeable> objects = SelectionSystem.OrderedSelectedObjects;
         
+        ITimeable? newActiveSubObjectGroup = null;
+        
+        // Changing to Note Edit Mode:
         if (newEditMode is EditorEditMode.NoteEditMode)
         {
+            // Delete edited Hold Note if it has less than 2 points.
+            if (EditMode == EditorEditMode.HoldEditMode && ActiveSubObjectGroup is HoldNote holdNote && holdNote.Points.Count < 2)
+            {
+                Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
+
+                if (layer != null)
+                {
+                    int index = layer.Notes.IndexOf(holdNote);
+                    operations.Add(new NoteRemoveOperation(layer, holdNote, index));
+                }
+            }
             
+            // Clear selection.
+            foreach (ITimeable obj in objects)
+            {
+                operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
+            }
         }
+        // Changing to Hold Edit Mode:
         else if (newEditMode is EditorEditMode.HoldEditMode)
         {
+            // Find the earliest selected hold note.
             HoldNote? holdNote = null;
             foreach (ITimeable obj in objects)
             {
@@ -55,10 +94,22 @@ public static class EditorSystem
                 break;
             }
 
-            if (holdNote == null) return;
+            // Cancel edit mode change if no hold is found.
+            if (holdNote == null) return null;
+
+            // Make it the new active object.
+            newActiveSubObjectGroup = holdNote;
+            
+            // Clear selection.
+            foreach (ITimeable obj in objects)
+            {
+                operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
+            }
         }
+        // Changing to Event Edit Mode:
         else if (newEditMode is EditorEditMode.EventEditMode)
         {
+            // Find the earliest selected stop and reverse effect events.
             StopEffectEvent? stopEffectEvent = null;
             ReverseEffectEvent? reverseEffectEvent = null;
 
@@ -75,9 +126,37 @@ public static class EditorSystem
                 
                 if (stopEffectEvent != null && reverseEffectEvent != null) break;
             }
+
+            // Cancel edit mode change if no event is found.
+            if (stopEffectEvent == null && reverseEffectEvent == null)
+            {
+                return null;
+            }
+            
+            if (stopEffectEvent != null && reverseEffectEvent != null)
+            {
+                // Pick the earliest event if objects of both types are selected.
+                newActiveSubObjectGroup = stopEffectEvent.Timestamp.FullTick < reverseEffectEvent.Timestamp.FullTick 
+                    ? stopEffectEvent 
+                    : reverseEffectEvent;
+            }
+            else
+            {
+                // Otherwise pick whichever isn't null.
+                newActiveSubObjectGroup ??= stopEffectEvent;
+                newActiveSubObjectGroup ??= reverseEffectEvent;
+            }
+            
+            // Clear selection.
+            foreach (ITimeable obj in objects)
+            {
+                operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
+            }
         }
         
-        //operations.Add(new EditModeChangeOperation(EditMode, newEditMode));
+        operations.Add(new EditModeChangeOperation(EditMode, newEditMode, ActiveSubObjectGroup, newActiveSubObjectGroup));
+        
+        return new(operations);
     }
     
     public static void Edit_Cut()
@@ -1282,41 +1361,177 @@ public static class EditorSystem
     
     public static void Convert_ZigZagHold(int beats, int division, int leftEdgeOffsetA, int leftEdgeOffsetB, int rightEdgeOffsetA,  int rightEdgeOffsetB)
     {
-        // TODO: implement algorithm for points and full holds.
         List<IOperation> operations = [];
 
+        int interval = 1920 * beats / division;
+        
         foreach (ITimeable obj in SelectionSystem.SelectedObjects)
         {
-            
-            
-            if (obj is not HoldNote holdNote) continue;
+            if (obj is HoldNote holdNote)
+            {
+                for (int i = 0; i < holdNote.Points.Count - 1; i++)
+                {
+                    processHoldSection(holdNote.Points[i], holdNote.Points[i + 1]);
+                }
+            }
 
-            Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
-            if (layer == null) continue;
-            
-            processHoldNote(layer, holdNote);
+            if (obj is HoldPointNote start)
+            {
+                int index = start.Parent.Points.IndexOf(start);
+                if (index == start.Parent.Points.Count - 1) continue;
+
+                HoldPointNote end = start.Parent.Points[index + 1];
+
+                processHoldSection(start, end);
+            }
         }
         
         UndoRedoSystem.Push(new CompositeOperation(operations));
 
         return;
 
-        void processHoldNote(Layer layer, HoldNote holdNote)
-        {
-            
-        }
-
-        void processHoldPoint(HoldPointNote start, HoldPointNote end)
+        void processHoldSection(HoldPointNote start, HoldPointNote end)
         {
             if (start.Parent != end.Parent) return;
+            if (start.Timestamp.FullTick == end.Timestamp.FullTick) return;
+
+            bool isA = true;
+            
+            for (int i = start.Timestamp.FullTick + interval; i < end.Timestamp.FullTick; i += interval)
+            {
+                float t = (float)(i - start.Timestamp.FullTick) / (end.Timestamp.FullTick - start.Timestamp.FullTick);
+                int position = (int)Math.Round(RenderUtils.LerpCyclic(start.Position, end.Position, t, 60));
+                int size = (int)Math.Round(RenderUtils.Lerp(start.Size, end.Size, t));
+
+                position = isA
+                    ? position - leftEdgeOffsetA
+                    : position - leftEdgeOffsetB;
+
+                size = isA
+                    ? size + leftEdgeOffsetA + rightEdgeOffsetA 
+                    : size + leftEdgeOffsetB + rightEdgeOffsetB;
+                
+                HoldPointNote point = new
+                (
+                    timestamp:  new(i),
+                    position:   position,
+                    size:       size,
+                    parent:     start.Parent,
+                    renderType: HoldPointRenderType.Visible
+                );
+                
+                operations.Add(new HoldPointNoteAddOperation(start.Parent, point, 0));
+                isA = !isA;
+            }
         }
     }
 
     public static void Convert_CutHold()
     {
         if (EditMode != EditorEditMode.HoldEditMode) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (ActiveSubObjectGroup is not HoldNote sourceHoldNote) return;
+
+        List<IOperation> operations = [];
+
+        Layer? layer = ChartSystem.Chart.ParentLayer(sourceHoldNote);
+        if (layer == null) return;
         
-        // TODO.
+        HoldNote newHoldNote = new(sourceHoldNote.BonusType, sourceHoldNote.JudgementType);
+        for (int i = 0; i < sourceHoldNote.Points.Count; i++)
+        {
+            HoldPointNote point = sourceHoldNote.Points[i];
+            
+            // when encountering first point:
+            if (i == 0)
+            {
+                // - add point to existing hold, force visible
+                newHoldNote.Points.Add(new
+                (
+                    timestamp: new(point.Timestamp.FullTick),
+                    position: point.Position,
+                    size: point.Size,
+                    parent: newHoldNote,
+                    renderType: HoldPointRenderType.Visible
+                ));
+            }
+            // when encountering cut point:
+            else if (SelectionSystem.SelectedObjects.Contains(point))
+            {
+                // - add point to existing hold, force visible
+                newHoldNote.Points.Add(new
+                (
+                    timestamp: new(point.Timestamp.FullTick),
+                    position: point.Position,
+                    size: point.Size,
+                    parent: newHoldNote,
+                    renderType: HoldPointRenderType.Visible
+                ));
+
+                // - push hold if points > 1
+                if (newHoldNote.Points.Count > 1)
+                {
+                    operations.Add(new NoteAddOperation(layer, newHoldNote, 0));
+                }
+                
+                // - create new hold
+                newHoldNote = new(sourceHoldNote.BonusType, sourceHoldNote.JudgementType);
+                
+                // - add point to new hold, force visible
+                newHoldNote.Points.Add(new
+                (
+                    timestamp: new(point.Timestamp.FullTick),
+                    position: point.Position,
+                    size: point.Size,
+                    parent: newHoldNote,
+                    renderType: HoldPointRenderType.Visible
+                ));
+            }
+            // when encountering end of hold:
+            else if (i == sourceHoldNote.Points.Count - 1)
+            {
+                // - add point to existing hold, force visible
+                newHoldNote.Points.Add(new
+                (
+                    timestamp: new(point.Timestamp.FullTick),
+                    position: point.Position,
+                    size: point.Size,
+                    parent: newHoldNote,
+                    renderType: HoldPointRenderType.Visible
+                ));
+                
+                // - push hold if points > 1
+                if (newHoldNote.Points.Count > 1)
+                {
+                    operations.Add(new NoteAddOperation(layer, newHoldNote, 0));
+                }
+            }
+            // when encountering normal point:
+            else
+            {
+                // - add point to existing hold
+                newHoldNote.Points.Add(new
+                (
+                    timestamp: new(point.Timestamp.FullTick),
+                    position: point.Position,
+                    size: point.Size,
+                    parent: newHoldNote,
+                    renderType: point.RenderType
+                ));
+            }
+        }
+
+        if (operations.Count == 0) return;
+        
+        // Set EditMode to NoteEditMode.
+        CompositeOperation? op = GetEditModeChangeOperation(EditorEditMode.NoteEditMode);
+        if (op == null) return;
+
+        operations.Add(op);
+        
+        // Remove original hold note.
+        int index = layer.Notes.IndexOf(sourceHoldNote);
+        operations.Add(new NoteRemoveOperation(layer, sourceHoldNote, index));
     }
 
     public static void Convert_JoinHold()
@@ -1376,8 +1591,7 @@ public static class EditorSystem
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
-
-// EventList operations here
+    
     public static void EventList_DeleteGlobalEvents()
     {
         if (SelectionSystem.SelectedObjects.Count == 0) return;
@@ -1398,7 +1612,7 @@ public static class EditorSystem
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
-// LayerList operations here
+
     public static void LayerList_MoveLayerUp()
     {
         if (SelectionSystem.SelectedLayer == null) return;

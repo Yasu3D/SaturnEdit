@@ -40,17 +40,17 @@ public partial class ZigZagHoldArgsWindow : Window
     {
         Color = 0xFFFFFFFF,
         StrokeWidth = 1,
-        IsAntialias = true,
+        IsAntialias = false,
         Style = SKPaintStyle.Stroke,
     };
     
     private readonly SKPaint guidePaint = new()
     {
         Color = 0xFFFFFFFF,
-        StrokeWidth = 2,
+        StrokeWidth = 1,
         IsAntialias = true,
         Style = SKPaintStyle.Stroke, 
-        PathEffect = SKPathEffect.CreateDash([ 4, 4 ], 0),
+        PathEffect = SKPathEffect.CreateDash([ 1, 1 ], 0),
     };
     
     private readonly SKPaint surfacePaint = new()
@@ -84,33 +84,22 @@ public partial class ZigZagHoldArgsWindow : Window
 #region UI Event Delegates
     private void RenderCanvas_OnRenderAction(SKCanvas canvas)
     {
-        canvas.Clear(backgroundColor);
-
-        for (int i = 0; i < 500; i += 25)
-        {
-            float p = i + 12.5f;
-            
-            canvas.DrawLine(p, 0, p, 500, gridPaint);
-            canvas.DrawLine(0, p, 500, p, gridPaint);
-        }
+        const int pixelsPerOffset = 4;
+        const float leftNeutralEdge = 250 + pixelsPerOffset * 30;
+        const float rightNeutralEdge = 250 - pixelsPerOffset * 30;
+        float pixelsPerVertexRow = 405.0f * Beats / Division;
         
-        int pixelsPerStep = 200 * Beats / Division;
-        int pixelsPerOffset = 7;
-
-        int leftNeutralEdge = 150;
-        int rightNeutralEdge = 350;
-
+        // Generate rows of vertices except for the last.
         List<SKPoint> vertices = [];
-
         bool stepIsA = false;
-        int y;
-        for (y = 405; y >= 0; y -= pixelsPerStep)
+        float v;
+        for (v = 405; v >= 0; v -= pixelsPerVertexRow)
         {
-            addVertices(y, stepIsA);
+            addVertices(v, stepIsA);
         }
         
-        // Add extra row of vertices
-        addVertices(y, stepIsA);
+        // Add final row of vertices
+        addVertices(v, stepIsA);
         
         List<SKPoint> triangles = [];
         int quadCount = (vertices.Count - 2) / 2;
@@ -125,22 +114,39 @@ public partial class ZigZagHoldArgsWindow : Window
             triangles.Add(vertices[i * 2 + 1]);
         }
         
-        canvas.DrawVertices(SKVertexMode.Triangles, triangles.ToArray(), null, null, surfacePaint);
+        // Begin drawing.
+        canvas.Clear(backgroundColor);
 
+        // Draw grid
+        for (float x = 0; x < 500; x += pixelsPerOffset * 5)
+        {
+            float offsetX = x + pixelsPerOffset * 2.5f;
+            canvas.DrawLine(offsetX, 0, offsetX, 405, gridPaint);
+        }
+
+        for (float y = 405; y >= 0; y -= pixelsPerOffset * 5)
+        {
+            canvas.DrawLine(0, y, 500, y, gridPaint);
+        }
+        
+        // Draw surface
+        canvas.DrawVertices(SKVertexMode.Triangles, triangles.ToArray(), null, null, surfacePaint);
+        
+        // Draw guide lines
         canvas.DrawLine(leftNeutralEdge, 0, leftNeutralEdge, 405, guidePaint);
         canvas.DrawLine(rightNeutralEdge, 0, rightNeutralEdge, 405, guidePaint);
         
         return;
 
-        void addVertices(int height, bool isA)
+        void addVertices(float height, bool isA)
         {
             float leftX = stepIsA
-                ? leftNeutralEdge - pixelsPerOffset * LeftEdgeOffsetA
-                : leftNeutralEdge - pixelsPerOffset * LeftEdgeOffsetB;
+                ? 250 - pixelsPerOffset * (LeftEdgeOffsetA + 30)
+                : 250 - pixelsPerOffset * (LeftEdgeOffsetB + 30);
 
             float rightX = stepIsA
-                ? rightNeutralEdge + pixelsPerOffset * RightEdgeOffsetA
-                : rightNeutralEdge + pixelsPerOffset * RightEdgeOffsetB;
+                ? 250 + pixelsPerOffset * (RightEdgeOffsetA + 30)
+                : 250 + pixelsPerOffset * (RightEdgeOffsetB + 30);
             
             SKPoint left = new(leftX, height);
             SKPoint right = new(rightX, height);

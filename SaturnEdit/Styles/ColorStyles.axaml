@@ -180,7 +180,7 @@
                     <SolidColorBrush x:Key="MirrorAxis" Color="#FF7B41E0" />
                     
                     <SolidColorBrush x:Key="ZigZagHoldGrid"    Color="#10FFFFFF" />
-                    <SolidColorBrush x:Key="ZigZagHoldGuide"   Color="#FF00FFFF" />
+                    <SolidColorBrush x:Key="ZigZagHoldGuide"   Color="#FFFF0000" />
                     <SolidColorBrush x:Key="ZigZagHoldSurface" Color="#AAFFFFFF" />
                     
 

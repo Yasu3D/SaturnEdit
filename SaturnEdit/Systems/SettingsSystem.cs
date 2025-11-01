@@ -835,8 +835,10 @@ public class ShortcutSettings
         ["Editor.Toolbar.DeleteSelection"] = new(Key.Delete, false, false, false, "ChartEditor.ChartView3D.Toolbar", "ChartEditor.ChartView3D.ToolTip.DeleteSelection"),
         ["Editor.Toolbar.Insert"]          = new(Key.E,      false, false, false, "ChartEditor.ChartView3D.Toolbar", "ChartEditor.ChartView3D.ToolTip.InsertNote"),
 
-        ["Editor.NoteEditMode"] = new(Key.Tab, false, false, false, "ChartEditor.General.Editor", "ChartEditor.ChartView3D.Mode.NoteEditMode"),
-        ["Editor.HoldEditMode"] = new(Key.Tab, false, false, false, "ChartEditor.General.Editor", "ChartEditor.ChartView3D.Mode.HoldEditMode"),
+        ["Editor.AutoEditMode"]  = new(Key.Tab,  false, false, false, "ChartEditor.General.Editor", "ChartEditor.ChartView3D.Mode.AutoEditMode"),
+        ["Editor.NoteEditMode"]  = new(Key.None, false, false, false, "ChartEditor.General.Editor", "ChartEditor.ChartView3D.Mode.NoteEditMode"),
+        ["Editor.HoldEditMode"]  = new(Key.None, false, false, false, "ChartEditor.General.Editor", "ChartEditor.ChartView3D.Mode.HoldEditMode"),
+        ["Editor.EventEditMode"] = new(Key.None, false, false, false, "ChartEditor.General.Editor", "ChartEditor.ChartView3D.Mode.EventEditMode"),
 
         ["Editor.Insert.TempoChange"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.TempoChange"),
         ["Editor.Insert.MetreChange"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.MetreChange"),

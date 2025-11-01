@@ -24,10 +24,14 @@
                               Height="32"
                               Width="150"
                               CornerRadius="7"
-                              SelectedIndex="0">
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartView3D.Mode.NoteEditMode}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartView3D.Mode.HoldEditMode}"/>
-                        <ComboBoxItem Content="{DynamicResource ChartEditor.ChartView3D.Mode.EventEditMode}"/>
+                              SelectedIndex="0"
+                              SelectionChanged="ComboBoxEditMode_OnSelectionChanged">
+                        <ComboBoxItem Name="ComboBoxItemNoteEditMode"
+                                      Content="{DynamicResource ChartEditor.ChartView3D.Mode.NoteEditMode}" />
+                        <ComboBoxItem Name="ComboBoxItemHoldEditMode"
+                                      Content="{DynamicResource ChartEditor.ChartView3D.Mode.HoldEditMode}" />
+                        <ComboBoxItem Name="ComboBoxItemEventEditMode"
+                                      Content="{DynamicResource ChartEditor.ChartView3D.Mode.EventEditMode}" />
                     </ComboBox>
 
                     <Rectangle Width="1"

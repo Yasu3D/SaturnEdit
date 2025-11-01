@@ -94,15 +94,165 @@
                               Grid.Column="0"
                               RowDefinitions="*,*"
                               Margin="10,0,0,0">
-                            <Rectangle Grid.Row="0"
-                                       Width="1" 
-                                       Height="20"
-                                       Fill="{DynamicResource SeparatorPrimary}"/>
+                            <Panel Grid.Row="0">
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="5.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="23.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="42,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="60.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="78.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="96.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="115,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="133.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="151.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="169.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="188,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="206.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="223.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                            </Panel>
                             
-                            <Rectangle Grid.Row="1"
-                                       Width="1" 
-                                       Height="20"
-                                       Fill="{DynamicResource SeparatorPrimary}"/>
+                            <Panel Grid.Row="1">
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="5.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="23.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="42,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="60.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="78.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="96.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="115,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="133.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="151.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="169.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="188,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="206.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="223.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                            </Panel>
                             
                             <TextBlock Grid.Row="0"
                                        Name="TextBlockLeftEdgeOffsetA"
@@ -154,14 +304,165 @@
                               Grid.Column="2"
                               RowDefinitions="*,*"
                               Margin="0,0,10,0">
-                            <Rectangle Grid.Row="0"
-                                       Width="1" 
-                                       Height="20"
-                                       Fill="{DynamicResource SeparatorPrimary}"/>
-                            <Rectangle Grid.Row="1"
-                                       Width="1" 
-                                       Height="20"
-                                       Fill="{DynamicResource SeparatorPrimary}"/>
+                            <Panel Grid.Row="0">
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="5.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="23.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="42,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="60.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="78.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="96.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="115,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="133.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="151.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="169.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="188,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="206.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="223.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                            </Panel>
+                            
+                            <Panel Grid.Row="1">
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="5.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="23.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="42,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="60.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="78.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="96.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="115,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="133.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="151.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="169.75,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="188,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="206.25,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                                
+                                <Rectangle Width="1"
+                                           Height="20"
+                                           HorizontalAlignment="Left"
+                                           Margin="223.5,0,0,0"
+                                           Fill="{DynamicResource SeparatorPrimary}" />
+                            </Panel>
                             
                             <TextBlock Grid.Row="0"
                                        Name="TextBlockRightEdgeOffsetA"
