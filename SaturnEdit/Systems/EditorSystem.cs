@@ -1538,6 +1538,8 @@ public static class EditorSystem
         // Remove original hold note.
         int index = layer.Notes.IndexOf(sourceHoldNote);
         operations.Add(new NoteRemoveOperation(layer, sourceHoldNote, index));
+
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     public static void Convert_JoinHold()

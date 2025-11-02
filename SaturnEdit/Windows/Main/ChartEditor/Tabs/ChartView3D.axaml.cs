@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -53,6 +54,8 @@ public partial class ChartView3D : UserControl
     private bool isGrabbingObject = false;
     private readonly ClickDragHelper clickDragLeft = new();
     private readonly ClickDragHelper clickDragRight = new();
+
+    private ITimeable? lastClickedObject = null;
    
 #region Methods
     private static void AutoEditMode()
@@ -178,6 +181,136 @@ public partial class ChartView3D : UserControl
                 rightEdgeOffsetA: zigZagHoldArgsWindow.RightEdgeOffsetA,
                 rightEdgeOffsetB: zigZagHoldArgsWindow.RightEdgeOffsetB
             ));
+        }
+    }
+
+    private void FindPointerOverObject(float radius, int lane, float viewDistance)
+    {
+        if (radius > 1.1f)
+        {
+            SelectionSystem.PointerOverObject = null;
+            return;
+        }
+
+        float threshold = Renderer3D.GetHitTestThreshold(canvasInfo, SettingsSystem.RenderSettings.NoteThickness);
+
+        List<(IPositionable.OverlapResult, ITimeable)> hits = [];
+
+        if (EditorSystem.EditMode == EditorEditMode.NoteEditMode)
+        {
+            foreach (Event @event in ChartSystem.Chart.Events)
+            {
+                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                hits.Add((hitTestResult, @event));
+            }
+
+            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            {
+                if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(bookmark, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                hits.Add((hitTestResult, bookmark));
+            }
+
+            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            {
+                if (!RenderUtils.IsVisible(laneToggle, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(laneToggle, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                hits.Add((hitTestResult, laneToggle));
+            }
+
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            {
+                float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
+
+                foreach (Event @event in layer.Events)
+                {
+                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                    if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                    hits.Add((hitTestResult, @event));
+                }
+
+                foreach (Note note in layer.Notes)
+                {
+                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                    if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                    hits.Add((hitTestResult, note));
+                }
+            }
+        }
+        else if (EditorSystem.EditMode == EditorEditMode.HoldEditMode && EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+        {
+            Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
+
+            if (layer != null)
+            {
+                float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
+
+                foreach (HoldPointNote holdPointNote in holdNote.Points)
+                {
+                    if (!RenderUtils.IsVisible(holdPointNote, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(holdPointNote, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                    if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                    hits.Add((hitTestResult, holdPointNote));
+                }
+            }
+        }
+        else if (EditorSystem.EditMode == EditorEditMode.EventEditMode)
+        {
+            if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+            {
+                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                {
+                    if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(subEvent, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                    if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                    hits.Add((hitTestResult, subEvent));
+                }
+            }
+            else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
+            {
+                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                {
+                    if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(subEvent, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                    if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                    hits.Add((hitTestResult, subEvent));
+                }
+            }
+        }
+
+        // TODO: Sort selection priority
+
+        if (hits.Count != 0)
+        {
+            SelectionSystem.PointerOverOverlap = hits[0].Item1;
+            SelectionSystem.PointerOverObject = hits[0].Item2;
+        }
+        else
+        {
+            SelectionSystem.PointerOverObject = null;
+            SelectionSystem.PointerOverOverlap = IPositionable.OverlapResult.None;
         }
     }
 #endregion Methods
@@ -849,120 +982,34 @@ public partial class ChartView3D : UserControl
             int lane = Renderer3D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
             float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
             
-            onMove();
+            FindPointerOverObject(radius, lane, viewDistance);
+            
             onLeftDrag();
             onRightDrag();
 
             return;
-
-            void onMove()
-            {
-                if (radius > 1.1f)
-                {
-                    SelectionSystem.PointerOverObject = null;
-                    return;
-                }
-            
-                float threshold = Renderer3D.GetHitTestThreshold(canvasInfo, SettingsSystem.RenderSettings.NoteThickness);
-                
-                foreach (Layer layer in ChartSystem.Chart.Layers)
-                {
-                    float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
-
-                    foreach (Event @event in layer.Events)
-                    {
-                        if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-                        
-                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
-                        if (hitTestResult != IPositionable.OverlapResult.None)
-                        {
-                            SelectionSystem.PointerOverObject = @event;
-                            SelectionSystem.PointerOverOverlap = hitTestResult;
-                            return;
-                        }
-                    }
-                    
-                    foreach (Note note in layer.Notes)
-                    {
-                        if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-                        
-                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
-                        if (hitTestResult != IPositionable.OverlapResult.None)
-                        {
-                            SelectionSystem.PointerOverObject = note;
-                            SelectionSystem.PointerOverOverlap = hitTestResult;
-                            return;
-                        }
-                    }
-                }
-                
-                foreach (Note note in ChartSystem.Chart.LaneToggles)
-                {
-                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-
-                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
-                    if (hitTestResult != IPositionable.OverlapResult.None)
-                    {
-                        SelectionSystem.PointerOverObject = note;
-                        SelectionSystem.PointerOverOverlap = hitTestResult;
-                        return;
-                    }
-                }
-
-                foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
-                {
-                    if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-
-                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(bookmark, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
-                    if (hitTestResult != IPositionable.OverlapResult.None)
-                    {
-                        SelectionSystem.PointerOverObject = bookmark;
-                        SelectionSystem.PointerOverOverlap = hitTestResult;
-                        return;
-                    }
-                }
-                
-                foreach (Event @event in ChartSystem.Chart.Events)
-                {
-                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-
-                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
-                    if (hitTestResult != IPositionable.OverlapResult.None)
-                    {
-                        SelectionSystem.PointerOverObject = @event;
-                        SelectionSystem.PointerOverOverlap = hitTestResult;
-                        return;
-                    }
-                }
-                
-                SelectionSystem.PointerOverObject = null;
-                SelectionSystem.PointerOverOverlap = IPositionable.OverlapResult.None;
-            }
             
             void onLeftDrag()
             {
                 if (!e.Properties.IsLeftButtonPressed) return;
 
                 clickDragLeft.EndPoint = point;
-                if (!clickDragLeft.IsDragActive) return;
-
                 clickDragLeft.EndLane = lane;
                 
-                // Box Select
-                if (!isGrabbingObject)
-                {
-                    float t = RenderUtils.InversePerspective(radius);
-                    float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
-                    
-                    SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
-                    
-                    return;
-                }
-
-                // Drag Object
+                if (!clickDragLeft.IsDragActive) return;
+                
                 if (isGrabbingObject)
                 {
+                    // Drag Object
                     Console.WriteLine("Dragging object");
+                }
+                else
+                {
+                    // Box Select
+                    float t = RenderUtils.InversePerspective(radius);
+                    float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
+                                
+                    SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
                 }
             }
 
@@ -971,9 +1018,10 @@ public partial class ChartView3D : UserControl
                 if (!e.Properties.IsRightButtonPressed) return;
 
                 clickDragRight.EndPoint = point;
+                clickDragRight.EndLane = lane;
+                
                 if (!clickDragRight.IsDragActive) return;
                 
-                clickDragRight.EndLane = lane;
                 CursorSystem.Position = clickDragRight.Position;
                 CursorSystem.Size = clickDragRight.Size;
             }
@@ -1021,7 +1069,14 @@ public partial class ChartView3D : UserControl
                 {
                     bool control = e.KeyModifiers.HasFlag(KeyModifiers.Control);
                     bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
-
+                    
+                    if (SelectionSystem.PointerOverObject != null && SelectionSystem.SelectedObjects.Contains(SelectionSystem.PointerOverObject))
+                    {
+                        // When clicking a selected object, only re-run selection on pointer released.
+                        lastClickedObject = SelectionSystem.PointerOverObject;
+                        return;
+                    }
+                    
                     SelectionSystem.SetSelection(control, shift);
                 }
             }
@@ -1052,8 +1107,20 @@ public partial class ChartView3D : UserControl
                 clickDragLeft.Reset(null, null, 0);
 
                 isGrabbingObject = false;
+                SelectionSystem.AttemptBoxSelection();
+                
+                if (SelectionSystem.PointerOverObject != null 
+                    && SelectionSystem.PointerOverObject == lastClickedObject
+                    && SelectionSystem.SelectedObjects.Contains(SelectionSystem.PointerOverObject))
+                {
+                    bool control = e.KeyModifiers.HasFlag(KeyModifiers.Control);
+                    bool shift = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
                     
-                SelectionSystem.ApplyBoxSelection();
+                    // When clicking a selected object, only re-run selection on pointer released.
+                    SelectionSystem.SetSelection(control, shift);
+                }
+
+                lastClickedObject = null;
             }
 
             void onRightReleased()
