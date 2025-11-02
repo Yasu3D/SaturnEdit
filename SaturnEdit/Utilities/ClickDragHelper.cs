@@ -22,6 +22,19 @@ public class ClickDragHelper
                 PassedThroughSeam = !PassedThroughSeam;
             }
 
+            int offset = value - endLane;
+
+            if (offset > 30)
+            {
+                offset -= 60;
+            }
+            else if (offset < -30)
+            {
+                offset += 60;
+            }
+            
+            Tally += offset;
+            
             endLane = value;
         }
     }
@@ -63,9 +76,11 @@ public class ClickDragHelper
             if (EndPoint == null) return false;
 
             double distance = Math.Max(Math.Abs(StartPoint.Value.Position.X - EndPoint.Value.Position.X), Math.Abs(StartPoint.Value.Position.Y - EndPoint.Value.Position.Y));
-            return distance > 10;
+            return distance > 5;
         }
     }
+
+    public int Tally { get; private set; } = 0;
 
 #region Methods
     public void Reset(PointerPoint? startPoint, PointerPoint? endPoint, int lane)
@@ -75,6 +90,7 @@ public class ClickDragHelper
         StartLane = lane;
         endLane = lane;
         PassedThroughSeam = false;
+        Tally = 0;
     }
 #endregion Methods
 }

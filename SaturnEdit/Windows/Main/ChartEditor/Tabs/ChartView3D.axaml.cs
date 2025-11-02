@@ -30,6 +30,10 @@ public partial class ChartView3D : UserControl
     public ChartView3D()
     {
         InitializeComponent();
+
+        clickDragLeft = new();
+        clickDragRight = new();
+        objectDrag = new(clickDragLeft);
         
         KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
         KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
@@ -51,10 +55,12 @@ public partial class ChartView3D : UserControl
 
     private readonly CanvasInfo canvasInfo = new();
     private bool blockEvents = false;
-    private bool isGrabbingObject = false;
-    private readonly ClickDragHelper clickDragLeft = new();
-    private readonly ClickDragHelper clickDragRight = new();
+    private readonly ClickDragHelper clickDragLeft;
+    private readonly ClickDragHelper clickDragRight;
 
+    private readonly ObjectDragHelper objectDrag;
+    
+    private Point? pointerPosition = null;
     private ITimeable? lastClickedObject = null;
    
 #region Methods
@@ -299,7 +305,7 @@ public partial class ChartView3D : UserControl
                 }
             }
         }
-
+        
         // TODO: Sort selection priority
 
         if (hits.Count != 0)
@@ -312,6 +318,92 @@ public partial class ChartView3D : UserControl
             SelectionSystem.PointerOverObject = null;
             SelectionSystem.PointerOverOverlap = IPositionable.OverlapResult.None;
         }
+    }
+    
+    private void SetCursorType()
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            // Default Cursor if position can't be found.
+            if (pointerPosition == null)
+            {
+                RenderCanvas.Cursor = new(StandardCursorType.Arrow);
+                return;
+            }
+            
+            // Default Cursor if box selecting.
+            if (!objectDrag.IsActive && clickDragLeft.IsDragActive)
+            {
+                RenderCanvas.Cursor = new(StandardCursorType.Arrow);
+                return;
+            }
+            
+            bool allowDefaultCursor = !objectDrag.IsActive;
+            bool allowOmniCursor = !objectDrag.IsActive || objectDrag.DragType == IPositionable.OverlapResult.Body;
+
+            // Default Cursor
+            // - No PointerOverObject
+            // - No PointerOverOverlap
+            if (allowDefaultCursor && (SelectionSystem.PointerOverObject == null || SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.None))
+            {
+                RenderCanvas.Cursor = new(StandardCursorType.Arrow);
+                return;
+            }
+
+            // Omnidirectional Cursor
+            // - PointerOverObject is not IPositionable
+            // - PointerOverOverlap is Body
+            if (allowOmniCursor && (SelectionSystem.PointerOverObject is not IPositionable || SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.Body))
+            {
+                RenderCanvas.Cursor = new(StandardCursorType.SizeAll);
+                return;
+            }
+
+            // Directional Cursor
+            bool rightEdge = SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.RightEdge;
+            int lane = Renderer3D.GetHitTestPointerLane(canvasInfo, (float)pointerPosition.Value.X, (float)pointerPosition.Value.Y);
+
+            if (lane is >= 0 and <= 3
+                or >= 56 and <= 59)
+            {
+                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopSide) : new(StandardCursorType.BottomSide);
+            }
+
+            if (lane is >= 4 and <= 10)
+            {
+                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomRightCorner) : new(StandardCursorType.TopLeftCorner);
+            }
+
+            if (lane is >= 11 and <= 18)
+            {
+                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.LeftSide) : new(StandardCursorType.RightSide);
+            }
+
+            if (lane is >= 19 and <= 25)
+            {
+                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomLeftCorner) : new(StandardCursorType.TopRightCorner);
+            }
+
+            if (lane is >= 26 and <= 33)
+            {
+                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomSide) : new(StandardCursorType.TopSide);
+            }
+
+            if (lane is >= 34 and <= 40)
+            {
+                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopLeftCorner) : new(StandardCursorType.BottomRightCorner);
+            }
+
+            if (lane is >= 41 and <= 48)
+            {
+                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.RightSide) : new(StandardCursorType.LeftSide);
+            }
+
+            if (lane is >= 49 and <= 55)
+            {
+                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopRightCorner) : new(StandardCursorType.BottomLeftCorner);
+            }
+        });
     }
 #endregion Methods
     
@@ -435,72 +527,7 @@ public partial class ChartView3D : UserControl
     
     private void OnPointerOverOverlapChanged(object? sender, EventArgs e)
     {
-        Dispatcher.UIThread.Post(() =>
-        {
-            // Default Cursor
-            // - No PointerOverObject
-            // - No PointerOverOverlap
-            if (SelectionSystem.PointerOverObject == null 
-                || SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.None)
-            {
-                RenderCanvas.Cursor = new(StandardCursorType.Arrow);
-                return;
-            }
-            
-            // Omnidirectional Cursor
-            // - PointerOverObject is not IPositionable
-            // - PointerOverOverlap is Body
-            if (SelectionSystem.PointerOverObject is not IPositionable positionable || SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.Body)
-            {
-                RenderCanvas.Cursor = new(StandardCursorType.SizeAll);
-                return;
-            }
-            
-            // Directional Cursor
-            bool rightEdge = SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.RightEdge;
-            int lane = rightEdge ? (positionable.Position + positionable.Size - 1) % 60 : positionable.Position;
-            
-            if (lane is >= 0 and <= 3
-                or >= 56 and <= 59)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopSide) : new(StandardCursorType.BottomSide);
-            }
-
-            if (lane is >= 4 and <= 10)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomRightCorner) : new(StandardCursorType.TopLeftCorner);
-            }
-
-            if (lane is >= 11 and <= 18)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.LeftSide) : new(StandardCursorType.RightSide);
-            }
-                
-            if (lane is >= 19 and <= 25)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomLeftCorner) : new(StandardCursorType.TopRightCorner);
-            }
-                
-            if (lane is >= 26 and <= 33)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomSide) : new(StandardCursorType.TopSide);
-            }
-                
-            if (lane is >= 34 and <= 40)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopLeftCorner) : new(StandardCursorType.BottomRightCorner);
-            }
-                
-            if (lane is >= 41 and <= 48)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.RightSide) : new(StandardCursorType.LeftSide);
-            }
-                
-            if (lane is >= 49 and <= 55)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopRightCorner) : new(StandardCursorType.BottomLeftCorner);
-            }
-        });
+        SetCursorType();
     }
     
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
@@ -949,7 +976,7 @@ public partial class ChartView3D : UserControl
             time: TimeSystem.Timestamp.Time,
             playing: playing,
             selectedObjects: SelectionSystem.SelectedObjects,
-            pointerOverObject: SelectionSystem.PointerOverObject,
+            pointerOverObject: objectDrag.IsActive ? null : SelectionSystem.PointerOverObject,
             activeObjectGroup: EditorSystem.ActiveObjectGroup,
             boxSelect: new(SelectionSystem.BoxSelectArgs.GlobalStartTime, SelectionSystem.BoxSelectArgs.GlobalEndTime, SelectionSystem.BoxSelectArgs.Position, SelectionSystem.BoxSelectArgs.Size),
             cursorNote: playing ? null : CursorSystem.CurrentNote
@@ -957,7 +984,7 @@ public partial class ChartView3D : UserControl
 
         // Hook into render function to update box selection during playback,
         // even when the pointer is not being moved.
-        if (playing && clickDragLeft.IsDragActive && !isGrabbingObject)
+        if (playing && clickDragLeft.IsDragActive && !objectDrag.IsActive)
         {
             _ = Task.Run(() =>
             {
@@ -975,6 +1002,7 @@ public partial class ChartView3D : UserControl
     private void RenderCanvas_OnPointerMoved(object? sender, PointerEventArgs e)
     {
         PointerPoint point = e.GetCurrentPoint(sender as Control);
+        pointerPosition = point.Position;
         
         _ = Task.Run(() =>
         {
@@ -983,6 +1011,7 @@ public partial class ChartView3D : UserControl
             float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
             
             FindPointerOverObject(radius, lane, viewDistance);
+            SetCursorType();
             
             onLeftDrag();
             onRightDrag();
@@ -998,18 +1027,20 @@ public partial class ChartView3D : UserControl
                 
                 if (!clickDragLeft.IsDragActive) return;
                 
-                if (isGrabbingObject)
+                if (objectDrag.IsActive)
                 {
-                    // Drag Object
-                    Console.WriteLine("Dragging object");
+                    float t = RenderUtils.InversePerspective(radius);
+                    float time = TimeSystem.Timestamp.Time + RenderUtils.Lerp(viewDistance, 0, t);
+        
+                    Task.Run(() => objectDrag.Update(time));
                 }
                 else
                 {
                     // Box Select
                     float t = RenderUtils.InversePerspective(radius);
                     float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
-                                
-                    SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
+
+                    Task.Run(() => SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime));
                 }
             }
 
@@ -1048,18 +1079,22 @@ public partial class ChartView3D : UserControl
                 if (!e.Properties.IsLeftButtonPressed) return;
                 clickDragLeft.Reset(point, point, lane);
 
-                isGrabbingObject = SelectionSystem.PointerOverObject != null;
-                    
+                float t = RenderUtils.InversePerspective(radius);
+                float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
+                
                 boxSelect();
                 normalSelect();
+                
+                int fullTick = Timestamp.TimestampFromTime(ChartSystem.Chart, TimeSystem.Timestamp.Time + viewTime).FullTick;
+                float m = 1920.0f / TimeSystem.Division;
+                fullTick = (int)(Math.Round(fullTick / m) * m);
+                
+                objectDrag.Start(fullTick);
 
                 return;
                     
                 void boxSelect()
                 {
-                    float t = RenderUtils.InversePerspective(radius);
-                    float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
-                        
                     SelectionSystem.SetBoxSelectionStart(
                         negativeSelection: e.KeyModifiers.HasFlag(KeyModifiers.Alt),
                         viewTime: viewTime);
@@ -1104,12 +1139,11 @@ public partial class ChartView3D : UserControl
             void onLeftReleased()
             {
                 if (e.InitialPressMouseButton != MouseButton.Left) return;
-                clickDragLeft.Reset(null, null, 0);
-
-                isGrabbingObject = false;
+                
                 SelectionSystem.AttemptBoxSelection();
                 
-                if (SelectionSystem.PointerOverObject != null 
+                if (objectDrag.IsActive == false 
+                    && SelectionSystem.PointerOverObject != null 
                     && SelectionSystem.PointerOverObject == lastClickedObject
                     && SelectionSystem.SelectedObjects.Contains(SelectionSystem.PointerOverObject))
                 {
@@ -1119,8 +1153,13 @@ public partial class ChartView3D : UserControl
                     // When clicking a selected object, only re-run selection on pointer released.
                     SelectionSystem.SetSelection(control, shift);
                 }
-
+                
+                objectDrag.End();
+                
                 lastClickedObject = null;
+                clickDragLeft.Reset(null, null, 0);
+                
+                SetCursorType();
             }
 
             void onRightReleased()
@@ -1134,6 +1173,7 @@ public partial class ChartView3D : UserControl
     private void RenderCanvas_OnPointerExited(object? sender, PointerEventArgs e)
     {
         SelectionSystem.PointerOverObject = null;
+        pointerPosition = null;
     }
 
 

@@ -166,6 +166,17 @@ public static class ChartSystem
         IsSaved = markAsSaved || IsSaved;
         return true;
     }
+
+    /// <summary>
+    /// Rebuilds the chart.
+    /// </summary>
+    /// <remarks>
+    /// This is a relatively expensive function (approx. 3-10ms) that should not be called frequently!
+    /// </remarks>
+    public static void Rebuild()
+    {
+        Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
+    }
 #endregion Methods
     
 #region System Event Delegates
@@ -175,9 +186,7 @@ public static class ChartSystem
     
     private static void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
-        Timestamp oldChartEnd = Entry.ChartEnd;
-        
-        Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
+        Rebuild();
         
         if (Entry.AutoBpmMessage)
         {
@@ -192,7 +201,7 @@ public static class ChartSystem
         if (SettingsSystem.RenderSettings.SaturnJudgeAreas != saturnJudgeAreas)
         {
             saturnJudgeAreas = SettingsSystem.RenderSettings.SaturnJudgeAreas;
-            Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
+            Rebuild();
         }
     }
 #endregion System Event Delegates
