@@ -113,7 +113,7 @@ public static class SelectionSystem
                 
             foreach (Event @event in ChartSystem.Chart.Events)
             {
-                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                 if (@event.Timestamp < start) continue;
                 if (@event.Timestamp > end) continue;
 
@@ -122,7 +122,7 @@ public static class SelectionSystem
 
             foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
             {
-                if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings)) continue;
+                if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                 if (bookmark.Timestamp < start) continue;
                 if (bookmark.Timestamp > end) continue;
 
@@ -131,7 +131,7 @@ public static class SelectionSystem
             
             foreach (Note note in ChartSystem.Chart.LaneToggles)
             {
-                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                 if (note.Timestamp < start) continue;
                 if (note.Timestamp > end) continue;
 
@@ -142,7 +142,7 @@ public static class SelectionSystem
             {
                 foreach (Event @event in layer.Events)
                 {
-                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                     if (@event.Timestamp < start) continue;
                     if (@event.Timestamp > end) continue;
 
@@ -151,7 +151,7 @@ public static class SelectionSystem
 
                 foreach (Note note in layer.Notes)
                 {
-                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                     if (note.Timestamp < start) continue;
                     if (note.Timestamp > end) continue;
 
@@ -189,7 +189,7 @@ public static class SelectionSystem
                 
             foreach (Event @event in ChartSystem.Chart.Events)
             {
-                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                 if (@event.Timestamp < start) continue;
                 if (@event.Timestamp > end) continue;
 
@@ -198,7 +198,7 @@ public static class SelectionSystem
 
             foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
             {
-                if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings)) continue;
+                if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                 if (bookmark.Timestamp < start) continue;
                 if (bookmark.Timestamp > end) continue;
 
@@ -207,7 +207,7 @@ public static class SelectionSystem
             
             foreach (Note note in ChartSystem.Chart.LaneToggles)
             {
-                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                 if (note.Timestamp < start) continue;
                 if (note.Timestamp > end) continue;
 
@@ -218,7 +218,7 @@ public static class SelectionSystem
             {
                 foreach (Event @event in layer.Events)
                 {
-                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                     if (@event.Timestamp < start) continue;
                     if (@event.Timestamp > end) continue;
 
@@ -227,7 +227,7 @@ public static class SelectionSystem
 
                 foreach (Note note in layer.Notes)
                 {
-                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                     if (note.Timestamp < start) continue;
                     if (note.Timestamp > end) continue;
 
@@ -292,7 +292,7 @@ public static class SelectionSystem
         
         foreach (Event @event in ChartSystem.Chart.Events)
         {
-            if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+            if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
             if (@event.Timestamp.Time < globalMin) continue;
             if (@event.Timestamp.Time > globalMax) continue;
 
@@ -310,7 +310,7 @@ public static class SelectionSystem
 
         foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
         {
-            if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings)) continue;
+            if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
             if (bookmark.Timestamp.Time < globalMin) continue;
             if (bookmark.Timestamp.Time > globalMax) continue;
 
@@ -328,7 +328,7 @@ public static class SelectionSystem
     
         foreach (Note note in ChartSystem.Chart.LaneToggles)
         {
-            if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+            if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
             if (note.Timestamp.Time < globalMin) continue;
             if (note.Timestamp.Time > globalMax) continue;
 
@@ -350,7 +350,7 @@ public static class SelectionSystem
         {
             foreach (Event @event in layer.Events)
             {
-                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings)) continue;
+                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                 if (@event.Timestamp.Time < globalMin) continue;
                 if (@event.Timestamp.Time > globalMax) continue;
 
@@ -368,7 +368,7 @@ public static class SelectionSystem
 
             foreach (Note note in layer.Notes)
             {
-                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings)) continue;
+                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                 float min = MathF.Min(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
                 float max = MathF.Max(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);

@@ -26,6 +26,8 @@ public partial class SelectByCriteriaWindow : Window
         {
             blockEvents = true;
 
+            CheckBoxFilterSelection.IsChecked = SelectionSystem.SelectByCriteriaArgs.FilterSelection;
+            
             SliderPosition.Value = SelectionSystem.SelectByCriteriaArgs.Position;
             SliderPositionVariance.Value = SelectionSystem.SelectByCriteriaArgs.PositionVariance;
             SliderSize.Value = SelectionSystem.SelectByCriteriaArgs.Size;
@@ -83,6 +85,12 @@ public partial class SelectByCriteriaWindow : Window
         
         switch (checkBox.Name)
         {
+            case "CheckBoxFilterSelection":
+            {
+                SelectionSystem.SelectByCriteriaArgs.FilterSelection = value;
+                break;
+            }
+            
             case "CheckBoxTouch":
             {
                 SelectionSystem.SelectByCriteriaArgs.IncludeTouchNotes = value;

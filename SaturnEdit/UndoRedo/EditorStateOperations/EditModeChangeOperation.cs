@@ -8,12 +8,12 @@ public class EditModeChangeOperation(EditorEditMode oldEditMode, EditorEditMode 
     public void Revert()
     {
         EditorSystem.EditMode = oldEditMode;
-        EditorSystem.ActiveSubObjectGroup = oldSubObjectGroup;
+        EditorSystem.ActiveObjectGroup = oldSubObjectGroup;
     }
 
     public void Apply()
     {
         EditorSystem.EditMode = newEditMode;
-        EditorSystem.ActiveSubObjectGroup = newSubObjectGroup;
+        EditorSystem.ActiveObjectGroup = newSubObjectGroup;
     }
 }

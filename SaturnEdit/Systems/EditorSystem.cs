@@ -35,7 +35,7 @@ public static class EditorSystem
     
     public static int MirrorAxis { get; set; } = 0;
     public static EditorEditMode EditMode { get; set; } = EditorEditMode.NoteEditMode;
-    public static ITimeable? ActiveSubObjectGroup = null;
+    public static ITimeable? ActiveObjectGroup { get; set; } = null;
 
     public static bool HoldEditModeAvailable => SelectionSystem.SelectedObjects.Any(x => x is HoldNote);
     public static bool EventEditModeAvailable => SelectionSystem.SelectedObjects.Any(x => x is StopEffectEvent or ReverseEffectEvent);
@@ -58,13 +58,13 @@ public static class EditorSystem
         List<IOperation> operations = [];
         List<ITimeable> objects = SelectionSystem.OrderedSelectedObjects;
         
-        ITimeable? newActiveSubObjectGroup = null;
+        ITimeable? newActiveObjectGroup = null;
         
         // Changing to Note Edit Mode:
         if (newEditMode is EditorEditMode.NoteEditMode)
         {
             // Delete edited Hold Note if it has less than 2 points.
-            if (EditMode == EditorEditMode.HoldEditMode && ActiveSubObjectGroup is HoldNote holdNote && holdNote.Points.Count < 2)
+            if (EditMode == EditorEditMode.HoldEditMode && ActiveObjectGroup is HoldNote holdNote && holdNote.Points.Count < 2)
             {
                 Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
 
@@ -79,6 +79,12 @@ public static class EditorSystem
             foreach (ITimeable obj in objects)
             {
                 operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
+            }
+            
+            // Re-select the previously active object group.
+            if (ActiveObjectGroup != null)
+            {
+                operations.Add(new SelectionAddOperation(ActiveObjectGroup, SelectionSystem.LastSelectedObject));
             }
         }
         // Changing to Hold Edit Mode:
@@ -98,7 +104,7 @@ public static class EditorSystem
             if (holdNote == null) return null;
 
             // Make it the new active object.
-            newActiveSubObjectGroup = holdNote;
+            newActiveObjectGroup = holdNote;
             
             // Clear selection.
             foreach (ITimeable obj in objects)
@@ -136,15 +142,15 @@ public static class EditorSystem
             if (stopEffectEvent != null && reverseEffectEvent != null)
             {
                 // Pick the earliest event if objects of both types are selected.
-                newActiveSubObjectGroup = stopEffectEvent.Timestamp.FullTick < reverseEffectEvent.Timestamp.FullTick 
+                newActiveObjectGroup = stopEffectEvent.Timestamp.FullTick < reverseEffectEvent.Timestamp.FullTick 
                     ? stopEffectEvent 
                     : reverseEffectEvent;
             }
             else
             {
                 // Otherwise pick whichever isn't null.
-                newActiveSubObjectGroup ??= stopEffectEvent;
-                newActiveSubObjectGroup ??= reverseEffectEvent;
+                newActiveObjectGroup ??= stopEffectEvent;
+                newActiveObjectGroup ??= reverseEffectEvent;
             }
             
             // Clear selection.
@@ -154,7 +160,7 @@ public static class EditorSystem
             }
         }
         
-        operations.Add(new EditModeChangeOperation(EditMode, newEditMode, ActiveSubObjectGroup, newActiveSubObjectGroup));
+        operations.Add(new EditModeChangeOperation(EditMode, newEditMode, ActiveObjectGroup, newActiveObjectGroup));
         
         return new(operations);
     }
@@ -1430,7 +1436,7 @@ public static class EditorSystem
     {
         if (EditMode != EditorEditMode.HoldEditMode) return;
         if (SelectionSystem.SelectedObjects.Count == 0) return;
-        if (ActiveSubObjectGroup is not HoldNote sourceHoldNote) return;
+        if (ActiveObjectGroup is not HoldNote sourceHoldNote) return;
 
         List<IOperation> operations = [];
 
