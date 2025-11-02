@@ -306,7 +306,15 @@ public partial class ChartView3D : UserControl
             }
         }
         
-        // TODO: Sort selection priority
+        hits = hits
+            .OrderBy(x => SelectionSystem.SelectedObjects.Contains(x.Item2))
+            .ThenBy(x => x.Item2 is ILaneToggle)
+            .ThenBy(x => x.Item2.Timestamp.FullTick)
+            .ThenBy(x => x.Item2 is SyncNote or MeasureLineNote)
+            .ThenBy(x => x.Item2 is Event or Bookmark)
+            .ThenBy(x => x.Item2 is HoldNote or HoldPointNote)
+            .ThenBy(x => (x.Item2 as IPositionable)?.Size ?? 60)
+            .ToList();
 
         if (hits.Count != 0)
         {
@@ -332,7 +340,7 @@ public partial class ChartView3D : UserControl
             }
             
             // Default Cursor if box selecting.
-            if (!objectDrag.IsActive && clickDragLeft.IsDragActive)
+            if (!objectDrag.IsActive && clickDragLeft.IsActive)
             {
                 RenderCanvas.Cursor = new(StandardCursorType.Arrow);
                 return;
@@ -984,7 +992,7 @@ public partial class ChartView3D : UserControl
 
         // Hook into render function to update box selection during playback,
         // even when the pointer is not being moved.
-        if (playing && clickDragLeft.IsDragActive && !objectDrag.IsActive)
+        if (playing && clickDragLeft.IsActive && !objectDrag.IsActive)
         {
             _ = Task.Run(() =>
             {
@@ -1025,7 +1033,7 @@ public partial class ChartView3D : UserControl
                 clickDragLeft.EndPoint = point;
                 clickDragLeft.EndLane = lane;
                 
-                if (!clickDragLeft.IsDragActive) return;
+                if (!clickDragLeft.IsActive) return;
                 
                 if (objectDrag.IsActive)
                 {
@@ -1051,7 +1059,7 @@ public partial class ChartView3D : UserControl
                 clickDragRight.EndPoint = point;
                 clickDragRight.EndLane = lane;
                 
-                if (!clickDragRight.IsDragActive) return;
+                if (!clickDragRight.IsActive) return;
                 
                 CursorSystem.Position = clickDragRight.Position;
                 CursorSystem.Size = clickDragRight.Size;
@@ -1142,7 +1150,7 @@ public partial class ChartView3D : UserControl
                 
                 SelectionSystem.AttemptBoxSelection();
                 
-                if (objectDrag.IsActive == false 
+                if ((objectDrag.IsActive == false || clickDragLeft.IsActive == false)
                     && SelectionSystem.PointerOverObject != null 
                     && SelectionSystem.PointerOverObject == lastClickedObject
                     && SelectionSystem.SelectedObjects.Contains(SelectionSystem.PointerOverObject))

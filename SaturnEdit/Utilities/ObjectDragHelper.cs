@@ -90,18 +90,13 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
         
         if (clickDragHelper.EndLane != EndLane || EndTick != fullTick)
         {
-            bool rebuild = DragType == IPositionable.OverlapResult.Body && EndTick != fullTick;
-            
             EndLane = clickDragHelper.EndLane;
             EndTick = fullTick;
             
             CompositeOperation compositeOperation = GetOperations();
             compositeOperation.Apply();
-
-            if (rebuild)
-            {
-                ChartSystem.Rebuild();
-            }
+            
+            ChartSystem.Rebuild();
         }
     }
 

@@ -68,7 +68,7 @@ public class ClickDragHelper
         }
     }
 
-    public bool IsDragActive
+    public bool IsActive
     {
         get
         {
