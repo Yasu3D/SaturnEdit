@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 using SkiaSharp;
 
@@ -21,6 +23,9 @@ public partial class ZigZagHoldArgsWindow : Window
 
         ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
         Control_OnActualThemeVariantChanged(null, EventArgs.Empty);
+        
+        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
 
     public int Beats { get; set; } = 1;
@@ -82,6 +87,27 @@ public partial class ZigZagHoldArgsWindow : Window
 #endregion Methods
     
 #region UI Event Delegates
+    private void Control_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
+        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+
+        if (e.Key == Key.Escape)
+        {
+            Result = ModalDialogResult.Cancel;
+            Close();
+        }
+
+        if (e.Key == Key.Enter)
+        {
+            Result = ModalDialogResult.Primary;
+            Close();
+        }
+    }
+    
+    private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
+    
     private void RenderCanvas_OnRenderAction(SKCanvas canvas)
     {
         const int pixelsPerOffset = 4;

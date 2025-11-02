@@ -1,8 +1,10 @@
 using System;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnData.Notation.Serialization;
+using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.Dialogs.ExportArgs;
@@ -15,11 +17,15 @@ public partial class ExportArgsWindow : Window
         OnArgsChanged();
         
         TextBoxWatermark.Watermark = DefaultExportWatermark;
+        
+        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
+
+    public ModalDialogResult Result { get; private set; }  = ModalDialogResult.Cancel;
 
     public static string? DefaultExportWatermark => new NotationWriteArgs().ExportWatermark;
     public NotationWriteArgs NotationWriteArgs = new();
-    public ModalDialogResult DialogResult = ModalDialogResult.Cancel;
     private bool blockEvents = false;
     
 #region System Event Delegates
@@ -113,6 +119,27 @@ public partial class ExportArgsWindow : Window
 #endregion System Event Delegates
     
 #region UI Event Delegates
+    private void Control_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
+        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+
+        if (e.Key == Key.Escape)
+        {
+            Result = ModalDialogResult.Cancel;
+            Close();
+        }
+
+        if (e.Key == Key.Enter)
+        {
+            Result = ModalDialogResult.Primary;
+            Close();
+        }
+    }
+    
+    private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
+    
     private void ComboBoxFileType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
@@ -185,13 +212,13 @@ public partial class ExportArgsWindow : Window
     
     private void ButtonExport_OnClick(object? sender, RoutedEventArgs e)
     {
-        DialogResult = ModalDialogResult.Primary;
+        Result = ModalDialogResult.Primary;
         Close();
     }
 
     private void ButtonCancel_OnClick(object? sender, RoutedEventArgs e)
     {
-        DialogResult = ModalDialogResult.Cancel;
+        Result = ModalDialogResult.Cancel;
         Close();
     }
 

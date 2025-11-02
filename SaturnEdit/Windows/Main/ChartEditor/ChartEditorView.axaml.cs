@@ -141,7 +141,7 @@ public partial class ChartEditorView : UserControl
                 ImportArgsWindow importArgsWindow = new();
                 await importArgsWindow.ShowDialog(rootWindow);
 
-                if (importArgsWindow.DialogResult != ModalDialogResult.Primary) return false;
+                if (importArgsWindow.Result != ModalDialogResult.Primary) return false;
                 
                 args = importArgsWindow.NotationReadArgs;
             }
@@ -286,7 +286,7 @@ public partial class ChartEditorView : UserControl
             await exportArgsWindow.ShowDialog(rootWindow);
 
             // Return if export was cancelled.
-            if (exportArgsWindow.DialogResult != ModalDialogResult.Primary) return false;
+            if (exportArgsWindow.Result != ModalDialogResult.Primary) return false;
             if (exportArgsWindow.NotationWriteArgs.FormatVersion == FormatVersion.Unknown) return false;
 
             // Open the file picker.

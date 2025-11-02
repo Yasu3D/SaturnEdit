@@ -1,8 +1,10 @@
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Threading;
 using FluentIcons.Common;
+using SaturnEdit.Utilities;
 
 namespace SaturnEdit.Windows.Dialogs.ModalDialog;
 
@@ -19,9 +21,13 @@ public partial class ModalDialogWindow : Window
     public ModalDialogWindow()
     {
         InitializeComponent();
+        
+        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
 
-    public ModalDialogResult Result = ModalDialogResult.Cancel;
+    public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
+    
     public Icon DialogIcon = FluentIcons.Common.Icon.Home;
     public string WindowTitleKey = "";
     public string HeaderKey = "";
@@ -53,6 +59,27 @@ public partial class ModalDialogWindow : Window
 #endregion Methods
 
 #region UI Event Delegates
+    private void Control_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
+        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+
+        if (e.Key == Key.Escape)
+        {
+            Result = ModalDialogResult.Cancel;
+            Close();
+        }
+
+        if (e.Key == Key.Enter)
+        {
+            Result = ModalDialogResult.Primary;
+            Close();
+        }
+    }
+    
+    private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
+    
     private void ButtonPrimary_OnClick(object? sender, RoutedEventArgs e)
     {
         Result = ModalDialogResult.Primary;

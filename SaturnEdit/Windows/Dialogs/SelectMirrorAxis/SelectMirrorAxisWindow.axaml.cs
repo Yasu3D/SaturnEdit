@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using SaturnEdit.Systems;
+using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 using SaturnView;
 using SkiaSharp;
@@ -23,10 +25,13 @@ public partial class SelectMirrorAxisWindow : Window
         Control_OnActualThemeVariantChanged(null, EventArgs.Empty);
         
         InitializeDialog();
+        
+        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
 
-    public int Axis { get; private set; } = 0;
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
+    public int Axis { get; private set; } = 0;
 
     private bool blockEvents = false;
     
@@ -63,6 +68,27 @@ public partial class SelectMirrorAxisWindow : Window
 #endregion Methods
     
 #region UI Event Handlers
+    private void Control_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
+        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+
+        if (e.Key == Key.Escape)
+        {
+            Result = ModalDialogResult.Cancel;
+            Close();
+        }
+
+        if (e.Key == Key.Enter)
+        {
+            Result = ModalDialogResult.Primary;
+            Close();
+        }
+    }
+    
+    private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
+    
     private async void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
     {
         try
