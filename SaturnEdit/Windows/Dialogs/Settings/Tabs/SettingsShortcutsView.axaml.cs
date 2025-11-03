@@ -26,7 +26,7 @@ public partial class SettingsShortcutsView : UserControl
         ListBoxShortcuts.AddHandler(KeyDownEvent, ListBoxShortcuts_OnKeyDown, RoutingStrategies.Tunnel);
     }
 
-    public bool DefiningShortcut = false; 
+    public static bool DefiningShortcut = false; 
     
     private ShortcutListItem? currentItem = null;
     

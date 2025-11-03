@@ -920,7 +920,8 @@
                                               PointerMoved="RenderCanvas_OnPointerMoved"
                                               PointerPressed="RenderCanvas_OnPointerPressed"
                                               PointerReleased="RenderCanvas_OnPointerReleased"
-                                              PointerExited="RenderCanvas_OnPointerExited"/>
+                                              PointerExited="RenderCanvas_OnPointerExited"
+                                              PointerWheelChanged="RenderCanvas_OnPointerWheelChanged"/>
                 </Panel>
             </Grid>
         </Grid>

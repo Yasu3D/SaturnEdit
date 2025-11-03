@@ -146,7 +146,12 @@ public static class TimeSystem
 #region Methods
     public static void SeekMeasureTick(int measure, int tick)
     {
-        Timestamp t = new(measure, tick);
+        SeekFullTick(measure * 1920 + tick);
+    }
+    
+    public static void SeekFullTick(int fullTick)
+    {
+        Timestamp t = new(fullTick);
         t.Time = Timestamp.TimeFromTimestamp(ChartSystem.Chart, t);
 
         Timestamp = t;

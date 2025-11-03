@@ -44,15 +44,13 @@
                                  Foreground="{DynamicResource ForegroundSecondary}" />
             </TextBox.InnerLeftContent>
         </TextBox>
-
-
+        
         <Border Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="5"
                 BorderBrush="{DynamicResource SeparatorSecondary}"
                 BorderThickness="1"
                 Margin="0,15">
-
             <Grid RowDefinitions="40,*">
                 <Border Grid.Row="0"
                         Background="{DynamicResource ButtonSecondaryPressed}"
@@ -86,8 +84,7 @@
                 </ListBox>
             </Grid>
         </Border>
-
-
+        
         <Button Grid.Column="4"
                 Grid.Row="2"
                 Name="ButtonResetToDefault"

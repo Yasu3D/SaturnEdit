@@ -555,6 +555,7 @@ public partial class ChartView3D : UserControl
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
         if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
         if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+        if (KeyDownBlacklist.IsInvalidState()) return;
         
         Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
 
@@ -1180,6 +1181,27 @@ public partial class ChartView3D : UserControl
         pointerPosition = null;
     }
 
+    private void RenderCanvas_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        onScrollUp();
+        onScrollDown();
+
+        return;
+
+        void onScrollUp()
+        {
+            if (e.Delta.Y <= 0) return;
+            
+            TimeSystem.SeekFullTick(TimeSystem.Timestamp.FullTick + TimeSystem.DivisionInterval);
+        }
+
+        void onScrollDown()
+        {
+            if (e.Delta.Y >= 0) return;
+            
+            TimeSystem.SeekFullTick(Math.Max(0, TimeSystem.Timestamp.FullTick - TimeSystem.DivisionInterval));
+        }
+    }
 
     private void ComboBoxEditMode_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {

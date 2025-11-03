@@ -212,6 +212,7 @@ public partial class LayerListView : UserControl
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
         if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
         if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+        if (KeyDownBlacklist.IsInvalidState()) return;
         
         Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
 
@@ -275,6 +276,7 @@ public partial class LayerListView : UserControl
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
         if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
         if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+        if (KeyDownBlacklist.IsInvalidState()) return;
         
         Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
 

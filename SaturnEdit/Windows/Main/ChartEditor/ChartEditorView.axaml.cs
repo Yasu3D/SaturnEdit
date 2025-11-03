@@ -14,6 +14,8 @@ using Dock.Model.Core;
 using Dock.Serializer;
 using FluentIcons.Common;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Events;
+using SaturnData.Notation.Notes;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
@@ -173,7 +175,7 @@ public partial class ChartEditorView : UserControl
         try
         {
             // Save As if chart file doesn't have a path yet.
-            if (!File.Exists(ChartSystem.Entry.ChartFile))
+            if (!File.Exists(ChartSystem.Entry.ChartPath))
             {
                 return await File_SaveAs();
             }
@@ -399,6 +401,225 @@ public partial class ChartEditorView : UserControl
         if (selectByCriteriaWindow.Result != ModalDialogResult.Primary) return;
         SelectionSystem.SelectByCriteria();
     }
+
+    private static void Navigate_MoveBeatForward()
+    {
+        TimeSystem.SeekFullTick(TimeSystem.Timestamp.FullTick + TimeSystem.DivisionInterval);
+    }
+    
+    private static void Navigate_MoveBeatBack()
+    {
+        TimeSystem.SeekFullTick(Math.Max(0, TimeSystem.Timestamp.FullTick - TimeSystem.DivisionInterval));
+    }
+    
+    private static void Navigate_MoveMeasureForward()
+    {
+        TimeSystem.SeekFullTick(TimeSystem.Timestamp.FullTick + 1920);
+    }
+    
+    private static void Navigate_MoveMeasureBack()
+    {
+        TimeSystem.SeekFullTick(Math.Max(0, TimeSystem.Timestamp.FullTick - 1920));
+    }
+    
+    private static void Navigate_JumpToNextObject()
+    {
+        int startTick = TimeSystem.Timestamp.FullTick;
+        int nextTick = int.MaxValue;
+
+        if (EditorSystem.Mode == EditorMode.ObjectMode)
+        {
+            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            {
+                if (bookmark.Timestamp.FullTick <= startTick) continue;
+                if (bookmark.Timestamp.FullTick >= nextTick) continue;
+
+                nextTick = bookmark.Timestamp.FullTick;
+            }
+
+            foreach (Event globalEvent in ChartSystem.Chart.Events)
+            {
+                if (globalEvent.Timestamp.FullTick <= startTick) continue;
+                if (globalEvent.Timestamp.FullTick >= nextTick) continue;
+
+                nextTick = globalEvent.Timestamp.FullTick;
+            }
+
+            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            {
+                if (laneToggle.Timestamp.FullTick <= startTick) continue;
+                if (laneToggle.Timestamp.FullTick >= nextTick) continue;
+
+                nextTick = laneToggle.Timestamp.FullTick;
+            }
+
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            {
+                foreach (Event layerEvent in layer.Events)
+                {
+                    if (layerEvent.Timestamp.FullTick <= startTick) continue;
+                    if (layerEvent.Timestamp.FullTick >= nextTick) continue;
+
+                    nextTick = layerEvent.Timestamp.FullTick;
+                }
+
+                foreach (Note note in layer.Notes)
+                {
+                    if (note.Timestamp.FullTick <= startTick) continue;
+                    if (note.Timestamp.FullTick >= nextTick) continue;
+
+                    nextTick = note.Timestamp.FullTick;
+                }
+            }
+        }
+        else if (EditorSystem.Mode == EditorMode.EditMode)
+        {
+            if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    if (point.Timestamp.FullTick <= startTick) continue;
+                    if (point.Timestamp.FullTick >= nextTick) continue;
+
+                    nextTick = point.Timestamp.FullTick;
+                }
+            }
+            else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+            {
+                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                {
+                    if (subEvent.Timestamp.FullTick <= startTick) continue;
+                    if (subEvent.Timestamp.FullTick >= nextTick) continue;
+
+                    nextTick = subEvent.Timestamp.FullTick;
+                }
+            }
+            else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
+            {
+                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                {
+                    if (subEvent.Timestamp.FullTick <= startTick) continue;
+                    if (subEvent.Timestamp.FullTick >= nextTick) continue;
+
+                    nextTick = subEvent.Timestamp.FullTick;
+                }
+            }
+        }
+
+        if (nextTick == int.MaxValue) return;
+        
+        TimeSystem.SeekFullTick(nextTick);
+    }
+    
+    private static void Navigate_JumpToPreviousObject() 
+    {
+        int startTick = TimeSystem.Timestamp.FullTick;
+        int previousTick = int.MinValue;
+
+        if (EditorSystem.Mode == EditorMode.ObjectMode)
+        {
+            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            {
+                if (bookmark.Timestamp.FullTick >= startTick) continue;
+                if (bookmark.Timestamp.FullTick <= previousTick) continue;
+
+                previousTick = bookmark.Timestamp.FullTick;
+            }
+
+            foreach (Event globalEvent in ChartSystem.Chart.Events)
+            {
+                if (globalEvent.Timestamp.FullTick >= startTick) continue;
+                if (globalEvent.Timestamp.FullTick <= previousTick) continue;
+
+                previousTick = globalEvent.Timestamp.FullTick;
+            }
+
+            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            {
+                if (laneToggle.Timestamp.FullTick >= startTick) continue;
+                if (laneToggle.Timestamp.FullTick <= previousTick) continue;
+
+                previousTick = laneToggle.Timestamp.FullTick;
+            }
+
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            {
+                foreach (Event layerEvent in layer.Events)
+                {
+                    if (layerEvent.Timestamp.FullTick >= startTick) continue;
+                    if (layerEvent.Timestamp.FullTick <= previousTick) continue;
+
+                    previousTick = layerEvent.Timestamp.FullTick;
+                }
+
+                foreach (Note note in layer.Notes)
+                {
+                    if (note.Timestamp.FullTick >= startTick) continue;
+                    if (note.Timestamp.FullTick <= previousTick) continue;
+
+                    previousTick = note.Timestamp.FullTick;
+                }
+            }
+        }
+        else if (EditorSystem.Mode == EditorMode.EditMode)
+        {
+            if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    if (point.Timestamp.FullTick >= startTick) continue;
+                    if (point.Timestamp.FullTick <= previousTick) continue;
+
+                    previousTick = point.Timestamp.FullTick;
+                }
+            }
+            else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+            {
+                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                {
+                    if (subEvent.Timestamp.FullTick >= startTick) continue;
+                    if (subEvent.Timestamp.FullTick <= previousTick) continue;
+
+                    previousTick = subEvent.Timestamp.FullTick;
+                }
+            }
+            else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
+            {
+                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                {
+                    if (subEvent.Timestamp.FullTick >= startTick) continue;
+                    if (subEvent.Timestamp.FullTick <= previousTick) continue;
+
+                    previousTick = subEvent.Timestamp.FullTick;
+                }
+            }
+        }
+
+        if (previousTick < 0) return;
+        
+        TimeSystem.SeekFullTick(previousTick);
+    }
+    
+    private static void Navigate_IncreaseBeatDivision()
+    {
+        TimeSystem.Division = Math.Clamp(TimeSystem.Division + 1, 1, 1920);
+    }
+    
+    private static void Navigate_DecreaseBeatDivision() 
+    {
+        TimeSystem.Division = Math.Clamp(TimeSystem.Division - 1, 1, 1920);
+    }
+    
+    private static void Navigate_DoubleBeatDivision() 
+    {
+        TimeSystem.Division = Math.Clamp(TimeSystem.Division * 2, 1, 1920);
+    }
+    
+    private static void Navigate_HalveBeatDivision() 
+    {
+        TimeSystem.Division = Math.Clamp(TimeSystem.Division / 2, 1, 1920);
+    }
+    
     
     private FilePickerSaveOptions ExportFilePickerSaveOptions(NotationWriteArgs args)
     {
@@ -544,8 +765,8 @@ public partial class ChartEditorView : UserControl
             MenuItemChartEditorMoveBeatBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveBeatBack"].ToKeyGesture();
             MenuItemChartEditorMoveMeasureForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveMeasureForward"].ToKeyGesture();
             MenuItemChartEditorMoveMeasureBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveMeasureBack"].ToKeyGesture();
-            MenuItemChartEditorJumpToNextNote.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToNextNote"].ToKeyGesture();
-            MenuItemChartEditorJumpToPreviousNote.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToPreviousNote"].ToKeyGesture();
+            MenuItemChartEditorJumpToNextObject.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToNextObject"].ToKeyGesture();
+            MenuItemChartEditorJumpToPreviousObject.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToPreviousObject"].ToKeyGesture();
             MenuItemChartEditorIncreaseBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.IncreaseBeatDivision"].ToKeyGesture();
             MenuItemChartEditorDecreaseBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DecreaseBeatDivision"].ToKeyGesture();
             MenuItemChartEditorDoubleBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DoubleBeatDivision"].ToKeyGesture();
@@ -577,6 +798,7 @@ public partial class ChartEditorView : UserControl
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
         if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
         if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+        if (KeyDownBlacklist.IsInvalidState()) return;
         
         Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
         
@@ -677,6 +899,57 @@ public partial class ChartEditorView : UserControl
             Edit_SelectByCriteria();
             e.Handled = true;
         }
+        
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveBeatForward"]))
+        { 
+            Navigate_MoveBeatForward();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveBeatBack"]))
+        { 
+            Navigate_MoveBeatBack();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveMeasureForward"]))
+        { 
+            Navigate_MoveMeasureForward();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveMeasureBack"]))
+        { 
+            Navigate_MoveMeasureBack();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToNextObject"]))
+        {
+            Navigate_JumpToNextObject();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToPreviousObject"]))
+        {
+            Navigate_JumpToPreviousObject();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.IncreaseBeatDivision"]))
+        {
+            Navigate_IncreaseBeatDivision();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DecreaseBeatDivision"]))
+        {
+            Navigate_DecreaseBeatDivision();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DoubleBeatDivision"]))
+        {
+            Navigate_DoubleBeatDivision();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.HalveBeatDivision"]))
+        {
+            Navigate_HalveBeatDivision();
+            e.Handled = true;
+        }
     }
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
@@ -724,6 +997,7 @@ public partial class ChartEditorView : UserControl
 
     private void MenuItemChartEditorQuit_OnClick(object? sender, RoutedEventArgs e) => File_Quit();
     
+    
     private void MenuItemChartEditorUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Undo();
 
     private void MenuItemChartEditorRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
@@ -741,5 +1015,26 @@ public partial class ChartEditorView : UserControl
     private void MenuItemChartEditorCheckerDeselect_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.CheckerDeselect();
 
     private void MenuItemChartEditorSelectByCriteria_OnClick(object? sender, RoutedEventArgs e) => Edit_SelectByCriteria();
+    
+    
+    private void MenuItemChartEditorMoveBeatForward_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveBeatForward();
+
+    private void MenuItemChartEditorMoveBeatBack_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveBeatBack();
+
+    private void MenuItemChartEditorMoveMeasureForward_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveMeasureForward();
+
+    private void MenuItemChartEditorMoveMeasureBack_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveMeasureBack();
+
+    private void MenuItemChartEditorJumpToNextObject_OnClick(object? sender, RoutedEventArgs e) => Navigate_JumpToNextObject();
+
+    private void MenuItemChartEditorJumpToPreviousObject_OnClick(object? sender, RoutedEventArgs e) => Navigate_JumpToPreviousObject();
+
+    private void MenuItemChartEditorIncreaseBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_IncreaseBeatDivision();
+
+    private void MenuItemChartEditorDecreaseBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_DecreaseBeatDivision();
+
+    private void MenuItemChartEditorDoubleBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_DoubleBeatDivision();
+
+    private void MenuItemChartEditorHalveBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_HalveBeatDivision();
 #endregion UI Event Delegates
 }

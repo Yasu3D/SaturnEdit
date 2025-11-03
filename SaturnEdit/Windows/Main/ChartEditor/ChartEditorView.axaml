@@ -390,7 +390,8 @@
                         <TextBlock Text="{DynamicResource Menu.Navigate}" />
                     </MenuItem.Header>
 
-                    <MenuItem Name="MenuItemChartEditorMoveBeatForward">
+                    <MenuItem Name="MenuItemChartEditorMoveBeatForward"
+                              Click="MenuItemChartEditorMoveBeatForward_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatForward}" />
                         </MenuItem.Header>
@@ -399,7 +400,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Name="MenuItemChartEditorMoveBeatBack">
+                    <MenuItem Name="MenuItemChartEditorMoveBeatBack"
+                              Click="MenuItemChartEditorMoveBeatBack_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatBack}" />
                         </MenuItem.Header>
@@ -410,7 +412,8 @@
 
                     <Separator />
 
-                    <MenuItem Name="MenuItemChartEditorMoveMeasureForward">
+                    <MenuItem Name="MenuItemChartEditorMoveMeasureForward"
+                              Click="MenuItemChartEditorMoveMeasureForward_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureForward}" />
                         </MenuItem.Header>
@@ -419,7 +422,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Name="MenuItemChartEditorMoveMeasureBack">
+                    <MenuItem Name="MenuItemChartEditorMoveMeasureBack"
+                              Click="MenuItemChartEditorMoveMeasureBack_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureBack}" />
                         </MenuItem.Header>
@@ -430,18 +434,20 @@
 
                     <Separator />
 
-                    <MenuItem Name="MenuItemChartEditorJumpToNextNote">
+                    <MenuItem Name="MenuItemChartEditorJumpToNextObject"
+                              Click="MenuItemChartEditorJumpToNextObject_OnClick">
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.JumpToNextNote}" />
+                            <TextBlock Text="{DynamicResource Menu.Navigate.JumpToNextObject}" />
                         </MenuItem.Header>
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="ArrowNext" />
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Name="MenuItemChartEditorJumpToPreviousNote">
+                    <MenuItem Name="MenuItemChartEditorJumpToPreviousObject"
+                              Click="MenuItemChartEditorJumpToPreviousObject_OnClick">
                         <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.Navigate.JumpToPreviousNote}" />
+                            <TextBlock Text="{DynamicResource Menu.Navigate.JumpToPreviousObject}" />
                         </MenuItem.Header>
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="ArrowPrevious" />
@@ -450,7 +456,8 @@
 
                     <Separator />
 
-                    <MenuItem Name="MenuItemChartEditorIncreaseBeatDivision">
+                    <MenuItem Name="MenuItemChartEditorIncreaseBeatDivision"
+                              Click="MenuItemChartEditorIncreaseBeatDivision_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.IncreaseBeatDivision}" />
                         </MenuItem.Header>
@@ -459,7 +466,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Name="MenuItemChartEditorDecreaseBeatDivision">
+                    <MenuItem Name="MenuItemChartEditorDecreaseBeatDivision"
+                              Click="MenuItemChartEditorDecreaseBeatDivision_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.DecreaseBeatDivision}" />
                         </MenuItem.Header>
@@ -468,13 +476,15 @@
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Name="MenuItemChartEditorDoubleBeatDivision">
+                    <MenuItem Name="MenuItemChartEditorDoubleBeatDivision"
+                              Click="MenuItemChartEditorDoubleBeatDivision_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.DoubleBeatDivision}" />
                         </MenuItem.Header>
                     </MenuItem>
 
-                    <MenuItem Name="MenuItemChartEditorHalveBeatDivision">
+                    <MenuItem Name="MenuItemChartEditorHalveBeatDivision"
+                              Click="MenuItemChartEditorHalveBeatDivision_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.HalveBeatDivision}" />
                         </MenuItem.Header>

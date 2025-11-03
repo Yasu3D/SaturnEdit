@@ -74,6 +74,7 @@ public partial class SelectByCriteriaWindow : Window
         IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
         if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
         if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+        if (KeyDownBlacklist.IsInvalidState()) return;
 
         if (e.Key == Key.Escape)
         {
