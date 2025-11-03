@@ -1093,6 +1093,7 @@ public static class EditorSystem
                     sourcePoint.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                         
                     operations.Add(new HoldPointNoteAddOperation(holdNote, sourcePoint, holdNote.Points.Count));
+                    operations.Add(new SelectionAddOperation(sourcePoint, SelectionSystem.LastSelectedObject));
                 }
                     
                 break;
