@@ -741,36 +741,36 @@ public partial class ChartEditorView : UserControl
     {
         Dispatcher.UIThread.Post(() =>
         {
-            MenuItemChartEditorNew.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.New"].ToKeyGesture();
-            MenuItemChartEditorOpen.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Open"].ToKeyGesture();
-            MenuItemChartEditorSave.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Save"].ToKeyGesture();
-            MenuItemChartEditorSaveAs.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.SaveAs"].ToKeyGesture();
-            MenuItemChartEditorReloadFromDisk.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.ReloadFromDisk"].ToKeyGesture();
-            MenuItemChartEditorExport.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Export"].ToKeyGesture();
-            MenuItemChartEditorRenderAsImage.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.RenderAsImage"].ToKeyGesture();
-            MenuItemChartEditorSettings.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["QuickCommands.Settings"].ToKeyGesture();
-            MenuItemChartEditorQuit.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Quit"].ToKeyGesture();
+            MenuItemNew.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.New"].ToKeyGesture();
+            MenuItemOpen.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Open"].ToKeyGesture();
+            MenuItemSave.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Save"].ToKeyGesture();
+            MenuItemSaveAs.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.SaveAs"].ToKeyGesture();
+            MenuItemReloadFromDisk.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.ReloadFromDisk"].ToKeyGesture();
+            MenuItemExport.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Export"].ToKeyGesture();
+            MenuItemRenderAsImage.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.RenderAsImage"].ToKeyGesture();
+            MenuItemSettings.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["QuickCommands.Settings"].ToKeyGesture();
+            MenuItemQuit.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Quit"].ToKeyGesture();
 
-            MenuItemChartEditorUndo.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"].ToKeyGesture();
-            MenuItemChartEditorRedo.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"].ToKeyGesture();
-            MenuItemChartEditorCut.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Cut"].ToKeyGesture();
-            MenuItemChartEditorCopy.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Copy"].ToKeyGesture();
-            MenuItemChartEditorPaste.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Paste"].ToKeyGesture();
-            MenuItemChartEditorSelectAll.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectAll"].ToKeyGesture();
-            MenuItemChartEditorDeselectAll.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.DeselectAll"].ToKeyGesture();
-            MenuItemChartEditorCheckerDeselect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.CheckerDeselect"].ToKeyGesture();
-            MenuItemChartEditorSelectByCriteria.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectByCriteria"].ToKeyGesture();
+            MenuItemUndo.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"].ToKeyGesture();
+            MenuItemRedo.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"].ToKeyGesture();
+            MenuItemCut.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Cut"].ToKeyGesture();
+            MenuItemCopy.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Copy"].ToKeyGesture();
+            MenuItemPaste.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Paste"].ToKeyGesture();
+            MenuItemSelectAll.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectAll"].ToKeyGesture();
+            MenuItemDeselectAll.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.DeselectAll"].ToKeyGesture();
+            MenuItemCheckerDeselect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.CheckerDeselect"].ToKeyGesture();
+            MenuItemSelectByCriteria.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectByCriteria"].ToKeyGesture();
 
-            MenuItemChartEditorMoveBeatForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveBeatForward"].ToKeyGesture();
-            MenuItemChartEditorMoveBeatBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveBeatBack"].ToKeyGesture();
-            MenuItemChartEditorMoveMeasureForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveMeasureForward"].ToKeyGesture();
-            MenuItemChartEditorMoveMeasureBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveMeasureBack"].ToKeyGesture();
-            MenuItemChartEditorJumpToNextObject.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToNextObject"].ToKeyGesture();
-            MenuItemChartEditorJumpToPreviousObject.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToPreviousObject"].ToKeyGesture();
-            MenuItemChartEditorIncreaseBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.IncreaseBeatDivision"].ToKeyGesture();
-            MenuItemChartEditorDecreaseBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DecreaseBeatDivision"].ToKeyGesture();
-            MenuItemChartEditorDoubleBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DoubleBeatDivision"].ToKeyGesture();
-            MenuItemChartEditorHalveBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.HalveBeatDivision"].ToKeyGesture();
+            MenuItemMoveBeatForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveBeatForward"].ToKeyGesture();
+            MenuItemMoveBeatBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveBeatBack"].ToKeyGesture();
+            MenuItemMoveMeasureForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveMeasureForward"].ToKeyGesture();
+            MenuItemMoveMeasureBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveMeasureBack"].ToKeyGesture();
+            MenuItemJumpToNextObject.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToNextObject"].ToKeyGesture();
+            MenuItemJumpToPreviousObject.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToPreviousObject"].ToKeyGesture();
+            MenuItemIncreaseBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.IncreaseBeatDivision"].ToKeyGesture();
+            MenuItemDecreaseBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DecreaseBeatDivision"].ToKeyGesture();
+            MenuItemDoubleBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DoubleBeatDivision"].ToKeyGesture();
+            MenuItemHalveBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.HalveBeatDivision"].ToKeyGesture();
         });
     }
     
@@ -778,7 +778,7 @@ public partial class ChartEditorView : UserControl
     {
         Dispatcher.UIThread.Post(() =>
         {
-            MenuItemChartEditorReloadFromDisk.IsEnabled = File.Exists(ChartSystem.Entry.ChartFile);
+            MenuItemReloadFromDisk.IsEnabled = File.Exists(ChartSystem.Entry.ChartFile);
         });
     }
     
@@ -786,8 +786,8 @@ public partial class ChartEditorView : UserControl
     {
         Dispatcher.UIThread.Post(() =>
         {
-            MenuItemChartEditorUndo.IsEnabled = UndoRedoSystem.CanUndo;
-            MenuItemChartEditorRedo.IsEnabled = UndoRedoSystem.CanRedo;
+            MenuItemUndo.IsEnabled = UndoRedoSystem.CanUndo;
+            MenuItemRedo.IsEnabled = UndoRedoSystem.CanRedo;
         });
     }
 #endregion System Event Delegates
@@ -954,23 +954,23 @@ public partial class ChartEditorView : UserControl
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
     
-    private void MenuItemChartEditorToolWindows_OnClick(object? sender, RoutedEventArgs e)
+    private void MenuItemToolWindows_OnClick(object? sender, RoutedEventArgs e)
     {
         if (sender is not MenuItem menuItem) return;
         UserControl? userControl = menuItem.Name switch
         {
-            "MenuItemChartEditorChartView3D" => new ChartView3D(),
-            "MenuItemChartEditorChartView2D" => new ChartView2D(),
-            "MenuItemChartEditorChartViewTxt" => new ChartViewTxt(),
-            "MenuItemChartEditorChartProperties" => new ChartPropertiesView(),
-            "MenuItemChartEditorChartStatistics" => new ChartStatisticsView(),
-            "MenuItemChartEditorProofreader" => new ProofreaderView(),
-            "MenuItemChartEditorEventList" => new EventListView(),
-            "MenuItemChartEditorLayerList" => new LayerListView(),
-            "MenuItemChartEditorInspector" => new InspectorView(),
-            "MenuItemChartEditorCursor" => new CursorView(),
-            "MenuItemChartEditorAudioMixer" => new AudioMixerView(),
-            "MenuItemChartEditorWaveform" => new WaveformView(),
+            "MenuItemChartView3D" => new ChartView3D(),
+            "MenuItemChartView2D" => new ChartView2D(),
+            "MenuItemChartViewTxt" => new ChartViewTxt(),
+            "MenuItemChartProperties" => new ChartPropertiesView(),
+            "MenuItemChartStatistics" => new ChartStatisticsView(),
+            "MenuItemProofreader" => new ProofreaderView(),
+            "MenuItemEventList" => new EventListView(),
+            "MenuItemLayerList" => new LayerListView(),
+            "MenuItemInspector" => new InspectorView(),
+            "MenuItemCursor" => new CursorView(),
+            "MenuItemAudioMixer" => new AudioMixerView(),
+            "MenuItemWaveform" => new WaveformView(),
             _ => null,
         };
 
@@ -978,63 +978,62 @@ public partial class ChartEditorView : UserControl
         CreateNewFloatingTool(userControl);
     }
 
-    private void MenuItemChartEditorNew_OnClick(object? sender, RoutedEventArgs e) => File_New();
+    private void MenuItemNew_OnClick(object? sender, RoutedEventArgs e) => File_New();
 
-    private void MenuItemChartEditorOpen_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open();
+    private void MenuItemOpen_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open();
 
-    private void MenuItemChartEditorSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_Save();
+    private void MenuItemSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_Save();
 
-    private void MenuItemChartEditorSaveAs_OnClick(object? sender, RoutedEventArgs e) => _ = File_SaveAs();
+    private void MenuItemSaveAs_OnClick(object? sender, RoutedEventArgs e) => _ = File_SaveAs();
 
-    private void MenuItemChartEditorReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => _ = File_ReloadFromDisk();
+    private void MenuItemReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => _ = File_ReloadFromDisk();
 
-    private void MenuItemChartEditorExport_OnClick(object? sender, RoutedEventArgs e) => _ = File_Export();
+    private void MenuItemExport_OnClick(object? sender, RoutedEventArgs e) => _ = File_Export();
 
-    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e)
-    {
-        mainWindow?.ShowSettingsWindow();
-    }
+    private void MenuItemRenderAsImage_OnClick(object? sender, RoutedEventArgs e) => File_RenderAsImage();
 
-    private void MenuItemChartEditorQuit_OnClick(object? sender, RoutedEventArgs e) => File_Quit();
+    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e) => mainWindow?.ShowSettingsWindow();
+
+    private void MenuItemQuit_OnClick(object? sender, RoutedEventArgs e) => File_Quit();
     
     
-    private void MenuItemChartEditorUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Undo();
+    private void MenuItemUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Undo();
 
-    private void MenuItemChartEditorRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
+    private void MenuItemRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
 
-    private void MenuItemChartEditorCut_OnClick(object? sender, RoutedEventArgs e) => Edit_Cut();
+    private void MenuItemCut_OnClick(object? sender, RoutedEventArgs e) => Edit_Cut();
 
-    private void MenuItemChartEditorCopy_OnClick(object? sender, RoutedEventArgs e) => Edit_Copy();
+    private void MenuItemCopy_OnClick(object? sender, RoutedEventArgs e) => Edit_Copy();
 
-    private void MenuItemChartEditorPaste_OnClick(object? sender, RoutedEventArgs e) => Edit_Paste();
+    private void MenuItemPaste_OnClick(object? sender, RoutedEventArgs e) => Edit_Paste();
 
-    private void MenuItemChartEditorSelectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.SelectAll();
+    private void MenuItemSelectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.SelectAll();
 
-    private void MenuItemChartEditorDeselectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.DeselectAll();
+    private void MenuItemDeselectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.DeselectAll();
 
-    private void MenuItemChartEditorCheckerDeselect_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.CheckerDeselect();
+    private void MenuItemCheckerDeselect_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.CheckerDeselect();
 
-    private void MenuItemChartEditorSelectByCriteria_OnClick(object? sender, RoutedEventArgs e) => Edit_SelectByCriteria();
+    private void MenuItemSelectByCriteria_OnClick(object? sender, RoutedEventArgs e) => Edit_SelectByCriteria();
     
     
-    private void MenuItemChartEditorMoveBeatForward_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveBeatForward();
+    private void MenuItemMoveBeatForward_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveBeatForward();
 
-    private void MenuItemChartEditorMoveBeatBack_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveBeatBack();
+    private void MenuItemMoveBeatBack_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveBeatBack();
 
-    private void MenuItemChartEditorMoveMeasureForward_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveMeasureForward();
+    private void MenuItemMoveMeasureForward_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveMeasureForward();
 
-    private void MenuItemChartEditorMoveMeasureBack_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveMeasureBack();
+    private void MenuItemMoveMeasureBack_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveMeasureBack();
 
-    private void MenuItemChartEditorJumpToNextObject_OnClick(object? sender, RoutedEventArgs e) => Navigate_JumpToNextObject();
+    private void MenuItemJumpToNextObject_OnClick(object? sender, RoutedEventArgs e) => Navigate_JumpToNextObject();
 
-    private void MenuItemChartEditorJumpToPreviousObject_OnClick(object? sender, RoutedEventArgs e) => Navigate_JumpToPreviousObject();
+    private void MenuItemJumpToPreviousObject_OnClick(object? sender, RoutedEventArgs e) => Navigate_JumpToPreviousObject();
 
-    private void MenuItemChartEditorIncreaseBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_IncreaseBeatDivision();
+    private void MenuItemIncreaseBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_IncreaseBeatDivision();
 
-    private void MenuItemChartEditorDecreaseBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_DecreaseBeatDivision();
+    private void MenuItemDecreaseBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_DecreaseBeatDivision();
 
-    private void MenuItemChartEditorDoubleBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_DoubleBeatDivision();
+    private void MenuItemDoubleBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_DoubleBeatDivision();
 
-    private void MenuItemChartEditorHalveBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_HalveBeatDivision();
+    private void MenuItemHalveBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_HalveBeatDivision();
 #endregion UI Event Delegates
 }
