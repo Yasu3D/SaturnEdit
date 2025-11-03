@@ -67,8 +67,6 @@ public static class TimeSystem
         get => timestamp;
         private set
         {
-            if (timestamp == value) return;
-            
             timestamp = value;
             TimestampChanged?.Invoke(null, EventArgs.Empty);
         }
