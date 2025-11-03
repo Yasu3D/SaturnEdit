@@ -106,7 +106,7 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
 
     public void End()
     {
-        if (!IsActive) return;
+        if (!IsActive || !clickDragHelper.IsActive) return;
 
         CompositeOperation operation = GetOperations();
         

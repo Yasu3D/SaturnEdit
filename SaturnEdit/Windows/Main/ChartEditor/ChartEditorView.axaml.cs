@@ -365,6 +365,30 @@ public partial class ChartEditorView : UserControl
         }
     }
 
+    private void Edit_Cut()
+    {
+        TopLevel? topLevel = TopLevel.GetTopLevel(this);
+        if (topLevel?.Clipboard == null) return;
+
+        _ = EditorSystem.Edit_Cut(topLevel.Clipboard);
+    }
+
+    private void Edit_Copy()
+    {
+        TopLevel? topLevel = TopLevel.GetTopLevel(this);
+        if (topLevel?.Clipboard == null) return;
+
+        _ = EditorSystem.Edit_Copy(topLevel.Clipboard, true);
+    }
+
+    private void Edit_Paste()
+    {
+        TopLevel? topLevel = TopLevel.GetTopLevel(this);
+        if (topLevel?.Clipboard == null) return;
+
+        _ = EditorSystem.Edit_Paste(topLevel.Clipboard);
+    }
+    
     public async void Edit_SelectByCriteria()
     {
         if (VisualRoot is not Window rootWindow) return;
@@ -620,17 +644,17 @@ public partial class ChartEditorView : UserControl
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Cut"]))
         {
-            EditorSystem.Edit_Cut();
+            Edit_Cut();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Copy"]))
         {
-            EditorSystem.Edit_Copy();
+            Edit_Copy();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Paste"]))
         {
-            EditorSystem.Edit_Paste();
+            Edit_Paste();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectAll"]))
@@ -704,11 +728,11 @@ public partial class ChartEditorView : UserControl
 
     private void MenuItemChartEditorRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
 
-    private void MenuItemChartEditorCut_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Edit_Cut();
+    private void MenuItemChartEditorCut_OnClick(object? sender, RoutedEventArgs e) => Edit_Cut();
 
-    private void MenuItemChartEditorCopy_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Edit_Copy();
+    private void MenuItemChartEditorCopy_OnClick(object? sender, RoutedEventArgs e) => Edit_Copy();
 
-    private void MenuItemChartEditorPaste_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Edit_Paste();
+    private void MenuItemChartEditorPaste_OnClick(object? sender, RoutedEventArgs e) => Edit_Paste();
 
     private void MenuItemChartEditorSelectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.SelectAll();
 

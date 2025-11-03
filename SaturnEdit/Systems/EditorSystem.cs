@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Avalonia.Input.Platform;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
+using SaturnData.Notation.Serialization;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.BookmarkOperations;
 using SaturnEdit.UndoRedo.EditModeOperations;
@@ -883,18 +886,220 @@ public static class EditorSystem
     }
     
     
-    public static void Edit_Cut()
+    public static async Task Edit_Cut(IClipboard clipboard)
     {
         if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        await Edit_Copy(clipboard, false);
+        ToolBar_Delete();
     }
 
-    public static void Edit_Copy()
+    public static async Task Edit_Copy(IClipboard clipboard, bool deselect)
     {
         if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<ITimeable> objects = SelectionSystem.OrderedSelectedObjects;
+
+        int startFullTick = objects[0].Timestamp.FullTick;
+        Chart chart = new() { Layers = [new("Clipboard")] };
+
+        if (Mode == EditorMode.ObjectMode)
+        {
+            foreach (ITimeable obj in objects)
+            {
+                if (obj is not ICloneable cloneable) continue;
+
+                object clone = cloneable.Clone();
+
+                if (clone is HoldNote holdNote)
+                {
+                    foreach (HoldPointNote point in holdNote.Points)
+                    {
+                        point.Timestamp.FullTick -= startFullTick;
+                    }
+                }
+                else if (clone is StopEffectEvent stopEffectEvent)
+                {
+                    foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                    {
+                        subEvent.Timestamp.FullTick -= startFullTick;
+                    }
+                }
+                else if (clone is ReverseEffectEvent reverseEffectEvent)
+                {
+                    foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                    {
+                        subEvent.Timestamp.FullTick -= startFullTick;
+                    }
+                }
+                else
+                {
+                    ((ITimeable)clone).Timestamp.FullTick -= startFullTick;
+                }
+                
+                if (clone is Bookmark bookmark)
+                {
+                    chart.Bookmarks.Add(bookmark);
+                }
+                else if (clone is Event globalEvent && clone is TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent)
+                {
+                    chart.Events.Add(globalEvent);
+                }
+                else if (clone is ILaneToggle laneToggle)
+                {
+                    chart.LaneToggles.Add((Note)laneToggle);
+                }
+                else if (clone is Event layerEvent && clone is SpeedChangeEvent or VisibilityChangeEvent or StopEffectEvent or ReverseEffectEvent)
+                {
+                    chart.Layers[0].Events.Add(layerEvent);
+                }
+                else if (clone is Note note)
+                {
+                    chart.Layers[0].Notes.Add(note);
+                }
+            }
+        }
+        else if (Mode == EditorMode.EditMode)
+        {
+            if (ActiveObjectGroup is not HoldNote holdNote) return;
+
+            HoldNote clone = (HoldNote)holdNote.Clone();
+
+            for (int i = holdNote.Points.Count - 1; i >= 0; i--)
+            {
+                if (!SelectionSystem.SelectedObjects.Contains(holdNote.Points[i]))
+                {
+                    clone.Points.RemoveAt(i);
+                    continue;
+                }
+                
+                clone.Points[i].Timestamp.FullTick -= startFullTick;
+            }
+
+            chart.Layers[0].Notes.Add(clone);
+        }
+
+        string data = NotationSerializer.ToString(chart, new());
+        await clipboard.SetTextAsync(data);
+
+        if (deselect)
+        {
+            SelectionSystem.DeselectAll();
+        }
     }
 
-    public static void Edit_Paste()
+    public static async Task Edit_Paste(IClipboard clipboard)
     {
+        string? clipboardText = await clipboard.GetTextAsync();
+        if (clipboardText == null) return;
+
+        clipboardText = clipboardText.Replace("\r", "");
+        string[] data = clipboardText.Split("\n", StringSplitOptions.RemoveEmptyEntries);
+
+        Chart chart = NotationSerializer.ToChart(data, new(), out List<Exception> exceptions);
+
+        if (exceptions.Count > 0) return;
+
+        List<IOperation> operations = [];
+
+        if (Mode == EditorMode.ObjectMode)
+        {
+            foreach (Bookmark bookmark in chart.Bookmarks)
+            {
+                bookmark.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
+                
+                operations.Add(new BookmarkAddOperation(bookmark, ChartSystem.Chart.Bookmarks.Count));
+                operations.Add(new SelectionAddOperation(bookmark, SelectionSystem.LastSelectedObject));
+            }
+
+            foreach (Event globalEvent in chart.Events)
+            {
+                globalEvent.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
+                
+                operations.Add(new GlobalEventAddOperation(globalEvent, ChartSystem.Chart.Events.Count));
+                operations.Add(new SelectionAddOperation(globalEvent, SelectionSystem.LastSelectedObject));
+            }
+
+            foreach (Note laneToggle in chart.LaneToggles)
+            {
+                laneToggle.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
+                
+                operations.Add(new LaneToggleAddOperation(laneToggle, ChartSystem.Chart.LaneToggles.Count));
+                operations.Add(new SelectionAddOperation(laneToggle, SelectionSystem.LastSelectedObject));
+            }
+
+            if (SelectionSystem.SelectedLayer != null)
+            {
+                foreach (Layer layer in chart.Layers)
+                {
+                    foreach (Event layerEvent in layer.Events)
+                    {
+                        if (layerEvent is StopEffectEvent stopEffectEvent)
+                        {
+                            foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                            {
+                                subEvent.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
+                            }
+                        }
+                        else if (layerEvent is ReverseEffectEvent reverseEffectEvent)
+                        {
+                            foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                            {
+                                subEvent.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
+                            }
+                        }
+                        else
+                        {
+                            layerEvent.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
+                        }
+                        
+                        operations.Add(new EventAddOperation(SelectionSystem.SelectedLayer, layerEvent, SelectionSystem.SelectedLayer.Events.Count));
+                        operations.Add(new SelectionAddOperation(layerEvent, SelectionSystem.LastSelectedObject));
+                    }
+
+                    foreach (Note note in layer.Notes)
+                    {
+                        if (note is HoldNote holdNote)
+                        {
+                            if (holdNote.Points.Count < 2) continue;
+                            
+                            foreach (HoldPointNote point in holdNote.Points)
+                            {
+                                point.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
+                            }
+                        }
+                        else
+                        {
+                            note.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
+                        }
+                        
+                        operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, note, SelectionSystem.SelectedLayer.Notes.Count));
+                        operations.Add(new SelectionAddOperation(note, SelectionSystem.LastSelectedObject));
+                    }
+                }
+            }
+        }
+        else if (Mode == EditorMode.EditMode)
+        {
+            if (ActiveObjectGroup is not HoldNote holdNote) return;
+            if (chart.Layers.Count == 0) return;
+
+            foreach (Note note in chart.Layers[0].Notes)
+            {
+                if (note is not HoldNote sourceHold) continue;
+                
+                foreach (HoldPointNote sourcePoint in sourceHold.Points)
+                {
+                    sourcePoint.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
+                        
+                    operations.Add(new HoldPointNoteAddOperation(holdNote, sourcePoint, holdNote.Points.Count));
+                }
+                    
+                break;
+            }
+        }
+        
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
 
