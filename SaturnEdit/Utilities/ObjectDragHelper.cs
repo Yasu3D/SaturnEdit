@@ -16,7 +16,6 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
     public bool IsActive { get; private set; } = false;
     
     public int StartTick { get; private set; } = -1;
-    public int StartLane { get; private set; } = -1;
     public int EndTick { get; private set; } = -1;
     public int EndLane { get; private set; } = -1;
     
@@ -30,7 +29,6 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
         DragType = SelectionSystem.PointerOverOverlap;
         StartTick = fullTick;
         EndTick = fullTick;
-        StartLane = clickDragHelper.StartLane;
         EndLane = clickDragHelper.StartLane;
         DraggedObjects = [];
 
@@ -90,13 +88,19 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
         
         if (clickDragHelper.EndLane != EndLane || EndTick != fullTick)
         {
+            bool build = EndTick != fullTick;
+            
             EndLane = clickDragHelper.EndLane;
             EndTick = fullTick;
             
             CompositeOperation compositeOperation = GetOperations();
             compositeOperation.Apply();
-            
-            ChartSystem.Rebuild();
+
+            // TODO: until the Build algorithm gets some clever optimization, rebuilds can only happen when absolutely necessary.
+            if (build)
+            {
+                ChartSystem.Rebuild();
+            }
         }
     }
 

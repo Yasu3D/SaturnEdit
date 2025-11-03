@@ -247,7 +247,7 @@
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfLaneShowNotes">...of those Lane Show:</system:String>
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes">...of those Lane Hide:</system:String>
     <system:String x:Key="ChartEditor.ChartView3D">Chart View (3D)</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Mode.AutoEditMode">Change Edit Mode (Auto)</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Mode.AutoMode">Change Mode (Auto)</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Mode.ObjectMode">Object Mode</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Mode.EditMode">Edit Mode</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.EditType">Edit Type</system:String>

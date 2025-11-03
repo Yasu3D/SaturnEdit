@@ -821,7 +821,8 @@
                             Spacing="5">
                     <Button Classes="Themed Outlined"
                             Width="40"
-                            Height="40">
+                            Height="40"
+                            Click="ButtonEditType_OnClick">
                         <ToolTip.Tip>
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
@@ -841,7 +842,8 @@
 
                     <Button Classes="Themed Outlined"
                             Width="40"
-                            Height="40">
+                            Height="40"
+                            Click="ButtonEditShape_OnClick">
                         <ToolTip.Tip>
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
@@ -866,7 +868,8 @@
 
                     <Button Classes="Themed Outlined"
                             Width="40"
-                            Height="40">
+                            Height="40"
+                            Click="ButtonDelete_OnClick">
                         <ToolTip.Tip>
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
@@ -886,7 +889,8 @@
 
                     <Button Classes="Themed Outlined"
                             Width="40"
-                            Height="40">
+                            Height="40"
+                            Click="ButtonInsert_OnClick">
                         <ToolTip.Tip>
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">

@@ -64,23 +64,6 @@ public partial class ChartView3D : UserControl
     private ITimeable? lastClickedObject = null;
    
 #region Methods
-    private static void AutoEditMode()
-    {
-        if (EditorSystem.Mode == EditorMode.EditMode)
-        {
-            EditorSystem.ChangeEditMode(EditorMode.ObjectMode);
-            return;
-        }
-        
-        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
-        {
-            if (obj is not (HoldNote or StopEffectEvent or ReverseEffectEvent)) continue;
-            
-            EditorSystem.ChangeEditMode(EditorMode.EditMode);
-            return;
-        }
-    }
-    
     private async void AdjustAxis()
     {
         if (VisualRoot is not Window window) return;
@@ -534,7 +517,7 @@ public partial class ChartView3D : UserControl
     
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
-        bool holdEditModeAvailable = EditorSystem.Mode == EditorMode.EditMode || EditorSystem.HoldEditModeAvailable;
+        bool holdEditModeAvailable = EditorSystem.Mode == EditorMode.EditMode || EditorSystem.EditModeAvailable;
         
         Dispatcher.UIThread.Post(() =>
         {
@@ -572,22 +555,47 @@ public partial class ChartView3D : UserControl
         
         Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
 
-        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.AutoEditMode"]))
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.AutoMode"]))
         {
-            AutoEditMode();
+            Task.Run(EditorSystem.ChangeEditMode);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.ObjectMode"]))
         {
-            EditorSystem.ChangeEditMode(EditorMode.ObjectMode);
+            Task.Run(() => EditorSystem.ChangeEditMode(EditorMode.ObjectMode));
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.EditMode"]))
         {
-            EditorSystem.ChangeEditMode(EditorMode.EditMode);
+            Task.Run(() => EditorSystem.ChangeEditMode(EditorMode.EditMode));
             e.Handled = true;
         }
         
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.Insert"]))
+        {
+            Task.Run(EditorSystem.ToolBar_Insert);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"]))
+        {
+            Task.Run(EditorSystem.ToolBar_Delete);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditShape"]))
+        {
+            Task.Run(EditorSystem.ToolBar_EditShape);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditType"]))
+        {
+            Task.Run(EditorSystem.ToolBar_EditType);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditBoth"]))
+        {
+            Task.Run(EditorSystem.ToolBar_EditBoth);
+            e.Handled = true;
+        }
         
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
         {
@@ -1394,7 +1402,7 @@ public partial class ChartView3D : UserControl
         if (sender is not ComboBox comboBox) return;
         SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)comboBox.SelectedIndex;
     }
-
+    
     
     private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddTempoChange);
 
@@ -1459,5 +1467,14 @@ public partial class ChartView3D : UserControl
     private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Convert_CutHold);
 
     private void MenuItemJoinHold_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Convert_JoinHold);
+    
+    
+    private void ButtonInsert_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.ToolBar_Insert);
+
+    private void ButtonDelete_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.ToolBar_Delete);
+
+    private void ButtonEditShape_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.ToolBar_EditShape);
+
+    private void ButtonEditType_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.ToolBar_EditType);
 #endregion UI Event Delegates
 }

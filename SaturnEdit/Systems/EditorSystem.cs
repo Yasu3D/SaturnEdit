@@ -6,6 +6,7 @@ using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.UndoRedo;
+using SaturnEdit.UndoRedo.BookmarkOperations;
 using SaturnEdit.UndoRedo.EditModeOperations;
 using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.HoldNoteOperations;
@@ -38,10 +39,26 @@ public static class EditorSystem
     public static EditorMode Mode { get; set; } = EditorMode.ObjectMode;
     public static ITimeable? ActiveObjectGroup { get; set; } = null;
 
-    public static bool HoldEditModeAvailable => SelectionSystem.SelectedObjects.Any(x => x is HoldNote);
-    public static bool EventEditModeAvailable => SelectionSystem.SelectedObjects.Any(x => x is StopEffectEvent or ReverseEffectEvent);
+    public static bool EditModeAvailable => SelectionSystem.SelectedObjects.Any(x => x is HoldNote or StopEffectEvent or ReverseEffectEvent);
 
 #region Methods
+    public static void ChangeEditMode()
+    {
+        if (Mode == EditorMode.EditMode)
+        {
+            ChangeEditMode(EditorMode.ObjectMode);
+            return;
+        }
+        
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
+        {
+            if (obj is not (HoldNote or StopEffectEvent or ReverseEffectEvent)) continue;
+            
+            ChangeEditMode(EditorMode.EditMode);
+            return;
+        }
+    }
+    
     public static void ChangeEditMode(EditorMode newMode)
     {
         EditModeChangeAttempted?.Invoke(null, EventArgs.Empty);
@@ -98,6 +115,10 @@ public static class EditorSystem
             
             foreach (ITimeable obj in objects)
             {
+                if (obj is HoldNote h)
+                {
+                    holdNote ??= h;
+                }
                 if (obj is StopEffectEvent s)
                 {
                     stopEffectEvent ??= s;
@@ -144,6 +165,125 @@ public static class EditorSystem
         
         return new(operations);
     }
+
+    public static void ToolBar_Insert()
+    {
+        if (Mode == EditorMode.ObjectMode)
+        {
+
+            return;
+        }
+
+        if (Mode == EditorMode.EditMode && ActiveObjectGroup is HoldNote holdNote)
+        {
+            
+        }
+    }
+
+    public static void ToolBar_Delete()
+    {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
+
+        for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
+        {
+            Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
+            if (!SelectionSystem.SelectedObjects.Contains(bookmark)) continue;
+
+            operations.Add(new SelectionRemoveOperation(bookmark, SelectionSystem.LastSelectedObject));
+            operations.Add(new BookmarkRemoveOperation(bookmark, i));
+        }
+        
+        for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
+        {
+            Event @event  = ChartSystem.Chart.Events[i];
+            if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
+            
+            operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
+            operations.Add(new GlobalEventRemoveOperation(@event, i));
+        }
+        
+        for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
+        {
+            Note laneToggle = ChartSystem.Chart.LaneToggles[i];
+            if (!SelectionSystem.SelectedObjects.Contains(laneToggle)) continue;
+            
+            operations.Add(new SelectionRemoveOperation(laneToggle, SelectionSystem.LastSelectedObject));
+            operations.Add(new LaneToggleRemoveOperation(laneToggle, i));
+        }
+
+        foreach (Layer layer in ChartSystem.Chart.Layers)
+        {
+            for (int i = 0; i < layer.Events.Count; i++)
+            {
+                Event @event = layer.Events[i];
+                if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
+                
+                operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
+                operations.Add(new EventRemoveOperation(layer, @event, i));
+            }
+            
+            for (int i = 0; i < layer.Notes.Count; i++)
+            {
+                Note note = layer.Notes[i];
+
+                if (note is HoldNote holdNote)
+                {
+                    for (int j = 0; j < holdNote.Points.Count; j++)
+                    {
+                        HoldPointNote point = holdNote.Points[j];
+                        if (!SelectionSystem.SelectedObjects.Contains(point)) continue;
+
+                        operations.Add(new SelectionRemoveOperation(point, SelectionSystem.LastSelectedObject));
+                        operations.Add(new HoldPointNoteRemoveOperation(holdNote, point, j));
+                    }
+                }
+                
+                if (!SelectionSystem.SelectedObjects.Contains(note)) continue;
+                
+                operations.Add(new SelectionRemoveOperation(note, SelectionSystem.LastSelectedObject));
+                operations.Add(new NoteRemoveOperation(layer, note, i));
+            }
+        }
+        
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+    }
+
+    public static void ToolBar_EditShape()
+    {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        
+        UndoRedoSystem.Push(GetEditShapeOperation());
+    }
+
+    public static void ToolBar_EditType()
+    {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        
+        UndoRedoSystem.Push(GetEditTypeOperation());
+    }
+
+    public static void ToolBar_EditBoth()
+    {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        CompositeOperation op0 = GetEditShapeOperation();
+        CompositeOperation op1 = GetEditTypeOperation();
+        
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+    }
+
+    private static CompositeOperation GetEditShapeOperation()
+    {
+        return new([]);
+    }
+    
+    private static CompositeOperation GetEditTypeOperation()
+    {
+        return new([]);
+    }
+    
     
     public static void Edit_Cut()
     {
