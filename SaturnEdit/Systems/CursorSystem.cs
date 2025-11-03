@@ -7,17 +7,36 @@ namespace SaturnEdit.Systems;
 
 public static class CursorSystem
 {
-    public static void Initialize() { }
+    public static void Initialize()
+    {
+        TouchNote = new(Timestamp.Zero, Position, Size, BonusType, JudgementType);
+        ChainNote = new(Timestamp.Zero, Position, Size, BonusType, JudgementType);
+        
+        HoldNote      = new(BonusType, JudgementType);
+        HoldPointNote = new(Timestamp.Zero, Position, Size, HoldNote, RenderType);
+        HoldNote.Points.Add(HoldPointNote);
+        
+        SlideClockwiseNote        = new(Timestamp.Zero, Position, Size, BonusType, JudgementType);
+        SlideCounterclockwiseNote = new(Timestamp.Zero, Position, Size, BonusType, JudgementType);
+        
+        SnapForwardNote  = new(Timestamp.Zero, Position, Size, BonusType, JudgementType);
+        SnapBackwardNote = new(Timestamp.Zero, Position, Size, BonusType, JudgementType);
+        
+        LaneShowNote = new(Timestamp.Zero, Position, Size, Direction);
+        LaneHideNote = new(Timestamp.Zero, Position, Size, Direction);
+        
+        SyncNote        = new(Timestamp.Zero, Position, Size);
+        MeasureLineNote = new(Timestamp.Zero, false);
+    }
     
-    public static event EventHandler? TypeChanged;
     public static event EventHandler? ShapeChanged;
     
-    public static Note CurrentNote
+    public static Note CurrentType
     {
-        get => currentNote;
+        get => currentType;
         set
         {
-            if (currentNote == value) return;
+            if (currentType == value) return;
             
             if (value is IPositionable positionable)
             {
@@ -35,21 +54,19 @@ public static class CursorSystem
                 holdPoint.RenderType = RenderType;
             }
 
-            currentNote = value;
-            
-            TypeChanged?.Invoke(null, EventArgs.Empty);
+            currentType = value;
         }
     }
-    private static Note currentNote = new TouchNote(Timestamp.Zero, 30, 15, BonusType.Normal, JudgementType.Normal);
+    private static Note currentType = new TouchNote(Timestamp.Zero, 30, 15, BonusType.Normal, JudgementType.Normal);
     
     public static int Position
     {
-        get => currentNote is IPositionable positionable ? positionable.Position : backupPosition;
+        get => currentType is IPositionable positionable ? positionable.Position : backupPosition;
         set
         {
             if (backupPosition == value) return;
 
-            if (currentNote is IPositionable positionable)
+            if (currentType is IPositionable positionable)
             {
                 positionable.Position = value;
             }
@@ -62,12 +79,12 @@ public static class CursorSystem
 
     public static int Size
     {
-        get => currentNote is IPositionable positionable ? positionable.Size : backupSize;
+        get => currentType is IPositionable positionable ? positionable.Size : backupSize;
         set
         {
             if (backupSize == value) return;
 
-            if (currentNote is IPositionable positionable)
+            if (currentType is IPositionable positionable)
             {
                 positionable.Size = value;
             }
@@ -80,12 +97,12 @@ public static class CursorSystem
 
     public static BonusType BonusType
     {
-        get => currentNote is IPlayable playable ? playable.BonusType : backupBonusType;
+        get => currentType is IPlayable playable ? playable.BonusType : backupBonusType;
         set
         {
             if (backupBonusType == value) return;
 
-            if (currentNote is IPlayable playable)
+            if (currentType is IPlayable playable)
             {
                 playable.BonusType = value;
             }
@@ -94,16 +111,16 @@ public static class CursorSystem
             ShapeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
-    private static BonusType backupBonusType;
+    private static BonusType backupBonusType = BonusType.Normal;
     
     public static JudgementType JudgementType
     {
-        get => currentNote is IPlayable playable ? playable.JudgementType : backupJudgementType;
+        get => currentType is IPlayable playable ? playable.JudgementType : backupJudgementType;
         set
         {
             if (backupJudgementType == value) return;
 
-            if (currentNote is IPlayable playable)
+            if (currentType is IPlayable playable)
             {
                 playable.JudgementType = value;
             }
@@ -112,16 +129,16 @@ public static class CursorSystem
             ShapeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
-    private static JudgementType backupJudgementType;
+    private static JudgementType backupJudgementType = JudgementType.Normal;
     
     public static HoldPointRenderType RenderType
     {
-        get => currentNote is HoldPointNote holdPoint ? holdPoint.RenderType : backupRenderType;
+        get => currentType is HoldPointNote holdPoint ? holdPoint.RenderType : backupRenderType;
         set
         {
             if (backupRenderType == value) return;
 
-            if (currentNote is HoldPointNote holdPoint)
+            if (currentType is HoldPointNote holdPoint)
             {
                 holdPoint.RenderType = value;
             }
@@ -130,16 +147,16 @@ public static class CursorSystem
             ShapeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
-    private static HoldPointRenderType backupRenderType;
+    private static HoldPointRenderType backupRenderType = HoldPointRenderType.Visible;
     
     public static LaneSweepDirection Direction
     {
-        get => currentNote is ILaneToggle laneToggle ? laneToggle.Direction : backupDirection;
+        get => currentType is ILaneToggle laneToggle ? laneToggle.Direction : backupDirection;
         set
         {
             if (backupDirection == value) return;
 
-            if (currentNote is ILaneToggle laneToggle)
+            if (currentType is ILaneToggle laneToggle)
             {
                 laneToggle.Direction = value;
             }
@@ -148,5 +165,18 @@ public static class CursorSystem
             ShapeChanged?.Invoke(null, EventArgs.Empty);
         }
     }
-    private static LaneSweepDirection backupDirection;
+    private static LaneSweepDirection backupDirection = LaneSweepDirection.Center;
+
+    public static TouchNote TouchNote { get; private set; } = null!;
+    public static ChainNote ChainNote { get; private set; } = null!;
+    public static HoldNote HoldNote { get; private set; } = null!;
+    public static HoldPointNote HoldPointNote { get; private set; } = null!;
+    public static SlideClockwiseNote SlideClockwiseNote { get; private set; } = null!;
+    public static SlideCounterclockwiseNote SlideCounterclockwiseNote { get; private set; } = null!;
+    public static SnapForwardNote SnapForwardNote { get; private set; } = null!;
+    public static SnapBackwardNote SnapBackwardNote { get; private set; } = null!;
+    public static LaneShowNote LaneShowNote { get; private set; } = null!;
+    public static LaneHideNote LaneHideNote { get; private set; } = null!;
+    public static SyncNote SyncNote { get; private set; } = null!;
+    public static MeasureLineNote MeasureLineNote { get; private set; } = null!;
 }

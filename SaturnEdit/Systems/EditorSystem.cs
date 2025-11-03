@@ -63,13 +63,13 @@ public static class EditorSystem
     {
         EditModeChangeAttempted?.Invoke(null, EventArgs.Empty);
         
-        CompositeOperation? op = GetEditModeChangeOperation(newMode);
+        CompositeOperation? op = GetEditModeChangeOperation(newMode, null);
         if (op == null || op.Operations.Count == 0) return;
 
         UndoRedoSystem.Push(op);
     }
     
-    private static CompositeOperation? GetEditModeChangeOperation(EditorMode newMode)
+    public static CompositeOperation? GetEditModeChangeOperation(EditorMode newMode, Note? newType)
     {
         if (Mode == newMode) return null;
         
@@ -104,7 +104,14 @@ public static class EditorSystem
             {
                 operations.Add(new SelectionAddOperation(ActiveObjectGroup, SelectionSystem.LastSelectedObject));
             }
+
+            // Change cursor to a different type again.
+            if (ActiveObjectGroup is HoldNote)
+            {
+                operations.Add(new CursorTypeChangeOperation(CursorSystem.CurrentType, newType ?? CursorSystem.HoldNote));
+            }
         }
+        
         // Changing to Edit Mode:
         else if (newMode is EditorMode.EditMode)
         {
@@ -153,6 +160,12 @@ public static class EditorSystem
             }
             
             newActiveObjectGroup = min;
+
+            // Switch to inserting hold point notes.
+            if (newActiveObjectGroup is HoldNote)
+            {
+                operations.Add(new CursorTypeChangeOperation(CursorSystem.CurrentType, CursorSystem.HoldPointNote));
+            }
             
             // Clear selection.
             foreach (ITimeable obj in objects)
@@ -161,23 +174,171 @@ public static class EditorSystem
             }
         }
         
-        operations.Add(new EditModeChangeOperation(Mode, newMode, ActiveObjectGroup, newActiveObjectGroup));
+        operations.Add(new EditorModeChangeOperation(Mode, newMode, ActiveObjectGroup, newActiveObjectGroup));
         
         return new(operations);
     }
 
+    
     public static void ToolBar_Insert()
     {
+        if (SelectionSystem.SelectedLayer == null) return;
+        
+        List<IOperation> operations = [];
+        
         if (Mode == EditorMode.ObjectMode)
         {
+            Note? note = null;
 
-            return;
-        }
-
-        if (Mode == EditorMode.EditMode && ActiveObjectGroup is HoldNote holdNote)
-        {
+            Timestamp timestamp = new(TimeSystem.Timestamp.FullTick);
             
+            if (CursorSystem.CurrentType is TouchNote)
+            {
+                note = new TouchNote
+                (
+                    timestamp:     timestamp,
+                    position:      CursorSystem.Position,
+                    size:          CursorSystem.Size,
+                    bonusType:     CursorSystem.BonusType,
+                    judgementType: CursorSystem.JudgementType
+                );
+            }
+            else if (CursorSystem.CurrentType is ChainNote)
+            {
+                note = new ChainNote
+                (
+                    timestamp:     timestamp,
+                    position:      CursorSystem.Position,
+                    size:          CursorSystem.Size,
+                    bonusType:     CursorSystem.BonusType,
+                    judgementType: CursorSystem.JudgementType
+                );
+            }
+            else if (CursorSystem.CurrentType is HoldNote)
+            {
+                note = new HoldNote
+                (
+                    bonusType:     CursorSystem.BonusType,
+                    judgementType: CursorSystem.JudgementType
+                );
+
+                HoldNote parent = (HoldNote)note;
+
+                HoldPointNote point = new
+                (
+                    timestamp:  timestamp,
+                    position:   CursorSystem.Position,
+                    size:       CursorSystem.Size,
+                    parent:     parent,
+                    renderType: HoldPointRenderType.Visible
+                );
+                
+                parent.Points.Add(point);
+                
+                operations.Add(new CursorTypeChangeOperation(CursorSystem.CurrentType, CursorSystem.HoldPointNote));
+                operations.Add(new EditorModeChangeOperation(Mode, EditorMode.EditMode, ActiveObjectGroup, parent));
+            }
+            else if (CursorSystem.CurrentType is SlideClockwiseNote)
+            {
+                note = new SlideClockwiseNote
+                (
+                    timestamp:     timestamp,
+                    position:      CursorSystem.Position,
+                    size:          CursorSystem.Size,
+                    bonusType:     CursorSystem.BonusType,
+                    judgementType: CursorSystem.JudgementType
+                );
+            }
+            else if (CursorSystem.CurrentType is SlideCounterclockwiseNote)
+            {
+                note = new SlideCounterclockwiseNote
+                (
+                    timestamp:     timestamp,
+                    position:      CursorSystem.Position,
+                    size:          CursorSystem.Size,
+                    bonusType:     CursorSystem.BonusType,
+                    judgementType: CursorSystem.JudgementType
+                );
+            }
+            else if (CursorSystem.CurrentType is SnapForwardNote)
+            {
+                note = new SnapForwardNote
+                (
+                    timestamp:     timestamp,
+                    position:      CursorSystem.Position,
+                    size:          CursorSystem.Size,
+                    bonusType:     CursorSystem.BonusType,
+                    judgementType: CursorSystem.JudgementType
+                );
+            }
+            else if (CursorSystem.CurrentType is SnapBackwardNote)
+            {
+                note = new SnapBackwardNote
+                (
+                    timestamp:     timestamp,
+                    position:      CursorSystem.Position,
+                    size:          CursorSystem.Size,
+                    bonusType:     CursorSystem.BonusType,
+                    judgementType: CursorSystem.JudgementType
+                );
+            }
+            else if (CursorSystem.CurrentType is LaneShowNote)
+            {
+                note = new LaneShowNote
+                (
+                    timestamp: timestamp,
+                    position:  CursorSystem.Position,
+                    size:      CursorSystem.Size,
+                    direction: CursorSystem.Direction
+                );
+            }
+            else if (CursorSystem.CurrentType is LaneHideNote)
+            {
+                note = new LaneHideNote
+                (
+                    timestamp: timestamp,
+                    position:  CursorSystem.Position,
+                    size:      CursorSystem.Size,
+                    direction: CursorSystem.Direction
+                );
+            }
+            else if (CursorSystem.CurrentType is SyncNote)
+            {
+                note = new SyncNote
+                (
+                    timestamp: timestamp,
+                    position:  CursorSystem.Position,
+                    size:      CursorSystem.Size
+                );
+            }
+            else if (CursorSystem.CurrentType is MeasureLineNote)
+            {
+                note = new MeasureLineNote
+                (
+                    timestamp: timestamp,
+                    isBeatLine: false
+                );
+            }
+
+            if (note == null) return;
+            
+            operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, note, SelectionSystem.SelectedLayer.Notes.Count));
         }
+        else if (Mode == EditorMode.EditMode && ActiveObjectGroup is HoldNote holdNote)
+        {
+            HoldPointNote point = new
+            (
+                timestamp:  new(TimeSystem.Timestamp.FullTick),
+                position:   CursorSystem.Position,
+                size:       CursorSystem.Size,
+                parent:     holdNote,
+                renderType: CursorSystem.RenderType
+            );
+            
+            operations.Add(new HoldPointNoteAddOperation(holdNote, point, holdNote.Points.Count));
+        }
+        
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     public static void ToolBar_Delete()
@@ -254,34 +415,471 @@ public static class EditorSystem
     {
         if (SelectionSystem.SelectedObjects.Count == 0) return;
         
-        UndoRedoSystem.Push(GetEditShapeOperation());
+        List<IOperation> operations = [];
+
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not IPositionable positionable) continue;
+            if (positionable.Position == CursorSystem.Position && positionable.Size == CursorSystem.Size) continue;
+            
+            operations.Add(new PositionableEditOperation(positionable, positionable.Position, CursorSystem.Position, positionable.Size, CursorSystem.Size));
+        }
+        
+        UndoRedoSystem.Push(new CompositeOperation(operations));
     }
 
     public static void ToolBar_EditType()
     {
+        if (Mode == EditorMode.EditMode) return;
         if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (ChartSystem.Chart.Layers.Count == 0) return;
         
-        UndoRedoSystem.Push(GetEditTypeOperation());
+        List<IOperation> operations = [];
+        List<ITimeable> objects = SelectionSystem.OrderedSelectedObjects;
+
+        if (CursorSystem.CurrentType is HoldNote)
+        {
+            // Convert to Hold Note
+            if (objects.Count < 2) return;
+            if (SelectionSystem.SelectedLayer == null) return;
+            
+            BonusType bonusType = BonusType.Normal;
+            JudgementType judgementType = JudgementType.Normal;
+
+            if (objects[0] is IPlayable playable)
+            {
+                bonusType = playable.BonusType;
+                judgementType = playable.JudgementType;
+            }
+            
+            HoldNote holdNote = new(bonusType, judgementType);
+            foreach (ITimeable obj in objects)
+            {
+                Layer layer = ChartSystem.Chart.ParentLayer(obj) ?? ChartSystem.Chart.Layers[0];
+                
+                // Remove original object.
+                removeObject(obj, layer);
+
+                if (obj is HoldNote sourceHoldNote)
+                {
+                    foreach (HoldPointNote point in sourceHoldNote.Points)
+                    {
+                        HoldPointNote newHoldPoint = new(new(point.Timestamp.FullTick), point.Position, point.Size, holdNote, point.RenderType);
+                        holdNote.Points.Add(newHoldPoint);
+                    }
+                }
+                else if (obj is StopEffectEvent sourceStopEffectEvent)
+                {
+                    foreach (EffectSubEvent subEvent in sourceStopEffectEvent.SubEvents)
+                    {
+                        holdNote.Points.Add(new(new(subEvent.Timestamp.FullTick), 0, 60, holdNote, HoldPointRenderType.Visible));
+                    }
+                }
+                else if (obj is ReverseEffectEvent sourceReverseEffectEvent)
+                {
+                    foreach (EffectSubEvent subEvent in sourceReverseEffectEvent.SubEvents)
+                    {
+                        holdNote.Points.Add(new(new(subEvent.Timestamp.FullTick), 0, 60, holdNote, HoldPointRenderType.Visible));
+                    }
+                }
+                else
+                {
+                    int position = 0;
+                    int size = 60;
+                    HoldPointRenderType renderType = HoldPointRenderType.Visible;
+
+                    if (obj is IPositionable positionable)
+                    {
+                        position = positionable.Position;
+                        size = positionable.Size;
+                    }
+
+                    if (obj is HoldPointNote holdPointNote)
+                    {
+                        renderType = holdPointNote.RenderType;
+                    }
+
+                    HoldPointNote newHoldPoint = new(new(obj.Timestamp.FullTick), position, size, holdNote, renderType);
+                    holdNote.Points.Add(newHoldPoint);
+                }
+            }
+
+            holdNote.Points = holdNote.Points.OrderBy(x => x.Timestamp.FullTick).ToList();
+
+            if (!objects.Any(x => x is HoldPointNote))
+            {
+                operations.Add(new SelectionAddOperation(holdNote, SelectionSystem.LastSelectedObject));
+            }
+
+            operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, holdNote, 0));
+        }
+        else
+        {
+            // Convert to all other types.
+            foreach (ITimeable obj in objects)
+            {
+                Layer layer = ChartSystem.Chart.ParentLayer(obj) ?? ChartSystem.Chart.Layers[0];
+                
+                // Remove original object.
+                removeObject(obj, layer);
+                
+                // Add new object(s).
+                if (obj is HoldNote holdNote)
+                {
+                    // Convert all hold note points to new objects.
+                    foreach (HoldPointNote point in holdNote.Points)
+                    {
+                        Timestamp timestamp = new(point.Timestamp.FullTick);
+                        ITimeable? newObject = CursorSystem.CurrentType switch
+                        {
+                            TouchNote => new TouchNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            ChainNote => new ChainNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            // Hold Note is skipped.
+                            SlideClockwiseNote        => new SlideClockwiseNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            SnapForwardNote  => new SnapForwardNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            SnapBackwardNote => new SnapBackwardNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            LaneShowNote => new LaneShowNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
+                            LaneHideNote => new LaneHideNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
+                            SyncNote        => new SyncNote(timestamp, point.Position, point.Size),
+                            MeasureLineNote => new MeasureLineNote(timestamp, false),
+                            _  => null,
+                        };
+
+                        if (newObject == null) continue;
+
+                        operations.Add(new SelectionAddOperation(newObject, SelectionSystem.LastSelectedObject));
+                        
+                        if (newObject is ILaneToggle and Note newLaneToggle)
+                        {
+                            operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                        }
+                        else if (newObject is Note newNote)
+                        {
+                            operations.Add(new NoteAddOperation(layer, newNote, 0));
+                        }
+                    }
+                }
+                else
+                {
+                    // Convert standard object to new object.
+                    int position = 0;
+                    int size = 60;
+                    
+                    if (obj is IPositionable positionable)
+                    {
+                        position = positionable.Position;
+                        size = positionable.Size;
+                    }
+                
+                    Timestamp timestamp = new(obj.Timestamp.FullTick);
+                    ITimeable? newObject = CursorSystem.CurrentType switch
+                    {
+                        TouchNote => new TouchNote(timestamp, position, size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                        ChainNote => new ChainNote(timestamp, position, size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                        // Hold Note is skipped.
+                        SlideClockwiseNote        => new SlideClockwiseNote(timestamp, position, size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                        SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, position, size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                        SnapForwardNote  => new SnapForwardNote(timestamp, position, size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                        SnapBackwardNote => new SnapBackwardNote(timestamp, position, size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                        LaneShowNote => new LaneShowNote(timestamp, position, size, CursorSystem.Direction),
+                        LaneHideNote => new LaneHideNote(timestamp, position, size, CursorSystem.Direction),
+                        SyncNote        => new SyncNote(timestamp, position, size),
+                        MeasureLineNote => new MeasureLineNote(timestamp, false),
+                        _  => null,
+                    };
+                    
+                    if (newObject == null) continue;
+                    
+                    operations.Add(new SelectionAddOperation(newObject, SelectionSystem.LastSelectedObject));
+                    
+                    if (newObject is ILaneToggle and Note newLaneToggle)
+                    {
+                        operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                    }
+                    else if (newObject is Note newNote)
+                    {
+                        operations.Add(new NoteAddOperation(layer, newNote, 0));
+                    }
+                }
+            }
+        }
+
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+        return;
+        
+        void removeObject(ITimeable obj, Layer layer)
+        {
+            operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
+            if (obj is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event globalEvent)
+            {
+                int index = ChartSystem.Chart.Events.IndexOf(globalEvent);
+                if (index == -1) return;
+                
+                operations.Add(new GlobalEventRemoveOperation(globalEvent, index));
+            }
+            else if (obj is ILaneToggle and Note laneToggle)
+            {
+                int index = ChartSystem.Chart.LaneToggles.IndexOf(laneToggle);
+                if (index == -1) return;
+                
+                operations.Add(new LaneToggleRemoveOperation(laneToggle, index));
+            }
+            else if (obj is Bookmark bookmark)
+            {
+                int index = ChartSystem.Chart.Bookmarks.IndexOf(bookmark);
+                if (index == -1) return;
+                
+                operations.Add(new BookmarkRemoveOperation(bookmark, index));
+            }
+            else if (obj is HoldPointNote holdPointNote)
+            {
+                int index = holdPointNote.Parent.Points.IndexOf(holdPointNote);
+                if (index == -1) return;
+                
+                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, index));
+            }
+            else if (obj is Event @event)
+            {
+                int index = layer.Events.IndexOf(@event);
+                if (index == -1) return;
+                
+                operations.Add(new EventRemoveOperation(layer, @event, index));
+            }
+            else if (obj is Note note)
+            {
+                int index = layer.Notes.IndexOf(note);
+                if (index == -1) return;
+                
+                operations.Add(new NoteRemoveOperation(layer, note, index));
+            }
+        }
     }
 
     public static void ToolBar_EditBoth()
     {
+        if (Mode == EditorMode.EditMode) return;
         if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        CompositeOperation op0 = GetEditShapeOperation();
-        CompositeOperation op1 = GetEditTypeOperation();
+        if (ChartSystem.Chart.Layers.Count == 0) return;
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
-    }
+        List<IOperation> operations = [];
+        List<ITimeable> objects = SelectionSystem.OrderedSelectedObjects;
 
-    private static CompositeOperation GetEditShapeOperation()
-    {
-        return new([]);
-    }
-    
-    private static CompositeOperation GetEditTypeOperation()
-    {
-        return new([]);
+        if (CursorSystem.CurrentType is HoldNote)
+        {
+            // Convert to Hold Note
+            if (objects.Count < 2) return;
+            if (SelectionSystem.SelectedLayer == null) return;
+            
+            BonusType bonusType = BonusType.Normal;
+            JudgementType judgementType = JudgementType.Normal;
+
+            if (objects[0] is IPlayable playable)
+            {
+                bonusType = playable.BonusType;
+                judgementType = playable.JudgementType;
+            }
+            
+            HoldNote holdNote = new(bonusType, judgementType);
+            foreach (ITimeable obj in objects)
+            {
+                Layer layer = ChartSystem.Chart.ParentLayer(obj) ?? ChartSystem.Chart.Layers[0];
+                
+                // Remove original object.
+                removeObject(obj, layer);
+
+                if (obj is HoldNote sourceHoldNote)
+                {
+                    foreach (HoldPointNote point in sourceHoldNote.Points)
+                    {
+                        HoldPointNote newHoldPoint = new(new(point.Timestamp.FullTick), CursorSystem.Position, CursorSystem.Size, holdNote, point.RenderType);
+                        holdNote.Points.Add(newHoldPoint);
+                    }
+                }
+                else if (obj is StopEffectEvent sourceStopEffectEvent)
+                {
+                    foreach (EffectSubEvent subEvent in sourceStopEffectEvent.SubEvents)
+                    {
+                        holdNote.Points.Add(new(new(subEvent.Timestamp.FullTick), CursorSystem.Position, CursorSystem.Size, holdNote, HoldPointRenderType.Visible));
+                    }
+                }
+                else if (obj is ReverseEffectEvent sourceReverseEffectEvent)
+                {
+                    foreach (EffectSubEvent subEvent in sourceReverseEffectEvent.SubEvents)
+                    {
+                        holdNote.Points.Add(new(new(subEvent.Timestamp.FullTick), CursorSystem.Position, CursorSystem.Size, holdNote, HoldPointRenderType.Visible));
+                    }
+                }
+                else
+                {
+                    HoldPointRenderType renderType = HoldPointRenderType.Visible;
+
+                    if (obj is HoldPointNote holdPointNote)
+                    {
+                        renderType = holdPointNote.RenderType;
+                    }
+
+                    HoldPointNote newHoldPoint = new(new(obj.Timestamp.FullTick), CursorSystem.Position, CursorSystem.Size, holdNote, renderType);
+                    holdNote.Points.Add(newHoldPoint);
+                }
+            }
+
+            holdNote.Points = holdNote.Points.OrderBy(x => x.Timestamp.FullTick).ToList();
+
+            if (!objects.Any(x => x is HoldPointNote))
+            {
+                operations.Add(new SelectionAddOperation(holdNote, SelectionSystem.LastSelectedObject));
+            }
+
+            operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, holdNote, 0));
+        }
+        else
+        {
+            // Convert to all other types.
+            foreach (ITimeable obj in objects)
+            {
+                Layer layer = ChartSystem.Chart.ParentLayer(obj) ?? ChartSystem.Chart.Layers[0];
+                
+                // Remove original object.
+                removeObject(obj, layer);
+                
+                // Add new object(s).
+                if (obj is HoldNote holdNote)
+                {
+                    // Convert all hold note points to new objects.
+                    foreach (HoldPointNote point in holdNote.Points)
+                    {
+                        Timestamp timestamp = new(point.Timestamp.FullTick);
+                        ITimeable? newObject = CursorSystem.CurrentType switch
+                        {
+                            TouchNote => new TouchNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
+                            ChainNote => new ChainNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
+                            // Hold Note is skipped.
+                            SlideClockwiseNote        => new SlideClockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
+                            SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
+                            SnapForwardNote  => new SnapForwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
+                            SnapBackwardNote => new SnapBackwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
+                            LaneShowNote => new LaneShowNote(timestamp, CursorSystem.Position, CursorSystem.Size, LaneSweepDirection.Instant),
+                            LaneHideNote => new LaneHideNote(timestamp, CursorSystem.Position, CursorSystem.Size, LaneSweepDirection.Instant),
+                            SyncNote        => new SyncNote(timestamp, CursorSystem.Position, CursorSystem.Size),
+                            MeasureLineNote => new MeasureLineNote(timestamp, false),
+                            _  => null,
+                        };
+
+                        if (newObject == null) continue;
+
+                        operations.Add(new SelectionAddOperation(newObject, SelectionSystem.LastSelectedObject));
+                        
+                        if (newObject is ILaneToggle and Note newLaneToggle)
+                        {
+                            operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                        }
+                        else if (newObject is Note newNote)
+                        {
+                            operations.Add(new NoteAddOperation(layer, newNote, 0));
+                        }
+                    }
+                }
+                else
+                {
+                    // Convert standard object to new object.
+                    BonusType bonusType = BonusType.Normal;
+                    JudgementType judgementType = JudgementType.Normal;
+                    LaneSweepDirection laneSweepDirection = LaneSweepDirection.Instant;
+
+                    if (obj is IPlayable playable)
+                    {
+                        bonusType = playable.BonusType;
+                        judgementType = playable.JudgementType;
+                    }
+
+                    if (obj is ILaneToggle laneToggle)
+                    {
+                        laneSweepDirection = laneToggle.Direction;
+                    }
+                
+                    Timestamp timestamp = new(obj.Timestamp.FullTick);
+                    ITimeable? newObject = CursorSystem.CurrentType switch
+                    {
+                        TouchNote => new TouchNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
+                        ChainNote => new ChainNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
+                        // Hold Note is skipped.
+                        SlideClockwiseNote        => new SlideClockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
+                        SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
+                        SnapForwardNote  => new SnapForwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
+                        SnapBackwardNote => new SnapBackwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
+                        LaneShowNote => new LaneShowNote(timestamp, CursorSystem.Position, CursorSystem.Size, laneSweepDirection),
+                        LaneHideNote => new LaneHideNote(timestamp, CursorSystem.Position, CursorSystem.Size, laneSweepDirection),
+                        SyncNote        => new SyncNote(timestamp, CursorSystem.Position, CursorSystem.Size),
+                        MeasureLineNote => new MeasureLineNote(timestamp, false),
+                        _  => null,
+                    };
+                    
+                    if (newObject == null) continue;
+                    
+                    operations.Add(new SelectionAddOperation(newObject, SelectionSystem.LastSelectedObject));
+                    
+                    if (newObject is ILaneToggle and Note newLaneToggle)
+                    {
+                        operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                    }
+                    else if (newObject is Note newNote)
+                    {
+                        operations.Add(new NoteAddOperation(layer, newNote, 0));
+                    }
+                }
+            }
+        }
+
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+        return;
+        
+        void removeObject(ITimeable obj, Layer layer)
+        {
+            operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
+            if (obj is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event globalEvent)
+            {
+                int index = ChartSystem.Chart.Events.IndexOf(globalEvent);
+                if (index == -1) return;
+                
+                operations.Add(new GlobalEventRemoveOperation(globalEvent, index));
+            }
+            else if (obj is ILaneToggle and Note laneToggle)
+            {
+                int index = ChartSystem.Chart.LaneToggles.IndexOf(laneToggle);
+                if (index == -1) return;
+                
+                operations.Add(new LaneToggleRemoveOperation(laneToggle, index));
+            }
+            else if (obj is Bookmark bookmark)
+            {
+                int index = ChartSystem.Chart.Bookmarks.IndexOf(bookmark);
+                if (index == -1) return;
+                
+                operations.Add(new BookmarkRemoveOperation(bookmark, index));
+            }
+            else if (obj is HoldPointNote holdPointNote)
+            {
+                int index = holdPointNote.Parent.Points.IndexOf(holdPointNote);
+                if (index == -1) return;
+                
+                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, index));
+            }
+            else if (obj is Event @event)
+            {
+                int index = layer.Events.IndexOf(@event);
+                if (index == -1) return;
+                
+                operations.Add(new EventRemoveOperation(layer, @event, index));
+            }
+            else if (obj is Note note)
+            {
+                int index = layer.Notes.IndexOf(note);
+                if (index == -1) return;
+                
+                operations.Add(new NoteRemoveOperation(layer, note, index));
+            }
+        }
     }
     
     
@@ -303,9 +901,8 @@ public static class EditorSystem
     public static void Insert_AddTempoChange()
     {
         TempoChangeEvent tempoChangeEvent = new(new(TimeSystem.Timestamp.FullTick), 120.000000f);
-        int index = ChartSystem.Chart.Events.FindLastIndex(x => x.Timestamp.FullTick <= tempoChangeEvent.Timestamp.FullTick);
 
-        GlobalEventAddOperation op0 = new(tempoChangeEvent, index);
+        GlobalEventAddOperation op0 = new(tempoChangeEvent, ChartSystem.Chart.Events.Count);
         SelectionAddOperation op1 = new(tempoChangeEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
@@ -314,9 +911,8 @@ public static class EditorSystem
     public static void Insert_AddMetreChange()
     {
         MetreChangeEvent metreChangeEvent = new(new(TimeSystem.Timestamp.FullTick), 4, 4);
-        int index = ChartSystem.Chart.Events.FindLastIndex(x => x.Timestamp.FullTick <= metreChangeEvent.Timestamp.FullTick);
 
-        GlobalEventAddOperation op0 = new(metreChangeEvent, index);
+        GlobalEventAddOperation op0 = new(metreChangeEvent, ChartSystem.Chart.Events.Count);
         SelectionAddOperation op1 = new(metreChangeEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
@@ -325,9 +921,8 @@ public static class EditorSystem
     public static void Insert_AddTutorialMarker()
     {
         TutorialMarkerEvent tutorialMarkerEvent = new(new(TimeSystem.Timestamp.FullTick), "KEY");
-        int index = ChartSystem.Chart.Events.FindLastIndex(x => x.Timestamp.FullTick <= tutorialMarkerEvent.Timestamp.FullTick);
 
-        GlobalEventAddOperation op0 = new(tutorialMarkerEvent, index);
+        GlobalEventAddOperation op0 = new(tutorialMarkerEvent, ChartSystem.Chart.Events.Count);
         SelectionAddOperation op1 = new(tutorialMarkerEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
@@ -338,9 +933,8 @@ public static class EditorSystem
         if (SelectionSystem.SelectedLayer == null) return;
         
         SpeedChangeEvent speedChangeEvent = new(new(TimeSystem.Timestamp.FullTick), 1.000000f);
-        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= speedChangeEvent.Timestamp.FullTick);
 
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, speedChangeEvent, index);
+        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, speedChangeEvent, SelectionSystem.SelectedLayer.Events.Count);
         SelectionAddOperation op1 = new(speedChangeEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
@@ -351,9 +945,8 @@ public static class EditorSystem
         if (SelectionSystem.SelectedLayer == null) return;
         
         VisibilityChangeEvent visibilityChangeEvent = new(new(TimeSystem.Timestamp.FullTick), true);
-        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= visibilityChangeEvent.Timestamp.FullTick);
 
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, visibilityChangeEvent, index);
+        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, visibilityChangeEvent, SelectionSystem.SelectedLayer.Events.Count);
         SelectionAddOperation op1 = new(visibilityChangeEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
@@ -372,9 +965,7 @@ public static class EditorSystem
         reverseEffectEvent.SubEvents[1] = new(middle, reverseEffectEvent);
         reverseEffectEvent.SubEvents[2] = new(end, reverseEffectEvent);
         
-        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= reverseEffectEvent.Timestamp.FullTick);
-        
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, reverseEffectEvent, index);
+        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, reverseEffectEvent, SelectionSystem.SelectedLayer.Events.Count);
         SelectionAddOperation op1 = new(reverseEffectEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
@@ -391,9 +982,7 @@ public static class EditorSystem
         stopEffectEvent.SubEvents[0] = new(start, stopEffectEvent);
         stopEffectEvent.SubEvents[1] = new(end, stopEffectEvent);
         
-        int index = SelectionSystem.SelectedLayer.Events.FindLastIndex(x => x.Timestamp.FullTick <= stopEffectEvent.Timestamp.FullTick);
-        
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, stopEffectEvent, index);
+        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, stopEffectEvent, SelectionSystem.SelectedLayer.Events.Count);
         SelectionAddOperation op1 = new(stopEffectEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
@@ -1650,7 +2239,7 @@ public static class EditorSystem
         if (operations.Count == 0) return;
         
         // Set EditMode to NoteEditMode.
-        CompositeOperation? op = GetEditModeChangeOperation(EditorMode.ObjectMode);
+        CompositeOperation? op = GetEditModeChangeOperation(EditorMode.ObjectMode, null);
         if (op == null) return;
 
         operations.Add(op);

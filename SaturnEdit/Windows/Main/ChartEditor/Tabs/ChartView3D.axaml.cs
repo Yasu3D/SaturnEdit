@@ -517,6 +517,9 @@ public partial class ChartView3D : UserControl
     
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
+        // End object drag if anything else changes.
+        objectDrag.End();
+        
         bool holdEditModeAvailable = EditorSystem.Mode == EditorMode.EditMode || EditorSystem.EditModeAvailable;
         
         Dispatcher.UIThread.Post(() =>
@@ -980,7 +983,7 @@ public partial class ChartView3D : UserControl
             pointerOverObject: objectDrag.IsActive ? null : SelectionSystem.PointerOverObject,
             activeObjectGroup: EditorSystem.ActiveObjectGroup,
             boxSelect: new(SelectionSystem.BoxSelectArgs.GlobalStartTime, SelectionSystem.BoxSelectArgs.GlobalEndTime, SelectionSystem.BoxSelectArgs.Position, SelectionSystem.BoxSelectArgs.Size),
-            cursorNote: playing ? null : CursorSystem.CurrentNote
+            cursorNote: playing ? null : CursorSystem.CurrentType
         );
 
         // Hook into render function to update box selection during playback,

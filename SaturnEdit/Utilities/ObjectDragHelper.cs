@@ -107,8 +107,8 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
     public void End()
     {
         if (!IsActive) return;
-        
-        UndoRedoSystem.Push(GetOperations());
+
+        CompositeOperation operation = GetOperations();
         
         IsActive = false;
         DragType = IPositionable.OverlapResult.None;
@@ -116,6 +116,8 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
         EndTick = -1;
         EndLane = -1;
         DraggedObjects = null;
+        
+        UndoRedoSystem.Push(operation);
     }
 
     private CompositeOperation GetOperations()
