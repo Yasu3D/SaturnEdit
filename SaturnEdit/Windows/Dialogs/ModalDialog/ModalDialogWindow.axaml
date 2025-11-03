@@ -11,7 +11,7 @@
         Height="220"
         CanResize="False"
         x:Class="SaturnEdit.Windows.Dialogs.ModalDialog.ModalDialogWindow"
-        Title="ModalDialog">
+        Title="TITLE">
     <Panel>
         <controls:WindowChrome Name="WindowChrome"
                                ZIndex="99"

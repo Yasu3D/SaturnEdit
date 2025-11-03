@@ -116,10 +116,10 @@
                           Width="170"
                           SelectedIndex="0"
                           SelectionChanged="ComboBoxJudgementLineColor_OnSelectionChanged">
-                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.JudgementLineColor.Version0}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.JudgementLineColor.Version1}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.JudgementLineColor.Version2}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.JudgementLineColor.Version3}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.JudgementLineColor.Greyscale}" />
                 </ComboBox>
             </Grid>
             

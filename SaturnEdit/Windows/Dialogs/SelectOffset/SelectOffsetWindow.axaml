@@ -10,7 +10,7 @@
         Width="350"
         Height="232"
         x:Class="SaturnEdit.Windows.Dialogs.SelectOffset.SelectOffsetWindow"
-        Title="Select Offset"
+        Title="{DynamicResource SelectOffset.Window.Title}"
         CanResize="False">
     <Panel>
         <controls:WindowChrome Name="WindowChrome"

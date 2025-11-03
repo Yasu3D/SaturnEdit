@@ -245,9 +245,8 @@ ChartEditor.ChartStatistics.Label.NumberOfLaneShowNotes,...of those Lane Show:
 ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes,...of those Lane Hide:
 ChartEditor.ChartView3D,Chart View (3D)
 ChartEditor.ChartView3D.Mode.AutoEditMode,Change Edit Mode (Auto)
-ChartEditor.ChartView3D.Mode.NoteEditMode,Note Edit Mode
-ChartEditor.ChartView3D.Mode.HoldEditMode,Hold Edit Mode
-ChartEditor.ChartView3D.Mode.EventEditMode,Event Edit Mode
+ChartEditor.ChartView3D.Mode.ObjectMode,Object Mode
+ChartEditor.ChartView3D.Mode.EditMode,Edit Mode
 ChartEditor.ChartView3D.ToolTip.EditType,Edit Type
 ChartEditor.ChartView3D.ToolTip.EditType.Description,Changes the type of all selected notes to the current note type.
 ChartEditor.ChartView3D.ToolTip.EditShape,Edit Shape
@@ -413,10 +412,10 @@ Settings.Rendering.BackgroundDim.Level2,Dim +2
 Settings.Rendering.BackgroundDim.Level3,Dim +3
 Settings.Rendering.BackgroundDim.Level4,Dim +4
 Settings.Rendering.JudgementLineColor,Judgement Line Color:
-Settings.Rendering.JudgementLineColor.Version0,Version0
 Settings.Rendering.JudgementLineColor.Version1,Version1
 Settings.Rendering.JudgementLineColor.Version2,Version2
 Settings.Rendering.JudgementLineColor.Version3,Version3
+Settings.Rendering.JudgementLineColor.Greyscale,Greyscale
 Settings.Rendering.HiddenOpacity,Hidden Opacity
 Settings.Rendering.BonusEffectVisibility,Bonus Effect Visibility
 Settings.Rendering.RNoteEffectVisibility,R-Note Effect Visibility
@@ -526,6 +525,8 @@ SelectOffset.Direction.Forward,Forward
 SelectOffset.Direction.Backward,Backward
 ZigZagHoldArgs.Window.Title,Zig-Zag Hold Generator
 ZigZagHoldArgs.Interval,Interval
+NewChart.Window.Title,New Chart
+NewChart.Create,Create
 ModalDialog.SavePrompt.Title,Save Chart
 ModalDialog.SavePrompt.Header,Do you want to save changes to your chart before closing?
 ModalDialog.SavePrompt.Paragraph,Your changes will be lost if you don't save them.

@@ -9,7 +9,7 @@
         Width="350"
         Height="600"
         x:Class="SaturnEdit.Windows.Dialogs.SelectByCriteria.SelectByCriteriaWindow"
-        Title="SelectByCriteriaWindow"
+        Title="{DynamicResource SelectByCriteria.Window.Title}"
         Background="{DynamicResource BackgroundPrimary}">
     <Panel>
         <controls:WindowChrome Name="WindowChrome"

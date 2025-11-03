@@ -20,6 +20,7 @@ using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ExportArgs;
 using SaturnEdit.Windows.Dialogs.ImportArgs;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
+using SaturnEdit.Windows.Dialogs.NewChart;
 using SaturnEdit.Windows.Dialogs.SelectByCriteria;
 using SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -63,6 +64,8 @@ public partial class ChartEditorView : UserControl
 
     public async void File_New()
     {
+        if (VisualRoot is not Window rootWindow) return;
+        
         // Prompt to save an unsaved chart first.
         if (!ChartSystem.IsSaved)
         {
@@ -85,8 +88,16 @@ public partial class ChartEditorView : UserControl
         }
 
         // Open new chart dialog.
+        NewChartWindow newChartWindow = new();
+        await newChartWindow.ShowDialog(rootWindow);
 
+        if (newChartWindow.Result != ModalDialogResult.Primary)
+        {
+            return;
+        }
+        
         // Create new chart.
+        ChartSystem.NewChart(newChartWindow.Tempo, newChartWindow.MetreUpper, newChartWindow.MetreLower);
     }
 
     public async Task<bool> File_Open()

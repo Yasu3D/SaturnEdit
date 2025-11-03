@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
+using SaturnData.Notation.Interfaces;
+using SaturnData.Notation.Notes;
 using SaturnData.Notation.Serialization;
 
 namespace SaturnEdit.Systems;
@@ -27,20 +29,11 @@ public static class ChartSystem
     public static event EventHandler? EntryChanged;
     public static event EventHandler? JacketChanged;
     public static event EventHandler? AudioChanged;
-    
+
     /// <summary>
     /// The chart being edited/displayed.
     /// </summary>
-    public static Chart Chart { get; private set; } = new()
-    {
-        Events = 
-        [ 
-            new TempoChangeEvent(Timestamp.Zero, 120), 
-            new MetreChangeEvent(Timestamp.Zero, 4, 4),
-        ],
-        
-        Layers = [ new("Main Layer") ],
-    };
+    public static Chart Chart { get; private set; } = ChartTemplate;
     
     /// <summary>
     /// The entry being edited/displayed.
@@ -52,19 +45,26 @@ public static class ChartSystem
     /// </summary>
     public static bool IsSaved { get; private set; } = true;
     
+    private static Chart ChartTemplate => new()
+    {
+        Events = [new TempoChangeEvent(Timestamp.Zero, 120), new MetreChangeEvent(Timestamp.Zero, 4, 4)],
+        LaneToggles = [new LaneShowNote(Timestamp.Zero, 15, 60, LaneSweepDirection.Center)],
+        Layers = [new("Main Layer")],
+    };
+    
     private static bool saturnJudgeAreas;
     
 #region Methods
     /// <summary>
     /// Creates a new chart to work on by resetting the <see cref="Chart"/> and <see cref="Entry"/> objects, then invokes <see cref="ChartChanged"/> and <see cref="EntryChanged"/>
     /// </summary>
-    public static void NewChart()
+    public static void NewChart(float tempo, int metreUpper, int metreLower)
     {
         Entry.EntryChanged -= OnInternalEntryChanged;
         Entry.AudioChanged -= OnInternalAudioChanged;
         Entry.JacketChanged -= OnInternalJacketChanged;
-        
-        Chart = new();
+
+        Chart = ChartTemplate;
         Entry = new();
         
         Entry.EntryChanged += OnInternalEntryChanged;
@@ -99,6 +99,8 @@ public static class ChartSystem
         EntryChanged?.Invoke(null, EventArgs.Empty);
         AudioChanged?.Invoke(null, EventArgs.Empty);
         JacketChanged?.Invoke(null, EventArgs.Empty);
+
+        IsSaved = true;
     }
     
     /// <summary>

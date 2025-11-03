@@ -1371,7 +1371,7 @@ public partial class InspectorView : UserControl
             return;
         }
         
-        float newValue = 0;
+        float newValue = 120;
 
         try
         {
@@ -1381,7 +1381,10 @@ public partial class InspectorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                Console.WriteLine(ex);
+            }
         }
         
         List<IOperation> operations = [];

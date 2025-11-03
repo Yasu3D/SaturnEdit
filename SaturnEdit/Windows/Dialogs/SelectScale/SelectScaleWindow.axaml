@@ -9,7 +9,7 @@
         Width="300"
         Height="160"
         x:Class="SaturnEdit.Windows.Dialogs.SelectScale.SelectScaleWindow"
-        Title="Select Scale"
+        Title="{DynamicResource SelectScale.Window.Title}"
         CanResize="False">
     <Panel>
         <controls:WindowChrome Name="WindowChrome"

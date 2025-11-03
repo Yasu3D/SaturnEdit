@@ -9,7 +9,7 @@
         Width="500"
         Height="645"
         x:Class="SaturnEdit.Windows.Dialogs.ZigZagHoldArgs.ZigZagHoldArgsWindow"
-        Title="Zig-Zag Hold Arguments"
+        Title="{DynamicResource ZigZagHoldArgs.Window.Title}"
         CanResize="False">
     <Panel>
         <controls:WindowChrome Name="WindowChrome"

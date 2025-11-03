@@ -27,11 +27,9 @@
                               SelectedIndex="0"
                               SelectionChanged="ComboBoxEditMode_OnSelectionChanged">
                         <ComboBoxItem Name="ComboBoxItemNoteEditMode"
-                                      Content="{DynamicResource ChartEditor.ChartView3D.Mode.NoteEditMode}" />
+                                      Content="{DynamicResource ChartEditor.ChartView3D.Mode.ObjectMode}" />
                         <ComboBoxItem Name="ComboBoxItemHoldEditMode"
-                                      Content="{DynamicResource ChartEditor.ChartView3D.Mode.HoldEditMode}" />
-                        <ComboBoxItem Name="ComboBoxItemEventEditMode"
-                                      Content="{DynamicResource ChartEditor.ChartView3D.Mode.EventEditMode}" />
+                                      Content="{DynamicResource ChartEditor.ChartView3D.Mode.EditMode}" />
                     </ComboBox>
 
                     <Rectangle Width="1"

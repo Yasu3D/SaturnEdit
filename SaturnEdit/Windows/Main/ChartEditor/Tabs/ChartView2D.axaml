@@ -23,15 +23,10 @@
                           Width="150"
                           CornerRadius="7"
                           SelectedIndex="0">
-                    <ComboBoxItem>
-                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Mode.NoteEditMode}"
-                                   VerticalAlignment="Center" />
-                    </ComboBoxItem>
-
-                    <ComboBoxItem>
-                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Mode.HoldEditMode}"
-                                   VerticalAlignment="Center" />
-                    </ComboBoxItem>
+                    <ComboBoxItem Name="ComboBoxItemNoteEditMode"
+                                  Content="{DynamicResource ChartEditor.ChartView3D.Mode.ObjectMode}" />
+                    <ComboBoxItem Name="ComboBoxItemHoldEditMode"
+                                  Content="{DynamicResource ChartEditor.ChartView3D.Mode.EditMode}" />
                 </ComboBox>
 
                 <Rectangle Width="1"

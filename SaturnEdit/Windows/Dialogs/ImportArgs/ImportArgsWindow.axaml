@@ -9,7 +9,7 @@
         Width="400"
         Height="232"
         x:Class="SaturnEdit.Windows.Dialogs.ImportArgs.ImportArgsWindow"
-        Title="ImportArgsWindow">
+        Title="{DynamicResource Import.Window.Title}">
     <Panel>
         <controls:WindowChrome Name="WindowChrome"
                                ZIndex="99"

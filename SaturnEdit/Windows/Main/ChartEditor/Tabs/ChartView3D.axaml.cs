@@ -66,24 +66,18 @@ public partial class ChartView3D : UserControl
 #region Methods
     private static void AutoEditMode()
     {
-        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
+        if (EditorSystem.Mode == EditorMode.EditMode)
         {
-            if (obj is HoldNote && EditorSystem.EditMode != EditorEditMode.HoldEditMode)
-            {
-                EditorSystem.ChangeEditMode(EditorEditMode.HoldEditMode);
-                return;
-            }
-
-            if (obj is StopEffectEvent or ReverseEffectEvent && EditorSystem.EditMode != EditorEditMode.EventEditMode)
-            {
-                EditorSystem.ChangeEditMode(EditorEditMode.EventEditMode);
-                return;
-            }
+            EditorSystem.ChangeEditMode(EditorMode.ObjectMode);
+            return;
         }
         
-        if (EditorSystem.EditMode != EditorEditMode.NoteEditMode)
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
-            EditorSystem.ChangeEditMode(EditorEditMode.NoteEditMode);
+            if (obj is not (HoldNote or StopEffectEvent or ReverseEffectEvent)) continue;
+            
+            EditorSystem.ChangeEditMode(EditorMode.EditMode);
+            return;
         }
     }
     
@@ -202,7 +196,7 @@ public partial class ChartView3D : UserControl
 
         List<(IPositionable.OverlapResult, ITimeable)> hits = [];
 
-        if (EditorSystem.EditMode == EditorEditMode.NoteEditMode)
+        if (EditorSystem.Mode == EditorMode.ObjectMode)
         {
             foreach (Event @event in ChartSystem.Chart.Events)
             {
@@ -259,28 +253,28 @@ public partial class ChartView3D : UserControl
                 }
             }
         }
-        else if (EditorSystem.EditMode == EditorEditMode.HoldEditMode && EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+        else if (EditorSystem.Mode == EditorMode.EditMode)
         {
-            Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
-
-            if (layer != null)
+            if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
             {
-                float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
+                Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
 
-                foreach (HoldPointNote holdPointNote in holdNote.Points)
+                if (layer != null)
                 {
-                    if (!RenderUtils.IsVisible(holdPointNote, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                    float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
 
-                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(holdPointNote, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
-                    if (hitTestResult == IPositionable.OverlapResult.None) continue;
+                    foreach (HoldPointNote holdPointNote in holdNote.Points)
+                    {
+                        if (!RenderUtils.IsVisible(holdPointNote, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                    hits.Add((hitTestResult, holdPointNote));
+                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(holdPointNote, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                        if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                        hits.Add((hitTestResult, holdPointNote));
+                    }
                 }
             }
-        }
-        else if (EditorSystem.EditMode == EditorEditMode.EventEditMode)
-        {
-            if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+            else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
             {
                 foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
                 {
@@ -540,21 +534,18 @@ public partial class ChartView3D : UserControl
     
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
-        bool holdEditModeAvailable = EditorSystem.EditMode == EditorEditMode.HoldEditMode || EditorSystem.HoldEditModeAvailable;
-        bool eventEditModeAvailable = EditorSystem.EditMode == EditorEditMode.EventEditMode || EditorSystem.EventEditModeAvailable;
+        bool holdEditModeAvailable = EditorSystem.Mode == EditorMode.EditMode || EditorSystem.HoldEditModeAvailable;
         
         Dispatcher.UIThread.Post(() =>
         {
-            ComboBoxEditMode.SelectedIndex = EditorSystem.EditMode switch
+            ComboBoxEditMode.SelectedIndex = EditorSystem.Mode switch
             {
-                EditorEditMode.NoteEditMode => 0,
-                EditorEditMode.HoldEditMode => 1,
-                EditorEditMode.EventEditMode => 2,
+                EditorMode.ObjectMode => 0,
+                EditorMode.EditMode => 1,
                 _ => 0,
             };
             
             ComboBoxItemHoldEditMode.IsEnabled = holdEditModeAvailable;
-            ComboBoxItemEventEditMode.IsEnabled = eventEditModeAvailable;
         });
     }
 
@@ -562,11 +553,10 @@ public partial class ChartView3D : UserControl
     {
         Dispatcher.UIThread.Post(() =>
         {
-            ComboBoxEditMode.SelectedIndex = EditorSystem.EditMode switch
+            ComboBoxEditMode.SelectedIndex = EditorSystem.Mode switch
             {
-                EditorEditMode.NoteEditMode => 0,
-                EditorEditMode.HoldEditMode => 1,
-                EditorEditMode.EventEditMode => 2,
+                EditorMode.ObjectMode => 0,
+                EditorMode.EditMode => 1,
                 _ => 0,
             };
         });
@@ -587,19 +577,14 @@ public partial class ChartView3D : UserControl
             AutoEditMode();
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.NoteEditMode"]))
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.ObjectMode"]))
         {
-            EditorSystem.ChangeEditMode(EditorEditMode.NoteEditMode);
+            EditorSystem.ChangeEditMode(EditorMode.ObjectMode);
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.HoldEditMode"]))
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.EditMode"]))
         {
-            EditorSystem.ChangeEditMode(EditorEditMode.HoldEditMode);
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.EventEditMode"]))
-        {
-            EditorSystem.ChangeEditMode(EditorEditMode.EventEditMode);
+            EditorSystem.ChangeEditMode(EditorMode.EditMode);
             e.Handled = true;
         }
         
@@ -1190,7 +1175,7 @@ public partial class ChartView3D : UserControl
         if (blockEvents) return;
         if (ComboBoxEditMode == null) return;
 
-        Task.Run(() => EditorSystem.ChangeEditMode((EditorEditMode)ComboBoxEditMode.SelectedIndex));
+        Task.Run(() => EditorSystem.ChangeEditMode((EditorMode)ComboBoxEditMode.SelectedIndex));
     }
     
     private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e)

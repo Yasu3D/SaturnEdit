@@ -248,9 +248,8 @@
     <system:String x:Key="ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes">...of those Lane Hide:</system:String>
     <system:String x:Key="ChartEditor.ChartView3D">Chart View (3D)</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Mode.AutoEditMode">Change Edit Mode (Auto)</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Mode.NoteEditMode">Note Edit Mode</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Mode.HoldEditMode">Hold Edit Mode</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Mode.EventEditMode">Event Edit Mode</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Mode.ObjectMode">Object Mode</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Mode.EditMode">Edit Mode</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.EditType">Edit Type</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.EditType.Description">Changes the type of all selected notes to the current note type.</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.EditShape">Edit Shape</system:String>
@@ -416,10 +415,10 @@
     <system:String x:Key="Settings.Rendering.BackgroundDim.Level3">Dim +3</system:String>
     <system:String x:Key="Settings.Rendering.BackgroundDim.Level4">Dim +4</system:String>
     <system:String x:Key="Settings.Rendering.JudgementLineColor">Judgement Line Color:</system:String>
-    <system:String x:Key="Settings.Rendering.JudgementLineColor.Version0">Version0</system:String>
     <system:String x:Key="Settings.Rendering.JudgementLineColor.Version1">Version1</system:String>
     <system:String x:Key="Settings.Rendering.JudgementLineColor.Version2">Version2</system:String>
     <system:String x:Key="Settings.Rendering.JudgementLineColor.Version3">Version3</system:String>
+    <system:String x:Key="Settings.Rendering.JudgementLineColor.Greyscale">Greyscale</system:String>
     <system:String x:Key="Settings.Rendering.HiddenOpacity">Hidden Opacity</system:String>
     <system:String x:Key="Settings.Rendering.BonusEffectVisibility">Bonus Effect Visibility</system:String>
     <system:String x:Key="Settings.Rendering.RNoteEffectVisibility">R-Note Effect Visibility</system:String>
@@ -529,6 +528,8 @@
     <system:String x:Key="SelectOffset.Direction.Backward">Backward</system:String>
     <system:String x:Key="ZigZagHoldArgs.Window.Title">Zig-Zag Hold Generator</system:String>
     <system:String x:Key="ZigZagHoldArgs.Interval">Interval</system:String>
+    <system:String x:Key="NewChart.Window.Title">New Chart</system:String>
+    <system:String x:Key="NewChart.Create">Create</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Title">Save Chart</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Header">Do you want to save changes to your chart before closing?</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Paragraph">Your changes will be lost if you don't save them.</system:String>

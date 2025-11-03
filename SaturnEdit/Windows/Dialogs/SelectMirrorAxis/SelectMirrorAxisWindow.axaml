@@ -9,7 +9,7 @@
         Width="320"
         Height="456"
         x:Class="SaturnEdit.Windows.Dialogs.ChooseMirrorAxis.SelectMirrorAxisWindow"
-        Title="Adjust Mirror Axis"
+        Title="{DynamicResource SelectMirrorAxis.Window.Title}"
         CanResize="False">
     <Panel>
         <controls:WindowChrome Name="WindowChrome"

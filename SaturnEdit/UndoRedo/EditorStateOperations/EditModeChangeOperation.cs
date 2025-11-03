@@ -3,17 +3,17 @@ using SaturnEdit.Systems;
 
 namespace SaturnEdit.UndoRedo.EditModeOperations;
 
-public class EditModeChangeOperation(EditorEditMode oldEditMode, EditorEditMode newEditMode, ITimeable? oldSubObjectGroup, ITimeable? newSubObjectGroup) : IOperation
+public class EditModeChangeOperation(EditorMode oldMode, EditorMode newMode, ITimeable? oldSubObjectGroup, ITimeable? newSubObjectGroup) : IOperation
 {
     public void Revert()
     {
-        EditorSystem.EditMode = oldEditMode;
+        EditorSystem.Mode = oldMode;
         EditorSystem.ActiveObjectGroup = oldSubObjectGroup;
     }
 
     public void Apply()
     {
-        EditorSystem.EditMode = newEditMode;
+        EditorSystem.Mode = newMode;
         EditorSystem.ActiveObjectGroup = newSubObjectGroup;
     }
 }

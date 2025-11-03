@@ -15,9 +15,6 @@ public static class SelectionSystem
 {
     public static void Initialize()
     {
-        TimeSystem.PlaybackStateChanged += OnPlaybackStateChanged;
-        OnPlaybackStateChanged(null, EventArgs.Empty);
-        
         ChartSystem.ChartLoaded += OnChartLoaded;
         OnChartLoaded(null, EventArgs.Empty);
     }
@@ -117,7 +114,7 @@ public static class SelectionSystem
                 end = Timestamp.Max(LastSelectedObject.Timestamp, PointerOverObject.Timestamp);
             }
 
-            if (EditorSystem.EditMode == EditorEditMode.NoteEditMode)
+            if (EditorSystem.Mode == EditorMode.ObjectMode)
             {
                 foreach (Event @event in ChartSystem.Chart.Events)
                 {
@@ -167,20 +164,20 @@ public static class SelectionSystem
                     }
                 }
             }
-            else if (EditorSystem.EditMode == EditorEditMode.HoldEditMode && EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+            else if (EditorSystem.Mode == EditorMode.EditMode)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
                 {
-                    if (!RenderUtils.IsVisible(point, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-                    if (point.Timestamp < start) continue;
-                    if (point.Timestamp > end) continue;
+                    foreach (HoldPointNote point in holdNote.Points)
+                    {
+                        if (!RenderUtils.IsVisible(point, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                        if (point.Timestamp < start) continue;
+                        if (point.Timestamp > end) continue;
 
-                    operations.Add(new SelectionAddOperation(point, LastSelectedObject));
+                        operations.Add(new SelectionAddOperation(point, LastSelectedObject));
+                    }
                 }
-            }
-            else if (EditorSystem.EditMode == EditorEditMode.EventEditMode)
-            {
-                if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+                else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
                 {
                     foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
                     {
@@ -259,7 +256,7 @@ public static class SelectionSystem
 
         List<IOperation> operations = [];
 
-        if (EditorSystem.EditMode == EditorEditMode.NoteEditMode)
+        if (EditorSystem.Mode == EditorMode.ObjectMode)
         {
             foreach (Event @event in ChartSystem.Chart.Events)
             {
@@ -383,39 +380,39 @@ public static class SelectionSystem
                 }
             }
         }
-        else if (EditorSystem.EditMode == EditorEditMode.HoldEditMode && EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+        else if (EditorSystem.Mode == EditorMode.EditMode)
         {
-            Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
-
-            if (layer == null) return;
-
-            foreach (HoldPointNote point in holdNote.Points)
+            if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
             {
-                if (!RenderUtils.IsVisible(point, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
 
-                float min = MathF.Min(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
-                float max = MathF.Max(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
+                if (layer == null) return;
 
-                if (point.Timestamp.ScaledTime < min) continue;
-                if (point.Timestamp.ScaledTime > max) continue;
-
-                if (point is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
-
-                if (BoxSelectArgs.NegativeSelection)
+                foreach (HoldPointNote point in holdNote.Points)
                 {
-                    if (!SelectedObjects.Contains(point)) continue;
-                    operations.Add(new SelectionRemoveOperation(point, LastSelectedObject));
-                }
-                else
-                {
-                    if (SelectedObjects.Contains(point)) continue;
-                    operations.Add(new SelectionAddOperation(point, LastSelectedObject));
+                    if (!RenderUtils.IsVisible(point, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    float min = MathF.Min(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
+                    float max = MathF.Max(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
+
+                    if (point.Timestamp.ScaledTime < min) continue;
+                    if (point.Timestamp.ScaledTime > max) continue;
+
+                    if (point is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
+
+                    if (BoxSelectArgs.NegativeSelection)
+                    {
+                        if (!SelectedObjects.Contains(point)) continue;
+                        operations.Add(new SelectionRemoveOperation(point, LastSelectedObject));
+                    }
+                    else
+                    {
+                        if (SelectedObjects.Contains(point)) continue;
+                        operations.Add(new SelectionAddOperation(point, LastSelectedObject));
+                    }
                 }
             }
-        }
-        else if (EditorSystem.EditMode == EditorEditMode.EventEditMode)
-        {
-            if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+            else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
             {
                 foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
                 {
@@ -466,7 +463,7 @@ public static class SelectionSystem
     {
         List<IOperation> operations = [];
 
-        if (EditorSystem.EditMode == EditorEditMode.NoteEditMode)
+        if (EditorSystem.Mode == EditorMode.ObjectMode)
         {
             foreach (Event @event in ChartSystem.Chart.Events)
             {
@@ -506,18 +503,18 @@ public static class SelectionSystem
                 }
             }
         }
-        else if (EditorSystem.EditMode == EditorEditMode.HoldEditMode && EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+        else if (EditorSystem.Mode == EditorMode.EditMode)
         {
-            foreach (HoldPointNote point in holdNote.Points)
+            if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
             {
-                if (SelectedObjects.Contains(point)) continue;
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    if (SelectedObjects.Contains(point)) continue;
 
-                operations.Add(new SelectionAddOperation(point, LastSelectedObject));
+                    operations.Add(new SelectionAddOperation(point, LastSelectedObject));
+                }
             }
-        }
-        else if (EditorSystem.EditMode == EditorEditMode.EventEditMode)
-        {
-            if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+            else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
             {
                 foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
                 {
@@ -594,7 +591,7 @@ public static class SelectionSystem
         {
             List<IOperation> operations = [];
 
-            if (EditorSystem.EditMode == EditorEditMode.NoteEditMode)
+            if (EditorSystem.Mode == EditorMode.ObjectMode)
             {
                 foreach (Event @event in ChartSystem.Chart.Events)
                 {
@@ -681,7 +678,7 @@ public static class SelectionSystem
                     }
                 }
             }
-            else if (EditorSystem.EditMode == EditorEditMode.HoldEditMode && EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+            else if (EditorSystem.Mode == EditorMode.EditMode && EditorSystem.ActiveObjectGroup is HoldNote holdNote)
             {
                 foreach (HoldPointNote point in holdNote.Points)
                 {
@@ -711,7 +708,7 @@ public static class SelectionSystem
 
             foreach (ITimeable obj in SelectedObjects)
             {
-                if (EditorSystem.EditMode == EditorEditMode.NoteEditMode)
+                if (EditorSystem.Mode == EditorMode.ObjectMode)
                 {
                     if (obj is Bookmark && !SelectByCriteriaArgs.IncludeBookmarks) continue;
                     if (obj is TouchNote && !SelectByCriteriaArgs.IncludeTouchNotes) continue;
@@ -755,13 +752,12 @@ public static class SelectionSystem
 #endregion Methods
     
 #region System Event Delegates
-    private static void OnPlaybackStateChanged(object? sender, EventArgs e)
-    {
-        PointerOverObject = null;
-    }
-
     private static void OnChartLoaded(object? sender, EventArgs e)
     {
+        SelectedObjects.Clear();
+        PointerOverObject = null;
+        LastSelectedObject = null;
+
         SelectedLayer = ChartSystem.Chart.Layers.Count == 0 ? null : ChartSystem.Chart.Layers[0];
     }
 #endregion System Event Delegates
