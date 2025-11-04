@@ -54,13 +54,13 @@ public partial class App : Application
         };
     }
     
-    private void SetLocale()
+    private static void SetLocale()
     {
         try
         {
             if (Current == null) return;
 
-            ResourceInclude? oldLocale = Current.Resources.MergedDictionaries.OfType<ResourceInclude>().FirstOrDefault(x => x.Source?.OriginalString?.Contains("Locales") ?? false);
+            ResourceInclude? oldLocale = Current.Resources.MergedDictionaries.OfType<ResourceInclude>().FirstOrDefault(x => x.Source?.OriginalString.Contains("Locales") ?? false);
 
             Uri uri = new($"avares://SaturnEdit/Assets/Locales/{SettingsSystem.EditorSettings.Locale}.axaml");
             ResourceInclude newLocale = new(uri) { Source = uri };

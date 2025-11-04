@@ -9,7 +9,6 @@ using System.IO;
 using Avalonia.Threading;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
-using TextMateSharp.Themes;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 

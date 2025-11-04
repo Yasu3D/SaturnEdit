@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -8,8 +7,6 @@ using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
-using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.EditModeOperations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Fixed;
 

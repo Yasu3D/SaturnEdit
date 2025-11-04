@@ -15,7 +15,6 @@ using Dock.Model.Core;
 using Dock.Serializer;
 using FluentIcons.Common;
 using SaturnData.Notation.Core;
-using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnData.Notation.Serialization;
@@ -31,7 +30,6 @@ using SaturnEdit.Windows.Dialogs.SelectOffset;
 using SaturnEdit.Windows.Dialogs.SelectScale;
 using SaturnEdit.Windows.Dialogs.ZigZagHoldArgs;
 using SaturnEdit.Windows.Main.ChartEditor.Tabs;
-using SaturnView;
 
 namespace SaturnEdit.Windows.ChartEditor;
 

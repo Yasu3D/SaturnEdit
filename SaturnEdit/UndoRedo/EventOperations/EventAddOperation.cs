@@ -1,5 +1,4 @@
 using SaturnData.Notation.Core;
-using SaturnEdit.Systems;
 
 namespace SaturnEdit.UndoRedo.EventOperations;
 

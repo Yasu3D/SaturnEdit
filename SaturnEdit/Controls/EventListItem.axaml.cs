@@ -1,6 +1,5 @@
 using System;
 using System.Globalization;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
@@ -8,7 +7,6 @@ using Avalonia.Threading;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnEdit.Systems;
-using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.TimeableOperations;
 

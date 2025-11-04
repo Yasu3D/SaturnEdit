@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using SaturnData.Notation.Core;
 
 namespace SaturnEdit.UndoRedo.NoteOperations;

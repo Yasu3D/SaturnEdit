@@ -5,11 +5,9 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
-using SaturnData.Notation.Events;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
 using SaturnEdit.Utilities;
 
