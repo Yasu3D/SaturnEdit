@@ -829,7 +829,7 @@ public class ShortcutSettings
         ["Editor.Playback.LoopPlayback"]          = new(Key.L,     true,  false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Loop"),
         ["Editor.Playback.SetLoopMarkerStart"]    = new(Key.Home,  false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.LoopStart"),
         ["Editor.Playback.SetLoopMarkerEnd"]      = new(Key.End,   false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.LoopEnd"),
-        ["Editor.Playback.Metronome"]             = new(Key.M,     true,  false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Metronome"),
+        ["Editor.Playback.Metronome"]             = new(Key.None,  false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Metronome"),
 
         ["Editor.Toolbar.EditType"]        = new(Key.E,      true,  false, false, "ChartEditor.ChartView3D.Toolbar", "ChartEditor.ChartView3D.ToolTip.EditType"),
         ["Editor.Toolbar.EditShape"]       = new(Key.E,      false, false, true,  "ChartEditor.ChartView3D.Toolbar", "ChartEditor.ChartView3D.ToolTip.EditShape"),

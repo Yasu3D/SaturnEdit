@@ -191,7 +191,7 @@ public static class CursorSystem
         // Exit edit mode when changing to another type.
         if (newType != HoldPointNote && EditorSystem.Mode == EditorMode.EditMode && EditorSystem.ActiveObjectGroup is HoldNote)
         {
-            CompositeOperation? op = EditorSystem.GetEditModeChangeOperation(EditorMode.ObjectMode, newType);
+            CompositeOperation? op = EditorSystem.GetEditModeChangeOperation(EditorMode.ObjectMode, null, newType);
 
             if (op != null)
             {

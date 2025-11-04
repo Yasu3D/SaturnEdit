@@ -13,7 +13,7 @@ namespace SaturnEdit.Utilities;
 
 public class ObjectDragHelper(ClickDragHelper clickDragHelper)
 {
-    public bool IsActive { get; private set; } = false;
+    public bool IsActive => active && clickDragHelper.IsActive;
     
     public int StartTick { get; private set; } = -1;
     public int EndTick { get; private set; } = -1;
@@ -22,10 +22,12 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
     public IPositionable.OverlapResult DragType { get; private set; } = IPositionable.OverlapResult.None;
     public List<ObjectDragItem>? DraggedObjects { get; private set; } = null;
 
+    private bool active = false;
+    
 #region Methods
     public void Start(int fullTick)
     {
-        IsActive = SelectionSystem.PointerOverObject != null;
+        active = SelectionSystem.PointerOverObject != null;
         DragType = SelectionSystem.PointerOverOverlap;
         StartTick = fullTick;
         EndTick = fullTick;
@@ -79,7 +81,7 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
 
     public void Update(float time)
     {
-        if (!IsActive || DraggedObjects == null) return;
+        if (!active || DraggedObjects == null) return;
         
         int fullTick = Timestamp.TimestampFromTime(ChartSystem.Chart, time).FullTick;
 
@@ -106,11 +108,11 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
 
     public void End()
     {
-        if (!IsActive || !clickDragHelper.IsActive) return;
+        if (!IsActive) return;
 
         CompositeOperation operation = GetOperations();
         
-        IsActive = false;
+        active = false;
         DragType = IPositionable.OverlapResult.None;
         StartTick = -1;
         EndTick = -1;

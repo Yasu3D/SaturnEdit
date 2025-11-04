@@ -61,14 +61,11 @@ public partial class ChartEditorView : UserControl
             dockState.Save(layout);
         }
     }
-
-    private MainWindow? mainWindow;
+    
     private readonly DockSerializer serializer;
     private readonly DockState dockState;
     
 #region Methods
-    public void SetMainWindow(MainWindow m) => mainWindow = m;
-
     public async void File_New()
     {
         if (VisualRoot is not Window rootWindow) return;
@@ -1030,7 +1027,7 @@ public partial class ChartEditorView : UserControl
 
     private void MenuItemRenderAsImage_OnClick(object? sender, RoutedEventArgs e) => File_RenderAsImage();
 
-    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e) => mainWindow?.ShowSettingsWindow();
+    private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ShowSettingsWindow();
 
     private void MenuItemQuit_OnClick(object? sender, RoutedEventArgs e) => File_Quit();
     

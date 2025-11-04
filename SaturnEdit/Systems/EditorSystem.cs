@@ -28,6 +28,8 @@ public enum EditorMode
     EditMode = 1,
 }
 
+// TODO: inserting a note does not recalculate sync notes until next operation???
+// TODO: Click+Drag editing doesn't push to undo-redo stack properly?
 public static class EditorSystem
 {
     public static void Initialize()
@@ -66,20 +68,28 @@ public static class EditorSystem
     {
         EditModeChangeAttempted?.Invoke(null, EventArgs.Empty);
         
-        CompositeOperation? op = GetEditModeChangeOperation(newMode, null);
+        CompositeOperation? op = GetEditModeChangeOperation(newMode, null, null);
+        if (op == null || op.Operations.Count == 0) return;
+
+        UndoRedoSystem.Push(op);
+    }
+
+    public static void ChangeEditMode(EditorMode newMode, ITimeable? newActiveObjectGroup)
+    {
+        EditModeChangeAttempted?.Invoke(null, EventArgs.Empty);
+        
+        CompositeOperation? op = GetEditModeChangeOperation(newMode, newActiveObjectGroup, null);
         if (op == null || op.Operations.Count == 0) return;
 
         UndoRedoSystem.Push(op);
     }
     
-    public static CompositeOperation? GetEditModeChangeOperation(EditorMode newMode, Note? newType)
+    public static CompositeOperation? GetEditModeChangeOperation(EditorMode newMode, ITimeable? newActiveObjectGroup, Note? newType)
     {
         if (Mode == newMode) return null;
         
         List<IOperation> operations = [];
         List<ITimeable> objects = SelectionSystem.OrderedSelectedObjects;
-        
-        ITimeable? newActiveObjectGroup = null;
         
         // Changing to Object Mode:
         if (newMode is EditorMode.ObjectMode)
@@ -118,51 +128,57 @@ public static class EditorSystem
         // Changing to Edit Mode:
         else if (newMode is EditorMode.EditMode)
         {
-            // Find the earliest selected object group.
-            HoldNote? holdNote = null;
-            StopEffectEvent? stopEffectEvent = null;
-            ReverseEffectEvent? reverseEffectEvent = null;
-            
-            foreach (ITimeable obj in objects)
+            if (newActiveObjectGroup == null)
             {
-                if (obj is HoldNote h)
-                {
-                    holdNote ??= h;
-                }
-                if (obj is StopEffectEvent s)
-                {
-                    stopEffectEvent ??= s;
-                }
-                else if (obj is ReverseEffectEvent r)
-                {
-                    reverseEffectEvent ??= r;
-                }
-                
-                if (holdNote != null && stopEffectEvent != null && reverseEffectEvent != null) break;
-            }
+                // Find the earliest selected object group.
+                HoldNote? holdNote = null;
+                StopEffectEvent? stopEffectEvent = null;
+                ReverseEffectEvent? reverseEffectEvent = null;
 
-            // Cancel edit mode change if no object group is found.
-            if (holdNote == null && stopEffectEvent == null && reverseEffectEvent == null) return null;
+                foreach (ITimeable obj in objects)
+                {
+                    if (obj is HoldNote h)
+                    {
+                        holdNote ??= h;
+                    }
 
-            // Make the earliest object the new active object.
-            ITimeable? min = null;
-            if (holdNote != null)
-            {
-                min ??= holdNote;
-                min = holdNote.Timestamp.FullTick < min.Timestamp.FullTick ? holdNote : min;
+                    if (obj is StopEffectEvent s)
+                    {
+                        stopEffectEvent ??= s;
+                    }
+                    else if (obj is ReverseEffectEvent r)
+                    {
+                        reverseEffectEvent ??= r;
+                    }
+
+                    if (holdNote != null && stopEffectEvent != null && reverseEffectEvent != null) break;
+                }
+
+                // Cancel edit mode change if no object group is found.
+                if (holdNote == null && stopEffectEvent == null && reverseEffectEvent == null) return null;
+
+                // Make the earliest object the new active object.
+                ITimeable? min = null;
+                if (holdNote != null)
+                {
+                    min ??= holdNote;
+                    min = holdNote.Timestamp.FullTick < min.Timestamp.FullTick ? holdNote : min;
+                }
+
+                if (stopEffectEvent != null)
+                {
+                    min ??= stopEffectEvent;
+                    min = stopEffectEvent.Timestamp.FullTick < min.Timestamp.FullTick ? stopEffectEvent : min;
+                }
+
+                if (reverseEffectEvent != null)
+                {
+                    min ??= reverseEffectEvent;
+                    min = reverseEffectEvent.Timestamp.FullTick < min.Timestamp.FullTick ? reverseEffectEvent : min;
+                }
+
+                newActiveObjectGroup = min;
             }
-            if (stopEffectEvent != null)
-            {
-                min ??= stopEffectEvent;
-                min = stopEffectEvent.Timestamp.FullTick < min.Timestamp.FullTick ? stopEffectEvent : min;
-            }
-            if (reverseEffectEvent != null)
-            {
-                min ??= reverseEffectEvent;
-                min = reverseEffectEvent.Timestamp.FullTick < min.Timestamp.FullTick ? reverseEffectEvent : min;
-            }
-            
-            newActiveObjectGroup = min;
 
             // Switch to inserting hold point notes.
             if (newActiveObjectGroup is HoldNote)
@@ -2445,7 +2461,7 @@ public static class EditorSystem
         if (operations.Count == 0) return;
         
         // Set EditMode to NoteEditMode.
-        CompositeOperation? op = GetEditModeChangeOperation(EditorMode.ObjectMode, null);
+        CompositeOperation? op = GetEditModeChangeOperation(EditorMode.ObjectMode, null, null);
         if (op == null) return;
 
         operations.Add(op);

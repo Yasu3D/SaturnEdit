@@ -216,7 +216,7 @@ public partial class ChartView3D : UserControl
             
             bool allowDefaultCursor = !objectDrag.IsActive;
             bool allowOmniCursor = !objectDrag.IsActive || objectDrag.DragType == IPositionable.OverlapResult.Body;
-
+            
             // Default Cursor
             // - No PointerOverObject
             // - No PointerOverOverlap
@@ -225,7 +225,7 @@ public partial class ChartView3D : UserControl
                 RenderCanvas.Cursor = new(StandardCursorType.Arrow);
                 return;
             }
-
+            
             // Omnidirectional Cursor
             // - PointerOverObject is not IPositionable
             // - PointerOverOverlap is Body
@@ -234,7 +234,7 @@ public partial class ChartView3D : UserControl
                 RenderCanvas.Cursor = new(StandardCursorType.SizeAll);
                 return;
             }
-
+            
             // Directional Cursor
             bool rightEdge = SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.RightEdge;
             int lane = Renderer3D.GetHitTestPointerLane(canvasInfo, (float)pointerPosition.Value.X, (float)pointerPosition.Value.Y);
@@ -1112,6 +1112,15 @@ public partial class ChartView3D : UserControl
         }
     }
 
+    private void RenderCanvas_OnDoubleTapped(object? sender, TappedEventArgs e)
+    {
+        if (SelectionSystem.PointerOverObject is not HoldNote holdNote) return;
+        if (!SelectionSystem.SelectedObjects.Contains(SelectionSystem.PointerOverObject)) return;
+
+        EditorSystem.ChangeEditMode(EditorMode.EditMode, holdNote);
+    }
+        
+    
     private void ComboBoxEditMode_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
