@@ -1,10 +1,12 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
 using SaturnEdit.Systems;
+using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
@@ -14,8 +16,12 @@ public partial class MainWindow : Window
 {
     public MainWindow()
     {
+        Instance = this;
         InitializeComponent();
 
+        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        
         ChartEditor.SetMainWindow(this);
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
@@ -42,6 +48,8 @@ public partial class MainWindow : Window
         SetTabs();
     }
 
+    public static MainWindow? Instance { get; private set; }
+
     private readonly IBrush? chartEditorChromeGradient = null;
     private readonly IBrush? stageEditorChromeGradient = null;
     private readonly IBrush? cosmeticsEditorChromeGradient = null;
@@ -55,6 +63,8 @@ public partial class MainWindow : Window
     {
         try
         {
+            SearchForAnything.IsVisible = false;
+            
             SettingsWindow settingsWindow = new();
             await settingsWindow.ShowDialog(this);
         }
@@ -120,12 +130,30 @@ public partial class MainWindow : Window
 #endregion System Event Delegates
 
 #region UI Event Delegates
+    private void Control_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
+        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+        if (KeyDownBlacklist.IsInvalidState()) return;
+        
+        Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
+        
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["QuickCommands.Settings"]))
+        {
+            ShowSettingsWindow();
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["QuickCommands.Search"]))
+        {
+            SearchForAnything.Show();
+        }
+    }
+    
+    private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
+    
     private void EditorTabs_OnIsCheckedChanged(object? sender, RoutedEventArgs e) => SetTabs();
 
-    private void ButtonSearch_OnClick(object? sender, RoutedEventArgs e)
-    {
-        
-    }
+    private void ButtonSearch_OnClick(object? sender, RoutedEventArgs e) => SearchForAnything.Show();
     
     private void ButtonSettings_OnClick(object? sender, RoutedEventArgs e) => ShowSettingsWindow();
 

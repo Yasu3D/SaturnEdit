@@ -27,35 +27,7 @@ public partial class ChartView2D : UserControl
     private bool blockEvents = false;
     
 #region Methods
-    private void AdjustAxis()
-    {
-        // TODO.
-    }
 
-    private void ScaleSelection()
-    {
-        // TODO.
-    }
-    
-    private void OffsetChart()
-    {
-        // TODO.
-    }
-
-    private void ScaleChart()
-    {
-        // TODO.
-    }
-
-    private void MirrorChart()
-    {
-        // TODO.
-    }
-
-    private void ZigZagHold()
-    {
-        // TODO.
-    }
 #endregion Methods
     
 #region System Event Delegates
@@ -66,9 +38,9 @@ public partial class ChartView2D : UserControl
             blockEvents = true;
         
             MenuItemShowJudgeAreas.IsChecked = SettingsSystem.RenderSettings.ShowJudgeAreas;
-            MenuItemShowMarvelousWindows.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousWindows;
-            MenuItemShowGreatWindows.IsChecked = SettingsSystem.RenderSettings.ShowGreatWindows;
-            MenuItemShowGoodWindows.IsChecked = SettingsSystem.RenderSettings.ShowGoodWindows;
+            MenuItemShowMarvelousArea.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousArea;
+            MenuItemShowGreatArea.IsChecked = SettingsSystem.RenderSettings.ShowGreatArea;
+            MenuItemShowGoodArea.IsChecked = SettingsSystem.RenderSettings.ShowGoodArea;
             MenuItemSaturnJudgeAreas.IsChecked = SettingsSystem.RenderSettings.SaturnJudgeAreas;
             MenuItemVisualizeLaneSweeps.IsChecked = SettingsSystem.RenderSettings.VisualizeLaneSweeps;
             MenuItemShowTouchNotes.IsChecked = SettingsSystem.RenderSettings.ShowTouchNotes;
@@ -97,9 +69,9 @@ public partial class ChartView2D : UserControl
             MenuItemHideHoldControlPoints.IsChecked = SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback;
             MenuItemHideBookmarks.IsChecked = SettingsSystem.RenderSettings.HideBookmarksDuringPlayback;
         
-            MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
-            MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
-            MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowMarvelousArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowGreatArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowGoodArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
 
             blockEvents = false;
         
@@ -135,9 +107,9 @@ public partial class ChartView2D : UserControl
             MenuItemJoinHold.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.JoinHold"].ToKeyGesture();
 
             MenuItemShowJudgeAreas.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgeAreas"].ToKeyGesture();
-            MenuItemShowMarvelousWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"].ToKeyGesture();
-            MenuItemShowGreatWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"].ToKeyGesture();
-            MenuItemShowGoodWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodWindows"].ToKeyGesture();
+            MenuItemShowMarvelousArea.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousArea"].ToKeyGesture();
+            MenuItemShowGreatArea.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatArea"].ToKeyGesture();
+            MenuItemShowGoodArea.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodArea"].ToKeyGesture();
             MenuItemSaturnJudgeAreas.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgeAreas"].ToKeyGesture();
             MenuItemVisualizeLaneSweeps.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeLaneSweeps"].ToKeyGesture();
             MenuItemShowTouchNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"].ToKeyGesture();
@@ -211,27 +183,27 @@ public partial class ChartView2D : UserControl
         {
             SettingsSystem.RenderSettings.ShowJudgeAreas = menuItem.IsChecked;
 
-            MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
-            MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
-            MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowMarvelousArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowGreatArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowGoodArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowMarvelousWindows)
+        if (menuItem == MenuItemShowMarvelousArea)
         {
-            SettingsSystem.RenderSettings.ShowMarvelousWindows = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowMarvelousArea = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowGreatWindows)
+        if (menuItem == MenuItemShowGreatArea)
         {
-            SettingsSystem.RenderSettings.ShowGreatWindows = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowGreatArea = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowGoodWindows)
+        if (menuItem == MenuItemShowGoodArea)
         {
-            SettingsSystem.RenderSettings.ShowGoodWindows = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowGoodArea = menuItem.IsChecked;
             return;
         }
         
@@ -431,21 +403,21 @@ public partial class ChartView2D : UserControl
 
     private void MenuItemMirrorCustom_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_MirrorCustom();
 
-    private void MenuItemAdjustAxis_OnClick(object? sender, RoutedEventArgs e) => AdjustAxis();
+    private void MenuItemAdjustAxis_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
 
     private void MenuItemFlipDirection_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_FlipDirection();
 
     private void MenuItemReverseSelection_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Transform_ReverseSelection();
 
-    private void MenuItemScaleSelection_OnClick(object? sender, RoutedEventArgs e) => ScaleSelection();
+    private void MenuItemScaleSelection_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
 
-    private void MenuItemOffsetChart_OnClick(object? sender, RoutedEventArgs e) => OffsetChart();
+    private void MenuItemOffsetChart_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
 
-    private void MenuItemScaleChart_OnClick(object? sender, RoutedEventArgs e) => ScaleChart();
+    private void MenuItemScaleChart_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
 
-    private void MenuItemMirrorChart_OnClick(object? sender, RoutedEventArgs e) => MirrorChart();
+    private void MenuItemMirrorChart_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
 
-    private void MenuItemZigZagHold_OnClick(object? sender, RoutedEventArgs e) => ZigZagHold();
+    private void MenuItemZigZagHold_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
 
     private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Convert_CutHold();
 

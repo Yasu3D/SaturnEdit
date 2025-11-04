@@ -191,8 +191,6 @@ public partial class NotePaletteView : UserControl
         if (blockEvents) return;
         if (sender is not RadioButton button) return;
         if (button.IsChecked == false) return;
-
-        List<IOperation> operations = [];
         
         // Select new Type
         Note? newType = null;
@@ -243,20 +241,8 @@ public partial class NotePaletteView : UserControl
         }
 
         if (newType == null) return;
-        operations.Add(new CursorTypeChangeOperation(CursorSystem.CurrentType, newType));
-
-        // Exit edit mode when changing to another type.
-        if (button.Name != "RadioButtonHold" && EditorSystem.Mode == EditorMode.EditMode && EditorSystem.ActiveObjectGroup is HoldNote)
-        {
-            CompositeOperation? op = EditorSystem.GetEditModeChangeOperation(EditorMode.ObjectMode, newType);
-
-            if (op != null)
-            {
-                operations.Add(op);
-            }
-        }
         
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        CursorSystem.SetType(newType);
     }
 
     private void RadioButtonBonusType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)

@@ -8,18 +8,12 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
-using FluentIcons.Common;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
-using SaturnEdit.Windows.Dialogs.ChooseMirrorAxis;
-using SaturnEdit.Windows.Dialogs.ModalDialog;
-using SaturnEdit.Windows.Dialogs.SelectOffset;
-using SaturnEdit.Windows.Dialogs.SelectScale;
-using SaturnEdit.Windows.Dialogs.ZigZagHoldArgs;
 using SaturnView;
 using SkiaSharp;
 
@@ -52,7 +46,7 @@ public partial class ChartView3D : UserControl
 
         SelectionSystem.PointerOverOverlapChanged += OnPointerOverOverlapChanged;
     }
-
+    
     private readonly CanvasInfo canvasInfo = new();
     private bool blockEvents = false;
     private readonly ClickDragHelper clickDragLeft;
@@ -64,109 +58,6 @@ public partial class ChartView3D : UserControl
     private ITimeable? lastClickedObject = null;
    
 #region Methods
-    private async void AdjustAxis()
-    {
-        if (VisualRoot is not Window window) return;
-            
-        SelectMirrorAxisWindow selectMirrorAxisWindow = new();
-        await selectMirrorAxisWindow.ShowDialog(window);
-
-        if (selectMirrorAxisWindow.Result == ModalDialogResult.Primary)
-        {
-            _ = Task.Run(() => EditorSystem.MirrorAxis = selectMirrorAxisWindow.Axis);
-        }
-    }
-
-    private async void ScaleSelection()
-    {
-        if (VisualRoot is not Window window) return;
-            
-        SelectScaleWindow selectScaleWindow = new();
-        await selectScaleWindow.ShowDialog(window);
-
-        if (selectScaleWindow.Result == ModalDialogResult.Primary)
-        {
-            _ = Task.Run(() => EditorSystem.Transform_ScaleSelection(selectScaleWindow.Scale));
-        }
-    }
-
-    private async void OffsetChart()
-    {
-        if (VisualRoot is not Window window) return;
-            
-        SelectOffsetWindow selectOffsetWindow = new();
-        await selectOffsetWindow.ShowDialog(window);
-
-        if (selectOffsetWindow.Result == ModalDialogResult.Primary)
-        {
-            _ = Task.Run(() => EditorSystem.Transform_OffsetChart(selectOffsetWindow.Offset));
-        }
-    }
-
-    private async void ScaleChart()
-    {
-        if (VisualRoot is not Window window) return;
-            
-        SelectScaleWindow selectScaleWindow = new();
-        await selectScaleWindow.ShowDialog(window);
-
-        if (selectScaleWindow.Result == ModalDialogResult.Primary)
-        {
-            _ = Task.Run(() => EditorSystem.Transform_ScaleChart(selectScaleWindow.Scale));
-        }
-    }
-
-    private async void MirrorChart()
-    {
-        if (VisualRoot is not Window window) return;
-            
-        SelectMirrorAxisWindow selectMirrorAxisWindow = new();
-        await selectMirrorAxisWindow.ShowDialog(window);
-
-        if (selectMirrorAxisWindow.Result == ModalDialogResult.Primary)
-        {
-            _ = Task.Run(() => EditorSystem.Transform_MirrorChart(selectMirrorAxisWindow.Axis));
-        }
-    }
-    
-    private async void ZigZagHold()
-    {
-        if (VisualRoot is not Window window) return;
-        
-        if (!SelectionSystem.SelectedObjects.Any(x => x is HoldNote))
-        {
-            ModalDialogWindow modalDialog = new()
-            {
-                DialogIcon = Icon.Warning,
-                WindowTitleKey = "ModalDialog.ZigZagHoldWarning.Title",
-                HeaderKey = "ModalDialog.ZigZagHoldWarning.Header",
-                ParagraphKey = "ModalDialog.ZigZagHoldWarning.Paragraph",
-                ButtonPrimaryKey = "Generic.Ok",
-            };
-            
-            modalDialog.InitializeDialog();
-            await modalDialog.ShowDialog(window);
-            
-            return;
-        }
-            
-        ZigZagHoldArgsWindow zigZagHoldArgsWindow = new();
-        await zigZagHoldArgsWindow.ShowDialog(window);
-
-        if (zigZagHoldArgsWindow.Result == ModalDialogResult.Primary)
-        {
-            _ = Task.Run(() => EditorSystem.Convert_ZigZagHold
-            (
-                beats:    zigZagHoldArgsWindow.Beats,
-                division: zigZagHoldArgsWindow.Division,
-                leftEdgeOffsetA:  zigZagHoldArgsWindow.LeftEdgeOffsetA,
-                leftEdgeOffsetB:  zigZagHoldArgsWindow.LeftEdgeOffsetB,
-                rightEdgeOffsetA: zigZagHoldArgsWindow.RightEdgeOffsetA,
-                rightEdgeOffsetB: zigZagHoldArgsWindow.RightEdgeOffsetB
-            ));
-        }
-    }
-
     private void FindPointerOverObject(float radius, int lane, float viewDistance)
     {
         if (radius > 1.1f)
@@ -403,9 +294,9 @@ public partial class ChartView3D : UserControl
             MenuItemShowVisibilityChanges.IsChecked = SettingsSystem.RenderSettings.ShowVisibilityChanges;
             MenuItemShowLaneToggleAnimations.IsChecked = SettingsSystem.RenderSettings.ShowLaneToggleAnimations;
             MenuItemShowJudgeAreas.IsChecked = SettingsSystem.RenderSettings.ShowJudgeAreas;
-            MenuItemShowMarvelousWindows.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousWindows;
-            MenuItemShowGreatWindows.IsChecked = SettingsSystem.RenderSettings.ShowGreatWindows;
-            MenuItemShowGoodWindows.IsChecked = SettingsSystem.RenderSettings.ShowGoodWindows;
+            MenuItemShowMarvelousArea.IsChecked = SettingsSystem.RenderSettings.ShowMarvelousArea;
+            MenuItemShowGreatArea.IsChecked = SettingsSystem.RenderSettings.ShowGreatArea;
+            MenuItemShowGoodArea.IsChecked = SettingsSystem.RenderSettings.ShowGoodArea;
             MenuItemSaturnJudgeAreas.IsChecked = SettingsSystem.RenderSettings.SaturnJudgeAreas;
             MenuItemVisualizeLaneSweeps.IsChecked = SettingsSystem.RenderSettings.VisualizeLaneSweeps;
             MenuItemShowTouchNotes.IsChecked = SettingsSystem.RenderSettings.ShowTouchNotes;
@@ -437,9 +328,9 @@ public partial class ChartView3D : UserControl
             NumericUpDownNoteSpeed.Value = SettingsSystem.RenderSettings.NoteSpeed / 10.0m;
             ComboBoxBackgroundDim.SelectedIndex = (int)SettingsSystem.RenderSettings.BackgroundDim;
         
-            MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
-            MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
-            MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowMarvelousArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowGreatArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowGoodArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
 
             blockEvents = false;
         
@@ -478,9 +369,9 @@ public partial class ChartView3D : UserControl
             MenuItemShowVisibilityChanges.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowVisibilityChanges"].ToKeyGesture();
             MenuItemShowLaneToggleAnimations.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowLaneToggleAnimations"].ToKeyGesture();
             MenuItemShowJudgeAreas.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgeAreas"].ToKeyGesture();
-            MenuItemShowMarvelousWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"].ToKeyGesture();
-            MenuItemShowGreatWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"].ToKeyGesture();
-            MenuItemShowGoodWindows.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodWindows"].ToKeyGesture();
+            MenuItemShowMarvelousArea.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousArea"].ToKeyGesture();
+            MenuItemShowGreatArea.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatArea"].ToKeyGesture();
+            MenuItemShowGoodArea.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodArea"].ToKeyGesture();
             MenuItemSaturnJudgeAreas.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgeAreas"].ToKeyGesture();
             MenuItemVisualizeLaneSweeps.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeLaneSweeps"].ToKeyGesture();
             MenuItemShowTouchNotes.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"].ToKeyGesture();
@@ -714,7 +605,7 @@ public partial class ChartView3D : UserControl
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.AdjustAxis"])) 
         {
-            AdjustAxis();
+            MainWindow.Instance?.ChartEditor.ChartView_AdjustAxis();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.FlipDirection"])) 
@@ -729,28 +620,28 @@ public partial class ChartView3D : UserControl
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleSelection"])) 
         {
-            ScaleSelection();
+            MainWindow.Instance?.ChartEditor.ChartView_ScaleSelection();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.OffsetChart"])) 
         {
-            OffsetChart();
+            MainWindow.Instance?.ChartEditor.ChartView_OffsetChart();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleChart"])) 
         {
-            ScaleChart();
+            MainWindow.Instance?.ChartEditor.ChartView_ScaleChart();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorChart"])) 
         {
-            MirrorChart();
+            MainWindow.Instance?.ChartEditor.ChartView_MirrorChart();
             e.Handled = true;
         }
             
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.ZigZagHold"]))
         {
-            ZigZagHold();
+            MainWindow.Instance?.ChartEditor.ChartView_ZigZagHold();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Convert.CutHold"]))
@@ -766,166 +657,184 @@ public partial class ChartView3D : UserControl
             
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.IncreaseNoteSpeed"]))
         {
-            
+            SettingsSystem.RenderSettings.NoteSpeed = Math.Min(60, SettingsSystem.RenderSettings.NoteSpeed + 1);
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseNoteSpeed"]))
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseNoteSpeed"])) 
         {
-            
+            SettingsSystem.RenderSettings.NoteSpeed = Math.Max(10, SettingsSystem.RenderSettings.NoteSpeed - 1);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.IncreaseBackgroundDim"]))
         {
-            
+            SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)Math.Min(4, (int)SettingsSystem.RenderSettings.BackgroundDim + 1);
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseBackgroundDim"]))
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseBackgroundDim"])) 
         {
-            
+            SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)Math.Max(0, (int)SettingsSystem.RenderSettings.BackgroundDim - 1);
             e.Handled = true;
         }
             
+        
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowSpeedChanges"]))
         {
-            
+            SettingsSystem.RenderSettings.ShowSpeedChanges = !SettingsSystem.RenderSettings.ShowSpeedChanges;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowVisibilityChanges"]))
         {
-            
+            SettingsSystem.RenderSettings.ShowVisibilityChanges = !SettingsSystem.RenderSettings.ShowVisibilityChanges;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowLaneToggleAnimations"]))
         {
-            
+            SettingsSystem.RenderSettings.ShowLaneToggleAnimations = !SettingsSystem.RenderSettings.ShowLaneToggleAnimations;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeLaneSweeps"]))
         {
-            
+            SettingsSystem.RenderSettings.VisualizeLaneSweeps = !SettingsSystem.RenderSettings.VisualizeLaneSweeps;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowJudgeAreas"]))
         {
-            
+            SettingsSystem.RenderSettings.ShowJudgeAreas = !SettingsSystem.RenderSettings.ShowJudgeAreas;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousWindows"]))
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowMarvelousArea"]))
         {
-            
+            SettingsSystem.RenderSettings.ShowMarvelousArea = !SettingsSystem.RenderSettings.ShowMarvelousArea;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatWindows"]))
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGreatArea"]))
         {
-            
+            SettingsSystem.RenderSettings.ShowGreatArea = !SettingsSystem.RenderSettings.ShowGreatArea;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodWindows"]))
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowGoodArea"]))
         {
-            
+            SettingsSystem.RenderSettings.ShowGoodArea = !SettingsSystem.RenderSettings.ShowGoodArea;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.SaturnJudgeAreas"]))
         {
-            
+            SettingsSystem.RenderSettings.SaturnJudgeAreas = !SettingsSystem.RenderSettings.SaturnJudgeAreas;
             e.Handled = true;
         }
-            
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Touch"]))
         {
+            SettingsSystem.RenderSettings.ShowTouchNotes = !SettingsSystem.RenderSettings.ShowTouchNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapForward"]))
         {
+            SettingsSystem.RenderSettings.ShowSnapForwardNotes = !SettingsSystem.RenderSettings.ShowSnapForwardNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SnapBackward"]))
         {
+            SettingsSystem.RenderSettings.ShowSnapBackwardNotes = !SettingsSystem.RenderSettings.ShowSnapBackwardNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideClockwise"]))
         {
+            SettingsSystem.RenderSettings.ShowSlideClockwiseNotes = !SettingsSystem.RenderSettings.ShowSlideClockwiseNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SlideCounterclockwise"]))
         {
+            SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes = !SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Chain"]))
         {
+            SettingsSystem.RenderSettings.ShowChainNotes = !SettingsSystem.RenderSettings.ShowChainNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Hold"]))
         {
+            SettingsSystem.RenderSettings.ShowHoldNotes = !SettingsSystem.RenderSettings.ShowHoldNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.Sync"]))
         {
+            SettingsSystem.RenderSettings.ShowSyncNotes = !SettingsSystem.RenderSettings.ShowSyncNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MeasureLine"]))
         {
+            SettingsSystem.RenderSettings.ShowMeasureLineNotes = !SettingsSystem.RenderSettings.ShowMeasureLineNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.BeatLine"]))
         {
+            SettingsSystem.RenderSettings.ShowBeatLineNotes = !SettingsSystem.RenderSettings.ShowBeatLineNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneShow"]))
         {
+            SettingsSystem.RenderSettings.ShowLaneShowNotes = !SettingsSystem.RenderSettings.ShowLaneShowNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.LaneHide"]))
         {
+            SettingsSystem.RenderSettings.ShowLaneHideNotes = !SettingsSystem.RenderSettings.ShowLaneHideNotes;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TempoChange"]))
         {
+            SettingsSystem.RenderSettings.ShowTempoChangeEvents = !SettingsSystem.RenderSettings.ShowTempoChangeEvents;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.MetreChange"]))
         {
+            SettingsSystem.RenderSettings.ShowMetreChangeEvents = !SettingsSystem.RenderSettings.ShowMetreChangeEvents;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.SpeedChange"]))
         {
+            SettingsSystem.RenderSettings.ShowSpeedChangeEvents = !SettingsSystem.RenderSettings.ShowSpeedChangeEvents;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.VisibilityChange"]))
         {
+            SettingsSystem.RenderSettings.ShowVisibilityChangeEvents = !SettingsSystem.RenderSettings.ShowVisibilityChangeEvents;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.ReverseEffect"]))
         {
+            SettingsSystem.RenderSettings.ShowReverseEffectEvents = !SettingsSystem.RenderSettings.ShowReverseEffectEvents;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.StopEffect"]))
         {
+            SettingsSystem.RenderSettings.ShowStopEffectEvents = !SettingsSystem.RenderSettings.ShowStopEffectEvents;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ToggleVisibility.TutorialMarker"]))
         {
+            SettingsSystem.RenderSettings.ShowTutorialMarkerEvents = !SettingsSystem.RenderSettings.ShowTutorialMarkerEvents;
             e.Handled = true;
         }
-            
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.EventMarkers"]))
         {
-            
+            SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback = !SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.LaneToggleNotes"]))
         {
-            
+            SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback = !SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.HoldControlPoints"]))
         {
-            
+            SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback = !SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback;
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.HideDuringPlayback.Bookmarks"]))
         {
-            
+            SettingsSystem.RenderSettings.HideBookmarksDuringPlayback = !SettingsSystem.RenderSettings.HideBookmarksDuringPlayback;
             e.Handled = true;
         }
     }
@@ -1238,27 +1147,27 @@ public partial class ChartView3D : UserControl
         {
             SettingsSystem.RenderSettings.ShowJudgeAreas = menuItem.IsChecked;
 
-            MenuItemShowMarvelousWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
-            MenuItemShowGreatWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
-            MenuItemShowGoodWindows.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowMarvelousArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowGreatArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
+            MenuItemShowGoodArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowMarvelousWindows)
+        if (menuItem == MenuItemShowMarvelousArea)
         {
-            SettingsSystem.RenderSettings.ShowMarvelousWindows = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowMarvelousArea = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowGreatWindows)
+        if (menuItem == MenuItemShowGreatArea)
         {
-            SettingsSystem.RenderSettings.ShowGreatWindows = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowGreatArea = menuItem.IsChecked;
             return;
         }
         
-        if (menuItem == MenuItemShowGoodWindows)
+        if (menuItem == MenuItemShowGoodArea)
         {
-            SettingsSystem.RenderSettings.ShowGoodWindows = menuItem.IsChecked;
+            SettingsSystem.RenderSettings.ShowGoodArea = menuItem.IsChecked;
             return;
         }
         
@@ -1473,21 +1382,21 @@ public partial class ChartView3D : UserControl
 
     private void MenuItemMirrorCustom_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MirrorCustom);
 
-    private void MenuItemAdjustAxis_OnClick(object? sender, RoutedEventArgs e) => AdjustAxis();
+    private void MenuItemAdjustAxis_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_AdjustAxis();
 
     private void MenuItemFlipDirection_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_FlipDirection);
 
     private void MenuItemReverseSelection_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_ReverseSelection);
 
-    private void MenuItemScaleSelection_OnClick(object? sender, RoutedEventArgs e) => ScaleSelection();
+    private void MenuItemScaleSelection_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_ScaleSelection();
 
-    private void MenuItemOffsetChart_OnClick(object? sender, RoutedEventArgs e) => OffsetChart();
+    private void MenuItemOffsetChart_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_OffsetChart();
 
-    private void MenuItemScaleChart_OnClick(object? sender, RoutedEventArgs e) => ScaleChart();
+    private void MenuItemScaleChart_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_ScaleChart();
 
-    private void MenuItemMirrorChart_OnClick(object? sender, RoutedEventArgs e) => MirrorChart();
+    private void MenuItemMirrorChart_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_MirrorChart();
 
-    private void MenuItemZigZagHold_OnClick(object? sender, RoutedEventArgs e) => ZigZagHold();
+    private void MenuItemZigZagHold_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_ZigZagHold();
 
     private void MenuItemCutHold_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Convert_CutHold);
 

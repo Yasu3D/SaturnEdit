@@ -299,9 +299,9 @@ ChartEditor.ChartView3D.Menu.Settings.ShowLaneToggleAnimations,Show Lane Toggle 
 ChartEditor.ChartView3D.Menu.Settings.VisualizeLaneSweeps,Visualize Lane Sweeps
 ChartEditor.ChartView3D.Menu.Settings.JudgeAreas,Judge Areas...
 ChartEditor.ChartView3D.Menu.Settings.ShowJudgeAreas,Show Judge Areas
-ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows,Show Marvelous Windows
-ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows,Show Great Windows
-ChartEditor.ChartView3D.Menu.Settings.ShowGoodWindows,Show Good Windows
+ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousArea,Show Marvelous Area
+ChartEditor.ChartView3D.Menu.Settings.ShowGreatArea,Show Great Area
+ChartEditor.ChartView3D.Menu.Settings.ShowGoodArea,Show Good Area
 ChartEditor.ChartView3D.Menu.Settings.SaturnJudgeAreas,Saturn Judge Areas
 ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility,Toggle Visibility...
 ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback,Hide during Playback...
@@ -527,6 +527,8 @@ ZigZagHoldArgs.Window.Title,Zig-Zag Hold Generator
 ZigZagHoldArgs.Interval,Interval
 NewChart.Window.Title,New Chart
 NewChart.Create,Create
+SearchForAnything.Window.Title,Search For Anything
+SearchForAnything.Watermark,Look for any action...
 ModalDialog.SavePrompt.Title,Save Chart
 ModalDialog.SavePrompt.Header,Do you want to save changes to your chart before closing?
 ModalDialog.SavePrompt.Paragraph,Your changes will be lost if you don't save them.

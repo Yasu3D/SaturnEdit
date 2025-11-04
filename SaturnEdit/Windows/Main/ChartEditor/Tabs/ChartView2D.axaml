@@ -437,31 +437,31 @@
 
                                 <Separator />
 
-                                <MenuItem Name="MenuItemShowMarvelousWindows"
+                                <MenuItem Name="MenuItemShowMarvelousArea"
                                           ToggleType="CheckBox"
                                           IsChecked="True"
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousArea}" />
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <MenuItem Name="MenuItemShowGreatWindows"
+                                <MenuItem Name="MenuItemShowGreatArea"
                                           ToggleType="CheckBox"
                                           IsChecked="True"
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGreatArea}" />
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <MenuItem Name="MenuItemShowGoodWindows"
+                                <MenuItem Name="MenuItemShowGoodArea"
                                           ToggleType="CheckBox"
                                           IsChecked="True"
                                           StaysOpenOnClick="True"
                                           Click="MenuItem_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGoodWindows}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGoodArea}" />
                                     </MenuItem.Header>
                                 </MenuItem>
 

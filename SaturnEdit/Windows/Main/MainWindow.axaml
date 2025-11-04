@@ -8,6 +8,7 @@
         xmlns:chartEditor="clr-namespace:SaturnEdit.Windows.ChartEditor"
         xmlns:cosmeticsEditor="clr-namespace:SaturnEdit.Windows.CosmeticsEditor"
         xmlns:stageEditor="clr-namespace:SaturnEdit.Windows.StageEditor"
+        xmlns:searchForAnything="clr-namespace:SaturnEdit.Windows.Main.SearchForAnything"
         mc:Ignorable="d"
         d:DesignWidth="1400"
         d:DesignHeight="900"
@@ -236,5 +237,11 @@
                                          IsVisible="False"
                                          IsEnabled="False" />
         </Panel>
+        
+        <!-- Search Popup -->
+        <searchForAnything:SearchForAnythingView Name="SearchForAnything"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"
+                                                 IsVisible="False" />
     </Panel>
 </Window>

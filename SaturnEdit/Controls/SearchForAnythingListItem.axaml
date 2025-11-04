@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="420"
+             d:DesignHeight="35"
+             Height="35"
+             x:Class="SaturnEdit.Controls.SearchForAnythingListItem">
+    <Grid ColumnDefinitions="*,1.2*,*"
+          Margin="25,0">
+        <TextBlock Grid.Column="0"
+                   Name="TextBlockGroup"
+                   Text="GROUP"
+                   Foreground="{DynamicResource ForegroundSecondary}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center" />
+
+        <Rectangle Grid.Column="0"
+                   Width="1"
+                   Fill="{DynamicResource SeparatorPrimary}"
+                   HorizontalAlignment="Right"
+                   Margin="0,0,15,0"/>
+
+        <TextBlock Grid.Column="1"
+                   Name="TextBlockAction"
+                   Text="ACTION"
+                   Foreground="{DynamicResource ForegroundPrimary}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center" />
+
+        <TextBlock Grid.Column="2"
+                   Name="TextBlockShortcut"
+                   Text="SHORTCUT"
+                   Foreground="{DynamicResource ForegroundTertiary}"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center" />
+    </Grid>
+</UserControl>

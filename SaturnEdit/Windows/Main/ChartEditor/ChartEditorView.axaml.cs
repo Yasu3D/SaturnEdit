@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Collections;
 using Avalonia.Controls;
@@ -15,16 +16,22 @@ using Dock.Serializer;
 using FluentIcons.Common;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
+using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
+using SaturnEdit.Windows.Dialogs.ChooseMirrorAxis;
 using SaturnEdit.Windows.Dialogs.ExportArgs;
 using SaturnEdit.Windows.Dialogs.ImportArgs;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 using SaturnEdit.Windows.Dialogs.NewChart;
 using SaturnEdit.Windows.Dialogs.SelectByCriteria;
+using SaturnEdit.Windows.Dialogs.SelectOffset;
+using SaturnEdit.Windows.Dialogs.SelectScale;
+using SaturnEdit.Windows.Dialogs.ZigZagHoldArgs;
 using SaturnEdit.Windows.Main.ChartEditor.Tabs;
+using SaturnView;
 
 namespace SaturnEdit.Windows.ChartEditor;
 
@@ -326,7 +333,7 @@ public partial class ChartEditorView : UserControl
 
     public void File_RenderAsImage()
     {
-        throw new NotImplementedException();
+        if (VisualRoot is not Window rootWindow) return;
     }
     
     public async void File_Quit()
@@ -367,7 +374,7 @@ public partial class ChartEditorView : UserControl
         }
     }
 
-    private void Edit_Cut()
+    public void Edit_Cut()
     {
         TopLevel? topLevel = TopLevel.GetTopLevel(this);
         if (topLevel?.Clipboard == null) return;
@@ -375,7 +382,7 @@ public partial class ChartEditorView : UserControl
         _ = EditorSystem.Edit_Cut(topLevel.Clipboard);
     }
 
-    private void Edit_Copy()
+    public void Edit_Copy()
     {
         TopLevel? topLevel = TopLevel.GetTopLevel(this);
         if (topLevel?.Clipboard == null) return;
@@ -383,7 +390,7 @@ public partial class ChartEditorView : UserControl
         _ = EditorSystem.Edit_Copy(topLevel.Clipboard, true);
     }
 
-    private void Edit_Paste()
+    public void Edit_Paste()
     {
         TopLevel? topLevel = TopLevel.GetTopLevel(this);
         if (topLevel?.Clipboard == null) return;
@@ -401,223 +408,108 @@ public partial class ChartEditorView : UserControl
         if (selectByCriteriaWindow.Result != ModalDialogResult.Primary) return;
         SelectionSystem.SelectByCriteria();
     }
+    
+    public async void ChartView_AdjustAxis()
+    {
+        if (VisualRoot is not Window window) return;
+            
+        SelectMirrorAxisWindow selectMirrorAxisWindow = new();
+        await selectMirrorAxisWindow.ShowDialog(window);
 
-    private static void Navigate_MoveBeatForward()
-    {
-        TimeSystem.SeekFullTick(TimeSystem.Timestamp.FullTick + TimeSystem.DivisionInterval);
-    }
-    
-    private static void Navigate_MoveBeatBack()
-    {
-        TimeSystem.SeekFullTick(Math.Max(0, TimeSystem.Timestamp.FullTick - TimeSystem.DivisionInterval));
-    }
-    
-    private static void Navigate_MoveMeasureForward()
-    {
-        TimeSystem.SeekFullTick(TimeSystem.Timestamp.FullTick + 1920);
-    }
-    
-    private static void Navigate_MoveMeasureBack()
-    {
-        TimeSystem.SeekFullTick(Math.Max(0, TimeSystem.Timestamp.FullTick - 1920));
-    }
-    
-    private static void Navigate_JumpToNextObject()
-    {
-        int startTick = TimeSystem.Timestamp.FullTick;
-        int nextTick = int.MaxValue;
-
-        if (EditorSystem.Mode == EditorMode.ObjectMode)
+        if (selectMirrorAxisWindow.Result == ModalDialogResult.Primary)
         {
-            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
-            {
-                if (bookmark.Timestamp.FullTick <= startTick) continue;
-                if (bookmark.Timestamp.FullTick >= nextTick) continue;
-
-                nextTick = bookmark.Timestamp.FullTick;
-            }
-
-            foreach (Event globalEvent in ChartSystem.Chart.Events)
-            {
-                if (globalEvent.Timestamp.FullTick <= startTick) continue;
-                if (globalEvent.Timestamp.FullTick >= nextTick) continue;
-
-                nextTick = globalEvent.Timestamp.FullTick;
-            }
-
-            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
-            {
-                if (laneToggle.Timestamp.FullTick <= startTick) continue;
-                if (laneToggle.Timestamp.FullTick >= nextTick) continue;
-
-                nextTick = laneToggle.Timestamp.FullTick;
-            }
-
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            {
-                foreach (Event layerEvent in layer.Events)
-                {
-                    if (layerEvent.Timestamp.FullTick <= startTick) continue;
-                    if (layerEvent.Timestamp.FullTick >= nextTick) continue;
-
-                    nextTick = layerEvent.Timestamp.FullTick;
-                }
-
-                foreach (Note note in layer.Notes)
-                {
-                    if (note.Timestamp.FullTick <= startTick) continue;
-                    if (note.Timestamp.FullTick >= nextTick) continue;
-
-                    nextTick = note.Timestamp.FullTick;
-                }
-            }
+            _ = Task.Run(() => EditorSystem.MirrorAxis = selectMirrorAxisWindow.Axis);
         }
-        else if (EditorSystem.Mode == EditorMode.EditMode)
+    }
+
+    public async void ChartView_ScaleSelection()
+    {
+        if (VisualRoot is not Window window) return;
+            
+        SelectScaleWindow selectScaleWindow = new();
+        await selectScaleWindow.ShowDialog(window);
+
+        if (selectScaleWindow.Result == ModalDialogResult.Primary)
         {
-            if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
-            {
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    if (point.Timestamp.FullTick <= startTick) continue;
-                    if (point.Timestamp.FullTick >= nextTick) continue;
-
-                    nextTick = point.Timestamp.FullTick;
-                }
-            }
-            else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
-            {
-                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
-                {
-                    if (subEvent.Timestamp.FullTick <= startTick) continue;
-                    if (subEvent.Timestamp.FullTick >= nextTick) continue;
-
-                    nextTick = subEvent.Timestamp.FullTick;
-                }
-            }
-            else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
-            {
-                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
-                {
-                    if (subEvent.Timestamp.FullTick <= startTick) continue;
-                    if (subEvent.Timestamp.FullTick >= nextTick) continue;
-
-                    nextTick = subEvent.Timestamp.FullTick;
-                }
-            }
+            _ = Task.Run(() => EditorSystem.Transform_ScaleSelection(selectScaleWindow.Scale));
         }
+    }
 
-        if (nextTick == int.MaxValue) return;
+    public async void ChartView_OffsetChart()
+    {
+        if (VisualRoot is not Window window) return;
+            
+        SelectOffsetWindow selectOffsetWindow = new();
+        await selectOffsetWindow.ShowDialog(window);
+
+        if (selectOffsetWindow.Result == ModalDialogResult.Primary)
+        {
+            _ = Task.Run(() => EditorSystem.Transform_OffsetChart(selectOffsetWindow.Offset));
+        }
+    }
+
+    public async void ChartView_ScaleChart()
+    {
+        if (VisualRoot is not Window window) return;
+            
+        SelectScaleWindow selectScaleWindow = new();
+        await selectScaleWindow.ShowDialog(window);
+
+        if (selectScaleWindow.Result == ModalDialogResult.Primary)
+        {
+            _ = Task.Run(() => EditorSystem.Transform_ScaleChart(selectScaleWindow.Scale));
+        }
+    }
+
+    public async void ChartView_MirrorChart()
+    {
+        if (VisualRoot is not Window window) return;
+            
+        SelectMirrorAxisWindow selectMirrorAxisWindow = new();
+        await selectMirrorAxisWindow.ShowDialog(window);
+
+        if (selectMirrorAxisWindow.Result == ModalDialogResult.Primary)
+        {
+            _ = Task.Run(() => EditorSystem.Transform_MirrorChart(selectMirrorAxisWindow.Axis));
+        }
+    }
+    
+    public async void ChartView_ZigZagHold()
+    {
+        if (VisualRoot is not Window window) return;
         
-        TimeSystem.SeekFullTick(nextTick);
-    }
-    
-    private static void Navigate_JumpToPreviousObject() 
-    {
-        int startTick = TimeSystem.Timestamp.FullTick;
-        int previousTick = int.MinValue;
-
-        if (EditorSystem.Mode == EditorMode.ObjectMode)
+        if (!SelectionSystem.SelectedObjects.Any(x => x is HoldNote))
         {
-            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            ModalDialogWindow modalDialog = new()
             {
-                if (bookmark.Timestamp.FullTick >= startTick) continue;
-                if (bookmark.Timestamp.FullTick <= previousTick) continue;
-
-                previousTick = bookmark.Timestamp.FullTick;
-            }
-
-            foreach (Event globalEvent in ChartSystem.Chart.Events)
-            {
-                if (globalEvent.Timestamp.FullTick >= startTick) continue;
-                if (globalEvent.Timestamp.FullTick <= previousTick) continue;
-
-                previousTick = globalEvent.Timestamp.FullTick;
-            }
-
-            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
-            {
-                if (laneToggle.Timestamp.FullTick >= startTick) continue;
-                if (laneToggle.Timestamp.FullTick <= previousTick) continue;
-
-                previousTick = laneToggle.Timestamp.FullTick;
-            }
-
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            {
-                foreach (Event layerEvent in layer.Events)
-                {
-                    if (layerEvent.Timestamp.FullTick >= startTick) continue;
-                    if (layerEvent.Timestamp.FullTick <= previousTick) continue;
-
-                    previousTick = layerEvent.Timestamp.FullTick;
-                }
-
-                foreach (Note note in layer.Notes)
-                {
-                    if (note.Timestamp.FullTick >= startTick) continue;
-                    if (note.Timestamp.FullTick <= previousTick) continue;
-
-                    previousTick = note.Timestamp.FullTick;
-                }
-            }
+                DialogIcon = Icon.Warning,
+                WindowTitleKey = "ModalDialog.ZigZagHoldWarning.Title",
+                HeaderKey = "ModalDialog.ZigZagHoldWarning.Header",
+                ParagraphKey = "ModalDialog.ZigZagHoldWarning.Paragraph",
+                ButtonPrimaryKey = "Generic.Ok",
+            };
+            
+            modalDialog.InitializeDialog();
+            await modalDialog.ShowDialog(window);
+            
+            return;
         }
-        else if (EditorSystem.Mode == EditorMode.EditMode)
+            
+        ZigZagHoldArgsWindow zigZagHoldArgsWindow = new();
+        await zigZagHoldArgsWindow.ShowDialog(window);
+
+        if (zigZagHoldArgsWindow.Result == ModalDialogResult.Primary)
         {
-            if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
-            {
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    if (point.Timestamp.FullTick >= startTick) continue;
-                    if (point.Timestamp.FullTick <= previousTick) continue;
-
-                    previousTick = point.Timestamp.FullTick;
-                }
-            }
-            else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
-            {
-                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
-                {
-                    if (subEvent.Timestamp.FullTick >= startTick) continue;
-                    if (subEvent.Timestamp.FullTick <= previousTick) continue;
-
-                    previousTick = subEvent.Timestamp.FullTick;
-                }
-            }
-            else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
-            {
-                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
-                {
-                    if (subEvent.Timestamp.FullTick >= startTick) continue;
-                    if (subEvent.Timestamp.FullTick <= previousTick) continue;
-
-                    previousTick = subEvent.Timestamp.FullTick;
-                }
-            }
+            _ = Task.Run(() => EditorSystem.Convert_ZigZagHold
+            (
+                beats:    zigZagHoldArgsWindow.Beats,
+                division: zigZagHoldArgsWindow.Division,
+                leftEdgeOffsetA:  zigZagHoldArgsWindow.LeftEdgeOffsetA,
+                leftEdgeOffsetB:  zigZagHoldArgsWindow.LeftEdgeOffsetB,
+                rightEdgeOffsetA: zigZagHoldArgsWindow.RightEdgeOffsetA,
+                rightEdgeOffsetB: zigZagHoldArgsWindow.RightEdgeOffsetB
+            ));
         }
-
-        if (previousTick < 0) return;
-        
-        TimeSystem.SeekFullTick(previousTick);
-    }
-    
-    private static void Navigate_IncreaseBeatDivision()
-    {
-        TimeSystem.Division = Math.Clamp(TimeSystem.Division + 1, 1, 1920);
-    }
-    
-    private static void Navigate_DecreaseBeatDivision() 
-    {
-        TimeSystem.Division = Math.Clamp(TimeSystem.Division - 1, 1, 1920);
-    }
-    
-    private static void Navigate_DoubleBeatDivision() 
-    {
-        TimeSystem.Division = Math.Clamp(TimeSystem.Division * 2, 1, 1920);
-    }
-    
-    private static void Navigate_HalveBeatDivision() 
-    {
-        TimeSystem.Division = Math.Clamp(TimeSystem.Division / 2, 1, 1920);
     }
     
     
@@ -902,52 +794,200 @@ public partial class ChartEditorView : UserControl
         
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveBeatForward"]))
         { 
-            Navigate_MoveBeatForward();
+            TimeSystem.Navigate_MoveBeatForward();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveBeatBack"]))
         { 
-            Navigate_MoveBeatBack();
+            TimeSystem.Navigate_MoveBeatBack();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveMeasureForward"]))
         { 
-            Navigate_MoveMeasureForward();
+            TimeSystem.Navigate_MoveMeasureForward();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.MoveMeasureBack"]))
         { 
-            Navigate_MoveMeasureBack();
+            TimeSystem.Navigate_MoveMeasureBack();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToNextObject"]))
         {
-            Navigate_JumpToNextObject();
+            TimeSystem.Navigate_JumpToNextObject();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.JumpToPreviousObject"]))
         {
-            Navigate_JumpToPreviousObject();
+            TimeSystem.Navigate_JumpToPreviousObject();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.IncreaseBeatDivision"]))
         {
-            Navigate_IncreaseBeatDivision();
+            TimeSystem.Navigate_IncreaseBeatDivision();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DecreaseBeatDivision"]))
         {
-            Navigate_DecreaseBeatDivision();
+            TimeSystem.Navigate_DecreaseBeatDivision();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DoubleBeatDivision"]))
         {
-            Navigate_DoubleBeatDivision();
+            TimeSystem.Navigate_DoubleBeatDivision();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.HalveBeatDivision"]))
         {
-            Navigate_HalveBeatDivision();
+            TimeSystem.Navigate_HalveBeatDivision();
+            e.Handled = true;
+        }
+        
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.Touch"])) 
+        {
+            CursorSystem.SetType(CursorSystem.TouchNote);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.Chain"])) 
+        {
+            CursorSystem.SetType(CursorSystem.ChainNote);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.Hold"])) 
+        {
+            CursorSystem.SetType(CursorSystem.HoldNote);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.SlideClockwise"])) 
+        {
+            CursorSystem.SetType(CursorSystem.SlideClockwiseNote);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.SlideCounterclockwise"])) 
+        {
+            CursorSystem.SetType(CursorSystem.SlideCounterclockwiseNote);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.SnapForward"])) 
+        {
+            CursorSystem.SetType(CursorSystem.SnapForwardNote);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.SnapBackward"])) 
+        {
+            CursorSystem.SetType(CursorSystem.SnapBackwardNote);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.LaneShow"])) 
+        {
+            CursorSystem.SetType(CursorSystem.LaneShowNote);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.LaneHide"])) 
+        {
+            CursorSystem.SetType(CursorSystem.LaneHideNote);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.Sync"])) 
+        {
+            CursorSystem.SetType(CursorSystem.SyncNote);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.NoteType.MeasureLine"])) 
+        {
+            CursorSystem.SetType(CursorSystem.MeasureLineNote);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.Normal"]))
+        {
+            CursorSystem.BonusType = BonusType.Normal;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.Bonus"]))
+        {
+            CursorSystem.BonusType = BonusType.Bonus;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.R"]))
+        {
+            CursorSystem.BonusType = BonusType.R;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.JudgementType.Normal"]))
+        {
+            CursorSystem.JudgementType = JudgementType.Normal;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.JudgementType.Fake"]))
+        {
+            CursorSystem.JudgementType = JudgementType.Fake;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.JudgementType.Autoplay"]))
+        {
+            CursorSystem.JudgementType = JudgementType.Autoplay;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Center"]))
+        {
+            CursorSystem.Direction = LaneSweepDirection.Center;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Clockwise"]))
+        {
+            CursorSystem.Direction = LaneSweepDirection.Clockwise;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Counterclockwise"]))
+        {
+            CursorSystem.Direction = LaneSweepDirection.Counterclockwise;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Instant"]))
+        {
+            CursorSystem.Direction = LaneSweepDirection.Instant;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.HoldPointRenderType.Hidden"]))
+        {
+            CursorSystem.RenderType = HoldPointRenderType.Visible;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.HoldPointRenderType.Visible"]))
+        {
+            CursorSystem.RenderType = HoldPointRenderType.Hidden;
+            e.Handled = true;
+        }
+        
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.IncreasePlaybackSpeed"]))
+        {
+            TimeSystem.PlaybackSpeed = Math.Min(300, TimeSystem.PlaybackSpeed + 5);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.DecreasePlaybackSpeed"])) 
+        {
+            TimeSystem.PlaybackSpeed = Math.Max(5, TimeSystem.PlaybackSpeed - 5);
+            e.Handled = true;
+        }
+        
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.LoopPlayback"]))
+        {
+            SettingsSystem.AudioSettings.LoopPlayback = !SettingsSystem.AudioSettings.LoopPlayback;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.SetLoopMarkerStart"]))
+        {
+            TimeSystem.LoopStart = TimeSystem.Timestamp.Time;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.SetLoopMarkerEnd"]))
+        {
+            TimeSystem.LoopEnd = TimeSystem.Timestamp.Time;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.Metronome"]))
+        {
+            SettingsSystem.AudioSettings.Metronome = !SettingsSystem.AudioSettings.Metronome;
             e.Handled = true;
         }
     }
@@ -1016,24 +1056,24 @@ public partial class ChartEditorView : UserControl
     private void MenuItemSelectByCriteria_OnClick(object? sender, RoutedEventArgs e) => Edit_SelectByCriteria();
     
     
-    private void MenuItemMoveBeatForward_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveBeatForward();
+    private void MenuItemMoveBeatForward_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_MoveBeatForward();
 
-    private void MenuItemMoveBeatBack_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveBeatBack();
+    private void MenuItemMoveBeatBack_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_MoveBeatBack();
 
-    private void MenuItemMoveMeasureForward_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveMeasureForward();
+    private void MenuItemMoveMeasureForward_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_MoveMeasureForward();
 
-    private void MenuItemMoveMeasureBack_OnClick(object? sender, RoutedEventArgs e) => Navigate_MoveMeasureBack();
+    private void MenuItemMoveMeasureBack_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_MoveMeasureBack();
 
-    private void MenuItemJumpToNextObject_OnClick(object? sender, RoutedEventArgs e) => Navigate_JumpToNextObject();
+    private void MenuItemJumpToNextObject_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_JumpToNextObject();
 
-    private void MenuItemJumpToPreviousObject_OnClick(object? sender, RoutedEventArgs e) => Navigate_JumpToPreviousObject();
+    private void MenuItemJumpToPreviousObject_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_JumpToPreviousObject();
 
-    private void MenuItemIncreaseBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_IncreaseBeatDivision();
+    private void MenuItemIncreaseBeatDivision_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_IncreaseBeatDivision();
 
-    private void MenuItemDecreaseBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_DecreaseBeatDivision();
+    private void MenuItemDecreaseBeatDivision_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_DecreaseBeatDivision();
 
-    private void MenuItemDoubleBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_DoubleBeatDivision();
+    private void MenuItemDoubleBeatDivision_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_DoubleBeatDivision();
 
-    private void MenuItemHalveBeatDivision_OnClick(object? sender, RoutedEventArgs e) => Navigate_HalveBeatDivision();
+    private void MenuItemHalveBeatDivision_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_HalveBeatDivision();
 #endregion UI Event Delegates
 }

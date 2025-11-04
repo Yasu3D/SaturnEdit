@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Avalonia;
 using Avalonia.Input;
 using SaturnView;
 using Tomlyn;
@@ -884,9 +886,9 @@ public class ShortcutSettings
         ["Editor.Settings.ShowLaneToggleAnimations"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowLaneToggleAnimations"),
         ["Editor.Settings.VisualizeLaneSweeps"]      = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.VisualizeLaneSweeps"),
         ["Editor.Settings.ShowJudgeAreas"]     = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowJudgeAreas"),
-        ["Editor.Settings.ShowMarvelousWindows"]     = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows"),
-        ["Editor.Settings.ShowGreatWindows"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows"),
-        ["Editor.Settings.ShowGoodWindows"]          = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowGoodWindows"),
+        ["Editor.Settings.ShowMarvelousArea"]     = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousArea"),
+        ["Editor.Settings.ShowGreatArea"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowGreatArea"),
+        ["Editor.Settings.ShowGoodArea"]          = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowGoodArea"),
         ["Editor.Settings.SaturnJudgeAreas"]   = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.SaturnJudgeAreas"),
 
         ["Editor.Settings.ToggleVisibility.Touch"]                 = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility", "ChartEditor.General.Type.Value.Touch"),
@@ -935,6 +937,36 @@ public class ShortcutSettings
         {
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    public List<KeyValuePair<string, Shortcut>> ShortcutsFilteredByQuery(string query)
+    {
+        if (Application.Current == null) return [];
+        if (query == "") return Shortcuts.ToList();
+        
+        string[] queryParts = query.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return Shortcuts.Where(x =>
+        {
+            foreach (string queryPart in queryParts)
+            {
+                bool group = Application.Current.TryGetResource(x.Value.GroupMessage, Application.Current.ActualThemeVariant, out object? groupResource)
+                             && groupResource is string groupName
+                             && groupName.Contains(queryPart, StringComparison.OrdinalIgnoreCase);
+
+                bool action = Application.Current.TryGetResource(x.Value.ActionMessage, Application.Current.ActualThemeVariant, out object? actionResource)
+                              && actionResource is string actionName
+                              && actionName.Contains(queryPart, StringComparison.OrdinalIgnoreCase);
+
+                bool shortcut = x.Value.ToString().Contains(queryPart, StringComparison.OrdinalIgnoreCase);
+
+                if (group || action || shortcut)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }).ToList();   
     }
 }
 

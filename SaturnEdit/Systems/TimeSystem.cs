@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Events;
+using SaturnData.Notation.Notes;
 
 namespace SaturnEdit.Systems;
 
@@ -164,6 +166,224 @@ public static class TimeSystem
 
         Timestamp = t;
         TimestampSeeked?.Invoke(null, EventArgs.Empty);
+    }
+    
+    public static void Navigate_MoveBeatForward()
+    {
+        SeekFullTick(Timestamp.FullTick + DivisionInterval);
+    }
+    
+    public static void Navigate_MoveBeatBack()
+    {
+        SeekFullTick(Math.Max(0, Timestamp.FullTick - DivisionInterval));
+    }
+    
+    public static void Navigate_MoveMeasureForward()
+    {
+        SeekFullTick(Timestamp.FullTick + 1920);
+    }
+    
+    public static void Navigate_MoveMeasureBack()
+    {
+        SeekFullTick(Math.Max(0, Timestamp.FullTick - 1920));
+    }
+    
+    public static void Navigate_JumpToNextObject()
+    {
+        int startTick = Timestamp.FullTick;
+        int nextTick = int.MaxValue;
+
+        if (EditorSystem.Mode == EditorMode.ObjectMode)
+        {
+            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            {
+                if (bookmark.Timestamp.FullTick <= startTick) continue;
+                if (bookmark.Timestamp.FullTick >= nextTick) continue;
+
+                nextTick = bookmark.Timestamp.FullTick;
+            }
+
+            foreach (Event globalEvent in ChartSystem.Chart.Events)
+            {
+                if (globalEvent.Timestamp.FullTick <= startTick) continue;
+                if (globalEvent.Timestamp.FullTick >= nextTick) continue;
+
+                nextTick = globalEvent.Timestamp.FullTick;
+            }
+
+            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            {
+                if (laneToggle.Timestamp.FullTick <= startTick) continue;
+                if (laneToggle.Timestamp.FullTick >= nextTick) continue;
+
+                nextTick = laneToggle.Timestamp.FullTick;
+            }
+
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            {
+                foreach (Event layerEvent in layer.Events)
+                {
+                    if (layerEvent.Timestamp.FullTick <= startTick) continue;
+                    if (layerEvent.Timestamp.FullTick >= nextTick) continue;
+
+                    nextTick = layerEvent.Timestamp.FullTick;
+                }
+
+                foreach (Note note in layer.Notes)
+                {
+                    if (note.Timestamp.FullTick <= startTick) continue;
+                    if (note.Timestamp.FullTick >= nextTick) continue;
+
+                    nextTick = note.Timestamp.FullTick;
+                }
+            }
+        }
+        else if (EditorSystem.Mode == EditorMode.EditMode)
+        {
+            if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    if (point.Timestamp.FullTick <= startTick) continue;
+                    if (point.Timestamp.FullTick >= nextTick) continue;
+
+                    nextTick = point.Timestamp.FullTick;
+                }
+            }
+            else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+            {
+                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                {
+                    if (subEvent.Timestamp.FullTick <= startTick) continue;
+                    if (subEvent.Timestamp.FullTick >= nextTick) continue;
+
+                    nextTick = subEvent.Timestamp.FullTick;
+                }
+            }
+            else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
+            {
+                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                {
+                    if (subEvent.Timestamp.FullTick <= startTick) continue;
+                    if (subEvent.Timestamp.FullTick >= nextTick) continue;
+
+                    nextTick = subEvent.Timestamp.FullTick;
+                }
+            }
+        }
+
+        if (nextTick == int.MaxValue) return;
+        
+        SeekFullTick(nextTick);
+    }
+    
+    public static void Navigate_JumpToPreviousObject() 
+    {
+        int startTick = Timestamp.FullTick;
+        int previousTick = int.MinValue;
+
+        if (EditorSystem.Mode == EditorMode.ObjectMode)
+        {
+            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            {
+                if (bookmark.Timestamp.FullTick >= startTick) continue;
+                if (bookmark.Timestamp.FullTick <= previousTick) continue;
+
+                previousTick = bookmark.Timestamp.FullTick;
+            }
+
+            foreach (Event globalEvent in ChartSystem.Chart.Events)
+            {
+                if (globalEvent.Timestamp.FullTick >= startTick) continue;
+                if (globalEvent.Timestamp.FullTick <= previousTick) continue;
+
+                previousTick = globalEvent.Timestamp.FullTick;
+            }
+
+            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            {
+                if (laneToggle.Timestamp.FullTick >= startTick) continue;
+                if (laneToggle.Timestamp.FullTick <= previousTick) continue;
+
+                previousTick = laneToggle.Timestamp.FullTick;
+            }
+
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            {
+                foreach (Event layerEvent in layer.Events)
+                {
+                    if (layerEvent.Timestamp.FullTick >= startTick) continue;
+                    if (layerEvent.Timestamp.FullTick <= previousTick) continue;
+
+                    previousTick = layerEvent.Timestamp.FullTick;
+                }
+
+                foreach (Note note in layer.Notes)
+                {
+                    if (note.Timestamp.FullTick >= startTick) continue;
+                    if (note.Timestamp.FullTick <= previousTick) continue;
+
+                    previousTick = note.Timestamp.FullTick;
+                }
+            }
+        }
+        else if (EditorSystem.Mode == EditorMode.EditMode)
+        {
+            if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    if (point.Timestamp.FullTick >= startTick) continue;
+                    if (point.Timestamp.FullTick <= previousTick) continue;
+
+                    previousTick = point.Timestamp.FullTick;
+                }
+            }
+            else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+            {
+                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                {
+                    if (subEvent.Timestamp.FullTick >= startTick) continue;
+                    if (subEvent.Timestamp.FullTick <= previousTick) continue;
+
+                    previousTick = subEvent.Timestamp.FullTick;
+                }
+            }
+            else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
+            {
+                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                {
+                    if (subEvent.Timestamp.FullTick >= startTick) continue;
+                    if (subEvent.Timestamp.FullTick <= previousTick) continue;
+
+                    previousTick = subEvent.Timestamp.FullTick;
+                }
+            }
+        }
+
+        if (previousTick < 0) return;
+        
+        SeekFullTick(previousTick);
+    }
+    
+    public static void Navigate_IncreaseBeatDivision()
+    {
+        Division = Math.Clamp(Division + 1, 1, 1920);
+    }
+    
+    public static void Navigate_DecreaseBeatDivision() 
+    {
+        Division = Math.Clamp(Division - 1, 1, 1920);
+    }
+    
+    public static void Navigate_DoubleBeatDivision() 
+    {
+        Division = Math.Clamp(Division * 2, 1, 1920);
+    }
+    
+    public static void Navigate_HalveBeatDivision() 
+    {
+        Division = Math.Clamp(Division / 2, 1, 1920);
     }
 #endregion Methods
 

@@ -302,9 +302,9 @@
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.VisualizeLaneSweeps">Visualize Lane Sweeps</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.JudgeAreas">Judge Areas...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowJudgeAreas">Show Judge Areas</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousWindows">Show Marvelous Windows</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowGreatWindows">Show Great Windows</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowGoodWindows">Show Good Windows</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousArea">Show Marvelous Area</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowGreatArea">Show Great Area</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ShowGoodArea">Show Good Area</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.SaturnJudgeAreas">Saturn Judge Areas</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility">Toggle Visibility...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback">Hide during Playback...</system:String>
@@ -530,6 +530,8 @@
     <system:String x:Key="ZigZagHoldArgs.Interval">Interval</system:String>
     <system:String x:Key="NewChart.Window.Title">New Chart</system:String>
     <system:String x:Key="NewChart.Create">Create</system:String>
+    <system:String x:Key="SearchForAnything.Window.Title">Search For Anything</system:String>
+    <system:String x:Key="SearchForAnything.Watermark">Look for any action...</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Title">Save Chart</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Header">Do you want to save changes to your chart before closing?</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Paragraph">Your changes will be lost if you don't save them.</system:String>

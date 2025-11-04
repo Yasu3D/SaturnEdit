@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
+using SaturnEdit.UndoRedo;
+using SaturnEdit.UndoRedo.EditModeOperations;
 
 namespace SaturnEdit.Systems;
 
@@ -179,4 +182,24 @@ public static class CursorSystem
     public static LaneHideNote LaneHideNote { get; private set; } = null!;
     public static SyncNote SyncNote { get; private set; } = null!;
     public static MeasureLineNote MeasureLineNote { get; private set; } = null!;
+
+#region Methods
+    public static void SetType(Note newType)
+    {
+        List<IOperation> operations = [new CursorTypeChangeOperation(CurrentType, newType)];
+
+        // Exit edit mode when changing to another type.
+        if (newType != HoldPointNote && EditorSystem.Mode == EditorMode.EditMode && EditorSystem.ActiveObjectGroup is HoldNote)
+        {
+            CompositeOperation? op = EditorSystem.GetEditModeChangeOperation(EditorMode.ObjectMode, newType);
+
+            if (op != null)
+            {
+                operations.Add(op);
+            }
+        }
+        
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+    }
+#endregion Methods
 }

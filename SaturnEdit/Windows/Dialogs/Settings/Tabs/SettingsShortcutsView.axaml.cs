@@ -85,39 +85,12 @@ public partial class SettingsShortcutsView : UserControl
     {
         Dispatcher.UIThread.Post(() =>
         {
-            if (Application.Current == null) return;
-        
             if (DefiningShortcut)
             {
                 StopDefiningShortcut();
             }
-        
-            string[] queryParts = query.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        
-            List<KeyValuePair<string, Shortcut>> shortcuts = query == ""
-                ? SettingsSystem.ShortcutSettings.Shortcuts.ToList()
-                : SettingsSystem.ShortcutSettings.Shortcuts.Where(x =>
-                {
-                    foreach (string queryPart in queryParts)
-                    {
-                        bool group = Application.Current.TryGetResource(x.Value.GroupMessage, Application.Current.ActualThemeVariant, out object? groupResource)
-                                     && groupResource is string groupName
-                                     && groupName.Contains(queryPart, StringComparison.OrdinalIgnoreCase);
-                    
-                        bool action = Application.Current.TryGetResource(x.Value.ActionMessage, Application.Current.ActualThemeVariant, out object? actionResource)
-                                      && actionResource is string actionName
-                                      && actionName.Contains(queryPart, StringComparison.OrdinalIgnoreCase);
-
-                        bool shortcut = x.Value.ToString().Contains(queryPart, StringComparison.OrdinalIgnoreCase);
-
-                        if (group || action || shortcut)
-                        {
-                            return true;
-                        }
-                    }
-                
-                    return false;
-                }).ToList();    
+            
+            List<KeyValuePair<string, Shortcut>> shortcuts = SettingsSystem.ShortcutSettings.ShortcutsFilteredByQuery(query);
         
             for (int i = 0; i < shortcuts.Count; i++)
             {
