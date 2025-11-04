@@ -944,7 +944,7 @@ public class ShortcutSettings
         if (Application.Current == null) return [];
         if (query == "") return Shortcuts.ToList();
         
-        string[] queryParts = query.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        string[] queryParts = query.Split(',', StringSplitOptions.RemoveEmptyEntries);
         return Shortcuts.Where(x =>
         {
             foreach (string queryPart in queryParts)
