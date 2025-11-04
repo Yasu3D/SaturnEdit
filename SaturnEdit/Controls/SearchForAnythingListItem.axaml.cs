@@ -11,7 +11,7 @@ public partial class SearchForAnythingListItem : UserControl
         InitializeComponent();
     }
 
-    public string Key { get; private set; }
+    public string Key { get; private set; } = "";
 
 #region Methods
     public void SetData(string key, Shortcut shortcut)
