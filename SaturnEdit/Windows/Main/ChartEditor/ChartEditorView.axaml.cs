@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
-using Dock.Model;
-using Dock.Model.Avalonia.Controls;
-using Dock.Model.Core;
-using Dock.Serializer;
 using FluentIcons.Common;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
@@ -53,9 +48,6 @@ public partial class ChartEditorView : UserControl
         
         Dock_LoadPersistedLayout();
     }
-    
-    private readonly DockSerializer dockSerializer = new();
-    private readonly DockState dockState = new();
     
     private static string PersistentLayoutPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Layout");
     private static string CustomLayoutDirectory => Path.Combine(PersistentLayoutPath, "Custom");
@@ -573,23 +565,7 @@ public partial class ChartEditorView : UserControl
     
     public void Dock_CreateNewFloatingTool(UserControl userControl)
     {
-        if (EditorToolDock.Factory == null) return;
-        if (EditorToolDock.VisibleDockables == null) return;
         
-        Tool tool = new()
-        {
-            Title = "Title", // TODO
-            Content = userControl,
-            CanFloat = true,
-            CanClose = true,
-        };
-        
-        EditorToolDock.AddTool(tool);
-        
-        if (EditorToolDock.VisibleDockables.Count > 1)
-        {
-            EditorToolDock.Factory.FloatDockable(tool);
-        }
     }
     
     private async void Dock_SaveLayout()
@@ -613,8 +589,8 @@ public partial class ChartEditorView : UserControl
         {
             Directory.CreateDirectory(PersistentLayoutPath);
 
-            string data = dockSerializer.Serialize(EditorDockControl.Layout);
-            File.WriteAllText(Path.Combine(PersistentLayoutPath, "layout.yaml"), data);
+            string data = ""; // TODO: Custom Dock Serializer
+            File.WriteAllText(Path.Combine(PersistentLayoutPath, "layout"), data);
         }
         catch (Exception ex)
         {
@@ -629,14 +605,8 @@ public partial class ChartEditorView : UserControl
         {
             if (File.Exists(PersistentLayoutPath))
             {
-                string data = File.ReadAllText(Path.Combine(PersistentLayoutPath, "layout.yaml"));
-                IDock? layout = dockSerializer.Deserialize<IDock?>(data);
-
-                if (layout is not null)
-                {
-                    EditorDockControl.Layout = layout;
-                    dockState.Restore(layout);
-                }
+                string data = File.ReadAllText(Path.Combine(PersistentLayoutPath, "layout"));
+                // TODO: Custom Dock Deserializer
             }
             else
             {

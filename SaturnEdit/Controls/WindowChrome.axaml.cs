@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Dock.Model.Controls;
 
 namespace SaturnEdit.Controls;
 
@@ -45,12 +44,6 @@ public partial class WindowChrome : UserControl
     
     public void ButtonClose_OnClick(object? sender, RoutedEventArgs e)
     {
-        if (DataContext is IToolDock toolDock)
-        {
-            toolDock.Owner?.Factory?.CloseDockable(toolDock);
-            return;
-        }
-        
         if (VisualRoot is Window window)
         {
             window.Close();

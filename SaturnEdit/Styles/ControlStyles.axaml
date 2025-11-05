@@ -20,11 +20,6 @@
     <!-- Sliders -->
     <StyleInclude Source="Styles/Slider.axaml"/>
     
-    <!-- Docks? -->
-    <Style Selector="DockControl">
-        <Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
-    </Style>
-    
     <!-- Separators -->
     <Style Selector="Separator">
         <Setter Property="Background" Value="{DynamicResource SeparatorPrimary}"/>
