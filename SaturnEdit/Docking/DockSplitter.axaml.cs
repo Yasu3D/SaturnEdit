@@ -131,14 +131,4 @@ public partial class DockSplitter : UserControl
         }
     }
 #endregion Methods
-
-    private void Splitter_OnDragDelta(object? sender, VectorEventArgs e)
-    {
-        Console.WriteLine($"{Proportion}");
-    }
-
-    private void Button_OnClick(object? sender, RoutedEventArgs e)
-    {
-        Proportion = 0.25f;
-    }
 }
