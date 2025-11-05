@@ -28,8 +28,6 @@ public enum EditorMode
     EditMode = 1,
 }
 
-// TODO: inserting a note does not recalculate sync notes until next operation???
-// TODO: Click+Drag editing doesn't push to undo-redo stack properly?
 public static class EditorSystem
 {
     public static void Initialize()
