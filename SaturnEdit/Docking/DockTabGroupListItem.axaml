@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             mc:Ignorable="d"
+             d:DesignWidth="80"
+             d:DesignHeight="35"
+             Height="35"
+             x:Class="SaturnEdit.Docking.DockTabGroupListItem">
+    <StackPanel VerticalAlignment="Center"
+                Orientation="Horizontal"
+                Margin="12,0">
+        <icon:FluentIcon Name="Icon"
+                         Icon="Accessibility"
+                         Foreground="{DynamicResource ForegroundPrimary}"
+                         FontSize="18"/>
+        
+        <TextBlock Name="TextBlockTitle"
+                   Text="Title" 
+                   VerticalAlignment="Center"
+                   Foreground="{DynamicResource ForegroundPrimary}"
+                   Margin="7,0,0,0"/>
+    </StackPanel>
+</UserControl>

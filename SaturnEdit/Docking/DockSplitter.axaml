@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="500"
+             d:DesignHeight="500"
+             x:Class="SaturnEdit.Docking.DockSplitter">
+    <Grid Name="SplitGrid">
+        
+        <Button VerticalAlignment="Top" Click="Button_OnClick"/>
+        
+        <Panel Name="ItemContainerA">
+            <Control Name="ItemA" />
+        </Panel>
+
+        <Rectangle Name="SplitterLine"
+                   Width="1"
+                   Fill="{DynamicResource SeparatorPrimary}" />
+        <GridSplitter Name="Splitter"
+                      Background="Transparent"
+                      ResizeDirection="Columns" DragDelta="Splitter_OnDragDelta" />
+
+        <Panel Name="ItemContainerB">
+            <Control Name="ItemB" />
+        </Panel>
+    </Grid>
+</UserControl>

@@ -63,9 +63,9 @@
             </Style>
 
             <!--  Selected Pressed State  -->
-            <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <!--<Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background" Value="{DynamicResource ButtonAccentPressed}" />
-            </Style>
+            </Style>-->
         </Style>
     </ControlTheme>
 </ResourceDictionary>

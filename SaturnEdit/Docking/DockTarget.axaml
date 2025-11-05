@@ -1,0 +1,190 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="500"
+             d:DesignHeight="500"
+             x:Class="SaturnEdit.Docking.DockTarget">
+    <Panel>
+        <Grid Name="IndicatorLeft"
+              ColumnDefinitions="*,*"
+              IsVisible="False">
+            <Rectangle Grid.Column="0"
+                       Fill="{DynamicResource DockTargetIndicator}"/>
+        </Grid>
+        
+        <Grid Name="IndicatorTop"
+              RowDefinitions="*,*"
+              IsVisible="False">
+            <Rectangle Grid.Row="0"
+                       Fill="{DynamicResource DockTargetIndicator}"/>
+        </Grid>
+        
+        <Grid Name="IndicatorRight"
+              ColumnDefinitions="*,*"
+              IsVisible="False">
+            <Rectangle Grid.Column="1"
+                       Fill="{DynamicResource DockTargetIndicator}"/>
+        </Grid>
+        
+        <Grid Name="IndicatorBottom"
+              RowDefinitions="*,*"
+              IsVisible="False">
+            <Rectangle Grid.Row="1"
+                       Fill="{DynamicResource DockTargetIndicator}"/>
+        </Grid>
+
+        <Rectangle Name="IndicatorCenter"
+                   Fill="{DynamicResource DockTargetIndicator}"
+                   IsVisible="False"/>
+        
+        <Border Name="TargetOuterLeft"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center"
+                Width="40"
+                Height="40"
+                Background="Transparent"
+                BorderBrush="{DynamicResource DockTargetOutline}"
+                BorderThickness="1"
+                CornerRadius="4"
+                PointerEntered="TargetLeft_OnPointerEntered"
+                PointerExited="Target_OnPointerExited">
+            <Border Background="{DynamicResource DockTargetFill}"
+                    CornerRadius="4,0,0,4"
+                    Margin="-1,-1,20,-1"/>
+        </Border>
+        
+        <Border Name="TargetOuterTop"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top"
+                Width="40"
+                Height="40"
+                Background="Transparent"
+                BorderBrush="{DynamicResource DockTargetOutline}"
+                BorderThickness="1"
+                CornerRadius="4"
+                PointerEntered="TargetTop_OnPointerEntered"
+                PointerExited="Target_OnPointerExited">
+            <Border Background="{DynamicResource DockTargetFill}"
+                    CornerRadius="4,4,0,0"
+                    Margin="-1,-1,-1,20"/>
+        </Border>
+        
+        <Border Name="TargetOuterRight"
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Center"
+                Width="40"
+                Height="40"
+                Background="Transparent"
+                BorderBrush="{DynamicResource DockTargetOutline}"
+                BorderThickness="1"
+                CornerRadius="4"
+                PointerEntered="TargetRight_OnPointerEntered"
+                PointerExited="Target_OnPointerExited">
+            <Border Background="{DynamicResource DockTargetFill}"
+                    CornerRadius="0,4,4,0"
+                    Margin="20,-1,-1,-1"/>
+        </Border>
+
+        <Border Name="TargetOuterBottom"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Width="40"
+                Height="40"
+                Background="Transparent"
+                BorderBrush="{DynamicResource DockTargetOutline}"
+                BorderThickness="1"
+                CornerRadius="4"
+                PointerEntered="TargetBottom_OnPointerEntered"
+                PointerExited="Target_OnPointerExited">
+            <Border Background="{DynamicResource DockTargetFill}"
+                    CornerRadius="0,0,4,4"
+                    Margin="-1,20,-1,-1" />
+        </Border>
+
+        <Grid ColumnDefinitions="40,50,40"
+              RowDefinitions="40,50,40"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <Border Grid.Row="1"
+                    Grid.Column="0"
+                    Name="TargetLeft"
+                    Width="40"
+                    Height="40"
+                    Background="Transparent"
+                    BorderBrush="{DynamicResource DockTargetOutline}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    PointerEntered="TargetLeft_OnPointerEntered"
+                    PointerExited="Target_OnPointerExited">
+                <Border Background="{DynamicResource DockTargetFill}"
+                        CornerRadius="4,0,0,4"
+                        Margin="-1,-1,20,-1" />
+            </Border>
+
+            <Border Grid.Row="0"
+                    Grid.Column="1"
+                    Name="TargetTop"
+                    Width="40"
+                    Height="40"
+                    Background="Transparent"
+                    BorderBrush="{DynamicResource DockTargetOutline}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    PointerEntered="TargetTop_OnPointerEntered"
+                    PointerExited="Target_OnPointerExited">
+                <Border Background="{DynamicResource DockTargetFill}"
+                        CornerRadius="4,4,0,0"
+                        Margin="-1,-1,-1,20" />
+            </Border>
+
+            <Border Grid.Row="1"
+                    Grid.Column="2"
+                    Name="TargetRight"
+                    Width="40"
+                    Height="40"
+                    Background="Transparent"
+                    BorderBrush="{DynamicResource DockTargetOutline}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    PointerEntered="TargetRight_OnPointerEntered"
+                    PointerExited="Target_OnPointerExited">
+                <Border Background="{DynamicResource DockTargetFill}"
+                        CornerRadius="0,4,4,0"
+                        Margin="20,-1,-1,-1" />
+            </Border>
+
+            <Border Grid.Row="2"
+                    Grid.Column="1"
+                    Name="TargetBottom"
+                    Width="40"
+                    Height="40"
+                    Background="Transparent"
+                    BorderBrush="{DynamicResource DockTargetOutline}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    PointerEntered="TargetBottom_OnPointerEntered"
+                    PointerExited="Target_OnPointerExited">
+                <Border Background="{DynamicResource DockTargetFill}"
+                        CornerRadius="0,0,4,4"
+                        Margin="-1,20,-1,-1" />
+            </Border>
+        </Grid>
+        
+        <Border Name="TargetCenter"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Width="40"
+                Height="40"
+                Background="Transparent"
+                BorderBrush="{DynamicResource DockTargetOutline}"
+                BorderThickness="1"
+                CornerRadius="4"
+                PointerEntered="TargetCenter_OnPointerEntered"
+                PointerExited="Target_OnPointerExited">
+            <Border Background="{DynamicResource DockTargetFill}"
+                    CornerRadius="4"/>
+        </Border>
+    </Panel>
+</UserControl>

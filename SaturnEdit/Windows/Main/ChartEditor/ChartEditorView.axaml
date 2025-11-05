@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:fixed="clr-namespace:SaturnEdit.Windows.Main.ChartEditor.Fixed"
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:docking="clr-namespace:SaturnEdit.Docking"
              mc:Ignorable="d"
              d:DesignWidth="1400"
              d:DesignHeight="900"
@@ -511,26 +512,8 @@
                        Fill="{DynamicResource SeparatorSecondary}" />
 
             <!-- Editor Tool Window Dock -->
-            <DockControl Grid.Column="2"
-                         Name="EditorDockControl"
-                         InitializeLayout="True"
-                         InitializeFactory="True">
-                <DockControl.Factory>
-                    <Factory />
-                </DockControl.Factory>
-
-                <RootDock Name="EditorRootDock"
-                          IsCollapsable="False"
-                          CanFloat="False"
-                          CanClose="False">
-                    <RootDock.Windows />
-
-                    <ToolDock Name="EditorToolDock"
-                              IsCollapsable="False"
-                              CanFloat="False"
-                              CanClose="False" />
-                </RootDock>
-            </DockControl>
+            <docking:DockArea Grid.Column="2"
+                              Name="EditorDockArea"/>
         </Grid>
 
         <fixed:PlaybackView Grid.Row="3" />

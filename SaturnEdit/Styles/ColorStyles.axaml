@@ -183,7 +183,6 @@
                     <SolidColorBrush x:Key="ZigZagHoldGuide"   Color="#FFFF0000" />
                     <SolidColorBrush x:Key="ZigZagHoldSurface" Color="#AAFFFFFF" />
                     
-
                     <RadialGradientBrush x:Key="ChartEditorChromeGradient"
                                          RadiusX="225"
                                          RadiusY="225"
@@ -211,19 +210,9 @@
                         <GradientStop Color="#00269EBB" Offset="1.0"/>
                     </RadialGradientBrush>
                     
-                    <!-- Legacy Dock Stuff, mostly overwritten by custom control themes. -->
-                    <SolidColorBrush x:Key="DockApplicationAccentBrushLow" Color="#454545" /> <!-- Document Grip Selected -->
-                    <SolidColorBrush x:Key="DockApplicationAccentForegroundBrush" Color="#D0D0D0" /> <!-- Window Text -->
-                    <SolidColorBrush x:Key="DockApplicationAccentBrushIndicator" Color="#007ACC" /> <!-- DockTarget Overlay Color -->
-                    <SolidColorBrush x:Key="DockTargetPrimary" Color="#AADEDEDE" /> <!-- DockTarget Outline -->
-                    <SolidColorBrush x:Key="DockTargetSecondary" Color="#80DEDEDE" /> <!-- DockTarget Fill -->
-
-                    <SolidColorBrush x:Key="DockThemeBorderLowBrush" Color="#454545" /> <!-- Window Border --> <!-- Document Grip Selected Unfocused -->
-                    <SolidColorBrush x:Key="DockThemeBackgroundBrush" Color="Transparent" /> <!-- Window Background -->
-                    <SolidColorBrush x:Key="DockThemeAccentBrush" Color="Transparent" /> <!-- Window Grip Selected -->
-                    <SolidColorBrush x:Key="DockThemeForegroundBrush" Color="#D0D0D0" /> <!-- Document Text -->
-                    
-                    <system:Double x:Key="DockFontSizeNormal">12</system:Double>
+                    <SolidColorBrush x:Key="DockTargetIndicator" Color="#503F80CC" />
+                    <SolidColorBrush x:Key="DockTargetOutline" Color="#FFCCCCCC" />
+                    <SolidColorBrush x:Key="DockTargetFill" Color="#80CCCCCC" />
                 </ResourceDictionary>
                 
             </ResourceDictionary.ThemeDictionaries>

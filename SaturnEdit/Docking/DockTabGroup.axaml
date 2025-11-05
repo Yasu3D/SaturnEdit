@@ -1,0 +1,69 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:docking="clr-namespace:SaturnEdit.Docking"
+             xmlns:controls="clr-namespace:SaturnEdit.Controls"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             mc:Ignorable="d"
+             d:DesignWidth="400"
+             d:DesignHeight="400"
+             x:Class="SaturnEdit.Docking.DockTabGroup">
+    <Grid RowDefinitions="35,1,*">
+        
+        <!-- Tab Bar & Chrome -->
+        <Panel Grid.Row="0"
+              Background="{DynamicResource BackgroundPrimary}">
+            
+            <!-- Single Tab -->
+            <docking:DockTabGroupListItem Name="SingleTabTitle" />
+            
+            <!-- Multiple Tab List -->
+            <ListBox Name="ListBoxMultipleTabs"
+                     Height="35"
+                     SelectionMode="AlwaysSelected"
+                     IsVisible="False">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            
+            <!-- Docked Close Button -->
+            <Panel Name="DockedChrome" 
+                   Background="{DynamicResource BackgroundPrimary}"
+                   Width="35"
+                   Height="35"
+                   HorizontalAlignment="Right">
+                <Button Name="ButtonClose"
+                        Classes="Themed Standard"
+                        Width="35"
+                        Height="35"
+                        CornerRadius="0">
+                    <PathIcon Data="{DynamicResource IconDismiss}"
+                              Width="10"
+                              Height="10" />
+                </Button>
+            </Panel>
+
+            <!-- Floating Window Chrome -->
+            <controls:WindowChrome Name="FloatingChrome"
+                                       Classes="ShowCloseOnly"
+                                       Background="{DynamicResource BackgroundPrimary}"
+                                       Width="47"
+                                       HorizontalAlignment="Right" 
+                                       IsVisible="False"/>
+        </Panel>
+        
+        <Rectangle Grid.Row="1"
+                   Fill="{DynamicResource SeparatorSecondary}" />
+        
+        <!-- Content -->
+        <Control Grid.Row="2"
+                 Name="TabContent"/>
+        
+        <!-- Dock Target -->
+        <docking:DockTarget Grid.Row="2"/>
+    </Grid>
+</UserControl>
