@@ -372,7 +372,7 @@
     <system:String x:Key="Menu.View.LayoutPresets.Advanced">Advanced Layout</system:String>
     <system:String x:Key="Menu.View.LayoutPresets.Advanced.Description">A more advanced layout, suitable for larger screens and note designers doing complex work with layers.</system:String>
     <system:String x:Key="Menu.View.SaveLayout">Save Layout...</system:String>
-    <system:String x:Key="Menu.View.LoadLayout">Load Layout</system:String>
+    <system:String x:Key="Menu.View.LoadLayout">Load Layout...</system:String>
     <system:String x:Key="Menu.Navigate">Navigate</system:String>
     <system:String x:Key="Menu.Navigate.MoveBeatForward">Move Beat Forward</system:String>
     <system:String x:Key="Menu.Navigate.MoveBeatBack">Move Beat Back</system:String>

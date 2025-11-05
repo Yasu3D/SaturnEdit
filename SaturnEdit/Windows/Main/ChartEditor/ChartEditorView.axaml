@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:tabs="clr-namespace:SaturnEdit.Windows.Main.ChartEditor.Tabs"
              xmlns:fixed="clr-namespace:SaturnEdit.Windows.Main.ChartEditor.Fixed"
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
@@ -344,7 +343,8 @@
                             <TextBlock Text="{DynamicResource Menu.View.LayoutPresets}" />
                         </MenuItem.Header>
 
-                        <MenuItem>
+                        <MenuItem Name="MenuItemLayoutPresetClassic"
+                                  Click="MenuItemLayoutPresetClassic_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.View.LayoutPresets.Classic}" />
                             </MenuItem.Header>
@@ -357,7 +357,8 @@
                             </ToolTip.Tip>
                         </MenuItem>
 
-                        <MenuItem>
+                        <MenuItem Name="MenuItemLayoutPresetAdvanced"
+                                  Click="MenuItemLayoutPresetAdvanced_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource Menu.View.LayoutPresets.Advanced}" />
                             </MenuItem.Header>
@@ -373,13 +374,15 @@
 
                     <Separator />
 
-                    <MenuItem>
+                    <MenuItem Name="MenuItemSaveLayout"
+                              Click="MenuItemSaveLayout_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.View.SaveLayout}" />
                         </MenuItem.Header>
                     </MenuItem>
 
-                    <MenuItem>
+                    <MenuItem Name="MenuItemLoadLayout"
+                              Click="MenuItemLoadLayout_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.View.LoadLayout}" />
                         </MenuItem.Header>
@@ -507,86 +510,30 @@
             <Rectangle Grid.Column="1"
                        Fill="{DynamicResource SeparatorSecondary}" />
 
-            <!-- Tab Dock -->
+            <!-- Editor Tool Window Dock -->
             <DockControl Grid.Column="2"
-                         x:Name="DockControl"
+                         Name="EditorDockControl"
                          InitializeLayout="True"
                          InitializeFactory="True">
                 <DockControl.Factory>
                     <Factory />
                 </DockControl.Factory>
 
-                <RootDock x:Name="RootDock"
-                          IsCollapsable="False">
+                <RootDock Name="EditorRootDock"
+                          IsCollapsable="False"
+                          CanFloat="False"
+                          CanClose="False">
                     <RootDock.Windows />
-                    <!-- Temporary Layout -->
-                    
-                    <!-- Horizontal Split -->
-                    <ProportionalDock Orientation="Horizontal">
-                        
-                        <!-- Left Panel - Inspector/LayerList/Cursor -->
-                        <ProportionalDock Orientation="Vertical">
 
-                            <!-- Top Section - Inspector/LayerList -->
-                            <ToolDock>
-                                <Tool Title="Inspector">
-                                    <tabs:InspectorView />
-                                </Tool>
-                                <Tool Title="EventList">
-                                    <tabs:EventListView />
-                                </Tool>
-                            </ToolDock>
-                            
-                            <ProportionalDockSplitter/>
-                            
-                            <!-- Bottom Section - Cursor -->
-                            <ToolDock>
-                                <Tool Title="Cursor">
-                                    <tabs:CursorView />
-                                </Tool>
-                                <Tool Title="Audio Mixer">
-                                    <tabs:AudioMixerView />
-                                </Tool>
-                            </ToolDock>
-                            
-                        </ProportionalDock>
-                        
-                        <ProportionalDockSplitter />
-                        
-                        <!-- Center Panel - ChartView3D/ChartView2D -->
-                        <ToolDock>
-                            <Tool Title="ChartView3D">
-                                <tabs:ChartView3D />
-                            </Tool>
-                            <Tool Title="ChartView2D">
-                                <tabs:ChartView2D />
-                            </Tool>
-                            <Tool Title="ChartViewTxt">
-                                <tabs:ChartViewTxt />
-                            </Tool>
-                        </ToolDock>
-                        
-                        <ProportionalDockSplitter />
-                        
-                        <!-- Right Panel - ChartProperties/ChartStatistics -->
-                        <ToolDock>
-                            <Tool Title="LayerList">
-                                <tabs:LayerListView />
-                            </Tool>
-                            <Tool Title="ChartProperties">
-                                <tabs:ChartPropertiesView />
-                            </Tool>
-                            <Tool Title="ChartStatistics">
-                                <tabs:ChartStatisticsView />
-                            </Tool>
-                        </ToolDock>
-                        
-                    </ProportionalDock>
+                    <ToolDock Name="EditorToolDock"
+                              IsCollapsable="False"
+                              CanFloat="False"
+                              CanClose="False" />
                 </RootDock>
             </DockControl>
         </Grid>
 
         <fixed:PlaybackView Grid.Row="3" />
-
+        
     </Grid>
 </UserControl>

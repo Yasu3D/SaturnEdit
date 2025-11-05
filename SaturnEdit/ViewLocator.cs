@@ -1,21 +1,30 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Dock.Model.Core;
+using StaticViewLocator;
 
 namespace SaturnEdit;
 
-public class ViewLocator : IDataTemplate
+[StaticViewLocator]
+public partial class ViewLocator : IDataTemplate
 {
     public Control? Build(object? data)
     {
-        return data switch
+        if (data is null) return null;
+
+        Type type = data.GetType();
+        if (s_views.TryGetValue(type, out Func<Control>? func))
         {
-            IDockable dockable when !string.IsNullOrEmpty(dockable.Title) => 
-                new TextBox { Text = $"Content for {dockable.Title}", AcceptsReturn = true },
-            string text => new TextBox { Text = text, AcceptsReturn = true },
-            _ => new TextBlock { Text = data?.ToString() ?? "No Content" }
-        };
+            return func.Invoke();
+        }
+
+        // Fallback for simple content
+        return new TextBlock { Text = data.ToString() };
     }
 
-    public bool Match(object? data) => true;
+    public bool Match(object? data)
+    {
+        return data is IDockable or not null;
+    }
 }

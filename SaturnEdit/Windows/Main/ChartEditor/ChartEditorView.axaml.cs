@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using Dock.Model;
@@ -33,7 +33,6 @@ using SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
 namespace SaturnEdit.Windows.ChartEditor;
 
-// TODO: Investigate bug that causes editor to freeze if you close a file dialog.
 public partial class ChartEditorView : UserControl
 {
     public ChartEditorView()
@@ -52,18 +51,14 @@ public partial class ChartEditorView : UserControl
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         OnOperationHistoryChanged(null, EventArgs.Empty);
         
-        serializer = new(typeof(AvaloniaList<>));
-        dockState = new();
-
-        IDock? layout = DockControl?.Layout;
-        if (layout != null)
-        {
-            dockState.Save(layout);
-        }
+        Dock_LoadPersistedLayout();
     }
     
-    private readonly DockSerializer serializer;
-    private readonly DockState dockState;
+    private readonly DockSerializer dockSerializer = new();
+    private readonly DockState dockState = new();
+    
+    private static string PersistentLayoutPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Layout");
+    private static string CustomLayoutDirectory => Path.Combine(PersistentLayoutPath, "Custom");
     
 #region Methods
     public async void File_New()
@@ -307,7 +302,7 @@ public partial class ChartEditorView : UserControl
             // Open the file picker.
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return false;
-            IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(ExportFilePickerSaveOptions(exportArgsWindow.NotationWriteArgs));
+            IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(getOptions(exportArgsWindow.NotationWriteArgs));
             if (file == null) return false;
 
             // Write the chart to the defined path, with the defined notation arguments.
@@ -324,11 +319,59 @@ public partial class ChartEditorView : UserControl
             Console.WriteLine(ex);
             return false;
         }
+        
+        FilePickerSaveOptions getOptions(NotationWriteArgs args)
+        {
+            string defaultExtension = args.FormatVersion switch
+            {
+                FormatVersion.Mer => ".mer",
+                FormatVersion.SatV1 => ".sat",
+                FormatVersion.SatV2 => ".sat",
+                FormatVersion.SatV3 => ".sat",
+                _ => "",
+            };
+
+            string suggestedFileName = ChartSystem.Entry.Difficulty switch
+            {
+                Difficulty.None => $"chart{defaultExtension}",
+                Difficulty.Normal => $"0_normal{defaultExtension}",
+                Difficulty.Hard => $"1_hard{defaultExtension}",
+                Difficulty.Expert => $"2_expert{defaultExtension}",
+                Difficulty.Inferno => $"3_inferno{defaultExtension}",
+                Difficulty.WorldsEnd => $"4_worldsend{defaultExtension}",
+                _ => $"chart.{defaultExtension}",
+            };
+
+            string key = args.FormatVersion switch
+            {
+                FormatVersion.Mer => "Menu.File.MerChartFile",
+                FormatVersion.SatV1 => "Menu.File.SaturnChartFile",
+                FormatVersion.SatV2 => "Menu.File.SaturnChartFile",
+                FormatVersion.SatV3 => "Menu.File.SaturnChartFile",
+                _ => "Menu.File.UnknownChartFile",
+            };
+
+            TryGetResource(key, ActualThemeVariant, out object? resource);
+            string filePickerFileTypeName = resource as string ?? "";
+
+            return new()
+            {
+                DefaultExtension = defaultExtension,
+                SuggestedFileName = suggestedFileName,
+                FileTypeChoices =
+                [
+                    new(filePickerFileTypeName)
+                    {
+                        Patterns = [$"*{defaultExtension}"],
+                    },
+                ],
+            };
+        }
     }
 
     public void File_RenderAsImage()
     {
-        if (VisualRoot is not Window rootWindow) return;
+        //if (VisualRoot is not Window rootWindow) return;
     }
     
     public async void File_Quit()
@@ -369,6 +412,26 @@ public partial class ChartEditorView : UserControl
         }
     }
 
+    public async Task<ModalDialogResult> PromptSave()
+    {
+        if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
+
+        ModalDialogWindow dialog = new()
+        {
+            DialogIcon = Icon.Warning,
+            WindowTitleKey = "ModalDialog.SavePrompt.Title",
+            HeaderKey = "ModalDialog.SavePrompt.Header",
+            ParagraphKey = "ModalDialog.SavePrompt.Paragraph",
+            ButtonPrimaryKey = "Menu.File.Save",
+            ButtonSecondaryKey = "ModalDialog.SavePrompt.DontSave",
+            ButtonTertiaryKey = "Generic.Cancel",
+        };
+
+        dialog.InitializeDialog();
+        await dialog.ShowDialog(rootWindow);
+        return dialog.Result;
+    }
+    
     public void Edit_Cut()
     {
         TopLevel? topLevel = TopLevel.GetTopLevel(this);
@@ -506,76 +569,89 @@ public partial class ChartEditorView : UserControl
             ));
         }
     }
+
     
-    
-    private FilePickerSaveOptions ExportFilePickerSaveOptions(NotationWriteArgs args)
+    public void Dock_CreateNewFloatingTool(UserControl userControl)
     {
-        string defaultExtension = args.FormatVersion switch
+        if (EditorToolDock.Factory == null) return;
+        if (EditorToolDock.VisibleDockables == null) return;
+        
+        Tool tool = new()
         {
-            FormatVersion.Mer => ".mer",
-            FormatVersion.SatV1 => ".sat",
-            FormatVersion.SatV2 => ".sat",
-            FormatVersion.SatV3 => ".sat",
-            _ => "",
+            Title = "Title", // TODO
+            Content = userControl,
+            CanFloat = true,
+            CanClose = true,
         };
-
-        string suggestedFileName = ChartSystem.Entry.Difficulty switch
+        
+        EditorToolDock.AddTool(tool);
+        
+        if (EditorToolDock.VisibleDockables.Count > 1)
         {
-            Difficulty.None => $"chart{defaultExtension}",
-            Difficulty.Normal => $"0_normal{defaultExtension}",
-            Difficulty.Hard => $"1_hard{defaultExtension}",
-            Difficulty.Expert => $"2_expert{defaultExtension}",
-            Difficulty.Inferno => $"3_inferno{defaultExtension}",
-            Difficulty.WorldsEnd => $"4_worldsend{defaultExtension}",
-            _ => $"chart.{defaultExtension}",
-        };
+            EditorToolDock.Factory.FloatDockable(tool);
+        }
+    }
+    
+    private async void Dock_SaveLayout()
+    {
+        // TODO.
+    }
 
-        string key = args.FormatVersion switch
+    private async void Dock_LoadLayout()
+    {
+        // TODO.
+    }
+
+    private void Dock_LoadPreset()
+    {
+        // TODO.
+    }
+
+    private void Dock_SavePersistedLayout()
+    {
+        try
         {
-            FormatVersion.Mer => "Menu.File.MerChartFile",
-            FormatVersion.SatV1 => "Menu.File.SaturnChartFile",
-            FormatVersion.SatV2 => "Menu.File.SaturnChartFile",
-            FormatVersion.SatV3 => "Menu.File.SaturnChartFile",
-            _ => "Menu.File.UnknownChartFile",
-        };
+            Directory.CreateDirectory(PersistentLayoutPath);
 
-        TryGetResource(key, ActualThemeVariant, out object? resource);
-        string filePickerFileTypeName = resource as string ?? "";
-
-        return new()
+            string data = dockSerializer.Serialize(EditorDockControl.Layout);
+            File.WriteAllText(Path.Combine(PersistentLayoutPath, "layout.yaml"), data);
+        }
+        catch (Exception ex)
         {
-            DefaultExtension = defaultExtension,
-            SuggestedFileName = suggestedFileName,
-            FileTypeChoices =
-            [
-                new(filePickerFileTypeName)
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+    }
+    
+    private void Dock_LoadPersistedLayout()
+    {
+        try
+        {
+            if (File.Exists(PersistentLayoutPath))
+            {
+                string data = File.ReadAllText(Path.Combine(PersistentLayoutPath, "layout.yaml"));
+                IDock? layout = dockSerializer.Deserialize<IDock?>(data);
+
+                if (layout is not null)
                 {
-                    Patterns = [$"*{defaultExtension}"],
-                },
-            ],
-        };
-    }
-
-    public async Task<ModalDialogResult> PromptSave()
-    {
-        if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
-
-        ModalDialogWindow dialog = new()
+                    EditorDockControl.Layout = layout;
+                    dockState.Restore(layout);
+                }
+            }
+            else
+            {
+                Dock_LoadPreset();
+            }
+        }
+        catch (Exception ex)
         {
-            DialogIcon = Icon.Warning,
-            WindowTitleKey = "ModalDialog.SavePrompt.Title",
-            HeaderKey = "ModalDialog.SavePrompt.Header",
-            ParagraphKey = "ModalDialog.SavePrompt.Paragraph",
-            ButtonPrimaryKey = "Menu.File.Save",
-            ButtonSecondaryKey = "ModalDialog.SavePrompt.DontSave",
-            ButtonTertiaryKey = "Generic.Cancel",
-        };
-
-        dialog.InitializeDialog();
-        await dialog.ShowDialog(rootWindow);
-        return dialog.Result;
+            // Don't throw.
+            Console.WriteLine(ex);
+            
+            Dock_LoadPreset();
+        }
     }
-
+        
     private void ShowFileWriteError()
     {
         if (VisualRoot is not Window rootWindow) return;
@@ -591,35 +667,6 @@ public partial class ChartEditorView : UserControl
 
         dialog.InitializeDialog();
         dialog.ShowDialog(rootWindow);
-    }
-    
-    public void CreateNewFloatingTool(UserControl userControl)
-    {
-        if (DockControl.Factory == null) return;
-        if (RootDock.VisibleDockables == null) return;
-
-        Tool tool = new() { Content = userControl };
-
-        ToolDock toolDock = new()
-        {
-            VisibleDockables = DockControl.Factory?.CreateList<IDockable>(tool),
-            ActiveDockable = tool,
-        };
-
-        if (RootDock.VisibleDockables.Count != 0)
-        {
-            Console.WriteLine("RootDock contains dockables!");
-
-            //DockControl.Factory?.AddDockable(RootDock, toolDock);
-            //DockControl.Factory?.FloatDockable(toolDock);
-        }
-        else
-        {
-            Console.WriteLine("RootDock is empty!");
-
-            //DockControl.Factory?.AddDockable(RootDock, toolDock);
-            //DockControl.Factory?.InitLayout(RootDock);
-        }
     }
 #endregion Methods
 
@@ -677,6 +724,8 @@ public partial class ChartEditorView : UserControl
             MenuItemRedo.IsEnabled = UndoRedoSystem.CanRedo;
         });
     }
+    
+    public void OnClosed(object? sender, EventArgs e) => Dock_SavePersistedLayout();
 #endregion System Event Delegates
     
 #region UI Event Delegates
@@ -988,30 +1037,6 @@ public partial class ChartEditorView : UserControl
     }
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
-    
-    private void MenuItemToolWindows_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (sender is not MenuItem menuItem) return;
-        UserControl? userControl = menuItem.Name switch
-        {
-            "MenuItemChartView3D" => new ChartView3D(),
-            "MenuItemChartView2D" => new ChartView2D(),
-            "MenuItemChartViewTxt" => new ChartViewTxt(),
-            "MenuItemChartProperties" => new ChartPropertiesView(),
-            "MenuItemChartStatistics" => new ChartStatisticsView(),
-            "MenuItemProofreader" => new ProofreaderView(),
-            "MenuItemEventList" => new EventListView(),
-            "MenuItemLayerList" => new LayerListView(),
-            "MenuItemInspector" => new InspectorView(),
-            "MenuItemCursor" => new CursorView(),
-            "MenuItemAudioMixer" => new AudioMixerView(),
-            "MenuItemWaveform" => new WaveformView(),
-            _ => null,
-        };
-
-        if (userControl == null) return;
-        CreateNewFloatingTool(userControl);
-    }
 
     private void MenuItemNew_OnClick(object? sender, RoutedEventArgs e) => File_New();
 
@@ -1049,6 +1074,39 @@ public partial class ChartEditorView : UserControl
     private void MenuItemCheckerDeselect_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.CheckerDeselect();
 
     private void MenuItemSelectByCriteria_OnClick(object? sender, RoutedEventArgs e) => Edit_SelectByCriteria();
+    
+    
+    private void MenuItemToolWindows_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not MenuItem menuItem) return;
+        UserControl? userControl = menuItem.Name switch
+        {
+            "MenuItemChartView3D" => new ChartView3D(),
+            "MenuItemChartView2D" => new ChartView2D(),
+            "MenuItemChartViewTxt" => new ChartViewTxt(),
+            "MenuItemChartProperties" => new ChartPropertiesView(),
+            "MenuItemChartStatistics" => new ChartStatisticsView(),
+            "MenuItemProofreader" => new ProofreaderView(),
+            "MenuItemEventList" => new EventListView(),
+            "MenuItemLayerList" => new LayerListView(),
+            "MenuItemInspector" => new InspectorView(),
+            "MenuItemCursor" => new CursorView(),
+            "MenuItemAudioMixer" => new AudioMixerView(),
+            "MenuItemWaveform" => new WaveformView(),
+            _ => null,
+        };
+
+        if (userControl == null) return;
+        Dock_CreateNewFloatingTool(userControl);
+    }
+    
+    private void MenuItemLayoutPresetClassic_OnClick(object? sender, RoutedEventArgs e) => Dock_LoadPreset();
+
+    private void MenuItemLayoutPresetAdvanced_OnClick(object? sender, RoutedEventArgs e) => Dock_LoadPreset();
+
+    private void MenuItemSaveLayout_OnClick(object? sender, RoutedEventArgs e) => Dock_SaveLayout();
+
+    private void MenuItemLoadLayout_OnClick(object? sender, RoutedEventArgs e) => Dock_LoadLayout();
     
     
     private void MenuItemMoveBeatForward_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_MoveBeatForward();

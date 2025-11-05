@@ -369,7 +369,7 @@ Menu.View.LayoutPresets.Classic.Description,"A simple layout, reminiscent of the
 Menu.View.LayoutPresets.Advanced,Advanced Layout
 Menu.View.LayoutPresets.Advanced.Description,"A more advanced layout, suitable for larger screens and note designers doing complex work with layers."
 Menu.View.SaveLayout,Save Layout...
-Menu.View.LoadLayout,Load Layout
+Menu.View.LoadLayout,Load Layout...
 Menu.Navigate,Navigate
 Menu.Navigate.MoveBeatForward,Move Beat Forward
 Menu.Navigate.MoveBeatBack,Move Beat Back
