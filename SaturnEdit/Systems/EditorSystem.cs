@@ -8,6 +8,7 @@ using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnData.Notation.Serialization;
+using SaturnData.Utilities;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.BookmarkOperations;
 using SaturnEdit.UndoRedo.EditModeOperations;
@@ -18,7 +19,6 @@ using SaturnEdit.UndoRedo.NoteOperations;
 using SaturnEdit.UndoRedo.PositionableOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
 using SaturnEdit.UndoRedo.TimeableOperations;
-using SaturnView;
 
 namespace SaturnEdit.Systems;
 
@@ -2335,8 +2335,8 @@ public static class EditorSystem
             for (int i = start.Timestamp.FullTick + interval; i < end.Timestamp.FullTick; i += interval)
             {
                 float t = (float)(i - start.Timestamp.FullTick) / (end.Timestamp.FullTick - start.Timestamp.FullTick);
-                int position = (int)Math.Round(RenderUtils.LerpCyclic(start.Position, end.Position, t, 60));
-                int size = (int)Math.Round(RenderUtils.Lerp(start.Size, end.Size, t));
+                int position = (int)Math.Round(SaturnMath.LerpCyclic(start.Position, end.Position, t, 60));
+                int size = (int)Math.Round(SaturnMath.Lerp(start.Size, end.Size, t));
 
                 position = isA
                     ? position - leftEdgeOffsetA

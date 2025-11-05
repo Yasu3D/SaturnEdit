@@ -12,6 +12,7 @@ using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
+using SaturnData.Utilities;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnView;
@@ -177,7 +178,6 @@ public partial class ChartView3D : UserControl
         hits = hits
             .OrderBy(x => SelectionSystem.SelectedObjects.Contains(x.Item2))
             .ThenBy(x => x.Item2 is ILaneToggle)
-            .ThenBy(x => x.Item2.Timestamp.FullTick)
             .ThenBy(x => x.Item2 is SyncNote or MeasureLineNote)
             .ThenBy(x => x.Item2 is Event or Bookmark)
             .ThenBy(x => x.Item2 is HoldNote or HoldPointNote)
@@ -906,7 +906,7 @@ public partial class ChartView3D : UserControl
                 float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
             
                 float t = RenderUtils.InversePerspective(radius);
-                float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
+                float viewTime = SaturnMath.Lerp(viewDistance, 0, t);
                 
                 SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
             });
@@ -944,7 +944,7 @@ public partial class ChartView3D : UserControl
                 if (objectDrag.IsActive)
                 {
                     float t = RenderUtils.InversePerspective(radius);
-                    float time = TimeSystem.Timestamp.Time + RenderUtils.Lerp(viewDistance, 0, t);
+                    float time = TimeSystem.Timestamp.Time + SaturnMath.Lerp(viewDistance, 0, t);
         
                     Task.Run(() => objectDrag.Update(time));
                 }
@@ -952,7 +952,7 @@ public partial class ChartView3D : UserControl
                 {
                     // Box Select
                     float t = RenderUtils.InversePerspective(radius);
-                    float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
+                    float viewTime = SaturnMath.Lerp(viewDistance, 0, t);
 
                     Task.Run(() => SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime));
                 }
@@ -994,7 +994,7 @@ public partial class ChartView3D : UserControl
                 clickDragLeft.Reset(point, point, lane);
 
                 float t = RenderUtils.InversePerspective(radius);
-                float viewTime = RenderUtils.Lerp(viewDistance, 0, t);
+                float viewTime = SaturnMath.Lerp(viewDistance, 0, t);
                 
                 boxSelect();
                 normalSelect();
