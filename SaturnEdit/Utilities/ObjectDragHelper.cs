@@ -154,7 +154,7 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
                 if (item.Timeable is IPositionable positionable)
                 {
                     int newPosition = item.Position + clickDragHelper.Tally;
-                    operations.Add(new PositionableEditOperation(positionable, positionable.Position, newPosition, positionable.Size, positionable.Size));
+                    operations.Add(new PositionableEditOperation(positionable, item.Position, newPosition, item.Size, positionable.Size));
                 }
             }
             else if (DragType == IPositionable.OverlapResult.LeftEdge)
@@ -163,14 +163,14 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
 
                 int newPosition = Math.Min(item.Position + item.Size - 1, item.Position + clickDragHelper.Tally);
                 int newSize = Math.Max(1, item.Size - clickDragHelper.Tally);
-                operations.Add(new PositionableEditOperation(positionable, positionable.Position, newPosition, positionable.Size, newSize));
+                operations.Add(new PositionableEditOperation(positionable, item.Position, newPosition, item.Size, newSize));
             }
             else if (DragType == IPositionable.OverlapResult.RightEdge)
             {
                 if (item.Timeable is not IPositionable positionable) return;
 
                 int newSize = Math.Max(1, item.Size + clickDragHelper.Tally);
-                operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, positionable.Size, newSize));
+                operations.Add(new PositionableEditOperation(positionable, item.Position, positionable.Position, item.Size, newSize));
             }
         }
     }
