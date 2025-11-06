@@ -184,7 +184,60 @@ public partial class DockArea : UserControl
 
     public void Float(UserControl item)
     {
-        // TODO: merge FloatTabGroup and FloatTab
+        if (item is DockTab tab)
+        {
+            if (MainWindow.Instance == null) return;
+        
+            if (tab.Parent?.Parent?.Parent is not DockTabGroup parentGroup) return;
+
+            if (parentGroup.IsFloating && parentGroup.TabList.Items.Count == 1) return;
+            
+            PixelPoint p = parentGroup.PointToScreen(new(0, 0));
+            
+            RemoveTab(parentGroup, tab);
+
+            DockTabGroup newGroup = new();
+            newGroup.TabList.Items.Add(tab);
+            
+            DockWindow window = new()
+            {
+                WindowContent = { Content = newGroup },
+                Width = parentGroup.Bounds.Width,
+                Height = parentGroup.Bounds.Height,
+                Position = p,
+            };
+            
+            window.Show(MainWindow.Instance);
+            return;
+        }
+
+        if (item is DockTabGroup group)
+        {
+            if (MainWindow.Instance == null) return;
+
+            List<object?> tabs = group.TabList.Items.ToList();
+            
+            PixelPoint p = group.PointToScreen(new(0, 0));
+            
+            RemoveTabGroup(group);
+
+            DockTabGroup newGroup = new();
+            foreach (object? obj in tabs)
+            {
+                newGroup.TabList.Items.Add(obj);
+            }
+            
+            DockWindow window = new()
+            {
+                WindowContent = { Content = newGroup },
+                Width = group.Bounds.Width,
+                Height = group.Bounds.Height,
+                Position = p,
+            };
+
+            window.Show(MainWindow.Instance);
+            return;
+        }
     }
 
     public void Popup(DockTab tab)
@@ -199,55 +252,6 @@ public partial class DockArea : UserControl
             WindowContent = { Content = group },
             Width = 500,
             Height = 500,
-        };
-        
-        window.Show(MainWindow.Instance);
-    }
-    
-    public void FloatTabGroup(DockTabGroup group)
-    {
-        if (MainWindow.Instance == null) return;
-
-        List<object?> tabs = group.TabList.Items.ToList();
-        
-        PixelPoint p = group.PointToScreen(new(0, 0));
-        
-        RemoveTabGroup(group);
-
-        DockTabGroup newGroup = new();
-        foreach (object? tab in tabs)
-        {
-            newGroup.TabList.Items.Add(tab);
-        }
-        
-        DockWindow window = new()
-        {
-            WindowContent = { Content = newGroup },
-            Width = group.Bounds.Width,
-            Height = group.Bounds.Height,
-            Position = p,
-        };
-
-        window.Show(MainWindow.Instance);
-    }
-    
-    public void FloatTab(DockTabGroup group, DockTab tab)
-    {
-        if (MainWindow.Instance == null) return;
-        
-        PixelPoint p = group.PointToScreen(new(0, 0));
-        
-        RemoveTab(group, tab);
-
-        DockTabGroup newGroup = new();
-        newGroup.TabList.Items.Add(tab);
-        
-        DockWindow window = new()
-        {
-            WindowContent = { Content = newGroup },
-            Width = group.Bounds.Width,
-            Height = group.Bounds.Height,
-            Position = p,
         };
         
         window.Show(MainWindow.Instance);

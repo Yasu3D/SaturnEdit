@@ -55,12 +55,9 @@ public partial class DockTab : UserControl
         double x = Math.Abs(startPoint.Value.X - p.X);
         double y = Math.Abs(startPoint.Value.Y - p.Y);
         
-        if (x + y > 10)
+        if (x + y > 20)
         {
-            if (Parent?.Parent?.Parent is not DockTabGroup group) return;
-            if (group.TabList.Items.Count == 1) return;
-            
-            DockArea.Instance.FloatTab(group, this);
+            DockArea.Instance.Float(this);
         }
     }
     

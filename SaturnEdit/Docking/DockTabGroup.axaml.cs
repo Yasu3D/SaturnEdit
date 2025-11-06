@@ -124,9 +124,9 @@ public partial class DockTabGroup : UserControl
             int x = DockArea.Instance.PointerPosition.X - DockArea.Instance.StartPosition.X;
             int y = DockArea.Instance.PointerPosition.Y - DockArea.Instance.StartPosition.Y;
 
-            if (Math.Abs(x + y) > 10)
+            if (Math.Abs(x + y) > 20)
             {
-                DockArea.Instance.FloatTabGroup(this);
+                DockArea.Instance.Float(this);
             }
         }
         else
