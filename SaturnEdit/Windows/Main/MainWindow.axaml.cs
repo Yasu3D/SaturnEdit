@@ -29,7 +29,7 @@ public partial class MainWindow : Window
         OnOperationHistoryChanged(null, EventArgs.Empty);
         
         Closed += AudioSystem.OnClosed;
-        Closed += ChartEditor.OnClosed;
+        Closing += ChartEditor.OnClosing;
         Closing += Window_OnClosing;
 
         if (Application.Current != null)

@@ -18,26 +18,6 @@ public partial class DockArea : UserControl
         WindowDragStarted += OnWindowDragStarted;
         WindowDragEnded += OnWindowDragEnded;
         WindowDragged += OnWindowDragged;
-        
-        //DockTabGroup groupA = new();
-        //groupA.TabList.Items.Add(new DockTab(new CursorView(), Icon.Agents, "ChartEditor.Cursor"));
-//
-        //DockTabGroup groupB = new();
-        //groupB.TabList.Items.Add(new DockTab(new ChartPropertiesView(), Icon.Agents, "ChartEditor.ChartProperties"));
-        //groupB.TabList.Items.Add(new DockTab(new EventListView(), Icon.Agents, "ChartEditor.EventList"));
-//
-        //DockSplitter splitterA = new(groupA, groupB, TargetSide.Top, 0.75);
-        //
-        //DockTabGroup groupC = new();
-        //groupC.TabList.Items.Add(new DockTab(new ChartView3D(), Icon.Agents, "ChartEditor.ChartView3D"));
-        //groupC.TabList.Items.Add(new DockTab(new ChartViewTxt(), Icon.Agents, "ChartEditor.ChartViewTxt"));
-        //
-        //DockSplitter splitterB = new(splitterA, groupC, TargetSide.Left, 0.66);
-        //
-        //Root.Content = splitterB;
-        //
-        //DockTabGroup groupD = new();
-        //groupD.TabList.Items.Add(new DockTab(new InspectorView(), Icon.Agents, "ChartEditor.Inspector"));
     }
 
     public static DockArea? Instance { get; private set; } = null;

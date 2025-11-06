@@ -46,8 +46,6 @@ public partial class ChartEditorView : UserControl
         
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         OnOperationHistoryChanged(null, EventArgs.Empty);
-        
-        Dock_LoadPersistedLayout();
     }
     
     private static string PersistentLayoutPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Layout");
@@ -580,6 +578,7 @@ public partial class ChartEditorView : UserControl
     private async void Dock_LoadLayout()
     {
         // TODO.
+        
     }
 
     private void Dock_LoadPreset()
@@ -593,7 +592,7 @@ public partial class ChartEditorView : UserControl
         {
             Directory.CreateDirectory(PersistentLayoutPath);
 
-            string data = ""; // TODO: Custom Dock Serializer
+            string data = DockSerializer.Serialize();
             File.WriteAllText(Path.Combine(PersistentLayoutPath, "layout"), data);
         }
         catch (Exception ex)
@@ -607,10 +606,10 @@ public partial class ChartEditorView : UserControl
     {
         try
         {
-            if (File.Exists(PersistentLayoutPath))
+            if (File.Exists(Path.Combine(PersistentLayoutPath, "layout")))
             {
                 string data = File.ReadAllText(Path.Combine(PersistentLayoutPath, "layout"));
-                // TODO: Custom Dock Deserializer
+                DockSerializer.Deserialize(data);
             }
             else
             {
@@ -699,10 +698,17 @@ public partial class ChartEditorView : UserControl
         });
     }
     
-    public void OnClosed(object? sender, EventArgs e) => Dock_SavePersistedLayout();
+    public void OnClosing(object? sender, EventArgs e) => Dock_SavePersistedLayout();
 #endregion System Event Delegates
     
 #region UI Event Delegates
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        base.OnLoaded(e);
+        
+        Dock_LoadPersistedLayout();
+    }
+
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
@@ -1055,6 +1061,7 @@ public partial class ChartEditorView : UserControl
         if (sender is not MenuItem menuItem) return;
         (UserControl?, Icon, string) tabData = menuItem.Name switch
         {
+            // TODO: default sizes
             "MenuItemChartView3D"     => (new ChartView3D(),         Icon.CircleShadow,           "ChartEditor.ChartView3D"),
             "MenuItemChartView2D"     => (new ChartView2D(),         Icon.GanttChart,             "ChartEditor.ChartView2D"),
             "MenuItemChartViewTxt"    => (new ChartViewTxt(),        Icon.TextT,                  "ChartEditor.ChartViewTxt"),
