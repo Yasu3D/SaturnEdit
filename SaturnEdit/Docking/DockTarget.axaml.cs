@@ -45,6 +45,17 @@ public partial class DockTarget : UserControl
         }
     }
     private bool showSideTargets = true;
+    
+    public bool ShowCenterTarget
+    {
+        get => showCenterTarget;
+        set
+        {
+            showCenterTarget = value;
+            Update();
+        }
+    }
+    private bool showCenterTarget = true;
 
     public TargetSide TargetSide
     {
@@ -62,15 +73,17 @@ public partial class DockTarget : UserControl
     {
         Dispatcher.UIThread.Post(() =>
         {
-            TargetOuterLeft.IsVisible   = UseOuterTargets && showSideTargets;
-            TargetOuterTop.IsVisible    = UseOuterTargets && showSideTargets;
-            TargetOuterRight.IsVisible  = UseOuterTargets && showSideTargets;
-            TargetOuterBottom.IsVisible = UseOuterTargets && showSideTargets;
+            TargetCenter.IsVisible = ShowCenterTarget;
             
-            TargetLeft.IsVisible   = !UseOuterTargets && showSideTargets;
-            TargetTop.IsVisible    = !UseOuterTargets && showSideTargets;
-            TargetRight.IsVisible  = !UseOuterTargets && showSideTargets;
-            TargetBottom.IsVisible = !UseOuterTargets && showSideTargets;
+            TargetOuterLeft.IsVisible   = UseOuterTargets && ShowSideTargets;
+            TargetOuterTop.IsVisible    = UseOuterTargets && ShowSideTargets;
+            TargetOuterRight.IsVisible  = UseOuterTargets && ShowSideTargets;
+            TargetOuterBottom.IsVisible = UseOuterTargets && ShowSideTargets;
+            
+            TargetLeft.IsVisible   = !UseOuterTargets && ShowSideTargets;
+            TargetTop.IsVisible    = !UseOuterTargets && ShowSideTargets;
+            TargetRight.IsVisible  = !UseOuterTargets && ShowSideTargets;
+            TargetBottom.IsVisible = !UseOuterTargets && ShowSideTargets;
 
             IndicatorCenter.IsVisible = TargetSide == TargetSide.Center;
             IndicatorLeft.IsVisible   = TargetSide == TargetSide.Left;

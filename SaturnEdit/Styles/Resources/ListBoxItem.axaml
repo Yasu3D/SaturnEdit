@@ -49,17 +49,17 @@
         <Style Selector="^:selected">
 
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource ButtonAccentChecked}" />
+                <Setter Property="Background" Value="{DynamicResource ButtonPrimaryChecked}" />
             </Style>
 
             <!--  Selected Unfocused State  -->
             <Style Selector="^:not(:focus) /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource ButtonAccentChecked}" />
+                <Setter Property="Background" Value="{DynamicResource ButtonPrimaryChecked}" />
             </Style>
 
             <!--  Selected PointerOver State  -->
             <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource ButtonAccentPointerOver}" />
+                <Setter Property="Background" Value="{DynamicResource ButtonPrimaryChecked}" />
             </Style>
 
             <!--  Selected Pressed State  -->

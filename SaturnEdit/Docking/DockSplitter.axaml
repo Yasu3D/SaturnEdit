@@ -7,9 +7,7 @@
              d:DesignHeight="500"
              x:Class="SaturnEdit.Docking.DockSplitter">
     <Grid Name="SplitGrid">
-        <Panel Name="ItemContainerA">
-            <Control Name="ItemA" />
-        </Panel>
+        <UserControl Name="ItemA" />
 
         <Rectangle Name="SplitterLine"
                    Width="1"
@@ -17,8 +15,6 @@
         <GridSplitter Name="Splitter"
                       Background="Transparent"/>
 
-        <Panel Name="ItemContainerB">
-            <Control Name="ItemB" />
-        </Panel>
+        <UserControl Name="ItemB" />
     </Grid>
 </UserControl>

@@ -8,11 +8,9 @@
              d:DesignHeight="450"
              x:Class="SaturnEdit.Docking.DockArea">
     <Panel>
-        <Panel Name="Layout" />
+        <UserControl Name="Root" />
         <docking:DockTarget Name="Target"
                             UseOuterTargets="True"
                             IsVisible="False" />
-        
-        <docking:DockSplitter/>
     </Panel>
 </UserControl>

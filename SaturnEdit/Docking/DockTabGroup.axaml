@@ -15,14 +15,12 @@
         <Panel Grid.Row="0"
               Background="{DynamicResource BackgroundPrimary}">
             
-            <!-- Single Tab -->
-            <docking:DockTabGroupListItem Name="SingleTabTitle" />
-            
-            <!-- Multiple Tab List -->
-            <ListBox Name="ListBoxMultipleTabs"
+            <!-- Tab List -->
+            <ListBox Name="ListBoxTabs"
                      Height="35"
                      SelectionMode="AlwaysSelected"
-                     IsVisible="False">
+                     IsVisible="True"
+                     SelectionChanged="ListBoxTabs_OnSelectionChanged">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal" />
@@ -60,10 +58,11 @@
                    Fill="{DynamicResource SeparatorSecondary}" />
         
         <!-- Content -->
-        <Control Grid.Row="2"
-                 Name="TabContent"/>
+        <UserControl Grid.Row="2"
+                 Name="TabContentContainer"/>
         
         <!-- Dock Target -->
-        <docking:DockTarget Grid.Row="2"/>
+        <docking:DockTarget Grid.Row="2"
+                            IsVisible="False"/>
     </Grid>
 </UserControl>

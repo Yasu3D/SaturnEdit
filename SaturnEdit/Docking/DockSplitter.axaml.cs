@@ -1,8 +1,6 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
 
 namespace SaturnEdit.Docking;
 
@@ -12,6 +10,44 @@ public partial class DockSplitter : UserControl
     {
         InitializeComponent();
         Update();
+    }
+
+    public DockSplitter(UserControl destination, UserControl inserted, TargetSide targetSide, double proportion = 0.5)
+    {
+        if (targetSide is TargetSide.Center or TargetSide.None)
+        {
+            throw new ArgumentException("Target Side must be Top, Bottom, Left, or Right.");
+        }
+        
+        InitializeComponent();
+        
+        if (targetSide == TargetSide.Left)
+        {
+            ItemA.Content = inserted;
+            ItemB.Content = destination;
+            Direction = GridResizeDirection.Columns;
+        }
+        else if (targetSide == TargetSide.Right)
+        {
+            ItemA.Content = destination;
+            ItemB.Content = inserted;
+            Direction = GridResizeDirection.Columns;
+        }
+        else if (targetSide == TargetSide.Top)
+        {
+            ItemA.Content = inserted;
+            ItemB.Content = destination;
+            Direction = GridResizeDirection.Rows;
+        }
+        else if (targetSide == TargetSide.Bottom)
+        {
+            ItemA.Content = destination;
+            ItemB.Content = inserted;
+            Direction = GridResizeDirection.Rows;
+        }
+        
+        Update();
+        Proportion = proportion;
     }
 
     public static readonly StyledProperty<GridResizeDirection> DirectionProperty = AvaloniaProperty.Register<DockTarget, GridResizeDirection>(nameof(Direction), defaultValue: GridResizeDirection.Columns);
@@ -32,15 +68,13 @@ public partial class DockSplitter : UserControl
             double value;
             if (Direction == GridResizeDirection.Columns)
             {
-                double width = Bounds.Width;
-                double itemWidth = ItemContainerA.Bounds.Width;
-                value = itemWidth / width;
+                double totalWidth = SplitGrid.ColumnDefinitions[0].Width.Value + SplitGrid.ColumnDefinitions[2].Width.Value;
+                value = SplitGrid.ColumnDefinitions[0].Width.Value / totalWidth;
             }
             else
             {
-                double height = Bounds.Height;
-                double itemHeight = ItemContainerA.Bounds.Height;
-                value = itemHeight / height;
+                double totalHeight = SplitGrid.RowDefinitions[0].Height.Value + SplitGrid.RowDefinitions[2].Height.Value;
+                value = SplitGrid.RowDefinitions[0].Height.Value / totalHeight;
             }
 
             return value;
@@ -51,26 +85,20 @@ public partial class DockSplitter : UserControl
 
             if (Direction == GridResizeDirection.Columns)
             {
-                double a = Bounds.Width * value;
-                double b = Bounds.Width - a - 1;
-
                 SplitGrid.ColumnDefinitions =
                 [
-                    new ColumnDefinition(a, GridUnitType.Star) { MinWidth = SplitterMinWidth },
+                    new ColumnDefinition(value, GridUnitType.Star) { MinWidth = SplitterMinWidth },
                     new ColumnDefinition(1, GridUnitType.Pixel),
-                    new ColumnDefinition(b, GridUnitType.Star) { MinWidth = SplitterMinWidth },
+                    new ColumnDefinition(1 - value, GridUnitType.Star) { MinWidth = SplitterMinWidth },
                 ];
             }
             else
             {
-                double a = Bounds.Height * value;
-                double b = Bounds.Height - a - 1;
-
                 SplitGrid.RowDefinitions =
                 [
-                    new RowDefinition(a, GridUnitType.Star) { MinHeight = SplitterMinWidth },
+                    new RowDefinition(value, GridUnitType.Star) { MinHeight = SplitterMinWidth },
                     new RowDefinition(1, GridUnitType.Pixel),
-                    new RowDefinition(b, GridUnitType.Star) { MinHeight = SplitterMinWidth },
+                    new RowDefinition(1 - value, GridUnitType.Star) { MinHeight = SplitterMinWidth },
                 ];
             }
         }
