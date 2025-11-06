@@ -336,8 +336,12 @@ public partial class DockArea : UserControl
             return;
         }
 
+        Target.ShowSideTargets = Root.Content != null;
+        Target.ShowCenterTarget = Root.Content == null;
+            
         Rect bounds = ScreenBounds(this);
         Target.IsVisible = HitTest(bounds);
+        
     }
 #endregion Methods
 

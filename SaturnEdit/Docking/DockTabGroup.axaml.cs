@@ -57,6 +57,8 @@ public partial class DockTabGroup : UserControl
             return;
         }
 
+        Target.ShowSideTargets = VisualRoot is not DockWindow;
+        
         Rect bounds = DockArea.ScreenBounds(this);
         Target.IsVisible = DockArea.Instance.HitTest(bounds);
     }
