@@ -29,8 +29,7 @@ public partial class DockTab : UserControl
     {
         if (Parent?.Parent?.Parent is not DockTabGroup group) return;
 
-        DockArea.Instance?.FloatTab(group, this);
-        //DockArea.Instance?.RemoveTab(group, this);
+        DockArea.Instance?.RemoveTab(group, this);
     }
 #endregion UI Event Delegates
 }

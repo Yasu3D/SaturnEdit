@@ -87,8 +87,7 @@ public partial class DockTabGroup : UserControl
     
     private void ButtonClose_OnClick(object? sender, RoutedEventArgs e)
     {
-        DockArea.Instance?.FloatTabGroup(this);
-        //DockArea.Instance?.RemoveTabGroup(this);
+        DockArea.Instance?.RemoveTabGroup(this);
     }
     
     private void WindowHandle_OnPointerMoved(object? sender, PointerEventArgs e)
