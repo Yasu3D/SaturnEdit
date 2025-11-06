@@ -7,6 +7,7 @@ using SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
 namespace SaturnEdit.Docking;
 
+// TODO: Set Floating Window position via PixelPoint p = group.PointToScreen(new(0, 0));
 public partial class DockArea : UserControl
 {
     public DockArea()
@@ -30,6 +31,9 @@ public partial class DockArea : UserControl
         DockSplitter splitterB = new(splitterA, groupC, TargetSide.Left, 0.66);
         
         Root.Content = splitterB;
+        
+        DockTabGroup groupD = new();
+        groupD.TabList.Items.Add(new DockTab(new InspectorView(), Icon.Agents, "ChartEditor.Inspector"));
     }
 
     public static DockArea? Instance { get; private set; } = null;
@@ -117,18 +121,24 @@ public partial class DockArea : UserControl
 
     public void FloatTabGroup(DockTabGroup group)
     {
+        if (MainWindow.Instance == null) return;
+        
         RemoveTabGroup(group);
 
         DockWindow window = new()
         {
-            Content = group,
+            WindowContent = { Content = group },
+            Width = group.Bounds.Width,
+            Height = group.Bounds.Height,
         };
 
-        window.Show();
+        window.Show(MainWindow.Instance);
     }
     
     public void FloatTab(DockTabGroup group, DockTab tab)
     {
+        if (MainWindow.Instance == null) return;
+        
         RemoveTab(group, tab);
 
         DockTabGroup newGroup = new();
@@ -136,32 +146,40 @@ public partial class DockArea : UserControl
         
         DockWindow window = new()
         {
-            Content = group,
+            WindowContent = { Content = newGroup },
+            Width = group.Bounds.Width,
+            Height = group.Bounds.Height,
         };
-
-        window.Show();
+        
+        window.Show(MainWindow.Instance);
     }
     
     public void RemoveWindow(DockWindow dockWindow)
     {
-        dockWindow.Content = null;
+        dockWindow.WindowContent.Content = null;
         dockWindow.Close();
     }
     
     public void RemoveSplitter(DockSplitter splitter, UserControl preservedItem)
     {
         if (splitter.Parent is not UserControl parent) return;
-
-        // un-parent contents of splitter
-        splitter.ItemA = null;
-        splitter.ItemB = null;
         
-        // replace splitter with preserved item.
+        // un-parent splitter.
+        parent.Content = null;
+        
+        // un-parent contents of splitter.
+        splitter.ItemA.Content = null;
+        splitter.ItemB.Content = null;
+        
+        // insert preserved item in splitter's place.
         parent.Content = preservedItem;
     }
 
     public void RemoveTabGroup(DockTabGroup group)
     {
+        group.TabList.Items.Clear();
+        group.TabContentContainer.Content = null;
+        
         // 1. Group is child of Window
         if (group.GetVisualRoot() is DockWindow window)
         {
@@ -182,9 +200,11 @@ public partial class DockArea : UserControl
         if (group.Parent?.Parent?.Parent is DockSplitter splitter)
         {
             // find preserved item
-            UserControl preservedItem = splitter.ItemA == group 
-                ? splitter.ItemB 
-                : splitter.ItemA;
+            UserControl? preservedItem = Equals(splitter.ItemA.Content, group) 
+                ? (UserControl?)splitter.ItemB.Content 
+                : (UserControl?)splitter.ItemA.Content;
+            
+            if (preservedItem == null) return;
             
             // remove splitter
             RemoveSplitter(splitter, preservedItem);

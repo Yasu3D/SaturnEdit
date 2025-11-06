@@ -3,58 +3,73 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:docking="clr-namespace:SaturnEdit.Docking"
-             xmlns:controls="clr-namespace:SaturnEdit.Controls"
-             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
              d:DesignWidth="400"
              d:DesignHeight="400"
-             x:Class="SaturnEdit.Docking.DockTabGroup">
-    <Grid RowDefinitions="35,1,*">
+             x:Class="SaturnEdit.Docking.DockTabGroup"
+             AttachedToVisualTree="Visual_OnAttachedToVisualTree">
+    <Grid RowDefinitions="35,1,*"
+          ColumnDefinitions="Auto,*,35">
         
-        <!-- Tab Bar & Chrome -->
-        <Panel Grid.Row="0"
-              Background="{DynamicResource BackgroundPrimary}">
-            
-            <!-- Tab List -->
-            <ListBox Name="TabList"
-                     Height="35"
-                     SelectionMode="AlwaysSelected"
-                     IsVisible="True"
-                     SelectionChanged="ListBoxTabs_OnSelectionChanged">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
-            
-            <!-- Close Button -->
-            <Panel Name="DockedChrome" 
-                   Background="{DynamicResource BackgroundPrimary}"
-                   Width="35"
+        <!-- Tab List -->
+        <ListBox Grid.Row="0"
+                 Grid.Column="0"
+                 Name="TabList"
+                 Background="{DynamicResource BackgroundPrimary}"
+                 Height="35"
+                 SelectionMode="AlwaysSelected"
+                 IsHitTestVisible="True"
+                 SelectionChanged="ListBoxTabs_OnSelectionChanged">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+        
+        <!-- Background -->
+        <Rectangle Grid.Row="0"
+                   Grid.Column="1"
+                   Fill="{DynamicResource BackgroundPrimary}"
                    Height="35"
-                   HorizontalAlignment="Right">
-                <Button Name="ButtonClose"
-                        Classes="Themed Standard"
-                        Width="35"
-                        Height="35"
-                        CornerRadius="0">
-                    <PathIcon Data="{DynamicResource IconDismiss}"
-                              Width="10"
-                              Height="10" />
-                </Button>
-            </Panel>
+                   HorizontalAlignment="Stretch"
+                   IsHitTestVisible="False"/>
+
+        <!-- Close Button -->
+        <Panel Grid.Row="0"
+               Grid.Column="2"
+               Name="ButtonClose"
+               Background="{DynamicResource BackgroundPrimary}"
+               Width="35"
+               Height="35"
+               HorizontalAlignment="Right"
+               IsHitTestVisible="True">
+            <Button Classes="Themed Standard"
+                    Width="35"
+                    Height="35"
+                    CornerRadius="0"
+                    Click="ButtonClose_OnClick">
+                <PathIcon Data="{DynamicResource IconDismiss}"
+                          Width="10"
+                          Height="10" />
+            </Button>
         </Panel>
-        
+
         <Rectangle Grid.Row="1"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="3"
                    Fill="{DynamicResource SeparatorSecondary}" />
-        
+
         <!-- Content -->
         <UserControl Grid.Row="2"
-                 Name="TabContentContainer"/>
-        
+                     Grid.Column="0"
+                     Grid.ColumnSpan="3"
+                     Name="TabContentContainer" />
+
         <!-- Dock Target -->
         <docking:DockTarget Grid.Row="2"
-                            IsVisible="False"/>
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            IsVisible="False" />
     </Grid>
 </UserControl>

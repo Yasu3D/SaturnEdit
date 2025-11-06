@@ -29,7 +29,8 @@
                 Width="20"
                 Height="20"
                 CornerRadius="0"
-                Margin="10,0,7.5,0">
+                Margin="10,0,7.5,0"
+                Click="ButtonClose_OnClick">
             <PathIcon Data="{DynamicResource IconDismiss}"
                       Width="8"
                       Height="8" />

@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using FluentIcons.Common;
 
@@ -22,4 +23,13 @@ public partial class DockTab : UserControl
     }
     
     public UserControl? TabContent { get; set; } = null;
+
+#region UI Event Delegates
+    private void ButtonClose_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (Parent?.Parent?.Parent is not DockTabGroup group) return;
+
+        DockArea.Instance?.RemoveTab(group, this);
+    }
+#endregion UI Event Delegates
 }
