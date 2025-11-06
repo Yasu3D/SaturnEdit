@@ -11,7 +11,7 @@
 
         <Rectangle Name="SplitterLine"
                    Width="1"
-                   Fill="{DynamicResource SeparatorSecondary}" />
+                   Fill="{DynamicResource SeparatorPrimary}" />
         <GridSplitter Name="Splitter"
                       Background="Transparent"/>
 

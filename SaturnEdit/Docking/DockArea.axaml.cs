@@ -8,7 +8,6 @@ using Avalonia.VisualTree;
 
 namespace SaturnEdit.Docking;
 
-// TODO: Set Floating Window position via PixelPoint p = group.PointToScreen(new(0, 0));
 public partial class DockArea : UserControl
 {
     public DockArea()
@@ -236,6 +235,8 @@ public partial class DockArea : UserControl
     {
         if (MainWindow.Instance == null) return;
         
+        PixelPoint p = group.PointToScreen(new(0, 0));
+        
         RemoveTab(group, tab);
 
         DockTabGroup newGroup = new();
@@ -246,6 +247,7 @@ public partial class DockArea : UserControl
             WindowContent = { Content = newGroup },
             Width = group.Bounds.Width,
             Height = group.Bounds.Height,
+            Position = p,
         };
         
         window.Show(MainWindow.Instance);
