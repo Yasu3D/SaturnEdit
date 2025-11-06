@@ -48,6 +48,7 @@ public partial class DockArea : UserControl
     public event EventHandler? WindowDragged;
     
     public Point WindowOffset;
+    public DockTabGroup? DraggedGroup = null;
 
     public PixelPoint PointerPosition
     {
@@ -348,8 +349,18 @@ public partial class DockArea : UserControl
 #region System Event Delegates
     private void OnWindowDragStarted(object? sender, EventArgs e) => UpdateTarget();
     
-    private void OnWindowDragEnded(object? sender, EventArgs e) => Target.IsVisible = false;
-    
+    private void OnWindowDragEnded(object? sender, EventArgs e)
+    {
+        Target.IsVisible = false;
+        
+        if (Target.TargetSide != TargetSide.None && DraggedGroup != null)
+        {
+            Dock(Target, DraggedGroup);
+        }
+
+        Target.TargetSide = TargetSide.None;
+    }
+
     private void OnWindowDragged(object? sender, EventArgs e) => UpdateTarget();
 #endregion System Event Delegates
     

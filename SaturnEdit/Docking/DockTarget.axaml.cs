@@ -24,7 +24,7 @@ public partial class DockTarget : UserControl
         
         if (DockArea.Instance != null)
         {
-            DockArea.Instance.WindowDragEnded += OnWindowDragEnded;
+            DockArea.Instance.WindowDragStarted += OnWindowDragStarted;
             DockArea.Instance.WindowDragged += OnWindowDragged;
         }
     }
@@ -97,22 +97,8 @@ public partial class DockTarget : UserControl
             IndicatorBottom.IsVisible = TargetSide == TargetSide.Bottom;
         });
     }
-#endregion Methods
 
-#region System Event Delegates
-    private void OnWindowDragEnded(object? sender, EventArgs e)
-    {
-        if (DockArea.Instance == null) return;
-
-        if (TargetSide != TargetSide.None)
-        {
-            Console.WriteLine($"Docking! {TargetSide}");
-        }
-        
-        TargetSide = TargetSide.None;
-    }
-
-    private void OnWindowDragged(object? sender, EventArgs e)
+    private void HitTestTargets()
     {
         if (!IsVisible) return;
         if (DockArea.Instance == null) return;
@@ -256,5 +242,11 @@ public partial class DockTarget : UserControl
 
         TargetSide = TargetSide.None;
     }
+#endregion Methods
+
+#region System Event Delegates
+    private void OnWindowDragStarted(object? sender, EventArgs e) => HitTestTargets();
+    
+    private void OnWindowDragged(object? sender, EventArgs e) => HitTestTargets();
 #endregion System Event Delegates
 }

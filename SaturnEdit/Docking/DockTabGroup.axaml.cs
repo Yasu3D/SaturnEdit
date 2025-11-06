@@ -67,7 +67,19 @@ public partial class DockTabGroup : UserControl
 #region System Event Delegates
     private void OnWindowDragStarted(object? sender, EventArgs e) => UpdateTarget();
 
-    private void OnWindowDragEnded(object? sender, EventArgs e) => Target.IsVisible = false;
+    private void OnWindowDragEnded(object? sender, EventArgs e)
+    {
+        Target.IsVisible = false;
+        
+        if (DockArea.Instance == null) return;
+        
+        if (Target.TargetSide != TargetSide.None && DockArea.Instance.DraggedGroup != null)
+        {
+            DockArea.Instance.Dock(Target, DockArea.Instance.DraggedGroup);
+        }
+
+        Target.TargetSide = TargetSide.None;
+    }
 
     private void OnWindowDragged(object? sender, EventArgs e) => UpdateTarget();
 #endregion System Event Delegates
@@ -112,6 +124,7 @@ public partial class DockTabGroup : UserControl
         
         DockArea.Instance.WindowOffset = e.GetPosition(window);
         DockArea.Instance.WindowDragActive = true;
+        DockArea.Instance.DraggedGroup = this;
         
         dragActive = true;
         window.Opacity = 0.5;
