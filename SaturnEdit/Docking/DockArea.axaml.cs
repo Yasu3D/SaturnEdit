@@ -50,6 +50,8 @@ public partial class DockArea : UserControl
     public Point WindowOffset;
     public DockTabGroup? DraggedGroup = null;
 
+    public PixelPoint StartPosition;
+    
     public PixelPoint PointerPosition
     {
         get => pointerPosition;
@@ -209,6 +211,8 @@ public partial class DockArea : UserControl
 
         List<object?> tabs = group.TabList.Items.ToList();
         
+        PixelPoint p = group.PointToScreen(new(0, 0));
+        
         RemoveTabGroup(group);
 
         DockTabGroup newGroup = new();
@@ -222,6 +226,7 @@ public partial class DockArea : UserControl
             WindowContent = { Content = newGroup },
             Width = group.Bounds.Width,
             Height = group.Bounds.Height,
+            Position = p,
         };
 
         window.Show(MainWindow.Instance);
@@ -344,7 +349,6 @@ public partial class DockArea : UserControl
             
         Rect bounds = ScreenBounds(this);
         Target.IsVisible = HitTest(bounds);
-        
     }
 #endregion Methods
 

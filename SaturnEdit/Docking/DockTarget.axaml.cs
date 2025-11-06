@@ -74,7 +74,7 @@ public partial class DockTarget : UserControl
     private TargetSide targetSide = TargetSide.None;
 
 #region Methods
-    private void Update()
+    public void Update()
     {
         Dispatcher.UIThread.Post(() =>
         {

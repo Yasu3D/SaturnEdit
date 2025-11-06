@@ -3,7 +3,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.VisualTree;
 
 namespace SaturnEdit.Docking;
 
@@ -12,13 +11,6 @@ public partial class DockTabGroup : UserControl
     public DockTabGroup()
     {
         InitializeComponent();
-        
-        if (DockArea.Instance != null)
-        {
-            DockArea.Instance.WindowDragStarted += OnWindowDragStarted;
-            DockArea.Instance.WindowDragEnded += OnWindowDragEnded;
-            DockArea.Instance.WindowDragged += OnWindowDragged;
-        }
     }
     
     public DockTab? SelectedTab
@@ -60,6 +52,7 @@ public partial class DockTabGroup : UserControl
         Target.ShowSideTargets = VisualRoot is not DockWindow;
         
         Rect bounds = DockArea.ScreenBounds(this);
+        
         Target.IsVisible = DockArea.Instance.HitTest(bounds);
     }
 #endregion Methods
@@ -87,7 +80,24 @@ public partial class DockTabGroup : UserControl
 #region UI Event Delegates
     private void Visual_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
     {
+        if (DockArea.Instance != null)
+        {
+            DockArea.Instance.WindowDragStarted += OnWindowDragStarted;
+            DockArea.Instance.WindowDragEnded += OnWindowDragEnded;
+            DockArea.Instance.WindowDragged += OnWindowDragged;
+        }
+        
         ButtonClose.IsVisible = !IsFloating;
+    }
+    
+    private void Visual_OnDetachedFromVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+    {
+        if (DockArea.Instance != null)
+        {
+            DockArea.Instance.WindowDragStarted -= OnWindowDragStarted;
+            DockArea.Instance.WindowDragEnded -= OnWindowDragEnded;
+            DockArea.Instance.WindowDragged -= OnWindowDragged;
+        }
     }
 
     private void ListBoxTabs_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -106,40 +116,60 @@ public partial class DockTabGroup : UserControl
     {
         if (DockArea.Instance == null) return;
         if (!e.Properties.IsLeftButtonPressed) return;
-        if (VisualRoot is not DockWindow window) return;
         
-        DockArea.Instance.PointerPosition = this.PointToScreen(e.GetPosition(window));
-        
-        int x = (int)(DockArea.Instance.PointerPosition.X - DockArea.Instance.WindowOffset.X);
-        int y = (int)(DockArea.Instance.PointerPosition.Y - DockArea.Instance.WindowOffset.Y);
+        DockArea.Instance.PointerPosition = this.PointToScreen(e.GetPosition(VisualRoot as Window));
 
-        window.Position = new(x, y);
+        if (VisualRoot is not DockWindow dockWindow)
+        {
+            int x = DockArea.Instance.PointerPosition.X - DockArea.Instance.StartPosition.X;
+            int y = DockArea.Instance.PointerPosition.Y - DockArea.Instance.StartPosition.Y;
+
+            if (Math.Abs(x + y) > 10)
+            {
+                DockArea.Instance.FloatTabGroup(this);
+            }
+        }
+        else
+        {
+            int x = (int)(DockArea.Instance.PointerPosition.X - DockArea.Instance.WindowOffset.X);
+            int y = (int)(DockArea.Instance.PointerPosition.Y - DockArea.Instance.WindowOffset.Y);
+
+            dockWindow.Position = new(x, y);
+        }
     }
     
     private void WindowHandle_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (DockArea.Instance == null) return;
         if (!e.Properties.IsLeftButtonPressed) return;
-        if (VisualRoot is not DockWindow window) return;
         
-        DockArea.Instance.WindowOffset = e.GetPosition(window);
-        DockArea.Instance.WindowDragActive = true;
+        DockArea.Instance.StartPosition = this.PointToScreen(e.GetPosition(VisualRoot as Window));
+        DockArea.Instance.PointerPosition = DockArea.Instance.StartPosition;
+        
+        DockArea.Instance.WindowOffset = e.GetPosition(VisualRoot as Window);
         DockArea.Instance.DraggedGroup = this;
         
-        dragActive = true;
-        window.Opacity = 0.5;
+        if (VisualRoot is DockWindow window)
+        {
+            DockArea.Instance.WindowDragActive = true;
+
+            dragActive = true;
+            window.Opacity = 0.5;
+        }
     }
 
     private void WindowHandle_OnPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
         if (DockArea.Instance == null) return;
         if (e.InitialPressMouseButton != MouseButton.Left) return;
-        if (VisualRoot is not DockWindow window) return;
         
         DockArea.Instance.WindowDragActive = false;
-        
         dragActive = false;
-        window.Opacity = 1.0;
+        
+        if (VisualRoot is DockWindow window)
+        {
+            window.Opacity = 1.0;
+        }
     }
 #endregion UI Event Delegates
 }
