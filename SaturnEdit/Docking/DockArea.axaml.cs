@@ -123,6 +123,8 @@ public partial class DockArea : UserControl
             // 2. Side Target, occupied root.
             if (destination.TargetSide != TargetSide.Center && Root.Content is UserControl existingRoot)
             {
+                Root.Content = null;
+                
                 // create splitter
                 DockSplitter splitter = new(existingRoot, insertedGroup, destination.TargetSide);
                 
