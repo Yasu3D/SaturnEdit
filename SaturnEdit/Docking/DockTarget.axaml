@@ -47,9 +47,7 @@
                 Background="Transparent"
                 BorderBrush="{DynamicResource DockTargetOutline}"
                 BorderThickness="1"
-                CornerRadius="4"
-                PointerEntered="TargetLeft_OnPointerEntered"
-                PointerExited="Target_OnPointerExited">
+                CornerRadius="4">
             <Border Background="{DynamicResource DockTargetFill}"
                     CornerRadius="4,0,0,4"
                     Margin="-1,-1,20,-1"/>
@@ -63,9 +61,7 @@
                 Background="Transparent"
                 BorderBrush="{DynamicResource DockTargetOutline}"
                 BorderThickness="1"
-                CornerRadius="4"
-                PointerEntered="TargetTop_OnPointerEntered"
-                PointerExited="Target_OnPointerExited">
+                CornerRadius="4">
             <Border Background="{DynamicResource DockTargetFill}"
                     CornerRadius="4,4,0,0"
                     Margin="-1,-1,-1,20"/>
@@ -79,9 +75,7 @@
                 Background="Transparent"
                 BorderBrush="{DynamicResource DockTargetOutline}"
                 BorderThickness="1"
-                CornerRadius="4"
-                PointerEntered="TargetRight_OnPointerEntered"
-                PointerExited="Target_OnPointerExited">
+                CornerRadius="4">
             <Border Background="{DynamicResource DockTargetFill}"
                     CornerRadius="0,4,4,0"
                     Margin="20,-1,-1,-1"/>
@@ -95,9 +89,7 @@
                 Background="Transparent"
                 BorderBrush="{DynamicResource DockTargetOutline}"
                 BorderThickness="1"
-                CornerRadius="4"
-                PointerEntered="TargetBottom_OnPointerEntered"
-                PointerExited="Target_OnPointerExited">
+                CornerRadius="4">
             <Border Background="{DynamicResource DockTargetFill}"
                     CornerRadius="0,0,4,4"
                     Margin="-1,20,-1,-1" />
@@ -115,9 +107,7 @@
                     Background="Transparent"
                     BorderBrush="{DynamicResource DockTargetOutline}"
                     BorderThickness="1"
-                    CornerRadius="4"
-                    PointerEntered="TargetLeft_OnPointerEntered"
-                    PointerExited="Target_OnPointerExited">
+                    CornerRadius="4">
                 <Border Background="{DynamicResource DockTargetFill}"
                         CornerRadius="4,0,0,4"
                         Margin="-1,-1,20,-1" />
@@ -131,9 +121,7 @@
                     Background="Transparent"
                     BorderBrush="{DynamicResource DockTargetOutline}"
                     BorderThickness="1"
-                    CornerRadius="4"
-                    PointerEntered="TargetTop_OnPointerEntered"
-                    PointerExited="Target_OnPointerExited">
+                    CornerRadius="4">
                 <Border Background="{DynamicResource DockTargetFill}"
                         CornerRadius="4,4,0,0"
                         Margin="-1,-1,-1,20" />
@@ -147,9 +135,7 @@
                     Background="Transparent"
                     BorderBrush="{DynamicResource DockTargetOutline}"
                     BorderThickness="1"
-                    CornerRadius="4"
-                    PointerEntered="TargetRight_OnPointerEntered"
-                    PointerExited="Target_OnPointerExited">
+                    CornerRadius="4">
                 <Border Background="{DynamicResource DockTargetFill}"
                         CornerRadius="0,4,4,0"
                         Margin="20,-1,-1,-1" />
@@ -163,9 +149,7 @@
                     Background="Transparent"
                     BorderBrush="{DynamicResource DockTargetOutline}"
                     BorderThickness="1"
-                    CornerRadius="4"
-                    PointerEntered="TargetBottom_OnPointerEntered"
-                    PointerExited="Target_OnPointerExited">
+                    CornerRadius="4">
                 <Border Background="{DynamicResource DockTargetFill}"
                         CornerRadius="0,0,4,4"
                         Margin="-1,20,-1,-1" />
@@ -180,9 +164,7 @@
                 Background="Transparent"
                 BorderBrush="{DynamicResource DockTargetOutline}"
                 BorderThickness="1"
-                CornerRadius="4"
-                PointerEntered="TargetCenter_OnPointerEntered"
-                PointerExited="Target_OnPointerExited">
+                CornerRadius="4">
             <Border Background="{DynamicResource DockTargetFill}"
                     CornerRadius="4"/>
         </Border>

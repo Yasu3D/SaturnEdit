@@ -6,7 +6,9 @@
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
-             x:Class="SaturnEdit.Docking.DockArea">
+             x:Class="SaturnEdit.Docking.DockArea"
+             PointerEntered="InputElement_OnPointerEntered"
+             PointerExited="InputElement_OnPointerExited">
     <Panel>
         <UserControl Name="Root" />
         <docking:DockTarget Name="Target"

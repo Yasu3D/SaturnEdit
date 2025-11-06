@@ -1,7 +1,6 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 
 namespace SaturnEdit.Docking;
@@ -22,6 +21,12 @@ public partial class DockTarget : UserControl
     {
         InitializeComponent();
         Update();
+        
+        if (DockArea.Instance != null)
+        {
+            DockArea.Instance.WindowDragEnded += OnWindowDragEnded;
+            DockArea.Instance.WindowDragged += OnWindowDragged;
+        }
     }
 
     public static readonly StyledProperty<bool> UseOuterTargetsProperty = AvaloniaProperty.Register<DockTarget, bool>(nameof(UseOuterTargets), defaultValue: false);
@@ -93,42 +98,163 @@ public partial class DockTarget : UserControl
         });
     }
 #endregion Methods
-    
-#region UI Event Delegates
-    private void Target_OnPointerExited(object? sender, PointerEventArgs e)
+
+#region System Event Delegates
+    private void OnWindowDragEnded(object? sender, EventArgs e)
     {
+        if (DockArea.Instance == null) return;
+
+        if (TargetSide != TargetSide.None)
+        {
+            Console.WriteLine($"Docking! {TargetSide}");
+        }
+        
         TargetSide = TargetSide.None;
-        Update();
-    }
-    
-    private void TargetLeft_OnPointerEntered(object? sender, PointerEventArgs e)
-    {
-        TargetSide = TargetSide.Left;
-        Update();
     }
 
-    private void TargetTop_OnPointerEntered(object? sender, PointerEventArgs e)
+    private void OnWindowDragged(object? sender, EventArgs e)
     {
-        TargetSide = TargetSide.Top;
-        Update();
-    }
+        if (!IsVisible) return;
+        if (DockArea.Instance == null) return;
+        if (VisualRoot == null) return;
 
-    private void TargetRight_OnPointerEntered(object? sender, PointerEventArgs e)
-    {
-        TargetSide = TargetSide.Right;
-        Update();
-    }
+        if (!DockArea.Instance.WindowDragActive)
+        {
+            TargetSide = TargetSide.None;
+            Update();
+            
+            return;
+        }
 
-    private void TargetBottom_OnPointerEntered(object? sender, PointerEventArgs e)
-    {
-        TargetSide = TargetSide.Bottom;
-        Update();
-    }
+        Rect bounds = DockArea.ScreenBounds(this);
 
-    private void TargetCenter_OnPointerEntered(object? sender, PointerEventArgs e)
-    {
-        TargetSide = TargetSide.Center;
-        Update();
+        int x = DockArea.Instance.PointerPosition.X;
+        int y = DockArea.Instance.PointerPosition.Y;
+
+        bool left;
+        bool right;
+        bool top;
+        bool bottom;
+        
+        if (ShowCenterTarget)
+        {
+            left   = x > bounds.Center.X - 20;
+            right  = x < bounds.Center.X + 20;
+            top    = y > bounds.Center.Y - 20;
+            bottom = y < bounds.Center.Y + 20;
+
+            if (left && right && top && bottom)
+            {
+                TargetSide = TargetSide.Center;
+                return;
+            }
+        }
+
+        if (showSideTargets)
+        {
+            if (UseOuterTargets)
+            {
+                // Left
+                left   = x > bounds.Left;
+                right  = x < bounds.Left + 40;
+                top    = y > bounds.Center.Y - 20;
+                bottom = y < bounds.Center.Y + 20;
+                
+                if (left && right && top && bottom)
+                {
+                    TargetSide = TargetSide.Left;
+                    return;
+                }
+                
+                // Right
+                left   = x > bounds.Right - 40;
+                right  = x < bounds.Right;
+                top    = y > bounds.Center.Y - 20;
+                bottom = y < bounds.Center.Y + 20;
+                
+                if (left && right && top && bottom)
+                {
+                    TargetSide = TargetSide.Right;
+                    return;
+                }
+                
+                // Top
+                left   = x > bounds.Center.X - 20;
+                right  = x < bounds.Center.X + 20;
+                top    = y > bounds.Top;
+                bottom = y < bounds.Top + 40;
+                
+                if (left && right && top && bottom)
+                {
+                    TargetSide = TargetSide.Top;
+                    return;
+                }
+                
+                // Bottom
+                left   = x > bounds.Center.X - 20;
+                right  = x < bounds.Center.X + 20;
+                top    = y > bounds.Bottom - 40;
+                bottom = y < bounds.Bottom;
+                
+                if (left && right && top && bottom)
+                {
+                    TargetSide = TargetSide.Bottom;
+                    return;
+                }
+            }
+            else
+            {
+                // Left
+                left   = x > bounds.Center.X - 65;
+                right  = x < bounds.Center.X - 25;
+                top    = y > bounds.Center.Y - 20;
+                bottom = y < bounds.Center.Y + 20;
+                
+                if (left && right && top && bottom)
+                {
+                    TargetSide = TargetSide.Left;
+                    return;
+                }
+                
+                // Right
+                left   = x > bounds.Center.X + 25;
+                right  = x < bounds.Center.X + 65;
+                top    = y > bounds.Center.Y - 20;
+                bottom = y < bounds.Center.Y + 20;
+                
+                if (left && right && top && bottom)
+                {
+                    TargetSide = TargetSide.Right;
+                    return;
+                }
+                
+                // Top
+                left   = x > bounds.Center.X - 20;
+                right  = x < bounds.Center.X + 20;
+                top    = y > bounds.Center.Y - 65;
+                bottom = y < bounds.Center.Y - 25;
+                
+                if (left && right && top && bottom)
+                {
+                    TargetSide = TargetSide.Top;
+                    return;
+                }
+                
+                // Bottom
+                left   = x > bounds.Center.X - 20;
+                right  = x < bounds.Center.X + 20;
+                top    = y > bounds.Center.Y + 25;
+                bottom = y < bounds.Center.Y + 65;
+                
+                if (left && right && top && bottom)
+                {
+                    TargetSide = TargetSide.Bottom;
+                    return;
+                }
+            }
+        }
+
+        TargetSide = TargetSide.None;
     }
-#endregion UI Event Delegates
+#endregion System Event Delegates
 }

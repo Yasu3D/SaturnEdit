@@ -30,10 +30,13 @@
         <!-- Background -->
         <Rectangle Grid.Row="0"
                    Grid.Column="1"
+                   Name="WindowHandle"
                    Fill="{DynamicResource BackgroundPrimary}"
                    Height="35"
                    HorizontalAlignment="Stretch"
-                   IsHitTestVisible="False"/>
+                   PointerMoved="WindowHandle_OnPointerMoved"
+                   PointerPressed="WindowHandle_OnPointerPressed"
+                   PointerReleased="WindowHandle_OnPointerReleased"/>
 
         <!-- Close Button -->
         <Panel Grid.Row="0"
@@ -67,7 +70,8 @@
                      Name="TabContentContainer" />
 
         <!-- Dock Target -->
-        <docking:DockTarget Grid.Row="2"
+        <docking:DockTarget Name="Target"
+                            Grid.Row="2"
                             Grid.Column="0"
                             Grid.ColumnSpan="3"
                             IsVisible="False" />

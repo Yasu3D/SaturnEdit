@@ -283,6 +283,9 @@
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource ChartEditor.EventList}" />
                             </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="TextBulletList" />
+                            </MenuItem.Icon>
                         </MenuItem>
 
                         <MenuItem Name="MenuItemLayerList"
@@ -290,6 +293,9 @@
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource ChartEditor.LayerList}" />
                             </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <icon:FluentIcon Icon="TextBulletList" />
+                            </MenuItem.Icon>
                         </MenuItem>
 
                         <Separator />

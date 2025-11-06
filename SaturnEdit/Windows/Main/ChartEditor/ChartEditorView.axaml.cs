@@ -13,6 +13,7 @@ using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnData.Notation.Serialization;
+using SaturnEdit.Docking;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ChooseMirrorAxis;
@@ -563,9 +564,12 @@ public partial class ChartEditorView : UserControl
     }
 
     
-    public void Dock_CreateNewFloatingTool(UserControl userControl)
+    public static void Dock_CreateNewFloatingTool(UserControl userControl, Icon icon, string key)
     {
+        if (DockArea.Instance == null) return;
         
+        DockTab tab = new(userControl, icon, key);
+        DockArea.Instance.Popup(tab);
     }
     
     private async void Dock_SaveLayout()
@@ -1049,25 +1053,25 @@ public partial class ChartEditorView : UserControl
     private void MenuItemToolWindows_OnClick(object? sender, RoutedEventArgs e)
     {
         if (sender is not MenuItem menuItem) return;
-        UserControl? userControl = menuItem.Name switch
+        (UserControl?, Icon, string) tabData = menuItem.Name switch
         {
-            "MenuItemChartView3D" => new ChartView3D(),
-            "MenuItemChartView2D" => new ChartView2D(),
-            "MenuItemChartViewTxt" => new ChartViewTxt(),
-            "MenuItemChartProperties" => new ChartPropertiesView(),
-            "MenuItemChartStatistics" => new ChartStatisticsView(),
-            "MenuItemProofreader" => new ProofreaderView(),
-            "MenuItemEventList" => new EventListView(),
-            "MenuItemLayerList" => new LayerListView(),
-            "MenuItemInspector" => new InspectorView(),
-            "MenuItemCursor" => new CursorView(),
-            "MenuItemAudioMixer" => new AudioMixerView(),
-            "MenuItemWaveform" => new WaveformView(),
-            _ => null,
+            "MenuItemChartView3D"     => (new ChartView3D(),         Icon.CircleShadow,           "ChartEditor.ChartView3D"),
+            "MenuItemChartView2D"     => (new ChartView2D(),         Icon.GanttChart,             "ChartEditor.ChartView2D"),
+            "MenuItemChartViewTxt"    => (new ChartViewTxt(),        Icon.TextT,                  "ChartEditor.ChartViewTxt"),
+            "MenuItemChartProperties" => (new ChartPropertiesView(), Icon.TextBulletList,         "ChartEditor.ChartProperties"),
+            "MenuItemChartStatistics" => (new ChartStatisticsView(), Icon.DataHistogram,          "ChartEditor.ChartStatistics"),
+            "MenuItemProofreader"     => (new ProofreaderView(),     Icon.ApprovalsApp,           "ChartEditor.Proofreader"),
+            "MenuItemEventList"       => (new EventListView(),       Icon.TextBulletList,         "ChartEditor.EventList"),
+            "MenuItemLayerList"       => (new LayerListView(),       Icon.TextBulletList,         "ChartEditor.LayerList"),
+            "MenuItemInspector"       => (new InspectorView(),       Icon.WrenchScrewdriver,      "ChartEditor.Inspector"),
+            "MenuItemCursor"          => (new CursorView(),          Icon.CircleHintHalfVertical, "ChartEditor.Cursor"),
+            "MenuItemAudioMixer"      => (new AudioMixerView(),      Icon.Speaker2,               "ChartEditor.AudioMixer"),
+            "MenuItemWaveform"        => (new WaveformView(),        Icon.Pulse,                  "ChartEditor.Waveform"),
+            _ => (null, Icon.Warning, ""),
         };
 
-        if (userControl == null) return;
-        Dock_CreateNewFloatingTool(userControl);
+        if (tabData.Item1 == null) return;
+        Dock_CreateNewFloatingTool(tabData.Item1, tabData.Item2, tabData.Item3);
     }
     
     private void MenuItemLayoutPresetClassic_OnClick(object? sender, RoutedEventArgs e) => Dock_LoadPreset();

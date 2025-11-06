@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.VisualTree;
-using FluentIcons.Common;
-using SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
 namespace SaturnEdit.Docking;
 
@@ -12,33 +13,91 @@ public partial class DockArea : UserControl
 {
     public DockArea()
     {
-        InitializeComponent();
         Instance = this;
+        InitializeComponent();
 
-        DockTabGroup groupA = new();
-        groupA.TabList.Items.Add(new DockTab(new CursorView(), Icon.Agents, "ChartEditor.Cursor"));
-
-        DockTabGroup groupB = new();
-        groupB.TabList.Items.Add(new DockTab(new ChartPropertiesView(), Icon.Agents, "ChartEditor.ChartProperties"));
-        groupB.TabList.Items.Add(new DockTab(new EventListView(), Icon.Agents, "ChartEditor.EventList"));
-
-        DockSplitter splitterA = new(groupA, groupB, TargetSide.Top, 0.75);
+        WindowDragStarted += OnWindowDragStarted;
+        WindowDragEnded += OnWindowDragEnded;
+        WindowDragged += OnWindowDragged;
         
-        DockTabGroup groupC = new();
-        groupC.TabList.Items.Add(new DockTab(new ChartView3D(), Icon.Agents, "ChartEditor.ChartView3D"));
-        groupC.TabList.Items.Add(new DockTab(new ChartViewTxt(), Icon.Agents, "ChartEditor.ChartViewTxt"));
-        
-        DockSplitter splitterB = new(splitterA, groupC, TargetSide.Left, 0.66);
-        
-        Root.Content = splitterB;
-        
-        DockTabGroup groupD = new();
-        groupD.TabList.Items.Add(new DockTab(new InspectorView(), Icon.Agents, "ChartEditor.Inspector"));
+        //DockTabGroup groupA = new();
+        //groupA.TabList.Items.Add(new DockTab(new CursorView(), Icon.Agents, "ChartEditor.Cursor"));
+//
+        //DockTabGroup groupB = new();
+        //groupB.TabList.Items.Add(new DockTab(new ChartPropertiesView(), Icon.Agents, "ChartEditor.ChartProperties"));
+        //groupB.TabList.Items.Add(new DockTab(new EventListView(), Icon.Agents, "ChartEditor.EventList"));
+//
+        //DockSplitter splitterA = new(groupA, groupB, TargetSide.Top, 0.75);
+        //
+        //DockTabGroup groupC = new();
+        //groupC.TabList.Items.Add(new DockTab(new ChartView3D(), Icon.Agents, "ChartEditor.ChartView3D"));
+        //groupC.TabList.Items.Add(new DockTab(new ChartViewTxt(), Icon.Agents, "ChartEditor.ChartViewTxt"));
+        //
+        //DockSplitter splitterB = new(splitterA, groupC, TargetSide.Left, 0.66);
+        //
+        //Root.Content = splitterB;
+        //
+        //DockTabGroup groupD = new();
+        //groupD.TabList.Items.Add(new DockTab(new InspectorView(), Icon.Agents, "ChartEditor.Inspector"));
     }
 
     public static DockArea? Instance { get; private set; } = null;
+    
+    public event EventHandler? WindowDragStarted;
+    public event EventHandler? WindowDragEnded;
+    public event EventHandler? WindowDragged;
+    
+    public Point WindowOffset;
 
+    public PixelPoint PointerPosition
+    {
+        get => pointerPosition;
+        set
+        {
+            pointerPosition = value;
+            WindowDragged?.Invoke(null, EventArgs.Empty);
+        }
+    }
+    private PixelPoint pointerPosition;
+    
+    public bool WindowDragActive
+    {
+        get => windowDragActive;
+        set
+        {
+            windowDragActive = value;
+            
+            if (value == true)
+            {
+                WindowDragStarted?.Invoke(null, EventArgs.Empty);
+            }
+
+            if (value == false)
+            {
+                WindowDragEnded?.Invoke(null, EventArgs.Empty);
+            }
+        }
+    }
+    private bool windowDragActive = false;
+    
 #region Methods
+    public bool HitTest(Rect rect)
+    {
+        double x = PointerPosition.X;
+        double y = PointerPosition.Y;
+        
+        bool insideX = x > rect.Left && x < rect.Right;
+        bool insideY = y > rect.Top && y < rect.Bottom;
+        
+        return insideX && insideY;
+    }
+
+    public static Rect ScreenBounds(Visual visual)
+    {
+        PixelPoint topLeft = visual.PointToScreen(new(0, 0));
+        return new(topLeft.X, topLeft.Y, visual.Bounds.Width, visual.Bounds.Height);
+    }
+    
     public void Dock(DockTarget destination, DockTabGroup insertedGroup)
     {
         if (destination.TargetSide == TargetSide.None) return;
@@ -119,15 +178,45 @@ public partial class DockArea : UserControl
         }
     }
 
-    public void FloatTabGroup(DockTabGroup group)
+    public void Float(UserControl item)
+    {
+        // TODO: merge FloatTabGroup and FloatTab
+    }
+
+    public void Popup(DockTab tab)
     {
         if (MainWindow.Instance == null) return;
-        
-        RemoveTabGroup(group);
 
+        DockTabGroup group = new();
+        group.TabList.Items.Add(tab);
+        
         DockWindow window = new()
         {
             WindowContent = { Content = group },
+            Width = 500,
+            Height = 500,
+        };
+        
+        window.Show(MainWindow.Instance);
+    }
+    
+    public void FloatTabGroup(DockTabGroup group)
+    {
+        if (MainWindow.Instance == null) return;
+
+        List<object?> tabs = group.TabList.Items.ToList();
+        
+        RemoveTabGroup(group);
+
+        DockTabGroup newGroup = new();
+        foreach (object? tab in tabs)
+        {
+            newGroup.TabList.Items.Add(tab);
+        }
+        
+        DockWindow window = new()
+        {
+            WindowContent = { Content = newGroup },
             Width = group.Bounds.Width,
             Height = group.Bounds.Height,
         };
@@ -236,5 +325,41 @@ public partial class DockArea : UserControl
             group.SelectedTab = group.TabList.Items[index] as DockTab;
         }
     }
+    
+    private void UpdateTarget()
+    {
+        if (VisualRoot == null) return;
+        
+        if (!WindowDragActive)
+        {
+            Target.IsVisible = false;
+            return;
+        }
+
+        Rect bounds = ScreenBounds(this);
+        Target.IsVisible = HitTest(bounds);
+    }
 #endregion Methods
+
+#region System Event Delegates
+    private void OnWindowDragStarted(object? sender, EventArgs e) => UpdateTarget();
+    
+    private void OnWindowDragEnded(object? sender, EventArgs e) => Target.IsVisible = false;
+    
+    private void OnWindowDragged(object? sender, EventArgs e) => UpdateTarget();
+#endregion System Event Delegates
+    
+#region UI Event Delegates
+    private void InputElement_OnPointerEntered(object? sender, PointerEventArgs e)
+    {
+        if (!WindowDragActive) return;
+        Target.IsVisible = true;
+    }
+
+    private void InputElement_OnPointerExited(object? sender, PointerEventArgs e)
+    {
+        if (!WindowDragActive) return;
+        Target.IsVisible = false;
+    }
+#endregion UI Event Delegates
 }

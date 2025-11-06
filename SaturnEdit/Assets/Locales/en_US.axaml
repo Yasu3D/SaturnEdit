@@ -329,7 +329,7 @@
     <system:String x:Key="ChartEditor.Cursor">Cursor</system:String>
     <system:String x:Key="ChartEditor.Cursor.OddBeatDivisionWarning">Odd Beat Division</system:String>
     <system:String x:Key="ChartEditor.Cursor.OddBeatDivisionWarning.Description">The current Beat Division does not evenly divide into 1920 Ticks. Notes placed with this division may have inconsistent timestamps.</system:String>
-    <system:String x:Key="Main.Window.Title">SaturnEdit</system:String>
+    <system:String x:Key="Main.Window.Title">SaturnEdit — Main Window</system:String>
     <system:String x:Key="Main.ToolTip.Update">Update Available!</system:String>
     <system:String x:Key="Main.ToolTip.Update.Description">Click to download latest version.</system:String>
     <system:String x:Key="Main.ToolTip.Search">Search for Anything...</system:String>
@@ -342,6 +342,7 @@
     <system:String x:Key="Main.ToolTip.CosmeticsEditor.Description">Create and edit Icons, Plates, Titles, etc.</system:String>
     <system:String x:Key="Main.ToolTip.StageEditor">Stage Editor</system:String>
     <system:String x:Key="Main.ToolTip.StageEditor.Description">Create and edit Stage-Up stages.</system:String>
+    <system:String x:Key="Dock.Window.Title">SaturnEdit — Dock Window</system:String>
     <system:String x:Key="Menu.File">File</system:String>
     <system:String x:Key="Menu.File.New">New</system:String>
     <system:String x:Key="Menu.File.Open">Open...</system:String>
