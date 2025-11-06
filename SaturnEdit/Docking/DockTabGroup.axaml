@@ -16,7 +16,7 @@
               Background="{DynamicResource BackgroundPrimary}">
             
             <!-- Tab List -->
-            <ListBox Name="ListBoxTabs"
+            <ListBox Name="TabList"
                      Height="35"
                      SelectionMode="AlwaysSelected"
                      IsVisible="True"
@@ -28,7 +28,7 @@
                 </ListBox.ItemsPanel>
             </ListBox>
             
-            <!-- Docked Close Button -->
+            <!-- Close Button -->
             <Panel Name="DockedChrome" 
                    Background="{DynamicResource BackgroundPrimary}"
                    Width="35"
@@ -44,14 +44,6 @@
                               Height="10" />
                 </Button>
             </Panel>
-
-            <!-- Floating Window Chrome -->
-            <controls:WindowChrome Name="FloatingChrome"
-                                       Classes="ShowCloseOnly"
-                                       Background="{DynamicResource BackgroundPrimary}"
-                                       Width="47"
-                                       HorizontalAlignment="Right" 
-                                       IsVisible="False"/>
         </Panel>
         
         <Rectangle Grid.Row="1"

@@ -13,20 +13,20 @@ public partial class DockTabGroup : UserControl
     {
         get
         {
-            if (ListBoxTabs.Items.Count == 0) return null;
-            if (ListBoxTabs.SelectedItem is not DockTab tab) return null;
+            if (TabList.Items.Count == 0) return null;
+            if (TabList.SelectedItem is not DockTab tab) return null;
 
             return tab;
         }
         set
         {
-            if (value == null || !ListBoxTabs.Items.Contains(value))
+            if (value == null || !TabList.Items.Contains(value))
             {
-                ListBoxTabs.SelectedItem = null;
+                TabList.SelectedItem = null;
                 return;
             }
 
-            ListBoxTabs.SelectedItem = value;
+            TabList.SelectedItem = value;
         }
     }
 
@@ -35,7 +35,7 @@ public partial class DockTabGroup : UserControl
 #region UI Event Delegates
     private void ListBoxTabs_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (ListBoxTabs?.SelectedItem is not DockTab tab) return;
+        if (TabList?.SelectedItem is not DockTab tab) return;
         
         TabContentContainer.Content = tab.TabContent;
     }
