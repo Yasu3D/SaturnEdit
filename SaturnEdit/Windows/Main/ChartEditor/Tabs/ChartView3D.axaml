@@ -47,8 +47,7 @@
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Insert.TempoChange}" />
                                 </MenuItem.Header>
                                 <MenuItem.Icon>
-                                    <PathIcon Data="{DynamicResource IconTempo}"
-                                              Foreground="{DynamicResource ForegroundPrimary}" />
+                                    <PathIcon Data="{DynamicResource IconTempo}"/>
                                 </MenuItem.Icon>
                             </MenuItem>
 
@@ -58,8 +57,7 @@
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Insert.MetreChange}" />
                                 </MenuItem.Header>
                                 <MenuItem.Icon>
-                                    <PathIcon Data="{DynamicResource IconMetre}"
-                                              Foreground="{DynamicResource ForegroundPrimary}" />
+                                    <PathIcon Data="{DynamicResource IconMetre}"/>
                                 </MenuItem.Icon>
                             </MenuItem>
 

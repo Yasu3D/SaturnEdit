@@ -13,7 +13,6 @@
         <TextBlock Grid.Row="0"
                    Text="{DynamicResource ChartEditor.EventList.Header.Events}"
                    FontWeight="Regular"
-                   Foreground="{DynamicResource ForegroundPrimary}"
                    Margin="10" />
 
         <StackPanel Grid.Row="0"
@@ -27,8 +26,7 @@
                     Height="22"
                     Click="ButtonDeleteEvent_OnClick">
                 <icon:FluentIcon Icon="Delete"
-                                 FontSize="16"
-                                 Foreground="{DynamicResource ForegroundPrimary}" />
+                                 FontSize="16"/>
                 <ToolTip.Tip>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
@@ -45,43 +43,36 @@
                     Width="22"
                     Height="22">
                 <icon:FluentIcon Icon="Add"
-                                 FontSize="16"
-                                 Foreground="{DynamicResource ForegroundPrimary}" />
+                                 FontSize="16"/>
                 <Button.Flyout>
                     <MenuFlyout>
                         <MenuItem Name="MenuItemAddTempoChange"
                                   Click="MenuItemAddTempoChange_OnClick">
                             <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TempoChange}"
-                                           Foreground="{DynamicResource ForegroundPrimary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TempoChange}"/>
                             </MenuItem.Header>
                             <MenuItem.Icon>
-                                <PathIcon Data="{DynamicResource IconTempo}"
-                                          Foreground="{DynamicResource ForegroundPrimary}" />
+                                <PathIcon Data="{DynamicResource IconTempo}"/>
                             </MenuItem.Icon>
                         </MenuItem>
 
                         <MenuItem Name="MenuItemAddMetreChange"
                                   Click="MenuItemAddMetreChange_OnClick">
                             <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.MetreChange}"
-                                           Foreground="{DynamicResource ForegroundPrimary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.MetreChange}"/>
                             </MenuItem.Header>
                             <MenuItem.Icon>
-                                <PathIcon Data="{DynamicResource IconMetre}"
-                                          Foreground="{DynamicResource ForegroundPrimary}" />
+                                <PathIcon Data="{DynamicResource IconMetre}"/>
                             </MenuItem.Icon>
                         </MenuItem>
 
                         <MenuItem Name="MenuItemAddTutorialMarker"
                                   Click="MenuItemAddTutorialMarker_OnClick">
                             <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TutorialMarker}"
-                                           Foreground="{DynamicResource ForegroundPrimary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TutorialMarker}"/>
                             </MenuItem.Header>
                             <MenuItem.Icon>
-                                <icon:FluentIcon Icon="HatGraduation"
-                                                 Foreground="{DynamicResource ForegroundPrimary}" />
+                                <icon:FluentIcon Icon="HatGraduation"/>
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuFlyout>

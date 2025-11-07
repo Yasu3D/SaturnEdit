@@ -13,8 +13,7 @@
                       IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Header.Song}"
-                               FontWeight="Regular"
-                               Foreground="{DynamicResource ForegroundPrimary}" />
+                               FontWeight="Regular"/>
                 </Expander.Header>
 
                 <Grid ColumnDefinitions="150,20,*,36"
@@ -109,8 +108,7 @@
                       IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Header.Chart}"
-                               FontWeight="Regular"
-                               Foreground="{DynamicResource ForegroundPrimary}" />
+                               FontWeight="Regular"/>
                 </Expander.Header>
 
                 <Grid ColumnDefinitions="150,20,*,36"
@@ -252,8 +250,7 @@
                       IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Header.Display}"
-                               FontWeight="Regular"
-                               Foreground="{DynamicResource ForegroundPrimary}" />
+                               FontWeight="Regular"/>
                 </Expander.Header>
 
                 <Grid ColumnDefinitions="150,20,*,36"
@@ -339,8 +336,7 @@
                       IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Header.Media}"
-                               FontWeight="Regular"
-                               Foreground="{DynamicResource ForegroundPrimary}" />
+                               FontWeight="Regular"/>
                 </Expander.Header>
 
                 <Grid ColumnDefinitions="150,20,*,36"

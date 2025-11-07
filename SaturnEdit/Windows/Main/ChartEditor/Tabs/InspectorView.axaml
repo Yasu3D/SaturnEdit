@@ -14,8 +14,7 @@
                               IsExpanded="True">
                         <Expander.Header>
                             <TextBlock Text="{DynamicResource ChartEditor.Inspector.Header.General}"
-                                       FontWeight="Regular"
-                                       Foreground="{DynamicResource ForegroundPrimary}" />
+                                       FontWeight="Regular"/>
                         </Expander.Header>
 
                         <Grid ColumnDefinitions="120,20,*"
@@ -109,8 +108,7 @@
                               IsExpanded="True">
                         <Expander.Header>
                             <TextBlock Text="{DynamicResource ChartEditor.Inspector.Header.Layers}"
-                                       FontWeight="Regular"
-                                       Foreground="{DynamicResource ForegroundPrimary}" />
+                                       FontWeight="Regular"/>
                         </Expander.Header>
 
                         <Grid ColumnDefinitions="120,20,*"
@@ -145,8 +143,7 @@
                               IsExpanded="True">
                         <Expander.Header>
                             <TextBlock Text="{DynamicResource ChartEditor.Inspector.Header.Shape}"
-                                       FontWeight="Regular"
-                                       Foreground="{DynamicResource ForegroundPrimary}" />
+                                       FontWeight="Regular"/>
                         </Expander.Header>
 
                         <Grid ColumnDefinitions="120,20,*"
@@ -193,8 +190,7 @@
                               IsExpanded="True">
                         <Expander.Header>
                             <TextBlock Text="{DynamicResource ChartEditor.Inspector.Header.Judgement}"
-                                       FontWeight="Regular"
-                                       Foreground="{DynamicResource ForegroundPrimary}" />
+                                       FontWeight="Regular"/>
                         </Expander.Header>
 
                         <Grid ColumnDefinitions="120,20,*"
@@ -247,8 +243,7 @@
                               IsExpanded="True">
                         <Expander.Header>
                             <TextBlock Text="{DynamicResource ChartEditor.Inspector.Header.Hold}"
-                                       FontWeight="Regular"
-                                       Foreground="{DynamicResource ForegroundPrimary}" />
+                                       FontWeight="Regular"/>
                         </Expander.Header>
 
                         <Grid ColumnDefinitions="120,20,*"
@@ -286,8 +281,7 @@
                               IsExpanded="True">
                         <Expander.Header>
                             <TextBlock Text="{DynamicResource ChartEditor.Inspector.Header.LaneToggle}"
-                                       FontWeight="Regular"
-                                       Foreground="{DynamicResource ForegroundPrimary}" />
+                                       FontWeight="Regular"/>
                         </Expander.Header>
 
                         <Grid ColumnDefinitions="120,20,*"
@@ -327,8 +321,7 @@
                               IsExpanded="True">
                         <Expander.Header>
                             <TextBlock Text="{DynamicResource ChartEditor.Inspector.Header.TempoChange}"
-                                       FontWeight="Regular"
-                                       Foreground="{DynamicResource ForegroundPrimary}" />
+                                       FontWeight="Regular"/>
                         </Expander.Header>
 
                         <Grid ColumnDefinitions="120,20,*"
@@ -364,8 +357,7 @@
                               IsExpanded="True">
                         <Expander.Header>
                             <TextBlock Text="{DynamicResource ChartEditor.Inspector.Header.MetreChange}"
-                                       FontWeight="Regular"
-                                       Foreground="{DynamicResource ForegroundPrimary}" />
+                                       FontWeight="Regular"/>
                         </Expander.Header>
 
                         <Grid ColumnDefinitions="120,20,*"
@@ -417,8 +409,7 @@
                               IsExpanded="True">
                         <Expander.Header>
                             <TextBlock Text="{DynamicResource ChartEditor.Inspector.Header.SpeedChange}"
-                                       FontWeight="Regular"
-                                       Foreground="{DynamicResource ForegroundPrimary}" />
+                                       FontWeight="Regular"/>
                         </Expander.Header>
 
                         <Grid ColumnDefinitions="120,20,*"

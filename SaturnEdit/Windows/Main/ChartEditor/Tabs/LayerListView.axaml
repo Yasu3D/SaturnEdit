@@ -15,7 +15,6 @@
             <TextBlock Grid.Row="0"
                        Text="{DynamicResource ChartEditor.LayerList.Header.Layers}"
                        FontWeight="Regular"
-                       Foreground="{DynamicResource ForegroundPrimary}"
                        Margin="10" />
 
             <StackPanel Grid.Row="0"
@@ -29,8 +28,7 @@
                         Height="22"
                         Click="ButtonMoveLayerUp_Click">
                     <icon:FluentIcon Icon="ArrowUpload"
-                                     FontSize="16"
-                                     Foreground="{DynamicResource ForegroundPrimary}" />
+                                     FontSize="16"/>
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemUp}" />
@@ -49,8 +47,7 @@
                         Height="22"
                         Click="ButtonMoveLayerDown_Click">
                     <icon:FluentIcon Icon="ArrowDownload"
-                                     FontSize="16"
-                                     Foreground="{DynamicResource ForegroundPrimary}" />
+                                     FontSize="16"/>
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.MoveItemDown}" />
@@ -74,8 +71,7 @@
                         Height="22"
                         Click="ButtonDeleteLayer_Click">
                     <icon:FluentIcon Icon="Delete"
-                                     FontSize="16"
-                                     Foreground="{DynamicResource ForegroundPrimary}" />
+                                     FontSize="16"/>
                     <ToolTip.Tip>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
@@ -94,8 +90,7 @@
                         Height="22"
                         Click="ButtonAddNewLayer_Click">
                     <icon:FluentIcon Icon="Add"
-                                     FontSize="16"
-                                     Foreground="{DynamicResource ForegroundPrimary}" />
+                                     FontSize="16"/>
                     <ToolTip.Tip>
                         <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.AddNew}" />
                     </ToolTip.Tip>
@@ -139,7 +134,6 @@
                 <TextBlock Grid.Row="0"
                            Text="{DynamicResource ChartEditor.LayerList.Header.LayerEvents}"
                            FontWeight="Regular"
-                           Foreground="{DynamicResource ForegroundPrimary}"
                            Margin="10" />
 
                 <StackPanel Grid.Row="0"
@@ -153,8 +147,7 @@
                             Height="22"
                             Click="ButtonDeleteEvent_OnClick">
                         <icon:FluentIcon Icon="Delete"
-                                         FontSize="16"
-                                         Foreground="{DynamicResource ForegroundPrimary}" />
+                                         FontSize="16"/>
                         <ToolTip.Tip>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
@@ -172,43 +165,36 @@
                             Width="22"
                             Height="22">
                         <icon:FluentIcon Icon="Add"
-                                         FontSize="16"
-                                         Foreground="{DynamicResource ForegroundPrimary}" />
+                                         FontSize="16"/>
                         <Button.Flyout>
                             <MenuFlyout>
                                 <MenuItem Name="MenuItemAddSpeedChange"
                                           Click="MenuItemAddSpeedChange_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SpeedChange}"
-                                                   Foreground="{DynamicResource ForegroundPrimary}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SpeedChange}"/>
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
-                                        <icon:FluentIcon Icon="TopSpeed"
-                                                         Foreground="{DynamicResource ForegroundPrimary}" />
+                                        <icon:FluentIcon Icon="TopSpeed"/>
                                     </MenuItem.Icon>
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemAddVisibilityChange"
                                           Click="MenuItemAddVisibilityChange_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.VisibilityChange}"
-                                                   Foreground="{DynamicResource ForegroundPrimary}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.VisibilityChange}"/>
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
-                                        <icon:FluentIcon Icon="Eye"
-                                                         Foreground="{DynamicResource ForegroundPrimary}" />
+                                        <icon:FluentIcon Icon="Eye"/>
                                     </MenuItem.Icon>
                                 </MenuItem>
 
                                 <MenuItem Name="MenuItemAddStopEffect"
                                           Click="MenuItemAddStopEffect_OnClick">
                                     <MenuItem.Header>
-                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.StopEffect}"
-                                                   Foreground="{DynamicResource ForegroundPrimary}" />
+                                        <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.StopEffect}"/>
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
-                                        <icon:FluentIcon Icon="Pause"
-                                                         Foreground="{DynamicResource ForegroundPrimary}" />
+                                        <icon:FluentIcon Icon="Pause"/>
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 

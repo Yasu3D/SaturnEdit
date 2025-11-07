@@ -18,7 +18,6 @@
                     PointerMoved="InputElement_OnPointerMoved">
             <icon:FluentIcon Name="Icon"
                              Icon="Accessibility"
-                             Foreground="{DynamicResource ForegroundPrimary}"
                              FontSize="18" 
                              IsHitTestVisible="False"
                              Margin="12,0,0,0"/>
@@ -26,7 +25,6 @@
             <TextBlock Name="TextBlockTitle"
                        Text="Title"
                        VerticalAlignment="Center"
-                       Foreground="{DynamicResource ForegroundPrimary}"
                        Margin="7,0,0,0"
                        IsHitTestVisible="False" />
 

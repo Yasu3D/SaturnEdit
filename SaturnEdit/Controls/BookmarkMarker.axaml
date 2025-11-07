@@ -25,7 +25,6 @@
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Bookmark}"
-                               Foreground="{DynamicResource ForegroundPrimary}"
                                Margin="0,0,10,0" />
                     <TextBlock Name="TextBlockColor"
                                Text="#000000"

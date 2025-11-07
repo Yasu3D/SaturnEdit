@@ -1,15 +1,47 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
     
     <!-- Windows Maximized Margin Patch -->
     <Style Selector="Window[WindowState=Maximized]">
         <Setter Property="Padding" Value="{OnPlatform Default='0', Windows='8', x:TypeArguments=Thickness}" />
     </Style>
 
-    <!-- TextBoxes -->
+    <!-- TextBlocks -->
     <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}"/>
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontWeight" Value="Light" />
+        
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}"/>
+        </Style>
+    </Style>
+    
+    <Style Selector="TextBox">
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}"/>
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontWeight" Value="Light" />
+        
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}"/>
+        </Style>
+    </Style>
+    
+    <Style Selector="icon|FluentIcon">
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}"/>
+        
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}"/>
+        </Style>
+    </Style>
+    
+    <Style Selector="PathIcon">
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}"/>
+        
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}"/>
+        </Style>
     </Style>
     
     <Style Selector="SelectableTextBlock">

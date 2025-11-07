@@ -62,8 +62,7 @@
                                           IsExpanded="True">
                                     <Expander.Header>
                                         <TextBlock Text="{DynamicResource Export.Header.SatArguments}"
-                                                   FontWeight="Regular"
-                                                   Foreground="{DynamicResource ForegroundPrimary}" />
+                                                   FontWeight="Regular"/>
                                     </Expander.Header>
                                     <StackPanel>
                                         <Grid Name="OptionWatermark"
@@ -107,8 +106,7 @@
                                           IsExpanded="True">
                                     <Expander.Header>
                                         <TextBlock Text="{DynamicResource Export.Header.MerArguments}"
-                                                   FontWeight="Regular"
-                                                   Foreground="{DynamicResource ForegroundPrimary}" />
+                                                   FontWeight="Regular"/>
                                     </Expander.Header>
                                     <StackPanel>
                                         <Grid Name="OptionWriteMusicPath"
@@ -170,8 +168,7 @@
                                           IsExpanded="True">
                                     <Expander.Header>
                                         <TextBlock Text="{DynamicResource Export.Header.BackwardsCompatibilityArguments}"
-                                                   FontWeight="Regular"
-                                                   Foreground="{DynamicResource ForegroundPrimary}" />
+                                                   FontWeight="Regular"/>
                                     </Expander.Header>
                                     <StackPanel>
                                         <Grid Name="OptionFakeNotes"

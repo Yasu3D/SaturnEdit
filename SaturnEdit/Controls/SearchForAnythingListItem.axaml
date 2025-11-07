@@ -25,7 +25,6 @@
         <TextBlock Grid.Column="1"
                    Name="TextBlockAction"
                    Text="ACTION"
-                   Foreground="{DynamicResource ForegroundPrimary}"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center" />
 

@@ -123,6 +123,7 @@
                     <SolidColorBrush x:Key="ForegroundPrimary"   Color="#ECFFFFFF" />
                     <SolidColorBrush x:Key="ForegroundSecondary" Color="#BBFFFFFF" />
                     <SolidColorBrush x:Key="ForegroundTertiary"  Color="#80FFFFFF" />
+                    
                     <SolidColorBrush x:Key="ForegroundError"     Color="#DDFF0000" />
                     <SolidColorBrush x:Key="ForegroundWarning"   Color="#DDFFCE00" />
                     

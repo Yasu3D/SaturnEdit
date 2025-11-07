@@ -129,7 +129,6 @@
                                    FontSize="15"
                                    FontFamily="Consolas,Cascadia Code,Monospace"
                                    IsHitTestVisible="False"
-                                   Foreground="{DynamicResource ForegroundPrimary}"
                                    Opacity="0.3" />
                     </Grid>
 
@@ -216,7 +215,6 @@
                             </ToolTip.Tip>
                             <PathIcon Data="{DynamicResource IconMetronome}"
                                       Width="14"
-                                      Foreground="{DynamicResource ForegroundPrimary}"
                                       Margin="1,0,0,0" /> <!-- The margin is here because my icon is a little bit off-center... -->
                         </ToggleButton>
 

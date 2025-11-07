@@ -190,8 +190,7 @@
                     HorizontalAlignment="Right"
                     Click="ButtonPickSound_OnClick">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
-                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}" />
                 </ToolTip.Tip>
                 <icon:FluentIcon Icon="Folder" />
             </Button>
@@ -234,8 +233,7 @@
                     HorizontalAlignment="Right"
                     Click="ButtonPickSound_OnClick">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
-                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Icon="Folder" />
             </Button>
@@ -278,8 +276,7 @@
                     HorizontalAlignment="Right"
                     Click="ButtonPickSound_OnClick">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
-                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Icon="Folder" />
             </Button>
@@ -322,8 +319,7 @@
                     HorizontalAlignment="Right"
                     Click="ButtonPickSound_OnClick">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
-                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Icon="Folder" />
             </Button>
@@ -379,8 +375,7 @@
                     HorizontalAlignment="Right"
                     Click="ButtonPickSound_OnClick">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
-                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Icon="Folder" />
             </Button>
@@ -423,8 +418,7 @@
                     HorizontalAlignment="Right"
                     Click="ButtonPickSound_OnClick">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
-                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Icon="Folder" />
             </Button>
@@ -480,8 +474,7 @@
                     HorizontalAlignment="Right"
                     Click="ButtonPickSound_OnClick">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
-                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Icon="Folder" />
             </Button>
@@ -524,8 +517,7 @@
                     HorizontalAlignment="Right"
                     Click="ButtonPickSound_OnClick">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
-                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Icon="Folder" />
             </Button>
