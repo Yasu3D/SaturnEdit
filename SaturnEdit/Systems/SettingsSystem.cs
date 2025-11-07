@@ -137,14 +137,14 @@ public static class SettingsSystem
         SettingsChanged?.Invoke(null, EventArgs.Empty);
     }
 
-    public static async void SaveSettings()
+    public static void SaveSettings()
     {
         Directory.CreateDirectory(SettingsPath);
 
-        await File.WriteAllTextAsync(Path.Combine(SettingsPath, "render_settings.toml"), Toml.FromModel(RenderSettings));
-        await File.WriteAllTextAsync(Path.Combine(SettingsPath, "editor_settings.toml"), Toml.FromModel(EditorSettings));
-        await File.WriteAllTextAsync(Path.Combine(SettingsPath, "audio_settings.toml"), Toml.FromModel(AudioSettings));
-        await File.WriteAllTextAsync(Path.Combine(SettingsPath, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsPath, "render_settings.toml"), Toml.FromModel(RenderSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsPath, "editor_settings.toml"), Toml.FromModel(EditorSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsPath, "audio_settings.toml"), Toml.FromModel(AudioSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsPath, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
     }
 #endregion Methods
     
