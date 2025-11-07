@@ -162,15 +162,15 @@ public partial class ChartEditorView : UserControl
     {
         try
         {
-            // Save As if chart file doesn't have a path yet.
-            if (!File.Exists(ChartSystem.Entry.ChartPath))
+            // Redirect to 'Save As' if chart file doesn't have a path yet, or if the format needs to be updated.
+            if (!File.Exists(ChartSystem.Entry.ChartPath) || ChartSystem.Entry.FormatVersion != FormatVersion.SatV3)
             {
                 return await File_SaveAs();
             }
 
             // Write chart to file.
-            bool updatePath = !File.Exists(ChartSystem.Entry.ChartFile);
-            if (!ChartSystem.WriteChart(ChartSystem.Entry.ChartFile, new(), true, updatePath))
+            bool updatePath = !File.Exists(ChartSystem.Entry.ChartPath);
+            if (!ChartSystem.WriteChart(ChartSystem.Entry.ChartPath, new(), true, updatePath))
             {
                 ShowFileWriteError();
                 return false;

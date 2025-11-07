@@ -66,6 +66,10 @@ public static class ChartSystem
 
         Chart = ChartTemplate;
         Entry = new();
+
+        ((TempoChangeEvent)Chart.Events[0]).Tempo = tempo;
+        ((MetreChangeEvent)Chart.Events[1]).Upper = metreUpper;
+        ((MetreChangeEvent)Chart.Events[1]).Lower = metreLower;
         
         Entry.EntryChanged += OnInternalEntryChanged;
         Entry.AudioChanged += OnInternalAudioChanged;
