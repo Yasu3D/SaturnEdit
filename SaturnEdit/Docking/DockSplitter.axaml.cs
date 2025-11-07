@@ -104,7 +104,7 @@ public partial class DockSplitter : UserControl
         }
     }
     
-    private const double SplitterMinWidth = 100;
+    private const double SplitterMinWidth = 35;
     
 #region Methods
     private void Update()

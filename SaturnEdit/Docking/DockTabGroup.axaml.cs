@@ -88,6 +88,7 @@ public partial class DockTabGroup : UserControl
         }
         
         ButtonClose.IsVisible = !IsFloating;
+        WindowHandle.Margin = IsFloating ? new(0, 0, 12, 0) : new(0, 0, 0, 0);
     }
     
     private void Visual_OnDetachedFromVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
@@ -136,6 +137,8 @@ public partial class DockTabGroup : UserControl
 
             dockWindow.Position = new(x, y);
         }
+        
+        UpdateTarget();
     }
     
     private void WindowHandle_OnPointerPressed(object? sender, PointerPressedEventArgs e)
@@ -156,6 +159,8 @@ public partial class DockTabGroup : UserControl
             dragActive = true;
             window.Opacity = 0.5;
         }
+        
+        UpdateTarget();
     }
 
     private void WindowHandle_OnPointerReleased(object? sender, PointerReleasedEventArgs e)
