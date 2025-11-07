@@ -246,7 +246,7 @@
                                                   IsChecked="True"
                                                   Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
-                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseOff}" />
+                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizationOption.Off}" />
                                             </MenuItem.Header>
                                         </MenuItem>
                                         <MenuItem Name="MenuItemQuantizedPauseNearest"
@@ -255,7 +255,7 @@
                                                   StaysOpenOnClick="True"
                                                   Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
-                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseNearest}" />
+                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizationOption.Nearest}" />
                                             </MenuItem.Header>
                                         </MenuItem>
                                         <MenuItem Name="MenuItemQuantizedPausePrevious"
@@ -264,7 +264,7 @@
                                                   StaysOpenOnClick="True"
                                                   Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
-                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPausePrevious}" />
+                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizationOption.Previous}" />
                                             </MenuItem.Header>
                                         </MenuItem>
                                         <MenuItem Name="MenuItemQuantizedPauseNext"
@@ -273,7 +273,51 @@
                                                   StaysOpenOnClick="True"
                                                   Click="MenuItemQuantizedPause_OnClick">
                                             <MenuItem.Header>
-                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizedPauseNext}" />
+                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizationOption.Next}" />
+                                            </MenuItem.Header>
+                                        </MenuItem>
+                                    </MenuItem>
+                                    
+                                    <MenuItem>
+                                        <MenuItem.Header>
+                                            <TextBlock Text="{DynamicResource Settings.Playback.QuantizedSeek}" />
+                                        </MenuItem.Header>
+
+                                        <MenuItem Name="MenuItemQuantizedSeekOff" 
+                                                  ToggleType="Radio"
+                                                  GroupName="QuantizePause"
+                                                  StaysOpenOnClick="True"
+                                                  IsChecked="True"
+                                                  Click="MenuItemQuantizedSeek_OnClick">
+                                            <MenuItem.Header>
+                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizationOption.Off}" />
+                                            </MenuItem.Header>
+                                        </MenuItem>
+                                        <MenuItem Name="MenuItemQuantizedSeekNearest"
+                                                  ToggleType="Radio"
+                                                  GroupName="QuantizePause"
+                                                  StaysOpenOnClick="True"
+                                                  Click="MenuItemQuantizedSeek_OnClick">
+                                            <MenuItem.Header>
+                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizationOption.Nearest}" />
+                                            </MenuItem.Header>
+                                        </MenuItem>
+                                        <MenuItem Name="MenuItemQuantizedSeekPrevious"
+                                                  ToggleType="Radio"
+                                                  GroupName="QuantizePause"
+                                                  StaysOpenOnClick="True"
+                                                  Click="MenuItemQuantizedSeek_OnClick">
+                                            <MenuItem.Header>
+                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizationOption.Previous}" />
+                                            </MenuItem.Header>
+                                        </MenuItem>
+                                        <MenuItem Name="MenuItemQuantizedSeekNext"
+                                                  ToggleType="Radio"
+                                                  GroupName="QuantizePause"
+                                                  StaysOpenOnClick="True"
+                                                  Click="MenuItemQuantizedSeek_OnClick">
+                                            <MenuItem.Header>
+                                                <TextBlock Text="{DynamicResource Settings.Playback.QuantizationOption.Next}" />
                                             </MenuItem.Header>
                                         </MenuItem>
                                     </MenuItem>
@@ -334,7 +378,7 @@
                     Name="SliderSeek"
                     Classes="Wide"
                     Minimum="0"
-                    ValueChanged="SliderSeek_OnValueChanged" />
+                    ValueChanged="SliderSeek_OnValueChanged"/>
             
             <!-- Bookmarks -->
             <Panel Grid.Column="1"

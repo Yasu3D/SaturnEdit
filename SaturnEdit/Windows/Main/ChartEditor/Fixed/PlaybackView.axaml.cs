@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
@@ -22,6 +23,8 @@ public partial class PlaybackView : UserControl
     public PlaybackView()
     {
         InitializeComponent();
+        
+        SliderSeek.AddHandler(PointerReleasedEvent, SliderSeek_OnPointerReleased, RoutingStrategies.Tunnel);
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
@@ -228,10 +231,16 @@ public partial class PlaybackView : UserControl
             ToggleButtonLoop.IsChecked = SettingsSystem.AudioSettings.LoopPlayback;
             ToggleButtonMetronome.IsChecked = SettingsSystem.AudioSettings.Metronome;
 
-            MenuItemQuantizedPauseOff.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Off;
-            MenuItemQuantizedPauseNearest.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Nearest;
-            MenuItemQuantizedPausePrevious.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Previous;
-            MenuItemQuantizedPauseNext.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizedPauseOptions.Next;
+            MenuItemQuantizedPauseOff.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizationOption.Off;
+            MenuItemQuantizedPauseNearest.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizationOption.Nearest;
+            MenuItemQuantizedPausePrevious.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizationOption.Previous;
+            MenuItemQuantizedPauseNext.IsChecked = SettingsSystem.AudioSettings.QuantizedPause == AudioSettings.QuantizationOption.Next;
+            
+            MenuItemQuantizedSeekOff.IsChecked = SettingsSystem.AudioSettings.QuantizedSeek == AudioSettings.QuantizationOption.Off;
+            MenuItemQuantizedSeekNearest.IsChecked = SettingsSystem.AudioSettings.QuantizedSeek == AudioSettings.QuantizationOption.Nearest;
+            MenuItemQuantizedSeekPrevious.IsChecked = SettingsSystem.AudioSettings.QuantizedSeek == AudioSettings.QuantizationOption.Previous;
+            MenuItemQuantizedSeekNext.IsChecked = SettingsSystem.AudioSettings.QuantizedSeek == AudioSettings.QuantizationOption.Next;
+            
             MenuItemLoopToStart.IsChecked = SettingsSystem.AudioSettings.LoopToStart;
             
             blockEvents = false;
@@ -323,8 +332,15 @@ public partial class PlaybackView : UserControl
     {
         if (blockEvents) return;
         if (sender is not Slider) return;
-
+        
         TimeSystem.SeekTime((float)SliderSeek.Value, TimeSystem.Division);
+    }
+    
+    private void SliderSeek_OnPointerReleased(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        
+        TimeSystem.Quantize(SettingsSystem.AudioSettings.QuantizedSeek);
     }
 
     private void ToggleButtonLoop_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -362,11 +378,26 @@ public partial class PlaybackView : UserControl
 
         SettingsSystem.AudioSettings.QuantizedPause = item.Name switch
         {
-            "MenuItemQuantizedPauseOff" => AudioSettings.QuantizedPauseOptions.Off,
-            "MenuItemQuantizedPauseNearest" => AudioSettings.QuantizedPauseOptions.Nearest,
-            "MenuItemQuantizedPausePrevious" => AudioSettings.QuantizedPauseOptions.Previous,
-            "MenuItemQuantizedPauseNext" => AudioSettings.QuantizedPauseOptions.Next,
-            _ => AudioSettings.QuantizedPauseOptions.Off,
+            "MenuItemQuantizedPauseOff" => AudioSettings.QuantizationOption.Off,
+            "MenuItemQuantizedPauseNearest" => AudioSettings.QuantizationOption.Nearest,
+            "MenuItemQuantizedPausePrevious" => AudioSettings.QuantizationOption.Previous,
+            "MenuItemQuantizedPauseNext" => AudioSettings.QuantizationOption.Next,
+            _ => AudioSettings.QuantizationOption.Off,
+        };
+    }
+    
+    private void MenuItemQuantizedSeek_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (sender is not MenuItem item) return;
+
+        SettingsSystem.AudioSettings.QuantizedSeek = item.Name switch
+        {
+            "MenuItemQuantizedSeekOff" => AudioSettings.QuantizationOption.Off,
+            "MenuItemQuantizedSeekNearest" => AudioSettings.QuantizationOption.Nearest,
+            "MenuItemQuantizedSeekPrevious" => AudioSettings.QuantizationOption.Previous,
+            "MenuItemQuantizedSeekNext" => AudioSettings.QuantizationOption.Next,
+            _ => AudioSettings.QuantizationOption.Off,
         };
     }
 

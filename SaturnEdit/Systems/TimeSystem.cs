@@ -168,6 +168,52 @@ public static class TimeSystem
         TimestampSeeked?.Invoke(null, EventArgs.Empty);
     }
     
+    public static void Quantize(AudioSettings.QuantizationOption quantizationOption)
+    {
+        float time = Timestamp.Time;
+        float currentBeatTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, Timestamp);
+        float nextBeatTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, Timestamp + DivisionInterval);
+
+        float currentBeatDelta = Math.Abs(time - currentBeatTime);
+        float nextBeatDelta = Math.Abs(time - nextBeatTime);
+        
+        switch (quantizationOption)
+        {
+            case AudioSettings.QuantizationOption.Off: break;
+
+            case AudioSettings.QuantizationOption.Nearest:
+            {
+                if (currentBeatDelta < nextBeatDelta)
+                {
+                    SeekTime(currentBeatTime, Division);
+                }
+                else
+                {
+                    SeekTime(nextBeatTime, Division);
+                }
+                
+                break;
+            }
+
+            case AudioSettings.QuantizationOption.Previous:
+            {
+                SeekTime(currentBeatTime, Division);
+                
+                break;
+            }
+
+            case AudioSettings.QuantizationOption.Next:
+            {
+                if (currentBeatDelta != 0)
+                {
+                    SeekTime(nextBeatTime, Division);
+                } 
+                
+                break;
+            }
+        }
+    }
+    
     public static void Navigate_MoveBeatForward()
     {
         SeekFullTick(Timestamp.FullTick + DivisionInterval);
@@ -392,52 +438,8 @@ public static class TimeSystem
     {
         LoopEnd = Math.Min(LoopEnd, ChartSystem.Entry.ChartEnd.Time);
     }
-    
-    private static void OnPlaybackStateChanged(object? sender, EventArgs e)
-    {
-        float time = Timestamp.Time;
-        float currentBeatTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, Timestamp);
-        float nextBeatTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, Timestamp + DivisionInterval);
 
-        float currentBeatDelta = Math.Abs(time - currentBeatTime);
-        float nextBeatDelta = Math.Abs(time - nextBeatTime);
-        
-        switch (SettingsSystem.AudioSettings.QuantizedPause)
-        {
-            case AudioSettings.QuantizedPauseOptions.Off: break;
-
-            case AudioSettings.QuantizedPauseOptions.Nearest:
-            {
-                if (currentBeatDelta < nextBeatDelta)
-                {
-                    SeekTime(currentBeatTime, Division);
-                }
-                else
-                {
-                    SeekTime(nextBeatTime, Division);
-                }
-                
-                break;
-            }
-
-            case AudioSettings.QuantizedPauseOptions.Previous:
-            {
-                SeekTime(currentBeatTime, Division);
-                
-                break;
-            }
-
-            case AudioSettings.QuantizedPauseOptions.Next:
-            {
-                if (currentBeatDelta != 0)
-                {
-                    SeekTime(nextBeatTime, Division);
-                } 
-                
-                break;
-            }
-        }
-    }
+    private static void OnPlaybackStateChanged(object? sender, EventArgs e) => Quantize(SettingsSystem.AudioSettings.QuantizedPause);
 #endregion System Event Delegates
 
 #region Internal Event Delegates

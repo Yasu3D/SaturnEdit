@@ -230,7 +230,20 @@ public class EditorSettings
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    private bool continueLastSession = true;
+    private bool continueLastSession = false;
+
+    public string LastSessionPath
+    {
+        get => lastSessionPath;
+        set
+        {
+            if (lastSessionPath == value) return;
+
+            lastSessionPath = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string lastSessionPath = "";
     
     public bool ChartViewTxtShowSpaces
     {
@@ -268,7 +281,7 @@ public class AudioSettings
 
 #region Enum Definitions
 
-    public enum QuantizedPauseOptions
+    public enum QuantizationOption
     {
         Off = 0,
         Nearest = 1,
@@ -304,7 +317,7 @@ public class AudioSettings
     }
     private bool metronome = false;
     
-    public QuantizedPauseOptions QuantizedPause
+    public QuantizationOption QuantizedPause
     {
         get => quantizedPause;
         set
@@ -315,7 +328,20 @@ public class AudioSettings
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    private QuantizedPauseOptions quantizedPause = QuantizedPauseOptions.Off;
+    private QuantizationOption quantizedPause = QuantizationOption.Off;
+
+    public QuantizationOption QuantizedSeek
+    {
+        get => quantizedSeek;
+        set
+        {
+            if (quantizedSeek == value) return;
+            
+            quantizedSeek = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private QuantizationOption quantizedSeek = QuantizationOption.Off;
     
     public bool LoopToStart
     {

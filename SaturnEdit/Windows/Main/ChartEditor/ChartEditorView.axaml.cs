@@ -810,7 +810,14 @@ public partial class ChartEditorView : UserControl
         });
     }
     
-    public void OnClosing(object? sender, EventArgs e) => Dock_SavePersistedLayout();
+    public void OnClosing(object? sender, EventArgs e)
+    {
+        Dock_SavePersistedLayout();
+
+        SettingsSystem.EditorSettings.LastSessionPath = SettingsSystem.EditorSettings.ContinueLastSession
+            ? ChartSystem.Entry.ChartPath
+            : "";
+    }
 #endregion System Event Delegates
     
 #region UI Event Delegates

@@ -24,6 +24,20 @@ public static class ChartSystem
         OnOperationHistoryChanged(null, EventArgs.Empty);
 
         IsSaved = true;
+        
+        if (SettingsSystem.EditorSettings.ContinueLastSession && File.Exists(SettingsSystem.EditorSettings.LastSessionPath))
+        {
+            try
+            {
+                ReadChart(SettingsSystem.EditorSettings.LastSessionPath, new());
+            }
+            catch (Exception ex)
+            {
+                // Don't throw.
+                Console.WriteLine(ex);
+                NewChart(120, 4, 4);
+            }
+        }
     }
     
     public static event EventHandler? ChartLoaded;

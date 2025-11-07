@@ -437,10 +437,11 @@
     <system:String x:Key="Settings.Rendering.NoteColorSnapForward">Snap Forward Note Color:</system:String>
     <system:String x:Key="Settings.Rendering.NoteColorSnapBackward">Snap Backward Note Color:</system:String>
     <system:String x:Key="Settings.Playback.QuantizedPause">Quantized Pause</system:String>
-    <system:String x:Key="Settings.Playback.QuantizedPauseOff">Exact Pause</system:String>
-    <system:String x:Key="Settings.Playback.QuantizedPauseNearest">Quantized Pause (Nearest)</system:String>
-    <system:String x:Key="Settings.Playback.QuantizedPausePrevious">Quantized Pause (Previous)</system:String>
-    <system:String x:Key="Settings.Playback.QuantizedPauseNext">Quantized Pause (Next)</system:String>
+    <system:String x:Key="Settings.Playback.QuantizedSeek">Quantized Seek</system:String>
+    <system:String x:Key="Settings.Playback.QuantizationOption.Off">Exact</system:String>
+    <system:String x:Key="Settings.Playback.QuantizationOption.Nearest">Quantized (Nearest)</system:String>
+    <system:String x:Key="Settings.Playback.QuantizationOption.Previous">Quantized (Previous)</system:String>
+    <system:String x:Key="Settings.Playback.QuantizationOption.Next">Quantized (Next)</system:String>
     <system:String x:Key="Settings.Playback.LoopToStart">Loop to Start</system:String>
     <system:String x:Key="Settings.Shortcuts">Shortcuts</system:String>
     <system:String x:Key="Settings.Shortcuts.Define">Define...</system:String>
@@ -521,7 +522,7 @@
     <system:String x:Key="NewChart.Window.Title">New Chart</system:String>
     <system:String x:Key="NewChart.Create">Create</system:String>
     <system:String x:Key="SearchForAnything.Window.Title">Search For Anything</system:String>
-    <system:String x:Key="SearchForAnything.Watermark">Look for any action...</system:String>
+    <system:String x:Key="SearchForAnything.Watermark">Search for any action...</system:String>
     <system:String x:Key="VolumeMixer.Window.Title">Volume Mixer</system:String>
     <system:String x:Key="VolumeMixer.Channel.Master">Master</system:String>
     <system:String x:Key="VolumeMixer.Channel.Audio">Audio</system:String>

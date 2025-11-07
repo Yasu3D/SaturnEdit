@@ -434,10 +434,11 @@ Settings.Rendering.NoteColorSlideCounterclockwise,Slide Counterclockwise Note Co
 Settings.Rendering.NoteColorSnapForward,Snap Forward Note Color:
 Settings.Rendering.NoteColorSnapBackward,Snap Backward Note Color:
 Settings.Playback.QuantizedPause,Quantized Pause
-Settings.Playback.QuantizedPauseOff,Exact Pause
-Settings.Playback.QuantizedPauseNearest,Quantized Pause (Nearest)
-Settings.Playback.QuantizedPausePrevious,Quantized Pause (Previous)
-Settings.Playback.QuantizedPauseNext,Quantized Pause (Next)
+Settings.Playback.QuantizedSeek,Quantized Seek
+Settings.Playback.QuantizationOption.Off,Exact
+Settings.Playback.QuantizationOption.Nearest,Quantized (Nearest)
+Settings.Playback.QuantizationOption.Previous,Quantized (Previous)
+Settings.Playback.QuantizationOption.Next,Quantized (Next)
 Settings.Playback.LoopToStart,Loop to Start
 Settings.Shortcuts,Shortcuts
 Settings.Shortcuts.Define,Define...
