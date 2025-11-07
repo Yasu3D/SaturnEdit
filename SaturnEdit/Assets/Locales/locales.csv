@@ -545,7 +545,7 @@ ModalDialog.FileOverwritePrompt.Paragraph,A file with the same name already exis
 ModalDialog.FileOverwritePrompt.OverwriteFile,Overwrite File
 ModalDialog.FileWriteError.Title,File Write Error
 ModalDialog.FileWriteError.Header,An error occurred during a file write.
-ModalDialog.FileWriteError.Paragraph,"Your changes have not been saved. Please confirm that you have enough space and write-access to the directory, then try again."
+ModalDialog.FileWriteError.Paragraph,"Data has not been saved. Please confirm that you have enough space and write-access to the directory, then try again."
 ModalDialog.ZigZagHoldWarning.Title,Zig-Zag Hold Error
 ModalDialog.ZigZagHoldWarning.Header,Unable to create a Zig-Zag Hold Note.
 ModalDialog.ZigZagHoldWarning.Paragraph,Please select one or more hold notes or hold points you wish to convert.

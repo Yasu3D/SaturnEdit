@@ -548,7 +548,7 @@
     <system:String x:Key="ModalDialog.FileOverwritePrompt.OverwriteFile">Overwrite File</system:String>
     <system:String x:Key="ModalDialog.FileWriteError.Title">File Write Error</system:String>
     <system:String x:Key="ModalDialog.FileWriteError.Header">An error occurred during a file write.</system:String>
-    <system:String x:Key="ModalDialog.FileWriteError.Paragraph">Your changes have not been saved. Please confirm that you have enough space and write-access to the directory, then try again.</system:String>
+    <system:String x:Key="ModalDialog.FileWriteError.Paragraph">Data has not been saved. Please confirm that you have enough space and write-access to the directory, then try again.</system:String>
     <system:String x:Key="ModalDialog.ZigZagHoldWarning.Title">Zig-Zag Hold Error</system:String>
     <system:String x:Key="ModalDialog.ZigZagHoldWarning.Header">Unable to create a Zig-Zag Hold Note.</system:String>
     <system:String x:Key="ModalDialog.ZigZagHoldWarning.Paragraph">Please select one or more hold notes or hold points you wish to convert.</system:String>

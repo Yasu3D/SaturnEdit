@@ -48,8 +48,9 @@ public partial class ChartEditorView : UserControl
         OnOperationHistoryChanged(null, EventArgs.Empty);
     }
     
-    private static string PersistentLayoutPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Layout");
-    private static string CustomLayoutDirectory => Path.Combine(PersistentLayoutPath, "Custom");
+    private static string LayoutDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Layout");
+    private static string CustomLayoutDirectory => Path.Combine(LayoutDirectory, "Custom");
+    private static string PersistedLayoutFile => Path.Combine(LayoutDirectory, "persisted.layout");
     
 #region Methods
     public async void File_New()
@@ -181,6 +182,7 @@ public partial class ChartEditorView : UserControl
         catch (Exception ex)
         {
             Console.WriteLine(ex);
+            ShowFileWriteError();
             return false;
         }
     }
@@ -229,6 +231,7 @@ public partial class ChartEditorView : UserControl
         catch (Exception ex)
         {
             Console.WriteLine(ex);
+            ShowFileWriteError();
             return false;
         }
     }
@@ -572,13 +575,77 @@ public partial class ChartEditorView : UserControl
     
     private async void Dock_SaveLayout()
     {
-        // TODO.
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return;
+
+            // Open file picker.
+            Directory.CreateDirectory(CustomLayoutDirectory);
+            
+            IStorageFolder? folder = await topLevel.StorageProvider.TryGetFolderFromPathAsync(CustomLayoutDirectory);
+            IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(new()
+            {
+                DefaultExtension = ".layout",
+                SuggestedFileName = "custom.layout",
+                SuggestedStartLocation = folder,
+                FileTypeChoices =
+                [
+                    new("SaturnEdit Layout File")
+                    {
+                        Patterns = ["*.layout"],
+                    },
+                ],
+            });
+
+            if (file == null) return;
+
+            // Write layout to file.
+            string data = DockSerializer.Serialize();
+            await File.WriteAllTextAsync(file.Path.LocalPath, data);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            ShowFileWriteError();
+            return;
+        }
     }
 
     private async void Dock_LoadLayout()
     {
-        // TODO.
-        
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return;
+
+            // Open file picker.
+            Directory.CreateDirectory(CustomLayoutDirectory);
+            
+            IStorageFolder? folder = await topLevel.StorageProvider.TryGetFolderFromPathAsync(CustomLayoutDirectory);
+            IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
+            {
+                SuggestedStartLocation = folder,
+                AllowMultiple = false,
+                FileTypeFilter =
+                [
+                    new("SaturnEdit Layout Files")
+                    {
+                        Patterns = ["*.layout"],
+                    },
+                ],
+            });
+            if (files.Count != 1) return;
+            
+            // Read layout from file.
+            string data = await File.ReadAllTextAsync(files[0].Path.LocalPath);
+            DockSerializer.Deserialize(data);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            // TODO: Load preset?
+        }
     }
 
     private void Dock_LoadPreset()
@@ -590,10 +657,10 @@ public partial class ChartEditorView : UserControl
     {
         try
         {
-            Directory.CreateDirectory(PersistentLayoutPath);
+            Directory.CreateDirectory(LayoutDirectory);
 
             string data = DockSerializer.Serialize();
-            File.WriteAllText(Path.Combine(PersistentLayoutPath, "layout"), data);
+            File.WriteAllText(PersistedLayoutFile, data);
         }
         catch (Exception ex)
         {
@@ -606,9 +673,9 @@ public partial class ChartEditorView : UserControl
     {
         try
         {
-            if (File.Exists(Path.Combine(PersistentLayoutPath, "layout")))
+            if (File.Exists(PersistedLayoutFile))
             {
-                string data = File.ReadAllText(Path.Combine(PersistentLayoutPath, "layout"));
+                string data = File.ReadAllText(PersistedLayoutFile);
                 DockSerializer.Deserialize(data);
             }
             else
