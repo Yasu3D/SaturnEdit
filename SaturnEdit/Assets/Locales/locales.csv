@@ -518,7 +518,7 @@ ZigZagHoldArgs.Interval,Interval
 NewChart.Window.Title,New Chart
 NewChart.Create,Create
 SearchForAnything.Window.Title,Search For Anything
-SearchForAnything.Watermark,Look for any action...
+SearchForAnything.Watermark,Search for any action...
 VolumeMixer.Window.Title,Volume Mixer
 VolumeMixer.Channel.Master,Master
 VolumeMixer.Channel.Audio,Audio
