@@ -149,7 +149,7 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
             if (DragType == IPositionable.OverlapResult.Body)
             {
                 int newFullTick = item.Tick + EndTick - StartTick;
-                operations.Add(new TimeableEditOperation(item.Timeable, item.Timeable.Timestamp.FullTick, newFullTick));
+                operations.Add(new TimeableEditOperation(item.Timeable, item.Tick, newFullTick));
 
                 if (item.Timeable is IPositionable positionable)
                 {
