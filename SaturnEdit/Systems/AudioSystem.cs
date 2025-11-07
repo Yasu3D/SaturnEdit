@@ -135,6 +135,7 @@ public static class AudioSystem
                     }
                 }
                 
+                if (note is MeasureLineNote or SyncNote) continue;
                 if (note is IPlayable playable && playable.JudgementType == JudgementType.Fake) continue;
                 
                 // Bonus effects on slide notes play hitsounds after a fancy animation. Account for the delay here before discarding passed notes.
