@@ -45,7 +45,7 @@ public static class AudioSystem
     public static event EventHandler? AudioLoaded;
     
     public static AudioChannel? AudioChannelAudio { get; private set; }
-    public static AudioChannel? AudioChannelHoldLoop { get; private set; }
+    public static AudioChannel? AudioChannelHold { get; private set; }
     public static AudioSample? AudioSampleGuide { get; private set; }
     public static AudioSample? AudioSampleTouch { get; private set; }
     public static AudioSample? AudioSampleSlide { get; private set; }
@@ -78,10 +78,10 @@ public static class AudioSystem
                 AudioSampleStartClick?.Pause();
                 AudioSampleMetronome?.Pause();
 
-                if (AudioChannelHoldLoop != null)
+                if (AudioChannelHold != null)
                 {
-                    AudioChannelHoldLoop.Playing = false;
-                    AudioChannelHoldLoop.Position = 0;
+                    AudioChannelHold.Playing = false;
+                    AudioChannelHold.Position = 0;
                 }
                 
                 return;
@@ -208,40 +208,40 @@ public static class AudioSystem
             }
             
             // Update Hold Loop Audio
-            if (AudioChannelHoldLoop != null)
+            if (AudioChannelHold != null)
             {
                 if (ActiveHoldNotes.Count == 0)
                 {
                     // Fade out audio when no hold is active.
-                    if (AudioChannelHoldLoop.Volume > 0)
+                    if (AudioChannelHold.Volume > 0)
                     {
                         holdLoopVolumeMultiplier = Math.Max(0, holdLoopVolumeMultiplier - TimeSystem.TickInterval * 0.004f);
                     }
                     else
                     {
                         // Then stop playback once the sound fades out completely.
-                        AudioChannelHoldLoop.Playing = false;
-                        AudioChannelHoldLoop.Position = 0;
+                        AudioChannelHold.Playing = false;
+                        AudioChannelHold.Position = 0;
                     }
                 }
                 else
                 {
-                    if (AudioChannelHoldLoop.Position > SettingsSystem.AudioSettings.HoldLoopEnd)
+                    if (AudioChannelHold.Position > SettingsSystem.AudioSettings.HoldLoopEnd)
                     {
-                        AudioChannelHoldLoop.Playing = true;
-                        AudioChannelHoldLoop.Position -= SettingsSystem.AudioSettings.HoldLoopEnd - SettingsSystem.AudioSettings.HoldLoopStart;
+                        AudioChannelHold.Playing = true;
+                        AudioChannelHold.Position -= SettingsSystem.AudioSettings.HoldLoopEnd - SettingsSystem.AudioSettings.HoldLoopStart;
                     }
 
-                    if (!AudioChannelHoldLoop.Playing || holdLoopVolumeMultiplier < 1)
+                    if (!AudioChannelHold.Playing || holdLoopVolumeMultiplier < 1)
                     {
-                        AudioChannelHoldLoop.Position = 0;
-                        AudioChannelHoldLoop.Playing = true;
+                        AudioChannelHold.Position = 0;
+                        AudioChannelHold.Playing = true;
                     }
                     
                     holdLoopVolumeMultiplier = 1;
                 }
                 
-                AudioChannelHoldLoop.Volume = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteHoldLoop   ? 0 : DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume) * DecibelToVolume(SettingsSystem.AudioSettings.HoldLoopVolume) * holdLoopVolumeMultiplier;
+                AudioChannelHold.Volume = DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume) * DecibelToVolume(SettingsSystem.AudioSettings.HoldVolume) * holdLoopVolumeMultiplier;
             }
         }
     }
@@ -369,10 +369,10 @@ public static class AudioSystem
         AudioSampleStartClick?.Pause();
         AudioSampleMetronome?.Pause();
 
-        if (AudioChannelHoldLoop != null)
+        if (AudioChannelHold != null)
         {
-            AudioChannelHoldLoop.Playing = false;
-            AudioChannelHoldLoop.Position = 0;
+            AudioChannelHold.Playing = false;
+            AudioChannelHold.Position = 0;
         }
             
         try
@@ -385,7 +385,7 @@ public static class AudioSystem
             AudioSampleStartClick = File.Exists(SettingsSystem.AudioSettings.HitsoundStartClickPath) ? new(SettingsSystem.AudioSettings.HitsoundStartClickPath) : null;
             AudioSampleMetronome  = File.Exists(SettingsSystem.AudioSettings.HitsoundMetronomePath)  ? new(SettingsSystem.AudioSettings.HitsoundMetronomePath)  : null;
             
-            AudioChannelHoldLoop  = File.Exists(SettingsSystem.AudioSettings.HitsoundHoldLoopPath)   ? new(SettingsSystem.AudioSettings.HitsoundHoldLoopPath)   : null;
+            AudioChannelHold  = File.Exists(SettingsSystem.AudioSettings.HitsoundHoldPath)   ? new(SettingsSystem.AudioSettings.HitsoundHoldPath)   : null;
             
             OnVolumeChanged(null, EventArgs.Empty);
         }
@@ -401,16 +401,17 @@ public static class AudioSystem
     private static void OnVolumeChanged(object? sender, EventArgs e)
     {
         double masterVolume = DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume);
+        double hitsoundVolume = masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.HitsoundVolume);
         
-        if (AudioChannelAudio     != null) AudioChannelAudio.Volume     = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteAudio      ? 0 : masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        if (AudioSampleGuide      != null) AudioSampleGuide.Volume      = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteGuide      ? 0 : masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.GuideVolume);
-        if (AudioSampleTouch      != null) AudioSampleTouch.Volume      = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteTouch      ? 0 : masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.TouchVolume);
-        if (AudioChannelHoldLoop  != null) AudioChannelHoldLoop.Volume  = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteHoldLoop   ? 0 : masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.HoldLoopVolume) * holdLoopVolumeMultiplier;
-        if (AudioSampleSlide      != null) AudioSampleSlide.Volume      = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteSlide      ? 0 : masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.SlideVolume);
-        if (AudioSampleBonus      != null) AudioSampleBonus.Volume      = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteBonus      ? 0 : masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.BonusVolume);
-        if (AudioSampleR          != null) AudioSampleR.Volume          = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteR          ? 0 : masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.RVolume);
-        if (AudioSampleStartClick != null) AudioSampleStartClick.Volume = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteStartClick ? 0 : masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.StartClickVolume);
-        if (AudioSampleMetronome  != null) AudioSampleMetronome.Volume  = SettingsSystem.AudioSettings.MuteMaster || SettingsSystem.AudioSettings.MuteMetronome  ? 0 : masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.MetronomeVolume);
+        if (AudioChannelAudio     != null) AudioChannelAudio.Volume     = masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+        if (AudioSampleGuide      != null) AudioSampleGuide.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.GuideVolume);
+        if (AudioSampleTouch      != null) AudioSampleTouch.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.TouchVolume);
+        if (AudioChannelHold      != null) AudioChannelHold.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.HoldVolume) * holdLoopVolumeMultiplier;
+        if (AudioSampleSlide      != null) AudioSampleSlide.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.SlideVolume);
+        if (AudioSampleBonus      != null) AudioSampleBonus.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.BonusVolume);
+        if (AudioSampleR          != null) AudioSampleR.Volume          = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.RVolume);
+        if (AudioSampleStartClick != null) AudioSampleStartClick.Volume = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.StartClickVolume);
+        if (AudioSampleMetronome  != null) AudioSampleMetronome.Volume  = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.MetronomeVolume);
     }
 
     private static void OnEntryChanged(object? sender, EventArgs e)

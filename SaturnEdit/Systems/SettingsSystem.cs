@@ -137,14 +137,14 @@ public static class SettingsSystem
         SettingsChanged?.Invoke(null, EventArgs.Empty);
     }
 
-    public static void SaveSettings()
+    public static async void SaveSettings()
     {
         Directory.CreateDirectory(SettingsPath);
 
-        File.WriteAllText(Path.Combine(SettingsPath, "render_settings.toml"), Toml.FromModel(RenderSettings));
-        File.WriteAllText(Path.Combine(SettingsPath, "editor_settings.toml"), Toml.FromModel(EditorSettings));
-        File.WriteAllText(Path.Combine(SettingsPath, "audio_settings.toml"), Toml.FromModel(AudioSettings));
-        File.WriteAllText(Path.Combine(SettingsPath, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
+        await File.WriteAllTextAsync(Path.Combine(SettingsPath, "render_settings.toml"), Toml.FromModel(RenderSettings));
+        await File.WriteAllTextAsync(Path.Combine(SettingsPath, "editor_settings.toml"), Toml.FromModel(EditorSettings));
+        await File.WriteAllTextAsync(Path.Combine(SettingsPath, "audio_settings.toml"), Toml.FromModel(AudioSettings));
+        await File.WriteAllTextAsync(Path.Combine(SettingsPath, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
     }
 #endregion Methods
     
@@ -358,6 +358,20 @@ public class AudioSettings
     }
     private int audioVolume = 0;
     
+    public int HitsoundVolume
+    {
+        get => hitsoundVolume;
+        set
+        {
+            if (hitsoundVolume == value) return;
+            
+            hitsoundVolume = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private int hitsoundVolume = 0;
+    
     public int GuideVolume
     {
         get => guideVolume;
@@ -386,19 +400,19 @@ public class AudioSettings
     }
     private int touchVolume = 0;
     
-    public int HoldLoopVolume
+    public int HoldVolume
     {
-        get => holdLoopVolume;
+        get => holdVolume;
         set
         {
-            if (holdLoopVolume == value) return;
+            if (holdVolume == value) return;
             
-            holdLoopVolume = value;
+            holdVolume = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    private int holdLoopVolume = 0;
+    private int holdVolume = 0;
     
     public int SlideVolume
     {
@@ -469,146 +483,6 @@ public class AudioSettings
         }
     }
     private int metronomeVolume = 0;
-    
-    public bool MuteMaster
-    {
-        get => muteMaster;
-        set
-        {
-            if (muteMaster == value) return;
-            
-            muteMaster = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteMaster = false;
-    
-    public bool MuteAudio
-    {
-        get => muteAudio;
-        set
-        {
-            if (muteAudio == value) return;
-            
-            muteAudio = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteAudio = false;
-    
-    public bool MuteGuide
-    {
-        get => muteGuide;
-        set
-        {
-            if (muteGuide == value) return;
-            
-            muteGuide = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteGuide = false;
-    
-    public bool MuteTouch
-    {
-        get => muteTouch;
-        set
-        {
-            if (muteTouch == value) return;
-            
-            muteTouch = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteTouch = false;
-    
-    public bool MuteHoldLoop
-    {
-        get => muteHoldLoop;
-        set
-        {
-            if (muteHoldLoop == value) return;
-            
-            muteHoldLoop = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteHoldLoop = false;
-    
-    public bool MuteSlide
-    {
-        get => muteSlide;
-        set
-        {
-            if (muteSlide == value) return;
-            
-            muteSlide = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteSlide = false;
-    
-    public bool MuteBonus
-    {
-        get => muteBonus;
-        set
-        {
-            if (muteBonus == value) return;
-            
-            muteBonus = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteBonus = false;
-    
-    public bool MuteR
-    {
-        get => muteR;
-        set
-        {
-            if (muteR == value) return;
-            
-            muteR = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteR = false;
-    
-    public bool MuteStartClick
-    {
-        get => muteStartClick;
-        set
-        {
-            if (muteStartClick == value) return;
-            
-            muteStartClick = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteStartClick = false;
-    
-    public bool MuteMetronome
-    {
-        get => muteMetronome;
-        set
-        {
-            if (muteMetronome == value) return;
-            
-            muteMetronome = value;
-            PropertyChanged?.Invoke(null, EventArgs.Empty);
-            VolumeChanged?.Invoke(null, EventArgs.Empty);
-        }
-    }
-    private bool muteMetronome = false;
 
     public string HitsoundGuidePath
     {
@@ -638,19 +512,19 @@ public class AudioSettings
     }
     private string hitsoundTouchPath = "";
     
-    public string HitsoundHoldLoopPath
+    public string HitsoundHoldPath
     {
-        get => hitsoundHoldLoopPath;
+        get => hitsoundHoldPath;
         set
         {
-            if (hitsoundHoldLoopPath == value) return;
+            if (hitsoundHoldPath == value) return;
             
-            hitsoundHoldLoopPath = value;
+            hitsoundHoldPath = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
             HitsoundsChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    private string hitsoundHoldLoopPath = "";
+    private string hitsoundHoldPath = "";
     
     public string HitsoundSlidePath
     {
@@ -771,29 +645,30 @@ public class ShortcutSettings
         ["File.RenderAsImage"]  = new(Key.None, false, false, false, "Menu.File", "Menu.File.RenderAsImage"),
         ["File.Quit"]           = new(Key.None, false, false, false, "Menu.File", "Menu.File.Quit"),
 
-        ["Edit.Undo"]            = new(Key.Z,    true,  false, false, "Menu.Edit", "Menu.Edit.Undo"),
-        ["Edit.Redo"]            = new(Key.Y,    true,  false, false, "Menu.Edit", "Menu.Edit.Redo"),
-        ["Edit.Cut"]             = new(Key.X,    true,  false, false, "Menu.Edit", "Menu.Edit.Cut"),
-        ["Edit.Copy"]            = new(Key.C,    true,  false, false, "Menu.Edit", "Menu.Edit.Copy"),
-        ["Edit.Paste"]           = new(Key.V,    true,  false, false, "Menu.Edit", "Menu.Edit.Paste"),
-        ["Edit.SelectAll"]       = new(Key.A,    true,  false, false, "Menu.Edit", "Menu.Edit.SelectAll"),
-        ["Edit.DeselectAll"]     = new(Key.A,    false, true,  false, "Menu.Edit", "Menu.Edit.DeselectAll"),
-        ["Edit.CheckerDeselect"] = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.CheckerDeselect"),
-        ["Edit.SelectByCriteria"]   = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.SelectByCriteria"),
+        ["Edit.Undo"]             = new(Key.Z,    true,  false, false, "Menu.Edit", "Menu.Edit.Undo"),
+        ["Edit.Redo"]             = new(Key.Y,    true,  false, false, "Menu.Edit", "Menu.Edit.Redo"),
+        ["Edit.Cut"]              = new(Key.X,    true,  false, false, "Menu.Edit", "Menu.Edit.Cut"),
+        ["Edit.Copy"]             = new(Key.C,    true,  false, false, "Menu.Edit", "Menu.Edit.Copy"),
+        ["Edit.Paste"]            = new(Key.V,    true,  false, false, "Menu.Edit", "Menu.Edit.Paste"),
+        ["Edit.SelectAll"]        = new(Key.A,    true,  false, false, "Menu.Edit", "Menu.Edit.SelectAll"),
+        ["Edit.DeselectAll"]      = new(Key.A,    false, true,  false, "Menu.Edit", "Menu.Edit.DeselectAll"),
+        ["Edit.CheckerDeselect"]  = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.CheckerDeselect"),
+        ["Edit.SelectByCriteria"] = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.SelectByCriteria"),
 
         ["Navigate.MoveBeatForward"]      = new(Key.Up,       false, false, false, "Menu.Navigate", "Menu.Navigate.MoveBeatForward"),
         ["Navigate.MoveBeatBack"]         = new(Key.Down,     false, false, false, "Menu.Navigate", "Menu.Navigate.MoveBeatBack"),
-        ["Navigate.MoveMeasureForward"]   = new(Key.Right,     false, false, false, "Menu.Navigate", "Menu.Navigate.MoveMeasureForward"),
-        ["Navigate.MoveMeasureBack"]      = new(Key.Left,    false, false, false, "Menu.Navigate", "Menu.Navigate.MoveMeasureBack"),
-        ["Navigate.JumpToNextObject"]       = new(Key.None,     false, false, false, "Menu.Navigate", "Menu.Navigate.JumpToNextObject"),
-        ["Navigate.JumpToPreviousObject"]   = new(Key.None,     false, false, false, "Menu.Navigate", "Menu.Navigate.JumpToPreviousObject"),
+        ["Navigate.MoveMeasureForward"]   = new(Key.Right,    false, false, false, "Menu.Navigate", "Menu.Navigate.MoveMeasureForward"),
+        ["Navigate.MoveMeasureBack"]      = new(Key.Left,     false, false, false, "Menu.Navigate", "Menu.Navigate.MoveMeasureBack"),
+        ["Navigate.JumpToNextObject"]     = new(Key.None,     false, false, false, "Menu.Navigate", "Menu.Navigate.JumpToNextObject"),
+        ["Navigate.JumpToPreviousObject"] = new(Key.None,     false, false, false, "Menu.Navigate", "Menu.Navigate.JumpToPreviousObject"),
         ["Navigate.IncreaseBeatDivision"] = new(Key.OemPlus,  true,  false, false, "Menu.Navigate", "Menu.Navigate.IncreaseBeatDivision"),
         ["Navigate.DecreaseBeatDivision"] = new(Key.OemMinus, true,  false, false, "Menu.Navigate", "Menu.Navigate.DecreaseBeatDivision"),
         ["Navigate.DoubleBeatDivision"]   = new(Key.PageUp,   true,  false, false, "Menu.Navigate", "Menu.Navigate.DoubleBeatDivision"),
         ["Navigate.HalveBeatDivision"]    = new(Key.PageDown, true,  false, false, "Menu.Navigate", "Menu.Navigate.HalveBeatDivision"),
 
-        ["QuickCommands.Settings"] = new(Key.S, true, true, false, "Menu.QuickCommands", "Main.ToolTip.Settings"),
-        ["QuickCommands.Search"]   = new(Key.F, true, false, false, "Menu.QuickCommands", "Main.ToolTip.Search"),
+        ["QuickCommands.Settings"]    = new(Key.S,    true,  true,  false, "Menu.QuickCommands", "Main.ToolTip.Settings"),
+        ["QuickCommands.VolumeMixer"] = new(Key.None, false, false, false, "Menu.QuickCommands", "Main.ToolTip.VolumeMixer"),
+        ["QuickCommands.Search"]      = new(Key.F,    true,  false, false, "Menu.QuickCommands", "Main.ToolTip.Search"),
 
         ["NotePalette.NoteType.Touch"]                 = new(Key.D1,   false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.Touch"),
         ["NotePalette.NoteType.Chain"]                 = new(Key.D2,   false, false, false, "ChartEditor.NotePalette", "ChartEditor.NotePalette.Note.Chain"),

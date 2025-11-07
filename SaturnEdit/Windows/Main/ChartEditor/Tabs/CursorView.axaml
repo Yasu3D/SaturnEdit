@@ -102,7 +102,7 @@
                    Margin="10,0"
                    FontSize="15"
                    FontFamily="Consolas,Cascadia Code,Monospace"
-                   Text="30" />
+                   Foreground="{DynamicResource ForegroundSecondary}"/>
         <Slider Grid.Row="2"
                 Grid.Column="2"
                 Name="SliderPosition"
@@ -126,7 +126,7 @@
                    Margin="10,0"
                    FontSize="15"
                    FontFamily="Consolas,Cascadia Code,Monospace"
-                   Text="15" />
+                   Foreground="{DynamicResource ForegroundSecondary}"/>
         <Slider Grid.Row="3"
                 Grid.Column="2"
                 Name="SliderSize"

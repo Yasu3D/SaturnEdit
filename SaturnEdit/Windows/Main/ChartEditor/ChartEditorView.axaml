@@ -323,16 +323,6 @@
 
                         <Separator />
 
-                        <MenuItem Name="MenuItemAudioMixer"
-                                  Click="MenuItemToolWindows_OnClick">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource ChartEditor.AudioMixer}" />
-                            </MenuItem.Header>
-                            <MenuItem.Icon>
-                                <icon:FluentIcon Icon="Speaker2" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-
                         <MenuItem Name="MenuItemWaveform"
                                   Click="MenuItemToolWindows_OnClick">
                             <MenuItem.Header>

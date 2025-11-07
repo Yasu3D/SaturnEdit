@@ -342,17 +342,6 @@ public static class DockSerializer
                         continue;
                     }
 
-                    if (group != null && split[0] == "AudioMixerView")
-                    {
-                        group.TabList.Items.Add(new DockTab(new AudioMixerView(), Icon.Speaker2, "ChartEditor.AudioMixer"));
-                        if (split.Length == 2 && split[1] == "X")
-                        {
-                            group.TabList.SelectedIndex = group.TabList.Items.Count - 1;
-                        }
-
-                        continue;
-                    }
-
                     if (group != null && split[0] == "WaveformView")
                     {
                         group.TabList.Items.Add(new DockTab(new WaveformView(), Icon.Pulse, "ChartEditor.Waveform"));

@@ -203,18 +203,6 @@ ChartEditor.NotePalette.HoldPointRenderType.Visible,Render Type - Visible
 ChartEditor.NotePalette.HoldPointRenderType.Visible.Description,A normal hold point that influences the shape and judged area of a Hold Note.
 ChartEditor.NotePalette.HoldPointRenderType.Hidden,Render Type - Hidden
 ChartEditor.NotePalette.HoldPointRenderType.Hidden.Description,"A special hold point that doesn't influence the shape of a Hold Note, but still influences the judged area."
-ChartEditor.AudioMixer,Audio Mixer
-ChartEditor.AudioMixer.Channel.Master,Master
-ChartEditor.AudioMixer.Channel.Audio,Audio
-ChartEditor.AudioMixer.Channel.Guide,Guide
-ChartEditor.AudioMixer.Channel.Touch,Touch
-ChartEditor.AudioMixer.Channel.HoldLoop,Hold Loop
-ChartEditor.AudioMixer.Channel.Slide,Slide
-ChartEditor.AudioMixer.Channel.Bonus,Bonus
-ChartEditor.AudioMixer.Channel.R,R
-ChartEditor.AudioMixer.Channel.StartClick,Start Click
-ChartEditor.AudioMixer.Channel.Metronome,Metronome
-ChartEditor.AudioMixer.Placeholder.NoSound,No Sound
 ChartEditor.ChartStatistics,Chart Statistics
 ChartEditor.ChartStatistics.Label.NumberOfLayers,# of Layers:
 ChartEditor.ChartStatistics.Label.NumberOfEvents,# of Events:
@@ -330,6 +318,7 @@ Main.Window.Title,SaturnEdit — Main Window
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.
 Main.ToolTip.Search,Search for Anything...
+Main.ToolTip.VolumeMixer,Open Volume Mixer...
 Main.ToolTip.Settings,Open Settings...
 Main.ToolTip.Undo,Undo
 Main.ToolTip.Redo,Redo
@@ -530,6 +519,18 @@ NewChart.Window.Title,New Chart
 NewChart.Create,Create
 SearchForAnything.Window.Title,Search For Anything
 SearchForAnything.Watermark,Look for any action...
+VolumeMixer.Window.Title,Volume Mixer
+VolumeMixer.Channel.Master,Master
+VolumeMixer.Channel.Audio,Audio
+VolumeMixer.Channel.Hitsounds,Hitsounds
+VolumeMixer.Channel.Guide,Guide
+VolumeMixer.Channel.Touch,Touch
+VolumeMixer.Channel.Hold,Hold
+VolumeMixer.Channel.Slide,Slide
+VolumeMixer.Channel.Bonus,Bonus
+VolumeMixer.Channel.R,R
+VolumeMixer.Channel.StartClick,Start Click
+VolumeMixer.Channel.Metronome,Metronome
 ModalDialog.SavePrompt.Title,Save Chart
 ModalDialog.SavePrompt.Header,Do you want to save changes to your chart before closing?
 ModalDialog.SavePrompt.Paragraph,Your changes will be lost if you don't save them.

@@ -1279,7 +1279,6 @@ public partial class ChartEditorView : UserControl
             "MenuItemLayerList"       => (new LayerListView(),       Icon.TextBulletList,         "ChartEditor.LayerList"      , 500, 735),
             "MenuItemInspector"       => (new InspectorView(),       Icon.WrenchScrewdriver,      "ChartEditor.Inspector"      , 500, 735),
             "MenuItemCursor"          => (new CursorView(),          Icon.CircleHintHalfVertical, "ChartEditor.Cursor"         , 350, 225),
-            "MenuItemAudioMixer"      => (new AudioMixerView(),      Icon.Speaker2,               "ChartEditor.AudioMixer"     , 600, 357),
             "MenuItemWaveform"        => (new WaveformView(),        Icon.Pulse,                  "ChartEditor.Waveform"       , 150, 773),
             _ => (null, Icon.Warning, "", 200, 200),
         };

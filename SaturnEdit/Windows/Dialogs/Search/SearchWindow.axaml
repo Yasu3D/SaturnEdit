@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:SaturnEdit.Controls"
+        mc:Ignorable="d"
+        d:DesignWidth="600"
+        d:DesignHeight="350"
+        Width="600"
+        Height="350"
+        x:Class="SaturnEdit.Windows.Dialogs.Search.SearchWindow"
+        Title="{DynamicResource SearchForAnything.Window.Title}"
+        CanResize="False"
+        Background="{DynamicResource BackgroundPrimary}">
+    <Grid RowDefinitions="40,1,*">
+        <controls:WindowChrome Classes="ShowCloseOnly"
+                               HorizontalAlignment="Right" />
+
+        <TextBox Grid.Row="0"
+                 Name="TextBoxSearchQuery"
+                 Classes="Transparent"
+                 Margin="5,0"
+                 Watermark="{DynamicResource SearchForAnything.Watermark}"
+                 VerticalAlignment="Center"
+                 VerticalContentAlignment="Center"
+                 HorizontalAlignment="Left"
+                 TextChanged="TextBoxSearchQuery_OnTextChanged" />
+
+        <Rectangle Grid.Row="1"
+                   Height="1"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Center"
+                   Fill="{DynamicResource SeparatorPrimary}" />
+
+        <ScrollViewer Grid.Row="2"
+                      Background="{DynamicResource BackgroundSecondary}">
+            <ListBox Name="ListBoxActions"
+                     SelectionMode="Single"
+                     DoubleTapped="ListBoxActions_OnDoubleTapped" />
+        </ScrollViewer>
+    </Grid>
+</Window>

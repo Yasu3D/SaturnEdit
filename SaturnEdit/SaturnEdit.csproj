@@ -211,11 +211,6 @@
       <AdditionalFiles Include="Windows\Dialogs\Settings\Tabs\SettingsShortcutsView.axaml" />
       <AdditionalFiles Include="Windows\Main\ChartEditor\Fixed\NotePaletteView.axaml" />
       <AdditionalFiles Include="Windows\Main\ChartEditor\Fixed\PlaybackView.axaml" />
-      <AdditionalFiles Include="Windows\Popups\SearchForAnything\SearchForAnythingView.axaml" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="Windows\Popups\" />
     </ItemGroup>
 
 </Project>

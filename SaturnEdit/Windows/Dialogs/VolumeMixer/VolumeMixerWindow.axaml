@@ -1,0 +1,457 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:SaturnEdit.Controls"
+        xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+        mc:Ignorable="d"
+        d:DesignWidth="400"
+        d:DesignHeight="560"
+        Width="400"
+        Height="560"
+        x:Class="SaturnEdit.Windows.Dialogs.VolumeMixer.VolumeMixerWindow"
+        Title="{DynamicResource VolumeMixer.Window.Title}"
+        Background="{DynamicResource BackgroundPrimary}"
+        CanResize="False">
+    <Grid RowDefinitions="40,1,*">
+        <controls:WindowChrome Grid.Row="0"
+                               Classes="ShowCloseOnly"
+                               HorizontalAlignment="Right" />
+
+        <TextBlock Grid.Row="0"
+                   Text="{DynamicResource VolumeMixer.Window.Title}"
+                   VerticalAlignment="Center"
+                   Margin="10,0,0,0" />
+
+        <Rectangle Grid.Row="1"
+                   Fill="{DynamicResource SeparatorSecondary}"
+                   Height="1" />
+
+        <Grid Grid.Row="2"
+              ColumnDefinitions="120,20,*,36"
+              RowDefinitions="40,40,40,20,40,40,40,40,20,40,40,20,40,40"
+              VerticalAlignment="Top"
+              Margin="15,10">
+
+            <Rectangle Grid.Row="0"
+                       Grid.Column="1"
+                       Grid.RowSpan="3"
+                       Width="1"
+                       HorizontalAlignment="Left"
+                       Fill="{DynamicResource SeparatorPrimary}" />
+
+            <!-- Global Volume -->
+
+            <!-- Master -->
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Master}" />
+            <Slider Grid.Row="0"
+                    Grid.Column="2"
+                    Name="SliderVolumeMaster"
+                    Classes="Wide"
+                    TickFrequency="1"
+                    Minimum="0"
+                    Maximum="48"
+                    IsSnapToTickEnabled="True"
+                    Height="30"
+                    ValueChanged="SliderVolume_OnValueChanged"/>
+            <TextBlock Grid.Row="0"
+                       Grid.Column="2"
+                       Name="TextBlockVolumeMaster"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="10,0"
+                       FontSize="15"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       Foreground="{DynamicResource ForegroundSecondary}" />
+
+            <!-- Audio -->
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Audio}" />
+            <Slider Grid.Row="1"
+                    Grid.Column="2"
+                    Name="SliderVolumeAudio"
+                    Classes="Wide"
+                    TickFrequency="1"
+                    Minimum="0"
+                    Maximum="48"
+                    IsSnapToTickEnabled="True"
+                    Height="30"
+                    ValueChanged="SliderVolume_OnValueChanged"/>
+            <TextBlock Grid.Row="1"
+                       Grid.Column="2"
+                       Name="TextBlockVolumeAudio"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="10,0"
+                       FontSize="15"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       Foreground="{DynamicResource ForegroundSecondary}" />
+
+            <!-- Hitsounds -->
+            <TextBlock Grid.Row="2"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Hitsounds}" />
+            <Slider Grid.Row="2"
+                    Grid.Column="2"
+                    Name="SliderVolumeHitsound"
+                    Classes="Wide"
+                    TickFrequency="1"
+                    Minimum="0"
+                    Maximum="48"
+                    IsSnapToTickEnabled="True"
+                    Height="30"
+                    ValueChanged="SliderVolume_OnValueChanged"/>
+            <TextBlock Grid.Row="2"
+                       Grid.Column="2"
+                       Name="TextBlockVolumeHitsound"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="10,0"
+                       FontSize="15"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       Foreground="{DynamicResource ForegroundSecondary}" />
+
+            <Rectangle Grid.Row="3"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="4"
+                       Fill="{DynamicResource SeparatorPrimary}"
+                       Height="1" />
+
+            <!-- Hitsounds -->
+            <Rectangle Grid.Row="4"
+                       Grid.Column="1"
+                       Grid.RowSpan="4"
+                       Width="1"
+                       HorizontalAlignment="Left"
+                       Fill="{DynamicResource SeparatorPrimary}" />
+
+            <!-- Guide -->
+            <TextBlock Grid.Row="4"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Guide}" />
+            <Slider Grid.Row="4"
+                    Grid.Column="2"
+                    Name="SliderVolumeGuide"
+                    Classes="Wide"
+                    TickFrequency="1"
+                    Minimum="0"
+                    Maximum="48"
+                    IsSnapToTickEnabled="True"
+                    Height="30"
+                    ValueChanged="SliderVolume_OnValueChanged"/>
+            <TextBlock Grid.Row="4"
+                       Grid.Column="2"
+                       Name="TextBlockVolumeGuide"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="10,0"
+                       FontSize="15"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       Foreground="{DynamicResource ForegroundSecondary}" />
+            <Button Grid.Row="4"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundGuide"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
+                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- Touch -->
+            <TextBlock Grid.Row="5"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Touch}" />
+            <Slider Grid.Row="5"
+                    Grid.Column="2"
+                    Name="SliderVolumeTouch"
+                    Classes="Wide"
+                    TickFrequency="1"
+                    Minimum="0"
+                    Maximum="48"
+                    IsSnapToTickEnabled="True"
+                    Height="30"
+                    ValueChanged="SliderVolume_OnValueChanged"/>
+            <TextBlock Grid.Row="5"
+                       Grid.Column="2"
+                       Name="TextBlockVolumeTouch"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="10,0"
+                       FontSize="15"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       Foreground="{DynamicResource ForegroundSecondary}" />
+            <Button Grid.Row="5"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundTouch"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
+                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- Hold -->
+            <TextBlock Grid.Row="6"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Hold}" />
+            <Slider Grid.Row="6"
+                    Grid.Column="2"
+                    Name="SliderVolumeHold"
+                    Classes="Wide"
+                    TickFrequency="1"
+                    Minimum="0"
+                    Maximum="48"
+                    IsSnapToTickEnabled="True"
+                    Height="30"
+                    ValueChanged="SliderVolume_OnValueChanged"/>
+            <TextBlock Grid.Row="6"
+                       Grid.Column="2"
+                       Name="TextBlockVolumeHold"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="10,0"
+                       FontSize="15"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       Foreground="{DynamicResource ForegroundSecondary}" />
+            <Button Grid.Row="6"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundHold"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
+                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- Slide -->
+            <TextBlock Grid.Row="7"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Slide}" />
+            <Slider Grid.Row="7"
+                    Grid.Column="2"
+                    Name="SliderVolumeSlide"
+                    Classes="Wide"
+                    TickFrequency="1"
+                    Minimum="0"
+                    Maximum="48"
+                    IsSnapToTickEnabled="True"
+                    Height="30"
+                    ValueChanged="SliderVolume_OnValueChanged"/>
+            <TextBlock Grid.Row="7"
+                       Grid.Column="2"
+                       Name="TextBlockVolumeSlide"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="10,0"
+                       FontSize="15"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       Foreground="{DynamicResource ForegroundSecondary}" />
+            <Button Grid.Row="7"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundSlide"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
+                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- Bonus -->
+            <Rectangle Grid.Row="8"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="4"
+                       Fill="{DynamicResource SeparatorPrimary}"
+                       Height="1" />
+
+            <Rectangle Grid.Row="9"
+                       Grid.Column="1"
+                       Grid.RowSpan="2"
+                       Width="1"
+                       HorizontalAlignment="Left"
+                       Fill="{DynamicResource SeparatorPrimary}" />
+
+            <TextBlock Grid.Row="9"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Bonus}" />
+            <Slider Grid.Row="9"
+                    Grid.Column="2"
+                    Name="SliderVolumeBonus"
+                    Classes="Wide"
+                    TickFrequency="1"
+                    Minimum="0"
+                    Maximum="48"
+                    IsSnapToTickEnabled="True"
+                    Height="30"
+                    ValueChanged="SliderVolume_OnValueChanged"/>
+            <TextBlock Grid.Row="9"
+                       Grid.Column="2"
+                       Name="TextBlockVolumeBonus"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="10,0"
+                       FontSize="15"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       Foreground="{DynamicResource ForegroundSecondary}" />
+            <Button Grid.Row="9"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundBonus"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
+                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- R -->
+            <TextBlock Grid.Row="10"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.R}" />
+            <Slider Grid.Row="10"
+                    Grid.Column="2"
+                    Name="SliderVolumeR"
+                    Classes="Wide"
+                    TickFrequency="1"
+                    Minimum="0"
+                    Maximum="48"
+                    IsSnapToTickEnabled="True"
+                    Height="30"
+                    ValueChanged="SliderVolume_OnValueChanged"/>
+            <TextBlock Grid.Row="10"
+                       Grid.Column="2"
+                       Name="TextBlockVolumeR"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="10,0"
+                       FontSize="15"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       Foreground="{DynamicResource ForegroundSecondary}" />
+            <Button Grid.Row="10"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundR"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
+                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- StartClick -->
+            <Rectangle Grid.Row="11"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="4"
+                       Fill="{DynamicResource SeparatorPrimary}"
+                       Height="1" />
+
+            <Rectangle Grid.Row="12"
+                       Grid.Column="1"
+                       Grid.RowSpan="2"
+                       Width="1"
+                       HorizontalAlignment="Left"
+                       Fill="{DynamicResource SeparatorPrimary}" />
+
+            <TextBlock Grid.Row="12"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.StartClick}" />
+            <Slider Grid.Row="12"
+                    Grid.Column="2"
+                    Name="SliderVolumeStartClick"
+                    Classes="Wide"
+                    TickFrequency="1"
+                    Minimum="0"
+                    Maximum="48"
+                    IsSnapToTickEnabled="True"
+                    Height="30"
+                    ValueChanged="SliderVolume_OnValueChanged"/>
+            <TextBlock Grid.Row="12"
+                       Grid.Column="2"
+                       Name="TextBlockVolumeStartClick"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="10,0"
+                       FontSize="15"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       Foreground="{DynamicResource ForegroundSecondary}" />
+            <Button Grid.Row="12"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundStartClick"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
+                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- Metronome -->
+            <TextBlock Grid.Row="13"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Metronome}" />
+            <Slider Grid.Row="13"
+                    Grid.Column="2"
+                    Name="SliderVolumeMetronome"
+                    Classes="Wide"
+                    TickFrequency="1"
+                    Minimum="0"
+                    Maximum="48"
+                    IsSnapToTickEnabled="True"
+                    Height="30"
+                    ValueChanged="SliderVolume_OnValueChanged"/>
+            <TextBlock Grid.Row="13"
+                       Grid.Column="2"
+                       Name="TextBlockVolumeMetronome"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="10,0"
+                       FontSize="15"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       Foreground="{DynamicResource ForegroundSecondary}" />
+            <Button Grid.Row="13"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundMetronome"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}" 
+                               Foreground="{DynamicResource ForegroundPrimary}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

@@ -9,6 +9,8 @@ using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
+using SaturnEdit.Windows.Dialogs.Search;
+using SaturnEdit.Windows.Dialogs.VolumeMixer;
 
 namespace SaturnEdit;
 
@@ -27,8 +29,6 @@ public partial class MainWindow : Window
 
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         OnOperationHistoryChanged(null, EventArgs.Empty);
-
-        SearchForAnything.PopupClosed += SearchForAnything_PopupClosed;
         
         Closed += AudioSystem.OnClosed;
         Closing += ChartEditor.OnClosing;
@@ -63,16 +63,12 @@ public partial class MainWindow : Window
     private bool bypassChartSave = false;
     private bool bypassStageSave = false;
     private bool bypassCosmeticsSave = false;
-
-    private bool blockEvents = false;
     
 #region Methods
     public async void ShowSettingsWindow()
     {
         try
         {
-            SearchForAnything.IsVisible = false;
-
             SettingsWindow settingsWindow = new();
             settingsWindow.Position = DialogPopupPosition(settingsWindow.Width, settingsWindow.Height);
 
@@ -84,6 +80,36 @@ public partial class MainWindow : Window
         }
     }
 
+    public async void ShowSearchWindow()
+    {
+        try
+        {
+            SearchWindow searchWindow = new();
+            searchWindow.Position = DialogPopupPosition(searchWindow.Width, searchWindow.Height);
+
+            await searchWindow.ShowDialog(this);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    public async void ShowVolumeMixerWindow()
+    {
+        try
+        {
+            VolumeMixerWindow volumeMixerWindow = new();
+            volumeMixerWindow.Position = DialogPopupPosition(volumeMixerWindow.Width, volumeMixerWindow.Height);
+
+            await volumeMixerWindow.ShowDialog(this);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+    
     private void SetTabs()
     {
         Dispatcher.UIThread.Post(() =>
@@ -132,19 +158,11 @@ public partial class MainWindow : Window
         Dispatcher.UIThread.Post(() =>
         {
             TextBlockShortcutSearch.Text = SettingsSystem.ShortcutSettings.Shortcuts["QuickCommands.Search"].ToString();
+            TextBlockShortcutVolumeMixer.Text = SettingsSystem.ShortcutSettings.Shortcuts["QuickCommands.VolumeMixer"].ToString();
             TextBlockShortcutSettings.Text = SettingsSystem.ShortcutSettings.Shortcuts["QuickCommands.Settings"].ToString();
             TextBlockShortcutUndo.Text = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"].ToString();
             TextBlockShortcutRedo.Text = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"].ToString();
         });
-    }
-
-    private void SearchForAnything_PopupClosed(object? sender, EventArgs e)
-    {
-        blockEvents = true;
-
-        ToggleButtonSearch.IsChecked = false;
-        
-        blockEvents = false;
     }
 #endregion System Event Delegates
 
@@ -162,45 +180,24 @@ public partial class MainWindow : Window
         {
             ShowSettingsWindow();
         }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["QuickCommands.VolumeMixer"]))
+        {
+            ShowVolumeMixerWindow();
+        }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["QuickCommands.Search"]))
         {
-            SearchForAnything.Show();
+            ShowSearchWindow();
         }
+        
     }
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
     
     private void EditorTabs_OnIsCheckedChanged(object? sender, RoutedEventArgs e) => SetTabs();
-    
-    private void ToggleButtonSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
-    {
-        if (blockEvents) return;
-        if (ToggleButtonSearch == null) return;
 
-        if (ToggleButtonSearch.IsChecked ?? false)
-        {
-            SearchForAnything.Show();
-        }
-        else
-        {
-            SearchForAnything.Hide();
-        }
-    }
-    
-    private void ToggleButtonVolume_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
-    {
-        if (blockEvents) return;
-        if (ToggleButtonVolume == null) return;
+    private void ButtonSearch_OnClick(object? sender, RoutedEventArgs e) => ShowSearchWindow();
 
-        if (ToggleButtonVolume.IsChecked ?? false)
-        {
-            SearchForAnything.Show();
-        }
-        else
-        {
-            SearchForAnything.Hide();
-        }
-    }
+    private void ButtonVolumeMixer_OnClick(object? sender, RoutedEventArgs e) => ShowVolumeMixerWindow();
     
     private void ButtonSettings_OnClick(object? sender, RoutedEventArgs e) => ShowSettingsWindow();
 

@@ -8,7 +8,6 @@
         xmlns:chartEditor="clr-namespace:SaturnEdit.Windows.ChartEditor"
         xmlns:cosmeticsEditor="clr-namespace:SaturnEdit.Windows.CosmeticsEditor"
         xmlns:stageEditor="clr-namespace:SaturnEdit.Windows.StageEditor"
-        xmlns:searchForAnything="clr-namespace:SaturnEdit.Windows.Popups.SearchForAnything"
         mc:Ignorable="d"
         d:DesignWidth="1400"
         d:DesignHeight="900"
@@ -133,10 +132,10 @@
                     <icon:FluentIcon Icon="ArrowDownload" />
                 </Button>
 
-                <ToggleButton Name="ToggleButtonSearch"
+                <Button Name="ButtonSearch"
                         Classes="Themed Square Standard"
                         Margin="5"
-                        IsCheckedChanged="ToggleButtonSearch_OnIsCheckedChanged"
+                        Click="ButtonSearch_OnClick"
                         ToolTip.VerticalOffset="5"
                         ToolTip.Placement="Bottom">
                     <ToolTip.Tip>
@@ -150,19 +149,26 @@
                         </StackPanel>
                     </ToolTip.Tip>
                     <icon:FluentIcon Icon="Search" />
-                </ToggleButton>
+                </Button>
                 
-                <ToggleButton Name="ToggleButtonVolume"
+                <Button Name="ButtonVolumeMixer"
                         Classes="Themed Square Standard"
                         Margin="5"
-                        IsCheckedChanged="ToggleButtonVolume_OnIsCheckedChanged"
+                        Click="ButtonVolumeMixer_OnClick"
                         ToolTip.VerticalOffset="5"
                         ToolTip.Placement="Bottom">
                     <ToolTip.Tip>
-                        <TextBlock Text="{DynamicResource Main.ToolTip.AdjustVolume}" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{DynamicResource Main.ToolTip.VolumeMixer}" />
+                            <TextBlock Name="TextBlockShortcutVolumeMixer"
+                                       Text="SHORTCUT"
+                                       Margin="15,0,0,0"
+                                       HorizontalAlignment="Right"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
                     </ToolTip.Tip>
                     <icon:FluentIcon Icon="Speaker2" />
-                </ToggleButton>
+                </Button>
 
                 <Button Name="ButtonSettings"
                         Classes="Themed Square Standard"
@@ -249,12 +255,5 @@
                                          IsVisible="False"
                                          IsEnabled="False" />
         </Panel>
-        
-        <!-- Search Popup -->
-        <searchForAnything:SearchForAnythingView Name="SearchForAnything"
-                                                 HorizontalAlignment="Center"
-                                                 VerticalAlignment="Center"
-                                                 Margin="0,40,0,0"
-                                                 IsVisible="False" />
     </Panel>
 </Window>
