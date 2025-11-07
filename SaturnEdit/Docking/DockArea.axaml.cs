@@ -216,11 +216,10 @@ public partial class DockArea : UserControl
             };
 
             window.Show(MainWindow.Instance);
-            return;
         }
     }
 
-    public void Popup(DockTab tab)
+    public void Popup(DockTab tab, double width, double height)
     {
         if (MainWindow.Instance == null) return;
 
@@ -230,8 +229,9 @@ public partial class DockArea : UserControl
         DockWindow window = new()
         {
             WindowContent = { Content = group },
-            Width = 500,
-            Height = 500,
+            Width = width,
+            Height = height,
+            Position = MainWindow.DialogPopupPosition(width, height),
         };
         
         window.Show(MainWindow.Instance);

@@ -75,6 +75,8 @@ public partial class ChartPropertiesView : UserControl
                 ButtonSecondaryKey = "ModalDialog.FileMovePrompt.MoveFile",
                 ButtonTertiaryKey = "Generic.Cancel",
             };
+            
+            dialog.Position = MainWindow.DialogPopupPosition(dialog.Width, dialog.Height);
 
             dialog.InitializeDialog();
             await dialog.ShowDialog(rootWindow);
@@ -94,6 +96,8 @@ public partial class ChartPropertiesView : UserControl
                 ButtonPrimaryKey = "ModalDialog.FileOverwritePrompt.OverwriteFile",
                 ButtonSecondaryKey = "Generic.Cancel",
             };
+            
+            dialog.Position = MainWindow.DialogPopupPosition(dialog.Width, dialog.Height);
 
             dialog.InitializeDialog();
             await dialog.ShowDialog(rootWindow);

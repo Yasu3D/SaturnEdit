@@ -49,6 +49,11 @@ public partial class MainWindow : Window
 
     public static MainWindow? Instance { get; private set; }
 
+    public static PixelPoint DialogPopupPosition(double width, double height) => Instance == null 
+        ? new(0, 0) 
+        : new((int)(Instance.Position.X + Instance.Bounds.Width  / 2 - width  / 2),
+              (int)(Instance.Position.Y + Instance.Bounds.Height / 2 - height / 2));
+    
     private readonly IBrush? chartEditorChromeGradient = null;
     private readonly IBrush? stageEditorChromeGradient = null;
     private readonly IBrush? cosmeticsEditorChromeGradient = null;
@@ -63,8 +68,10 @@ public partial class MainWindow : Window
         try
         {
             SearchForAnything.IsVisible = false;
-            
+
             SettingsWindow settingsWindow = new();
+            settingsWindow.Position = DialogPopupPosition(settingsWindow.Width, settingsWindow.Height);
+
             await settingsWindow.ShowDialog(this);
         }
         catch (Exception ex)

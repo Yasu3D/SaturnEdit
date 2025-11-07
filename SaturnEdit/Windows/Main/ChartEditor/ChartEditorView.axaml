@@ -8,7 +8,8 @@
              mc:Ignorable="d"
              d:DesignWidth="1400"
              d:DesignHeight="900"
-             x:Class="SaturnEdit.Windows.ChartEditor.ChartEditorView">
+             x:Class="SaturnEdit.Windows.ChartEditor.ChartEditorView"
+             DragDrop.AllowDrop="True">
     <Grid RowDefinitions="40,1,*,79">
 
         <!-- Menu Bar -->

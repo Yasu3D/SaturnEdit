@@ -38,6 +38,8 @@ public partial class ChartEditorView : UserControl
         KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
         KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
         
+        AddHandler(DragDrop.DropEvent, Control_Drop);
+        
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
@@ -86,6 +88,8 @@ public partial class ChartEditorView : UserControl
 
         // Open new chart dialog.
         NewChartWindow newChartWindow = new();
+        newChartWindow.Position = MainWindow.DialogPopupPosition(newChartWindow.Width, newChartWindow.Height);
+        
         await newChartWindow.ShowDialog(rootWindow);
 
         if (newChartWindow.Result != ModalDialogResult.Primary)
@@ -147,6 +151,8 @@ public partial class ChartEditorView : UserControl
             {
                 if (VisualRoot is not Window rootWindow) return false;
                 ImportArgsWindow importArgsWindow = new();
+                importArgsWindow.Position = MainWindow.DialogPopupPosition(importArgsWindow.Width, importArgsWindow.Height);
+                
                 await importArgsWindow.ShowDialog(rootWindow);
 
                 if (importArgsWindow.Result != ModalDialogResult.Primary) return false;
@@ -293,6 +299,8 @@ public partial class ChartEditorView : UserControl
             // Open an export dialog.
             if (VisualRoot is not Window rootWindow) return false;
             ExportArgsWindow exportArgsWindow = new();
+            exportArgsWindow.Position = MainWindow.DialogPopupPosition(exportArgsWindow.Width, exportArgsWindow.Height);
+            
             await exportArgsWindow.ShowDialog(rootWindow);
 
             // Return if export was cancelled.
@@ -426,6 +434,8 @@ public partial class ChartEditorView : UserControl
             ButtonSecondaryKey = "ModalDialog.SavePrompt.DontSave",
             ButtonTertiaryKey = "Generic.Cancel",
         };
+        
+        dialog.Position = MainWindow.DialogPopupPosition(dialog.Width, dialog.Height);
 
         dialog.InitializeDialog();
         await dialog.ShowDialog(rootWindow);
@@ -461,6 +471,8 @@ public partial class ChartEditorView : UserControl
         if (VisualRoot is not Window rootWindow) return;
 
         SelectByCriteriaWindow selectByCriteriaWindow = new();
+        selectByCriteriaWindow.Position = MainWindow.DialogPopupPosition(selectByCriteriaWindow.Width, selectByCriteriaWindow.Height);
+        
         await selectByCriteriaWindow.ShowDialog(rootWindow);
 
         if (selectByCriteriaWindow.Result != ModalDialogResult.Primary) return;
@@ -470,8 +482,10 @@ public partial class ChartEditorView : UserControl
     public async void ChartView_AdjustAxis()
     {
         if (VisualRoot is not Window window) return;
-            
+
         SelectMirrorAxisWindow selectMirrorAxisWindow = new();
+        selectMirrorAxisWindow.Position = MainWindow.DialogPopupPosition(selectMirrorAxisWindow.Width, selectMirrorAxisWindow.Height);
+        
         await selectMirrorAxisWindow.ShowDialog(window);
 
         if (selectMirrorAxisWindow.Result == ModalDialogResult.Primary)
@@ -483,8 +497,10 @@ public partial class ChartEditorView : UserControl
     public async void ChartView_ScaleSelection()
     {
         if (VisualRoot is not Window window) return;
-            
+
         SelectScaleWindow selectScaleWindow = new();
+        selectScaleWindow.Position = MainWindow.DialogPopupPosition(selectScaleWindow.Width, selectScaleWindow.Height);
+        
         await selectScaleWindow.ShowDialog(window);
 
         if (selectScaleWindow.Result == ModalDialogResult.Primary)
@@ -496,8 +512,10 @@ public partial class ChartEditorView : UserControl
     public async void ChartView_OffsetChart()
     {
         if (VisualRoot is not Window window) return;
-            
+
         SelectOffsetWindow selectOffsetWindow = new();
+        selectOffsetWindow.Position = MainWindow.DialogPopupPosition(selectOffsetWindow.Width, selectOffsetWindow.Height);
+        
         await selectOffsetWindow.ShowDialog(window);
 
         if (selectOffsetWindow.Result == ModalDialogResult.Primary)
@@ -509,8 +527,10 @@ public partial class ChartEditorView : UserControl
     public async void ChartView_ScaleChart()
     {
         if (VisualRoot is not Window window) return;
-            
+
         SelectScaleWindow selectScaleWindow = new();
+        selectScaleWindow.Position = MainWindow.DialogPopupPosition(selectScaleWindow.Width, selectScaleWindow.Height);
+        
         await selectScaleWindow.ShowDialog(window);
 
         if (selectScaleWindow.Result == ModalDialogResult.Primary)
@@ -522,8 +542,10 @@ public partial class ChartEditorView : UserControl
     public async void ChartView_MirrorChart()
     {
         if (VisualRoot is not Window window) return;
-            
+
         SelectMirrorAxisWindow selectMirrorAxisWindow = new();
+        selectMirrorAxisWindow.Position = MainWindow.DialogPopupPosition(selectMirrorAxisWindow.Width, selectMirrorAxisWindow.Height);
+        
         await selectMirrorAxisWindow.ShowDialog(window);
 
         if (selectMirrorAxisWindow.Result == ModalDialogResult.Primary)
@@ -547,13 +569,17 @@ public partial class ChartEditorView : UserControl
                 ButtonPrimaryKey = "Generic.Ok",
             };
             
+            modalDialog.Position = MainWindow.DialogPopupPosition(modalDialog.Width, modalDialog.Height);
+
             modalDialog.InitializeDialog();
             await modalDialog.ShowDialog(window);
             
             return;
         }
-            
+
         ZigZagHoldArgsWindow zigZagHoldArgsWindow = new();
+        zigZagHoldArgsWindow.Position = MainWindow.DialogPopupPosition(zigZagHoldArgsWindow.Width, zigZagHoldArgsWindow.Height);
+        
         await zigZagHoldArgsWindow.ShowDialog(window);
 
         if (zigZagHoldArgsWindow.Result == ModalDialogResult.Primary)
@@ -571,12 +597,12 @@ public partial class ChartEditorView : UserControl
     }
 
     
-    public static void Dock_CreateNewFloatingTool(UserControl userControl, Icon icon, string key)
+    public static void Dock_CreateNewFloatingTool(UserControl userControl, Icon icon, string key, double width, double height)
     {
         if (DockArea.Instance == null) return;
         
         DockTab tab = new(userControl, icon, key);
-        DockArea.Instance.Popup(tab);
+        DockArea.Instance.Popup(tab, width, height);
     }
     
     private async void Dock_SaveLayout()
@@ -614,7 +640,6 @@ public partial class ChartEditorView : UserControl
         {
             Console.WriteLine(ex);
             ShowFileWriteError();
-            return;
         }
     }
 
@@ -722,6 +747,8 @@ public partial class ChartEditorView : UserControl
             ParagraphKey = "ModalDialog.FileWriteError.Paragraph",
             ButtonPrimaryKey = "Generic.Ok",
         };
+        
+        dialog.Position = MainWindow.DialogPopupPosition(dialog.Width, dialog.Height);
 
         dialog.InitializeDialog();
         dialog.ShowDialog(rootWindow);
@@ -1102,7 +1129,103 @@ public partial class ChartEditorView : UserControl
     }
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
+    
+    private async void Control_Drop(object? sender, DragEventArgs e)
+    {
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null)
+            {
+                e.Handled = true;
+                return;
+            }
 
+            // Prompt to save an unsaved chart first.
+            if (!ChartSystem.IsSaved)
+            {
+                ModalDialogResult result = await PromptSave();
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary)
+                {
+                    e.Handled = true;
+                    return;
+                }
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort opening new file if save was unsuccessful.
+                    if (!success)
+                    {
+                        e.Handled = true;
+                        return;
+                    }
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            IStorageItem? file = e.DataTransfer.TryGetFile();
+
+            if (file == null)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            if (!File.Exists(file.Path.LocalPath))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            // Get Read Args
+            NotationReadArgs args = new();
+            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(file.Path.LocalPath);
+            if (formatVersion == FormatVersion.Unknown)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            if (formatVersion != FormatVersion.SatV3)
+            {
+                if (VisualRoot is not Window rootWindow)
+                {
+                    e.Handled = true;
+                    return;
+                }
+
+                ImportArgsWindow importArgsWindow = new();
+                importArgsWindow.Position = MainWindow.DialogPopupPosition(importArgsWindow.Width, importArgsWindow.Height);
+                
+                await importArgsWindow.ShowDialog(rootWindow);
+
+                if (importArgsWindow.Result != ModalDialogResult.Primary)
+                {
+                    e.Handled = true;
+                    return;
+                }
+
+                args = importArgsWindow.NotationReadArgs;
+            }
+
+            ChartSystem.ReadChart(file.Path.LocalPath, args);
+
+            e.Handled = true;
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+    }
+    
     private void MenuItemNew_OnClick(object? sender, RoutedEventArgs e) => File_New();
 
     private void MenuItemOpen_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open();
@@ -1144,26 +1267,25 @@ public partial class ChartEditorView : UserControl
     private void MenuItemToolWindows_OnClick(object? sender, RoutedEventArgs e)
     {
         if (sender is not MenuItem menuItem) return;
-        (UserControl?, Icon, string) tabData = menuItem.Name switch
+        (UserControl?, Icon, string, double, double) tabData = menuItem.Name switch
         {
-            // TODO: default sizes
-            "MenuItemChartView3D"     => (new ChartView3D(),         Icon.CircleShadow,           "ChartEditor.ChartView3D"),
-            "MenuItemChartView2D"     => (new ChartView2D(),         Icon.GanttChart,             "ChartEditor.ChartView2D"),
-            "MenuItemChartViewTxt"    => (new ChartViewTxt(),        Icon.TextT,                  "ChartEditor.ChartViewTxt"),
-            "MenuItemChartProperties" => (new ChartPropertiesView(), Icon.TextBulletList,         "ChartEditor.ChartProperties"),
-            "MenuItemChartStatistics" => (new ChartStatisticsView(), Icon.DataHistogram,          "ChartEditor.ChartStatistics"),
-            "MenuItemProofreader"     => (new ProofreaderView(),     Icon.ApprovalsApp,           "ChartEditor.Proofreader"),
-            "MenuItemEventList"       => (new EventListView(),       Icon.TextBulletList,         "ChartEditor.EventList"),
-            "MenuItemLayerList"       => (new LayerListView(),       Icon.TextBulletList,         "ChartEditor.LayerList"),
-            "MenuItemInspector"       => (new InspectorView(),       Icon.WrenchScrewdriver,      "ChartEditor.Inspector"),
-            "MenuItemCursor"          => (new CursorView(),          Icon.CircleHintHalfVertical, "ChartEditor.Cursor"),
-            "MenuItemAudioMixer"      => (new AudioMixerView(),      Icon.Speaker2,               "ChartEditor.AudioMixer"),
-            "MenuItemWaveform"        => (new WaveformView(),        Icon.Pulse,                  "ChartEditor.Waveform"),
-            _ => (null, Icon.Warning, ""),
+            "MenuItemChartView3D"     => (new ChartView3D(),         Icon.CircleShadow,           "ChartEditor.ChartView3D"    , 750, 773),
+            "MenuItemChartView2D"     => (new ChartView2D(),         Icon.GanttChart,             "ChartEditor.ChartView2D"    , 750, 773),
+            "MenuItemChartViewTxt"    => (new ChartViewTxt(),        Icon.TextT,                  "ChartEditor.ChartViewTxt"   , 750, 773),
+            "MenuItemChartProperties" => (new ChartPropertiesView(), Icon.TextBulletList,         "ChartEditor.ChartProperties", 500, 535),
+            "MenuItemChartStatistics" => (new ChartStatisticsView(), Icon.DataHistogram,          "ChartEditor.ChartStatistics", 500, 535),
+            "MenuItemProofreader"     => (new ProofreaderView(),     Icon.ApprovalsApp,           "ChartEditor.Proofreader"    , 800, 485),
+            "MenuItemEventList"       => (new EventListView(),       Icon.TextBulletList,         "ChartEditor.EventList"      , 500, 735),
+            "MenuItemLayerList"       => (new LayerListView(),       Icon.TextBulletList,         "ChartEditor.LayerList"      , 500, 735),
+            "MenuItemInspector"       => (new InspectorView(),       Icon.WrenchScrewdriver,      "ChartEditor.Inspector"      , 500, 735),
+            "MenuItemCursor"          => (new CursorView(),          Icon.CircleHintHalfVertical, "ChartEditor.Cursor"         , 350, 225),
+            "MenuItemAudioMixer"      => (new AudioMixerView(),      Icon.Speaker2,               "ChartEditor.AudioMixer"     , 600, 357),
+            "MenuItemWaveform"        => (new WaveformView(),        Icon.Pulse,                  "ChartEditor.Waveform"       , 150, 773),
+            _ => (null, Icon.Warning, "", 200, 200),
         };
 
         if (tabData.Item1 == null) return;
-        Dock_CreateNewFloatingTool(tabData.Item1, tabData.Item2, tabData.Item3);
+        Dock_CreateNewFloatingTool(tabData.Item1, tabData.Item2, tabData.Item3, tabData.Item4, tabData.Item5);
     }
     
     private void MenuItemLayoutPresetClassic_OnClick(object? sender, RoutedEventArgs e) => Dock_LoadPreset(PresetLayoutType.Classic);

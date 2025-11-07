@@ -20,6 +20,7 @@ public static class ChartSystem
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
+        AudioSystem.AudioLoaded += OnAudioLoaded;
         OnOperationHistoryChanged(null, EventArgs.Empty);
 
         IsSaved = true;
@@ -210,5 +211,7 @@ public static class ChartSystem
             Rebuild();
         }
     }
+
+    private static void OnAudioLoaded(object? sender, EventArgs e) => Rebuild();
 #endregion System Event Delegates
 }

@@ -34,8 +34,10 @@ public partial class ProofreaderView : UserControl
         try
         {
             if (VisualRoot is not Window window) return;
-            
+
             ProofreaderCriteriaWindow proofreaderCriteriaWindow = new();
+            proofreaderCriteriaWindow.Position = MainWindow.DialogPopupPosition(proofreaderCriteriaWindow.Width, proofreaderCriteriaWindow.Height);
+            
             await proofreaderCriteriaWindow.ShowDialog(window);
         }
         catch (Exception ex)
