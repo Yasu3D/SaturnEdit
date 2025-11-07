@@ -51,6 +51,12 @@ public partial class ChartEditorView : UserControl
     private static string LayoutDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Layout");
     private static string CustomLayoutDirectory => Path.Combine(LayoutDirectory, "Custom");
     private static string PersistedLayoutFile => Path.Combine(LayoutDirectory, "persisted.layout");
+
+    private enum PresetLayoutType
+    {
+        Classic = 0,
+        Advanced = 1,
+    }
     
 #region Methods
     public async void File_New()
@@ -639,18 +645,30 @@ public partial class ChartEditorView : UserControl
             
             // Read layout from file.
             string data = await File.ReadAllTextAsync(files[0].Path.LocalPath);
-            DockSerializer.Deserialize(data);
+            DockSerializer.Deserialize(data, true);
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex);
-            // TODO: Load preset?
+            Dock_LoadPreset(PresetLayoutType.Classic);
         }
     }
 
-    private void Dock_LoadPreset()
+    private static void Dock_LoadPreset(PresetLayoutType preset)
     {
-        // TODO.
+        const string classicPreset = "Main 1300 950 0 0\nSplit Col 0.64\nGroup\nChartView3D X\nSplit Row 0.73\nGroup\nChartPropertiesView X\nInspectorView\nGroup\nCursorView X";
+        const string advancedPreset = "Main 1920 1080 0 0\nSplit Col 0.71\nSplit Col 0.35\nSplit Row 0.75\nGroup\nInspectorView X\nEventListView\nLayerListView\nGroup\nCursorView X\nGroup\nChartView3D X\nSplit Row 0.65\nGroup\nChartPropertiesView X\nChartStatisticsView\nGroup\nProofreaderView X";
+
+        if (preset == PresetLayoutType.Classic)
+        {
+            DockSerializer.Deserialize(classicPreset, false);
+            return;
+        }
+        
+        if (preset == PresetLayoutType.Advanced)
+        {
+            DockSerializer.Deserialize(advancedPreset, false);
+        }
     }
 
     private void Dock_SavePersistedLayout()
@@ -676,11 +694,11 @@ public partial class ChartEditorView : UserControl
             if (File.Exists(PersistedLayoutFile))
             {
                 string data = File.ReadAllText(PersistedLayoutFile);
-                DockSerializer.Deserialize(data);
+                DockSerializer.Deserialize(data, true);
             }
             else
             {
-                Dock_LoadPreset();
+                Dock_LoadPreset(PresetLayoutType.Classic);
             }
         }
         catch (Exception ex)
@@ -688,7 +706,7 @@ public partial class ChartEditorView : UserControl
             // Don't throw.
             Console.WriteLine(ex);
             
-            Dock_LoadPreset();
+            Dock_LoadPreset(PresetLayoutType.Classic);
         }
     }
         
@@ -1148,9 +1166,9 @@ public partial class ChartEditorView : UserControl
         Dock_CreateNewFloatingTool(tabData.Item1, tabData.Item2, tabData.Item3);
     }
     
-    private void MenuItemLayoutPresetClassic_OnClick(object? sender, RoutedEventArgs e) => Dock_LoadPreset();
+    private void MenuItemLayoutPresetClassic_OnClick(object? sender, RoutedEventArgs e) => Dock_LoadPreset(PresetLayoutType.Classic);
 
-    private void MenuItemLayoutPresetAdvanced_OnClick(object? sender, RoutedEventArgs e) => Dock_LoadPreset();
+    private void MenuItemLayoutPresetAdvanced_OnClick(object? sender, RoutedEventArgs e) => Dock_LoadPreset(PresetLayoutType.Advanced);
 
     private void MenuItemSaveLayout_OnClick(object? sender, RoutedEventArgs e) => Dock_SaveLayout();
 

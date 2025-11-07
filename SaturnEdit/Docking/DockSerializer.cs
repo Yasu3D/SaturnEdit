@@ -117,7 +117,7 @@ public static class DockSerializer
         }
     }
 
-    public static void Deserialize(string data)
+    public static void Deserialize(string data, bool setPosition)
     {
         Dispatcher.UIThread.Invoke(() =>
         {
@@ -148,9 +148,12 @@ public static class DockSerializer
                         MainWindow.Instance.Width = Convert.ToDouble(split[1], CultureInfo.InvariantCulture);
                         MainWindow.Instance.Height = Convert.ToDouble(split[2], CultureInfo.InvariantCulture);
 
-                        int posX = Convert.ToInt32(split[3], CultureInfo.InvariantCulture);
-                        int posY = Convert.ToInt32(split[4], CultureInfo.InvariantCulture);
-                        MainWindow.Instance.Position = new(posX, posY);
+                        if (setPosition)
+                        {
+                            int posX = Convert.ToInt32(split[3], CultureInfo.InvariantCulture);
+                            int posY = Convert.ToInt32(split[4], CultureInfo.InvariantCulture);
+                            MainWindow.Instance.Position = new(posX, posY);
+                        }
                         continue;
                     }
 
