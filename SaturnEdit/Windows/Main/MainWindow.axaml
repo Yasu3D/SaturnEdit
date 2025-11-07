@@ -8,7 +8,7 @@
         xmlns:chartEditor="clr-namespace:SaturnEdit.Windows.ChartEditor"
         xmlns:cosmeticsEditor="clr-namespace:SaturnEdit.Windows.CosmeticsEditor"
         xmlns:stageEditor="clr-namespace:SaturnEdit.Windows.StageEditor"
-        xmlns:searchForAnything="clr-namespace:SaturnEdit.Windows.Main.SearchForAnything"
+        xmlns:searchForAnything="clr-namespace:SaturnEdit.Windows.Popups.SearchForAnything"
         mc:Ignorable="d"
         d:DesignWidth="1400"
         d:DesignHeight="900"
@@ -133,10 +133,10 @@
                     <icon:FluentIcon Icon="ArrowDownload" />
                 </Button>
 
-                <Button Name="ButtonSearch"
+                <ToggleButton Name="ToggleButtonSearch"
                         Classes="Themed Square Standard"
                         Margin="5"
-                        Click="ButtonSearch_OnClick"
+                        IsCheckedChanged="ToggleButtonSearch_OnIsCheckedChanged"
                         ToolTip.VerticalOffset="5"
                         ToolTip.Placement="Bottom">
                     <ToolTip.Tip>
@@ -150,7 +150,19 @@
                         </StackPanel>
                     </ToolTip.Tip>
                     <icon:FluentIcon Icon="Search" />
-                </Button>
+                </ToggleButton>
+                
+                <ToggleButton Name="ToggleButtonVolume"
+                        Classes="Themed Square Standard"
+                        Margin="5"
+                        IsCheckedChanged="ToggleButtonVolume_OnIsCheckedChanged"
+                        ToolTip.VerticalOffset="5"
+                        ToolTip.Placement="Bottom">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Main.ToolTip.AdjustVolume}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="Speaker2" />
+                </ToggleButton>
 
                 <Button Name="ButtonSettings"
                         Classes="Themed Square Standard"
@@ -242,6 +254,7 @@
         <searchForAnything:SearchForAnythingView Name="SearchForAnything"
                                                  HorizontalAlignment="Center"
                                                  VerticalAlignment="Center"
+                                                 Margin="0,40,0,0"
                                                  IsVisible="False" />
     </Panel>
 </Window>

@@ -11,7 +11,7 @@ using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnView;
 
-namespace SaturnEdit.Windows.Main.SearchForAnything;
+namespace SaturnEdit.Windows.Popups.SearchForAnything;
 
 public partial class SearchForAnythingView : UserControl
 {
@@ -20,6 +20,8 @@ public partial class SearchForAnythingView : UserControl
         InitializeComponent();
     }
 
+    public event EventHandler? PopupClosed;
+    
     private string query = "";
     private bool blockEvents = false;
     
@@ -35,12 +37,6 @@ public partial class SearchForAnythingView : UserControl
 #region Methods
     public void Show()
     {
-        if (IsVisible)
-        {
-            IsVisible = false;
-            return;
-        }
-        
         Dispatcher.UIThread.Post(() =>
         {
             blockEvents = true;
@@ -54,6 +50,12 @@ public partial class SearchForAnythingView : UserControl
 
             blockEvents = false;
         });
+    }
+
+    public void Hide()
+    {
+        IsVisible = false;
+        PopupClosed?.Invoke(null, EventArgs.Empty);
     }
 
     private void GenerateList()
@@ -95,7 +97,7 @@ public partial class SearchForAnythingView : UserControl
     private void ButtonClose_OnClick(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        IsVisible = false;
+        Hide();
     }
     
     private void TextBoxSearchQuery_OnTextChanged(object? sender, TextChangedEventArgs e)
@@ -114,49 +116,49 @@ public partial class SearchForAnythingView : UserControl
         if (item.Key == "File.New")
         {
             MainWindow.Instance?.ChartEditor.File_New();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "File.Open") 
         {
             _ = MainWindow.Instance?.ChartEditor.File_Open();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "File.Save") 
         {
             _ = MainWindow.Instance?.ChartEditor.File_Save();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "File.SaveAs") 
         {
             _ = MainWindow.Instance?.ChartEditor.File_SaveAs();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "File.ReloadFromDisk") 
         {
             _ = MainWindow.Instance?.ChartEditor.File_ReloadFromDisk();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "File.Export") 
         {
             _ = MainWindow.Instance?.ChartEditor.File_Export();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "File.RenderAsImage") 
         {
             MainWindow.Instance?.ChartEditor.File_RenderAsImage();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "File.Quit") 
         {
             MainWindow.Instance?.ChartEditor.File_Quit();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Edit.Undo")
@@ -172,43 +174,43 @@ public partial class SearchForAnythingView : UserControl
         else if (item.Key == "Edit.Cut")
         {
             MainWindow.Instance?.ChartEditor.Edit_Cut();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Edit.Copy") 
         {
             MainWindow.Instance?.ChartEditor.Edit_Copy();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Edit.Paste") 
         {
             MainWindow.Instance?.ChartEditor.Edit_Paste();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Edit.SelectAll") 
         {
             SelectionSystem.SelectAll();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Edit.DeselectAll") 
         {
             SelectionSystem.DeselectAll();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Edit.CheckerDeselect") 
         {
             SelectionSystem.CheckerDeselect();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Edit.SelectByCriteria") 
         {
             MainWindow.Instance?.ChartEditor.Edit_SelectByCriteria();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Navigate.MoveBeatForward") 
@@ -264,151 +266,151 @@ public partial class SearchForAnythingView : UserControl
         else if (item.Key == "NotePalette.NoteType.Touch") 
         {
             CursorSystem.SetType(CursorSystem.TouchNote);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.NoteType.Chain") 
         {
             CursorSystem.SetType(CursorSystem.ChainNote);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.NoteType.Hold") 
         {
             CursorSystem.SetType(CursorSystem.HoldNote);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.NoteType.SlideClockwise") 
         {
             CursorSystem.SetType(CursorSystem.SlideClockwiseNote);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.NoteType.SlideCounterclockwise") 
         {
             CursorSystem.SetType(CursorSystem.SlideCounterclockwiseNote);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.NoteType.SnapForward") 
         {
             CursorSystem.SetType(CursorSystem.SnapForwardNote);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.NoteType.SnapBackward") 
         {
             CursorSystem.SetType(CursorSystem.SnapBackwardNote);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.NoteType.LaneShow") 
         {
             CursorSystem.SetType(CursorSystem.LaneShowNote);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.NoteType.LaneHide") 
         {
             CursorSystem.SetType(CursorSystem.LaneHideNote);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.NoteType.Sync") 
         {
             CursorSystem.SetType(CursorSystem.SyncNote);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.NoteType.MeasureLine") 
         {
             CursorSystem.SetType(CursorSystem.MeasureLineNote);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.BonusType.Normal") 
         {
             CursorSystem.BonusType = BonusType.Normal;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.BonusType.Bonus") 
         {
             CursorSystem.BonusType = BonusType.Bonus;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.BonusType.R") 
         {
             CursorSystem.BonusType = BonusType.R;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.JudgementType.Normal") 
         {
             CursorSystem.JudgementType = JudgementType.Normal;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.JudgementType.Fake") 
         {
             CursorSystem.JudgementType = JudgementType.Fake;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.JudgementType.Autoplay") 
         {
             CursorSystem.JudgementType = JudgementType.Autoplay;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.SweepDirection.Center") 
         {
             CursorSystem.Direction = LaneSweepDirection.Center;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.SweepDirection.Clockwise") 
         {
             CursorSystem.Direction = LaneSweepDirection.Clockwise;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.SweepDirection.Counterclockwise") 
         {
             CursorSystem.Direction = LaneSweepDirection.Counterclockwise;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.SweepDirection.Instant") 
         {
             CursorSystem.Direction = LaneSweepDirection.Instant;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.HoldPointRenderType.Hidden") 
         {
             CursorSystem.RenderType = HoldPointRenderType.Visible;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "NotePalette.HoldPointRenderType.Visible") 
         {
             CursorSystem.RenderType = HoldPointRenderType.Hidden;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Playback.Play") 
         {
             TimeSystem.PlaybackState = PlaybackState.Playing;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Playback.Pause") 
         {
             TimeSystem.PlaybackState = PlaybackState.Stopped;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Playback.IncreasePlaybackSpeed") 
@@ -424,481 +426,481 @@ public partial class SearchForAnythingView : UserControl
         else if (item.Key == "Editor.Playback.LoopPlayback") 
         {
             SettingsSystem.AudioSettings.LoopPlayback = !SettingsSystem.AudioSettings.LoopPlayback;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Playback.SetLoopMarkerStart") 
         {
             TimeSystem.LoopStart = TimeSystem.Timestamp.Time;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Playback.SetLoopMarkerEnd") 
         {
             TimeSystem.LoopEnd = TimeSystem.Timestamp.Time;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Playback.Metronome") 
         {
             SettingsSystem.AudioSettings.Metronome = !SettingsSystem.AudioSettings.Metronome;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Toolbar.EditType") 
         {
             EditorSystem.ToolBar_EditType();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Toolbar.EditShape") 
         {
             EditorSystem.ToolBar_EditShape();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Toolbar.EditBoth") 
         {
             EditorSystem.ToolBar_EditBoth();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Toolbar.DeleteSelection") 
         {
             EditorSystem.ToolBar_Delete();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Toolbar.Insert") 
         {
             EditorSystem.ToolBar_Insert();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.AutoMode") 
         {
             EditorSystem.ChangeEditMode();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.ObjectMode") 
         {
             EditorSystem.ChangeEditMode(EditorMode.ObjectMode);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.EditMode") 
         {
             EditorSystem.ChangeEditMode(EditorMode.EditMode);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.TempoChange") 
         {
             EditorSystem.Insert_AddTempoChange();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.MetreChange") 
         {
             EditorSystem.Insert_AddMetreChange();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.TutorialMarker") 
         {
             EditorSystem.Insert_AddTutorialMarker();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.SpeedChange") 
         {
             EditorSystem.Insert_AddSpeedChange();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.VisibilityChange") 
         {
             EditorSystem.Insert_AddVisibilityChange();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.StopEffect") 
         {
             EditorSystem.Insert_AddStopEffect();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.ReverseEffect") 
         {
             EditorSystem.Insert_AddReverseEffect();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MoveBeatForward") 
         {
             EditorSystem.Transform_MoveSelectionBeatForward();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MoveBeatBack") 
         {
             EditorSystem.Transform_MoveSelectionBeatBack();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MoveMeasureForward") 
         {
             EditorSystem.Transform_MoveSelectionMeasureForward();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MoveMeasureBack") 
         {
             EditorSystem.Transform_MoveSelectionMeasureBack();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MoveClockwise") 
         {
             EditorSystem.Transform_MoveClockwise();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MoveCounterclockwise") 
         {
             EditorSystem.Transform_MoveCounterclockwise();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.IncreaseSize") 
         {
             EditorSystem.Transform_IncreaseSize();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.DecreaseSize") 
         {
             EditorSystem.Transform_DecreaseSize();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MoveClockwiseIterative") 
         {
             EditorSystem.Transform_MoveClockwiseIterative();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MoveCounterclockwiseIterative") 
         {
             EditorSystem.Transform_MoveCounterclockwiseIterative();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.IncreaseSizeIterative") 
         {
             EditorSystem.Transform_IncreaseSizeIterative();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.DecreaseSizeIterative") 
         {
             EditorSystem.Transform_DecreaseSizeIterative();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MirrorHorizontal") 
         {
             EditorSystem.Transform_MirrorHorizontal();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MirrorVertical") 
         {
             EditorSystem.Transform_MirrorVertical();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MirrorCustom") 
         {
             EditorSystem.Transform_MirrorCustom();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.AdjustAxis") 
         {
             MainWindow.Instance?.ChartEditor.ChartView_AdjustAxis();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.FlipDirection") 
         {
             EditorSystem.Transform_FlipDirection();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.ReverseSelection") 
         {
             EditorSystem.Transform_ReverseSelection();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.ScaleSelection") 
         {
             MainWindow.Instance?.ChartEditor.ChartView_ScaleSelection();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.OffsetChart") 
         {
             MainWindow.Instance?.ChartEditor.ChartView_OffsetChart();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.ScaleChart") 
         {
             MainWindow.Instance?.ChartEditor.ChartView_ScaleChart();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MirrorChart") 
         {
             MainWindow.Instance?.ChartEditor.ChartView_MirrorChart();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Convert.ZigZagHold") 
         {
             MainWindow.Instance?.ChartEditor.ChartView_ZigZagHold();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Convert.CutHold") 
         {
             EditorSystem.Convert_CutHold();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Convert.JoinHold") 
         {
             EditorSystem.Convert_JoinHold();
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.IncreaseNoteSpeed")
         {
             SettingsSystem.RenderSettings.NoteSpeed = Math.Min(60, SettingsSystem.RenderSettings.NoteSpeed + 1);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.DecreaseNoteSpeed") 
         {
             SettingsSystem.RenderSettings.NoteSpeed = Math.Max(10, SettingsSystem.RenderSettings.NoteSpeed - 1);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.IncreaseBackgroundDim")
         {
             SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)Math.Min(4, (int)SettingsSystem.RenderSettings.BackgroundDim + 1);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.DecreaseBackgroundDim") 
         {
             SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)Math.Max(0, (int)SettingsSystem.RenderSettings.BackgroundDim - 1);
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ShowSpeedChanges")
         {
             SettingsSystem.RenderSettings.ShowSpeedChanges = !SettingsSystem.RenderSettings.ShowSpeedChanges;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ShowVisibilityChanges") 
         {
             SettingsSystem.RenderSettings.ShowVisibilityChanges = !SettingsSystem.RenderSettings.ShowVisibilityChanges;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ShowLaneToggleAnimations") 
         {
             SettingsSystem.RenderSettings.ShowLaneToggleAnimations = !SettingsSystem.RenderSettings.ShowLaneToggleAnimations;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.VisualizeLaneSweeps") 
         {
             SettingsSystem.RenderSettings.VisualizeLaneSweeps = !SettingsSystem.RenderSettings.VisualizeLaneSweeps;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ShowJudgeAreas") 
         {
             SettingsSystem.RenderSettings.ShowJudgeAreas = !SettingsSystem.RenderSettings.ShowJudgeAreas;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ShowMarvelousArea") 
         {
             SettingsSystem.RenderSettings.ShowMarvelousArea = !SettingsSystem.RenderSettings.ShowMarvelousArea;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ShowGreatArea") 
         {
             SettingsSystem.RenderSettings.ShowGreatArea = !SettingsSystem.RenderSettings.ShowGreatArea;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ShowGoodArea") 
         {
             SettingsSystem.RenderSettings.ShowGoodArea = !SettingsSystem.RenderSettings.ShowGoodArea;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.SaturnJudgeAreas")
         {
             SettingsSystem.RenderSettings.SaturnJudgeAreas = !SettingsSystem.RenderSettings.SaturnJudgeAreas;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.Touch") 
         {
             SettingsSystem.RenderSettings.ShowTouchNotes = !SettingsSystem.RenderSettings.ShowTouchNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.SnapForward") 
         {
             SettingsSystem.RenderSettings.ShowSnapForwardNotes = !SettingsSystem.RenderSettings.ShowSnapForwardNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.SnapBackward") 
         {
             SettingsSystem.RenderSettings.ShowSnapBackwardNotes = !SettingsSystem.RenderSettings.ShowSnapBackwardNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.SlideClockwise") 
         {
             SettingsSystem.RenderSettings.ShowSlideClockwiseNotes = !SettingsSystem.RenderSettings.ShowSlideClockwiseNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.SlideCounterclockwise") 
         {
             SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes = !SettingsSystem.RenderSettings.ShowSlideCounterclockwiseNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.Chain") 
         {
             SettingsSystem.RenderSettings.ShowChainNotes = !SettingsSystem.RenderSettings.ShowChainNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.Hold") 
         {
             SettingsSystem.RenderSettings.ShowHoldNotes = !SettingsSystem.RenderSettings.ShowHoldNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.Sync") 
         {
             SettingsSystem.RenderSettings.ShowSyncNotes = !SettingsSystem.RenderSettings.ShowSyncNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.MeasureLine") 
         {
             SettingsSystem.RenderSettings.ShowMeasureLineNotes = !SettingsSystem.RenderSettings.ShowMeasureLineNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.BeatLine") 
         {
             SettingsSystem.RenderSettings.ShowBeatLineNotes = !SettingsSystem.RenderSettings.ShowBeatLineNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.LaneShow") 
         {
             SettingsSystem.RenderSettings.ShowLaneShowNotes = !SettingsSystem.RenderSettings.ShowLaneShowNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.LaneHide") 
         {
             SettingsSystem.RenderSettings.ShowLaneHideNotes = !SettingsSystem.RenderSettings.ShowLaneHideNotes;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.TempoChange") 
         {
             SettingsSystem.RenderSettings.ShowTempoChangeEvents = !SettingsSystem.RenderSettings.ShowTempoChangeEvents;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.MetreChange") 
         {
             SettingsSystem.RenderSettings.ShowMetreChangeEvents = !SettingsSystem.RenderSettings.ShowMetreChangeEvents;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.SpeedChange") 
         {
             SettingsSystem.RenderSettings.ShowSpeedChangeEvents = !SettingsSystem.RenderSettings.ShowSpeedChangeEvents;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.VisibilityChange") 
         {
             SettingsSystem.RenderSettings.ShowVisibilityChangeEvents = !SettingsSystem.RenderSettings.ShowVisibilityChangeEvents;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.ReverseEffect") 
         {
             SettingsSystem.RenderSettings.ShowReverseEffectEvents = !SettingsSystem.RenderSettings.ShowReverseEffectEvents;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.StopEffect") 
         {
             SettingsSystem.RenderSettings.ShowStopEffectEvents = !SettingsSystem.RenderSettings.ShowStopEffectEvents;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.ToggleVisibility.TutorialMarker") 
         {
             SettingsSystem.RenderSettings.ShowTutorialMarkerEvents = !SettingsSystem.RenderSettings.ShowTutorialMarkerEvents;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.HideDuringPlayback.EventMarkers") 
         {
             SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback = !SettingsSystem.RenderSettings.HideEventMarkersDuringPlayback;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.HideDuringPlayback.LaneToggleNotes") 
         {
             SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback = !SettingsSystem.RenderSettings.HideLaneToggleNotesDuringPlayback;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.HideDuringPlayback.HoldControlPoints") 
         {
             SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback = !SettingsSystem.RenderSettings.HideHoldControlPointsDuringPlayback;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Settings.HideDuringPlayback.Bookmarks") 
         {
             SettingsSystem.RenderSettings.HideBookmarksDuringPlayback = !SettingsSystem.RenderSettings.HideBookmarksDuringPlayback;
-            IsVisible = false;
+            Hide();
             e.Handled = true;
         }
     }

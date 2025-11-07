@@ -1004,7 +1004,7 @@ public static class EditorSystem
 
     public static async Task Edit_Paste(IClipboard clipboard)
     {
-        string? clipboardText = await clipboard.GetTextAsync();
+        string? clipboardText = await clipboard.TryGetTextAsync();
         if (clipboardText == null) return;
 
         clipboardText = clipboardText.Replace("\r", "");

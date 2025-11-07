@@ -27,6 +27,8 @@ public partial class MainWindow : Window
 
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         OnOperationHistoryChanged(null, EventArgs.Empty);
+
+        SearchForAnything.PopupClosed += SearchForAnything_PopupClosed;
         
         Closed += AudioSystem.OnClosed;
         Closing += ChartEditor.OnClosing;
@@ -61,6 +63,8 @@ public partial class MainWindow : Window
     private bool bypassChartSave = false;
     private bool bypassStageSave = false;
     private bool bypassCosmeticsSave = false;
+
+    private bool blockEvents = false;
     
 #region Methods
     public async void ShowSettingsWindow()
@@ -133,6 +137,15 @@ public partial class MainWindow : Window
             TextBlockShortcutRedo.Text = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"].ToString();
         });
     }
+
+    private void SearchForAnything_PopupClosed(object? sender, EventArgs e)
+    {
+        blockEvents = true;
+
+        ToggleButtonSearch.IsChecked = false;
+        
+        blockEvents = false;
+    }
 #endregion System Event Delegates
 
 #region UI Event Delegates
@@ -158,8 +171,36 @@ public partial class MainWindow : Window
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
     
     private void EditorTabs_OnIsCheckedChanged(object? sender, RoutedEventArgs e) => SetTabs();
+    
+    private void ToggleButtonSearch_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (ToggleButtonSearch == null) return;
 
-    private void ButtonSearch_OnClick(object? sender, RoutedEventArgs e) => SearchForAnything.Show();
+        if (ToggleButtonSearch.IsChecked ?? false)
+        {
+            SearchForAnything.Show();
+        }
+        else
+        {
+            SearchForAnything.Hide();
+        }
+    }
+    
+    private void ToggleButtonVolume_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (ToggleButtonVolume == null) return;
+
+        if (ToggleButtonVolume.IsChecked ?? false)
+        {
+            SearchForAnything.Show();
+        }
+        else
+        {
+            SearchForAnything.Hide();
+        }
+    }
     
     private void ButtonSettings_OnClick(object? sender, RoutedEventArgs e) => ShowSettingsWindow();
 
