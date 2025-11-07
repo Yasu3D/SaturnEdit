@@ -749,6 +749,7 @@ public class ShortcutSettings
         ["Editor.Insert.VisibilityChange"] = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.VisibilityChange"),
         ["Editor.Insert.StopEffect"]       = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.StopEffect"),
         ["Editor.Insert.ReverseEffect"]    = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.ReverseEffect"),
+        ["Editor.Insert.Bookmark"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Insert", "ChartEditor.ChartView3D.Menu.Insert.Bookmark"),
         
         ["Editor.Transform.MoveBeatForward"]               = new(Key.Up,    true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveSelectionBeatForward"),
         ["Editor.Transform.MoveBeatBack"]                  = new(Key.Down,  true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveSelectionBeatBack"),

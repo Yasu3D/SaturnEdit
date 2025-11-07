@@ -279,6 +279,7 @@
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.VisibilityChange">Add Visibility Change</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.StopEffect">Add Stop Effect</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.ReverseEffect">Add Reverse Effect</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Insert.Bookmark">Add Bookmark</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert">Convert</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert.ZigZagHold">Zig-Zag Hold...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Convert.CutHold">Cut Hold</system:String>

@@ -114,6 +114,18 @@
                                     <icon:FluentIcon Icon="Rewind" />
                                 </MenuItem.Icon>
                             </MenuItem>
+                            
+                            <Separator/>
+                            
+                            <MenuItem Name="MenuItemAddBookmark"
+                                      Click="MenuItemAddBookmark_OnClick">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Insert.Bookmark}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="Bookmark" />
+                                </MenuItem.Icon>
+                            </MenuItem>
 
                         </MenuFlyout>
                     </Button.Flyout>

@@ -410,11 +410,12 @@ public partial class InspectorView : UserControl
                 : -1;
             
             // Set tutorial marker group values.
-            TextBoxTutorialMarkerKey.Text = sameKey && sharedKey != null ? sharedKey : null;
+            TextBoxTutorialMarkerKey.Text = sameKey ? sharedKey : null;
             
             // Set bookmark group values.
             TextBoxBookmarkColor.Text = sameColor && sharedColor != null ? $"{sharedColor - 0xFF000000:X6}" : null;
-            TextBoxBookmarkMessage.Text = sameMessage && sharedMessage != null ? sharedMessage : null;
+            TextBoxBookmarkMessage.Text = sameMessage ? sharedMessage : null;
+
             BorderBookmarkColor.IsVisible = sameColor;
             BorderBookmarkColorPlaceholder.IsVisible = !sameColor;
             

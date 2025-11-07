@@ -527,6 +527,11 @@ public partial class ChartView3D : UserControl
             Task.Run(EditorSystem.Insert_AddReverseEffect);
             e.Handled = true;
         }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.Bookmark"]))
+        {
+            Task.Run(EditorSystem.Insert_AddBookmark);
+            e.Handled = true;
+        }
         
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatForward"])) 
         {
@@ -1361,6 +1366,8 @@ public partial class ChartView3D : UserControl
 
     private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddReverseEffect);
 
+    private void MenuItemAddBookmark_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddBookmark);
+    
     private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MoveSelectionBeatForward);
 
     private void MenuItemMoveSelectionBeatBack_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MoveSelectionBeatBack);

@@ -1208,6 +1208,16 @@ public static class EditorSystem
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
+    public static void Insert_AddBookmark()
+    {
+        Bookmark bookmark = new(new(TimeSystem.Timestamp.FullTick), 0xFFDDDDDD, "");
+
+        BookmarkAddOperation op0 = new(bookmark, ChartSystem.Chart.Bookmarks.Count);
+        SelectionAddOperation op1 = new(bookmark, SelectionSystem.LastSelectedObject);
+
+        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+    }
+
     
     public static void Transform_MoveSelectionBeatForward()
     {
