@@ -199,8 +199,6 @@ public static class EditorSystem
     
     public static void ToolBar_Insert()
     {
-        if (SelectionSystem.SelectedLayer == null) return;
-        
         List<IOperation> operations = [];
         
         if (Mode == EditorMode.ObjectMode)
@@ -338,8 +336,15 @@ public static class EditorSystem
             }
 
             if (note == null) return;
-            
-            operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, note, SelectionSystem.SelectedLayer.Notes.Count));
+
+            if (note is ILaneToggle)
+            {
+                operations.Add(new LaneToggleAddOperation(note, ChartSystem.Chart.LaneToggles.Count));
+            }
+            else if (SelectionSystem.SelectedLayer != null)
+            {
+                operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, note, SelectionSystem.SelectedLayer.Notes.Count));
+            }
         }
         else if (Mode == EditorMode.EditMode && ActiveObjectGroup is HoldNote holdNote)
         {
