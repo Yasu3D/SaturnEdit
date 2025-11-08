@@ -24,6 +24,8 @@ public static class SettingsSystem
     }
     
     public static event EventHandler? SettingsChanged;
+    public static event EventHandler? VolumeChanged;
+    public static event EventHandler? HitsoundsChanged;
     
     public static RenderSettings RenderSettings
     {
@@ -59,8 +61,12 @@ public static class SettingsSystem
         set
         {
             audioSettings.PropertyChanged -= OnPropertyChanged;
+            audioSettings.VolumeChanged -= OnVolumeChanged;
+            audioSettings.HitsoundsChanged -= OnHitsoundsChanged;
             audioSettings = value;
             audioSettings.PropertyChanged += OnPropertyChanged;
+            audioSettings.VolumeChanged += OnVolumeChanged;
+            audioSettings.HitsoundsChanged -= OnHitsoundsChanged;
             
             SettingsChanged?.Invoke(null, EventArgs.Empty);
         }
@@ -152,6 +158,18 @@ public static class SettingsSystem
     private static void OnPropertyChanged(object? sender, EventArgs e)
     {
         SettingsChanged?.Invoke(null, EventArgs.Empty);
+        SaveSettings();
+    }
+    
+    private static void OnVolumeChanged(object? sender, EventArgs e)
+    {
+        VolumeChanged?.Invoke(null, EventArgs.Empty);
+        SaveSettings();
+    }
+    
+    private static void OnHitsoundsChanged(object? sender, EventArgs e)
+    {
+        HitsoundsChanged?.Invoke(null, EventArgs.Empty);
         SaveSettings();
     }
 #endregion Internal Event Delegates

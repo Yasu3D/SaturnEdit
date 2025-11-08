@@ -27,10 +27,10 @@ public static class AudioSystem
         ChartSystem.EntryChanged += OnEntryChanged;
         UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
         
-        SettingsSystem.AudioSettings.VolumeChanged += OnVolumeChanged;
+        SettingsSystem.VolumeChanged += OnVolumeChanged;
         OnVolumeChanged(null, EventArgs.Empty);
 
-        SettingsSystem.AudioSettings.HitsoundsChanged += OnHitsoundsChanged;
+        SettingsSystem.HitsoundsChanged += OnHitsoundsChanged;
         OnHitsoundsChanged(null, EventArgs.Empty);
 
         TimeSystem.TimestampSeeked += OnTimestampSeeked;
@@ -403,7 +403,7 @@ public static class AudioSystem
         double masterVolume = DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume);
         double hitsoundVolume = masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.HitsoundVolume);
         
-        if (AudioChannelAudio     != null) AudioChannelAudio.Volume     = masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+        if (AudioChannelAudio     != null) AudioChannelAudio.Volume     = masterVolume   * DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
         if (AudioSampleGuide      != null) AudioSampleGuide.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.GuideVolume);
         if (AudioSampleTouch      != null) AudioSampleTouch.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.TouchVolume);
         if (AudioChannelHold      != null) AudioChannelHold.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.HoldVolume) * holdLoopVolumeMultiplier;
