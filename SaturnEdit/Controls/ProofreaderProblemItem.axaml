@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="25"
+             Height="25"
+             x:Class="SaturnEdit.Controls.ProofreaderProblemItem">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition SharedSizeGroup="A"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition SharedSizeGroup="B"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition SharedSizeGroup="C"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition SharedSizeGroup="D"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition SharedSizeGroup="E"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0"
+                   Name="TextBlockTimestamp"
+                   Text="0'0000"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="5,0,0,0"/>
+        
+        <TextBlock Grid.Column="2"
+                   Name="TextBlockType"
+                   Text="Type"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="5,0,0,0"/>
+        
+        <TextBlock Grid.Column="4"
+                   Name="TextBlockPosition"
+                   Text="-"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="5,0,0,0"/>
+        
+        <TextBlock Grid.Column="6"
+                   Name="TextBlockSize"
+                   Text="-"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="5,0,0,0"/>
+        
+        <TextBlock Grid.Column="8"
+                   Name="TextBlockProblem"
+                   Text="Problem"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="5,0,0,0"/>
+    </Grid>
+</UserControl>

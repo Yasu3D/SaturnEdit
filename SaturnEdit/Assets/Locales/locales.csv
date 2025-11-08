@@ -150,11 +150,23 @@ ChartEditor.ChartProperties.FileNotFoundWarning.Description,Ensure that all medi
 ChartEditor.Proofreader,Proofreader
 ChartEditor.Proofreader.Criteria,Criteria
 ChartEditor.Proofreader.Problem,Problem
-ChartEditor.Proofreader.HintClickJump,Click on a problem to jump to its timestamp in the chart.
+ChartEditor.Proofreader.HintClickJump,Double-click on a problem to jump to its timestamp in the chart.
 ChartEditor.Proofreader.ToolTip.Criteria,Adjust Criteria
 ChartEditor.Proofreader.ToolTip.Criteria.Description,Adjust the things to look out for while proofreading. 
 ChartEditor.Proofreader.ToolTip.Run,Run Proofreader
 ChartEditor.Proofreader.Criteria.Title,Proofreader Criteria
+ChartEditor.Proofreader.Problem.StrictNoteSizeMer,Note Size does not conform to MER standard.
+ChartEditor.Proofreader.Problem.StrictNoteSizeSat,Note Size does not conform to SAT standard.
+ChartEditor.Proofreader.Problem.StrictBonusTypeMer,Note 
+ChartEditor.Proofreader.Problem.OverlappingNotes,Note overlaps with another note.
+ChartEditor.Proofreader.Problem.EffectsOnLowers,Lower difficulties should avoid effects.
+ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect,Mer standard does not support Speed Changes before a Stop Effect.
+ChartEditor.Proofreader.Problem.SpeedChangeTooClose,Mer standard does not support Speed Changes less than 1/16th apart.
+ChartEditor.Proofreader.Problem.SpeedChangeTooEarly,Mer standard does not support Speed Changes before 0'240.
+ChartEditor.Proofreader.Problem.SpeedChangeNearZero,Mer standard does not support Speed Changes with near-zero values (except zero).
+ChartEditor.Proofreader.Problem.InvalidLaneToggles,Mer standard does not support Lane Toggles with overlapping sweeps.
+ChartEditor.Proofreader.Problem.NotesDuringReverse,Note during a reverse effect.
+ChartEditor.Proofreader.Problem.ObjectsAfterChartEnd,Object after chart end.
 ChartEditor.NotePalette,Note Palette
 ChartEditor.NotePalette.Note.Touch,Touch Note
 ChartEditor.NotePalette.Note.Touch.Description,Hit by tapping within its area at the right time.

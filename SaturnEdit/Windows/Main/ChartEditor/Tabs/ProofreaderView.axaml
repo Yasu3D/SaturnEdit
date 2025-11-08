@@ -3,121 +3,141 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:controls="clr-namespace:SaturnEdit.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              Background="{DynamicResource BackgroundPrimary}"
-             x:Class="SaturnEdit.Windows.Main.ChartEditor.Tabs.ProofreaderView">
-    <DockPanel>
+             x:Class="SaturnEdit.Windows.Main.ChartEditor.Tabs.ProofreaderView"
+             Focusable="True">
+    <Grid RowDefinitions="30,*,50" IsSharedSizeScope="True">
         <!-- Header -->
-        <Border DockPanel.Dock="Top"
+        <Border Grid.Row="0"
                 Height="30"
-                Background="{DynamicResource BackgroundPrimary}"
                 BorderBrush="{DynamicResource SeparatorPrimary}"
                 BorderThickness="0,0,0,1">
-            <Grid ColumnDefinitions="100,100,100,100,Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="A" Width="100" />
+                    <ColumnDefinition Width="1"/>
+                    <ColumnDefinition SharedSizeGroup="B" Width="100" />
+                    <ColumnDefinition Width="1"/>
+                    <ColumnDefinition SharedSizeGroup="C" Width="100" />
+                    <ColumnDefinition Width="1"/>
+                    <ColumnDefinition SharedSizeGroup="D" Width="100" />
+                    <ColumnDefinition Width="1"/>
+                    <ColumnDefinition SharedSizeGroup="E" Width="Auto" />
+                </Grid.ColumnDefinitions>
+                
                 <TextBlock Grid.Column="0"
                            Text="{DynamicResource ChartEditor.General.Timestamp}"
-                           VerticalAlignment="Center"
-                           Margin="5" />
-                <Rectangle Grid.Column="0"
-                           Fill="{DynamicResource SeparatorPrimary}"
-                           Width="1"
-                           HorizontalAlignment="Right" />
-
-                <TextBlock Grid.Column="1"
-                           Text="{DynamicResource ChartEditor.General.Type}"
                            VerticalAlignment="Center"
                            Margin="5" />
                 <Rectangle Grid.Column="1"
                            Fill="{DynamicResource SeparatorPrimary}"
                            Width="1"
                            HorizontalAlignment="Right" />
+                <GridSplitter Grid.Column="1" 
+                              Background="Transparent"/>
 
                 <TextBlock Grid.Column="2"
+                           Text="{DynamicResource ChartEditor.General.Type}"
+                           VerticalAlignment="Center"
+                           Margin="5" />
+                <Rectangle Grid.Column="3"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Width="1"
+                           HorizontalAlignment="Right" />
+                <GridSplitter Grid.Column="3" 
+                              Background="Transparent"/>
+
+                <TextBlock Grid.Column="4"
                            Text="{DynamicResource ChartEditor.General.Position}"
                            VerticalAlignment="Center"
                            Margin="5" />
-                <Rectangle Grid.Column="2"
+                <Rectangle Grid.Column="5"
                            Fill="{DynamicResource SeparatorPrimary}"
                            Width="1"
                            HorizontalAlignment="Right" />
+                <GridSplitter Grid.Column="5" 
+                              Background="Transparent"/>
 
-                <TextBlock Grid.Column="3"
+                <TextBlock Grid.Column="6"
                            Text="{DynamicResource ChartEditor.General.Size}"
                            VerticalAlignment="Center"
                            Margin="5" />
-                <Rectangle Grid.Column="3"
+                <Rectangle Grid.Column="7"
                            Fill="{DynamicResource SeparatorPrimary}"
                            Width="1"
                            HorizontalAlignment="Right" />
-                
-                <TextBlock Grid.Column="4"
+                <GridSplitter Grid.Column="7" 
+                              Background="Transparent"/>
+
+                <TextBlock Grid.Column="8"
                            Text="{DynamicResource ChartEditor.Proofreader.Problem}"
                            VerticalAlignment="Center"
                            Margin="5" />
-                <Rectangle Grid.Column="3"
-                           Fill="{DynamicResource SeparatorPrimary}"
-                           Width="1"
-                           HorizontalAlignment="Right" />
             </Grid>
         </Border>
 
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1">
+            <ListBox Name="ListBoxProblems" SelectionMode="Single"
+                     DoubleTapped="ListBoxProblems_OnDoubleTapped">
+            </ListBox>
+        </ScrollViewer>
+
         <!-- Footer -->
-        <Border DockPanel.Dock="Bottom"
+        <Border Grid.Row="2"
                 Height="50"
                 Background="{DynamicResource BackgroundPrimary}"
                 BorderBrush="{DynamicResource SeparatorPrimary}"
                 BorderThickness="0,1,0,0">
-            <DockPanel HorizontalAlignment="Stretch">
-                <Button DockPanel.Dock="Right"
-                        Name="ButtonRunProofread"
-                        HorizontalAlignment="Right"
-                        Classes="Themed Square AccentFull"
-                        Margin="10">
-                    <icon:FluentIcon Icon="ApprovalsApp" />
-                    <ToolTip.Tip>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{DynamicResource ChartEditor.Proofreader.ToolTip.Run}" />
-                            <TextBlock Name="TextBlockShortcutRunProofreader" Text="SHORTCUT"
-                                       Margin="15,0,0,0"
-                                       HorizontalAlignment="Right"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Button>
+            <Panel HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0,0,10,0">
+                    <Button Name="ButtonRunProofread"
+                            HorizontalAlignment="Right"
+                            Classes="Themed Square AccentFull"
+                            Margin="10"
+                            Click="ButtonRunProofread_OnClick">
+                        <icon:FluentIcon Icon="ApprovalsApp" />
+                        <ToolTip.Tip>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.ToolTip.Run}" />
+                                <TextBlock Name="TextBlockShortcutRunProofreader"
+                                           Text="SHORTCUT"
+                                           Margin="15,0,0,0"
+                                           HorizontalAlignment="Right"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </Button>
 
-                <Button DockPanel.Dock="Right"
-                        Name="ButtonProofreadCriteria"
-                        HorizontalAlignment="Right"
-                        Classes="Themed Outlined"
-                        Height="30"
-                        Width="75"
-                        Click="ButtonProofreadCriteria_OnClick">
-                    <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria}" />
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.Proofreader.ToolTip.Criteria}" />
-                            <TextBlock Text="{DynamicResource ChartEditor.Proofreader.ToolTip.Criteria.Description}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </Button>
+                    <Button Name="ButtonProofreadCriteria"
+                            HorizontalAlignment="Right"
+                            Classes="Themed Outlined"
+                            Height="30"
+                            Width="75"
+                            Click="ButtonProofreadCriteria_OnClick">
+                        <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria}" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.ToolTip.Criteria}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.ToolTip.Criteria.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </Button>
+                </StackPanel>
 
-                <TextBlock DockPanel.Dock="Left"
-                           Text="{DynamicResource ChartEditor.Proofreader.HintClickJump}"
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.HintClickJump}"
                            Foreground="{DynamicResource ForegroundSecondary}"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
-                           Margin="15,0,0,0"/>
-            </DockPanel>
+                           Margin="15,0,0,0" />
+            </Panel>
         </Border>
-
-        <!-- Content -->
-        <ScrollViewer>
-            <StackPanel Name="StackPanelProblems">
-            
-            </StackPanel>
-        </ScrollViewer>
-    </DockPanel>
+    </Grid>
 </UserControl>
