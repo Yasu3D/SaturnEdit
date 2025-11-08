@@ -154,7 +154,6 @@ ChartEditor.Proofreader.HintClickJump,Double-click on a problem to jump to its t
 ChartEditor.Proofreader.ToolTip.Criteria,Adjust Criteria
 ChartEditor.Proofreader.ToolTip.Criteria.Description,Adjust the things to look out for while proofreading. 
 ChartEditor.Proofreader.ToolTip.Run,Run Proofreader
-ChartEditor.Proofreader.Criteria.Title,Proofreader Criteria
 ChartEditor.Proofreader.Problem.StrictNoteSizeMer,Note Size does not conform to MER standard.
 ChartEditor.Proofreader.Problem.StrictNoteSizeSat,Note Size does not conform to SAT standard.
 ChartEditor.Proofreader.Problem.StrictBonusTypeMer,Note 
@@ -167,6 +166,17 @@ ChartEditor.Proofreader.Problem.SpeedChangeNearZero,Mer standard does not suppor
 ChartEditor.Proofreader.Problem.InvalidLaneToggles,Mer standard does not support Lane Toggles with overlapping sweeps.
 ChartEditor.Proofreader.Problem.NotesDuringReverse,Note during a reverse effect.
 ChartEditor.Proofreader.Problem.ObjectsAfterChartEnd,Object after chart end.
+ChartEditor.Proofreader.Criteria.Title,Proofreader Criteria
+ChartEditor.Proofreader.Criteria.StrictNoteSizeMer,Strict Note Size (MER)
+ChartEditor.Proofreader.Criteria.StrictNoteSizeSat,Strict Note Size (SAT)
+ChartEditor.Proofreader.Criteria.StrictBonusTypeMer,Strict Bonus Type (MER)
+ChartEditor.Proofreader.Criteria.OverlappingNotesStrict,Overlapping Notes (Strict)
+ChartEditor.Proofreader.Criteria.OverlappingNotesLenient,Overlapping Notes (Lenient)
+ChartEditor.Proofreader.Criteria.EffectsOnLowers,Effects on Lowers
+ChartEditor.Proofreader.Criteria.InvalidEffects,Invalid Effects
+ChartEditor.Proofreader.Criteria.InvalidLaneToggles,Invalid Lane Toggles
+ChartEditor.Proofreader.Criteria.NotesDuringReverse,Notes during Reverse
+ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd,Objects after Chart End
 ChartEditor.NotePalette,Note Palette
 ChartEditor.NotePalette.Note.Touch,Touch Note
 ChartEditor.NotePalette.Note.Touch.Description,Hit by tapping within its area at the right time.

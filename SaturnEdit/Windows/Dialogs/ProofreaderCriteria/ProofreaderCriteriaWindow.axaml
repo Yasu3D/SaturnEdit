@@ -5,60 +5,141 @@
         xmlns:controls="clr-namespace:SaturnEdit.Controls"
         mc:Ignorable="d"
         d:DesignWidth="450"
-        d:DesignHeight="700"
+        d:DesignHeight="500"
         x:Class="SaturnEdit.Windows.Dialogs.ProofreaderCriteria.ProofreaderCriteriaWindow"
         Width="450"
-        Height="700"
-        MinWidth="450"
-        MinHeight="700"
-        Title="{DynamicResource ChartEditor.Proofreader.Criteria.Title}">
-    <Grid>
-        <controls:WindowChrome Name="WindowChrome"
+        Height="500"
+        Title="{DynamicResource ChartEditor.Proofreader.Criteria.Title}"
+        CanResize="False"
+        Background="{DynamicResource BackgroundPrimary}">
+    <Grid RowDefinitions="40,*,50">
+        <controls:WindowChrome Grid.Row="0"
+                               Name="WindowChrome"
                                ZIndex="99"
                                Classes="ShowCloseOnly"
                                HorizontalAlignment="Right"
                                VerticalAlignment="Top" />
 
-        <DockPanel>
-            <!-- Window Header -->
-            <Grid DockPanel.Dock="Top">
-                <Border Height="40"
-                        Background="{DynamicResource BackgroundPrimary}"
-                        IsHitTestVisible="False">
-                    <TextBlock HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Margin="10,0"
-                               Text="{DynamicResource ChartEditor.Proofreader.Criteria.Title}" />
-                </Border>
-            </Grid>
+        <!-- Window Header -->
+        <TextBlock Grid.Row="0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="10,0"
+                   Text="{DynamicResource ChartEditor.Proofreader.Criteria.Title}" />
+        <Rectangle Grid.Row="0"
+                   Height="1"
+                   VerticalAlignment="Bottom"
+                   Fill="{DynamicResource SeparatorSecondary}" />
 
-            <!-- Footer -->
-            <Border DockPanel.Dock="Bottom"
+        <!-- Content -->
+        <StackPanel Grid.Row="1"
+                    Margin="20"
+                    Spacing="5">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxStrictNoteSizeMer"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.StrictNoteSizeMer}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxStrictNoteSizeSat"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.StrictNoteSizeSat}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxStrictBonusTypeMer"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.StrictBonusTypeMer}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxOverlappingNotesStrict"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.OverlappingNotesStrict}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxOverlappingNotesLenient"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.OverlappingNotesLenient}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxEffectsOnLowers"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.EffectsOnLowers}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxInvalidEffects"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.InvalidEffects}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxInvalidLaneToggles"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.InvalidLaneToggles}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxNotesDuringReverse"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.NotesDuringReverse}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxObjectsAfterChartEnd"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Footer -->
+        <Rectangle Grid.Row="2"
+                   Height="1"
+                   VerticalAlignment="Top"
+                   Fill="{DynamicResource SeparatorSecondary}" />
+        <StackPanel Grid.Row="2"
                     Height="50"
-                    Background="{DynamicResource BackgroundPrimary}">
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Classes="Themed AccentFull"
+                    Height="28"
+                    Margin="11,11,9,11"
+                    Width="75"
+                    Click="ButtonSave_OnClick">
+                <TextBlock Text="{DynamicResource Menu.File.Save}" />
+            </Button>
 
-                <StackPanel Orientation="Horizontal" 
-                            HorizontalAlignment="Right">
-                    <Button Classes="Themed AccentFull"
-                            Height="28"
-                            Margin="11,11,9,11"
-                            Width="75">
-                        <TextBlock Text="{DynamicResource Menu.File.Save}" />
-                    </Button>
-
-                    <Button Classes="Themed Outlined"
-                            Height="28"
-                            Margin="9,11,11,11"
-                            Width="75">
-                        <TextBlock Text="{DynamicResource Generic.Cancel}" />
-                    </Button>
-                </StackPanel>
-            </Border>
-
-            <!-- Content -->
-            <Border 
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch" />
-        </DockPanel>
+            <Button Classes="Themed Outlined"
+                    Height="28"
+                    Margin="9,11,11,11"
+                    Width="75"
+                    Click="ButtonCancel_OnClick">
+                <TextBlock Text="{DynamicResource Generic.Cancel}" />
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>

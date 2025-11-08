@@ -157,7 +157,6 @@
     <system:String x:Key="ChartEditor.Proofreader.ToolTip.Criteria">Adjust Criteria</system:String>
     <system:String x:Key="ChartEditor.Proofreader.ToolTip.Criteria.Description">Adjust the things to look out for while proofreading. </system:String>
     <system:String x:Key="ChartEditor.Proofreader.ToolTip.Run">Run Proofreader</system:String>
-    <system:String x:Key="ChartEditor.Proofreader.Criteria.Title">Proofreader Criteria</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.StrictNoteSizeMer">Note Size does not conform to MER standard.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.StrictNoteSizeSat">Note Size does not conform to SAT standard.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.StrictBonusTypeMer">Note </system:String>
@@ -170,6 +169,17 @@
     <system:String x:Key="ChartEditor.Proofreader.Problem.InvalidLaneToggles">Mer standard does not support Lane Toggles with overlapping sweeps.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.NotesDuringReverse">Note during a reverse effect.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.ObjectsAfterChartEnd">Object after chart end.</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.Title">Proofreader Criteria</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.StrictNoteSizeMer">Strict Note Size (MER)</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.StrictNoteSizeSat">Strict Note Size (SAT)</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.StrictBonusTypeMer">Strict Bonus Type (MER)</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.OverlappingNotesStrict">Overlapping Notes (Strict)</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.OverlappingNotesLenient">Overlapping Notes (Lenient)</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.EffectsOnLowers">Effects on Lowers</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidEffects">Invalid Effects</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidLaneToggles">Invalid Lane Toggles</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.NotesDuringReverse">Notes during Reverse</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd">Objects after Chart End</system:String>
     <system:String x:Key="ChartEditor.NotePalette">Note Palette</system:String>
     <system:String x:Key="ChartEditor.NotePalette.Note.Touch">Touch Note</system:String>
     <system:String x:Key="ChartEditor.NotePalette.Note.Touch.Description">Hit by tapping within its area at the right time.</system:String>

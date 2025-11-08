@@ -6,7 +6,6 @@ using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.Dialogs.ProofreaderCriteria;
 
-// TODO.
 public partial class ProofreaderCriteriaWindow : Window
 {
     public ProofreaderCriteriaWindow()
@@ -18,6 +17,7 @@ public partial class ProofreaderCriteriaWindow : Window
     }
 
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
+    public Main.ChartEditor.Tabs.ProofreaderCriteria Criteria = new();
 
 #region UI Event Delegates
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
@@ -41,5 +41,33 @@ public partial class ProofreaderCriteriaWindow : Window
     }
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
+    
+    private void CheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not CheckBox checkBox) return;
+        
+        if      (checkBox == CheckBoxStrictNoteSizeMer)       { Criteria.StrictNoteSizeMer       = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxStrictNoteSizeSat)       { Criteria.StrictNoteSizeSat       = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxStrictBonusTypeMer)      { Criteria.StrictBonusTypeMer      = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxOverlappingNotesStrict)  { Criteria.OverlappingNotesStrict  = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxOverlappingNotesLenient) { Criteria.OverlappingNotesLenient = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxEffectsOnLowers)         { Criteria.EffectsOnLowers         = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxInvalidEffects)          { Criteria.InvalidEffectsMer       = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxInvalidLaneToggles)      { Criteria.InvalidLaneToggles      = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxNotesDuringReverse)      { Criteria.NotesDuringReverse      = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxObjectsAfterChartEnd)    { Criteria.ObjectsAfterChartEnd    = checkBox.IsChecked ?? false; }
+    }
+    
+    private void ButtonSave_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Result = ModalDialogResult.Primary;
+        Close();
+    }
+
+    private void ButtonCancel_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Result = ModalDialogResult.Cancel;
+        Close();
+    }
 #endregion UI Event Delegates
 }

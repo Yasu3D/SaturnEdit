@@ -13,6 +13,7 @@ using SaturnData.Notation.Notes;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
+using SaturnEdit.Windows.Dialogs.ModalDialog;
 using SaturnEdit.Windows.Dialogs.ProofreaderCriteria;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
@@ -309,7 +310,7 @@ public partial class ProofreaderView : UserControl
             }
         }
 
-        if (criteria.InvalidLaneTogglesMer)
+        if (criteria.InvalidLaneToggles)
         {
             for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
             {
@@ -565,6 +566,11 @@ public partial class ProofreaderView : UserControl
             proofreaderCriteriaWindow.Position = MainWindow.DialogPopupPosition(proofreaderCriteriaWindow.Width, proofreaderCriteriaWindow.Height);
             
             await proofreaderCriteriaWindow.ShowDialog(window);
+
+            if (proofreaderCriteriaWindow.Result == ModalDialogResult.Primary)
+            {
+                criteria = proofreaderCriteriaWindow.Criteria;
+            }
         }
         catch (Exception ex)
         {
@@ -588,14 +594,14 @@ public partial class ProofreaderView : UserControl
 
 public struct ProofreaderCriteria()
 {
-    public bool StrictNoteSizeMer = true;
+    public bool StrictNoteSizeMer = false;
     public bool StrictNoteSizeSat = true;
-    public bool StrictBonusTypeMer = true;
+    public bool StrictBonusTypeMer = false;
     public bool OverlappingNotesLenient = true;
-    public bool OverlappingNotesStrict = true;
+    public bool OverlappingNotesStrict = false;
     public bool EffectsOnLowers = true;
-    public bool InvalidEffectsMer = true;
-    public bool InvalidLaneTogglesMer = true;
+    public bool InvalidEffectsMer = false;
+    public bool InvalidLaneToggles = true;
     public bool NotesDuringReverse = true;
     public bool ObjectsAfterChartEnd = true;
 }

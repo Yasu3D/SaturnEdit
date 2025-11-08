@@ -90,8 +90,7 @@
         <!-- Footer -->
         <Border Grid.Row="2"
                 Height="50"
-                Background="{DynamicResource BackgroundPrimary}"
-                BorderBrush="{DynamicResource SeparatorPrimary}"
+                BorderBrush="{DynamicResource SeparatorSecondary}"
                 BorderThickness="0,1,0,0">
             <Panel HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal"
