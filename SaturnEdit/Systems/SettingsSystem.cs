@@ -141,10 +141,10 @@ public static class SettingsSystem
     {
         Directory.CreateDirectory(SettingsPath);
 
-        File.WriteAllText(Path.Combine(SettingsPath, "render_settings.toml"), Toml.FromModel(RenderSettings));
-        File.WriteAllText(Path.Combine(SettingsPath, "editor_settings.toml"), Toml.FromModel(EditorSettings));
-        File.WriteAllText(Path.Combine(SettingsPath, "audio_settings.toml"), Toml.FromModel(AudioSettings));
-        File.WriteAllText(Path.Combine(SettingsPath, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsPath, "render_settings.toml"), Toml.FromModel(RenderSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsPath, "editor_settings.toml"), Toml.FromModel(EditorSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsPath, "audio_settings.toml"), Toml.FromModel(AudioSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsPath, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
     }
 #endregion Methods
     
