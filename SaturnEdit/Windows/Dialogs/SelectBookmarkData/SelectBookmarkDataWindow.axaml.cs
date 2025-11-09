@@ -35,6 +35,7 @@ public partial class SelectBookmarkDataWindow : Window
             blockEvents = true;
 
             TextBoxColor.Text = $"{Color - 0xFF000000:X6}";
+            ColorPickerBookmarkColor.Color = Color;
             
             blockEvents = false;
         });
@@ -76,6 +77,15 @@ public partial class SelectBookmarkDataWindow : Window
         if (TextBoxColor == null) return;
         
         Color = uint.TryParse(TextBoxColor.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
+        UpdateData();
+    }
+    
+    private void ColorPickerBookmarkColor_OnColorPickFinished(object? sender, EventArgs e)
+    {
+        if (blockEvents) return;
+        if (ColorPickerBookmarkColor == null) return;
+
+        Color = ColorPickerBookmarkColor.Color;
         UpdateData();
     }
     

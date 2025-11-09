@@ -61,6 +61,9 @@
     <!-- Buttons -->
     <StyleInclude Source="Styles/ButtonStyles.axaml"/>
     
+    <!-- Flyouts -->
+    <StyleInclude Source="Styles/FlyoutStyles.axaml"/>
+    
     <!-- ToolTip -->
     <Style Selector="ToolTip">
         <Setter Property="ShowDelay" Value="0"/>

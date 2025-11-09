@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Media;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
@@ -416,13 +415,8 @@ public partial class InspectorView : UserControl
             TextBoxBookmarkColor.Text = sameColor && sharedColor != null ? $"{sharedColor - 0xFF000000:X6}" : null;
             TextBoxBookmarkMessage.Text = sameMessage ? sharedMessage : null;
 
-            BorderBookmarkColor.IsVisible = sameColor;
-            BorderBookmarkColorPlaceholder.IsVisible = !sameColor;
-            
-            if (sameColor)
-            {
-                BorderBookmarkColor.Background = new SolidColorBrush(sharedColor ?? 0xFF000000);
-            }
+            ColorPickerBookmarkColor.BorderColorPlaceholder.IsVisible = !sameColor;
+            ColorPickerBookmarkColor.Color = sameColor ? sharedColor ?? 0xFFDDDDDD : 0xFFDDDDDD;
             
             blockEvents = false;
         });
@@ -1585,6 +1579,25 @@ public partial class InspectorView : UserControl
         }
         
         uint newValue = uint.TryParse(TextBoxBookmarkColor.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
+        
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
+        {
+            if (obj is not Bookmark bookmark) continue;
+            
+            operations.Add(new BookmarkEditOperation(bookmark, bookmark.Color, newValue, bookmark.Message, bookmark.Message));
+        }
+
+        UndoRedoSystem.Push(new CompositeOperation(operations));
+    }
+    
+    private void ColorPickerBookmarkColor_OnColorPickFinished(object? sender, EventArgs e)
+    {
+        if (blockEvents) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (ColorPickerBookmarkColor == null) return;
+        
+        uint newValue = ColorPickerBookmarkColor.Color;
         
         List<IOperation> operations = [];
         foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)

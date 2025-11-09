@@ -74,13 +74,9 @@
                                  VerticalAlignment="Center"
                                  LostFocus="TextBoxColor_OnLostFocus" />
 
-                        <Border Grid.Column="2"
-                                Name="BorderBookmarkColor"
-                                Background="Black"
-                                BorderBrush="{DynamicResource SeparatorPrimary}"
-                                BorderThickness="1"
-                                CornerRadius="5"
-                                Margin="-1" />
+                        <controls:SaturnColorPicker Grid.Column="2"
+                                                    Name="ColorPickerBookmarkColor"
+                                                    ColorPickFinished="ColorPickerBookmarkColor_OnColorPickFinished"/>
                     </Grid>
                 </Grid>
             </Border>

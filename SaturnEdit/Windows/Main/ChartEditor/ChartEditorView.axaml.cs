@@ -1252,6 +1252,8 @@ public partial class ChartEditorView : UserControl
                 e.Handled = true;
                 return;
             }
+            
+            IStorageItem? file = e.DataTransfer.TryGetFile();
 
             // Prompt to save an unsaved chart first.
             if (!ChartSystem.IsSaved)
@@ -1281,8 +1283,6 @@ public partial class ChartEditorView : UserControl
                 // Don't Save
                 // Continue as normal.
             }
-
-            IStorageItem? file = e.DataTransfer.TryGetFile();
 
             if (file == null)
             {
