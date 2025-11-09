@@ -66,7 +66,7 @@ public static class SettingsSystem
             audioSettings = value;
             audioSettings.PropertyChanged += OnPropertyChanged;
             audioSettings.VolumeChanged += OnVolumeChanged;
-            audioSettings.HitsoundsChanged -= OnHitsoundsChanged;
+            audioSettings.HitsoundsChanged += OnHitsoundsChanged;
             
             SettingsChanged?.Invoke(null, EventArgs.Empty);
         }
@@ -386,7 +386,7 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    private int masterVolume = 0;
+    private int masterVolume = -30;
     
     public int AudioVolume
     {
@@ -428,7 +428,7 @@ public class AudioSettings
             VolumeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    private int guideVolume = 0;
+    private int guideVolume = -20;
     
     public int TouchVolume
     {
@@ -781,8 +781,8 @@ public class ShortcutSettings
         ["Editor.Transform.MoveCounterclockwiseIterative"] = new(Key.Right, true,  false, true,  "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwiseIterative"),
         ["Editor.Transform.IncreaseSizeIterative"]         = new(Key.Up,    true,  false, true,  "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.IncreaseSizeIterative"),
         ["Editor.Transform.DecreaseSizeIterative"]         = new(Key.Down,  true,  false, true,  "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.DecreaseSizeIterative"),
-        ["Editor.Transform.MirrorHorizontal"]              = new(Key.M,     true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal"),
-        ["Editor.Transform.MirrorVertical"]                = new(Key.M,     false, false, true,  "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MirrorVertical"),
+        ["Editor.Transform.MirrorHorizontal"]              = new(Key.M,     false, false, true,  "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal"),
+        ["Editor.Transform.MirrorVertical"]                = new(Key.M,     true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MirrorVertical"),
         ["Editor.Transform.MirrorCustom"]                  = new(Key.M,     false, true,  false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MirrorCustom"),
         ["Editor.Transform.AdjustAxis"]                    = new(Key.M,     false, true,  true,  "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.AdjustAxis"),
         ["Editor.Transform.FlipDirection"]                 = new(Key.F,     false, false, true,  "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.FlipDirection"),
@@ -796,10 +796,10 @@ public class ShortcutSettings
         ["Editor.Convert.CutHold"]   = new(Key.H, false, true,  false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.CutHold"),
         ["Editor.Convert.JoinHold"]   = new(Key.H, true,  false, false, "ChartEditor.ChartView3D.Menu.Convert", "ChartEditor.ChartView3D.Menu.Convert.JoinHold"),
 
-        ["Editor.IncreaseNoteSpeed"]     = new(Key.Add,  false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.IncreaseNoteSpeed"),
-        ["Editor.DecreaseNoteSpeed"]     = new(Key.Subtract, false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.DecreaseNoteSpeed"),
-        ["Editor.IncreaseBackgroundDim"] = new(Key.PageUp,   false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim"),
-        ["Editor.DecreaseBackgroundDim"] = new(Key.PageDown, false, false, true, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.DecreaseBackgroundDim"),
+        ["Editor.IncreaseNoteSpeed"]     = new(Key.Add,      false, false, true,  "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.IncreaseNoteSpeed"),
+        ["Editor.DecreaseNoteSpeed"]     = new(Key.Subtract, false, false, true,  "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.DecreaseNoteSpeed"),
+        ["Editor.IncreaseBackgroundDim"] = new(Key.Add,      true,  false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim"),
+        ["Editor.DecreaseBackgroundDim"] = new(Key.Subtract, true,  false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.DecreaseBackgroundDim"),
 
         ["Editor.Settings.ShowSpeedChanges"]         = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowSpeedChanges"),
         ["Editor.Settings.ShowVisibilityChanges"]    = new(Key.None, false, false, false, "ChartEditor.ChartView3D.Menu.Settings", "ChartEditor.ChartView3D.Menu.Settings.ShowVisibilityChanges"),
