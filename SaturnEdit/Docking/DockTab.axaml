@@ -7,7 +7,8 @@
              d:DesignWidth="100"
              d:DesignHeight="35"
              Height="35"
-             x:Class="SaturnEdit.Docking.DockTab">
+             x:Class="SaturnEdit.Docking.DockTab"
+             AttachedToVisualTree="Visual_OnAttachedToVisualTree">
     <Border BorderBrush="{DynamicResource SeparatorSecondary}"
             BorderThickness="0,0,1,0">
         <StackPanel VerticalAlignment="Center"
@@ -25,7 +26,7 @@
             <TextBlock Name="TextBlockTitle"
                        Text="Title"
                        VerticalAlignment="Center"
-                       Margin="7,0,0,0"
+                       Margin="7,0,12,0"
                        IsHitTestVisible="False" />
 
             <Button Name="ButtonClose"
@@ -33,7 +34,7 @@
                     Width="20"
                     Height="20"
                     CornerRadius="0"
-                    Margin="10,0,7.5,0"
+                    Margin="0,0,7.5,0"
                     Click="ButtonClose_OnClick">
                 <PathIcon Data="{DynamicResource IconDismiss}"
                           Width="8"

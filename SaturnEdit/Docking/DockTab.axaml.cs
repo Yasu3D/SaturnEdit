@@ -29,6 +29,13 @@ public partial class DockTab : UserControl
     private Point? startPoint = null;
 
 #region UI Event Delegates
+    private void Visual_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+    {
+        if (Parent is not ListBox listBox) return;
+
+        ButtonClose.IsVisible = listBox.Items.Count > 1;
+    }
+    
     private void InputElement_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (DockArea.Instance == null) return;

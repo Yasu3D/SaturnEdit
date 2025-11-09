@@ -12,6 +12,18 @@
     <Grid RowDefinitions="35,1,*"
           ColumnDefinitions="Auto,*,35">
         
+        <!-- Background -->
+        <Rectangle Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Name="WindowHandle"
+                   Fill="{DynamicResource BackgroundPrimary}"
+                   Height="35"
+                   HorizontalAlignment="Stretch"
+                   PointerMoved="WindowHandle_OnPointerMoved"
+                   PointerPressed="WindowHandle_OnPointerPressed"
+                   PointerReleased="WindowHandle_OnPointerReleased"/>
+        
         <!-- Tab List -->
         <ListBox Grid.Row="0"
                  Grid.Column="0"
@@ -28,17 +40,6 @@
             </ListBox.ItemsPanel>
         </ListBox>
         
-        <!-- Background -->
-        <Rectangle Grid.Row="0"
-                   Grid.Column="1"
-                   Name="WindowHandle"
-                   Fill="{DynamicResource BackgroundPrimary}"
-                   Height="35"
-                   HorizontalAlignment="Stretch"
-                   PointerMoved="WindowHandle_OnPointerMoved"
-                   PointerPressed="WindowHandle_OnPointerPressed"
-                   PointerReleased="WindowHandle_OnPointerReleased"/>
-
         <!-- Close Button -->
         <Panel Grid.Row="0"
                Grid.Column="2"

@@ -89,6 +89,8 @@ public partial class DockTabGroup : UserControl
         
         ButtonClose.IsVisible = !IsFloating;
         WindowHandle.Margin = IsFloating ? new(0, 0, 12, 0) : new(0, 0, 0, 0);
+
+        TabList.IsHitTestVisible = !IsFloating || TabList.Items.Count > 1;
     }
     
     private void Visual_OnDetachedFromVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
