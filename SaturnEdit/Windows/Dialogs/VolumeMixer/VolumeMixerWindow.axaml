@@ -9,6 +9,7 @@
         d:DesignHeight="560"
         Width="400"
         Height="560"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.VolumeMixer.VolumeMixerWindow"
         Title="{DynamicResource VolumeMixer.Window.Title}"
         Background="{DynamicResource BackgroundPrimary}"

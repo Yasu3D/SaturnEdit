@@ -8,6 +8,7 @@
         d:DesignHeight="600"
         Width="350"
         Height="600"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.SelectByCriteria.SelectByCriteriaWindow"
         Title="{DynamicResource SelectByCriteria.Window.Title}"
         Background="{DynamicResource BackgroundPrimary}">

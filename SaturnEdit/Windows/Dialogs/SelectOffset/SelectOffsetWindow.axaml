@@ -9,6 +9,7 @@
         d:DesignHeight="232"
         Width="350"
         Height="232"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.SelectOffset.SelectOffsetWindow"
         Title="{DynamicResource SelectOffset.Window.Title}"
         CanResize="False">

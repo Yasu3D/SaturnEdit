@@ -8,6 +8,7 @@
         d:DesignHeight="645"
         Width="500"
         Height="645"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.ZigZagHoldArgs.ZigZagHoldArgsWindow"
         Title="{DynamicResource ZigZagHoldArgs.Window.Title}"
         CanResize="False">

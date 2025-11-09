@@ -8,6 +8,7 @@
         d:DesignHeight="232"
         Width="400"
         Height="232"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.ImportArgs.ImportArgsWindow"
         Title="{DynamicResource Import.Window.Title}">
     <Panel>

@@ -8,6 +8,7 @@
         d:DesignHeight="160"
         Width="300"
         Height="160"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.SelectScale.SelectScaleWindow"
         Title="{DynamicResource SelectScale.Window.Title}"
         CanResize="False">

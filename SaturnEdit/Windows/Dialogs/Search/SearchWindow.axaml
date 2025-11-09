@@ -11,6 +11,7 @@
         x:Class="SaturnEdit.Windows.Dialogs.Search.SearchWindow"
         Title="{DynamicResource SearchForAnything.Window.Title}"
         CanResize="False"
+        Focusable="True"
         Background="{DynamicResource BackgroundPrimary}">
     <Grid RowDefinitions="40,1,*">
         <controls:WindowChrome Classes="ShowCloseOnly"

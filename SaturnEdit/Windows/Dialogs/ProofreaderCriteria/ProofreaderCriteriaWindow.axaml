@@ -9,8 +9,9 @@
         x:Class="SaturnEdit.Windows.Dialogs.ProofreaderCriteria.ProofreaderCriteriaWindow"
         Width="450"
         Height="500"
-        Title="{DynamicResource ChartEditor.Proofreader.Criteria.Title}"
         CanResize="False"
+        Focusable="True"
+        Title="{DynamicResource ChartEditor.Proofreader.Criteria.Title}"
         Background="{DynamicResource BackgroundPrimary}">
     <Grid RowDefinitions="40,*,50">
         <controls:WindowChrome Grid.Row="0"

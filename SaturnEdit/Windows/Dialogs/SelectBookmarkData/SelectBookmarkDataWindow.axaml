@@ -8,6 +8,7 @@
         d:DesignHeight="200"
         Width="300"
         Height="200"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.SelectBookmarkData.SelectBookmarkDataWindow"
         Title="{DynamicResource SelectBookmarkData.Window.Title}"
         CanResize="False">

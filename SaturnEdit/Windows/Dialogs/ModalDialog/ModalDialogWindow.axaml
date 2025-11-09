@@ -10,6 +10,7 @@
         Width="500"
         Height="220"
         CanResize="False"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.ModalDialog.ModalDialogWindow"
         Title="TITLE">
     <Panel>

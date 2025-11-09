@@ -8,6 +8,7 @@
         d:DesignHeight="160"
         Width="300"
         Height="160"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.SelectTutorialMarkerKey.SelectTutorialMarkerKeyWindow"
         Title="{DynamicResource SelectTutorialMarkerKey.Window.Title}"
         CanResize="False">

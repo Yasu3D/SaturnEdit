@@ -8,6 +8,7 @@
         d:DesignHeight="160"
         Width="300"
         Height="160"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.SelectTempo.SelectTempoWindow"
         Title="{DynamicResource SelectTempo.Window.Title}"
         CanResize="False">

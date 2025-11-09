@@ -8,10 +8,10 @@
         d:DesignHeight="190"
         Width="350"
         Height="190"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.NewChart.NewChartWindow"
         Title="{DynamicResource NewChart.Window.Title}"
-        CanResize="False"
-        Focusable="True">
+        CanResize="False">
     <Panel>
         <controls:WindowChrome Name="WindowChrome"
                                ZIndex="99"

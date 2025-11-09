@@ -8,6 +8,7 @@
         d:DesignHeight="456"
         Width="320"
         Height="456"
+        Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.ChooseMirrorAxis.SelectMirrorAxisWindow"
         Title="{DynamicResource SelectMirrorAxis.Window.Title}"
         CanResize="False">
