@@ -1102,6 +1102,27 @@ public partial class ChartEditorView : UserControl
             e.Handled = true;
         }
         
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Cursor.IncreasePosition"]))
+        {
+            CursorSystem.Position++;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Cursor.DecreasePosition"]))
+        {
+            CursorSystem.Position--;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Cursor.IncreaseSize"]))
+        {
+            CursorSystem.Size++;
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Cursor.DecreaseSize"]))
+        {
+            CursorSystem.Size--;
+            e.Handled = true;
+        }
+        
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Playback.IncreasePlaybackSpeed"]))
         {
             TimeSystem.PlaybackSpeed = Math.Min(300, TimeSystem.PlaybackSpeed + 5);

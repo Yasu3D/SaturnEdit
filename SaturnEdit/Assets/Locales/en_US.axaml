@@ -340,6 +340,10 @@
     <system:String x:Key="ChartEditor.Cursor">Cursor</system:String>
     <system:String x:Key="ChartEditor.Cursor.OddBeatDivisionWarning">Odd Beat Division</system:String>
     <system:String x:Key="ChartEditor.Cursor.OddBeatDivisionWarning.Description">The current Beat Division does not evenly divide into 1920 Ticks. Notes placed with this division may have inconsistent timestamps.</system:String>
+    <system:String x:Key="ChartEditor.Cursor.IncreasePosition">Increase Position</system:String>
+    <system:String x:Key="ChartEditor.Cursor.DecreasePosition">Decrease Position</system:String>
+    <system:String x:Key="ChartEditor.Cursor.IncreaseSize">Increase Size</system:String>
+    <system:String x:Key="ChartEditor.Cursor.DecreaseSize">Decrease Size</system:String>
     <system:String x:Key="Main.Window.Title">SaturnEdit — Main Window</system:String>
     <system:String x:Key="Main.ToolTip.Update">Update Available!</system:String>
     <system:String x:Key="Main.ToolTip.Update.Description">Click to download latest version.</system:String>

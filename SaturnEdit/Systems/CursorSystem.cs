@@ -69,6 +69,8 @@ public static class CursorSystem
         {
             if (backupPosition == value) return;
 
+            value = IPositionable.LimitPosition(value);
+            
             if (currentType is IPositionable positionable)
             {
                 positionable.Position = value;
@@ -87,6 +89,8 @@ public static class CursorSystem
         {
             if (backupSize == value) return;
 
+            value = IPositionable.LimitSize(value);
+            
             if (currentType is IPositionable positionable)
             {
                 positionable.Size = value;

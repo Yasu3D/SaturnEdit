@@ -741,6 +741,11 @@ public class ShortcutSettings
         ["List.MoveItemUp"]   = new(Key.Up,   false, false, true, "ChartEditor.List", "ChartEditor.List.ToolTip.MoveItemUp"),
         ["List.MoveItemDown"] = new(Key.Down, false, false, true, "ChartEditor.List", "ChartEditor.List.ToolTip.MoveItemDown"),
         
+        ["Cursor.IncreasePosition"] = new(Key.None, false, false, false, "ChartEditor.Cursor", "ChartEditor.Cursor.IncreasePosition"),
+        ["Cursor.DecreasePosition"] = new(Key.None, false, false, false, "ChartEditor.Cursor", "ChartEditor.Cursor.DecreasePosition"),
+        ["Cursor.IncreaseSize"] = new(Key.None, false, false, false, "ChartEditor.Cursor", "ChartEditor.Cursor.IncreaseSize"),
+        ["Cursor.DecreaseSize"] = new(Key.None, false, false, false, "ChartEditor.Cursor", "ChartEditor.Cursor.DecreaseSize"),
+        
         ["Editor.Playback.Play"]                  = new(Key.Space, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Play"),
         ["Editor.Playback.Pause"]                 = new(Key.Space, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.Pause"),
         ["Editor.Playback.IncreasePlaybackSpeed"] = new(Key.Add, false, false, false, "ChartEditor.Playback", "ChartEditor.Playback.ToolTip.IncreasePlaybackSpeed"),
