@@ -359,15 +359,15 @@ public partial class ChartView2D : UserControl
         }
     }
 
-    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTempoChange();
+    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
 
-    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddMetreChange();
+    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
 
-    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTutorialMarker();
+    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
 
-    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddSpeedChange();
+    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
 
-    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddVisibilityChange();
+    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => throw new NotImplementedException();
 
     private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddStopEffect();
 

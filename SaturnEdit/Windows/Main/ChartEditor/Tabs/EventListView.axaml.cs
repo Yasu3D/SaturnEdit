@@ -164,27 +164,27 @@ public partial class EventListView : UserControl
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
         {
-            EditorSystem.Insert_AddTempoChange();
+            EditorSystem.Insert_AddTempoChange(120.0f);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"]))
         {
-            EditorSystem.Insert_AddMetreChange();
+            EditorSystem.Insert_AddMetreChange(4, 4);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"]))
         {
-            EditorSystem.Insert_AddTutorialMarker();
+            EditorSystem.Insert_AddTutorialMarker("KEY");
             e.Handled = true;
         }
     }
     
     private void ButtonDeleteEvent_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.EventList_DeleteGlobalEvents();
 
-    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTempoChange();
+    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTempoChange(120.0f);
 
-    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddMetreChange();
+    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddMetreChange(4, 4);
 
-    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTutorialMarker();
+    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTutorialMarker("KEY");
 #endregion UI Event Delegates
 }

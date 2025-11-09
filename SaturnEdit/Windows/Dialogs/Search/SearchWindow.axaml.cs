@@ -367,6 +367,26 @@ public partial class SearchWindow : Window
             e.Handled = true;
             close = false;
         }
+        else if (item.Key == "Cursor.IncreasePosition")
+        {
+            CursorSystem.Position++;
+            e.Handled = true;
+        }
+        else if (item.Key == "Cursor.DecreasePosition")
+        {
+            CursorSystem.Position--;
+            e.Handled = true;
+        }
+        else if (item.Key == "Cursor.IncreaseSize")
+        {
+            CursorSystem.Size++;
+            e.Handled = true;
+        }
+        else if (item.Key == "Cursor.DecreaseSize")
+        {
+            CursorSystem.Size--;
+            e.Handled = true;
+        }
         else if (item.Key == "Editor.Playback.Play") 
         {
             TimeSystem.PlaybackState = PlaybackState.Playing;
@@ -451,27 +471,27 @@ public partial class SearchWindow : Window
         }
         else if (item.Key == "Editor.Insert.TempoChange") 
         {
-            EditorSystem.Insert_AddTempoChange();
+            MainWindow.Instance?.ChartEditor.ChartView_AddTempoChangeEvent();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.MetreChange") 
         {
-            EditorSystem.Insert_AddMetreChange();
+            MainWindow.Instance?.ChartEditor.ChartView_AddMetreChangeEvent();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.TutorialMarker") 
         {
-            EditorSystem.Insert_AddTutorialMarker();
+            MainWindow.Instance?.ChartEditor.ChartView_AddTutorialMarkerEvent();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.SpeedChange") 
         {
-            EditorSystem.Insert_AddSpeedChange();
+            MainWindow.Instance?.ChartEditor.ChartView_AddSpeedChangeEvent();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.VisibilityChange") 
         {
-            EditorSystem.Insert_AddVisibilityChange();
+            MainWindow.Instance?.ChartEditor.ChartView_AddVisibilityChangeEvent();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Insert.StopEffect") 
@@ -482,6 +502,11 @@ public partial class SearchWindow : Window
         else if (item.Key == "Editor.Insert.ReverseEffect") 
         {
             EditorSystem.Insert_AddReverseEffect();
+            e.Handled = true;
+        }
+        else if (item.Key == "Editor.Insert.Bookmark")
+        {
+            MainWindow.Instance?.ChartEditor.ChartView_AddBookmark();
             e.Handled = true;
         }
         else if (item.Key == "Editor.Transform.MoveBeatForward") 

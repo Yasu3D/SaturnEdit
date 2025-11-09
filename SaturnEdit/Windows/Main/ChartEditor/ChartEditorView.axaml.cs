@@ -21,9 +21,15 @@ using SaturnEdit.Windows.Dialogs.ExportArgs;
 using SaturnEdit.Windows.Dialogs.ImportArgs;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 using SaturnEdit.Windows.Dialogs.NewChart;
+using SaturnEdit.Windows.Dialogs.SelectBookmarkData;
 using SaturnEdit.Windows.Dialogs.SelectByCriteria;
+using SaturnEdit.Windows.Dialogs.SelectMetre;
 using SaturnEdit.Windows.Dialogs.SelectOffset;
 using SaturnEdit.Windows.Dialogs.SelectScale;
+using SaturnEdit.Windows.Dialogs.SelectSpeed;
+using SaturnEdit.Windows.Dialogs.SelectTempo;
+using SaturnEdit.Windows.Dialogs.SelectTutorialMarkerKey;
+using SaturnEdit.Windows.Dialogs.SelectVisibility;
 using SaturnEdit.Windows.Dialogs.ZigZagHoldArgs;
 using SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -477,6 +483,84 @@ public partial class ChartEditorView : UserControl
 
         if (selectByCriteriaWindow.Result != ModalDialogResult.Primary) return;
         SelectionSystem.SelectByCriteria();
+    }
+
+    public async void ChartView_AddTempoChangeEvent()
+    {
+        if (VisualRoot is not Window rootWindow) return;
+
+        SelectTempoWindow selectTempoWindow = new();
+        selectTempoWindow.Position = MainWindow.DialogPopupPosition(selectTempoWindow.Width, selectTempoWindow.Height);
+        
+        await selectTempoWindow.ShowDialog(rootWindow);
+
+        if (selectTempoWindow.Result != ModalDialogResult.Primary) return;
+        EditorSystem.Insert_AddTempoChange(selectTempoWindow.Tempo);
+    }
+    
+    public async void ChartView_AddMetreChangeEvent()
+    {
+        if (VisualRoot is not Window rootWindow) return;
+        
+        SelectMetreWindow selectMetreWindow = new();
+        selectMetreWindow.Position = MainWindow.DialogPopupPosition(selectMetreWindow.Width, selectMetreWindow.Height);
+        
+        await selectMetreWindow.ShowDialog(rootWindow);
+
+        if (selectMetreWindow.Result != ModalDialogResult.Primary) return;
+        EditorSystem.Insert_AddMetreChange(selectMetreWindow.Upper, selectMetreWindow.Lower);
+    }
+    
+    public async void ChartView_AddTutorialMarkerEvent()
+    {
+        if (VisualRoot is not Window rootWindow) return;
+        
+        SelectTutorialMarkerKeyWindow selectTutorialMarkerKeyWindow = new();
+        selectTutorialMarkerKeyWindow.Position = MainWindow.DialogPopupPosition(selectTutorialMarkerKeyWindow.Width, selectTutorialMarkerKeyWindow.Height);
+        
+        await selectTutorialMarkerKeyWindow.ShowDialog(rootWindow);
+
+        if (selectTutorialMarkerKeyWindow.Result != ModalDialogResult.Primary) return;
+        EditorSystem.Insert_AddTutorialMarker(selectTutorialMarkerKeyWindow.TutorialMarkerKey);
+    }
+    
+    public async void ChartView_AddSpeedChangeEvent()
+    {
+        if (VisualRoot is not Window rootWindow) return;
+
+        SelectSpeedWindow selectSpeedWindow = new();
+        selectSpeedWindow.Position = MainWindow.DialogPopupPosition(selectSpeedWindow.Width, selectSpeedWindow.Height);
+        
+        await selectSpeedWindow.ShowDialog(rootWindow);
+
+        if (selectSpeedWindow.Result != ModalDialogResult.Primary) return;
+        EditorSystem.Insert_AddSpeedChange(selectSpeedWindow.Speed);
+    }
+    
+    public async void ChartView_AddVisibilityChangeEvent()
+    {
+        if (VisualRoot is not Window rootWindow) return;
+        
+        SelectVisibilityWindow selectVisibilityWindow = new();
+        selectVisibilityWindow.Position = MainWindow.DialogPopupPosition(selectVisibilityWindow.Width, selectVisibilityWindow.Height);
+        
+        await selectVisibilityWindow.ShowDialog(rootWindow);
+
+        if (selectVisibilityWindow.Result != ModalDialogResult.Primary) return;
+        EditorSystem.Insert_AddVisibilityChange(selectVisibilityWindow.Visibility);
+    }
+    
+    public async void ChartView_AddBookmark()
+    {
+        if (VisualRoot is not Window rootWindow) return;
+
+        SelectBookmarkDataWindow selectBookmarkDataWindow = new();
+        selectBookmarkDataWindow.Position = MainWindow.DialogPopupPosition(selectBookmarkDataWindow.Width, selectBookmarkDataWindow.Height);
+        
+        await selectBookmarkDataWindow.ShowDialog(rootWindow);
+
+        if (selectBookmarkDataWindow.Result != ModalDialogResult.Primary) return;
+        EditorSystem.Insert_AddBookmark(selectBookmarkDataWindow.Message, selectBookmarkDataWindow.Color);
     }
     
     public async void ChartView_AdjustAxis()

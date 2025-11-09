@@ -6,11 +6,11 @@ using Avalonia.Interactivity;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
-namespace SaturnEdit.Windows.Dialogs.SelectScale;
+namespace SaturnEdit.Windows.Dialogs.SelectVisibility;
 
-public partial class SelectScaleWindow : Window
+public partial class SelectVisibilityWindow : Window
 {
-    public SelectScaleWindow()
+    public SelectVisibilityWindow()
     {
         InitializeComponent();
         
@@ -18,8 +18,9 @@ public partial class SelectScaleWindow : Window
         KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
 
-    public double Scale { get; private set; } = 1.0;
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
+
+    public bool Visibility { get; set; } = true;
 
 #region UI Event Delegates
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
@@ -44,25 +45,11 @@ public partial class SelectScaleWindow : Window
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
     
-    private void TextBoxScale_OnLostFocus(object? sender, RoutedEventArgs e)
+    private void ComboBoxVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (TextBoxScale == null) return;
+        if (ComboBoxVisibility == null) return;
 
-        try
-        {
-            Scale = Convert.ToDouble(TextBoxScale.Text, CultureInfo.InvariantCulture);
-            TextBoxScale.Text = Scale.ToString("0.000000", CultureInfo.InvariantCulture);
-        }
-        catch (Exception ex)
-        {
-            Scale = 1;
-            TextBoxScale.Text = Scale.ToString("0.000000", CultureInfo.InvariantCulture);
-                
-            if (ex is not (FormatException or OverflowException))
-            {
-                Console.WriteLine(ex);
-            }
-        }
+        Visibility = ComboBoxVisibility.SelectedIndex == 0;
     }
     
     private void ButtonOk_OnClick(object? sender, RoutedEventArgs e)
@@ -70,7 +57,7 @@ public partial class SelectScaleWindow : Window
         Result = ModalDialogResult.Primary;
         Close();
     }
-    
+
     private void ButtonCancel_OnClick(object? sender, RoutedEventArgs e)
     {
         Result = ModalDialogResult.Cancel;

@@ -494,27 +494,27 @@ public partial class ChartView3D : UserControl
         
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"]))
         {
-            Task.Run(EditorSystem.Insert_AddTempoChange);
+            MainWindow.Instance?.ChartEditor.ChartView_AddTempoChangeEvent();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"]))
         {
-            Task.Run(EditorSystem.Insert_AddMetreChange);
+            MainWindow.Instance?.ChartEditor.ChartView_AddMetreChangeEvent();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"]))
         {
-            Task.Run(EditorSystem.Insert_AddTutorialMarker);
+            MainWindow.Instance?.ChartEditor.ChartView_AddTutorialMarkerEvent();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"]))
         {
-            Task.Run(EditorSystem.Insert_AddSpeedChange);
+            MainWindow.Instance?.ChartEditor.ChartView_AddSpeedChangeEvent();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"]))
         {
-            Task.Run(EditorSystem.Insert_AddVisibilityChange);
+            MainWindow.Instance?.ChartEditor.ChartView_AddVisibilityChangeEvent();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"]))
@@ -529,7 +529,7 @@ public partial class ChartView3D : UserControl
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.Bookmark"]))
         {
-            Task.Run(EditorSystem.Insert_AddBookmark);
+            MainWindow.Instance?.ChartEditor.ChartView_AddBookmark();
             e.Handled = true;
         }
         
@@ -1352,21 +1352,21 @@ public partial class ChartView3D : UserControl
     }
     
     
-    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddTempoChange);
+    private void MenuItemAddTempoChange_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_AddTempoChangeEvent();
 
-    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddMetreChange);
+    private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_AddMetreChangeEvent();
 
-    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddTutorialMarker);
+    private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_AddTutorialMarkerEvent();
 
-    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddSpeedChange);
+    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_AddSpeedChangeEvent();
 
-    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddVisibilityChange);
+    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_AddVisibilityChangeEvent();
 
     private void MenuItemAddStopEffect_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddStopEffect);
 
     private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddReverseEffect);
 
-    private void MenuItemAddBookmark_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Insert_AddBookmark);
+    private void MenuItemAddBookmark_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_AddBookmark();
     
     private void MenuItemMoveSelectionBeatForward_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_MoveSelectionBeatForward);
 

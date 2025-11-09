@@ -97,12 +97,12 @@ public partial class EventListItem : UserControl
                 if (Event is TempoChangeEvent tempoChangeEvent)
                 {
                     TextBoxTextValue.IsVisible = true;
-                    TextBoxTextValue.Text = tempoChangeEvent.Tempo.ToString("F6", CultureInfo.InvariantCulture);
+                    TextBoxTextValue.Text = tempoChangeEvent.Tempo.ToString("0.000000", CultureInfo.InvariantCulture);
                 }
                 else if (Event is SpeedChangeEvent speedChangeEvent)
                 {
                     TextBoxTextValue.IsVisible = true;
-                    TextBoxTextValue.Text = speedChangeEvent.Speed.ToString("F6", CultureInfo.InvariantCulture);
+                    TextBoxTextValue.Text = speedChangeEvent.Speed.ToString("0.000000", CultureInfo.InvariantCulture);
                 }
                 else if (Event is TutorialMarkerEvent tutorialMarkerEvent)
                 {

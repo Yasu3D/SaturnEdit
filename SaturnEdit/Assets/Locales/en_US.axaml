@@ -544,6 +544,12 @@
     <system:String x:Key="SelectOffset.Direction">Direction</system:String>
     <system:String x:Key="SelectOffset.Direction.Forward">Forward</system:String>
     <system:String x:Key="SelectOffset.Direction.Backward">Backward</system:String>
+    <system:String x:Key="SelectTempo.Window.Title">Select Tempo</system:String>
+    <system:String x:Key="SelectMetre.Window.Title">Select Metre</system:String>
+    <system:String x:Key="SelectSpeed.Window.Title">Select Speed</system:String>
+    <system:String x:Key="SelectVisibility.Window.Title">Select Visibility</system:String>
+    <system:String x:Key="SelectTutorialMarkerKey.Window.Title">Select Tutorial Tag Key</system:String>
+    <system:String x:Key="SelectBookmarkData.Window.Title">Select Bookmark Data</system:String>
     <system:String x:Key="ZigZagHoldArgs.Window.Title">Zig-Zag Hold Generator</system:String>
     <system:String x:Key="ZigZagHoldArgs.Interval">Interval</system:String>
     <system:String x:Key="NewChart.Window.Title">New Chart</system:String>

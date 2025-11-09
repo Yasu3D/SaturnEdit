@@ -541,6 +541,12 @@ SelectOffset.Window.Title,Select Offset
 SelectOffset.Direction,Direction
 SelectOffset.Direction.Forward,Forward
 SelectOffset.Direction.Backward,Backward
+SelectTempo.Window.Title,Select Tempo
+SelectMetre.Window.Title,Select Metre
+SelectSpeed.Window.Title,Select Speed
+SelectVisibility.Window.Title,Select Visibility
+SelectTutorialMarkerKey.Window.Title,Select Tutorial Tag Key
+SelectBookmarkData.Window.Title,Select Bookmark Data
 ZigZagHoldArgs.Window.Title,Zig-Zag Hold Generator
 ZigZagHoldArgs.Interval,Interval
 NewChart.Window.Title,New Chart

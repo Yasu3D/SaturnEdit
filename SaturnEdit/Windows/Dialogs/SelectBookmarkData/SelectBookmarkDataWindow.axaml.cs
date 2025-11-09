@@ -3,14 +3,15 @@ using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
-namespace SaturnEdit.Windows.Dialogs.SelectScale;
+namespace SaturnEdit.Windows.Dialogs.SelectBookmarkData;
 
-public partial class SelectScaleWindow : Window
+public partial class SelectBookmarkDataWindow : Window
 {
-    public SelectScaleWindow()
+    public SelectBookmarkDataWindow()
     {
         InitializeComponent();
         
@@ -18,9 +19,27 @@ public partial class SelectScaleWindow : Window
         KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
 
-    public double Scale { get; private set; } = 1.0;
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
+    
+    public string Message { get; set; } = "";
+    public uint Color { get; set; } = 0xFFDDDDDD;
 
+    private bool blockEvents = false;
+
+#region Methods
+    private void UpdateData()
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
+
+            TextBoxColor.Text = $"{Color - 0xFF000000:X6}";
+            
+            blockEvents = false;
+        });
+    }
+#endregion Methods
+    
 #region UI Event Delegates
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
@@ -44,25 +63,19 @@ public partial class SelectScaleWindow : Window
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
     
-    private void TextBoxScale_OnLostFocus(object? sender, RoutedEventArgs e)
+    private void TextBoxMessage_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (TextBoxScale == null) return;
-
-        try
-        {
-            Scale = Convert.ToDouble(TextBoxScale.Text, CultureInfo.InvariantCulture);
-            TextBoxScale.Text = Scale.ToString("0.000000", CultureInfo.InvariantCulture);
-        }
-        catch (Exception ex)
-        {
-            Scale = 1;
-            TextBoxScale.Text = Scale.ToString("0.000000", CultureInfo.InvariantCulture);
-                
-            if (ex is not (FormatException or OverflowException))
-            {
-                Console.WriteLine(ex);
-            }
-        }
+        if (TextBoxMessage == null) return;
+        Message = TextBoxMessage.Text ?? "";
+    }
+    
+    private void TextBoxColor_OnLostFocus(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (TextBoxColor == null) return;
+        
+        Color = uint.TryParse(TextBoxColor.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
+        UpdateData();
     }
     
     private void ButtonOk_OnClick(object? sender, RoutedEventArgs e)
@@ -70,7 +83,7 @@ public partial class SelectScaleWindow : Window
         Result = ModalDialogResult.Primary;
         Close();
     }
-    
+
     private void ButtonCancel_OnClick(object? sender, RoutedEventArgs e)
     {
         Result = ModalDialogResult.Cancel;

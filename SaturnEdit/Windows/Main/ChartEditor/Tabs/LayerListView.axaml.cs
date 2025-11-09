@@ -287,12 +287,12 @@ public partial class LayerListView : UserControl
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"]))
         {
-            EditorSystem.Insert_AddSpeedChange();
+            EditorSystem.Insert_AddSpeedChange(1.0f);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"]))
         {
-            EditorSystem.Insert_AddVisibilityChange();
+            EditorSystem.Insert_AddVisibilityChange(true);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"]))
@@ -309,9 +309,9 @@ public partial class LayerListView : UserControl
 
     private void ButtonDeleteEvent_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.LayerList_DeleteEvents();
 
-    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddSpeedChange();
+    private void MenuItemAddSpeedChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddSpeedChange(1.0f);
 
-    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddVisibilityChange();
+    private void MenuItemAddVisibilityChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddVisibilityChange(true);
 
     private void MenuItemAddReverseEffect_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddReverseEffect();
 

@@ -1123,9 +1123,9 @@ public static class EditorSystem
     }
 
 
-    public static void Insert_AddTempoChange()
+    public static void Insert_AddTempoChange(float tempo)
     {
-        TempoChangeEvent tempoChangeEvent = new(new(TimeSystem.Timestamp.FullTick), 120.000000f);
+        TempoChangeEvent tempoChangeEvent = new(new(TimeSystem.Timestamp.FullTick), tempo);
 
         GlobalEventAddOperation op0 = new(tempoChangeEvent, ChartSystem.Chart.Events.Count);
         SelectionAddOperation op1 = new(tempoChangeEvent, SelectionSystem.LastSelectedObject);
@@ -1133,9 +1133,9 @@ public static class EditorSystem
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
-    public static void Insert_AddMetreChange()
+    public static void Insert_AddMetreChange(int upper, int lower)
     {
-        MetreChangeEvent metreChangeEvent = new(new(TimeSystem.Timestamp.FullTick), 4, 4);
+        MetreChangeEvent metreChangeEvent = new(new(TimeSystem.Timestamp.FullTick), upper, lower);
 
         GlobalEventAddOperation op0 = new(metreChangeEvent, ChartSystem.Chart.Events.Count);
         SelectionAddOperation op1 = new(metreChangeEvent, SelectionSystem.LastSelectedObject);
@@ -1143,9 +1143,9 @@ public static class EditorSystem
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
-    public static void Insert_AddTutorialMarker()
+    public static void Insert_AddTutorialMarker(string key)
     {
-        TutorialMarkerEvent tutorialMarkerEvent = new(new(TimeSystem.Timestamp.FullTick), "KEY");
+        TutorialMarkerEvent tutorialMarkerEvent = new(new(TimeSystem.Timestamp.FullTick), key);
 
         GlobalEventAddOperation op0 = new(tutorialMarkerEvent, ChartSystem.Chart.Events.Count);
         SelectionAddOperation op1 = new(tutorialMarkerEvent, SelectionSystem.LastSelectedObject);
@@ -1153,11 +1153,11 @@ public static class EditorSystem
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
     
-    public static void Insert_AddSpeedChange()
+    public static void Insert_AddSpeedChange(float speed)
     {
         if (SelectionSystem.SelectedLayer == null) return;
         
-        SpeedChangeEvent speedChangeEvent = new(new(TimeSystem.Timestamp.FullTick), 1.000000f);
+        SpeedChangeEvent speedChangeEvent = new(new(TimeSystem.Timestamp.FullTick), speed);
 
         EventAddOperation op0 = new(SelectionSystem.SelectedLayer, speedChangeEvent, SelectionSystem.SelectedLayer.Events.Count);
         SelectionAddOperation op1 = new(speedChangeEvent, SelectionSystem.LastSelectedObject);
@@ -1165,11 +1165,11 @@ public static class EditorSystem
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
-    public static void Insert_AddVisibilityChange()
+    public static void Insert_AddVisibilityChange(bool visibility)
     {
         if (SelectionSystem.SelectedLayer == null) return;
         
-        VisibilityChangeEvent visibilityChangeEvent = new(new(TimeSystem.Timestamp.FullTick), true);
+        VisibilityChangeEvent visibilityChangeEvent = new(new(TimeSystem.Timestamp.FullTick), visibility);
 
         EventAddOperation op0 = new(SelectionSystem.SelectedLayer, visibilityChangeEvent, SelectionSystem.SelectedLayer.Events.Count);
         SelectionAddOperation op1 = new(visibilityChangeEvent, SelectionSystem.LastSelectedObject);
@@ -1213,9 +1213,9 @@ public static class EditorSystem
         UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
     }
 
-    public static void Insert_AddBookmark()
+    public static void Insert_AddBookmark(string message, uint color)
     {
-        Bookmark bookmark = new(new(TimeSystem.Timestamp.FullTick), 0xFFDDDDDD, "");
+        Bookmark bookmark = new(new(TimeSystem.Timestamp.FullTick), color, message);
 
         BookmarkAddOperation op0 = new(bookmark, ChartSystem.Chart.Bookmarks.Count);
         SelectionAddOperation op1 = new(bookmark, SelectionSystem.LastSelectedObject);

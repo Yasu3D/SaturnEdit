@@ -6,11 +6,11 @@ using Avalonia.Interactivity;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
-namespace SaturnEdit.Windows.Dialogs.SelectScale;
+namespace SaturnEdit.Windows.Dialogs.SelectMetre;
 
-public partial class SelectScaleWindow : Window
+public partial class SelectMetreWindow : Window
 {
-    public SelectScaleWindow()
+    public SelectMetreWindow()
     {
         InitializeComponent();
         
@@ -18,8 +18,10 @@ public partial class SelectScaleWindow : Window
         KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
 
-    public double Scale { get; private set; } = 1.0;
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
+    
+    public int Upper { get; set; } = 4;
+    public int Lower { get; set; } = 4;
 
 #region UI Event Delegates
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
@@ -44,20 +46,41 @@ public partial class SelectScaleWindow : Window
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
     
-    private void TextBoxScale_OnLostFocus(object? sender, RoutedEventArgs e)
+    private void TextBoxUpper_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (TextBoxScale == null) return;
+        if (TextBoxUpper == null) return;
 
         try
         {
-            Scale = Convert.ToDouble(TextBoxScale.Text, CultureInfo.InvariantCulture);
-            TextBoxScale.Text = Scale.ToString("0.000000", CultureInfo.InvariantCulture);
+            Upper = Convert.ToInt32(TextBoxUpper.Text, CultureInfo.InvariantCulture);
+            TextBoxUpper.Text = Upper.ToString("N0", CultureInfo.InvariantCulture);
         }
         catch (Exception ex)
         {
-            Scale = 1;
-            TextBoxScale.Text = Scale.ToString("0.000000", CultureInfo.InvariantCulture);
-                
+            Upper = 4;
+            TextBoxUpper.Text = Upper.ToString("N0", CultureInfo.InvariantCulture);
+            
+            if (ex is not (FormatException or OverflowException))
+            {
+                Console.WriteLine(ex);
+            }
+        }
+    }
+
+    private void TextBoxLower_OnLostFocus(object? sender, RoutedEventArgs e)
+    {
+        if (TextBoxLower == null) return;
+
+        try
+        {
+            Lower = Convert.ToInt32(TextBoxLower.Text, CultureInfo.InvariantCulture);
+            TextBoxLower.Text = Lower.ToString("N0", CultureInfo.InvariantCulture);
+        }
+        catch (Exception ex)
+        {
+            Lower = 4;
+            TextBoxLower.Text = Lower.ToString("N0", CultureInfo.InvariantCulture);
+            
             if (ex is not (FormatException or OverflowException))
             {
                 Console.WriteLine(ex);
@@ -70,7 +93,7 @@ public partial class SelectScaleWindow : Window
         Result = ModalDialogResult.Primary;
         Close();
     }
-    
+
     private void ButtonCancel_OnClick(object? sender, RoutedEventArgs e)
     {
         Result = ModalDialogResult.Cancel;
