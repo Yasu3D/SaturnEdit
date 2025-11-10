@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -46,7 +47,14 @@ public partial class ChartView3D : UserControl
         OnEditModeChangeAttempted(null, EventArgs.Empty);
 
         SelectionSystem.PointerOverOverlapChanged += OnPointerOverOverlapChanged;
+
+        ChartSystem.JacketChanged += OnJacketChanged;
+        OnJacketChanged(null, EventArgs.Empty);
     }
+
+    private static SKPaint? jacketBackgroundPaint = null;
+    private static int jacketBackgroundWidth = 0;
+    private static int jacketBackgroundHeight = 0;
     
     private readonly CanvasInfo canvasInfo = new();
     private bool blockEvents = false;
@@ -284,6 +292,39 @@ public partial class ChartView3D : UserControl
 #endregion Methods
     
 #region System Event Delegates
+    private static void OnJacketChanged(object? sender, EventArgs e)
+    {
+        if (!File.Exists(ChartSystem.Entry.JacketPath))
+        {
+            jacketBackgroundPaint = null;
+            return;
+        }
+        
+        try
+        {
+            SKImage image = SKImage.FromEncodedData(ChartSystem.Entry.JacketPath);
+
+            jacketBackgroundWidth = image.Width;
+            jacketBackgroundHeight = image.Height;
+            
+            jacketBackgroundPaint = new()
+            {
+                IsAntialias = false,
+                Shader = SKShader.CreateImage(image),
+            };
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            if (ex is not FileNotFoundException)
+            {
+                Console.WriteLine(ex);
+            }
+
+            jacketBackgroundPaint = null;
+        }
+    }
+        
     private void OnSettingsChanged(object? sender, EventArgs e)
     { 
         Dispatcher.UIThread.Post(() =>
@@ -898,7 +939,10 @@ public partial class ChartView3D : UserControl
             pointerOverObject: objectDrag.IsActive ? null : SelectionSystem.PointerOverObject,
             activeObjectGroup: EditorSystem.ActiveObjectGroup,
             boxSelect: new(SelectionSystem.BoxSelectArgs.GlobalStartTime, SelectionSystem.BoxSelectArgs.GlobalEndTime, SelectionSystem.BoxSelectArgs.Position, SelectionSystem.BoxSelectArgs.Size),
-            cursorNote: playing ? null : CursorSystem.CurrentType
+            cursorNote: playing ? null : CursorSystem.CurrentType,
+            jacketBackgroundPaint: jacketBackgroundPaint,
+            jacketBackgroundWidth: jacketBackgroundWidth,
+            jacketBackgroundHeight: jacketBackgroundHeight
         );
 
         // Hook into render function to update box selection during playback,
