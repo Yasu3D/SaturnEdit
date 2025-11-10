@@ -1458,6 +1458,10 @@ public partial class ChartEditorView : UserControl
     private void MenuItemJumpToNextObject_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_JumpToNextObject();
 
     private void MenuItemJumpToPreviousObject_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_JumpToPreviousObject();
+    
+    private void MenuItemJumpToNextSelection_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_JumpToNextSelection();
+
+    private void MenuItemJumpToPreviousSelection_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_JumpToPreviousSelection();
 
     private void MenuItemIncreaseBeatDivision_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_IncreaseBeatDivision();
 

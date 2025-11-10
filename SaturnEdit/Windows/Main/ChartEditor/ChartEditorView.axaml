@@ -407,7 +407,8 @@
                     </MenuItem.Header>
 
                     <MenuItem Name="MenuItemMoveBeatForward"
-                              Click="MenuItemMoveBeatForward_OnClick">
+                              Click="MenuItemMoveBeatForward_OnClick"
+                              StaysOpenOnClick="True">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatForward}" />
                         </MenuItem.Header>
@@ -417,7 +418,8 @@
                     </MenuItem>
 
                     <MenuItem Name="MenuItemMoveBeatBack"
-                              Click="MenuItemMoveBeatBack_OnClick">
+                              Click="MenuItemMoveBeatBack_OnClick"
+                              StaysOpenOnClick="True">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.MoveBeatBack}" />
                         </MenuItem.Header>
@@ -429,7 +431,8 @@
                     <Separator />
 
                     <MenuItem Name="MenuItemMoveMeasureForward"
-                              Click="MenuItemMoveMeasureForward_OnClick">
+                              Click="MenuItemMoveMeasureForward_OnClick"
+                              StaysOpenOnClick="True">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureForward}" />
                         </MenuItem.Header>
@@ -439,7 +442,8 @@
                     </MenuItem>
 
                     <MenuItem Name="MenuItemMoveMeasureBack"
-                              Click="MenuItemMoveMeasureBack_OnClick">
+                              Click="MenuItemMoveMeasureBack_OnClick"
+                              StaysOpenOnClick="True">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.MoveMeasureBack}" />
                         </MenuItem.Header>
@@ -451,7 +455,8 @@
                     <Separator />
 
                     <MenuItem Name="MenuItemJumpToNextObject"
-                              Click="MenuItemJumpToNextObject_OnClick">
+                              Click="MenuItemJumpToNextObject_OnClick"
+                              StaysOpenOnClick="True">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.JumpToNextObject}" />
                         </MenuItem.Header>
@@ -461,9 +466,34 @@
                     </MenuItem>
 
                     <MenuItem Name="MenuItemJumpToPreviousObject"
-                              Click="MenuItemJumpToPreviousObject_OnClick">
+                              Click="MenuItemJumpToPreviousObject_OnClick"
+                              StaysOpenOnClick="True">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.JumpToPreviousObject}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowPrevious" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <Separator />
+                    
+                    <MenuItem Name="MenuItemJumpToNextSelection"
+                              Click="MenuItemJumpToNextSelection_OnClick"
+                              StaysOpenOnClick="True">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.JumpToNextSelection}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowPrevious" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem Name="MenuItemJumpToPreviousSelection"
+                              Click="MenuItemJumpToPreviousSelection_OnClick"
+                              StaysOpenOnClick="True">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Navigate.JumpToPreviousSelection}" />
                         </MenuItem.Header>
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="ArrowPrevious" />
@@ -473,7 +503,8 @@
                     <Separator />
 
                     <MenuItem Name="MenuItemIncreaseBeatDivision"
-                              Click="MenuItemIncreaseBeatDivision_OnClick">
+                              Click="MenuItemIncreaseBeatDivision_OnClick"
+                              StaysOpenOnClick="True">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.IncreaseBeatDivision}" />
                         </MenuItem.Header>
@@ -483,7 +514,8 @@
                     </MenuItem>
 
                     <MenuItem Name="MenuItemDecreaseBeatDivision"
-                              Click="MenuItemDecreaseBeatDivision_OnClick">
+                              Click="MenuItemDecreaseBeatDivision_OnClick"
+                              StaysOpenOnClick="True">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.DecreaseBeatDivision}" />
                         </MenuItem.Header>
@@ -493,14 +525,16 @@
                     </MenuItem>
 
                     <MenuItem Name="MenuItemDoubleBeatDivision"
-                              Click="MenuItemDoubleBeatDivision_OnClick">
+                              Click="MenuItemDoubleBeatDivision_OnClick"
+                              StaysOpenOnClick="True">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.DoubleBeatDivision}" />
                         </MenuItem.Header>
                     </MenuItem>
 
                     <MenuItem Name="MenuItemHalveBeatDivision"
-                              Click="MenuItemHalveBeatDivision_OnClick">
+                              Click="MenuItemHalveBeatDivision_OnClick"
+                              StaysOpenOnClick="True">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.Navigate.HalveBeatDivision}" />
                         </MenuItem.Header>

@@ -396,6 +396,8 @@ Menu.Navigate.MoveMeasureForward,Move Measure Forward
 Menu.Navigate.MoveMeasureBack,Move Measure Back
 Menu.Navigate.JumpToNextObject,Jump to Next Object
 Menu.Navigate.JumpToPreviousObject,Jump to Previous Object
+Menu.Navigate.JumpToNextSelection,Jump to Next Selection
+Menu.Navigate.JumpToPreviousSelection,Jump to Previous Selection
 Menu.Navigate.IncreaseBeatDivision,Increase Beat Division
 Menu.Navigate.DecreaseBeatDivision,Decrease Beat Division
 Menu.Navigate.DoubleBeatDivision,Double Beat Division

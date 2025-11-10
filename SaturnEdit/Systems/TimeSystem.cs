@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
+using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 
 namespace SaturnEdit.Systems;
@@ -407,6 +408,46 @@ public static class TimeSystem
             }
         }
 
+        if (previousTick < 0) return;
+        
+        SeekFullTick(previousTick);
+    }
+    
+    public static void Navigate_JumpToNextSelection()
+    {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        
+        int startTick = Timestamp.FullTick;
+        int nextTick = int.MaxValue;
+
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj.Timestamp.FullTick <= startTick) continue;
+            if (obj.Timestamp.FullTick >= nextTick) continue;
+
+            nextTick = obj.Timestamp.FullTick;
+        }
+        
+        if (nextTick == int.MaxValue) return;
+        
+        SeekFullTick(nextTick);
+    }
+    
+    public static void Navigate_JumpToPreviousSelection() 
+    {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        
+        int startTick = Timestamp.FullTick;
+        int previousTick = int.MinValue;
+
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj.Timestamp.FullTick >= startTick) continue;
+            if (obj.Timestamp.FullTick <= previousTick) continue;
+
+            previousTick = obj.Timestamp.FullTick;
+        }
+        
         if (previousTick < 0) return;
         
         SeekFullTick(previousTick);

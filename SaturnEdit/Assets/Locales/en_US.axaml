@@ -399,6 +399,8 @@
     <system:String x:Key="Menu.Navigate.MoveMeasureBack">Move Measure Back</system:String>
     <system:String x:Key="Menu.Navigate.JumpToNextObject">Jump to Next Object</system:String>
     <system:String x:Key="Menu.Navigate.JumpToPreviousObject">Jump to Previous Object</system:String>
+    <system:String x:Key="Menu.Navigate.JumpToNextSelection">Jump to Next Selection</system:String>
+    <system:String x:Key="Menu.Navigate.JumpToPreviousSelection">Jump to Previous Selection</system:String>
     <system:String x:Key="Menu.Navigate.IncreaseBeatDivision">Increase Beat Division</system:String>
     <system:String x:Key="Menu.Navigate.DecreaseBeatDivision">Decrease Beat Division</system:String>
     <system:String x:Key="Menu.Navigate.DoubleBeatDivision">Double Beat Division</system:String>
