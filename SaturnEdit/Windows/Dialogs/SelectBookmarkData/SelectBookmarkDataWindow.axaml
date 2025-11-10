@@ -76,7 +76,8 @@
 
                         <controls:SaturnColorPicker Grid.Column="2"
                                                     Name="ColorPickerBookmarkColor"
-                                                    ColorPickFinished="ColorPickerBookmarkColor_OnColorPickFinished"/>
+                                                    ColorPickFinished="ColorPickerBookmarkColor_OnColorPickFinished"
+                                                    ColorChanged="ColorPickerBookmarkColor_OnColorChanged"/>
                     </Grid>
                 </Grid>
             </Border>

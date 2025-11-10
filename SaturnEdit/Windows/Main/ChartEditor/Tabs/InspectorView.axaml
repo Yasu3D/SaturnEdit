@@ -552,7 +552,9 @@
 
                                 <controls:SaturnColorPicker Grid.Column="2"
                                                     Name="ColorPickerBookmarkColor"
-                                                    ColorPickFinished="ColorPickerBookmarkColor_OnColorPickFinished"/>
+                                                    ColorPickStarted="ColorPickerBookmarkColor_OnColorPickStarted"
+                                                    ColorPickFinished="ColorPickerBookmarkColor_OnColorPickFinished"
+                                                    ColorChanged="ColorPickerBookmarkColor_OnColorChanged"/>
                             </Grid>
                         
                             <TextBlock Grid.Row="1"

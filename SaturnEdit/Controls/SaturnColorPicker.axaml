@@ -39,7 +39,8 @@
                         Placement="Top"
                         FlyoutPresenterClasses="ColorPicker"
                         VerticalOffset="-5"
-                        Closed="FlyoutBase_OnClosed">
+                        Closed="FlyoutBase_OnClosed"
+                        Opened="FlyoutBase_OnOpened">
                     <Grid RowDefinitions="150,22"
                           Margin="3">
                         <controls:SkiaSharpCanvas Grid.Row="0"

@@ -14,7 +14,8 @@ public partial class SelectBookmarkDataWindow : Window
     public SelectBookmarkDataWindow()
     {
         InitializeComponent();
-        UpdateData();
+        UpdateColorText();
+        UpdateColorPicker();
         
         KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
         KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
@@ -28,14 +29,25 @@ public partial class SelectBookmarkDataWindow : Window
     private bool blockEvents = false;
 
 #region Methods
-    private void UpdateData()
+    private void UpdateColorPicker()
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
+
+            ColorPickerBookmarkColor.Color = Color;
+            
+            blockEvents = false;
+        });
+    }
+    
+    private void UpdateColorText()
     {
         Dispatcher.UIThread.Post(() =>
         {
             blockEvents = true;
 
             TextBoxColor.Text = $"{Color - 0xFF000000:X6}";
-            ColorPickerBookmarkColor.Color = Color;
             
             blockEvents = false;
         });
@@ -77,7 +89,8 @@ public partial class SelectBookmarkDataWindow : Window
         if (TextBoxColor == null) return;
         
         Color = uint.TryParse(TextBoxColor.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
-        UpdateData();
+        UpdateColorText();
+        UpdateColorPicker();
     }
     
     private void ColorPickerBookmarkColor_OnColorPickFinished(object? sender, EventArgs e)
@@ -86,7 +99,16 @@ public partial class SelectBookmarkDataWindow : Window
         if (ColorPickerBookmarkColor == null) return;
 
         Color = ColorPickerBookmarkColor.Color;
-        UpdateData();
+        UpdateColorText();
+    }
+    
+    private void ColorPickerBookmarkColor_OnColorChanged(object? sender, EventArgs e)
+    {
+        if (blockEvents) return;
+        if (ColorPickerBookmarkColor == null) return;
+
+        Color = ColorPickerBookmarkColor.Color;
+        UpdateColorText();
     }
     
     private void ButtonOk_OnClick(object? sender, RoutedEventArgs e)

@@ -33,6 +33,8 @@ public partial class InspectorView : UserControl
     }
 
     private bool blockEvents = false;
+
+    private Dictionary<Bookmark, uint> recoloredBookmarks = [];
     
 #region System Event Delegates
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
@@ -1591,6 +1593,42 @@ public partial class InspectorView : UserControl
         UndoRedoSystem.Push(new CompositeOperation(operations));
     }
     
+    private void ColorPickerBookmarkColor_OnColorPickStarted(object? sender, EventArgs e)
+    {
+        if (blockEvents) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (ColorPickerBookmarkColor == null) return;
+        
+        recoloredBookmarks.Clear();
+
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not Bookmark bookmark) continue;
+            recoloredBookmarks.Add(bookmark, bookmark.Color);
+        }
+    }
+
+    private void ColorPickerBookmarkColor_OnColorChanged(object? sender, EventArgs e)
+    {
+        if (blockEvents) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (ColorPickerBookmarkColor == null) return;
+
+        uint newValue = ColorPickerBookmarkColor.Color;
+        ColorPickerBookmarkColor.BorderColorPlaceholder.IsVisible = false;
+
+        foreach (KeyValuePair<Bookmark, uint> bookmark in recoloredBookmarks)
+        {
+            bookmark.Key.Color = newValue;
+        }
+
+        blockEvents = true;
+
+        TextBoxBookmarkColor.Text = $"{newValue - 0xFF000000:X6}";
+        
+        blockEvents = false;
+    }
+    
     private void ColorPickerBookmarkColor_OnColorPickFinished(object? sender, EventArgs e)
     {
         if (blockEvents) return;
@@ -1600,11 +1638,10 @@ public partial class InspectorView : UserControl
         uint newValue = ColorPickerBookmarkColor.Color;
         
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
+
+        foreach (KeyValuePair<Bookmark, uint> bookmark in recoloredBookmarks)
         {
-            if (obj is not Bookmark bookmark) continue;
-            
-            operations.Add(new BookmarkEditOperation(bookmark, bookmark.Color, newValue, bookmark.Message, bookmark.Message));
+            operations.Add(new BookmarkEditOperation(bookmark.Key, bookmark.Value, newValue, bookmark.Key.Message, bookmark.Key.Message));
         }
 
         UndoRedoSystem.Push(new CompositeOperation(operations));
