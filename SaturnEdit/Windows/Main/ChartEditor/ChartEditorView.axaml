@@ -42,6 +42,20 @@
                             <icon:FluentIcon Icon="Folder" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    
+                    <MenuItem Name="MenuItemRecent">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Recent}" />
+                        </MenuItem.Header>
+                        
+                        <MenuItem Name="MenuItemClearRecent"
+                                  Click="MenuItemClearRecent_OnClick"
+                                  StaysOpenOnClick="True">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.ClearRecent}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </MenuItem>
 
                     <Separator />
 

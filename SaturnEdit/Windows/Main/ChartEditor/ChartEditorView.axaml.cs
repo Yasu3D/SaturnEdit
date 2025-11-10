@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -874,6 +875,39 @@ public partial class ChartEditorView : UserControl
             MenuItemDecreaseBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DecreaseBeatDivision"].ToKeyGesture();
             MenuItemDoubleBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DoubleBeatDivision"].ToKeyGesture();
             MenuItemHalveBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.HalveBeatDivision"].ToKeyGesture();
+            
+            MenuItemRecent.Items.Clear();
+
+            if (SettingsSystem.EditorSettings.RecentFiles.Count != 0)
+            {
+                for (int i = 0; i < SettingsSystem.EditorSettings.RecentFiles.Count; i++)
+                {
+                    try
+                    {
+                        string file = SettingsSystem.EditorSettings.RecentFiles[i];
+                        string trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
+                        
+                        MenuItemRecent.Items.Add(new MenuItem
+                        {
+                            Icon = (i + 1).ToString(CultureInfo.InvariantCulture),
+                            Header = new TextBlock { Text = trimmed },
+                            Tag = file,
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        // Don't throw.
+                        Console.WriteLine(ex);
+                    }
+                }
+
+                MenuItemRecent.Items.Add(new Separator());
+                MenuItemRecent.Items.Add(MenuItemClearRecent);
+            }
+            else
+            {
+                MenuItemRecent.IsEnabled = false;
+            }
         });
     }
     
@@ -1342,6 +1376,11 @@ public partial class ChartEditorView : UserControl
 
     private void MenuItemOpen_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open();
 
+    private void MenuItemClearRecent_OnClick(object? sender, RoutedEventArgs e)
+    {
+        SettingsSystem.EditorSettings.ClearRecentFiles();
+    }
+    
     private void MenuItemSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_Save();
 
     private void MenuItemSaveAs_OnClick(object? sender, RoutedEventArgs e) => _ = File_SaveAs();

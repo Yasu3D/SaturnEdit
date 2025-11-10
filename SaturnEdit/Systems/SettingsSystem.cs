@@ -288,6 +288,20 @@ public class EditorSettings
         }
     }
     private bool chartViewTxtSyntaxHighlighting = true;
+
+    public List<string> RecentFiles { get; set; } = [];
+    
+    public void AddRecentFile(string path)
+    {
+        RecentFiles.Add(path);
+        PropertyChanged?.Invoke(null, EventArgs.Empty);
+    }
+
+    public void ClearRecentFiles()
+    {
+        RecentFiles.Clear();
+        PropertyChanged?.Invoke(null, EventArgs.Empty);
+    }
 }
 
 public class AudioSettings

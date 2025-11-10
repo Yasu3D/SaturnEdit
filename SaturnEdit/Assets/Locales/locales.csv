@@ -359,6 +359,8 @@ Dock.Window.Title,SaturnEdit — Dock Window
 Menu.File,File
 Menu.File.New,New
 Menu.File.Open,Open...
+Menu.File.Recent,Recent
+Menu.File.ClearRecent,Clear Recent
 Menu.File.Save,Save
 Menu.File.SaveAs,Save As...
 Menu.File.ReloadFromDisk,Reload from Disk
