@@ -462,17 +462,10 @@ public static class EditorSystem
         if (CursorSystem.CurrentType is HoldNote)
         {
             // Convert to Hold Note
-            if (objects.Count < 2) return;
             if (SelectionSystem.SelectedLayer == null) return;
             
-            BonusType bonusType = BonusType.Normal;
-            JudgementType judgementType = JudgementType.Normal;
-
-            if (objects[0] is IPlayable playable)
-            {
-                bonusType = playable.BonusType;
-                judgementType = playable.JudgementType;
-            }
+            BonusType bonusType = CursorSystem.BonusType;
+            JudgementType judgementType = CursorSystem.JudgementType;
             
             HoldNote holdNote = new(bonusType, judgementType);
             foreach (ITimeable obj in objects)
@@ -528,6 +521,8 @@ public static class EditorSystem
 
             holdNote.Points = holdNote.Points.OrderBy(x => x.Timestamp.FullTick).ToList();
 
+            if (holdNote.Points.Count < 2) return;
+            
             if (!objects.Any(x => x is HoldPointNote))
             {
                 operations.Add(new SelectionAddOperation(holdNote, SelectionSystem.LastSelectedObject));
@@ -690,17 +685,10 @@ public static class EditorSystem
         if (CursorSystem.CurrentType is HoldNote)
         {
             // Convert to Hold Note
-            if (objects.Count < 2) return;
             if (SelectionSystem.SelectedLayer == null) return;
             
-            BonusType bonusType = BonusType.Normal;
-            JudgementType judgementType = JudgementType.Normal;
-
-            if (objects[0] is IPlayable playable)
-            {
-                bonusType = playable.BonusType;
-                judgementType = playable.JudgementType;
-            }
+            BonusType bonusType = CursorSystem.BonusType;
+            JudgementType judgementType = CursorSystem.JudgementType;
             
             HoldNote holdNote = new(bonusType, judgementType);
             foreach (ITimeable obj in objects)
@@ -748,6 +736,8 @@ public static class EditorSystem
 
             holdNote.Points = holdNote.Points.OrderBy(x => x.Timestamp.FullTick).ToList();
 
+            if (holdNote.Points.Count < 2) return;
+            
             if (!objects.Any(x => x is HoldPointNote))
             {
                 operations.Add(new SelectionAddOperation(holdNote, SelectionSystem.LastSelectedObject));
