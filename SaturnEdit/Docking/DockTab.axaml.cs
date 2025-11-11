@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Threading;
 using FluentIcons.Common;
 
 namespace SaturnEdit.Docking;
@@ -24,17 +25,34 @@ public partial class DockTab : UserControl
         Icon.Icon = icon;
         TextBlockTitle.Bind(TextBlock.TextProperty, new DynamicResourceExtension(titleKey));
     }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        
+        if (DockArea.Instance != null)
+        {
+            DockArea.Instance.DockChanged += OnDockChanged;
+            OnDockChanged(null, EventArgs.Empty);
+        }
+    }
     
     public UserControl? TabContent { get; set; } = null;
     private Point? startPoint = null;
 
-#region UI Event Delegates
-    private void Visual_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+#region System Event Delegates
+    private void OnDockChanged(object? sender, EventArgs e)
     {
-        if (Parent is not ListBox listBox) return;
-
-        ButtonClose.IsVisible = listBox.Items.Count > 1;
+        Dispatcher.UIThread.Post(() =>
+        {
+            if (Parent is not ListBox listBox) return;
+            
+            ButtonClose.IsVisible = listBox.Items.Count > 1;
+        });
     }
+#endregion System Event Delegates
+    
+#region UI Event Delegates
     
     private void InputElement_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {

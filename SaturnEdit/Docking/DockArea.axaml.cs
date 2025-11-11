@@ -26,6 +26,8 @@ public partial class DockArea : UserControl
     public event EventHandler? WindowDragEnded;
     public event EventHandler? WindowDragged;
     
+    public event EventHandler? DockChanged;
+    
     public Point WindowOffset;
     public DockTabGroup? DraggedGroup = null;
 
@@ -98,11 +100,10 @@ public partial class DockArea : UserControl
             {
                 // place inserted group in root.
                 Root.Content = insertedGroup;
-                return;
             }
 
             // 2. Side Target, occupied root.
-            if (destination.TargetSide != TargetSide.Center && Root.Content is UserControl existingRoot)
+            else if (destination.TargetSide != TargetSide.Center && Root.Content is UserControl existingRoot)
             {
                 Root.Content = null;
                 
@@ -115,7 +116,7 @@ public partial class DockArea : UserControl
         }
 
         // B. Docking into Tab Group
-        if (parent is DockTabGroup destinationGroup)
+        else if (parent is DockTabGroup destinationGroup)
         {
             // 1. Center target
             if (destination.TargetSide == TargetSide.Center && insertedGroup.TabList.Items.Count != 0)
@@ -147,7 +148,7 @@ public partial class DockArea : UserControl
             }
 
             // 2. Side target
-            if (destination.TargetSide != TargetSide.Center)
+            else if (destination.TargetSide != TargetSide.Center)
             {
                 // remove destinationGroup from destinationRoot
                 if (destinationGroup.Parent is not UserControl destinationRoot) return;
@@ -160,6 +161,8 @@ public partial class DockArea : UserControl
                 destinationRoot.Content = splitter;
             }
         }
+        
+        DockChanged?.Invoke(null, EventArgs.Empty);
     }
 
     public void Float(UserControl item)
@@ -188,10 +191,9 @@ public partial class DockArea : UserControl
             };
             
             window.Show(MainWindow.Instance);
-            return;
         }
 
-        if (item is DockTabGroup group)
+        else if (item is DockTabGroup group)
         {
             if (MainWindow.Instance == null) return;
 
@@ -217,6 +219,8 @@ public partial class DockArea : UserControl
 
             window.Show(MainWindow.Instance);
         }
+        
+        DockChanged?.Invoke(null, EventArgs.Empty);
     }
 
     public void Popup(DockTab tab, double width, double height)
@@ -235,12 +239,16 @@ public partial class DockArea : UserControl
         };
         
         window.Show(MainWindow.Instance);
+        
+        DockChanged?.Invoke(null, EventArgs.Empty);
     }
     
     public void RemoveWindow(DockWindow dockWindow)
     {
         dockWindow.WindowContent.Content = null;
         dockWindow.Close();
+        
+        DockChanged?.Invoke(null, EventArgs.Empty);
     }
     
     public void RemoveSplitter(DockSplitter splitter, UserControl preservedItem)
@@ -256,6 +264,8 @@ public partial class DockArea : UserControl
         
         // insert preserved item in splitter's place.
         parent.Content = preservedItem;
+        
+        DockChanged?.Invoke(null, EventArgs.Empty);
     }
 
     public void RemoveTabGroup(DockTabGroup group)
@@ -268,19 +278,17 @@ public partial class DockArea : UserControl
         {
             // remove window
             RemoveWindow(window);
-            return;
         }
         
         // 2. Group is child of Root
-        if (group.Parent == Root)
+        else if (group.Parent == Root)
         {
             // remove group
             Root.Content = null;
-            return;
         }
         
         // 3. Group is child of DockSplitter
-        if (group.Parent?.Parent?.Parent is DockSplitter splitter)
+        else if (group.Parent?.Parent?.Parent is DockSplitter splitter)
         {
             // find preserved item
             UserControl? preservedItem = Equals(splitter.ItemA.Content, group) 
@@ -292,6 +300,8 @@ public partial class DockArea : UserControl
             // remove splitter
             RemoveSplitter(splitter, preservedItem);
         }
+        
+        DockChanged?.Invoke(null, EventArgs.Empty);
     }
 
     public void RemoveTab(DockTabGroup group, DockTab tab)
@@ -318,6 +328,8 @@ public partial class DockArea : UserControl
             // select tab at index
             group.SelectedTab = group.TabList.Items[index] as DockTab;
         }
+        
+        DockChanged?.Invoke(null, EventArgs.Empty);
     }
     
     private void UpdateTarget()
