@@ -929,24 +929,36 @@ public partial class ChartEditorView : UserControl
             MenuItemDecreaseBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DecreaseBeatDivision"].ToKeyGesture();
             MenuItemDoubleBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DoubleBeatDivision"].ToKeyGesture();
             MenuItemHalveBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.HalveBeatDivision"].ToKeyGesture();
+
+            // Update recent file list.
+            foreach (object? obj in MenuItemRecent.Items)
+            {
+                if (obj is not MenuItem item) continue;
+                item.Click -= MenuItemOpenRecent_OnClick;
+            }
             
             MenuItemRecent.Items.Clear();
 
             if (SettingsSystem.EditorSettings.RecentFiles.Count != 0)
             {
-                for (int i = 0; i < SettingsSystem.EditorSettings.RecentFiles.Count; i++)
+                // Reverse loop so most recent file appears at the top.
+                for (int i = SettingsSystem.EditorSettings.RecentFiles.Count - 1; i >= 0; i--)
                 {
                     try
                     {
                         string file = SettingsSystem.EditorSettings.RecentFiles[i];
                         string trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
-                        
-                        MenuItemRecent.Items.Add(new MenuItem
+
+                        MenuItem item = new MenuItem
                         {
                             Icon = (i + 1).ToString(CultureInfo.InvariantCulture),
                             Header = new TextBlock { Text = trimmed },
                             Tag = file,
-                        });
+                        };
+
+                        item.Click += MenuItemOpenRecent_OnClick;
+                        
+                        MenuItemRecent.Items.Add(item);
                     }
                     catch (Exception ex)
                     {
@@ -954,7 +966,7 @@ public partial class ChartEditorView : UserControl
                         Console.WriteLine(ex);
                     }
                 }
-
+                
                 MenuItemRecent.Items.Add(new Separator());
                 MenuItemRecent.Items.Add(MenuItemClearRecent);
             }
@@ -1433,6 +1445,64 @@ public partial class ChartEditorView : UserControl
     private void MenuItemClearRecent_OnClick(object? sender, RoutedEventArgs e)
     {
         SettingsSystem.EditorSettings.ClearRecentFiles();
+    }
+
+    private async void MenuItemOpenRecent_OnClick(object? sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (sender is not MenuItem item) return;
+            if (item.Tag is not string path) return;
+            if (!File.Exists(path)) return;
+        
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return;
+
+            // Prompt to save an unsaved chart first.
+            if (!ChartSystem.IsSaved)
+            {
+                ModalDialogResult result = await PromptSave();
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort opening new file if save was unsuccessful.
+                    if (!success) return;
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            // Get Read Args
+            NotationReadArgs args = new();
+            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(path);
+            if (formatVersion == FormatVersion.Unknown) return;
+            if (formatVersion != FormatVersion.SatV3)
+            {
+                if (VisualRoot is not Window rootWindow) return;
+                ImportArgsWindow importArgsWindow = new();
+                importArgsWindow.Position = MainWindow.DialogPopupPosition(importArgsWindow.Width, importArgsWindow.Height);
+                
+                await importArgsWindow.ShowDialog(rootWindow);
+
+                if (importArgsWindow.Result != ModalDialogResult.Primary) return;
+                
+                args = importArgsWindow.NotationReadArgs;
+            }
+            
+            // Read chart from file.
+            ChartSystem.ReadChart(path, args);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
     
     private void MenuItemSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_Save();
