@@ -29,6 +29,23 @@ public partial class SelectBookmarkDataWindow : Window
     private bool blockEvents = false;
 
 #region Methods
+    public void SetData(string message, uint color)
+    {
+        Message = message;
+        Color = color;
+
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
+
+            TextBoxMessage.Text = Message;
+            TextBoxColor.Text = $"{Color - 0xFF000000:X6}";
+            ColorPickerBookmarkColor.Color = Color;
+        
+            blockEvents = false;
+        });
+    }
+    
     private void UpdateColorPicker()
     {
         Dispatcher.UIThread.Post(() =>

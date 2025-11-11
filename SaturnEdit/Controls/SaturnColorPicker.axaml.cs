@@ -66,6 +66,7 @@ public partial class SaturnColorPicker : UserControl
             Value = v;
 
             ColorChanged?.Invoke(null, EventArgs.Empty);
+            BorderColorPreview.Background = new SolidColorBrush(Color);
         }
     }
     

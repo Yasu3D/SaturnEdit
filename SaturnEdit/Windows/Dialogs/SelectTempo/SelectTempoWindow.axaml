@@ -55,7 +55,6 @@
                                    Text="{DynamicResource ChartEditor.Inspector.Label.Tempo}" />
                     <TextBox Grid.Column="2"
                                        Name="TextBoxTempo"
-                                       Text="120.000000"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Stretch"
                                        LostFocus="TextBoxTempo_OnLostFocus" />

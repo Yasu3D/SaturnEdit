@@ -1,5 +1,3 @@
-using System;
-using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -22,6 +20,14 @@ public partial class SelectVisibilityWindow : Window
 
     public bool Visibility { get; set; } = true;
 
+#region Methods
+    public void SetData(bool visibility)
+    {
+        Visibility = visibility;
+        ComboBoxVisibility.SelectedIndex = Visibility ? 0 : 1;
+    }
+#endregion Methods
+    
 #region UI Event Delegates
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {

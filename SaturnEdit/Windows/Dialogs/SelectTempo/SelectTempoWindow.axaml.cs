@@ -22,6 +22,15 @@ public partial class SelectTempoWindow : Window
     
     public float Tempo { get; set; } = 120.000000f;
 
+#region Methods
+    public void SetData(float tempo)
+    {
+        Tempo = tempo;
+        
+        TextBoxTempo.Text = Tempo.ToString("0.000000", CultureInfo.InvariantCulture);
+    }
+#endregion Methods
+    
 #region UI Event Delegates
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {

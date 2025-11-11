@@ -55,7 +55,6 @@
                                    Text="{DynamicResource ChartEditor.Inspector.Label.Key}" />
                     <TextBox Grid.Column="2"
                                        Name="TextBoxKey"
-                                       Text=""
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Stretch"
                                        LostFocus="TextBoxKey_OnLostFocus" />

@@ -488,80 +488,134 @@ public partial class ChartEditorView : UserControl
 
     public async void ChartView_AddTempoChangeEvent()
     {
-        if (VisualRoot is not Window rootWindow) return;
-
-        SelectTempoWindow selectTempoWindow = new();
-        selectTempoWindow.Position = MainWindow.DialogPopupPosition(selectTempoWindow.Width, selectTempoWindow.Height);
+        float? tempo = await ShowTempoDialog();
+        if (tempo == null) return;
         
-        await selectTempoWindow.ShowDialog(rootWindow);
-
-        if (selectTempoWindow.Result != ModalDialogResult.Primary) return;
-        EditorSystem.Insert_AddTempoChange(selectTempoWindow.Tempo);
+        EditorSystem.Insert_AddTempoChange(tempo.Value);
     }
     
     public async void ChartView_AddMetreChangeEvent()
     {
-        if (VisualRoot is not Window rootWindow) return;
+        (int?, int?) metre = await ShowMetreDialog();
+        if (metre.Item1 == null || metre.Item2 == null) return;
         
-        SelectMetreWindow selectMetreWindow = new();
-        selectMetreWindow.Position = MainWindow.DialogPopupPosition(selectMetreWindow.Width, selectMetreWindow.Height);
-        
-        await selectMetreWindow.ShowDialog(rootWindow);
-
-        if (selectMetreWindow.Result != ModalDialogResult.Primary) return;
-        EditorSystem.Insert_AddMetreChange(selectMetreWindow.Upper, selectMetreWindow.Lower);
+        EditorSystem.Insert_AddMetreChange(metre.Item1.Value, metre.Item2.Value);
     }
     
     public async void ChartView_AddTutorialMarkerEvent()
     {
-        if (VisualRoot is not Window rootWindow) return;
+        string? key = await ShowTutorialMarkerDialog();
+        if (key == null) return;
         
-        SelectTutorialMarkerKeyWindow selectTutorialMarkerKeyWindow = new();
-        selectTutorialMarkerKeyWindow.Position = MainWindow.DialogPopupPosition(selectTutorialMarkerKeyWindow.Width, selectTutorialMarkerKeyWindow.Height);
-        
-        await selectTutorialMarkerKeyWindow.ShowDialog(rootWindow);
-
-        if (selectTutorialMarkerKeyWindow.Result != ModalDialogResult.Primary) return;
-        EditorSystem.Insert_AddTutorialMarker(selectTutorialMarkerKeyWindow.TutorialMarkerKey);
+        EditorSystem.Insert_AddTutorialMarker(key);
     }
     
     public async void ChartView_AddSpeedChangeEvent()
     {
-        if (VisualRoot is not Window rootWindow) return;
-
-        SelectSpeedWindow selectSpeedWindow = new();
-        selectSpeedWindow.Position = MainWindow.DialogPopupPosition(selectSpeedWindow.Width, selectSpeedWindow.Height);
+        float? speed = await ShowSpeedDialog();
+        if (speed == null) return;
         
-        await selectSpeedWindow.ShowDialog(rootWindow);
-
-        if (selectSpeedWindow.Result != ModalDialogResult.Primary) return;
-        EditorSystem.Insert_AddSpeedChange(selectSpeedWindow.Speed);
+        EditorSystem.Insert_AddSpeedChange(speed.Value);
     }
     
     public async void ChartView_AddVisibilityChangeEvent()
     {
-        if (VisualRoot is not Window rootWindow) return;
+        bool? visibility = await ShowVisibilityDialog();
+        if (visibility == null) return;
         
-        SelectVisibilityWindow selectVisibilityWindow = new();
-        selectVisibilityWindow.Position = MainWindow.DialogPopupPosition(selectVisibilityWindow.Width, selectVisibilityWindow.Height);
-        
-        await selectVisibilityWindow.ShowDialog(rootWindow);
-
-        if (selectVisibilityWindow.Result != ModalDialogResult.Primary) return;
-        EditorSystem.Insert_AddVisibilityChange(selectVisibilityWindow.Visibility);
+        EditorSystem.Insert_AddVisibilityChange(visibility.Value);
     }
     
     public async void ChartView_AddBookmark()
     {
-        if (VisualRoot is not Window rootWindow) return;
+        (string?, uint?) bookmark = await ShowBookmarkDialog();
+        if (bookmark.Item1 == null || bookmark.Item2 == null) return;
+        
+        EditorSystem.Insert_AddBookmark(bookmark.Item1, bookmark.Item2.Value);
+    }
+    
+    public async Task<float?> ShowTempoDialog(float startTempo = 120)
+    {
+        if (VisualRoot is not Window rootWindow) return null;
+
+        SelectTempoWindow selectTempoWindow = new();
+        selectTempoWindow.SetData(startTempo);
+        selectTempoWindow.Position = MainWindow.DialogPopupPosition(selectTempoWindow.Width, selectTempoWindow.Height);
+        
+        await selectTempoWindow.ShowDialog(rootWindow);
+
+        if (selectTempoWindow.Result != ModalDialogResult.Primary) return null;
+        return selectTempoWindow.Tempo;
+    }
+    
+    public async Task<(int?, int?)> ShowMetreDialog(int startUpper = 4, int startLower = 4)
+    {
+        if (VisualRoot is not Window rootWindow) return (null, null);
+
+        SelectMetreWindow selectMetreWindow = new();
+        selectMetreWindow.SetData(startUpper, startLower);
+        selectMetreWindow.Position = MainWindow.DialogPopupPosition(selectMetreWindow.Width, selectMetreWindow.Height);
+        
+        await selectMetreWindow.ShowDialog(rootWindow);
+
+        if (selectMetreWindow.Result != ModalDialogResult.Primary) return (null, null);
+        return (selectMetreWindow.Upper, selectMetreWindow.Lower);
+    }
+
+    public async Task<string?> ShowTutorialMarkerDialog(string startKey = "")
+    {
+        if (VisualRoot is not Window rootWindow) return null;
+
+        SelectTutorialMarkerKeyWindow selectTutorialMarkerKeyWindow = new();
+        selectTutorialMarkerKeyWindow.SetData(startKey);
+        selectTutorialMarkerKeyWindow.Position = MainWindow.DialogPopupPosition(selectTutorialMarkerKeyWindow.Width, selectTutorialMarkerKeyWindow.Height);
+        
+        await selectTutorialMarkerKeyWindow.ShowDialog(rootWindow);
+
+        if (selectTutorialMarkerKeyWindow.Result != ModalDialogResult.Primary) return null;
+        return selectTutorialMarkerKeyWindow.TutorialMarkerKey;
+    }
+    
+    public async Task<float?> ShowSpeedDialog(float startSpeed = 1)
+    {
+        if (VisualRoot is not Window rootWindow) return null;
+
+        SelectSpeedWindow selectSpeedWindow = new();
+        selectSpeedWindow.SetData(startSpeed);
+        selectSpeedWindow.Position = MainWindow.DialogPopupPosition(selectSpeedWindow.Width, selectSpeedWindow.Height);
+        
+        await selectSpeedWindow.ShowDialog(rootWindow);
+
+        if (selectSpeedWindow.Result != ModalDialogResult.Primary) return null;
+        return selectSpeedWindow.Speed;
+    }
+
+    public async Task<bool?> ShowVisibilityDialog(bool startVisibility = true)
+    {
+        if (VisualRoot is not Window rootWindow) return null;
+
+        SelectVisibilityWindow selectVisibilityWindow = new();
+        selectVisibilityWindow.SetData(startVisibility);
+        selectVisibilityWindow.Position = MainWindow.DialogPopupPosition(selectVisibilityWindow.Width, selectVisibilityWindow.Height);
+        
+        await selectVisibilityWindow.ShowDialog(rootWindow);
+
+        if (selectVisibilityWindow.Result != ModalDialogResult.Primary) return null;
+        return selectVisibilityWindow.Visibility;
+    }
+
+    public async Task<(string?, uint?)> ShowBookmarkDialog(string startMessage = "", uint startColor = 0xFFDDDDDD)
+    {
+        if (VisualRoot is not Window rootWindow) return (null, null);
 
         SelectBookmarkDataWindow selectBookmarkDataWindow = new();
+        selectBookmarkDataWindow.SetData(startMessage, startColor);
         selectBookmarkDataWindow.Position = MainWindow.DialogPopupPosition(selectBookmarkDataWindow.Width, selectBookmarkDataWindow.Height);
         
         await selectBookmarkDataWindow.ShowDialog(rootWindow);
 
-        if (selectBookmarkDataWindow.Result != ModalDialogResult.Primary) return;
-        EditorSystem.Insert_AddBookmark(selectBookmarkDataWindow.Message, selectBookmarkDataWindow.Color);
+        if (selectBookmarkDataWindow.Result != ModalDialogResult.Primary) return (null, null);
+        return (selectBookmarkDataWindow.Message, selectBookmarkDataWindow.Color);
     }
     
     public async void ChartView_AdjustAxis()

@@ -22,6 +22,15 @@ public partial class SelectSpeedWindow : Window
     
     public float Speed { get; set; } = 1.000000f;
 
+#region Methods
+    public void SetData(float speed)
+    {
+        Speed = speed;
+
+        TextBoxSpeed.Text = Speed.ToString("0.000000", CultureInfo.InvariantCulture);
+    }
+#endregion Methods
+    
 #region UI Event Delegates
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {

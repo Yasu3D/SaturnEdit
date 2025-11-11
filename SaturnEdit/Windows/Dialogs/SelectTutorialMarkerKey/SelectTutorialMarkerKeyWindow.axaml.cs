@@ -22,6 +22,14 @@ public partial class SelectTutorialMarkerKeyWindow : Window
     
     public string TutorialMarkerKey { get; set; } = "";
 
+#region Methods
+    public void SetData(string key)
+    {
+        TutorialMarkerKey = key;
+        TextBoxKey.Text = key;
+    }
+#endregion Methods
+    
 #region UI Event Delegates
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {

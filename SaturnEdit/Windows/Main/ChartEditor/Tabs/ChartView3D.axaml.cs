@@ -15,6 +15,8 @@ using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnData.Utilities;
 using SaturnEdit.Systems;
+using SaturnEdit.UndoRedo.BookmarkOperations;
+using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.Utilities;
 using SaturnView;
 using SkiaSharp;
@@ -1164,12 +1166,74 @@ public partial class ChartView3D : UserControl
         }
     }
 
-    private void RenderCanvas_OnDoubleTapped(object? sender, TappedEventArgs e)
+    private async void RenderCanvas_OnDoubleTapped(object? sender, TappedEventArgs e)
     {
-        if (SelectionSystem.PointerOverObject is not HoldNote holdNote) return;
-        if (!SelectionSystem.SelectedObjects.Contains(SelectionSystem.PointerOverObject)) return;
+        try
+        {
+            if (MainWindow.Instance == null) return;
+            if (SelectionSystem.PointerOverObject == null) return;
+            if (!SelectionSystem.SelectedObjects.Contains(SelectionSystem.PointerOverObject)) return;
 
-        EditorSystem.ChangeEditMode(EditorMode.EditMode, holdNote);
+            if (SelectionSystem.PointerOverObject is TempoChangeEvent tempoChangeEvent)
+            {
+                float? tempo = await MainWindow.Instance.ChartEditor.ShowTempoDialog(tempoChangeEvent.Tempo);
+                if (tempo == null) return;
+                
+                UndoRedoSystem.Push(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, tempo.Value));
+            }
+            else if (SelectionSystem.PointerOverObject is MetreChangeEvent metreChangeEvent)
+            {
+                (int?, int?) metre = await MainWindow.Instance.ChartEditor.ShowMetreDialog(metreChangeEvent.Upper, metreChangeEvent.Lower);
+                if (metre.Item1 == null || metre.Item2 == null) return;
+                
+                UndoRedoSystem.Push(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, metre.Item1.Value, metreChangeEvent.Lower, metre.Item2.Value));
+            }
+            else if (SelectionSystem.PointerOverObject is TutorialMarkerEvent tutorialMarkerEvent)
+            {
+                string? key = await MainWindow.Instance.ChartEditor.ShowTutorialMarkerDialog(tutorialMarkerEvent.Key);
+                if (key == null) return;
+                
+                UndoRedoSystem.Push(new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, key));
+            }
+            else if (SelectionSystem.PointerOverObject is SpeedChangeEvent speedChangeEvent)
+            {
+                float? speed = await MainWindow.Instance.ChartEditor.ShowSpeedDialog(speedChangeEvent.Speed);
+                if (speed == null) return;
+                
+                UndoRedoSystem.Push(new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, speed.Value));
+            }
+            else if (SelectionSystem.PointerOverObject is VisibilityChangeEvent visibilityChangeEvent)
+            {
+                bool? visibility = await MainWindow.Instance.ChartEditor.ShowVisibilityDialog(visibilityChangeEvent.Visibility);
+                if (visibility == null) return;
+                
+                UndoRedoSystem.Push(new VisibilityChangeEditOperation(visibilityChangeEvent, visibilityChangeEvent.Visibility, visibility.Value));
+            }
+            else if (SelectionSystem.PointerOverObject is Bookmark bookmark)
+            { 
+                (string?, uint?) data = await MainWindow.Instance.ChartEditor.ShowBookmarkDialog(bookmark.Message, bookmark.Color);
+                if (data.Item1 == null || data.Item2 == null) return;
+                
+                UndoRedoSystem.Push(new BookmarkEditOperation(bookmark, bookmark.Color, data.Item2.Value, bookmark.Message, data.Item1));
+            }
+            else if (SelectionSystem.PointerOverObject is HoldNote holdNote)
+            {
+                EditorSystem.ChangeEditMode(EditorMode.EditMode, holdNote);
+            }
+            else if (SelectionSystem.PointerOverObject is StopEffectEvent stopEffectEvent)
+            {
+                EditorSystem.ChangeEditMode(EditorMode.EditMode, stopEffectEvent);
+            }
+            else if (SelectionSystem.PointerOverObject is ReverseEffectEvent reverseEffectEvent)
+            {
+                EditorSystem.ChangeEditMode(EditorMode.EditMode, reverseEffectEvent);
+            }
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
     }
         
     

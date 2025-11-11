@@ -57,7 +57,6 @@
                           ColumnDefinitions="*, 15, *">
                         <TextBox Grid.Column="0"
                                        Name="TextBoxUpper"
-                                       Text="4"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Stretch"
                                        LostFocus="TextBoxUpper_OnLostFocus" />
@@ -70,7 +69,6 @@
 
                         <TextBox Grid.Column="2"
                                        Name="TextBoxLower"
-                                       Text="4"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Stretch"
                                        LostFocus="TextBoxLower_OnLostFocus" />

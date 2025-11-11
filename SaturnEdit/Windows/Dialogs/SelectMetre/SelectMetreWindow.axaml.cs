@@ -23,6 +23,17 @@ public partial class SelectMetreWindow : Window
     public int Upper { get; set; } = 4;
     public int Lower { get; set; } = 4;
 
+#region Methods
+    public void SetData(int upper, int lower)
+    {
+        Upper = upper;
+        Lower = lower;
+
+        TextBoxUpper.Text = Upper.ToString(CultureInfo.InvariantCulture);
+        TextBoxLower.Text = Lower.ToString(CultureInfo.InvariantCulture);
+    }
+#endregion Methods
+    
 #region UI Event Delegates
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
