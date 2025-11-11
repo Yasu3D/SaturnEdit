@@ -16,14 +16,14 @@ public partial class SettingsAppearanceView : UserControl
         OnSettingsChanged(null, EventArgs.Empty);
     }
 
-    private bool blockEvent = false;
+    private bool blockEvents = false;
 
 #region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
         {
-            blockEvent = true;
+            blockEvents = true;
         
             if (SettingsSystem.EditorSettings.Theme == EditorSettings.EditorThemeOptions.Light)
             {
@@ -34,7 +34,7 @@ public partial class SettingsAppearanceView : UserControl
                 RadioButtonThemeDark.IsChecked = true;
             }
             
-            blockEvent = false;
+            blockEvents = false;
         });
     }
 #endregion System Event Delegates
@@ -42,7 +42,7 @@ public partial class SettingsAppearanceView : UserControl
 #region UI Event Delegates
     private void RadioButtonTheme_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (RadioButtonThemeLight == null || RadioButtonThemeDark == null) return;
         if (sender is not RadioButton button) return;
         if (!button.IsChecked ?? false) return;

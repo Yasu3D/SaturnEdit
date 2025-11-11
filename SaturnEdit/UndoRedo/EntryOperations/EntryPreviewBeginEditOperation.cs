@@ -1,8 +1,9 @@
+using SaturnData.Notation.Core;
 using SaturnEdit.Systems;
 
 namespace SaturnEdit.UndoRedo.EntryOperations;
 
-public class EntryPreviewBeginEditOperation(float oldValue, float newValue) : IOperation
+public class EntryPreviewBeginEditOperation(Timestamp oldValue, Timestamp newValue) : IOperation
 {
     public void Revert()
     {

@@ -115,7 +115,7 @@
     <system:String x:Key="ChartEditor.ChartProperties.Key.Level">Level</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Key.Clear">Clear Threshold</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Key.PreviewBegin">Preview Begin</system:String>
-    <system:String x:Key="ChartEditor.ChartProperties.Key.PreviewLength">Preview Length</system:String>
+    <system:String x:Key="ChartEditor.ChartProperties.Key.PreviewEnd">Preview End</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Key.Background">Background</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Key.Tutorial">Tutorial Mode</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.Key.Jacket">Jacket</system:String>
@@ -441,6 +441,7 @@
     <system:String x:Key="Settings.Rendering.JudgementLineColor.Version3">Version3</system:String>
     <system:String x:Key="Settings.Rendering.JudgementLineColor.Greyscale">Greyscale</system:String>
     <system:String x:Key="Settings.Rendering.HiddenOpacity">Hidden Opacity</system:String>
+    <system:String x:Key="Settings.Rendering.UnitTickVisibility">Unit Tick Visibility</system:String>
     <system:String x:Key="Settings.Rendering.BonusEffectVisibility">Bonus Effect Visibility</system:String>
     <system:String x:Key="Settings.Rendering.RNoteEffectVisibility">R-Note Effect Visibility</system:String>
     <system:String x:Key="Settings.Rendering.RNoteEffectOpacity">R-Note Effect Opacity</system:String>

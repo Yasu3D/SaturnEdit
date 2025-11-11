@@ -142,6 +142,25 @@
             </Grid>
             
             <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.UnitTickVisibility}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <ComboBox Grid.Column="1"
+                          Name="ComboBoxUnitTickVisibility"
+                          HorizontalAlignment="Left"
+                          Width="170"
+                          SelectedIndex="0"
+                          SelectionChanged="ComboBoxUnitTickVisibility_OnSelectionChanged">
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.AlwaysOn}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.AlwaysOff}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.OnlyWhenPlaying}" />
+                    <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.OnlyWhenPaused}" />
+                </ComboBox>
+            </Grid>
+            
+            <Grid ColumnDefinitions="250,*"
                   Margin="0,20,0,10">
                 <TextBlock Grid.Column="0"
                            Text="{DynamicResource Settings.Rendering.BonusEffectVisibility}"
@@ -152,7 +171,7 @@
                           HorizontalAlignment="Left"
                           Width="170"
                           SelectedIndex="0"
-                          SelectionChanged="ComboBoxShowBonusEffect_OnSelectionChanged">
+                          SelectionChanged="ComboBoxBonusEffectVisibility_OnSelectionChanged">
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.AlwaysOn}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.AlwaysOff}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.OnlyWhenPlaying}" />
@@ -171,7 +190,7 @@
                           HorizontalAlignment="Left"
                           Width="170"
                           SelectedIndex="0"
-                          SelectionChanged="ComboBoxShowRNoteEffect_OnSelectionChanged">
+                          SelectionChanged="ComboBoxRNoteEffectVisibility_OnSelectionChanged">
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.AlwaysOn}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.AlwaysOff}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.OnlyWhenPlaying}" />

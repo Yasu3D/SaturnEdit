@@ -643,7 +643,7 @@ public partial class ChartEditorView : UserControl
     {
         if (VisualRoot is not Window window) return;
         
-        if (!SelectionSystem.SelectedObjects.Any(x => x is HoldNote))
+        if (!SelectionSystem.SelectedObjects.Any(x => x is HoldNote or HoldPointNote))
         {
             ModalDialogWindow modalDialog = new()
             {

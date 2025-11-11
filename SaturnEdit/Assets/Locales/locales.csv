@@ -112,7 +112,7 @@ ChartEditor.ChartProperties.Key.Difficulty,Difficulty
 ChartEditor.ChartProperties.Key.Level,Level
 ChartEditor.ChartProperties.Key.Clear,Clear Threshold
 ChartEditor.ChartProperties.Key.PreviewBegin,Preview Begin
-ChartEditor.ChartProperties.Key.PreviewLength,Preview Length
+ChartEditor.ChartProperties.Key.PreviewEnd,Preview End
 ChartEditor.ChartProperties.Key.Background,Background
 ChartEditor.ChartProperties.Key.Tutorial,Tutorial Mode
 ChartEditor.ChartProperties.Key.Jacket,Jacket
@@ -438,6 +438,7 @@ Settings.Rendering.JudgementLineColor.Version2,Version2
 Settings.Rendering.JudgementLineColor.Version3,Version3
 Settings.Rendering.JudgementLineColor.Greyscale,Greyscale
 Settings.Rendering.HiddenOpacity,Hidden Opacity
+Settings.Rendering.UnitTickVisibility,Unit Tick Visibility
 Settings.Rendering.BonusEffectVisibility,Bonus Effect Visibility
 Settings.Rendering.RNoteEffectVisibility,R-Note Effect Visibility
 Settings.Rendering.RNoteEffectOpacity,R-Note Effect Opacity

@@ -126,8 +126,11 @@ public partial class ChartPropertiesView : UserControl
             NumericUpDownChartEndMeasure.Value = ChartSystem.Entry.ChartEnd.Measure;
             NumericUpDownChartEndTick.Value = ChartSystem.Entry.ChartEnd.Tick;
             
-            TextBoxPreviewBegin.Text = (ChartSystem.Entry.PreviewBegin / 1000).ToString("F3", CultureInfo.InvariantCulture);
-            TextBoxPreviewLength.Text = (ChartSystem.Entry.PreviewLength / 1000).ToString("F3", CultureInfo.InvariantCulture);
+            NumericUpDownPreviewBeginMeasure.Value = ChartSystem.Entry.PreviewBegin.Measure;
+            NumericUpDownPreviewBeginTick.Value = ChartSystem.Entry.PreviewBegin.Tick;
+            NumericUpDownPreviewEndMeasure.Value = ChartSystem.Entry.PreviewEnd.Measure;
+            NumericUpDownPreviewEndTick.Value = ChartSystem.Entry.PreviewEnd.Tick;
+            
             ComboBoxBackground.SelectedIndex = (int)ChartSystem.Entry.Background;
             ComboBoxTutorialMode.SelectedIndex = ChartSystem.Entry.TutorialMode ? 1 : 0;
 
@@ -477,59 +480,71 @@ public partial class ChartPropertiesView : UserControl
         if (sender == null) return;
 
         TimeSystem.PlaybackState = PlaybackState.Preview;
-        TimeSystem.SeekTime(ChartSystem.Entry.PreviewBegin, TimeSystem.Division);
+        TimeSystem.SeekTime(ChartSystem.Entry.PreviewBegin.Time, TimeSystem.Division);
     }
     
-    private void TextBoxPreviewBegin_OnLostFocus(object? sender, RoutedEventArgs e)
+    private void NumericUpDownPreviewBeginMeasure_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
         if (blockEvents) return;
         if (sender == null) return;
         
-        try
-        {
-            float oldValue = ChartSystem.Entry.PreviewBegin;
-            float newValue = 1000 * Convert.ToSingle(TextBoxPreviewBegin.Text ?? "", CultureInfo.InvariantCulture);
-            if (oldValue == newValue) return;
-        
-            UndoRedoSystem.Push(new EntryPreviewBeginEditOperation(oldValue, newValue));
-        }
-        catch (Exception ex)
-        {
-            // Reset Value
-            UndoRedoSystem.Push(new EntryPreviewBeginEditOperation(ChartSystem.Entry.PreviewBegin, 0));
+        int measure = (int?)NumericUpDownPreviewBeginMeasure.Value ?? 0;
+        int tick = (int?)NumericUpDownPreviewBeginTick.Value ?? 0;
 
-            if (ex is not (FormatException or OverflowException))
-            {
-                Console.WriteLine(ex);
-            }
-        }
+        Timestamp oldValue = ChartSystem.Entry.PreviewBegin;
+        Timestamp newValue = new(measure, tick);
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.Push(new EntryPreviewBeginEditOperation(oldValue, newValue));
     }
 
-    private void TextBoxPreviewLength_OnLostFocus(object? sender, RoutedEventArgs e)
+    private void NumericUpDownPreviewBeginTick_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
         if (blockEvents) return;
         if (sender == null) return;
         
-        try
-        {
-            float oldValue = ChartSystem.Entry.PreviewLength;
-            float newValue = 1000 * Convert.ToSingle(TextBoxPreviewLength.Text ?? "", CultureInfo.InvariantCulture);
-            if (oldValue == newValue) return;
+        int measure = (int?)NumericUpDownPreviewBeginMeasure.Value ?? 0;
+        int tick = (int?)NumericUpDownPreviewBeginTick.Value ?? 0;
+        int fullTick = measure * 1920 + tick;
         
-            UndoRedoSystem.Push(new EntryPreviewBeginEditOperation(oldValue, newValue));
-        }
-        catch (Exception ex)
-        {
-            // Reset Value
-            UndoRedoSystem.Push(new EntryPreviewBeginEditOperation(ChartSystem.Entry.PreviewLength, 10000));
-
-            if (ex is not (FormatException or OverflowException))
-            {
-                Console.WriteLine(ex);
-            }
-        }
+        Timestamp oldValue = ChartSystem.Entry.PreviewBegin;
+        Timestamp newValue = new(fullTick);
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.Push(new EntryPreviewBeginEditOperation(oldValue, newValue));
     }
 
+    private void NumericUpDownPreviewEndMeasure_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (sender == null) return;
+        
+        int measure = (int?)NumericUpDownPreviewEndMeasure.Value ?? 0;
+        int tick = (int?)NumericUpDownPreviewEndTick.Value ?? 0;
+
+        Timestamp oldValue = ChartSystem.Entry.PreviewEnd;
+        Timestamp newValue = new(measure, tick);
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.Push(new EntryPreviewEndEditOperation(oldValue, newValue));
+    }
+
+    private void NumericUpDownPreviewEndTick_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (sender == null) return;
+        
+        int measure = (int?)NumericUpDownPreviewEndMeasure.Value ?? 0;
+        int tick = (int?)NumericUpDownPreviewEndTick.Value ?? 0;
+        int fullTick = measure * 1920 + tick;
+        
+        Timestamp oldValue = ChartSystem.Entry.PreviewEnd;
+        Timestamp newValue = new(fullTick);
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.Push(new EntryPreviewEndEditOperation(oldValue, newValue));
+    }
+    
     private void ComboBoxBackground_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;

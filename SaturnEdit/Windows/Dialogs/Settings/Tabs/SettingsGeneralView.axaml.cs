@@ -16,20 +16,20 @@ public partial class SettingsGeneralView : UserControl
         OnSettingsChanged(null, EventArgs.Empty);
     }
 
-    private bool blockEvent = false;
+    private bool blockEvents = false;
     
 #region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
         {
-            blockEvent = true;
+            blockEvents = true;
             
             ComboBoxLanguage.SelectedIndex = (int)SettingsSystem.EditorSettings.Locale;
             CheckBoxShowSplashScreen.IsChecked = SettingsSystem.EditorSettings.ShowSplashScreen;
             CheckBoxContinueLastSession.IsChecked = SettingsSystem.EditorSettings.ContinueLastSession;
             
-            blockEvent = false;
+            blockEvents = false;
         });
     }
 #endregion System Event Delegates
@@ -37,7 +37,7 @@ public partial class SettingsGeneralView : UserControl
 #region UI Event Delegates
     private void ComboBoxLanguage_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (ComboBoxLanguage == null) return;
 
         SettingsSystem.EditorSettings.Locale = (EditorSettings.LocaleOptions)ComboBoxLanguage.SelectedIndex;
@@ -45,14 +45,14 @@ public partial class SettingsGeneralView : UserControl
 
     private void CheckBoxShowSplashScreen_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (CheckBoxShowSplashScreen == null) return;
         SettingsSystem.EditorSettings.ShowSplashScreen = CheckBoxShowSplashScreen.IsChecked ?? true;
     }
 
     private void CheckBoxContinueLastSession_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (CheckBoxContinueLastSession == null) return;
         SettingsSystem.EditorSettings.ContinueLastSession = CheckBoxContinueLastSession.IsChecked ?? true;
     }

@@ -198,7 +198,8 @@
                                VerticalAlignment="Center" />
                     <Grid Grid.Column="2"
                           Grid.Row="5"
-                          ColumnDefinitions="*,15,*">
+                          ColumnDefinitions="*,15,*"
+                          Height="30">
                         <NumericUpDown Grid.Column="0"
                                        Name="NumericUpDownChartEndMeasure"
                                        VerticalAlignment="Center"
@@ -266,11 +267,33 @@
                                Grid.Column="0"
                                VerticalAlignment="Center"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewBegin}" />
-                    <TextBox Grid.Row="0"
-                             Grid.Column="2"
-                             Name="TextBoxPreviewBegin"
-                             VerticalAlignment="Center"
-                             LostFocus="TextBoxPreviewBegin_OnLostFocus"/>
+                    <Grid Grid.Column="2"
+                          Grid.Row="0"
+                          ColumnDefinitions="*,15,*"
+                          Height="30">
+                        <NumericUpDown Grid.Column="0"
+                                       Name="NumericUpDownPreviewBeginMeasure"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       Minimum="0"
+                                       FormatString="0" 
+                                       ValueChanged="NumericUpDownPreviewBeginMeasure_OnValueChanged"/>
+
+                        <Rectangle Grid.Column="1"
+                                   Fill="{DynamicResource SeparatorPrimary}"
+                                   Width="1"
+                                   Margin="0,5"
+                                   HorizontalAlignment="Center" />
+
+                        <NumericUpDown Grid.Column="2"
+                                       Name="NumericUpDownPreviewBeginTick"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       Minimum="-1"
+                                       Maximum="1920"
+                                       FormatString="0" 
+                                       ValueChanged="NumericUpDownPreviewBeginTick_OnValueChanged"/>
+                    </Grid>
                     <Button Grid.Row="0"
                             Grid.Column="3"
                             Name="ButtonPlayPreview"
@@ -288,12 +311,34 @@
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewLength}" />
-                    <TextBox Grid.Row="1"
-                             Grid.Column="2"
-                             Name="TextBoxPreviewLength"
-                             VerticalAlignment="Center"
-                             LostFocus="TextBoxPreviewLength_OnLostFocus"/>
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewEnd}" />
+                    <Grid Grid.Column="2"
+                          Grid.Row="1"
+                          ColumnDefinitions="*,15,*"
+                          Height="30">
+                        <NumericUpDown Grid.Column="0"
+                                       Name="NumericUpDownPreviewEndMeasure"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       Minimum="0"
+                                       FormatString="0" 
+                                       ValueChanged="NumericUpDownPreviewEndMeasure_OnValueChanged"/>
+
+                        <Rectangle Grid.Column="1"
+                                   Fill="{DynamicResource SeparatorPrimary}"
+                                   Width="1"
+                                   Margin="0,5"
+                                   HorizontalAlignment="Center" />
+
+                        <NumericUpDown Grid.Column="2"
+                                       Name="NumericUpDownPreviewEndTick"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       Minimum="-1"
+                                       Maximum="1920"
+                                       FormatString="0" 
+                                       ValueChanged="NumericUpDownPreviewEndTick_OnValueChanged"/>
+                    </Grid>
 
                     <TextBlock Grid.Row="2"
                                Grid.Column="0"

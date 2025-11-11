@@ -17,14 +17,14 @@ public partial class SettingsRenderingView : UserControl
         OnSettingsChanged(null, EventArgs.Empty);
     }
 
-    private bool blockEvent = false;
+    private bool blockEvents = false;
     
 #region System Event Delegates
     private void OnSettingsChanged(object? sender, EventArgs empty)
     {
         Dispatcher.UIThread.Post(() =>
         {
-            blockEvent = true;
+            blockEvents = true;
         
             CheckBoxLowPerformanceMode.IsChecked = SettingsSystem.RenderSettings.LowPerformanceMode;
             
@@ -35,6 +35,7 @@ public partial class SettingsRenderingView : UserControl
             ComboBoxJudgementLineColor.SelectedIndex = (int)SettingsSystem.RenderSettings.JudgementLineColor;
             
             NumericUpDownHiddenOpacity.Value = SettingsSystem.RenderSettings.HiddenOpacity / 10.0m;
+            ComboBoxUnitTickVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.UnitTickVisibility;
 
             ComboBoxBonusEffectVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.BonusEffectVisibility;
             ComboBoxRNoteEffectVisibility.SelectedIndex = (int)SettingsSystem.RenderSettings.RNoteEffectVisibility;
@@ -56,7 +57,7 @@ public partial class SettingsRenderingView : UserControl
             ComboBoxNoteColorSnapForward.SelectedIndex = (int)SettingsSystem.RenderSettings.SnapForwardNoteColor;
             ComboBoxNoteColorSnapBackward.SelectedIndex = (int)SettingsSystem.RenderSettings.SnapBackwardNoteColor;
 
-            blockEvent = false;
+            blockEvents = false;
         });
     }
 #endregion System Event Delegates
@@ -64,7 +65,7 @@ public partial class SettingsRenderingView : UserControl
 #region UI Event Delegates
     private void CheckBoxLowPerformanceMode_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (CheckBoxLowPerformanceMode == null) return;
 
         SettingsSystem.RenderSettings.LowPerformanceMode = CheckBoxLowPerformanceMode.IsChecked ?? false;
@@ -72,7 +73,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void NumericUpDownNoteSpeed_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (NumericUpDownNoteSpeed == null) return;
 
         SettingsSystem.RenderSettings.NoteSpeed = (int)(NumericUpDownNoteSpeed.Value * 10 ?? 30);
@@ -80,7 +81,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void ComboBoxGuideLineType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (ComboBoxGuideLineType == null) return;
 
         SettingsSystem.RenderSettings.GuideLineType = (RenderSettings.GuideLineTypeOption)ComboBoxGuideLineType.SelectedIndex;
@@ -88,7 +89,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void ComboBoxBackgroundDim_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (ComboBoxBackgroundDim == null) return;
 
         SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)ComboBoxBackgroundDim.SelectedIndex;
@@ -96,7 +97,7 @@ public partial class SettingsRenderingView : UserControl
     
     private void ComboBoxJudgementLineColor_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (ComboBoxJudgementLineColor == null) return;
 
         SettingsSystem.RenderSettings.JudgementLineColor = (RenderSettings.JudgementLineColorOption)ComboBoxJudgementLineColor.SelectedIndex;
@@ -104,23 +105,31 @@ public partial class SettingsRenderingView : UserControl
     
     private void NumericUpDownHiddenOpacity_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (NumericUpDownHiddenOpacity == null) return;
 
         SettingsSystem.RenderSettings.HiddenOpacity = (int)(NumericUpDownHiddenOpacity.Value * 10 ?? 10);
     }
     
-    private void ComboBoxShowBonusEffect_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    private void ComboBoxUnitTickVisibility_OnSelectionChanged(object? sender, RoutedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
+        if (ComboBoxUnitTickVisibility == null) return;
+
+        SettingsSystem.RenderSettings.UnitTickVisibility = (RenderSettings.EffectVisibilityOption)ComboBoxUnitTickVisibility.SelectedIndex;
+    }
+    
+    private void ComboBoxBonusEffectVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvents) return;
         if (ComboBoxBonusEffectVisibility == null) return;
 
         SettingsSystem.RenderSettings.BonusEffectVisibility = (RenderSettings.EffectVisibilityOption)ComboBoxBonusEffectVisibility.SelectedIndex;
     }
     
-    private void ComboBoxShowRNoteEffect_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    private void ComboBoxRNoteEffectVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (ComboBoxRNoteEffectVisibility == null) return;
 
         SettingsSystem.RenderSettings.RNoteEffectVisibility = (RenderSettings.EffectVisibilityOption)ComboBoxRNoteEffectVisibility.SelectedIndex;
@@ -128,7 +137,7 @@ public partial class SettingsRenderingView : UserControl
     
     private void NumericUpDownRNoteEffectOpacity_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (NumericUpDownRNoteEffectOpacity == null) return;
 
         SettingsSystem.RenderSettings.RNoteEffectOpacity = (int)(NumericUpDownRNoteEffectOpacity.Value * 10 ?? 30);
@@ -136,7 +145,7 @@ public partial class SettingsRenderingView : UserControl
     
     private void ComboBoxClearBackgroundVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (ComboBoxClearBackgroundVisibility == null) return;
 
         SettingsSystem.RenderSettings.ClearBackgroundVisibility = (RenderSettings.ClearBackgroundVisibilityOption)ComboBoxClearBackgroundVisibility.SelectedIndex;
@@ -144,7 +153,7 @@ public partial class SettingsRenderingView : UserControl
     
     private void ComboBoxDifficultyDisplayVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (ComboBoxDifficultyDisplayVisibility == null) return;
 
         SettingsSystem.RenderSettings.DifficultyDisplayVisibility = (RenderSettings.InterfaceVisibilityOption)ComboBoxDifficultyDisplayVisibility.SelectedIndex;
@@ -152,7 +161,7 @@ public partial class SettingsRenderingView : UserControl
         
     private void ComboBoxLevelDisplayVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (ComboBoxLevelDisplayVisibility == null) return;
 
         SettingsSystem.RenderSettings.LevelDisplayVisibility = (RenderSettings.InterfaceVisibilityOption)ComboBoxLevelDisplayVisibility.SelectedIndex;
@@ -160,7 +169,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void ComboBoxTitleDisplayVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (ComboBoxTitleDisplayVisibility == null) return;
 
         SettingsSystem.RenderSettings.TitleDisplayVisibility = (RenderSettings.InterfaceVisibilityOption)ComboBoxTitleDisplayVisibility.SelectedIndex;
@@ -168,7 +177,7 @@ public partial class SettingsRenderingView : UserControl
     
     private void ComboBoxNoteThickness_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (ComboBoxNoteThickness == null) return;
 
         SettingsSystem.RenderSettings.NoteThickness = (RenderSettings.NoteThicknessOption)ComboBoxNoteThickness.SelectedIndex;
@@ -176,7 +185,7 @@ public partial class SettingsRenderingView : UserControl
 
     private void ComboBoxNoteColor_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (blockEvent) return;
+        if (blockEvents) return;
         if (sender is not ComboBox comboBox) return;
 
         RenderSettings.NoteColorOption color = (RenderSettings.NoteColorOption)comboBox.SelectedIndex;
