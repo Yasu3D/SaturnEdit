@@ -49,6 +49,8 @@ public partial class ChartView2D : UserControl
 
         SelectionSystem.PointerOverOverlapChanged += OnPointerOverOverlapChanged;
     }
+
+    private static int zoomLevel = 10;
     
     private readonly CanvasInfo canvasInfo = new();
     private bool blockEvents = false;
@@ -242,7 +244,7 @@ public partial class ChartView2D : UserControl
             
             // Directional Cursor
             bool rightEdge = SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.RightEdge;
-            int lane = Renderer2D.GetHitTestPointerLane(canvasInfo, (float)pointerPosition.Value.X, (float)pointerPosition.Value.Y);
+            int lane = Renderer2D.GetHitTestPointerLane(canvasInfo, (float)pointerPosition.Value.X);
 
             if (lane is >= 0 and <= 3
                 or >= 56 and <= 59)
@@ -399,14 +401,12 @@ public partial class ChartView2D : UserControl
     
     private void OnPointerOverOverlapChanged(object? sender, EventArgs e)
     {
-        // TODO: Implement
-        /*SetCursorType();*/
+        SetCursorType();
     }
     
     private void OnOperationHistoryChanged(object? sender, EventArgs e)
     {
-        // TODO: Implement
-        /*// End object drag if anything else changes.
+        // End object drag if anything else changes.
         objectDrag.End();
         
         bool holdEditModeAvailable = EditorSystem.Mode == EditorMode.EditMode || EditorSystem.EditModeAvailable;
@@ -421,7 +421,7 @@ public partial class ChartView2D : UserControl
             };
             
             ComboBoxItemHoldEditMode.IsEnabled = holdEditModeAvailable;
-        });*/
+        });
     }
 
     private void OnEditModeChangeAttempted(object? sender, EventArgs e)
@@ -657,44 +657,7 @@ public partial class ChartView2D : UserControl
             Task.Run(EditorSystem.Convert_JoinHold);
             e.Handled = true;
         }
-            
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.IncreaseNoteSpeed"]))
-        {
-            SettingsSystem.RenderSettings.NoteSpeed = Math.Min(60, SettingsSystem.RenderSettings.NoteSpeed + 1);
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseNoteSpeed"])) 
-        {
-            SettingsSystem.RenderSettings.NoteSpeed = Math.Max(10, SettingsSystem.RenderSettings.NoteSpeed - 1);
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.IncreaseBackgroundDim"]))
-        {
-            SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)Math.Min(4, (int)SettingsSystem.RenderSettings.BackgroundDim + 1);
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.DecreaseBackgroundDim"])) 
-        {
-            SettingsSystem.RenderSettings.BackgroundDim = (RenderSettings.BackgroundDimOption)Math.Max(0, (int)SettingsSystem.RenderSettings.BackgroundDim - 1);
-            e.Handled = true;
-        }
-            
         
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowSpeedChanges"]))
-        {
-            SettingsSystem.RenderSettings.ShowSpeedChanges = !SettingsSystem.RenderSettings.ShowSpeedChanges;
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowVisibilityChanges"]))
-        {
-            SettingsSystem.RenderSettings.ShowVisibilityChanges = !SettingsSystem.RenderSettings.ShowVisibilityChanges;
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.ShowLaneToggleAnimations"]))
-        {
-            SettingsSystem.RenderSettings.ShowLaneToggleAnimations = !SettingsSystem.RenderSettings.ShowLaneToggleAnimations;
-            e.Handled = true;
-        }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Settings.VisualizeLaneSweeps"]))
         {
             SettingsSystem.RenderSettings.VisualizeLaneSweeps = !SettingsSystem.RenderSettings.VisualizeLaneSweeps;
@@ -846,9 +809,8 @@ public partial class ChartView2D : UserControl
     
     private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
-        double minimum = double.Min(PanelCanvasContainer.Bounds.Width, PanelCanvasContainer.Bounds.Height);
-        RenderCanvas.Width = minimum;
-        RenderCanvas.Height = minimum;
+        RenderCanvas.Width = PanelCanvasContainer.Bounds.Width;
+        RenderCanvas.Height = PanelCanvasContainer.Bounds.Height;
 
         canvasInfo.Width = (float)RenderCanvas.Width;
         canvasInfo.Height = (float)RenderCanvas.Height;
@@ -880,40 +842,47 @@ public partial class ChartView2D : UserControl
     {
         bool playing = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview;
 
-        Renderer2D.Render(canvas, canvasInfo);
+        Renderer2D.Render
+        (
+            canvas: canvas,
+            canvasInfo: canvasInfo,
+            settings: SettingsSystem.RenderSettings,
+            chart: ChartSystem.Chart,
+            time: TimeSystem.Timestamp.Time,
+            playing: playing,
+            zoomLevel: zoomLevel,
+            selectedObjects: SelectionSystem.SelectedObjects,
+            pointerOverObject: SelectionSystem.PointerOverObject,
+            activeObjectGroup: EditorSystem.ActiveObjectGroup,
+            boxSelect: new(SelectionSystem.BoxSelectArgs.GlobalStartTime, SelectionSystem.BoxSelectArgs.GlobalEndTime, SelectionSystem.BoxSelectArgs.Position, SelectionSystem.BoxSelectArgs.Size),
+            cursorNote: CursorSystem.CurrentType
+        );
 
-        // TODO: Implement Click&Drag
-        
-        // Hook into render function to update box selection during playback,
-        // even when the pointer is not being moved.
-        /*if (playing && clickDragLeft.IsActive && !objectDrag.IsActive)
+        if (playing && clickDragLeft.IsActive && !objectDrag.IsActive)
         {
             _ = Task.Run(() =>
             {
-                float radius = Renderer2D.GetHitTestPointerRadius(canvasInfo, (float)clickDragLeft.EndPoint!.Value.Position.X, (float)clickDragLeft.EndPoint!.Value.Position.Y);
-                float viewDistance = Renderer2D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
-            
-                float t = RenderUtils.InversePerspective(radius);
-                float viewTime = SaturnMath.Lerp(viewDistance, 0, t);
+                float depth = Renderer2D.GetHitTestPointerDepth(canvasInfo, (float)clickDragLeft.EndPoint!.Value.Position.Y);
+                float viewDistance = Renderer2D.GetViewDistance(zoomLevel);
+                float viewTime = SaturnMath.Lerp(viewDistance, 0, depth);
                 
                 SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
             });
-        }*/
+        }
     }
 
     private void RenderCanvas_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        // TODO: Implement
-        /*PointerPoint point = e.GetCurrentPoint(sender as Control);
+        PointerPoint point = e.GetCurrentPoint(sender as Control);
         pointerPosition = point.Position;
         
         _ = Task.Run(() =>
         {
-            float radius = Renderer2D.GetHitTestPointerRadius(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
-            int lane = Renderer2D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
-            float viewDistance = Renderer2D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
-            
-            FindPointerOverObject(radius, lane, viewDistance);
+            float depth = Renderer2D.GetHitTestPointerDepth(canvasInfo, (float)point.Position.Y);
+            int lane = Renderer2D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X);
+            float viewDistance = Renderer2D.GetViewDistance(zoomLevel);
+
+            FindPointerOverObject(depth, lane, viewDistance);
             SetCursorType();
             
             onLeftDrag();
@@ -932,16 +901,14 @@ public partial class ChartView2D : UserControl
                 
                 if (objectDrag.IsActive)
                 {
-                    float t = RenderUtils.InversePerspective(radius);
-                    float time = TimeSystem.Timestamp.Time + SaturnMath.Lerp(viewDistance, 0, t);
+                    float time = TimeSystem.Timestamp.Time + SaturnMath.Lerp(viewDistance, 0, depth);
         
                     Task.Run(() => objectDrag.Update(time));
                 }
                 else
                 {
                     // Box Select
-                    float t = RenderUtils.InversePerspective(radius);
-                    float viewTime = SaturnMath.Lerp(viewDistance, 0, t);
+                    float viewTime = SaturnMath.Lerp(viewDistance, 0, depth);
 
                     Task.Run(() => SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime));
                 }
@@ -959,19 +926,18 @@ public partial class ChartView2D : UserControl
                 CursorSystem.Position = clickDragRight.Position;
                 CursorSystem.Size = clickDragRight.Size;
             }
-        });*/
+        });
     }
 
     private void RenderCanvas_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        // TODO: Implement
-        /*PointerPoint point = e.GetCurrentPoint(sender as Control);
+        PointerPoint point = e.GetCurrentPoint(sender as Control);
         
         _ = Task.Run(() =>
         {
-            float radius = Renderer2D.GetHitTestPointerRadius(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
-            int lane = Renderer2D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X, (float)point.Position.Y);
-            float viewDistance = Renderer2D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
+            float depth = Renderer2D.GetHitTestPointerDepth(canvasInfo, (float)point.Position.Y);
+            int lane = Renderer2D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X);
+            float viewDistance = Renderer2D.GetViewDistance(zoomLevel);
 
             onLeftClick();
             onRightClick();
@@ -983,8 +949,7 @@ public partial class ChartView2D : UserControl
                 if (!e.Properties.IsLeftButtonPressed) return;
                 clickDragLeft.Reset(point, point, lane);
 
-                float t = RenderUtils.InversePerspective(radius);
-                float viewTime = SaturnMath.Lerp(viewDistance, 0, t);
+                float viewTime = SaturnMath.Lerp(viewDistance, 0, depth);
                 
                 boxSelect();
                 normalSelect();
@@ -1028,13 +993,12 @@ public partial class ChartView2D : UserControl
                     
                 CursorSystem.Position = clickDragRight.Position;
             }
-        });*/
+        });
     }
     
     private void RenderCanvas_OnPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
-        // TODO: Implement
-        /*_ = Task.Run(() =>
+        _ = Task.Run(() =>
         {
             onLeftReleased();
             onRightReleased();
@@ -1072,14 +1036,13 @@ public partial class ChartView2D : UserControl
                 if (e.InitialPressMouseButton != MouseButton.Right) return;
                 clickDragRight.Reset(null, null, 0);
             }
-        });*/
+        });
     }
     
     private void RenderCanvas_OnPointerExited(object? sender, PointerEventArgs e)
     {
-        // TODO: Implement
-        /*SelectionSystem.PointerOverObject = null;
-        pointerPosition = null;*/
+        SelectionSystem.PointerOverObject = null;
+        pointerPosition = null;
     }
 
     private void RenderCanvas_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
@@ -1092,15 +1055,29 @@ public partial class ChartView2D : UserControl
         void onScrollUp()
         {
             if (e.Delta.Y <= 0) return;
-            
-            TimeSystem.SeekFullTick(TimeSystem.Timestamp.FullTick + TimeSystem.DivisionInterval);
+
+            if (e.KeyModifiers.HasFlag(KeyModifiers.Control))
+            {
+                zoomLevel = Math.Clamp(zoomLevel + 1, 1, 20);
+            }
+            else
+            {
+                TimeSystem.SeekFullTick(TimeSystem.Timestamp.FullTick + TimeSystem.DivisionInterval);
+            }
         }
 
         void onScrollDown()
         {
             if (e.Delta.Y >= 0) return;
             
-            TimeSystem.SeekFullTick(Math.Max(0, TimeSystem.Timestamp.FullTick - TimeSystem.DivisionInterval));
+            if (e.KeyModifiers.HasFlag(KeyModifiers.Control))
+            {
+                zoomLevel = Math.Clamp(zoomLevel - 1, 1, 20);
+            }
+            else
+            {
+                TimeSystem.SeekFullTick(Math.Max(0, TimeSystem.Timestamp.FullTick - TimeSystem.DivisionInterval));
+            }
         }
     }
 
