@@ -329,7 +329,7 @@ public partial class ChartView3D : UserControl
             jacketBackgroundPaint = null;
         }
     }
-        
+    
     private void OnSettingsChanged(object? sender, EventArgs e)
     { 
         Dispatcher.UIThread.Post(() =>
