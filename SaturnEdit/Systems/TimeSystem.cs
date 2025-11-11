@@ -85,7 +85,7 @@ public static class TimeSystem
     /// <see cref="Timestamp"/> with compensation for the sound card <see cref="AudioSystem.Latency"/>
     /// </summary>
     public static float HitsoundTime => Timestamp.Time + HitsoundOffset;
-    public static float HitsoundOffset => AudioSystem.Latency + 25 * PlaybackSpeed * 0.01f;
+    public static float HitsoundOffset => PlaybackSpeed / 100.0f * AudioSystem.Latency * 2;
     
     /// <summary>
     /// The current beat division to snap to.
