@@ -805,7 +805,7 @@ public partial class ChartView2D : UserControl
             playing: playing,
             zoomLevel: zoomLevel,
             selectedObjects: SelectionSystem.SelectedObjects,
-            pointerOverObject: SelectionSystem.PointerOverObject,
+            pointerOverObject: objectDrag.IsActive ? null : SelectionSystem.PointerOverObject,
             activeObjectGroup: EditorSystem.ActiveObjectGroup,
             boxSelect: new(SelectionSystem.BoxSelectArgs.GlobalStartTime, SelectionSystem.BoxSelectArgs.GlobalEndTime, SelectionSystem.BoxSelectArgs.Position, SelectionSystem.BoxSelectArgs.Size),
             cursorNote: CursorSystem.CurrentType

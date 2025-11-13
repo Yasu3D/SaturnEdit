@@ -25,6 +25,7 @@ public static class UndoRedoSystem
     public static void Push(IOperation operation)
     {
         if (operation is CompositeOperation { Operations.Count: 0 }) return;
+        Console.WriteLine("Pushed Operation");
         
         operation.Apply();
         UndoStack.Push(operation);

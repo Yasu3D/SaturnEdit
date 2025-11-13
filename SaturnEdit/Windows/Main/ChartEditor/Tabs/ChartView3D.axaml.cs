@@ -949,6 +949,8 @@ public partial class ChartView3D : UserControl
             jacketBackgroundWidth: jacketBackgroundWidth,
             jacketBackgroundHeight: jacketBackgroundHeight
         );
+        
+        Console.WriteLine(SelectionSystem.PointerOverObject);
 
         // Hook into render function to update box selection during playback,
         // even when the pointer is not being moved.

@@ -6,7 +6,19 @@ namespace SaturnEdit.Utilities;
 public class ClickDragHelper
 {
     public PointerPoint? StartPoint { get; private set; } = null;
-    public PointerPoint? EndPoint { get; set; } = null;
+
+    public PointerPoint? EndPoint
+    {
+        get => endPoint;
+        set
+        {
+            endPoint = value;
+
+            PassedMinDistance = PassedMinDistance || Distance > 5;
+        }
+    }
+
+    private PointerPoint? endPoint = null;
 
     public int StartLane { get; set; } = 0;
 
@@ -39,8 +51,6 @@ public class ClickDragHelper
         }
     }
     private int endLane = 0;
-    
-    public bool PassedThroughSeam { get; private set; } = false;
 
     public int Position
     {
@@ -75,22 +85,37 @@ public class ClickDragHelper
             if (StartPoint == null) return false;
             if (EndPoint == null) return false;
 
-            double distance = Math.Max(Math.Abs(StartPoint.Value.Position.X - EndPoint.Value.Position.X), Math.Abs(StartPoint.Value.Position.Y - EndPoint.Value.Position.Y));
-            return distance > 5;
+            return PassedMinDistance;
         }
     }
 
     public int Tally { get; private set; } = 0;
+    
+    public double Distance
+    {
+        get
+        {
+            if (StartPoint == null) return 0;
+            if (EndPoint == null) return 0;
+            
+            return Math.Max(Math.Abs(StartPoint.Value.Position.X - EndPoint.Value.Position.X), Math.Abs(StartPoint.Value.Position.Y - EndPoint.Value.Position.Y));
+        }
+    }
+    
+    public bool PassedThroughSeam { get; private set; } = false;
+    
+    public bool PassedMinDistance { get; private set; }  = false;
 
 #region Methods
-    public void Reset(PointerPoint? startPoint, PointerPoint? endPoint, int lane)
+    public void Reset(PointerPoint? start, PointerPoint? end, int lane)
     {
-        StartPoint = startPoint;
-        EndPoint = endPoint;
+        StartPoint = start;
+        EndPoint = end;
         StartLane = lane;
         endLane = lane;
-        PassedThroughSeam = false;
         Tally = 0;
+        PassedThroughSeam = false;
+        PassedMinDistance = false;
     }
 #endregion Methods
 }
