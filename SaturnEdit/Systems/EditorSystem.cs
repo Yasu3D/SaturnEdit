@@ -549,13 +549,13 @@ public static class EditorSystem
                         Timestamp timestamp = new(point.Timestamp.FullTick);
                         ITimeable? newObject = CursorSystem.CurrentType switch
                         {
-                            TouchNote => new TouchNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
-                            ChainNote => new ChainNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            TouchNote => new TouchNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            ChainNote => new ChainNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             // Hold Note is skipped.
-                            SlideClockwiseNote        => new SlideClockwiseNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
-                            SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
-                            SnapForwardNote  => new SnapForwardNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
-                            SnapBackwardNote => new SnapBackwardNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            SlideClockwiseNote        => new SlideClockwiseNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            SnapForwardNote  => new SnapForwardNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            SnapBackwardNote => new SnapBackwardNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             LaneShowNote => new LaneShowNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
                             LaneHideNote => new LaneHideNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
                             SyncNote        => new SyncNote(timestamp, point.Position, point.Size),
@@ -764,15 +764,15 @@ public static class EditorSystem
                         Timestamp timestamp = new(point.Timestamp.FullTick);
                         ITimeable? newObject = CursorSystem.CurrentType switch
                         {
-                            TouchNote => new TouchNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
-                            ChainNote => new ChainNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
+                            TouchNote => new TouchNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            ChainNote => new ChainNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             // Hold Note is skipped.
-                            SlideClockwiseNote        => new SlideClockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
-                            SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
-                            SnapForwardNote  => new SnapForwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
-                            SnapBackwardNote => new SnapBackwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, BonusType.Normal, JudgementType.Normal),
-                            LaneShowNote => new LaneShowNote(timestamp, CursorSystem.Position, CursorSystem.Size, LaneSweepDirection.Instant),
-                            LaneHideNote => new LaneHideNote(timestamp, CursorSystem.Position, CursorSystem.Size, LaneSweepDirection.Instant),
+                            SlideClockwiseNote        => new SlideClockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            SnapForwardNote  => new SnapForwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            SnapBackwardNote => new SnapBackwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            LaneShowNote => new LaneShowNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.Direction),
+                            LaneHideNote => new LaneHideNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.Direction),
                             SyncNote        => new SyncNote(timestamp, CursorSystem.Position, CursorSystem.Size),
                             MeasureLineNote => new MeasureLineNote(timestamp, false),
                             _  => null,
@@ -795,33 +795,18 @@ public static class EditorSystem
                 else
                 {
                     // Convert standard object to new object.
-                    BonusType bonusType = BonusType.Normal;
-                    JudgementType judgementType = JudgementType.Normal;
-                    LaneSweepDirection laneSweepDirection = LaneSweepDirection.Instant;
-
-                    if (obj is IPlayable playable)
-                    {
-                        bonusType = playable.BonusType;
-                        judgementType = playable.JudgementType;
-                    }
-
-                    if (obj is ILaneToggle laneToggle)
-                    {
-                        laneSweepDirection = laneToggle.Direction;
-                    }
-                
                     Timestamp timestamp = new(obj.Timestamp.FullTick);
                     ITimeable? newObject = CursorSystem.CurrentType switch
                     {
-                        TouchNote => new TouchNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
-                        ChainNote => new ChainNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
+                        TouchNote => new TouchNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                        ChainNote => new ChainNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                         // Hold Note is skipped.
-                        SlideClockwiseNote        => new SlideClockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
-                        SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
-                        SnapForwardNote  => new SnapForwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
-                        SnapBackwardNote => new SnapBackwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, bonusType, judgementType),
-                        LaneShowNote => new LaneShowNote(timestamp, CursorSystem.Position, CursorSystem.Size, laneSweepDirection),
-                        LaneHideNote => new LaneHideNote(timestamp, CursorSystem.Position, CursorSystem.Size, laneSweepDirection),
+                        SlideClockwiseNote        => new SlideClockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                        SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                        SnapForwardNote  => new SnapForwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                        SnapBackwardNote => new SnapBackwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                        LaneShowNote => new LaneShowNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.Direction),
+                        LaneHideNote => new LaneHideNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.Direction),
                         SyncNote        => new SyncNote(timestamp, CursorSystem.Position, CursorSystem.Size),
                         MeasureLineNote => new MeasureLineNote(timestamp, false),
                         _  => null,

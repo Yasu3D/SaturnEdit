@@ -47,6 +47,12 @@ public static class CursorSystem
                 positionable.Size = Size;
             }
 
+            if (value is IPlayable playable)
+            {
+                playable.BonusType = BonusType;
+                playable.JudgementType = JudgementType;
+            }
+
             if (value is ILaneToggle laneToggle)
             {
                 laneToggle.Direction = Direction;

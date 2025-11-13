@@ -719,8 +719,8 @@ public class ShortcutSettings
         ["Navigate.MoveMeasureBack"]      = new(Key.Left,     false, false, false, "Menu.Navigate", "Menu.Navigate.MoveMeasureBack"),
         ["Navigate.JumpToNextObject"]     = new(Key.None,     false, false, false, "Menu.Navigate", "Menu.Navigate.JumpToNextObject"),
         ["Navigate.JumpToPreviousObject"] = new(Key.None,     false, false, false, "Menu.Navigate", "Menu.Navigate.JumpToPreviousObject"),
-        ["Navigate.IncreaseBeatDivision"] = new(Key.OemPlus,  true,  false, false, "Menu.Navigate", "Menu.Navigate.IncreaseBeatDivision"),
-        ["Navigate.DecreaseBeatDivision"] = new(Key.OemMinus, true,  false, false, "Menu.Navigate", "Menu.Navigate.DecreaseBeatDivision"),
+        ["Navigate.IncreaseBeatDivision"] = new(Key.PageUp,   false, false, true,  "Menu.Navigate", "Menu.Navigate.IncreaseBeatDivision"),
+        ["Navigate.DecreaseBeatDivision"] = new(Key.PageDown, false, false, true,  "Menu.Navigate", "Menu.Navigate.DecreaseBeatDivision"),
         ["Navigate.DoubleBeatDivision"]   = new(Key.PageUp,   true,  false, false, "Menu.Navigate", "Menu.Navigate.DoubleBeatDivision"),
         ["Navigate.HalveBeatDivision"]    = new(Key.PageDown, true,  false, false, "Menu.Navigate", "Menu.Navigate.HalveBeatDivision"),
 

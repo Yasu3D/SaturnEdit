@@ -65,141 +65,128 @@ public partial class ChartView2D : UserControl
 #region Methods
     private void FindPointerOverObject(float depth, int lane, float viewDistance)
     {
-        lock (ChartSystem.Chart)
+        float threshold = Renderer2D.GetHitTestThreshold(canvasInfo, SettingsSystem.RenderSettings.NoteThickness);
+
+        List<(IPositionable.OverlapResult, ITimeable)> hits = [];
+
+        if (EditorSystem.Mode == EditorMode.ObjectMode)
         {
-            if (depth is > 1 or < 0)
+            foreach (Event @event in ChartSystem.Chart.Events)
             {
-                SelectionSystem.PointerOverObject = null;
-                return;
+                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(@event, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                hits.Add((hitTestResult, @event));
             }
 
-            float threshold = Renderer2D.GetHitTestThreshold(canvasInfo, SettingsSystem.RenderSettings.NoteThickness);
-
-            List<(IPositionable.OverlapResult, ITimeable)> hits = [];
-
-            if (EditorSystem.Mode == EditorMode.ObjectMode)
+            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
             {
-                foreach (Event @event in ChartSystem.Chart.Events)
+                if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(bookmark, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                hits.Add((hitTestResult, bookmark));
+            }
+
+            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            {
+                if (!RenderUtils.IsVisible(laneToggle, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(laneToggle, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                hits.Add((hitTestResult, laneToggle));
+            }
+
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            {
+                foreach (Event @event in layer.Events)
                 {
                     if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                    IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(@event, depth, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                    IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(@event, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
                     if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
                     hits.Add((hitTestResult, @event));
                 }
 
-                foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+                foreach (Note note in layer.Notes)
                 {
-                    if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                    IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(bookmark, depth, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                    IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(note, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
                     if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
-                    hits.Add((hitTestResult, bookmark));
+                    hits.Add((hitTestResult, note));
                 }
+            }
+        }
+        else if (EditorSystem.Mode == EditorMode.EditMode)
+        {
+            if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+            {
+                Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
 
-                foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+                if (layer != null)
                 {
-                    if (!RenderUtils.IsVisible(laneToggle, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                    foreach (HoldPointNote holdPointNote in holdNote.Points)
+                    {
+                        if (!RenderUtils.IsVisible(holdPointNote, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                    IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(laneToggle, depth, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                        IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(holdPointNote, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                        if (hitTestResult == IPositionable.OverlapResult.None) continue;
+
+                        hits.Add((hitTestResult, holdPointNote));
+                    }
+                }
+            }
+            else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+            {
+                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                {
+                    if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(subEvent, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
                     if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
-                    hits.Add((hitTestResult, laneToggle));
-                }
-
-                foreach (Layer layer in ChartSystem.Chart.Layers)
-                {
-                    float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
-
-                    foreach (Event @event in layer.Events)
-                    {
-                        if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-
-                        IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(@event, depth, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
-                        if (hitTestResult == IPositionable.OverlapResult.None) continue;
-
-                        hits.Add((hitTestResult, @event));
-                    }
-
-                    foreach (Note note in layer.Notes)
-                    {
-                        if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-
-                        IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(note, depth, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
-                        if (hitTestResult == IPositionable.OverlapResult.None) continue;
-
-                        hits.Add((hitTestResult, note));
-                    }
+                    hits.Add((hitTestResult, subEvent));
                 }
             }
-            else if (EditorSystem.Mode == EditorMode.EditMode)
+            else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
             {
-                if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
                 {
-                    Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
+                    if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                    if (layer != null)
-                    {
-                        float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
+                    IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(subEvent, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                    if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
-                        foreach (HoldPointNote holdPointNote in holdNote.Points)
-                        {
-                            if (!RenderUtils.IsVisible(holdPointNote, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-
-                            IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(holdPointNote, depth, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
-                            if (hitTestResult == IPositionable.OverlapResult.None) continue;
-
-                            hits.Add((hitTestResult, holdPointNote));
-                        }
-                    }
-                }
-                else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
-                {
-                    foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
-                    {
-                        if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-
-                        IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(subEvent, depth, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
-                        if (hitTestResult == IPositionable.OverlapResult.None) continue;
-
-                        hits.Add((hitTestResult, subEvent));
-                    }
-                }
-                else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
-                {
-                    foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
-                    {
-                        if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-
-                        IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(subEvent, depth, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
-                        if (hitTestResult == IPositionable.OverlapResult.None) continue;
-
-                        hits.Add((hitTestResult, subEvent));
-                    }
+                    hits.Add((hitTestResult, subEvent));
                 }
             }
+        }
 
-            hits = hits
-                .OrderBy(x => SelectionSystem.SelectedObjects.Contains(x.Item2))
-                .ThenBy(x => x.Item2 is ILaneToggle)
-                .ThenBy(x => x.Item2 is SyncNote or MeasureLineNote)
-                .ThenBy(x => x.Item2 is Event or Bookmark)
-                .ThenBy(x => x.Item2 is HoldNote or HoldPointNote)
-                .ThenBy(x => (x.Item2 as IPositionable)?.Size ?? 60)
-                .ToList();
+        hits = hits
+            .OrderBy(x => SelectionSystem.SelectedObjects.Contains(x.Item2))
+            .ThenBy(x => x.Item2 is ILaneToggle)
+            .ThenBy(x => x.Item2 is SyncNote or MeasureLineNote)
+            .ThenBy(x => x.Item2 is Event or Bookmark)
+            .ThenBy(x => x.Item2 is HoldNote or HoldPointNote)
+            .ThenBy(x => (x.Item2 as IPositionable)?.Size ?? 60)
+            .ToList();
 
-            if (hits.Count != 0)
-            {
-                SelectionSystem.PointerOverOverlap = hits[0].Item1;
-                SelectionSystem.PointerOverObject = hits[0].Item2;
-            }
-            else
-            {
-                SelectionSystem.PointerOverObject = null;
-                SelectionSystem.PointerOverOverlap = IPositionable.OverlapResult.None;
-            }
+        if (hits.Count != 0)
+        {
+            SelectionSystem.PointerOverOverlap = hits[0].Item1;
+            SelectionSystem.PointerOverObject = hits[0].Item2;
+        }
+        else
+        {
+            SelectionSystem.PointerOverObject = null;
+            SelectionSystem.PointerOverOverlap = IPositionable.OverlapResult.None;
         }
     }
     
@@ -243,48 +230,14 @@ public partial class ChartView2D : UserControl
             }
             
             // Directional Cursor
-            bool rightEdge = SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.RightEdge;
-            int lane = Renderer2D.GetHitTestPointerLane(canvasInfo, (float)pointerPosition.Value.X);
-
-            if (lane is >= 0 and <= 3
-                or >= 56 and <= 59)
+            if (SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.LeftEdge)
             {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopSide) : new(StandardCursorType.BottomSide);
+                RenderCanvas.Cursor = new(StandardCursorType.LeftSide);
             }
 
-            if (lane is >= 4 and <= 10)
+            if (SelectionSystem.PointerOverOverlap == IPositionable.OverlapResult.RightEdge)
             {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomRightCorner) : new(StandardCursorType.TopLeftCorner);
-            }
-
-            if (lane is >= 11 and <= 18)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.LeftSide) : new(StandardCursorType.RightSide);
-            }
-
-            if (lane is >= 19 and <= 25)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomLeftCorner) : new(StandardCursorType.TopRightCorner);
-            }
-
-            if (lane is >= 26 and <= 33)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.BottomSide) : new(StandardCursorType.TopSide);
-            }
-
-            if (lane is >= 34 and <= 40)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopLeftCorner) : new(StandardCursorType.BottomRightCorner);
-            }
-
-            if (lane is >= 41 and <= 48)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.RightSide) : new(StandardCursorType.LeftSide);
-            }
-
-            if (lane is >= 49 and <= 55)
-            {
-                RenderCanvas.Cursor = rightEdge ? new(StandardCursorType.TopRightCorner) : new(StandardCursorType.BottomLeftCorner);
+                RenderCanvas.Cursor = new(StandardCursorType.RightSide);
             }
         });
     }
@@ -863,7 +816,7 @@ public partial class ChartView2D : UserControl
             _ = Task.Run(() =>
             {
                 float depth = Renderer2D.GetHitTestPointerDepth(canvasInfo, (float)clickDragLeft.EndPoint!.Value.Position.Y);
-                float viewDistance = Renderer2D.GetViewDistance(zoomLevel);
+                float viewDistance = Renderer2D.GetViewDistance(zoomLevel, canvasInfo);
                 float viewTime = SaturnMath.Lerp(viewDistance, 0, depth);
                 
                 SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
@@ -880,7 +833,7 @@ public partial class ChartView2D : UserControl
         {
             float depth = Renderer2D.GetHitTestPointerDepth(canvasInfo, (float)point.Position.Y);
             int lane = Renderer2D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X);
-            float viewDistance = Renderer2D.GetViewDistance(zoomLevel);
+            float viewDistance = Renderer2D.GetViewDistance(zoomLevel, canvasInfo);
 
             FindPointerOverObject(depth, lane, viewDistance);
             SetCursorType();
@@ -937,7 +890,7 @@ public partial class ChartView2D : UserControl
         {
             float depth = Renderer2D.GetHitTestPointerDepth(canvasInfo, (float)point.Position.Y);
             int lane = Renderer2D.GetHitTestPointerLane(canvasInfo, (float)point.Position.X);
-            float viewDistance = Renderer2D.GetViewDistance(zoomLevel);
+            float viewDistance = Renderer2D.GetViewDistance(zoomLevel, canvasInfo);
 
             onLeftClick();
             onRightClick();
@@ -1058,7 +1011,7 @@ public partial class ChartView2D : UserControl
 
             if (e.KeyModifiers.HasFlag(KeyModifiers.Control))
             {
-                zoomLevel = Math.Clamp(zoomLevel + 1, 1, 20);
+                zoomLevel = Math.Clamp(zoomLevel - 1, 1, 20);
             }
             else
             {
@@ -1072,7 +1025,7 @@ public partial class ChartView2D : UserControl
             
             if (e.KeyModifiers.HasFlag(KeyModifiers.Control))
             {
-                zoomLevel = Math.Clamp(zoomLevel - 1, 1, 20);
+                zoomLevel = Math.Clamp(zoomLevel + 1, 1, 20);
             }
             else
             {
