@@ -389,42 +389,10 @@ public partial class ChartEditorView : UserControl
         //if (VisualRoot is not Window rootWindow) return;
     }
     
-    public async void File_Quit()
+    public void File_Quit()
     {
-        try
-        {
-            TopLevel? topLevel = TopLevel.GetTopLevel(this);
-            if (topLevel == null) return;
-
-            // Prompt to save an unsaved chart first.
-            if (!ChartSystem.IsSaved)
-            {
-                ModalDialogResult result = await PromptSave();
-
-                // Cancel
-                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
-
-                // Save
-                if (result is ModalDialogResult.Primary)
-                {
-                    bool success = await File_Save();
-
-                    // Abort quitting if save was unsuccessful.
-                    if (!success) return;
-                }
-
-                // Don't Save
-                // Continue as normal.
-            }
-
-            if (VisualRoot is not Window rootWindow) return;
-            rootWindow.Close();
-        }
-        catch (Exception ex)
-        {
-            // Don't throw.
-            Console.WriteLine(ex);
-        }
+        if (VisualRoot is not Window rootWindow) return;
+        rootWindow.Close();
     }
 
     public async Task<ModalDialogResult> PromptSave()
@@ -939,17 +907,17 @@ public partial class ChartEditorView : UserControl
             
             MenuItemRecent.Items.Clear();
 
-            if (SettingsSystem.EditorSettings.RecentFiles.Count != 0)
+            if (SettingsSystem.EditorSettings.RecentChartFiles.Count != 0)
             {
                 // Reverse loop so most recent file appears at the top.
-                for (int i = SettingsSystem.EditorSettings.RecentFiles.Count - 1; i >= 0; i--)
+                for (int i = SettingsSystem.EditorSettings.RecentChartFiles.Count - 1; i >= 0; i--)
                 {
                     try
                     {
-                        string file = SettingsSystem.EditorSettings.RecentFiles[i];
+                        string file = SettingsSystem.EditorSettings.RecentChartFiles[i];
                         string trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
 
-                        MenuItem item = new MenuItem
+                        MenuItem item = new()
                         {
                             Icon = (i + 1).ToString(CultureInfo.InvariantCulture),
                             Header = new TextBlock { Text = trimmed },
@@ -1438,14 +1406,12 @@ public partial class ChartEditorView : UserControl
         }
     }
     
+    
     private void MenuItemNew_OnClick(object? sender, RoutedEventArgs e) => File_New();
 
     private void MenuItemOpen_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open();
 
-    private void MenuItemClearRecent_OnClick(object? sender, RoutedEventArgs e)
-    {
-        SettingsSystem.EditorSettings.ClearRecentFiles();
-    }
+    private void MenuItemClearRecent_OnClick(object? sender, RoutedEventArgs e) => SettingsSystem.EditorSettings.ClearRecentChartFiles();
 
     private async void MenuItemOpenRecent_OnClick(object? sender, RoutedEventArgs e)
     {

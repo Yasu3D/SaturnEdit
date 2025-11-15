@@ -2,12 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
              d:DesignWidth="800"
-             d:DesignHeight="450"
+             d:DesignHeight="600"
              x:Class="SaturnEdit.Windows.StageEditor.StageEditorView">
     <Grid RowDefinitions="40,1,*">
-        
+
         <!-- Menu Bar -->
         <Panel Grid.Row="0"
                VerticalAlignment="Top"
@@ -15,14 +16,386 @@
             <!-- ChartEditor Menu -->
             <Menu HorizontalAlignment="Left"
                   Margin="116,0,0,0">
-                
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock Text="{DynamicResource Menu.File}" />
+                    </MenuItem.Header>
+
+                    <MenuItem Name="MenuItemNew"
+                              Click="MenuItemNew_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.New}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="DocumentAdd" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemOpen"
+                              Click="MenuItemOpen_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Open}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Folder" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemRecent">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Recent}" />
+                        </MenuItem.Header>
+
+                        <MenuItem Name="MenuItemClearRecent"
+                                  Click="MenuItemClearRecent_OnClick"
+                                  StaysOpenOnClick="True">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.ClearRecent}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </MenuItem>
+
+                    <Separator />
+
+                    <MenuItem Name="MenuItemSave"
+                              Click="MenuItemSave_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Save}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Save" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemSaveAs"
+                              Click="MenuItemSaveAs_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.SaveAs}" />
+                        </MenuItem.Header>
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemReloadFromDisk"
+                              Click="MenuItemReloadFromDisk_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.ReloadFromDisk}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowSync" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <Separator />
+
+                    <MenuItem Name="MenuItemSettings"
+                              Click="MenuItemSettings_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Settings}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Settings" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemQuit"
+                              Click="MenuItemQuit_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Quit}" />
+                        </MenuItem.Header>
+                    </MenuItem>
+                </MenuItem>
+
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock Text="{DynamicResource Menu.Edit}" />
+                    </MenuItem.Header>
+
+                    <MenuItem Name="MenuItemUndo"
+                              Click="MenuItemUndo_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.Undo}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowUndo" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemRedo"
+                              Click="MenuItemRedo_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.Redo}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowRedo" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
             </Menu>
         </Panel>
-        
+
         <!-- Horizontal Separator -->
         <Rectangle Grid.Row="1"
                    Fill="{DynamicResource SeparatorSecondary}" />
-        
+
         <!-- Content -->
+        <StackPanel Grid.Row="2"
+                    Background="{DynamicResource BackgroundPrimary}">
+            <Grid RowDefinitions="40,40,40"
+                  ColumnDefinitions="120,20,*,50,120"
+                  Margin="15">
+
+                <Rectangle Grid.Row="0"
+                           Grid.Column="1"
+                           Grid.RowSpan="3"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Width="1"
+                           HorizontalAlignment="Left" />
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource StageEditor.Property.Id}" />
+                <TextBox Grid.Row="0"
+                         Grid.Column="2"
+                         Name="TextBoxStageId"
+                         Height="30"
+                         Watermark="00000000-0000-0000-0000-000000000000"
+                         LostFocus="TextBoxStageId_OnLostFocus" />
+                <Button Grid.Row="0"
+                        Grid.Column="3"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,0"
+                        Click="ButtonRegenerateStageId_OnClick">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource StageEditor.ToolTip.GenerateNewId}" />
+                            <TextBlock Text="{DynamicResource StageEditor.ToolTip.GenerateNewId.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="ArrowShuffle" />
+                </Button>
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource StageEditor.Property.Name}" />
+                <TextBox Grid.Row="1"
+                         Grid.Column="2"
+                         Name="TextBoxStageName"
+                         Height="30"
+                         LostFocus="TextBoxStageName_OnLostFocus" />
+
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource StageEditor.Property.Icon}" />
+                <TextBox Grid.Row="2"
+                         Grid.Column="2"
+                         Name="TextBoxStageIcon"
+                         Height="30"
+                         LostFocus="TextBoxStageIcon_OnLostFocus" />
+                <Button Grid.Row="2"
+                        Grid.Column="3"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,0"
+                        Click="ButtonStageIcon_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+
+                <Image Grid.Row="0"
+                       Grid.Column="4"
+                       Grid.RowSpan="3"
+                       Name="ImageStageIconBackground"
+                       Source="avares://SaturnEdit/Assets/StageIconBackground.png" />
+
+                <Image Grid.Row="0"
+                       Grid.Column="4"
+                       Grid.RowSpan="3"
+                       Name="ImageStageIcon" />
+            </Grid>
+
+            <Rectangle Height="1"
+                       HorizontalAlignment="Stretch"
+                       Fill="{DynamicResource SeparatorPrimary}"
+                       Margin="10,0,10,5" />
+
+            <Grid RowDefinitions="40,40,40"
+                  ColumnDefinitions="120,20,*,35,35"
+                  Margin="15">
+                <Rectangle Grid.Row="0"
+                           Grid.Column="1"
+                           Grid.RowSpan="3"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Width="1"
+                           HorizontalAlignment="Left" />
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource StageEditor.Property.Song1}" />
+                <TextBox Grid.Row="0"
+                         Grid.Column="2"
+                         Name="TextBoxSongId1"
+                         Height="30"
+                         Watermark="00000000-0000-0000-0000-000000000000" />
+                <Button Grid.Row="0"
+                        Grid.Column="3"
+                        Name="ButtonPickChartFile1"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,0"
+                        Click="ButtonPickChartFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <ToggleButton Grid.Row="0"
+                              Grid.Column="4"
+                              Name="ToggleButtonSecret1"
+                              Classes="Themed Square Outlined"
+                              Margin="5,0,0,0"
+                              IsCheckedChanged="ToggleButtonSecret_OnIsCheckedChanged">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource StageEditor.ToolTip.Secret}" />
+                            <TextBlock Text="{DynamicResource StageEditor.ToolTip.Secret.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="Question" />
+                </ToggleButton>
+
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource StageEditor.Property.Song2}" />
+                <TextBox Grid.Row="1"
+                         Grid.Column="2"
+                         Name="TextBoxSongId2"
+                         Height="30"
+                         Watermark="00000000-0000-0000-0000-000000000000" />
+                <Button Grid.Row="1"
+                        Grid.Column="3"
+                        Name="ButtonPickChartFile2"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,0"
+                        Click="ButtonPickChartFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <ToggleButton Grid.Row="1"
+                              Grid.Column="4"
+                              Name="ToggleButtonSecret2"
+                              Classes="Themed Square Outlined"
+                              Margin="5,0,0,0"
+                              IsCheckedChanged="ToggleButtonSecret_OnIsCheckedChanged">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource StageEditor.ToolTip.Secret}" />
+                            <TextBlock Text="{DynamicResource StageEditor.ToolTip.Secret.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="Question" />
+                </ToggleButton>
+
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource StageEditor.Property.Song3}" />
+                <TextBox Grid.Row="2"
+                         Grid.Column="2"
+                         Name="TextBoxSongId3"
+                         Height="30"
+                         Watermark="00000000-0000-0000-0000-000000000000" />
+                <Button Grid.Row="2"
+                        Grid.Column="3"
+                        Name="ButtonPickChartFile3"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,0"
+                        Click="ButtonPickChartFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <ToggleButton Grid.Row="2"
+                              Grid.Column="4"
+                              Name="ToggleButtonSecret3"
+                              Classes="Themed Square Outlined"
+                              Margin="5,0,0,0"
+                              IsCheckedChanged="ToggleButtonSecret_OnIsCheckedChanged">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource StageEditor.ToolTip.Secret}" />
+                            <TextBlock Text="{DynamicResource StageEditor.ToolTip.Secret.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="Question" />
+                </ToggleButton>
+            </Grid>
+
+            <Rectangle Height="1"
+                       HorizontalAlignment="Stretch"
+                       Fill="{DynamicResource SeparatorPrimary}"
+                       Margin="10,0,10,5" />
+
+            <Grid RowDefinitions="40,40,40"
+                  ColumnDefinitions="120,20,*"
+                  Margin="15">
+                <Rectangle Grid.Row="0"
+                           Grid.Column="1"
+                           Grid.RowSpan="3"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Width="1"
+                           HorizontalAlignment="Left" />
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource StageEditor.Property.Health}" />
+                <TextBox Grid.Row="0"
+                         Grid.Column="2"
+                         Name="TextBoxHealth"
+                         Height="30"
+                         LostFocus="TextBoxHealth_OnLostFocus" />
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource StageEditor.Property.HealthRecovery}" />
+                <TextBox Grid.Row="1"
+                         Grid.Column="2"
+                         Name="TextBoxHealthRecovery"
+                         Height="30"
+                         LostFocus="TextBoxHealthRecovery_OnLostFocus" />
+
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource StageEditor.Property.ErrorThreshold}" />
+                <ComboBox Grid.Row="2"
+                          Grid.Column="2"
+                          Name="ComboBoxErrorThreshold"
+                          Height="30"
+                          SelectionChanged="ComboBoxErrorThreshold_OnSelectionChanged">
+                    <ComboBoxItem Content="{DynamicResource StageEditor.Property.ErrorThreshold.Great}" />
+                    <ComboBoxItem Content="{DynamicResource StageEditor.Property.ErrorThreshold.Good}" />
+                    <ComboBoxItem Content="{DynamicResource StageEditor.Property.ErrorThreshold.Miss}" />
+                </ComboBox>
+            </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>

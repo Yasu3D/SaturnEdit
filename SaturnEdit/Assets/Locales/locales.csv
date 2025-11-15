@@ -341,6 +341,22 @@ ChartEditor.Cursor.IncreasePosition,Increase Position
 ChartEditor.Cursor.DecreasePosition,Decrease Position
 ChartEditor.Cursor.IncreaseSize,Increase Size
 ChartEditor.Cursor.DecreaseSize,Decrease Size
+StageEditor.Property.Id,Stage Id
+StageEditor.Property.Name,Stage Name
+StageEditor.Property.Icon,Stage Icon
+StageEditor.Property.Song1,First Song
+StageEditor.Property.Song2,Second Song
+StageEditor.Property.Song3,Third Song
+StageEditor.Property.Health,Health
+StageEditor.Property.HealthRecovery,Health Recovery
+StageEditor.Property.ErrorThreshold,Error Threshold
+StageEditor.Property.ErrorThreshold.Great,GREAT or worse
+StageEditor.Property.ErrorThreshold.Good,GOOD or worse
+StageEditor.Property.ErrorThreshold.Miss,MISS
+StageEditor.ToolTip.GenerateNewId,Generate New Id
+StageEditor.ToolTip.GenerateNewId.Description,Generates a new UUID to use as the Stage Id.
+StageEditor.ToolTip.Secret,Secret Song
+StageEditor.ToolTip.Secret.Description,Should the song be hidden in the preview?
 Main.Window.Title,SaturnEdit — Main Window
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.

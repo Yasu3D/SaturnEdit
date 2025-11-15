@@ -121,8 +121,8 @@ public static class ChartSystem
         AudioChanged?.Invoke(null, EventArgs.Empty);
         JacketChanged?.Invoke(null, EventArgs.Empty);
 
-        SettingsSystem.EditorSettings.RecentFiles.Remove(path);
-        SettingsSystem.EditorSettings.AddRecentFile(path);
+        SettingsSystem.EditorSettings.RecentChartFiles.Remove(path);
+        SettingsSystem.EditorSettings.AddRecentChartFile(path);
 
         IsSaved = true;
     }
@@ -188,8 +188,8 @@ public static class ChartSystem
             Entry.RootDirectory = Path.GetDirectoryName(path) ?? "";
             Entry.ChartFile = Path.GetFileName(path);
             
-            SettingsSystem.EditorSettings.RecentFiles.Remove(path);
-            SettingsSystem.EditorSettings.AddRecentFile(path);
+            SettingsSystem.EditorSettings.RecentChartFiles.Remove(path);
+            SettingsSystem.EditorSettings.AddRecentChartFile(path);
         }
         
         IsSaved = markAsSaved || IsSaved;

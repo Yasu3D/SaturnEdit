@@ -247,13 +247,13 @@
                                          IsVisible="True"
                                          IsEnabled="True" />
 
-            <cosmeticsEditor:CosmeticsEditorView Name="StageEditor"
-                                                 IsVisible="False"
-                                                 IsEnabled="False" />
-
-            <stageEditor:StageEditorView Name="CosmeticsEditor"
+            <stageEditor:StageEditorView Name="StageEditor"
                                          IsVisible="False"
                                          IsEnabled="False" />
+            
+            <cosmeticsEditor:CosmeticsEditorView Name="CosmeticsEditor"
+                                                 IsVisible="False"
+                                                 IsEnabled="False" />
         </Panel>
     </Panel>
 </Window>

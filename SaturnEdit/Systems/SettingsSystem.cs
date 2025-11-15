@@ -181,14 +181,14 @@ public class EditorSettings
 
 #region Enum Definitions
 
-    // ReSharper disable InconsistentNaming
     public enum LocaleOptions
     {
+        // ReSharper disable InconsistentNaming
         en_US = 0,
         ja_JP = 1,
         cmn_CN = 2,
+        // ReSharper restore InconsistentNaming
     }
-    // ReSharper restore InconsistentNaming
     
     public enum EditorThemeOptions
     {
@@ -289,17 +289,48 @@ public class EditorSettings
     }
     private bool chartViewTxtSyntaxHighlighting = true;
 
-    public List<string> RecentFiles { get; set; } = [];
     
-    public void AddRecentFile(string path)
+    public List<string> RecentChartFiles { get; set; } = [];
+    
+    public void AddRecentChartFile(string path)
     {
-        RecentFiles.Add(path);
+        RecentChartFiles.Add(path);
         PropertyChanged?.Invoke(null, EventArgs.Empty);
     }
 
-    public void ClearRecentFiles()
+    public void ClearRecentChartFiles()
     {
-        RecentFiles.Clear();
+        RecentChartFiles.Clear();
+        PropertyChanged?.Invoke(null, EventArgs.Empty);
+    }
+    
+    
+    public List<string> RecentStageFiles { get; set; } = [];
+    
+    public void AddRecentStageFile(string path)
+    {
+        RecentStageFiles.Add(path);
+        PropertyChanged?.Invoke(null, EventArgs.Empty);
+    }
+
+    public void ClearRecentStageFiles()
+    {
+        RecentStageFiles.Clear();
+        PropertyChanged?.Invoke(null, EventArgs.Empty);
+    }
+    
+    
+    public List<string> RecentCosmeticFiles { get; set; } = [];
+    
+    public void AddRecentCosmeticFile(string path)
+    {
+        RecentCosmeticFiles.Add(path);
+        PropertyChanged?.Invoke(null, EventArgs.Empty);
+    }
+
+    public void ClearRecentCosmeticFiles()
+    {
+        RecentCosmeticFiles.Clear();
         PropertyChanged?.Invoke(null, EventArgs.Empty);
     }
 }
