@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
@@ -45,7 +44,7 @@ public partial class PlaybackView : UserControl
         AudioSystem.AudioLoaded += OnAudioLoaded;
         UpdateSeekSlider();
         
-        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
         
         ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
         
@@ -150,7 +149,7 @@ public partial class PlaybackView : UserControl
         UpdateBookmarks();
     }
 
-    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         UpdateSeekSlider();
         UpdateLoopMarkers();

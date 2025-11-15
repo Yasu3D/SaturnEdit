@@ -22,8 +22,8 @@ public partial class ChartStatisticsView : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
-        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
-        OnOperationHistoryChanged(null, EventArgs.Empty);
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
         
         SizeChanged += Control_OnSizeChanged;
     }
@@ -234,7 +234,7 @@ public partial class ChartStatisticsView : UserControl
 #endregion Methods
 
 #region System Event Delegates
-    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         UpdateGraph();
         UpdateStatistics();

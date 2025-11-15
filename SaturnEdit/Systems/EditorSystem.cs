@@ -69,7 +69,7 @@ public static class EditorSystem
         CompositeOperation? op = GetEditModeChangeOperation(newMode, null, null);
         if (op == null || op.Operations.Count == 0) return;
 
-        UndoRedoSystem.Push(op);
+        UndoRedoSystem.ChartBranch.Push(op);
     }
 
     public static void ChangeEditMode(EditorMode newMode, ITimeable? newActiveObjectGroup)
@@ -79,7 +79,7 @@ public static class EditorSystem
         CompositeOperation? op = GetEditModeChangeOperation(newMode, newActiveObjectGroup, null);
         if (op == null || op.Operations.Count == 0) return;
 
-        UndoRedoSystem.Push(op);
+        UndoRedoSystem.ChartBranch.Push(op);
     }
     
     public static CompositeOperation? GetEditModeChangeOperation(EditorMode newMode, ITimeable? newActiveObjectGroup, Note? newType)
@@ -360,7 +360,7 @@ public static class EditorSystem
             operations.Add(new HoldPointNoteAddOperation(holdNote, point, holdNote.Points.Count));
         }
         
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void ToolBar_Delete()
@@ -430,7 +430,7 @@ public static class EditorSystem
             }
         }
         
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void ToolBar_EditShape()
@@ -447,7 +447,7 @@ public static class EditorSystem
             operations.Add(new PositionableEditOperation(positionable, positionable.Position, CursorSystem.Position, positionable.Size, CursorSystem.Size));
         }
         
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void ToolBar_EditType()
@@ -622,7 +622,7 @@ public static class EditorSystem
             }
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
         return;
         
         void removeObject(ITimeable obj, Layer layer)
@@ -828,7 +828,7 @@ public static class EditorSystem
             }
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
         return;
         
         void removeObject(ITimeable obj, Layer layer)
@@ -1094,7 +1094,7 @@ public static class EditorSystem
             }
         }
         
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
 
@@ -1105,7 +1105,7 @@ public static class EditorSystem
         GlobalEventAddOperation op0 = new(tempoChangeEvent, ChartSystem.Chart.Events.Count);
         SelectionAddOperation op1 = new(tempoChangeEvent, SelectionSystem.LastSelectedObject);
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void Insert_AddMetreChange(int upper, int lower)
@@ -1115,7 +1115,7 @@ public static class EditorSystem
         GlobalEventAddOperation op0 = new(metreChangeEvent, ChartSystem.Chart.Events.Count);
         SelectionAddOperation op1 = new(metreChangeEvent, SelectionSystem.LastSelectedObject);
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void Insert_AddTutorialMarker(string key)
@@ -1125,7 +1125,7 @@ public static class EditorSystem
         GlobalEventAddOperation op0 = new(tutorialMarkerEvent, ChartSystem.Chart.Events.Count);
         SelectionAddOperation op1 = new(tutorialMarkerEvent, SelectionSystem.LastSelectedObject);
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }
     
     public static void Insert_AddSpeedChange(float speed)
@@ -1137,7 +1137,7 @@ public static class EditorSystem
         EventAddOperation op0 = new(SelectionSystem.SelectedLayer, speedChangeEvent, SelectionSystem.SelectedLayer.Events.Count);
         SelectionAddOperation op1 = new(speedChangeEvent, SelectionSystem.LastSelectedObject);
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void Insert_AddVisibilityChange(bool visibility)
@@ -1149,7 +1149,7 @@ public static class EditorSystem
         EventAddOperation op0 = new(SelectionSystem.SelectedLayer, visibilityChangeEvent, SelectionSystem.SelectedLayer.Events.Count);
         SelectionAddOperation op1 = new(visibilityChangeEvent, SelectionSystem.LastSelectedObject);
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void Insert_AddReverseEffect()
@@ -1168,7 +1168,7 @@ public static class EditorSystem
         EventAddOperation op0 = new(SelectionSystem.SelectedLayer, reverseEffectEvent, SelectionSystem.SelectedLayer.Events.Count);
         SelectionAddOperation op1 = new(reverseEffectEvent, SelectionSystem.LastSelectedObject);
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void Insert_AddStopEffect()
@@ -1185,7 +1185,7 @@ public static class EditorSystem
         EventAddOperation op0 = new(SelectionSystem.SelectedLayer, stopEffectEvent, SelectionSystem.SelectedLayer.Events.Count);
         SelectionAddOperation op1 = new(stopEffectEvent, SelectionSystem.LastSelectedObject);
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void Insert_AddBookmark(string message, uint color)
@@ -1195,7 +1195,7 @@ public static class EditorSystem
         BookmarkAddOperation op0 = new(bookmark, ChartSystem.Chart.Bookmarks.Count);
         SelectionAddOperation op1 = new(bookmark, SelectionSystem.LastSelectedObject);
 
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }
 
     
@@ -1232,7 +1232,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1280,7 +1280,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1328,7 +1328,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1376,7 +1376,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1413,7 +1413,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1448,7 +1448,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1483,7 +1483,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1518,7 +1518,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1567,7 +1567,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1616,7 +1616,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1665,7 +1665,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1714,7 +1714,7 @@ public static class EditorSystem
         }
 
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -1826,7 +1826,7 @@ public static class EditorSystem
         }
         
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void Transform_FlipDirection()
@@ -1895,7 +1895,7 @@ public static class EditorSystem
         }
         
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void Transform_ReverseSelection()
@@ -1965,7 +1965,7 @@ public static class EditorSystem
         }
         
         if (operations.Count < 2) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void Transform_ScaleSelection(double scale)
@@ -2015,7 +2015,7 @@ public static class EditorSystem
         }
         
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void Transform_OffsetChart(int offset)
@@ -2080,7 +2080,7 @@ public static class EditorSystem
         }
         
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -2154,7 +2154,7 @@ public static class EditorSystem
         }
         
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -2197,7 +2197,7 @@ public static class EditorSystem
         }
         
         if (operations.Count == 0) return;
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -2311,7 +2311,7 @@ public static class EditorSystem
             }
         }
         
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
         return;
 
@@ -2458,7 +2458,7 @@ public static class EditorSystem
         int index = layer.Notes.IndexOf(sourceHoldNote);
         operations.Add(new NoteRemoveOperation(layer, sourceHoldNote, index));
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void Convert_JoinHold()
@@ -2515,7 +2515,7 @@ public static class EditorSystem
         if (rootLayer == null) return;
 
         operations.Add(new NoteAddOperation(rootLayer, newHoldNote, 0));
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     
@@ -2536,7 +2536,7 @@ public static class EditorSystem
             operations.Add(new GlobalEventRemoveOperation(@event, index));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
 
@@ -2553,7 +2553,7 @@ public static class EditorSystem
         Layer layerA = ChartSystem.Chart.Layers[indexA];
         Layer layerB = ChartSystem.Chart.Layers[indexB];
 
-        UndoRedoSystem.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
+        UndoRedoSystem.ChartBranch.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
     }
 
     public static void LayerList_MoveLayerDown()
@@ -2569,7 +2569,7 @@ public static class EditorSystem
         Layer layerA = ChartSystem.Chart.Layers[indexA];
         Layer layerB = ChartSystem.Chart.Layers[indexB];
 
-        UndoRedoSystem.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
+        UndoRedoSystem.ChartBranch.Push(new LayerSwapOperation(layerA, layerB, indexA, indexB));
     }
     
     public static void LayerList_DeleteLayer()
@@ -2590,7 +2590,7 @@ public static class EditorSystem
         LayerRemoveOperation op0 = new(SelectionSystem.SelectedLayer, index);
         LayerSelectOperation op1 = new(SelectionSystem.SelectedLayer, newSelection);
 
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }
     
     public static void LayerList_AddLayer()
@@ -2604,7 +2604,7 @@ public static class EditorSystem
         LayerAddOperation op0 = new(layer, index);
         LayerSelectOperation op1 = new(SelectionSystem.SelectedLayer, layer); 
         
-        UndoRedoSystem.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }
 
     public static void LayerList_DeleteEvents()
@@ -2625,7 +2625,7 @@ public static class EditorSystem
             operations.Add(new EventRemoveOperation(SelectionSystem.SelectedLayer, @event, index));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
 #endregion Methods

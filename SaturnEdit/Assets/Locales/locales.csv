@@ -587,7 +587,9 @@ VolumeMixer.Channel.R,R
 VolumeMixer.Channel.StartClick,Start Click
 VolumeMixer.Channel.Metronome,Metronome
 ModalDialog.SavePrompt.Title,Save Chart
-ModalDialog.SavePrompt.Header,Do you want to save changes to your chart before closing?
+ModalDialog.SavePrompt.Header.Chart,Do you want to save changes to your chart before closing?
+ModalDialog.SavePrompt.Header.Stage,Do you want to save changes to your stage before closing?
+ModalDialog.SavePrompt.Header.Cosmetic,Do you want to save changes to your cosmetic before closing?
 ModalDialog.SavePrompt.Paragraph,Your changes will be lost if you don't save them.
 ModalDialog.SavePrompt.DontSave,Don't Save
 ModalDialog.FileMovePrompt.Title,Move or copy selected file.

@@ -209,7 +209,7 @@ public static class SelectionSystem
             }
         }
             
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void SetBoxSelectionStart(bool negativeSelection, float viewTime)
@@ -454,7 +454,7 @@ public static class SelectionSystem
             }
         }
         
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
         
         BoxSelectArgs = new();
     }
@@ -532,7 +532,7 @@ public static class SelectionSystem
             }
         }
         
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void DeselectAll()
@@ -545,7 +545,7 @@ public static class SelectionSystem
             operations.Add(new SelectionRemoveOperation(obj, LastSelectedObject));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void CheckerDeselect()
@@ -572,7 +572,7 @@ public static class SelectionSystem
             operations.Add(new SelectionRemoveOperation(timeable, LastSelectedObject));
         }
         
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     public static void SelectByCriteria()
@@ -697,7 +697,7 @@ public static class SelectionSystem
             }
             // Select By Criteria makes no sense in Event Edit Mode
             
-            UndoRedoSystem.Push(new CompositeOperation(operations));
+            UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
         }
         
         void filterByCriteria()
@@ -746,7 +746,7 @@ public static class SelectionSystem
             }
             // Filter By Criteria makes no sense in Event Edit Mode.
 
-            UndoRedoSystem.Push(new CompositeOperation(operations));
+            UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
         }
     }
 #endregion Methods

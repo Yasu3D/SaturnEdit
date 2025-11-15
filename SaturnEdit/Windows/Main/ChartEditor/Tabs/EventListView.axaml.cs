@@ -22,8 +22,8 @@ public partial class EventListView : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
         
-        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
-        OnOperationHistoryChanged(null, EventArgs.Empty);
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
@@ -97,7 +97,7 @@ public partial class EventListView : UserControl
         });
     }
 
-    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         UpdateEvents();
     }
@@ -127,7 +127,7 @@ public partial class EventListView : UserControl
             operations.Add(new SelectionRemoveOperation(item.Event, SelectionSystem.LastSelectedObject));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void ListBoxEvents_OnDoubleTapped(object? sender, TappedEventArgs e)

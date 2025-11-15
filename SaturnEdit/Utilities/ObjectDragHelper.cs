@@ -119,7 +119,7 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
         EndLane = -1;
         DraggedObjects = null;
         
-        UndoRedoSystem.Push(operation);
+        UndoRedoSystem.ChartBranch.Push(operation);
     }
 
     private CompositeOperation GetOperations()

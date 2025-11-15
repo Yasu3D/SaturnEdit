@@ -24,8 +24,8 @@ public partial class LayerListView : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
-        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
-        OnOperationHistoryChanged(null, EventArgs.Empty);
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
@@ -145,7 +145,7 @@ public partial class LayerListView : UserControl
 #endregion Methods
 
 #region System Event Delegates
-    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         UpdateLayers();
         UpdateEvents();
@@ -178,7 +178,7 @@ public partial class LayerListView : UserControl
         string newName = item.TextBoxLayerName.Text ?? "Unnamed Layer";
         if (oldName == newName) return;
         
-        UndoRedoSystem.Push(new LayerRenameOperation(item.Layer, oldName, newName));
+        UndoRedoSystem.ChartBranch.Push(new LayerRenameOperation(item.Layer, oldName, newName));
     }
     
     private void LayerItem_OnVisibilityChanged(object? sender, EventArgs e)
@@ -190,7 +190,7 @@ public partial class LayerListView : UserControl
         bool newVisibility = !item.Layer.Visible;
         if (oldVisibility == newVisibility) return;
         
-        UndoRedoSystem.Push(new LayerShowHideOperation(item.Layer, oldVisibility, newVisibility));
+        UndoRedoSystem.ChartBranch.Push(new LayerShowHideOperation(item.Layer, oldVisibility, newVisibility));
     }
     
     private void ListBoxLayers_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -202,7 +202,7 @@ public partial class LayerListView : UserControl
         Layer? newLayer = ListBoxLayers.SelectedItem is LayerListItem item ? item.Layer : null;
         if (oldLayer == newLayer) return;
         
-        UndoRedoSystem.Push(new LayerSelectOperation(oldLayer, newLayer));
+        UndoRedoSystem.ChartBranch.Push(new LayerSelectOperation(oldLayer, newLayer));
     }
     
     private void ListBoxLayers_OnKeyDown(object? sender, KeyEventArgs e)
@@ -266,7 +266,7 @@ public partial class LayerListView : UserControl
             operations.Add(new SelectionRemoveOperation(item.Event, SelectionSystem.LastSelectedObject));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
     
     private void ListBoxEvents_OnKeyDown(object? sender, KeyEventArgs e)

@@ -19,8 +19,8 @@ public partial class NotePaletteView : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
-        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
-        OnOperationHistoryChanged(null, EventArgs.Empty);
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents;
@@ -174,7 +174,7 @@ public partial class NotePaletteView : UserControl
         }
     }
 
-    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         UpdateBonusTypeIcons();
         

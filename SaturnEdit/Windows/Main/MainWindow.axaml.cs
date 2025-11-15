@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -14,6 +15,13 @@ using SaturnEdit.Windows.Dialogs.VolumeMixer;
 
 namespace SaturnEdit;
 
+public enum SavePromptType
+{
+    Chart = 0,
+    Stage = 1,
+    Cosmetic = 2,
+}
+
 public partial class MainWindow : Window
 {
     public MainWindow()
@@ -27,8 +35,10 @@ public partial class MainWindow : Window
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
-        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
-        OnOperationHistoryChanged(null, EventArgs.Empty);
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        UndoRedoSystem.StageBranch.OperationHistoryChanged += StageBranch_OnOperationHistoryChanged;
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
+        UpdateUndoRedoButtons();
         
         Closed += AudioSystem.OnClosed;
         Closing += ChartEditor.OnClosing;
@@ -46,15 +56,34 @@ public partial class MainWindow : Window
             cosmeticsEditorChromeGradient = (IBrush?)resource;
         }
         
-        SetTabs();
+        UpdateTabs();
     }
 
     public static MainWindow? Instance { get; private set; }
 
-    public static PixelPoint DialogPopupPosition(double width, double height) => Instance == null 
-        ? new(0, 0) 
-        : new((int)(Instance.Position.X + Instance.Bounds.Width  / 2 - width  / 2),
-              (int)(Instance.Position.Y + Instance.Bounds.Height / 2 - height / 2));
+    private bool CanUndo
+    {
+        get
+        {
+            if (ChartEditor.IsVisible) return UndoRedoSystem.ChartBranch.CanUndo;
+            if (StageEditor.IsVisible) return UndoRedoSystem.StageBranch.CanUndo;
+            if (CosmeticsEditor.IsVisible) return UndoRedoSystem.CosmeticBranch.CanUndo;
+
+            return false;
+        }
+    }
+    
+    private bool CanRedo
+    {
+        get
+        {
+            if (ChartEditor.IsVisible) return UndoRedoSystem.ChartBranch.CanRedo;
+            if (StageEditor.IsVisible) return UndoRedoSystem.StageBranch.CanRedo;
+            if (CosmeticsEditor.IsVisible) return UndoRedoSystem.CosmeticBranch.CanRedo;
+
+            return false;
+        }
+    }
     
     private readonly IBrush? chartEditorChromeGradient = null;
     private readonly IBrush? stageEditorChromeGradient = null;
@@ -110,7 +139,7 @@ public partial class MainWindow : Window
         }
     }
     
-    private void SetTabs()
+    private void UpdateTabs()
     {
         Dispatcher.UIThread.Post(() =>
         {
@@ -141,18 +170,91 @@ public partial class MainWindow : Window
             }
         });
     }
-#endregion Methods
 
-#region System Event Delegates
-    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    private void UpdateUndoRedoButtons()
     {
         Dispatcher.UIThread.Post(() =>
         {
-            ButtonUndo.IsEnabled = UndoRedoSystem.CanUndo;
-            ButtonRedo.IsEnabled = UndoRedoSystem.CanRedo;
+            ButtonUndo.IsEnabled = CanUndo;
+            ButtonRedo.IsEnabled = CanRedo;
         });
     }
+
+    private void Undo()
+    {
+        if (ChartEditor.IsVisible) UndoRedoSystem.ChartBranch.Undo();
+        if (StageEditor.IsVisible) UndoRedoSystem.StageBranch.Undo();
+        if (CosmeticsEditor.IsVisible) UndoRedoSystem.CosmeticBranch.Undo();
+    }
+
+    private void Redo()
+    {
+        if (ChartEditor.IsVisible) UndoRedoSystem.ChartBranch.Redo();
+        if (StageEditor.IsVisible) UndoRedoSystem.StageBranch.Redo();
+        if (CosmeticsEditor.IsVisible) UndoRedoSystem.CosmeticBranch.Redo();
+    }
     
+    public static PixelPoint DialogPopupPosition(double width, double height)
+    {
+        return Instance == null
+            ? new(0, 0)
+            : new((int)(Instance.Position.X + Instance.Bounds.Width / 2 - width / 2),
+                (int)(Instance.Position.Y + Instance.Bounds.Height / 2 - height / 2));
+    }
+    
+    public static async Task<ModalDialogResult> ShowSavePrompt(SavePromptType type)
+    {
+        if (Instance == null) return ModalDialogResult.Cancel;
+        
+        ModalDialogWindow dialog = new()
+        {
+            DialogIcon = FluentIcons.Common.Icon.Warning,
+            WindowTitleKey = "ModalDialog.SavePrompt.Title",
+            HeaderKey = type switch
+            {
+                SavePromptType.Chart => "ModalDialog.SavePrompt.Header.Chart",
+                SavePromptType.Stage => "ModalDialog.SavePrompt.Header.Stage",
+                SavePromptType.Cosmetic => "ModalDialog.SavePrompt.Header.Cosmetic",
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
+            },
+            ParagraphKey = "ModalDialog.SavePrompt.Paragraph",
+            ButtonPrimaryKey = "Menu.File.Save",
+            ButtonSecondaryKey = "ModalDialog.SavePrompt.DontSave",
+            ButtonTertiaryKey = "Generic.Cancel",
+        };
+        
+        dialog.Position = DialogPopupPosition(dialog.Width, dialog.Height);
+
+        dialog.InitializeDialog();
+        await dialog.ShowDialog(Instance);
+        return dialog.Result;
+    }
+    
+    public static void ShowFileWriteError()
+    {
+        if (Instance == null) return;
+        
+        ModalDialogWindow dialog = new()
+        {
+            DialogIcon = FluentIcons.Common.Icon.Warning,
+            WindowTitleKey = "ModalDialog.FileWriteError.Title",
+            HeaderKey = "ModalDialog.FileWriteError.Header",
+            ParagraphKey = "ModalDialog.FileWriteError.Paragraph",
+            ButtonPrimaryKey = "Generic.Ok",
+        };
+        
+        dialog.Position = DialogPopupPosition(dialog.Width, dialog.Height);
+
+        dialog.InitializeDialog();
+        dialog.ShowDialog(Instance);
+    }
+#endregion Methods
+
+#region System Event Delegates
+    private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e) => UpdateUndoRedoButtons();
+    private void StageBranch_OnOperationHistoryChanged(object? sender, EventArgs e) => UpdateUndoRedoButtons();
+    private void CosmeticBranch_OnOperationHistoryChanged(object? sender, EventArgs e) => UpdateUndoRedoButtons();
+
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -193,7 +295,11 @@ public partial class MainWindow : Window
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
     
-    private void EditorTabs_OnIsCheckedChanged(object? sender, RoutedEventArgs e) => SetTabs();
+    private void EditorTabs_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        UpdateTabs();
+        UpdateUndoRedoButtons();
+    }
 
     private void ButtonSearch_OnClick(object? sender, RoutedEventArgs e) => ShowSearchWindow();
 
@@ -205,10 +311,10 @@ public partial class MainWindow : Window
     {
         
     }
-    
-    private void ButtonUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Undo();
 
-    private void ButtonRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
+    private void ButtonUndo_OnClick(object? sender, RoutedEventArgs e) => Undo();
+    
+    private void ButtonRedo_OnClick(object? sender, RoutedEventArgs e) => Redo();
     
     private async void Window_OnClosing(object? sender, WindowClosingEventArgs e)
     {
@@ -220,7 +326,7 @@ public partial class MainWindow : Window
             if (!bypassChartSave && !ChartSystem.IsSaved)
             {
                 e.Cancel = true;
-                ModalDialogResult result = await ChartEditor.PromptSave();
+                ModalDialogResult result = await ShowSavePrompt(SavePromptType.Chart);
 
                 if (result is ModalDialogResult.Primary)
                 {
@@ -240,10 +346,28 @@ public partial class MainWindow : Window
                 }
             }
 
-            // TODO: Stage Editor
-            if (!bypassStageSave)
+            // Stage Editor
+            if (!bypassStageSave && !StageSystem.IsSaved)
             {
-                
+                e.Cancel = true;
+                ModalDialogResult result = await ShowSavePrompt(SavePromptType.Stage);
+
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool saved = await StageEditor.File_Save();
+
+                    if (saved)
+                    {
+                        Close();
+                        return;
+                    }
+                }
+                else if (result is ModalDialogResult.Secondary)
+                {
+                    bypassStageSave = true;
+                    Close();
+                    return;
+                }
             }
 
             // TODO: Cosmetics Editor

@@ -124,13 +124,13 @@ public partial class SearchWindow : Window
         }
         else if (item.Key == "Edit.Undo")
         {
-            UndoRedoSystem.Undo();
+            UndoRedoSystem.ChartBranch.Undo();
             e.Handled = true;
             close = false;
         }
         else if (item.Key == "Edit.Redo")
         {
-            UndoRedoSystem.Redo();
+            UndoRedoSystem.ChartBranch.Redo();
             e.Handled = true;
             close = false;
         }

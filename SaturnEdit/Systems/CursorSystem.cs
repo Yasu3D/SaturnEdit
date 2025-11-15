@@ -209,7 +209,7 @@ public static class CursorSystem
             }
         }
         
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 #endregion Methods
 }

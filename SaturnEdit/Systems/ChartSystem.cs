@@ -19,9 +19,11 @@ public static class ChartSystem
         Entry.JacketChanged += OnInternalJacketChanged;
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
-        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
+        
         AudioSystem.AudioLoaded += OnAudioLoaded;
-        OnOperationHistoryChanged(null, EventArgs.Empty);
+        
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
 
         IsSaved = true;
         
@@ -213,7 +215,7 @@ public static class ChartSystem
     private static void OnInternalAudioChanged(object? sender, EventArgs e) => AudioChanged?.Invoke(sender, e);
     private static void OnInternalJacketChanged(object? sender, EventArgs e) => JacketChanged?.Invoke(sender, e);
     
-    private static void OnOperationHistoryChanged(object? sender, EventArgs e)
+    private static void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         Rebuild();
         

@@ -41,8 +41,8 @@ public partial class ChartView2D : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
-        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
-        OnOperationHistoryChanged(null, EventArgs.Empty);
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
 
         EditorSystem.EditModeChangeAttempted += OnEditModeChangeAttempted;
         OnEditModeChangeAttempted(null, EventArgs.Empty);
@@ -357,7 +357,7 @@ public partial class ChartView2D : UserControl
         SetCursorType();
     }
     
-    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         // End object drag if anything else changes.
         objectDrag.End();
@@ -1047,42 +1047,42 @@ public partial class ChartView2D : UserControl
                 float? tempo = await MainWindow.Instance.ChartEditor.ShowTempoDialog(tempoChangeEvent.Tempo);
                 if (tempo == null) return;
                 
-                UndoRedoSystem.Push(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, tempo.Value));
+                UndoRedoSystem.ChartBranch.Push(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, tempo.Value));
             }
             else if (SelectionSystem.PointerOverObject is MetreChangeEvent metreChangeEvent)
             {
                 (int?, int?) metre = await MainWindow.Instance.ChartEditor.ShowMetreDialog(metreChangeEvent.Upper, metreChangeEvent.Lower);
                 if (metre.Item1 == null || metre.Item2 == null) return;
                 
-                UndoRedoSystem.Push(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, metre.Item1.Value, metreChangeEvent.Lower, metre.Item2.Value));
+                UndoRedoSystem.ChartBranch.Push(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, metre.Item1.Value, metreChangeEvent.Lower, metre.Item2.Value));
             }
             else if (SelectionSystem.PointerOverObject is TutorialMarkerEvent tutorialMarkerEvent)
             {
                 string? key = await MainWindow.Instance.ChartEditor.ShowTutorialMarkerDialog(tutorialMarkerEvent.Key);
                 if (key == null) return;
                 
-                UndoRedoSystem.Push(new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, key));
+                UndoRedoSystem.ChartBranch.Push(new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, key));
             }
             else if (SelectionSystem.PointerOverObject is SpeedChangeEvent speedChangeEvent)
             {
                 float? speed = await MainWindow.Instance.ChartEditor.ShowSpeedDialog(speedChangeEvent.Speed);
                 if (speed == null) return;
                 
-                UndoRedoSystem.Push(new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, speed.Value));
+                UndoRedoSystem.ChartBranch.Push(new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, speed.Value));
             }
             else if (SelectionSystem.PointerOverObject is VisibilityChangeEvent visibilityChangeEvent)
             {
                 bool? visibility = await MainWindow.Instance.ChartEditor.ShowVisibilityDialog(visibilityChangeEvent.Visibility);
                 if (visibility == null) return;
                 
-                UndoRedoSystem.Push(new VisibilityChangeEditOperation(visibilityChangeEvent, visibilityChangeEvent.Visibility, visibility.Value));
+                UndoRedoSystem.ChartBranch.Push(new VisibilityChangeEditOperation(visibilityChangeEvent, visibilityChangeEvent.Visibility, visibility.Value));
             }
             else if (SelectionSystem.PointerOverObject is Bookmark bookmark)
             { 
                 (string?, uint?) data = await MainWindow.Instance.ChartEditor.ShowBookmarkDialog(bookmark.Message, bookmark.Color);
                 if (data.Item1 == null || data.Item2 == null) return;
                 
-                UndoRedoSystem.Push(new BookmarkEditOperation(bookmark, bookmark.Color, data.Item2.Value, bookmark.Message, data.Item1));
+                UndoRedoSystem.ChartBranch.Push(new BookmarkEditOperation(bookmark, bookmark.Color, data.Item2.Value, bookmark.Message, data.Item1));
             }
             else if (SelectionSystem.PointerOverObject is HoldNote holdNote)
             {

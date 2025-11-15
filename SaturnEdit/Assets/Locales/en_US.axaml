@@ -590,7 +590,9 @@
     <system:String x:Key="VolumeMixer.Channel.StartClick">Start Click</system:String>
     <system:String x:Key="VolumeMixer.Channel.Metronome">Metronome</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Title">Save Chart</system:String>
-    <system:String x:Key="ModalDialog.SavePrompt.Header">Do you want to save changes to your chart before closing?</system:String>
+    <system:String x:Key="ModalDialog.SavePrompt.Header.Chart">Do you want to save changes to your chart before closing?</system:String>
+    <system:String x:Key="ModalDialog.SavePrompt.Header.Stage">Do you want to save changes to your stage before closing?</system:String>
+    <system:String x:Key="ModalDialog.SavePrompt.Header.Cosmetic">Do you want to save changes to your cosmetic before closing?</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Paragraph">Your changes will be lost if you don't save them.</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.DontSave">Don't Save</system:String>
     <system:String x:Key="ModalDialog.FileMovePrompt.Title">Move or copy selected file.</system:String>

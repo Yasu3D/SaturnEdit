@@ -53,8 +53,8 @@ public partial class ChartEditorView : UserControl
         ChartSystem.EntryChanged += OnEntryChanged;
         OnEntryChanged(null, EventArgs.Empty);
         
-        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
-        OnOperationHistoryChanged(null, EventArgs.Empty);
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
     
     private static string LayoutDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Layout");
@@ -75,7 +75,7 @@ public partial class ChartEditorView : UserControl
         // Prompt to save an unsaved chart first.
         if (!ChartSystem.IsSaved)
         {
-            ModalDialogResult result = await PromptSave();
+            ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Chart);
 
             // Cancel
             if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
@@ -118,7 +118,7 @@ public partial class ChartEditorView : UserControl
             // Prompt to save an unsaved chart first.
             if (!ChartSystem.IsSaved)
             {
-                ModalDialogResult result = await PromptSave();
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Chart);
 
                 // Cancel
                 if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return false;
@@ -192,7 +192,7 @@ public partial class ChartEditorView : UserControl
             bool updatePath = !File.Exists(ChartSystem.Entry.ChartPath);
             if (!ChartSystem.WriteChart(ChartSystem.Entry.ChartPath, new(), true, updatePath))
             {
-                ShowFileWriteError();
+                MainWindow.ShowFileWriteError();
                 return false;
             }
 
@@ -201,7 +201,7 @@ public partial class ChartEditorView : UserControl
         catch (Exception ex)
         {
             Console.WriteLine(ex);
-            ShowFileWriteError();
+            MainWindow.ShowFileWriteError();
             return false;
         }
     }
@@ -241,7 +241,7 @@ public partial class ChartEditorView : UserControl
             // Write chart to file.
             if (!ChartSystem.WriteChart(file.Path.LocalPath, new(), true, true))
             {
-                ShowFileWriteError();
+                MainWindow.ShowFileWriteError();
                 return false;
             }
 
@@ -250,7 +250,7 @@ public partial class ChartEditorView : UserControl
         catch (Exception ex)
         {
             Console.WriteLine(ex);
-            ShowFileWriteError();
+            MainWindow.ShowFileWriteError();
             return false;
         }
     }
@@ -264,7 +264,7 @@ public partial class ChartEditorView : UserControl
             // Prompt to save an unsaved chart first.
             if (!ChartSystem.IsSaved)
             {
-                ModalDialogResult result = await PromptSave();
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Chart);
 
                 // Cancel
                 if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return false;
@@ -323,7 +323,7 @@ public partial class ChartEditorView : UserControl
             // Write the chart to the defined path, with the defined notation arguments.
             if (!ChartSystem.WriteChart(file.Path.LocalPath, exportArgsWindow.NotationWriteArgs, true, true))
             {
-                ShowFileWriteError();
+                MainWindow.ShowFileWriteError();
                 return false;
             }
 
@@ -393,28 +393,6 @@ public partial class ChartEditorView : UserControl
     {
         if (VisualRoot is not Window rootWindow) return;
         rootWindow.Close();
-    }
-
-    public async Task<ModalDialogResult> PromptSave()
-    {
-        if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
-
-        ModalDialogWindow dialog = new()
-        {
-            DialogIcon = Icon.Warning,
-            WindowTitleKey = "ModalDialog.SavePrompt.Title",
-            HeaderKey = "ModalDialog.SavePrompt.Header",
-            ParagraphKey = "ModalDialog.SavePrompt.Paragraph",
-            ButtonPrimaryKey = "Menu.File.Save",
-            ButtonSecondaryKey = "ModalDialog.SavePrompt.DontSave",
-            ButtonTertiaryKey = "Generic.Cancel",
-        };
-        
-        dialog.Position = MainWindow.DialogPopupPosition(dialog.Width, dialog.Height);
-
-        dialog.InitializeDialog();
-        await dialog.ShowDialog(rootWindow);
-        return dialog.Result;
     }
     
     public void Edit_Cut()
@@ -746,7 +724,7 @@ public partial class ChartEditorView : UserControl
         catch (Exception ex)
         {
             Console.WriteLine(ex);
-            ShowFileWriteError();
+            MainWindow.ShowFileWriteError();
         }
     }
 
@@ -841,25 +819,6 @@ public partial class ChartEditorView : UserControl
             Dock_LoadPreset(PresetLayoutType.Classic);
         }
     }
-        
-    private void ShowFileWriteError()
-    {
-        if (VisualRoot is not Window rootWindow) return;
-        
-        ModalDialogWindow dialog = new()
-        {
-            DialogIcon = Icon.Warning,
-            WindowTitleKey = "ModalDialog.FileWriteError.Title",
-            HeaderKey = "ModalDialog.FileWriteError.Header",
-            ParagraphKey = "ModalDialog.FileWriteError.Paragraph",
-            ButtonPrimaryKey = "Generic.Ok",
-        };
-        
-        dialog.Position = MainWindow.DialogPopupPosition(dialog.Width, dialog.Height);
-
-        dialog.InitializeDialog();
-        dialog.ShowDialog(rootWindow);
-    }
 #endregion Methods
 
 #region System Event Delegates
@@ -953,12 +912,12 @@ public partial class ChartEditorView : UserControl
         });
     }
     
-    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
         {
-            MenuItemUndo.IsEnabled = UndoRedoSystem.CanUndo;
-            MenuItemRedo.IsEnabled = UndoRedoSystem.CanRedo;
+            MenuItemUndo.IsEnabled = UndoRedoSystem.ChartBranch.CanUndo;
+            MenuItemRedo.IsEnabled = UndoRedoSystem.ChartBranch.CanRedo;
         });
     }
     
@@ -1043,12 +1002,12 @@ public partial class ChartEditorView : UserControl
         
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"]))
         {
-            UndoRedoSystem.Undo();
+            UndoRedoSystem.ChartBranch.Undo();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"]))
         {
-            UndoRedoSystem.Redo();
+            UndoRedoSystem.ChartBranch.Redo();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Cut"]))
@@ -1326,7 +1285,7 @@ public partial class ChartEditorView : UserControl
             // Prompt to save an unsaved chart first.
             if (!ChartSystem.IsSaved)
             {
-                ModalDialogResult result = await PromptSave();
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Chart);
 
                 // Cancel
                 if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary)
@@ -1427,7 +1386,7 @@ public partial class ChartEditorView : UserControl
             // Prompt to save an unsaved chart first.
             if (!ChartSystem.IsSaved)
             {
-                ModalDialogResult result = await PromptSave();
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Chart);
 
                 // Cancel
                 if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
@@ -1486,9 +1445,9 @@ public partial class ChartEditorView : UserControl
     private void MenuItemQuit_OnClick(object? sender, RoutedEventArgs e) => File_Quit();
     
     
-    private void MenuItemUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Undo();
+    private void MenuItemUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.ChartBranch.Undo();
 
-    private void MenuItemRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.Redo();
+    private void MenuItemRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.ChartBranch.Redo();
 
     private void MenuItemCut_OnClick(object? sender, RoutedEventArgs e) => Edit_Cut();
 

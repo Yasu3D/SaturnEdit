@@ -28,8 +28,8 @@ public partial class InspectorView : UserControl
     {
         InitializeComponent();
 
-        UndoRedoSystem.OperationHistoryChanged += OnOperationHistoryChanged;
-        OnOperationHistoryChanged(null, EventArgs.Empty);
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
@@ -37,7 +37,7 @@ public partial class InspectorView : UserControl
     private Dictionary<Bookmark, uint> recoloredBookmarks = [];
     
 #region System Event Delegates
-    private void OnOperationHistoryChanged(object? sender, EventArgs e)
+    private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         if (Design.IsDesignMode)
         {
@@ -822,7 +822,7 @@ public partial class InspectorView : UserControl
             }
         }
         
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
         return;
 
         void removeObject(ITimeable obj, Layer layer)
@@ -956,7 +956,7 @@ public partial class InspectorView : UserControl
             }
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxTick_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -1041,7 +1041,7 @@ public partial class InspectorView : UserControl
             }
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxFullTick_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -1122,7 +1122,7 @@ public partial class InspectorView : UserControl
             }
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
     
     private void ComboBoxLayers_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -1155,7 +1155,7 @@ public partial class InspectorView : UserControl
             }
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxPosition_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -1210,7 +1210,7 @@ public partial class InspectorView : UserControl
             }
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxSize_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -1265,7 +1265,7 @@ public partial class InspectorView : UserControl
             }
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void ComboBoxBonusType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -1286,7 +1286,7 @@ public partial class InspectorView : UserControl
             operations.Add(new PlayableEditOperation(playable, playable.BonusType, newBonusType, playable.JudgementType, playable.JudgementType));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void ComboBoxJudgementType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -1307,7 +1307,7 @@ public partial class InspectorView : UserControl
             operations.Add(new PlayableEditOperation(playable, playable.BonusType, playable.BonusType, playable.JudgementType, newJudgementType));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void ComboBoxRenderType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -1328,7 +1328,7 @@ public partial class InspectorView : UserControl
             operations.Add(new HoldPointNoteRenderTypeEditOperation(point, point.RenderType, newRenderType));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void ComboBoxSweepDirection_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -1349,7 +1349,7 @@ public partial class InspectorView : UserControl
             operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, newDirection));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxTempo_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -1392,7 +1392,7 @@ public partial class InspectorView : UserControl
             operations.Add(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, newValue));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxUpper_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -1432,7 +1432,7 @@ public partial class InspectorView : UserControl
             operations.Add(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, newValue, metreChangeEvent.Lower, metreChangeEvent.Lower));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxLower_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -1472,7 +1472,7 @@ public partial class InspectorView : UserControl
             operations.Add(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, metreChangeEvent.Upper, metreChangeEvent.Lower, newValue));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxSpeed_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -1511,7 +1511,7 @@ public partial class InspectorView : UserControl
             operations.Add(new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, newValue));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void ComboBoxVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -1532,7 +1532,7 @@ public partial class InspectorView : UserControl
             operations.Add(new VisibilityChangeEditOperation(visibilityChange, visibilityChange.Visibility, newVisibility));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxTutorialMarkerKey_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -1561,7 +1561,7 @@ public partial class InspectorView : UserControl
             operations.Add(new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, newValue));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxBookmarkColor_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -1590,7 +1590,7 @@ public partial class InspectorView : UserControl
             operations.Add(new BookmarkEditOperation(bookmark, bookmark.Color, newValue, bookmark.Message, bookmark.Message));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
     
     private void ColorPickerBookmarkColor_OnColorPickStarted(object? sender, EventArgs e)
@@ -1644,7 +1644,7 @@ public partial class InspectorView : UserControl
             operations.Add(new BookmarkEditOperation(bookmark.Key, bookmark.Value, newValue, bookmark.Key.Message, bookmark.Key.Message));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
     private void TextBoxBookmarkMessage_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -1673,7 +1673,7 @@ public partial class InspectorView : UserControl
             operations.Add(new BookmarkEditOperation(bookmark, bookmark.Color, bookmark.Color, bookmark.Message, newValue));
         }
 
-        UndoRedoSystem.Push(new CompositeOperation(operations));
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 #endregion UI Event Delegates
 }

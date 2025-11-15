@@ -1,11 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
+using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
+using SaturnEdit.Windows.Dialogs.ImportArgs;
+using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.StageEditor;
 
@@ -20,29 +25,187 @@ public partial class StageEditorView : UserControl
     }
 
 #region Methods
-    private void File_New()
+    private async void File_New()
     {
+        // Prompt to save an unsaved stage first.
+        if (!StageSystem.IsSaved)
+        {
+            ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Stage);
+
+            // Cancel
+            if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
+
+            // Save
+            if (result is ModalDialogResult.Primary)
+            {
+                bool success = await File_Save();
+
+                // Abort opening new file if save was unsuccessful.
+                if (!success) return;
+            }
+
+            // Don't Save
+            // Continue as normal.
+        }
         
+        StageSystem.NewStage();
     }
 
     private async Task<bool> File_Open()
     {
-        return false;
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return false;
+
+            // Prompt to save an unsaved stage first.
+            if (!StageSystem.IsSaved)
+            {
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Stage);
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return false;
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort opening new file if save was unsuccessful.
+                    if (!success) return false;
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            // Open file picker.
+            IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
+            {
+                AllowMultiple = false,
+                FileTypeFilter =
+                [
+                    new("Stage Up Stage Files")
+                    {
+                        Patterns = ["*.toml"],
+                    },
+                ],
+            });
+            if (files.Count != 1) return false;
+            
+            // Read stage from file.
+            StageSystem.ReadStage(files[0].Path.LocalPath);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
     }
 
-    private async Task<bool> File_Save()
+    public async Task<bool> File_Save()
     {
-        return false;
+        try
+        {
+            // Redirect to 'Save As' if stage doesn't have a file defined yet.
+            if (!File.Exists(StageSystem.StageUpStage.AbsoluteSourcePath))
+            {
+                return await File_SaveAs();
+            }
+
+            // Write stage to file.
+            if (!StageSystem.WriteStage(StageSystem.StageUpStage.AbsoluteSourcePath, true, false))
+            {
+                MainWindow.ShowFileWriteError();
+                return false;
+            }
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            MainWindow.ShowFileWriteError();
+            return false;
+        }
     }
 
     private async Task<bool> File_SaveAs()
     {
-        return false;
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return false;
+
+            // Open file picker.
+            IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(new()
+            {
+                DefaultExtension = ".toml",
+                SuggestedFileName = "stage.toml",
+                FileTypeChoices =
+                [
+                    new("Stage Up Stage File")
+                    {
+                        Patterns = ["*.toml"],
+                    },
+                ],
+            });
+
+            if (file == null) return false;
+
+            // Write stage to file.
+            if (!StageSystem.WriteStage(file.Path.LocalPath, true, true))
+            {
+                MainWindow.ShowFileWriteError();
+                return false;
+            }
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            MainWindow.ShowFileWriteError();
+            return false;
+        }
     }
 
     private async Task<bool> File_ReloadFromDisk()
     {
-        return false;
+        try
+        {
+            if (!File.Exists(StageSystem.StageUpStage.AbsoluteSourcePath)) return false;
+
+            // Prompt to save an unsaved stage first.
+            if (!StageSystem.IsSaved)
+            {
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Stage);
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return false;
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort opening new file if save was unsuccessful.
+                    if (!success) return false;
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            StageSystem.ReadStage(StageSystem.StageUpStage.AbsoluteSourcePath);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
     }
 
     private void File_Quit()
@@ -127,18 +290,17 @@ public partial class StageEditorView : UserControl
     {
         try
         {
-            // TODO
-            /*if (sender is not MenuItem item) return;
+            if (sender is not MenuItem item) return;
             if (item.Tag is not string path) return;
             if (!File.Exists(path)) return;
         
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return;
 
-            // Prompt to save an unsaved chart first.
-            if (!ChartSystem.IsSaved)
+            // Prompt to save an unsaved stage first.
+            if (!StageSystem.IsSaved)
             {
-                ModalDialogResult result = await PromptSave();
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Stage);
 
                 // Cancel
                 if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
@@ -155,26 +317,9 @@ public partial class StageEditorView : UserControl
                 // Don't Save
                 // Continue as normal.
             }
-
-            // Get Read Args
-            NotationReadArgs args = new();
-            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(path);
-            if (formatVersion == FormatVersion.Unknown) return;
-            if (formatVersion != FormatVersion.SatV3)
-            {
-                if (VisualRoot is not Window rootWindow) return;
-                ImportArgsWindow importArgsWindow = new();
-                importArgsWindow.Position = MainWindow.DialogPopupPosition(importArgsWindow.Width, importArgsWindow.Height);
-                
-                await importArgsWindow.ShowDialog(rootWindow);
-
-                if (importArgsWindow.Result != ModalDialogResult.Primary) return;
-                
-                args = importArgsWindow.NotationReadArgs;
-            }
             
-            // Read chart from file.
-            ChartSystem.ReadChart(path, args);*/
+            // Read stage from file.
+            StageSystem.ReadStage(path);
         }
         catch (Exception ex)
         {
@@ -193,15 +338,9 @@ public partial class StageEditorView : UserControl
     private void MenuItemQuit_OnClick(object? sender, RoutedEventArgs e) => File_Quit();
 
     
-    private void MenuItemUndo_OnClick(object? sender, RoutedEventArgs e)
-    {
-        
-    }
+    private void MenuItemUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.StageBranch.Undo();
 
-    private void MenuItemRedo_OnClick(object? sender, RoutedEventArgs e)
-    {
-        
-    }
+    private void MenuItemRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.StageBranch.Redo();
     
     
     private void ButtonRegenerateStageId_OnClick(object? sender, RoutedEventArgs e)
