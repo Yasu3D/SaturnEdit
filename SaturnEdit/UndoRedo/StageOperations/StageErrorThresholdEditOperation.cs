@@ -1,14 +1,17 @@
+using SaturnData.Notation.Core;
+using SaturnEdit.Systems;
+
 namespace SaturnEdit.UndoRedo.StageOperations;
 
-public class StageErrorThresholdEditOperation() : IOperation
+public class StageErrorThresholdEditOperation(JudgementGrade oldErrorThreshold, JudgementGrade newErrorThreshold) : IOperation
 {
     public void Revert()
     {
-        throw new System.NotImplementedException();
+        StageSystem.StageUpStage.ErrorThreshold = oldErrorThreshold;
     }
 
     public void Apply()
     {
-        throw new System.NotImplementedException();
+        StageSystem.StageUpStage.ErrorThreshold = newErrorThreshold;
     }
 }

@@ -1,14 +1,16 @@
+using SaturnEdit.Systems;
+
 namespace SaturnEdit.UndoRedo.StageOperations;
 
-public class StageHealthRecoveryEditOperation() : IOperation
+public class StageHealthRecoveryEditOperation(int oldHealthRecovery, int newHealthRecovery) : IOperation
 {
     public void Revert()
     {
-        throw new System.NotImplementedException();
+        StageSystem.StageUpStage.HealthRecovery = oldHealthRecovery;
     }
 
     public void Apply()
     {
-        throw new System.NotImplementedException();
+        StageSystem.StageUpStage.HealthRecovery = newHealthRecovery;
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -247,6 +248,78 @@ public partial class MainWindow : Window
 
         dialog.InitializeDialog();
         dialog.ShowDialog(Instance);
+    }
+    
+    public static async Task<bool> PromptFileMoveAndOverwrite(string sourceFilePath, string projectFilePath)
+    {
+        if (sourceFilePath != projectFilePath)
+        {
+            ModalDialogResult moveResult = await promptFileMove();
+            if (moveResult is ModalDialogResult.Tertiary or ModalDialogResult.Cancel) return false;
+
+            // File already exists in root directory. Prompt to overwrite files.
+            if (File.Exists(projectFilePath))
+            {
+                ModalDialogResult overwriteResult = await promptFileOverwrite();
+                if (overwriteResult is ModalDialogResult.Secondary or ModalDialogResult.Cancel) return false;
+            }
+            
+            if (moveResult is ModalDialogResult.Primary)
+            {
+                // Copy
+                File.Copy(sourceFilePath, projectFilePath, true);
+            }
+            else if (moveResult is ModalDialogResult.Secondary)
+            {
+                // Move
+                File.Move(sourceFilePath, projectFilePath, true);
+            }
+        }
+
+        return true;
+        
+        async Task<ModalDialogResult> promptFileMove()
+        {
+            if (Instance == null) return ModalDialogResult.Cancel;
+
+            ModalDialogWindow dialog = new()
+            {
+                DialogIcon = FluentIcons.Common.Icon.Warning,
+                WindowTitleKey = "ModalDialog.FileMovePrompt.Title",
+                HeaderKey = "ModalDialog.FileMovePrompt.Header",
+                ParagraphKey = "ModalDialog.FileMovePrompt.Paragraph",
+                ButtonPrimaryKey = "ModalDialog.FileMovePrompt.CopyFile",
+                ButtonSecondaryKey = "ModalDialog.FileMovePrompt.MoveFile",
+                ButtonTertiaryKey = "Generic.Cancel",
+            };
+            
+            dialog.Position = DialogPopupPosition(dialog.Width, dialog.Height);
+
+            dialog.InitializeDialog();
+            await dialog.ShowDialog(Instance);
+            return dialog.Result;
+        }
+        
+        async Task<ModalDialogResult> promptFileOverwrite()
+        {
+            if (Instance == null) return ModalDialogResult.Cancel;
+
+            ModalDialogWindow dialog = new()
+            {
+                DialogIcon = FluentIcons.Common.Icon.Warning,
+                WindowTitleKey = "ModalDialog.FileOverwritePrompt.Title",
+                HeaderKey = "ModalDialog.FileOverwritePrompt.Header",
+                ParagraphKey = "ModalDialog.FileOverwritePrompt.Paragraph",
+                ButtonPrimaryKey = "ModalDialog.FileOverwritePrompt.OverwriteFile",
+                ButtonSecondaryKey = "Generic.Cancel",
+            };
+            
+            dialog.Position = DialogPopupPosition(dialog.Width, dialog.Height);
+
+            dialog.InitializeDialog();
+            await dialog.ShowDialog(Instance);
+            return dialog.Result;
+        }
     }
 #endregion Methods
 

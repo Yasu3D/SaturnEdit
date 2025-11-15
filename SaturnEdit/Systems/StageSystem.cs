@@ -48,6 +48,8 @@ public static class StageSystem
             SettingsSystem.EditorSettings.RecentStageFiles.Remove(path);
             SettingsSystem.EditorSettings.AddRecentStageFile(path);
             
+            StageLoaded?.Invoke(null, EventArgs.Empty);
+            
             IsSaved = true;
         }
         catch (Exception ex)

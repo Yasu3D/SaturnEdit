@@ -408,8 +408,8 @@
                                      Foreground="{DynamicResource ForegroundWarning}">
                         <ToolTip.Tip>
                                 <StackPanel>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
                         </ToolTip.Tip>
                     </icon:FluentIcon>
@@ -446,8 +446,8 @@
                                      Foreground="{DynamicResource ForegroundWarning}">
                         <ToolTip.Tip>
                                 <StackPanel>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
                         </ToolTip.Tip>
                     </icon:FluentIcon>
@@ -484,8 +484,8 @@
                                      Foreground="{DynamicResource ForegroundWarning}">
                         <ToolTip.Tip>
                                 <StackPanel>
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning}" />
-                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.FileNotFoundWarning.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
+                                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}" Foreground="{DynamicResource ForegroundSecondary}" />
                                 </StackPanel>
                         </ToolTip.Tip>
                     </icon:FluentIcon>

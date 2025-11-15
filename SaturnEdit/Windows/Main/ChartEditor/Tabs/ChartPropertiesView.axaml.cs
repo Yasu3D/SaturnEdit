@@ -2,18 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
-using FluentIcons.Common;
 using SaturnData.Notation.Core;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.EntryOperations;
-using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -31,80 +28,6 @@ public partial class ChartPropertiesView : UserControl
     }
 
     private bool blockEvents = false;
-    
-#region Methods
-    private async Task<bool> PromptFileMoveAndOverwrite(string sourceFilePath, string projectFilePath)
-    {
-        if (sourceFilePath != projectFilePath)
-        {
-            ModalDialogResult moveResult = await promptFileMove();
-            if (moveResult is ModalDialogResult.Tertiary or ModalDialogResult.Cancel) return false;
-
-            // File already exists in root directory. Prompt to overwrite files.
-            if (File.Exists(projectFilePath))
-            {
-                ModalDialogResult overwriteResult = await promptFileOverwrite();
-                if (overwriteResult is ModalDialogResult.Secondary or ModalDialogResult.Cancel) return false;
-            }
-            
-            if (moveResult is ModalDialogResult.Primary)
-            {
-                // Copy
-                File.Copy(sourceFilePath, projectFilePath, true);
-            }
-            else if (moveResult is ModalDialogResult.Secondary)
-            {
-                // Move
-                File.Move(sourceFilePath, projectFilePath, true);
-            }
-        }
-
-        return true;
-        
-        async Task<ModalDialogResult> promptFileMove()
-        {
-            if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
-
-            ModalDialogWindow dialog = new()
-            {
-                DialogIcon = Icon.Warning,
-                WindowTitleKey = "ModalDialog.FileMovePrompt.Title",
-                HeaderKey = "ModalDialog.FileMovePrompt.Header",
-                ParagraphKey = "ModalDialog.FileMovePrompt.Paragraph",
-                ButtonPrimaryKey = "ModalDialog.FileMovePrompt.CopyFile",
-                ButtonSecondaryKey = "ModalDialog.FileMovePrompt.MoveFile",
-                ButtonTertiaryKey = "Generic.Cancel",
-            };
-            
-            dialog.Position = MainWindow.DialogPopupPosition(dialog.Width, dialog.Height);
-
-            dialog.InitializeDialog();
-            await dialog.ShowDialog(rootWindow);
-            return dialog.Result;
-        }
-        
-        async Task<ModalDialogResult> promptFileOverwrite()
-        {
-            if (VisualRoot is not Window rootWindow) return ModalDialogResult.Cancel;
-
-            ModalDialogWindow dialog = new()
-            {
-                DialogIcon = Icon.Warning,
-                WindowTitleKey = "ModalDialog.FileOverwritePrompt.Title",
-                HeaderKey = "ModalDialog.FileOverwritePrompt.Header",
-                ParagraphKey = "ModalDialog.FileOverwritePrompt.Paragraph",
-                ButtonPrimaryKey = "ModalDialog.FileOverwritePrompt.OverwriteFile",
-                ButtonSecondaryKey = "Generic.Cancel",
-            };
-            
-            dialog.Position = MainWindow.DialogPopupPosition(dialog.Width, dialog.Height);
-
-            dialog.InitializeDialog();
-            await dialog.ShowDialog(rootWindow);
-            return dialog.Result;
-        }
-    }
-#endregion Methods
 
 #region System Event Delegates
     private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
@@ -690,7 +613,7 @@ public partial class ChartPropertiesView : UserControl
                 string pathFromRootDirectory = Path.Combine(ChartSystem.Entry.RootDirectory, filename);
 
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
-                if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
+                if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
                 UndoRedoSystem.ChartBranch.Push(new EntryJacketEditOperation(ChartSystem.Entry.JacketFile, filename));
             }
@@ -737,7 +660,7 @@ public partial class ChartPropertiesView : UserControl
                 string pathFromRootDirectory = Path.Combine(ChartSystem.Entry.RootDirectory, filename);
 
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
-                if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
+                if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
                 UndoRedoSystem.ChartBranch.Push(new EntryAudioEditOperation(ChartSystem.Entry.AudioFile, filename));
             }
@@ -784,14 +707,14 @@ public partial class ChartPropertiesView : UserControl
                 string pathFromRootDirectory = Path.Combine(ChartSystem.Entry.RootDirectory, filename);
 
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
-                if (!await PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
+                if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
                 
                 UndoRedoSystem.ChartBranch.Push(new EntryVideoEditOperation(ChartSystem.Entry.VideoFile, filename));
             }
         }
         catch (Exception ex)
         {
-            // don't throw
+            // Don't throw
             Console.WriteLine(ex);
         }
     }

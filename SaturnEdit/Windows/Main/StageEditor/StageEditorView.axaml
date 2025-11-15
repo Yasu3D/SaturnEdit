@@ -175,6 +175,21 @@
                     </ToolTip.Tip>
                     <icon:FluentIcon Icon="ArrowShuffle" />
                 </Button>
+                <icon:FluentIcon Grid.Row="2"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarning"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,10,0"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
 
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
@@ -192,7 +207,7 @@
                            Text="{DynamicResource StageEditor.Property.Icon}" />
                 <TextBox Grid.Row="2"
                          Grid.Column="2"
-                         Name="TextBoxStageIcon"
+                         Name="TextBoxStageIconPath"
                          Height="30"
                          LostFocus="TextBoxStageIcon_OnLostFocus" />
                 <Button Grid.Row="2"
@@ -200,7 +215,7 @@
                         Classes="Themed Square Outlined"
                         HorizontalAlignment="Left"
                         Margin="5,0,0,0"
-                        Click="ButtonStageIcon_OnClick">
+                        Click="ButtonPickStageIconFile_OnClick">
                     <ToolTip.Tip>
                         <TextBlock Text="{DynamicResource Generic.PickFile}" />
                     </ToolTip.Tip>
@@ -242,7 +257,8 @@
                          Grid.Column="2"
                          Name="TextBoxSongId1"
                          Height="30"
-                         Watermark="00000000-0000-0000-0000-000000000000" />
+                         Watermark="00000000-0000-0000-0000-000000000000" 
+                         LostFocus="TextBoxSongId_OnLostFocus"/>
                 <Button Grid.Row="0"
                         Grid.Column="3"
                         Name="ButtonPickChartFile1"
@@ -280,7 +296,8 @@
                          Grid.Column="2"
                          Name="TextBoxSongId2"
                          Height="30"
-                         Watermark="00000000-0000-0000-0000-000000000000" />
+                         Watermark="00000000-0000-0000-0000-000000000000"
+                         LostFocus="TextBoxSongId_OnLostFocus"/>
                 <Button Grid.Row="1"
                         Grid.Column="3"
                         Name="ButtonPickChartFile2"
@@ -317,7 +334,8 @@
                          Grid.Column="2"
                          Name="TextBoxSongId3"
                          Height="30"
-                         Watermark="00000000-0000-0000-0000-000000000000" />
+                         Watermark="00000000-0000-0000-0000-000000000000"
+                         LostFocus="TextBoxSongId_OnLostFocus"/>
                 <Button Grid.Row="2"
                         Grid.Column="3"
                         Name="ButtonPickChartFile3"

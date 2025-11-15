@@ -4,12 +4,16 @@ using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
+using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
-using SaturnEdit.Windows.Dialogs.ImportArgs;
+using SaturnEdit.UndoRedo;
+using SaturnEdit.UndoRedo.StageOperations;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.StageEditor;
@@ -22,8 +26,13 @@ public partial class StageEditorView : UserControl
 
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
+
+        UndoRedoSystem.StageBranch.OperationHistoryChanged += StageBranch_OnOperationHistoryChanged;
+        StageBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
+    private bool blockEvents = false;
+    
 #region Methods
     private async void File_New()
     {
@@ -277,6 +286,56 @@ public partial class StageEditorView : UserControl
             }
         });
     }
+    
+    private void StageBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
+
+            TextBoxStageId.Text = StageSystem.StageUpStage.Id;
+            TextBoxStageName.Text = StageSystem.StageUpStage.Name;
+            TextBoxStageIconPath.Text = StageSystem.StageUpStage.IconPath;
+
+            TextBoxSongId1.Text = StageSystem.StageUpStage.Song1.EntryId;
+            ToggleButtonSecret1.IsChecked = StageSystem.StageUpStage.Song1.Secret;
+            
+            TextBoxSongId2.Text = StageSystem.StageUpStage.Song2.EntryId;
+            ToggleButtonSecret2.IsChecked = StageSystem.StageUpStage.Song2.Secret;
+            
+            TextBoxSongId3.Text = StageSystem.StageUpStage.Song3.EntryId;
+            ToggleButtonSecret3.IsChecked = StageSystem.StageUpStage.Song3.Secret;
+
+            TextBoxHealth.Text = StageSystem.StageUpStage.Health.ToString(CultureInfo.InvariantCulture);
+            TextBoxHealthRecovery.Text = StageSystem.StageUpStage.HealthRecovery.ToString(CultureInfo.InvariantCulture);
+            ComboBoxErrorThreshold.SelectedIndex = StageSystem.StageUpStage.ErrorThreshold switch
+            {
+                JudgementGrade.Unjudged => 2,
+                JudgementGrade.Miss => 2,
+                JudgementGrade.Good => 1,
+                JudgementGrade.Great => 0,
+                JudgementGrade.Marvelous => 0,
+                _ => 0,
+            };
+            
+            bool iconExists = File.Exists(StageSystem.StageUpStage.AbsoluteIconPath);
+            IconFileNotFoundWarning.IsVisible = StageSystem.StageUpStage.AbsoluteIconPath != "" && !iconExists;
+            
+            try
+            {
+                ImageStageIcon.Source = iconExists ? new Bitmap(StageSystem.StageUpStage.AbsoluteIconPath) : null;
+                ImageStageIcon.IsVisible = iconExists;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                ImageStageIcon.IsVisible = false;
+                IconFileNotFoundWarning.IsVisible = true;
+            }
+            
+            blockEvents = false;
+        });
+    }
 #endregion System Event Handlers
     
 #region UI Event Handlers
@@ -343,54 +402,311 @@ public partial class StageEditorView : UserControl
     private void MenuItemRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.StageBranch.Redo();
     
     
-    private void ButtonRegenerateStageId_OnClick(object? sender, RoutedEventArgs e)
-    {
-        
-    }
-
-    private void ButtonStageIcon_OnClick(object? sender, RoutedEventArgs e)
-    {
-        
-    }
-    
     private void TextBoxStageId_OnLostFocus(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
+        if (TextBoxStageId == null) return;
         
+        string oldId = StageSystem.StageUpStage.Id;
+        string newId = TextBoxStageId.Text ?? "";
+        if (oldId == newId) return;
+        
+        UndoRedoSystem.StageBranch.Push(new StageIdEditOperation(StageSystem.StageUpStage.Id, newId));
     }
 
+    private void ButtonRegenerateStageId_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+
+        string oldId = StageSystem.StageUpStage.Id;
+        string newId = Guid.NewGuid().ToString();
+        if (oldId == newId) return;
+
+        UndoRedoSystem.StageBranch.Push(new StageIdEditOperation(oldId, newId));
+    }
+    
     private void TextBoxStageName_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        
-    }
+        if (blockEvents) return;
+        if (TextBoxStageName == null) return;
 
+        string oldName = StageSystem.StageUpStage.Name;
+        string newName = TextBoxStageName.Text ?? "";
+        if (oldName == newName) return;
+        
+        UndoRedoSystem.StageBranch.Push(new StageNameEditOperation(oldName, newName));
+    }
+    
     private void TextBoxStageIcon_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        
+        if (blockEvents) return;
+        if (TextBoxStageIconPath == null) return;
+
+        string oldIconPath = StageSystem.StageUpStage.IconPath;
+        string newIconPath = TextBoxStageIconPath.Text ?? "";
+        if (oldIconPath == newIconPath)
+        {
+            // Refresh UI in case the file changed, but don't push unnecessary operation.
+            StageBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+            return;
+        }
+
+        UndoRedoSystem.StageBranch.Push(new StageIconPathEditOperation(oldIconPath, newIconPath));
+    }
+    
+    private async void ButtonPickStageIconFile_OnClick(object? sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (blockEvents) return;
+            
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return;
+
+            // Open file picker.
+            IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
+            {
+                AllowMultiple = false,
+                FileTypeFilter =
+                [
+                    new("Image Files")
+                    {
+                        Patterns = ["*.png", "*.jpeg*", "*.jpg"],
+                    },
+                ],
+            });
+            if (files.Count != 1) return;
+            
+            if (StageSystem.StageUpStage.AbsoluteIconPath == files[0].Path.LocalPath)
+            {
+                // Refresh UI in case the file changed, but don't push unnecessary operation.
+                StageBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+                return;
+            }
+            
+            if (StageSystem.StageUpStage.AbsoluteSourcePath == "")
+            {
+                // Define new source path.
+                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "stage.toml");
+
+                StageSourcePathEditOperation op0 = new(StageSystem.StageUpStage.AbsoluteSourcePath, newSourcePath);
+                StageIconPathEditOperation op1 = new(StageSystem.StageUpStage.IconPath, Path.GetFileName(files[0].Path.LocalPath));
+                
+                UndoRedoSystem.StageBranch.Push(new CompositeOperation([op0, op1]));
+            }
+            else
+            {
+                // Use existing root directory.
+                string filename = Path.GetFileName(files[0].Path.LocalPath);
+                string pathFromRootDirectory = Path.Combine(Path.GetDirectoryName(StageSystem.StageUpStage.AbsoluteSourcePath) ?? "", filename);
+
+                // Prompt user to move or copy the selected file if it's not in the root directory yet.
+                if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
+
+                UndoRedoSystem.StageBranch.Push(new StageIconPathEditOperation(StageSystem.StageUpStage.IconPath, filename));
+            }
+        }
+        catch (Exception ex)
+        {
+            // don't throw
+            Console.WriteLine(ex);
+        }
     }
 
-    private void ButtonPickChartFile_OnClick(object? sender, RoutedEventArgs e)
+    private void TextBoxSongId_OnLostFocus(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
+        if (sender is not TextBox textBox) return;
+
+        int index = -1;
+        string oldEntryId = "";
+        string newEntryId = textBox.Text ?? "";
         
+        if      (textBox == TextBoxSongId1)
+        {
+            index = 0;
+            oldEntryId = StageSystem.StageUpStage.Song1.EntryId;
+        }
+        else if (textBox == TextBoxSongId2)
+        {
+            index = 1;
+            oldEntryId = StageSystem.StageUpStage.Song2.EntryId;
+        }
+        else if (textBox == TextBoxSongId3)
+        {
+            index = 2;
+            oldEntryId = StageSystem.StageUpStage.Song3.EntryId;
+        }
+
+        if (index == -1) return;
+        if (oldEntryId == newEntryId) return;
+
+        UndoRedoSystem.StageBranch.Push(new StageSongEntryIdEditOperation(index, oldEntryId, newEntryId));
+    }
+    
+    private async void ButtonPickChartFile_OnClick(object? sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (blockEvents) return;
+            if (sender is not Button button) return;
+
+            int index = -1;
+            string oldEntryId = "";
+
+            if      (button == ButtonPickChartFile1)
+            {
+                index = 0;
+                oldEntryId = StageSystem.StageUpStage.Song1.EntryId;
+            }
+            else if (button == ButtonPickChartFile2)
+            {
+                index = 1;
+                oldEntryId = StageSystem.StageUpStage.Song2.EntryId;
+            }
+            else if (button == ButtonPickChartFile3)
+            {
+                index = 2;
+                oldEntryId = StageSystem.StageUpStage.Song3.EntryId;
+            }
+            
+            if (index == -1) return;
+        
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return;
+
+            // Open file picker.
+            IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
+            {
+                AllowMultiple = false,
+                FileTypeFilter =
+                [
+                    new("Saturn Chart Files")
+                    {
+                        Patterns = ["*.sat"],
+                    },
+                ],
+            });
+            if (files.Count != 1) return;
+
+            // Get Read Args
+            NotationReadArgs args = new();
+            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(files[0].Path.LocalPath);
+            if (formatVersion is FormatVersion.Unknown or FormatVersion.Mer) return;
+            
+            // Get Entry
+            Entry entry = NotationSerializer.ToEntry(files[0].Path.LocalPath, args, out _);
+            
+            string newEntryId = entry.Id;
+            if (oldEntryId == newEntryId) return;
+
+            UndoRedoSystem.StageBranch.Push(new StageSongEntryIdEditOperation(index, oldEntryId, newEntryId));
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
     }
 
     private void ToggleButtonSecret_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
+        if (sender is not ToggleButton button) return;
+
+        int index = -1;
+        bool oldSecret = false;
+        bool newSecret = button.IsChecked ?? false;
         
+        if      (button == ToggleButtonSecret1)
+        {
+            index = 0;
+            oldSecret = StageSystem.StageUpStage.Song1.Secret;
+        }
+        else if (button == ToggleButtonSecret2)
+        {
+            index = 1;
+            oldSecret = StageSystem.StageUpStage.Song2.Secret;
+        }
+        else if (button == ToggleButtonSecret3)
+        {
+            index = 2;
+            oldSecret = StageSystem.StageUpStage.Song3.Secret;
+        }
+
+        if (index == -1) return;
+        if (oldSecret == newSecret) return;
+
+        UndoRedoSystem.StageBranch.Push(new StageSongSecretEditOperation(index, oldSecret, newSecret));
     }
 
     private void TextBoxHealth_OnLostFocus(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
+        if (TextBoxHealth == null) return;
+
+        try
+        {
+            int oldHealth = StageSystem.StageUpStage.Health;
+            int newHealth = Convert.ToInt32(TextBoxHealth.Text ?? "", CultureInfo.InvariantCulture);
+            if (oldHealth == newHealth) return;
         
+            UndoRedoSystem.StageBranch.Push(new StageHealthEditOperation(oldHealth, newHealth));
+        }
+        catch (Exception ex)
+        {
+            // Reset Value
+            UndoRedoSystem.StageBranch.Push(new StageHealthEditOperation(StageSystem.StageUpStage.Health, 100));
+
+            if (ex is not (FormatException or OverflowException))
+            {
+                Console.WriteLine(ex);
+            }
+        }
     }
 
     private void TextBoxHealthRecovery_OnLostFocus(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
+        if (TextBoxHealthRecovery == null) return;
+
+        try
+        {
+            int oldHealthRecovery = StageSystem.StageUpStage.HealthRecovery;
+            int newHealthRecovery = Convert.ToInt32(TextBoxHealthRecovery.Text ?? "", CultureInfo.InvariantCulture);
+            if (oldHealthRecovery == newHealthRecovery) return;
         
+            UndoRedoSystem.StageBranch.Push(new StageHealthRecoveryEditOperation(oldHealthRecovery, newHealthRecovery));
+        }
+        catch (Exception ex)
+        {
+            // Reset Value
+            UndoRedoSystem.StageBranch.Push(new StageHealthRecoveryEditOperation(StageSystem.StageUpStage.HealthRecovery, 10));
+
+            if (ex is not (FormatException or OverflowException))
+            {
+                Console.WriteLine(ex);
+            }
+        }
     }
 
     private void ComboBoxErrorThreshold_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        if (blockEvents) return;
+        if (ComboBoxErrorThreshold == null) return;
+
+        JudgementGrade oldErrorThreshold = StageSystem.StageUpStage.ErrorThreshold;
+        JudgementGrade newErrorThreshold = ComboBoxErrorThreshold.SelectedIndex switch
+        {
+            0 => JudgementGrade.Great,
+            1 => JudgementGrade.Good,
+            2 => JudgementGrade.Miss,
+            _ => JudgementGrade.Miss,
+        };
         
+        if (oldErrorThreshold == newErrorThreshold) return;
+        
+        UndoRedoSystem.StageBranch.Push(new StageErrorThresholdEditOperation(oldErrorThreshold, newErrorThreshold));
     }
 #endregion UI Event Handlers
 }

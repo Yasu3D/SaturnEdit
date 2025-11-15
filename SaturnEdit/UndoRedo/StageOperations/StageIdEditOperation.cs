@@ -1,14 +1,16 @@
+using SaturnEdit.Systems;
+
 namespace SaturnEdit.UndoRedo.StageOperations;
 
-public class StageIdEditOperation() : IOperation
+public class StageIdEditOperation(string oldId, string newId) : IOperation
 {
     public void Revert()
     {
-        throw new System.NotImplementedException();
+        StageSystem.StageUpStage.Id = oldId;
     }
 
     public void Apply()
     {
-        throw new System.NotImplementedException();
+        StageSystem.StageUpStage.Id = newId;
     }
 }

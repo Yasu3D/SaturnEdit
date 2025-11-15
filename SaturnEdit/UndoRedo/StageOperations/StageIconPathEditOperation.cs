@@ -1,16 +1,17 @@
 using System;
+using SaturnEdit.Systems;
 
 namespace SaturnEdit.UndoRedo.StageOperations;
 
-public class StageIconPathEditOperation(string oldPath, string newPath) : IOperation
+public class StageIconPathEditOperation(string oldIconPath, string newIconPath) : IOperation
 {
     public void Revert()
     {
-        throw new NotImplementedException();
+        StageSystem.StageUpStage.IconPath = oldIconPath;
     }
 
     public void Apply()
     {
-        throw new NotImplementedException();
+        StageSystem.StageUpStage.IconPath = newIconPath;
     }
 }

@@ -1,14 +1,16 @@
+using SaturnEdit.Systems;
+
 namespace SaturnEdit.UndoRedo.StageOperations;
 
-public class StageSourcePathEditOperation() : IOperation
+public class StageSourcePathEditOperation(string oldPath, string newPath) : IOperation
 {
     public void Revert()
     {
-        throw new System.NotImplementedException();
+        StageSystem.StageUpStage.AbsoluteSourcePath = oldPath;
     }
 
     public void Apply()
     {
-        throw new System.NotImplementedException();
+        StageSystem.StageUpStage.AbsoluteSourcePath = newPath;
     }
 }

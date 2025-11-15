@@ -145,8 +145,6 @@ ChartEditor.ChartProperties.ToolTip.AutoClearThreshold,Auto Clear Threshold
 ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description,Automatically determine the clear threshold based on the chart's difficulty.
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd,Auto Chart End
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description,Automatically determine when a chart should end and transition to the results screen.
-ChartEditor.ChartProperties.FileNotFoundWarning,File not found.
-ChartEditor.ChartProperties.FileNotFoundWarning.Description,Ensure that all media files are in the same directory as the chart file.
 ChartEditor.Proofreader,Proofreader
 ChartEditor.Proofreader.Criteria,Criteria
 ChartEditor.Proofreader.Problem,Problem
@@ -607,6 +605,8 @@ ModalDialog.FileWriteError.Paragraph,"Data has not been saved. Please confirm th
 ModalDialog.ZigZagHoldWarning.Title,Zig-Zag Hold Error
 ModalDialog.ZigZagHoldWarning.Header,Unable to create a Zig-Zag Hold Note.
 ModalDialog.ZigZagHoldWarning.Paragraph,Please select one or more hold notes or hold points you wish to convert.
+Generic.FileNotFoundWarning,File not found.
+Generic.FileNotFoundWarning.Description,Ensure that all media files are in the same directory as the file referencing them.
 Generic.Enabled,Enabled
 Generic.Disabled,Disabled
 Generic.Cancel,Cancel
