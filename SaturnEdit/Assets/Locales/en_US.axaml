@@ -384,6 +384,7 @@
     <system:String x:Key="Dock.Window.Title">SaturnEdit — Dock Window</system:String>
     <system:String x:Key="Menu.File">File</system:String>
     <system:String x:Key="Menu.File.New">New</system:String>
+    <system:String x:Key="Menu.File.NewEllipsis">New...</system:String>
     <system:String x:Key="Menu.File.Open">Open...</system:String>
     <system:String x:Key="Menu.File.Recent">Recent</system:String>
     <system:String x:Key="Menu.File.ClearRecent">Clear Recent</system:String>

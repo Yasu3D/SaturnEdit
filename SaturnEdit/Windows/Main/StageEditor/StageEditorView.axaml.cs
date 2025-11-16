@@ -246,51 +246,6 @@ public partial class StageEditorView : UserControl
 
             MenuItemUndo.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"].ToKeyGesture();
             MenuItemRedo.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"].ToKeyGesture();
-
-            // Update recent file list.
-            foreach (object? obj in MenuItemRecent.Items)
-            {
-                if (obj is not MenuItem item) continue;
-                item.Click -= MenuItemOpenRecent_OnClick;
-            }
-            
-            MenuItemRecent.Items.Clear();
-
-            if (SettingsSystem.EditorSettings.RecentStageFiles.Count != 0)
-            {
-                // Reverse loop so most recent file appears at the top.
-                for (int i = SettingsSystem.EditorSettings.RecentStageFiles.Count - 1; i >= 0; i--)
-                {
-                    try
-                    {
-                        string file = SettingsSystem.EditorSettings.RecentStageFiles[i];
-                        string trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
-
-                        MenuItem item = new()
-                        {
-                            Icon = (i + 1).ToString(CultureInfo.InvariantCulture),
-                            Header = new TextBlock { Text = trimmed },
-                            Tag = file,
-                        };
-
-                        item.Click += MenuItemOpenRecent_OnClick;
-                        
-                        MenuItemRecent.Items.Add(item);
-                    }
-                    catch (Exception ex)
-                    {
-                        // Don't throw.
-                        Console.WriteLine(ex);
-                    }
-                }
-                
-                MenuItemRecent.Items.Add(new Separator());
-                MenuItemRecent.Items.Add(MenuItemClearRecent);
-            }
-            else
-            {
-                MenuItemRecent.IsEnabled = false;
-            }
         });
     }
     
@@ -477,55 +432,6 @@ public partial class StageEditorView : UserControl
     private void MenuItemNew_OnClick(object? sender, RoutedEventArgs e) => File_New();
 
     private void MenuItemOpen_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open();
-
-    private void MenuItemClearRecent_OnClick(object? sender, RoutedEventArgs e) => SettingsSystem.EditorSettings.ClearRecentStageFiles();
-
-    private async void MenuItemOpenRecent_OnClick(object? sender, RoutedEventArgs e)
-    {
-        try
-        {
-            if (sender is not MenuItem item) return;
-            if (item.Tag is not string path) return;
-            
-            if (!File.Exists(path))
-            {
-                SettingsSystem.EditorSettings.RemoveRecentStageFile(path);
-                return;
-            }
-        
-            TopLevel? topLevel = TopLevel.GetTopLevel(this);
-            if (topLevel == null) return;
-
-            // Prompt to save an unsaved stage first.
-            if (!StageSystem.IsSaved)
-            {
-                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Stage);
-
-                // Cancel
-                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
-
-                // Save
-                if (result is ModalDialogResult.Primary)
-                {
-                    bool success = await File_Save();
-
-                    // Abort opening new file if save was unsuccessful.
-                    if (!success) return;
-                }
-
-                // Don't Save
-                // Continue as normal.
-            }
-            
-            // Read stage from file.
-            StageSystem.ReadStage(path);
-        }
-        catch (Exception ex)
-        {
-            // Don't throw.
-            Console.WriteLine(ex);
-        }
-    }
     
     private void MenuItemSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_Save();
 

@@ -1,5 +1,5 @@
 using System;
-using System.Globalization;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -7,10 +7,11 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
+using SaturnData.Content.Cosmetics;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
-using SaturnEdit.Windows.Dialogs.ImportArgs;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
+using ConsoleColor = SaturnData.Content.Cosmetics.ConsoleColor;
 
 namespace SaturnEdit.Windows.CosmeticsEditor;
 
@@ -23,35 +24,248 @@ public partial class CosmeticsEditorView : UserControl
         KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
         KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
         
-        AddHandler(DragDrop.DropEvent, Control_Drop);
-        
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
     }
 
 #region Methods
-    // TODO.
-    private async Task<bool> File_Open()
+    private async void File_New(CosmeticType cosmeticType)
     {
-        return false;
-    }
+        // Prompt to save an unsaved cosmetic first.
+        if (!CosmeticSystem.IsSaved)
+        {
+            ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Cosmetic);
 
-    // TODO.
+            // Cancel
+            if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
+
+            // Save
+            if (result is ModalDialogResult.Primary)
+            {
+                bool success = await File_Save();
+
+                // Abort opening new file if save was unsuccessful.
+                if (!success) return;
+            }
+
+            // Don't Save
+            // Continue as normal.
+        }
+        
+        CosmeticSystem.NewCosmetic(cosmeticType);
+    }
+    
+    private async Task<bool> File_Open(CosmeticType cosmeticType)
+    {
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return false;
+
+            // Prompt to save an unsaved cosmetic first.
+            if (!CosmeticSystem.IsSaved)
+            {
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Cosmetic);
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return false;
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort opening new file if save was unsuccessful.
+                    if (!success) return false;
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            // Open file picker.
+            string fileTypeFilterName = cosmeticType switch
+            {
+                CosmeticType.ConsoleColor => "Console Color Files",
+                CosmeticType.Emblem => "Emblem Files",
+                CosmeticType.Icon => "Icon Files",
+                CosmeticType.Navigator => "Navigator Files",
+                CosmeticType.NoteSound => "Note Sound Files",
+                CosmeticType.Plate => "Plate Files",
+                CosmeticType.SystemMusic => "System Music Files",
+                CosmeticType.SystemSound => "System Sound Files",
+                CosmeticType.Title => "Title Files",
+                _ => throw new ArgumentOutOfRangeException(nameof(cosmeticType), cosmeticType, null),
+            };
+            
+            IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
+            {
+                AllowMultiple = false,
+                FileTypeFilter =
+                [
+                    new(fileTypeFilterName)
+                    {
+                        Patterns = ["*.toml"],
+                    },
+                ],
+            });
+            if (files.Count != 1) return false;
+            
+            // Read cosmetic from file.
+            CosmeticSystem.ReadCosmetic(files[0].Path.LocalPath, cosmeticType);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
+    }
+    
     public async Task<bool> File_Save()
     {
-        return false;
-    }
+        try
+        {
+            // Redirect to 'Save As' if cosmetic doesn't have a file defined yet.
+            if (!File.Exists(CosmeticSystem.CosmeticItem.AbsoluteSourcePath))
+            {
+                return await File_SaveAs();
+            }
 
-    // TODO.
+            // Write cosmetic to file.
+            if (!CosmeticSystem.WriteCosmetic(CosmeticSystem.CosmeticItem.AbsoluteSourcePath, true, false))
+            {
+                MainWindow.ShowFileWriteError();
+                return false;
+            }
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            MainWindow.ShowFileWriteError();
+            return false;
+        }
+    }
+    
     private async Task<bool> File_SaveAs()
     {
-        return false;
-    }
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return false;
 
-    // TODO.
+            // Open file picker.
+            string suggestedFileName = CosmeticSystem.CosmeticItem switch
+            {
+                ConsoleColor => "console_color.toml",
+                Emblem => "emblem.toml",
+                Icon => "icon.toml",
+                Navigator => "navigator.toml",
+                NoteSound => "note_sound.toml",
+                Plate => "plate.toml",
+                SystemMusic => "system_music.toml",
+                SystemSound => "system_sound.toml",
+                Title => "title.toml",
+                _ => "cosmetic.toml",
+            };
+            
+            string fileTypeChoiceName = CosmeticSystem.CosmeticItem switch
+            {
+                ConsoleColor => "Console Color File",
+                Emblem => "Emblem File",
+                Icon => "Icon File",
+                Navigator => "Navigator File",
+                NoteSound => "Note Sound File",
+                Plate => "Plate File",
+                SystemMusic => "System Music File",
+                SystemSound => "System Sound File",
+                Title => "Title File",
+                _ => "Cosmetic File",
+            };
+
+            IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(new()
+            {
+                DefaultExtension = ".toml",
+                SuggestedFileName = suggestedFileName,
+                FileTypeChoices =
+                [
+                    new(fileTypeChoiceName)
+                    {
+                        Patterns = ["*.toml"],
+                    },
+                ],
+            });
+
+            if (file == null) return false;
+
+            // Write cosmetic to file.
+            if (!CosmeticSystem.WriteCosmetic(file.Path.LocalPath, true, true))
+            {
+                MainWindow.ShowFileWriteError();
+                return false;
+            }
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            MainWindow.ShowFileWriteError();
+            return false;
+        }
+    }
+    
     private async Task<bool> File_ReloadFromDisk()
     {
-        return false;
+        try
+        {
+            if (!File.Exists(CosmeticSystem.CosmeticItem.AbsoluteSourcePath)) return false;
+
+            // Prompt to save an unsaved cosmetic first.
+            if (!CosmeticSystem.IsSaved)
+            {
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Cosmetic);
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return false;
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort opening new file if save was unsuccessful.
+                    if (!success) return false;
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            CosmeticType cosmeticType = CosmeticSystem.CosmeticItem switch
+            {
+                ConsoleColor => CosmeticType.ConsoleColor,
+                Emblem => CosmeticType.Emblem,
+                Icon => CosmeticType.Icon,
+                Navigator => CosmeticType.Navigator,
+                NoteSound => CosmeticType.NoteSound,
+                Plate => CosmeticType.Plate,
+                SystemMusic => CosmeticType.SystemMusic,
+                SystemSound => CosmeticType.SystemSound,
+                Title => CosmeticType.Title,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
+            
+            CosmeticSystem.ReadCosmetic(CosmeticSystem.CosmeticItem.AbsoluteSourcePath, cosmeticType);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
     }
 
     private void File_Quit()
@@ -66,7 +280,6 @@ public partial class CosmeticsEditorView : UserControl
     {
         Dispatcher.UIThread.Post(() =>
         {
-            MenuItemOpen.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Open"].ToKeyGesture();
             MenuItemSave.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Save"].ToKeyGesture();
             MenuItemSaveAs.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.SaveAs"].ToKeyGesture();
             MenuItemReloadFromDisk.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.ReloadFromDisk"].ToKeyGesture();
@@ -75,51 +288,6 @@ public partial class CosmeticsEditorView : UserControl
 
             MenuItemUndo.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"].ToKeyGesture();
             MenuItemRedo.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"].ToKeyGesture();
-
-            // Update recent file list.
-            foreach (object? obj in MenuItemRecent.Items)
-            {
-                if (obj is not MenuItem item) continue;
-                item.Click -= MenuItemOpenRecent_OnClick;
-            }
-            
-            MenuItemRecent.Items.Clear();
-
-            if (SettingsSystem.EditorSettings.RecentCosmeticFiles.Count != 0)
-            {
-                // Reverse loop so most recent file appears at the top.
-                for (int i = SettingsSystem.EditorSettings.RecentCosmeticFiles.Count - 1; i >= 0; i--)
-                {
-                    try
-                    {
-                        string file = SettingsSystem.EditorSettings.RecentCosmeticFiles[i];
-                        string trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
-
-                        MenuItem item = new()
-                        {
-                            Icon = (i + 1).ToString(CultureInfo.InvariantCulture),
-                            Header = new TextBlock { Text = trimmed },
-                            Tag = file,
-                        };
-
-                        item.Click += MenuItemOpenRecent_OnClick;
-                        
-                        MenuItemRecent.Items.Add(item);
-                    }
-                    catch (Exception ex)
-                    {
-                        // Don't throw.
-                        Console.WriteLine(ex);
-                    }
-                }
-                
-                MenuItemRecent.Items.Add(new Separator());
-                MenuItemRecent.Items.Add(MenuItemClearRecent);
-            }
-            else
-            {
-                MenuItemRecent.IsEnabled = false;
-            }
         });
     }
 #endregion System Event Handlers
@@ -135,13 +303,8 @@ public partial class CosmeticsEditorView : UserControl
         if (KeyDownBlacklist.IsInvalidState()) return;
         
         Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
-        
-        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Open"]))
-        {
-            _ = File_Open();
-            e.Handled = true;
-        }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Save"]))
+
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Save"]))
         {
             _ = File_Save();
             e.Handled = true;
@@ -180,108 +343,27 @@ public partial class CosmeticsEditorView : UserControl
         
         e.Handled = true;
     }
-
-    private async void Control_Drop(object? sender, DragEventArgs e)
-    {
-        try
-        {
-            TopLevel? topLevel = TopLevel.GetTopLevel(this);
-            if (topLevel == null)
-            {
-                e.Handled = true;
-                return;
-            }
-            
-            IStorageItem? file = e.DataTransfer.TryGetFile();
-
-            // TODO
-
-            e.Handled = true;
-        }
-        catch (Exception ex)
-        {
-            // Don't throw.
-            Console.WriteLine(ex);
-        }
-    }
     
     
-    private void MenuItemNewConsoleColor_OnClick(object? sender, RoutedEventArgs e)
-    {
-        // TODO
-    }
-
-    private void MenuItemNewEmblem_OnClick(object? sender, RoutedEventArgs e)
-    {
-        // TODO
-    }
-
-    private void MenuItemNewIcon_OnClick(object? sender, RoutedEventArgs e)
-    {
-        // TODO
-    }
-
-    private void MenuItemNewNavigator_OnClick(object? sender, RoutedEventArgs e)
-    {
-        // TODO
-    }
-
-    private void MenuItemNewNoteSound_OnClick(object? sender, RoutedEventArgs e)
-    {
-        // TODO
-    }
-
-    private void MenuItemNewPlate_OnClick(object? sender, RoutedEventArgs e)
-    {
-        // TODO
-    }
-
-    private void MenuItemNewSystemMusic_OnClick(object? sender, RoutedEventArgs e)
-    {
-        // TODO
-    }
-
-    private void MenuItemNewSystemSound_OnClick(object? sender, RoutedEventArgs e)
-    {
-        // TODO
-    }
-
-    private void MenuItemNewTitle_OnClick(object? sender, RoutedEventArgs e)
-    {
-        // TODO
-    }
-
-    private void MenuItemOpen_OnClick(object? sender, RoutedEventArgs e)
-    {
-        // TODO
-    }
-
-    private void MenuItemClearRecent_OnClick(object? sender, RoutedEventArgs e) => SettingsSystem.EditorSettings.ClearRecentCosmeticFiles();
-
-    private async void MenuItemOpenRecent_OnClick(object? sender, RoutedEventArgs e)
-    {
-        try
-        {
-            if (sender is not MenuItem item) return;
-            if (item.Tag is not string path) return;
-            
-            if (!File.Exists(path))
-            {
-                SettingsSystem.EditorSettings.RemoveRecentCosmeticFile(path);
-                return;
-            }
-        
-            TopLevel? topLevel = TopLevel.GetTopLevel(this);
-            if (topLevel == null) return;
-            
-            // TODO.
-        }
-        catch (Exception ex)
-        {
-            // Don't throw.
-            Console.WriteLine(ex);
-        }
-    }
+    private void MenuItemNewConsoleColor_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.ConsoleColor);
+    private void MenuItemNewEmblem_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.Emblem);
+    private void MenuItemNewIcon_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.Icon);
+    private void MenuItemNewNavigator_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.Navigator);
+    private void MenuItemNewNoteSound_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.NoteSound);
+    private void MenuItemNewPlate_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.Plate);
+    private void MenuItemNewSystemMusic_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.SystemMusic);
+    private void MenuItemNewSystemSound_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.SystemSound);
+    private void MenuItemNewTitle_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.Title);
+    
+    private void MenuItemOpenConsoleColor_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.ConsoleColor);
+    private void MenuItemOpenEmblem_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.Emblem);
+    private void MenuItemOpenIcon_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.Icon);
+    private void MenuItemOpenNavigator_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.Navigator);
+    private void MenuItemOpenNoteSound_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.NoteSound);
+    private void MenuItemOpenPlate_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.Plate);
+    private void MenuItemOpenSystemMusic_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.SystemMusic);
+    private void MenuItemOpenSystemSound_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.SystemSound);
+    private void MenuItemOpenTitle_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.Title);
 
     private void MenuItemSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_Save();
 

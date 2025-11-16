@@ -44,9 +44,6 @@ public static class StageSystem
             
             StageUpStage = Toml.ToModel<StageUpStage>(data);
             StageUpStage.AbsoluteSourcePath = path;
-
-            SettingsSystem.EditorSettings.RecentStageFiles.Remove(path);
-            SettingsSystem.EditorSettings.AddRecentStageFile(path);
             
             StageLoaded?.Invoke(null, EventArgs.Empty);
             
@@ -63,7 +60,7 @@ public static class StageSystem
     /// Writes a stage to a file.
     /// </summary>
     /// <param name="path">Path to the file to write to.</param>
-    /// <param name="markAsSaved">Should the chart be marked as saved?</param>
+    /// <param name="markAsSaved">Should the stage be marked as saved?</param>
     /// <param name="updatePath">Should the <see cref="StageUpStage.AbsoluteSourcePath"/> get updated?</param>
     public static bool WriteStage(string path, bool markAsSaved, bool updatePath)
     {
@@ -82,9 +79,6 @@ public static class StageSystem
         if (updatePath)
         {
             StageUpStage.AbsoluteSourcePath = path;
-            
-            SettingsSystem.EditorSettings.RecentStageFiles.Remove(path);
-            SettingsSystem.EditorSettings.AddRecentStageFile(path);
         }
         
         IsSaved = markAsSaved || IsSaved;

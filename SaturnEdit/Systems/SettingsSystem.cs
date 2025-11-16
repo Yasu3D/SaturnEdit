@@ -309,48 +309,6 @@ public class EditorSettings
         RecentChartFiles.Clear();
         PropertyChanged?.Invoke(null, EventArgs.Empty);
     }
-    
-    
-    public List<string> RecentStageFiles { get; set; } = [];
-    
-    public void AddRecentStageFile(string path)
-    {
-        RecentStageFiles.Add(path);
-        PropertyChanged?.Invoke(null, EventArgs.Empty);
-    }
-
-    public void RemoveRecentStageFile(string path)
-    {
-        RecentStageFiles.Remove(path);
-        PropertyChanged?.Invoke(null, EventArgs.Empty);
-    }
-    
-    public void ClearRecentStageFiles()
-    {
-        RecentStageFiles.Clear();
-        PropertyChanged?.Invoke(null, EventArgs.Empty);
-    }
-    
-    
-    public List<string> RecentCosmeticFiles { get; set; } = [];
-    
-    public void AddRecentCosmeticFile(string path)
-    {
-        RecentCosmeticFiles.Add(path);
-        PropertyChanged?.Invoke(null, EventArgs.Empty);
-    }
-
-    public void RemoveRecentCosmeticFile(string path)
-    {
-        RecentCosmeticFiles.Remove(path);
-        PropertyChanged?.Invoke(null, EventArgs.Empty);
-    }
-    
-    public void ClearRecentCosmeticFiles()
-    {
-        RecentCosmeticFiles.Clear();
-        PropertyChanged?.Invoke(null, EventArgs.Empty);
-    }
 }
 
 public class AudioSettings
