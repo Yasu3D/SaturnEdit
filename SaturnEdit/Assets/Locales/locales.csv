@@ -364,6 +364,12 @@ CosmeticEditor.Type.Plate,Plate
 CosmeticEditor.Type.SystemMusic,System Music
 CosmeticEditor.Type.SystemSound,System Sound
 CosmeticEditor.Type.Title,Title
+CosmeticEditor.Property.Id,Cosmetic Id
+CosmeticEditor.Property.Name,Cosmetic Name
+CosmeticEditor.Property.Author,Cosmetic Author
+CosmeticEditor.Property.Rarity,Cosmetic Rarity
+CosmeticEditor.ToolTip.GenerateNewId,Generate New Id
+CosmeticEditor.ToolTip.GenerateNewId.Description,Generates a new UUID to use as the Cosmetic Id.
 Main.Window.Title,SaturnEdit — Main Window
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.

@@ -11,6 +11,8 @@ public static class UndoRedoSystem
         ChartSystem.ChartLoaded += OnChartLoaded;
 
         StageSystem.StageLoaded += OnStageLoaded;
+
+        CosmeticSystem.CosmeticLoaded += OnCosmeticLoaded;
     }
 
     /// <summary>
@@ -32,5 +34,7 @@ public static class UndoRedoSystem
     private static void OnChartLoaded(object? sender, EventArgs e) => ChartBranch.Clear();
 
     private static void OnStageLoaded(object? sender, EventArgs e) => StageBranch.Clear();
+
+    private static void OnCosmeticLoaded(object? sender, EventArgs e) => CosmeticBranch.Clear();
 #endregion System Event Delegates
 }

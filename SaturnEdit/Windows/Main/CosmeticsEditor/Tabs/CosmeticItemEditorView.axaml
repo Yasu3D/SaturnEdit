@@ -1,0 +1,76 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="SaturnEdit.Windows.Main.CosmeticsEditor.Tabs.CosmeticItemEditorView">
+    <Grid RowDefinitions="40,40,40,40"
+          ColumnDefinitions="120,20,*,50"
+          Margin="15">
+        <Rectangle Grid.Row="0"
+                   Grid.Column="1"
+                   Grid.RowSpan="4"
+                   Fill="{DynamicResource SeparatorPrimary}"
+                   Width="1"
+                   HorizontalAlignment="Left" />
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Property.Id}" />
+        <TextBox Grid.Row="0"
+                 Grid.Column="2"
+                 Name="TextBoxCosmeticId"
+                 Height="30"
+                 Watermark="00000000-0000-0000-0000-000000000000"
+                 LostFocus="TextBoxCosmeticId_OnLostFocus" />
+        <Button Grid.Row="0"
+                Grid.Column="3"
+                Classes="Themed Square Outlined"
+                HorizontalAlignment="Left"
+                Margin="5,0,0,0"
+                Click="ButtonRegenerateCosmeticId_OnClick">
+            <ToolTip.Tip>
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource CosmeticEditor.ToolTip.GenerateNewId}" />
+                    <TextBlock Text="{DynamicResource CosmeticEditor.ToolTip.GenerateNewId.Description}"
+                               Foreground="{DynamicResource ForegroundSecondary}" />
+                </StackPanel>
+            </ToolTip.Tip>
+            <icon:FluentIcon Icon="ArrowShuffle" />
+        </Button>
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Property.Name}" />
+        <TextBox Grid.Row="1"
+                 Grid.Column="2"
+                 Name="TextBoxCosmeticName"
+                 Height="30"
+                 LostFocus="TextBoxCosmeticName_OnLostFocus" />
+        
+        <TextBlock Grid.Row="2"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Property.Author}" />
+        <TextBox Grid.Row="2"
+                 Grid.Column="2"
+                 Name="TextBoxCosmeticAuthor"
+                 Height="30"
+                 LostFocus="TextBoxCosmeticAuthor_OnLostFocus" />
+        
+        <TextBlock Grid.Row="3"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Property.Rarity}" />
+        <TextBox Grid.Row="3"
+                 Grid.Column="2"
+                 Name="TextBoxCosmeticRarity"
+                 Height="30"
+                 LostFocus="TextBoxCosmeticRarity_OnLostFocus" />
+    </Grid>
+</UserControl>

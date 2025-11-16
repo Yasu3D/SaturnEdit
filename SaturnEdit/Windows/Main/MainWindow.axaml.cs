@@ -442,11 +442,29 @@ public partial class MainWindow : Window
                     return;
                 }
             }
-
-            // TODO: Cosmetics Editor
-            if (!bypassCosmeticsSave)
+            
+            // Cosmetic Editor
+            if (!bypassCosmeticsSave && !CosmeticSystem.IsSaved)
             {
-                
+                e.Cancel = true;
+                ModalDialogResult result = await ShowSavePrompt(SavePromptType.Cosmetic);
+
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool saved = await CosmeticsEditor.File_Save();
+
+                    if (saved)
+                    {
+                        Close();
+                        return;
+                    }
+                }
+                else if (result is ModalDialogResult.Secondary)
+                {
+                    bypassStageSave = true;
+                    Close();
+                    return;
+                }
             }
             
             bypassChartSave = false;

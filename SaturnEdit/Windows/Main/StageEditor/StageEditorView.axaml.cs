@@ -458,7 +458,7 @@ public partial class StageEditorView : UserControl
         string newId = TextBoxStageId.Text ?? "";
         if (oldId == newId) return;
         
-        UndoRedoSystem.StageBranch.Push(new StageIdEditOperation(StageSystem.StageUpStage.Id, newId));
+        UndoRedoSystem.StageBranch.Push(new StageIdEditOperation(oldId, newId));
     }
 
     private void ButtonRegenerateStageId_OnClick(object? sender, RoutedEventArgs e)

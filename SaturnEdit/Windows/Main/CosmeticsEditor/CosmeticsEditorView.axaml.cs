@@ -26,6 +26,9 @@ public partial class CosmeticsEditorView : UserControl
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
+
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
+        CosmeticBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
 #region Methods
@@ -288,6 +291,39 @@ public partial class CosmeticsEditorView : UserControl
 
             MenuItemUndo.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"].ToKeyGesture();
             MenuItemRedo.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"].ToKeyGesture();
+        });
+    }
+
+    private void CosmeticBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            ConsoleColorEditor.IsVisible = CosmeticSystem.CosmeticItem is ConsoleColor;
+            ConsoleColorEditor.IsEnabled = ConsoleColorEditor.IsVisible;
+            
+            EmblemEditor.IsVisible = CosmeticSystem.CosmeticItem is Emblem;
+            EmblemEditor.IsEnabled = EmblemEditor.IsVisible;
+            
+            IconEditor.IsVisible = CosmeticSystem.CosmeticItem is Icon;
+            IconEditor.IsEnabled = IconEditor.IsVisible;
+            
+            NavigatorEditor.IsVisible = CosmeticSystem.CosmeticItem is Navigator;
+            NavigatorEditor.IsEnabled = NavigatorEditor.IsVisible;
+            
+            NoteSoundEditor.IsVisible = CosmeticSystem.CosmeticItem is NoteSound;
+            NoteSoundEditor.IsEnabled = NoteSoundEditor.IsVisible;
+            
+            PlateEditor.IsVisible = CosmeticSystem.CosmeticItem is Plate;
+            PlateEditor.IsEnabled = PlateEditor.IsVisible;
+            
+            SystemMusicEditor.IsVisible = CosmeticSystem.CosmeticItem is SystemMusic;
+            SystemMusicEditor.IsEnabled = SystemMusicEditor.IsVisible;
+            
+            SystemSoundEditor.IsVisible = CosmeticSystem.CosmeticItem is SystemSound;
+            SystemSoundEditor.IsEnabled = SystemSoundEditor.IsVisible;
+            
+            TitleEditor.IsVisible = CosmeticSystem.CosmeticItem is Title;
+            TitleEditor.IsEnabled = TitleEditor.IsVisible;
         });
     }
 #endregion System Event Handlers

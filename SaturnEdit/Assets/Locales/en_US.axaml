@@ -367,6 +367,12 @@
     <system:String x:Key="CosmeticEditor.Type.SystemMusic">System Music</system:String>
     <system:String x:Key="CosmeticEditor.Type.SystemSound">System Sound</system:String>
     <system:String x:Key="CosmeticEditor.Type.Title">Title</system:String>
+    <system:String x:Key="CosmeticEditor.Property.Id">Cosmetic Id</system:String>
+    <system:String x:Key="CosmeticEditor.Property.Name">Cosmetic Name</system:String>
+    <system:String x:Key="CosmeticEditor.Property.Author">Cosmetic Author</system:String>
+    <system:String x:Key="CosmeticEditor.Property.Rarity">Cosmetic Rarity</system:String>
+    <system:String x:Key="CosmeticEditor.ToolTip.GenerateNewId">Generate New Id</system:String>
+    <system:String x:Key="CosmeticEditor.ToolTip.GenerateNewId.Description">Generates a new UUID to use as the Cosmetic Id.</system:String>
     <system:String x:Key="Main.Window.Title">SaturnEdit — Main Window</system:String>
     <system:String x:Key="Main.ToolTip.Update">Update Available!</system:String>
     <system:String x:Key="Main.ToolTip.Update.Description">Click to download latest version.</system:String>
