@@ -29,7 +29,7 @@ public static class StageSystem
         
         StageLoaded?.Invoke(null, EventArgs.Empty);
         
-        IsSaved = false;
+        IsSaved = true;
     }
 
     /// <summary>

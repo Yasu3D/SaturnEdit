@@ -941,6 +941,8 @@ public partial class ChartEditorView : UserControl
 
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
+        if (!IsEnabled) return;
+        
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
         if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
         if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
@@ -1267,8 +1269,13 @@ public partial class ChartEditorView : UserControl
         }
     }
     
-    private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
-    
+    private void Control_OnKeyUp(object? sender, KeyEventArgs e)
+    {
+        if (!IsEnabled) return;
+        
+        e.Handled = true;
+    }
+
     private async void Control_Drop(object? sender, DragEventArgs e)
     {
         try
@@ -1378,7 +1385,12 @@ public partial class ChartEditorView : UserControl
         {
             if (sender is not MenuItem item) return;
             if (item.Tag is not string path) return;
-            if (!File.Exists(path)) return;
+            
+            if (!File.Exists(path))
+            {
+                SettingsSystem.EditorSettings.RemoveRecentChartFile(path);
+                return;
+            }
         
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return;

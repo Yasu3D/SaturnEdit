@@ -298,6 +298,12 @@ public class EditorSettings
         PropertyChanged?.Invoke(null, EventArgs.Empty);
     }
 
+    public void RemoveRecentChartFile(string path)
+    {
+        RecentChartFiles.Remove(path);
+        PropertyChanged?.Invoke(null, EventArgs.Empty);
+    }
+    
     public void ClearRecentChartFiles()
     {
         RecentChartFiles.Clear();
@@ -313,6 +319,12 @@ public class EditorSettings
         PropertyChanged?.Invoke(null, EventArgs.Empty);
     }
 
+    public void RemoveRecentStageFile(string path)
+    {
+        RecentStageFiles.Remove(path);
+        PropertyChanged?.Invoke(null, EventArgs.Empty);
+    }
+    
     public void ClearRecentStageFiles()
     {
         RecentStageFiles.Clear();
@@ -328,6 +340,12 @@ public class EditorSettings
         PropertyChanged?.Invoke(null, EventArgs.Empty);
     }
 
+    public void RemoveRecentCosmeticFile(string path)
+    {
+        RecentCosmeticFiles.Remove(path);
+        PropertyChanged?.Invoke(null, EventArgs.Empty);
+    }
+    
     public void ClearRecentCosmeticFiles()
     {
         RecentCosmeticFiles.Clear();

@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
@@ -14,6 +15,8 @@ using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.StageOperations;
+using SaturnEdit.Utilities;
+using SaturnEdit.Windows.Dialogs.ImportArgs;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.StageEditor;
@@ -24,6 +27,11 @@ public partial class StageEditorView : UserControl
     {
         InitializeComponent();
 
+        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        
+        AddHandler(DragDrop.DropEvent, Control_Drop);
+        
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
@@ -339,6 +347,164 @@ public partial class StageEditorView : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    private void Control_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (!IsEnabled) return;
+        
+        IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
+        if (KeyDownBlacklist.IsInvalidFocusedElement(focusedElement)) return;
+        if (KeyDownBlacklist.IsInvalidKey(e.Key)) return;
+        if (KeyDownBlacklist.IsInvalidState()) return;
+        
+        Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
+        
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.New"]))
+        {
+            File_New();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Open"]))
+        {
+            _ = File_Open();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Save"]))
+        {
+            _ = File_Save();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.SaveAs"]))
+        {
+            _ = File_SaveAs();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.ReloadFromDisk"]))
+        {
+            _ = File_ReloadFromDisk();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Quit"]))
+        {
+            File_Quit();
+            e.Handled = true;
+        }
+        
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"]))
+        {
+            UndoRedoSystem.ChartBranch.Undo();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"]))
+        {
+            UndoRedoSystem.ChartBranch.Redo();
+            e.Handled = true;
+        }
+    }
+    
+    private void Control_OnKeyUp(object? sender, KeyEventArgs e)
+    {
+        if (!IsEnabled) return;
+        
+        e.Handled = true;
+    }
+
+    private async void Control_Drop(object? sender, DragEventArgs e)
+    {
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null)
+            {
+                e.Handled = true;
+                return;
+            }
+            
+            IStorageItem? file = e.DataTransfer.TryGetFile();
+
+            // Prompt to save an unsaved chart first.
+            if (!ChartSystem.IsSaved)
+            {
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Chart);
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary)
+                {
+                    e.Handled = true;
+                    return;
+                }
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort opening new file if save was unsuccessful.
+                    if (!success)
+                    {
+                        e.Handled = true;
+                        return;
+                    }
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            if (file == null)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            if (!File.Exists(file.Path.LocalPath))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            // Get Read Args
+            NotationReadArgs args = new();
+            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(file.Path.LocalPath);
+            if (formatVersion == FormatVersion.Unknown)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            if (formatVersion != FormatVersion.SatV3)
+            {
+                if (VisualRoot is not Window rootWindow)
+                {
+                    e.Handled = true;
+                    return;
+                }
+
+                ImportArgsWindow importArgsWindow = new();
+                importArgsWindow.Position = MainWindow.DialogPopupPosition(importArgsWindow.Width, importArgsWindow.Height);
+                
+                await importArgsWindow.ShowDialog(rootWindow);
+
+                if (importArgsWindow.Result != ModalDialogResult.Primary)
+                {
+                    e.Handled = true;
+                    return;
+                }
+
+                args = importArgsWindow.NotationReadArgs;
+            }
+
+            ChartSystem.ReadChart(file.Path.LocalPath, args);
+
+            e.Handled = true;
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+    }
+    
+    
     private void MenuItemNew_OnClick(object? sender, RoutedEventArgs e) => File_New();
 
     private void MenuItemOpen_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open();
@@ -351,7 +517,12 @@ public partial class StageEditorView : UserControl
         {
             if (sender is not MenuItem item) return;
             if (item.Tag is not string path) return;
-            if (!File.Exists(path)) return;
+            
+            if (!File.Exists(path))
+            {
+                SettingsSystem.EditorSettings.RemoveRecentStageFile(path);
+                return;
+            }
         
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return;
