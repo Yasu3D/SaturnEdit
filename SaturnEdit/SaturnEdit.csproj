@@ -181,6 +181,10 @@
         
         <AvaloniaResource Include="Assets\PlaceholderJacket.png" />
         <AvaloniaResource Include="Assets\StageIconBackground.png" />
+        <AvaloniaResource Include="Assets\Cosmetics\ConsoleColor.png"/>
+        <AvaloniaResource Include="Assets\Cosmetics\PlaceholderEmblem.png"/>
+        <AvaloniaResource Include="Assets\Cosmetics\PlaceholderIcon.png"/>
+        <AvaloniaResource Include="Assets\Cosmetics\PlaceholderPlate.png"/>
     </ItemGroup>
     
     <ItemGroup>

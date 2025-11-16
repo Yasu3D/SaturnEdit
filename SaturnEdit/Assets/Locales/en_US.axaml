@@ -358,6 +358,15 @@
     <system:String x:Key="StageEditor.ToolTip.GenerateNewId.Description">Generates a new UUID to use as the Stage Id.</system:String>
     <system:String x:Key="StageEditor.ToolTip.Secret">Secret Song</system:String>
     <system:String x:Key="StageEditor.ToolTip.Secret.Description">Should the song be hidden in the preview?</system:String>
+    <system:String x:Key="CosmeticEditor.Type.ConsoleColor">Console Color</system:String>
+    <system:String x:Key="CosmeticEditor.Type.Emblem">Emblem</system:String>
+    <system:String x:Key="CosmeticEditor.Type.Icon">Icon</system:String>
+    <system:String x:Key="CosmeticEditor.Type.Navigator">Navigator</system:String>
+    <system:String x:Key="CosmeticEditor.Type.NoteSound">Note Sound</system:String>
+    <system:String x:Key="CosmeticEditor.Type.Plate">Plate</system:String>
+    <system:String x:Key="CosmeticEditor.Type.SystemMusic">System Music</system:String>
+    <system:String x:Key="CosmeticEditor.Type.SystemSound">System Sound</system:String>
+    <system:String x:Key="CosmeticEditor.Type.Title">Title</system:String>
     <system:String x:Key="Main.Window.Title">SaturnEdit — Main Window</system:String>
     <system:String x:Key="Main.ToolTip.Update">Update Available!</system:String>
     <system:String x:Key="Main.ToolTip.Update.Description">Click to download latest version.</system:String>

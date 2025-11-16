@@ -355,6 +355,15 @@ StageEditor.ToolTip.GenerateNewId,Generate New Id
 StageEditor.ToolTip.GenerateNewId.Description,Generates a new UUID to use as the Stage Id.
 StageEditor.ToolTip.Secret,Secret Song
 StageEditor.ToolTip.Secret.Description,Should the song be hidden in the preview?
+CosmeticEditor.Type.ConsoleColor,Console Color
+CosmeticEditor.Type.Emblem,Emblem
+CosmeticEditor.Type.Icon,Icon
+CosmeticEditor.Type.Navigator,Navigator
+CosmeticEditor.Type.NoteSound,Note Sound
+CosmeticEditor.Type.Plate,Plate
+CosmeticEditor.Type.SystemMusic,System Music
+CosmeticEditor.Type.SystemSound,System Sound
+CosmeticEditor.Type.Title,Title
 Main.Window.Title,SaturnEdit — Main Window
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.
@@ -372,6 +381,7 @@ Main.ToolTip.StageEditor.Description,Create and edit Stage-Up stages.
 Dock.Window.Title,SaturnEdit — Dock Window
 Menu.File,File
 Menu.File.New,New
+Menu.File.NewEllipsis,New...
 Menu.File.Open,Open...
 Menu.File.Recent,Recent
 Menu.File.ClearRecent,Clear Recent

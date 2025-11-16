@@ -2,7 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:SaturnEdit.Controls"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:tabs="clr-namespace:SaturnEdit.Windows.Main.CosmeticsEditor.Tabs"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
@@ -13,10 +14,185 @@
         <Panel Grid.Row="0"
                VerticalAlignment="Top"
                Height="40">
-            <!-- ChartEditor Menu -->
+            <!-- Menu -->
             <Menu HorizontalAlignment="Left"
                   Margin="116,0,0,0">
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock Text="{DynamicResource Menu.File}" />
+                    </MenuItem.Header>
 
+                    <MenuItem Name="MenuItemNew">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.NewEllipsis}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="DocumentAdd" />
+                        </MenuItem.Icon>
+
+                        <MenuItem Name="MenuItemNewConsoleColor"
+                                  Click="MenuItemNewConsoleColor_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.ConsoleColor}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                        <MenuItem Name="MenuItemNewEmblem"
+                                  Click="MenuItemNewEmblem_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.Emblem}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                        <MenuItem Name="MenuItemNewIcon"
+                                  Click="MenuItemNewIcon_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.Icon}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                        <MenuItem Name="MenuItemNewNavigator"
+                                  Click="MenuItemNewNavigator_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.Navigator}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                        <MenuItem Name="MenuItemNewNoteSound"
+                                  Click="MenuItemNewNoteSound_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.NoteSound}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                        <MenuItem Name="MenuItemNewPlate"
+                                  Click="MenuItemNewPlate_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.Plate}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                        <MenuItem Name="MenuItemNewSystemMusic"
+                                  Click="MenuItemNewSystemMusic_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.SystemMusic}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                        <MenuItem Name="MenuItemNewSystemSound"
+                                  Click="MenuItemNewSystemSound_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.SystemSound}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                        <MenuItem Name="MenuItemNewTitle"
+                                  Click="MenuItemNewTitle_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.Title}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemOpen"
+                              Click="MenuItemOpen_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Open}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Folder" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemRecent">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Recent}" />
+                        </MenuItem.Header>
+
+                        <MenuItem Name="MenuItemClearRecent"
+                                  Click="MenuItemClearRecent_OnClick"
+                                  StaysOpenOnClick="True">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.ClearRecent}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </MenuItem>
+
+                    <Separator />
+
+                    <MenuItem Name="MenuItemSave"
+                              Click="MenuItemSave_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Save}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Save" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemSaveAs"
+                              Click="MenuItemSaveAs_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.SaveAs}" />
+                        </MenuItem.Header>
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemReloadFromDisk"
+                              Click="MenuItemReloadFromDisk_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.ReloadFromDisk}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowSync" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <Separator />
+
+                    <MenuItem Name="MenuItemSettings"
+                              Click="MenuItemSettings_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Settings}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="Settings" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemQuit"
+                              Click="MenuItemQuit_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Quit}" />
+                        </MenuItem.Header>
+                    </MenuItem>
+                </MenuItem>
+
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock Text="{DynamicResource Menu.Edit}" />
+                    </MenuItem.Header>
+
+                    <MenuItem Name="MenuItemUndo"
+                              Click="MenuItemUndo_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.Undo}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowUndo" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Name="MenuItemRedo"
+                              Click="MenuItemRedo_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.Redo}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowRedo" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
             </Menu>
         </Panel>
 
@@ -25,6 +201,6 @@
                    Fill="{DynamicResource SeparatorSecondary}" />
 
         <!-- Content -->
-        
+        <tabs:IconEditorView Grid.Row="2"/>
     </Grid>
 </UserControl>

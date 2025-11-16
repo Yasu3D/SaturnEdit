@@ -16,7 +16,6 @@ using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.StageOperations;
 using SaturnEdit.Utilities;
-using SaturnEdit.Windows.Dialogs.ImportArgs;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.StageEditor;
@@ -391,12 +390,12 @@ public partial class StageEditorView : UserControl
         
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"]))
         {
-            UndoRedoSystem.ChartBranch.Undo();
+            UndoRedoSystem.StageBranch.Undo();
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"]))
         {
-            UndoRedoSystem.ChartBranch.Redo();
+            UndoRedoSystem.StageBranch.Redo();
             e.Handled = true;
         }
     }
@@ -421,10 +420,10 @@ public partial class StageEditorView : UserControl
             
             IStorageItem? file = e.DataTransfer.TryGetFile();
 
-            // Prompt to save an unsaved chart first.
-            if (!ChartSystem.IsSaved)
+            // Prompt to save an unsaved stage first.
+            if (!StageSystem.IsSaved)
             {
-                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Chart);
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Stage);
 
                 // Cancel
                 if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary)
@@ -463,37 +462,7 @@ public partial class StageEditorView : UserControl
             }
 
             // Get Read Args
-            NotationReadArgs args = new();
-            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(file.Path.LocalPath);
-            if (formatVersion == FormatVersion.Unknown)
-            {
-                e.Handled = true;
-                return;
-            }
-
-            if (formatVersion != FormatVersion.SatV3)
-            {
-                if (VisualRoot is not Window rootWindow)
-                {
-                    e.Handled = true;
-                    return;
-                }
-
-                ImportArgsWindow importArgsWindow = new();
-                importArgsWindow.Position = MainWindow.DialogPopupPosition(importArgsWindow.Width, importArgsWindow.Height);
-                
-                await importArgsWindow.ShowDialog(rootWindow);
-
-                if (importArgsWindow.Result != ModalDialogResult.Primary)
-                {
-                    e.Handled = true;
-                    return;
-                }
-
-                args = importArgsWindow.NotationReadArgs;
-            }
-
-            ChartSystem.ReadChart(file.Path.LocalPath, args);
+            StageSystem.ReadStage(file.Path.LocalPath);
 
             e.Handled = true;
         }
@@ -553,6 +522,7 @@ public partial class StageEditorView : UserControl
         }
         catch (Exception ex)
         {
+            // Don't throw.
             Console.WriteLine(ex);
         }
     }
