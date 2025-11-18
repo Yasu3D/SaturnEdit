@@ -84,7 +84,7 @@ public partial class EventListView : UserControl
     }
 #endregion Methods
     
-#region System Event Delegates
+#region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -101,9 +101,9 @@ public partial class EventListView : UserControl
     {
         UpdateEvents();
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
     
-#region UI Event Delegates
+#region UI Event Handlers
     private void ListBoxEvents_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
@@ -186,5 +186,5 @@ public partial class EventListView : UserControl
     private void MenuItemAddMetreChange_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddMetreChange(4, 4);
 
     private void MenuItemAddTutorialMarker_OnClick(object? sender, RoutedEventArgs e) => EditorSystem.Insert_AddTutorialMarker("KEY");
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

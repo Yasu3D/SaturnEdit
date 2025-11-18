@@ -155,7 +155,7 @@ public partial class NotePaletteView : UserControl
     }
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private async void OnSettingsChanged(object? sender, EventArgs e)
     {
         try
@@ -180,9 +180,9 @@ public partial class NotePaletteView : UserControl
         
         SetSelection();
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void RadioButtonNoteType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
@@ -301,5 +301,5 @@ public partial class NotePaletteView : UserControl
             _ => LaneSweepDirection.Center,
         };
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

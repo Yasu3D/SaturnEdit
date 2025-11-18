@@ -324,7 +324,7 @@ public static class AudioSystem
     }
 #endregion Methods
     
-#region System Event Delegates
+#region System Event Handlers
     public static void OnClosed(object? sender, EventArgs e)
     {
         Bass.Free();
@@ -463,5 +463,5 @@ public static class AudioSystem
             AudioChannelAudio.Playing = !beforeAudio && !afterAudio;
         }
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 }

@@ -751,7 +751,7 @@ public static class SelectionSystem
     }
 #endregion Methods
     
-#region System Event Delegates
+#region System Event Handlers
     private static void OnChartLoaded(object? sender, EventArgs e)
     {
         SelectedObjects.Clear();
@@ -760,7 +760,7 @@ public static class SelectionSystem
 
         SelectedLayer = ChartSystem.Chart.Layers.Count == 0 ? null : ChartSystem.Chart.Layers[0];
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 }
 
 public class BoxSelectArgs

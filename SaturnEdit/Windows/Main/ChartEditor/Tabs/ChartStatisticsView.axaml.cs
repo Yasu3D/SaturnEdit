@@ -233,7 +233,7 @@ public partial class ChartStatisticsView : UserControl
     }
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         UpdateGraph();
@@ -287,12 +287,12 @@ public partial class ChartStatisticsView : UserControl
             GraphSnapBackwardNote.BorderBrush = new SolidColorBrush(borderColor);
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
         UpdateGraph();
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

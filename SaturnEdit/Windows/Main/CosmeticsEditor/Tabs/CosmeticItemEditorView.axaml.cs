@@ -20,7 +20,7 @@ public partial class CosmeticItemEditorView : UserControl
 
     private bool blockEvents = false;
     
-#region System Event Delegates
+#region System Event Handlers
     private void CosmeticBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -35,9 +35,9 @@ public partial class CosmeticItemEditorView : UserControl
             blockEvents = false;
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
     
-#region UI Event Delegates
+#region UI Event Handlers
     private void TextBoxCosmeticId_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
@@ -109,5 +109,5 @@ public partial class CosmeticItemEditorView : UserControl
             }
         }
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

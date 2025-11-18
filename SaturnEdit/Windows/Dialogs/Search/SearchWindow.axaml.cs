@@ -69,7 +69,7 @@ public partial class SearchWindow : Window
     }
 #endregion Methods
     
-#region UI Event Delegates
+#region UI Event Handlers
     private void TextBoxSearchQuery_OnTextChanged(object? sender, TextChangedEventArgs e)
     {
         query = TextBoxSearchQuery.Text ?? "";
@@ -820,5 +820,5 @@ public partial class SearchWindow : Window
             Close();
         }
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

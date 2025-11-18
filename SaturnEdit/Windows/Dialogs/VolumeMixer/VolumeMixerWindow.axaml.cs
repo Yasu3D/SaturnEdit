@@ -39,7 +39,7 @@ public partial class VolumeMixerWindow : Window
     }
 #endregion Methods
     
-#region System Event Delegates
+#region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -73,7 +73,7 @@ public partial class VolumeMixerWindow : Window
             blockEvents = false;
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
 #region UI Event Handlers
     private void SliderVolume_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)

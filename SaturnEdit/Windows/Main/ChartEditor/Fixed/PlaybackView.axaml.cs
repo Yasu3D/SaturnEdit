@@ -141,7 +141,7 @@ public partial class PlaybackView : UserControl
     }
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private void OnEntryChanged(object? sender, EventArgs e)
     {
         UpdateSeekSlider();
@@ -245,9 +245,9 @@ public partial class PlaybackView : UserControl
             blockEvents = false;
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private async void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
     {
         try
@@ -415,5 +415,5 @@ public partial class PlaybackView : UserControl
 
         TimeSystem.SeekTime(marker.Bookmark.Timestamp.Time, TimeSystem.Division);
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

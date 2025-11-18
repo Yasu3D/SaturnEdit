@@ -21,7 +21,7 @@ public partial class SelectScaleWindow : Window
     public double Scale { get; private set; } = 1.0;
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
@@ -76,5 +76,5 @@ public partial class SelectScaleWindow : Window
         Result = ModalDialogResult.Cancel;
         Close();
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

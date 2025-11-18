@@ -127,7 +127,7 @@ public partial class EventListItem : UserControl
     }
 #endregion Methods
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void TextBoxMeasure_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
@@ -652,5 +652,5 @@ public partial class EventListItem : UserControl
         
         UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[2], oldFullTick, newFullTick));
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

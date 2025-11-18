@@ -18,7 +18,7 @@ public partial class SettingsAppearanceView : UserControl
 
     private bool blockEvents = false;
 
-#region System Event Delegates
+#region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -37,9 +37,9 @@ public partial class SettingsAppearanceView : UserControl
             blockEvents = false;
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void RadioButtonTheme_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
@@ -54,5 +54,5 @@ public partial class SettingsAppearanceView : UserControl
             _ => SettingsSystem.EditorSettings.Theme,
         };
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

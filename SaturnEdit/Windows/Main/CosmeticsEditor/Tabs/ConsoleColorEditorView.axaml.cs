@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnEdit.Systems;
+using SaturnEdit.UndoRedo.PrimitiveOperations;
 using ConsoleColor = SaturnData.Content.Cosmetics.ConsoleColor;
 
 namespace SaturnEdit.Windows.Main.CosmeticsEditor.Tabs;
@@ -20,7 +21,7 @@ public partial class ConsoleColorEditorView : UserControl
 
     private bool blockEvents = false;
     
-#region System Event Delegates
+#region System Event Handlers
     private void CosmeticBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
@@ -28,7 +29,7 @@ public partial class ConsoleColorEditorView : UserControl
         Dispatcher.UIThread.Post(() =>
         {
             blockEvents = true;
-
+            
             TextBoxColorA.Text = $"{consoleColor.ColorA - 0xFF000000:X6}";
             TextBoxColorB.Text = $"{consoleColor.ColorB - 0xFF000000:X6}";
             TextBoxColorC.Text = $"{consoleColor.ColorC - 0xFF000000:X6}";
@@ -46,87 +47,173 @@ public partial class ConsoleColorEditorView : UserControl
             blockEvents = false;
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
     
-#region UI Event Delegates
+#region UI Event Handlers
     private void TextBoxColorA_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.ColorA;
         uint newValue = uint.TryParse(TextBoxColorA.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
+
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorA = value; }, oldValue, newValue));
     }
 
     private void TextBoxLedA_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.LedA;
         uint newValue = uint.TryParse(TextBoxLedA.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
+
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedA = value; }, oldValue, newValue));
     }
     
     private void TextBoxColorB_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.ColorB;
         uint newValue = uint.TryParse(TextBoxColorB.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
+
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorB = value; }, oldValue, newValue));
     }
     
     private void TextBoxLedB_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.LedB;
         uint newValue = uint.TryParse(TextBoxLedB.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
+
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedB = value; }, oldValue, newValue));
     }
     
     private void TextBoxColorC_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.ColorC;
         uint newValue = uint.TryParse(TextBoxColorC.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
+
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorC = value; }, oldValue, newValue));
     }
     
     private void TextBoxLedC_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.LedC;
         uint newValue = uint.TryParse(TextBoxLedC.Text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint result) ? result + 0xFF000000 : 0xFFDDDDDD;
+
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedC = value; }, oldValue, newValue));
     }
 
     
     private void ColorPickerColorA_OnColorPickFinished(object? sender, EventArgs e)
     {
         if (blockEvents) return;
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.ColorA;
+        uint newValue = ColorPickerColorA.Color;
+        
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorA = value; }, oldValue, newValue));
     }
     
     private void ColorPickerLedA_OnColorPickFinished(object? sender, EventArgs e)
     {
         if (blockEvents) return;
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.LedA;
+        uint newValue = ColorPickerLedA.Color;
+
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedA = value; }, oldValue, newValue));
     }
     
     private void ColorPickerColorB_OnColorPickFinished(object? sender, EventArgs e)
     {
         if (blockEvents) return;
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.ColorB;
+        uint newValue = ColorPickerColorB.Color;
+
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorB = value; }, oldValue, newValue));
     }
     
     private void ColorPickerLedB_OnColorPickFinished(object? sender, EventArgs e)
     {
         if (blockEvents) return;
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.LedB;
+        uint newValue = ColorPickerLedB.Color;
+
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedB = value; }, oldValue, newValue));
     }
 
     private void ColorPickerColorC_OnColorPickFinished(object? sender, EventArgs e)
     {
         if (blockEvents) return;
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.ColorC;
+        uint newValue = ColorPickerColorC.Color;
+
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorC = value; }, oldValue, newValue));
     }
 
     private void ColorPickerLedC_OnColorPickFinished(object? sender, EventArgs e)
     {
         if (blockEvents) return;
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor) return;
+
+        uint oldValue = consoleColor.LedC;
+        uint newValue = ColorPickerLedC.Color;
+
+        if (oldValue == newValue) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedC = value; }, oldValue, newValue));
     }
 
 
     private void ColorPickerColorA_OnColorChanged(object? sender, EventArgs e)
     {
+        if (blockEvents) return;
+        
         blockEvents = true;
-
+        
         TextBoxColorA.Text = $"{ColorPickerColorA.Color - 0xFF000000:X6}";
         
         blockEvents = false;
@@ -134,6 +221,19 @@ public partial class ConsoleColorEditorView : UserControl
 
     private void ColorPickerLedA_OnColorChanged(object? sender, EventArgs e)
     {
+        if (blockEvents) return;
+        
+        blockEvents = true;
+
+        TextBoxLedA.Text = $"{ColorPickerLedA.Color - 0xFF000000:X6}";
+        
+        blockEvents = false;
+    }
+
+    private void ColorPickerColorB_OnColorChanged(object? sender, EventArgs e)
+    {
+        if (blockEvents) return;
+        
         blockEvents = true;
 
         TextBoxColorB.Text = $"{ColorPickerColorB.Color - 0xFF000000:X6}";
@@ -141,26 +241,10 @@ public partial class ConsoleColorEditorView : UserControl
         blockEvents = false;
     }
 
-    private void ColorPickerColorB_OnColorChanged(object? sender, EventArgs e)
-    {
-        blockEvents = true;
-
-        TextBoxColorC.Text = $"{ColorPickerColorC.Color - 0xFF000000:X6}";
-        
-        blockEvents = false;
-    }
-
     private void ColorPickerLedB_OnColorChanged(object? sender, EventArgs e)
     {
-        blockEvents = true;
-
-        TextBoxLedA.Text = $"{ColorPickerLedA.Color - 0xFF000000:X6}";
-
-        blockEvents = false;
-    }
-
-    private void ColorPickerColorC_OnColorChanged(object? sender, EventArgs e)
-    {
+        if (blockEvents) return;
+        
         blockEvents = true;
 
         TextBoxLedB.Text = $"{ColorPickerLedB.Color - 0xFF000000:X6}";
@@ -168,13 +252,26 @@ public partial class ConsoleColorEditorView : UserControl
         blockEvents = false;
     }
 
+    private void ColorPickerColorC_OnColorChanged(object? sender, EventArgs e)
+    {
+        if (blockEvents) return;
+        
+        blockEvents = true;
+
+        TextBoxColorC.Text = $"{ColorPickerColorC.Color - 0xFF000000:X6}";
+
+        blockEvents = false;
+    }
+
     private void ColorPickerLedC_OnColorChanged(object? sender, EventArgs e)
     {
+        if (blockEvents) return;
+        
         blockEvents = true;
 
         TextBoxLedC.Text = $"{ColorPickerLedC.Color - 0xFF000000:X6}";
 
         blockEvents = false;
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

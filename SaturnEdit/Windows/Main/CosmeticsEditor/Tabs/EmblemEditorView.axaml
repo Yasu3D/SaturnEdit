@@ -2,9 +2,65 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              x:Class="SaturnEdit.Windows.Main.CosmeticsEditor.Tabs.EmblemEditorView">
-    Emblem
+    <Grid RowDefinitions="40,40"
+          ColumnDefinitions="120,20,*,50"
+          Margin="15">
+        <Rectangle Grid.Row="0"
+                   Grid.Column="1"
+                   Grid.RowSpan="2"
+                   Fill="{DynamicResource SeparatorPrimary}"
+                   Width="1"
+                   HorizontalAlignment="Left" />
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Property.ImageArtist}" />
+        <TextBox Grid.Row="0"
+                 Grid.Column="2"
+                 Name="TextBoxEmblemArtist"
+                 Height="30"
+                 LostFocus="TextBoxEmblemArtist_OnLostFocus" />
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Emblem.Property.EmblemImage}" />
+        <TextBox Grid.Row="1"
+                 Grid.Column="2"
+                 Name="TextBoxEmblemImagePath"
+                 Height="30"
+                 LostFocus="TextBoxEmblemImagePath_OnLostFocus" />
+        <Button Grid.Row="1"
+                Grid.Column="3"
+                Classes="Themed Square Outlined"
+                HorizontalAlignment="Left"
+                Margin="5,0,0,0"
+                Click="ButtonPickEmblemFile_OnClick">
+            <ToolTip.Tip>
+                <TextBlock Text="{DynamicResource Generic.PickFile}" />
+            </ToolTip.Tip>
+            <icon:FluentIcon Icon="FolderOpen" />
+        </Button>
+        <icon:FluentIcon Grid.Row="1"
+                         Grid.Column="0"
+                         Name="IconFileNotFoundWarning"
+                         HorizontalAlignment="Right"
+                         Margin="0,0,10,0"
+                         Icon="Warning"
+                         Foreground="{DynamicResource ForegroundWarning}">
+            <ToolTip.Tip>
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                               Foreground="{DynamicResource ForegroundSecondary}" />
+                </StackPanel>
+            </ToolTip.Tip>
+        </icon:FluentIcon>
+    </Grid>
 </UserControl>

@@ -167,21 +167,6 @@
                     </ToolTip.Tip>
                     <icon:FluentIcon Icon="ArrowShuffle" />
                 </Button>
-                <icon:FluentIcon Grid.Row="2"
-                                 Grid.Column="0"
-                                 Name="IconFileNotFoundWarning"
-                                 HorizontalAlignment="Right"
-                                 Margin="0,0,10,0"
-                                 Icon="Warning"
-                                 Foreground="{DynamicResource ForegroundWarning}">
-                    <ToolTip.Tip>
-                        <StackPanel>
-                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
-                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
-                                       Foreground="{DynamicResource ForegroundSecondary}" />
-                        </StackPanel>
-                    </ToolTip.Tip>
-                </icon:FluentIcon>
 
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
@@ -213,6 +198,21 @@
                     </ToolTip.Tip>
                     <icon:FluentIcon Icon="FolderOpen" />
                 </Button>
+                <icon:FluentIcon Grid.Row="2"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarning"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,10,0"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
             </Grid>
 
             <Rectangle Height="1"

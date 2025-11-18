@@ -368,6 +368,8 @@ CosmeticEditor.Property.Id,Cosmetic Id
 CosmeticEditor.Property.Name,Cosmetic Name
 CosmeticEditor.Property.Author,Cosmetic Author
 CosmeticEditor.Property.Rarity,Cosmetic Rarity
+CosmeticEditor.Property.ImageArtist,Image Artist
+CosmeticEditor.Property.AudioArtist,Audio Artist
 CosmeticEditor.ToolTip.GenerateNewId,Generate New Id
 CosmeticEditor.ToolTip.GenerateNewId.Description,Generates a new UUID to use as the Cosmetic Id.
 CosmeticEditor.ConsoleColor.Property.UIColorsA,UI Color A
@@ -376,6 +378,10 @@ CosmeticEditor.ConsoleColor.Property.UIColorsC,UI Color C
 CosmeticEditor.ConsoleColor.Property.LedColorsA,LED Color A 
 CosmeticEditor.ConsoleColor.Property.LedColorsB,LED Color B
 CosmeticEditor.ConsoleColor.Property.LedColorsC,LED Color C
+CosmeticEditor.Emblem.Property.EmblemImage,Emblem Image
+CosmeticEditor.Icon.Property.IconImage,Icon Image
+CosmeticEditor.Plate.Property.PlateImage,Plate Image
+CosmeticEditor.Title.Property.Message,Title Message
 Main.Window.Title,SaturnEdit — Main Window
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.

@@ -36,7 +36,7 @@ public partial class InspectorView : UserControl
 
     private readonly Dictionary<Bookmark, uint> recoloredBookmarks = [];
     
-#region System Event Delegates
+#region System Event Handlers
     private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         if (Design.IsDesignMode)
@@ -423,9 +423,9 @@ public partial class InspectorView : UserControl
             blockEvents = false;
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void ComboBoxType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
@@ -1675,5 +1675,5 @@ public partial class InspectorView : UserControl
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

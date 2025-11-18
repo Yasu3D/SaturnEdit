@@ -210,7 +210,7 @@ public static class ChartSystem
     }
 #endregion Methods
     
-#region System Event Delegates
+#region System Event Handlers
     private static void OnInternalEntryChanged(object? sender, EventArgs e) => EntryChanged?.Invoke(sender, e);
     private static void OnInternalAudioChanged(object? sender, EventArgs e) => AudioChanged?.Invoke(sender, e);
     private static void OnInternalJacketChanged(object? sender, EventArgs e) => JacketChanged?.Invoke(sender, e);
@@ -237,5 +237,5 @@ public static class ChartSystem
     }
 
     private static void OnAudioLoaded(object? sender, EventArgs e) => Rebuild();
-#endregion System Event Delegates
+#endregion System Event Handlers
 }

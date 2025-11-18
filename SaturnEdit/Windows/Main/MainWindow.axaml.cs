@@ -323,7 +323,7 @@ public partial class MainWindow : Window
     }
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e) => UpdateUndoRedoButtons();
     private void StageBranch_OnOperationHistoryChanged(object? sender, EventArgs e) => UpdateUndoRedoButtons();
     private void CosmeticBranch_OnOperationHistoryChanged(object? sender, EventArgs e) => UpdateUndoRedoButtons();
@@ -339,9 +339,9 @@ public partial class MainWindow : Window
             TextBlockShortcutRedo.Text = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"].ToString();
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
@@ -477,5 +477,5 @@ public partial class MainWindow : Window
             Console.WriteLine(ex);
         }
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

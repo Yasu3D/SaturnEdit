@@ -24,7 +24,7 @@ public partial class ImportArgsWindow : Window
     public NotationReadArgs NotationReadArgs = new();
     private bool blockEvents = false;
 
-#region System Event Delegates
+#region System Event Handlers
     private void OnArgsChanged()
     {
         Dispatcher.UIThread.Post(() =>
@@ -38,9 +38,9 @@ public partial class ImportArgsWindow : Window
             blockEvents = false;
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
     
-#region UI Event Delegates
+#region UI Event Handlers
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
@@ -107,5 +107,5 @@ public partial class ImportArgsWindow : Window
         NotationReadArgs = new();
         OnArgsChanged();
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

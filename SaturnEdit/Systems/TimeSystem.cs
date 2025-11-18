@@ -474,16 +474,16 @@ public static class TimeSystem
     }
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private static void OnEntryChanged(object? sender, EventArgs e)
     {
         LoopEnd = Math.Min(LoopEnd, ChartSystem.Entry.ChartEnd.Time);
     }
 
     private static void OnPlaybackStateChanged(object? sender, EventArgs e) => Quantize(SettingsSystem.AudioSettings.QuantizedPause);
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region Internal Event Delegates
+#region Internal Event Handlers
     private static void UpdateTimer_OnTick(object? sender)
     {
         UpdateTick?.Invoke(null, EventArgs.Empty);
@@ -559,5 +559,5 @@ public static class TimeSystem
             Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, (float)AudioSystem.AudioChannelAudio.Position + ChartSystem.Entry.AudioOffset, Division);
         }
     }
-#endregion Internal Event Delegates
+#endregion Internal Event Handlers
 }

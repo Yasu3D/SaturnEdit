@@ -18,7 +18,7 @@ public partial class SettingsGeneralView : UserControl
 
     private bool blockEvents = false;
     
-#region System Event Delegates
+#region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -32,9 +32,9 @@ public partial class SettingsGeneralView : UserControl
             blockEvents = false;
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void ComboBoxLanguage_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
@@ -56,5 +56,5 @@ public partial class SettingsGeneralView : UserControl
         if (CheckBoxContinueLastSession == null) return;
         SettingsSystem.EditorSettings.ContinueLastSession = CheckBoxContinueLastSession.IsChecked ?? true;
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

@@ -38,12 +38,12 @@ public partial class BookmarkMarker : UserControl
     }
 #endregion Methods
     
-#region UI Event Delegates
+#region UI Event Handlers
     private void Control_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (!e.Properties.IsLeftButtonPressed) return;
         
         Click?.Invoke(this, EventArgs.Empty);
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

@@ -58,7 +58,7 @@ public partial class ModalDialogWindow : Window
     }
 #endregion Methods
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
@@ -98,5 +98,5 @@ public partial class ModalDialogWindow : Window
         Result = ModalDialogResult.Tertiary;
         Close();
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

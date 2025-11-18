@@ -29,7 +29,7 @@ public partial class ChartPropertiesView : UserControl
 
     private bool blockEvents = false;
 
-#region System Event Delegates
+#region System Event Handlers
     private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -102,9 +102,9 @@ public partial class ChartPropertiesView : UserControl
             }
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private async void TextBoxTitle_OnLostFocus(object? sender, RoutedEventArgs routedEventArgs)
     {
         try
@@ -718,5 +718,5 @@ public partial class ChartPropertiesView : UserControl
             Console.WriteLine(ex);
         }
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

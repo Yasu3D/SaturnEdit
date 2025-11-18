@@ -36,7 +36,7 @@ public partial class SettingsWindow : Window
 
     private bool saveSettings = false;
     
-#region UI Event Delegates
+#region UI Event Handlers
     private void SettingsTab_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (sender is not RadioButton button) return;
@@ -80,5 +80,5 @@ public partial class SettingsWindow : Window
             SettingsSystem.ShortcutSettings = Toml.ToModel<ShortcutSettings>(shortcutSettingsBackup);
         }
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

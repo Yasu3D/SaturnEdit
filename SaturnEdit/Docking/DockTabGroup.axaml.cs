@@ -57,7 +57,7 @@ public partial class DockTabGroup : UserControl
     }
 #endregion Methods
     
-#region System Event Delegates
+#region System Event Handlers
     private void OnWindowDragStarted(object? sender, EventArgs e) => UpdateTarget();
 
     private void OnWindowDragEnded(object? sender, EventArgs e)
@@ -75,9 +75,9 @@ public partial class DockTabGroup : UserControl
     }
 
     private void OnWindowDragged(object? sender, EventArgs e) => UpdateTarget();
-#endregion System Event Delegates
+#endregion System Event Handlers
     
-#region UI Event Delegates
+#region UI Event Handlers
     private void Visual_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
     {
         if (DockArea.Instance != null)
@@ -178,5 +178,5 @@ public partial class DockTabGroup : UserControl
             window.Opacity = 1.0;
         }
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

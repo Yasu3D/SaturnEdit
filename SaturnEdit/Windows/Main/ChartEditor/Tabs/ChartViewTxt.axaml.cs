@@ -68,7 +68,7 @@ public partial class ChartViewTxt : UserControl
     }
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         ToggleButtonShowSpaces.IsChecked = SettingsSystem.EditorSettings.ChartViewTxtShowSpaces;
@@ -78,9 +78,9 @@ public partial class ChartViewTxt : UserControl
     private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e) => UpdateTextFromChart();
 
     private void OnEntryChanged(object? sender, EventArgs e) => UpdateTextFromChart();
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
     {
         ThemeName themeName = SettingsSystem.EditorSettings.Theme switch
@@ -127,5 +127,5 @@ public partial class ChartViewTxt : UserControl
             Console.WriteLine(ex);
         }
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

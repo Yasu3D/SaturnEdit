@@ -818,7 +818,7 @@ public partial class ChartEditorView : UserControl
     }
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -920,9 +920,9 @@ public partial class ChartEditorView : UserControl
             ? ChartSystem.Entry.ChartPath
             : "";
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
     
-#region UI Event Delegates
+#region UI Event Handlers
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
@@ -1522,5 +1522,5 @@ public partial class ChartEditorView : UserControl
     private void MenuItemDoubleBeatDivision_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_DoubleBeatDivision();
 
     private void MenuItemHalveBeatDivision_OnClick(object? sender, RoutedEventArgs e) => TimeSystem.Navigate_HalveBeatDivision();
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

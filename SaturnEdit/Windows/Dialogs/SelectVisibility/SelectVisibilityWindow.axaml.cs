@@ -28,7 +28,7 @@ public partial class SelectVisibilityWindow : Window
     }
 #endregion Methods
     
-#region UI Event Delegates
+#region UI Event Handlers
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
@@ -69,5 +69,5 @@ public partial class SelectVisibilityWindow : Window
         Result = ModalDialogResult.Cancel;
         Close();
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

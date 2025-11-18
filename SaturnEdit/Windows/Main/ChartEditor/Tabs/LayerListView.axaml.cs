@@ -144,7 +144,7 @@ public partial class LayerListView : UserControl
     }
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         UpdateLayers();
@@ -166,9 +166,9 @@ public partial class LayerListView : UserControl
             MenuItemAddReverseEffect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"].ToKeyGesture();
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void LayerItem_OnNameChanged(object? sender, EventArgs e)
     {
         if (blockEvents) return;
@@ -332,5 +332,5 @@ public partial class LayerListView : UserControl
             return;
         }
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

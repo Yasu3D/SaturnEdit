@@ -24,7 +24,7 @@ public partial class CursorView : UserControl
 
     private bool blockEvents = false;
     
-#region System Event Delegates
+#region System Event Handlers
     private void OnTimestampChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -71,9 +71,9 @@ public partial class CursorView : UserControl
             TextBlockSize.Text = $"{(int)SliderSize.Value}";
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void SliderPosition_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
     {
         if (blockEvents) return;
@@ -139,5 +139,5 @@ public partial class CursorView : UserControl
         TimeSystem.Division = division;
         TimeSystem.SeekMeasureTick(measure, readjustedBeat * TimeSystem.DivisionInterval);
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

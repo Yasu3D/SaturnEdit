@@ -19,7 +19,7 @@ public partial class ProofreaderCriteriaWindow : Window
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
     public Main.ChartEditor.Tabs.ProofreaderCriteria Criteria = new();
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();
@@ -69,5 +69,5 @@ public partial class ProofreaderCriteriaWindow : Window
         Result = ModalDialogResult.Cancel;
         Close();
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

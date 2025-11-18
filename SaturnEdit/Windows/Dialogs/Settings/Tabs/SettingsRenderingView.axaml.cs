@@ -19,7 +19,7 @@ public partial class SettingsRenderingView : UserControl
 
     private bool blockEvents = false;
     
-#region System Event Delegates
+#region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs empty)
     {
         Dispatcher.UIThread.Post(() =>
@@ -60,9 +60,9 @@ public partial class SettingsRenderingView : UserControl
             blockEvents = false;
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void CheckBoxLowPerformanceMode_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
@@ -225,5 +225,5 @@ public partial class SettingsRenderingView : UserControl
             SettingsSystem.RenderSettings.SnapBackwardNoteColor = color;
         }
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

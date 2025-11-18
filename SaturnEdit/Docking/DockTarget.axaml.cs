@@ -244,9 +244,9 @@ public partial class DockTarget : UserControl
     }
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private void OnWindowDragStarted(object? sender, EventArgs e) => HitTestTargets();
     
     private void OnWindowDragged(object? sender, EventArgs e) => HitTestTargets();
-#endregion System Event Delegates
+#endregion System Event Handlers
 }

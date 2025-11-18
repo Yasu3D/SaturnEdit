@@ -522,7 +522,7 @@ public partial class ProofreaderView : UserControl
     }
 #endregion Methods
     
-#region System Event Delegates
+#region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -535,9 +535,9 @@ public partial class ProofreaderView : UserControl
     {
         UpdateProblems();
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
@@ -589,7 +589,7 @@ public partial class ProofreaderView : UserControl
 
         TimeSystem.SeekMeasureTick(item.Problem.Value.Measure, item.Problem.Value.Tick);
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }
 
 public struct ProofreaderCriteria()

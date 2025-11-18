@@ -40,7 +40,7 @@ public partial class DockTab : UserControl
     public UserControl? TabContent { get; set; } = null;
     private Point? startPoint = null;
 
-#region System Event Delegates
+#region System Event Handlers
     private void OnDockChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -50,9 +50,9 @@ public partial class DockTab : UserControl
             ButtonClose.IsVisible = listBox.Items.Count > 1;
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
     
-#region UI Event Delegates
+#region UI Event Handlers
     
     private void InputElement_OnPointerPressed(object? sender, PointerPressedEventArgs e)
     {
@@ -93,5 +93,5 @@ public partial class DockTab : UserControl
 
         DockArea.Instance.RemoveTab(group, this);
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

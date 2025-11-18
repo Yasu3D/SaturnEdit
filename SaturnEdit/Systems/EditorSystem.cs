@@ -2630,11 +2630,11 @@ public static class EditorSystem
 
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private static void OnChartLoaded(object? sender, EventArgs e)
     {
         Mode = EditorMode.ObjectMode;
         ActiveObjectGroup = null;
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 }

@@ -243,7 +243,7 @@ public partial class ChartView2D : UserControl
     }
 #endregion Methods
     
-#region System Event Delegates
+#region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs e)
     { 
         Dispatcher.UIThread.Post(() =>
@@ -389,9 +389,9 @@ public partial class ChartView2D : UserControl
             };
         });
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();
@@ -1373,5 +1373,5 @@ public partial class ChartView2D : UserControl
     private void ButtonEditShape_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.ToolBar_EditShape);
 
     private void ButtonEditType_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.ToolBar_EditType);
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

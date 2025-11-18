@@ -154,7 +154,7 @@ public partial class SaturnColorPicker : UserControl
     }
 #endregion 
     
-#region UI Event Delegates
+#region UI Event Handlers
     private async void OnActualThemeVariantChanged(object? sender, EventArgs e)
     {
         try
@@ -265,5 +265,5 @@ public partial class SaturnColorPicker : UserControl
     
     private void FlyoutBase_OnOpened(object? sender, EventArgs e) => ColorPickStarted?.Invoke(null, EventArgs.Empty);
     private void FlyoutBase_OnClosed(object? sender, EventArgs e) => ColorPickFinished?.Invoke(null, EventArgs.Empty);
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

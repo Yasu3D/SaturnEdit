@@ -148,14 +148,14 @@ public partial class SettingsShortcutsView : UserControl
     }
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         GenerateList(TextBoxSearch?.Text ?? "");
     }
-#endregion System Event Delegates
+#endregion System Event Handlers
 
-#region UI Event Delegates
+#region UI Event Handlers
     private void ListBoxShortcuts_OnKeyDown(object? sender, KeyEventArgs e)
     {
         if (!DefiningShortcut) return;
@@ -260,5 +260,5 @@ public partial class SettingsShortcutsView : UserControl
         if (TextBoxSearch == null) return;
         GenerateList(TextBoxSearch.Text ?? "");
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }

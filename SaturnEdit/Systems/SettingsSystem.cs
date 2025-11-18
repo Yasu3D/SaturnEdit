@@ -154,7 +154,7 @@ public static class SettingsSystem
     }
 #endregion Methods
     
-#region Internal Event Delegates
+#region Internal Event Handlers
     private static void OnPropertyChanged(object? sender, EventArgs e)
     {
         SettingsChanged?.Invoke(null, EventArgs.Empty);
@@ -172,7 +172,7 @@ public static class SettingsSystem
         HitsoundsChanged?.Invoke(null, EventArgs.Empty);
         SaveSettings();
     }
-#endregion Internal Event Delegates
+#endregion Internal Event Handlers
 }
 
 public class EditorSettings

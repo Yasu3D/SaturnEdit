@@ -350,7 +350,7 @@ public partial class DockArea : UserControl
     }
 #endregion Methods
 
-#region System Event Delegates
+#region System Event Handlers
     private void OnWindowDragStarted(object? sender, EventArgs e) => UpdateTarget();
     
     private void OnWindowDragEnded(object? sender, EventArgs e)
@@ -366,9 +366,9 @@ public partial class DockArea : UserControl
     }
 
     private void OnWindowDragged(object? sender, EventArgs e) => UpdateTarget();
-#endregion System Event Delegates
+#endregion System Event Handlers
     
-#region UI Event Delegates
+#region UI Event Handlers
     private void InputElement_OnPointerEntered(object? sender, PointerEventArgs e)
     {
         if (!WindowDragActive) return;
@@ -380,5 +380,5 @@ public partial class DockArea : UserControl
         if (!WindowDragActive) return;
         Target.IsVisible = false;
     }
-#endregion UI Event Delegates
+#endregion UI Event Handlers
 }
