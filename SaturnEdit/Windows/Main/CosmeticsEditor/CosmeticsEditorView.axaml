@@ -5,8 +5,8 @@
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              xmlns:tabs="clr-namespace:SaturnEdit.Windows.Main.CosmeticsEditor.Tabs"
              mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
+             d:DesignWidth="1000"
+             d:DesignHeight="600"
              x:Class="SaturnEdit.Windows.CosmeticsEditor.CosmeticsEditorView">
     <Grid RowDefinitions="40,1,*">
 
@@ -36,63 +36,63 @@
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.ConsoleColor}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemNewEmblem"
                                   Click="MenuItemNewEmblem_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.Emblem}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemNewIcon"
                                   Click="MenuItemNewIcon_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.Icon}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemNewNavigator"
                                   Click="MenuItemNewNavigator_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.Navigator}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemNewNoteSound"
                                   Click="MenuItemNewNoteSound_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.NoteSound}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemNewPlate"
                                   Click="MenuItemNewPlate_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.Plate}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemNewSystemMusic"
                                   Click="MenuItemNewSystemMusic_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.SystemMusic}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemNewSystemSound"
                                   Click="MenuItemNewSystemSound_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.SystemSound}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemNewTitle"
                                   Click="MenuItemNewTitle_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.Title}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                     </MenuItem>
 
                     <MenuItem Name="MenuItemOpen">
@@ -102,63 +102,63 @@
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="Folder" />
                         </MenuItem.Icon>
-                        
+
                         <MenuItem Name="MenuItemOpenConsoleColor"
                                   Click="MenuItemOpenConsoleColor_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.ConsoleColor}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemOpenEmblem"
                                   Click="MenuItemOpenEmblem_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.Emblem}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemOpenIcon"
                                   Click="MenuItemOpenIcon_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.Icon}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemOpenNavigator"
                                   Click="MenuItemOpenNavigator_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.Navigator}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemOpenNoteSound"
                                   Click="MenuItemOpenNoteSound_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.NoteSound}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemOpenPlate"
                                   Click="MenuItemOpenPlate_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.Plate}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemOpenSystemMusic"
                                   Click="MenuItemOpenSystemMusic_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.SystemMusic}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemOpenSystemSound"
                                   Click="MenuItemOpenSystemSound_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.SystemSound}" />
                             </MenuItem.Header>
                         </MenuItem>
-                        
+
                         <MenuItem Name="MenuItemOpenTitle"
                                   Click="MenuItemOpenTitle_OnClick">
                             <MenuItem.Header>
@@ -249,51 +249,74 @@
                    Fill="{DynamicResource SeparatorSecondary}" />
 
         <!-- Content -->
-        <StackPanel Grid.Row="2" Background="{DynamicResource BackgroundPrimary}">
-            <tabs:CosmeticItemEditorView/>
-            
-            <Rectangle Height="1"
-                       HorizontalAlignment="Stretch"
-                       Margin="10,5"
-                       Fill="{DynamicResource SeparatorPrimary}"/>
-            
-            <Panel>
-                <tabs:ConsoleColorEditorView Name="ConsoleColorEditor"
-                                             IsVisible="False"
-                                             IsEnabled="False" />
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="50" />
+                <ColumnDefinition Width="1" />
+                <ColumnDefinition MinWidth="50" />
+            </Grid.ColumnDefinitions>
 
-                <tabs:EmblemEditorView Name="EmblemEditor"
-                                       IsVisible="False"
-                                       IsEnabled="False" />
+            <StackPanel Grid.Column="0"
+                        Background="{DynamicResource BackgroundPrimary}">
+                <tabs:CosmeticItemEditorView />
 
-                <tabs:IconEditorView Name="IconEditor"
-                                     IsVisible="False"
-                                     IsEnabled="False" />
+                <Rectangle Height="1"
+                           HorizontalAlignment="Stretch"
+                           Margin="10,5"
+                           Fill="{DynamicResource SeparatorPrimary}" />
 
-                <tabs:NavigatorEditorView Name="NavigatorEditor"
+                <Panel>
+                    <tabs:ConsoleColorEditorView Name="ConsoleColorEditor"
+                                                 IsVisible="False"
+                                                 IsEnabled="False" />
+
+                    <tabs:EmblemEditorView Name="EmblemEditor"
+                                           IsVisible="False"
+                                           IsEnabled="False" />
+
+                    <tabs:IconEditorView Name="IconEditor"
+                                         IsVisible="False"
+                                         IsEnabled="False" />
+
+                    <tabs:NavigatorEditorView Name="NavigatorEditor"
+                                              IsVisible="False"
+                                              IsEnabled="False" />
+
+                    <tabs:NoteSoundEditorView Name="NoteSoundEditor"
+                                              IsVisible="False"
+                                              IsEnabled="False" />
+
+                    <tabs:PlateEditorView Name="PlateEditor"
                                           IsVisible="False"
                                           IsEnabled="False" />
 
-                <tabs:NoteSoundEditorView Name="NoteSoundEditor"
+                    <tabs:SystemMusicEditorView Name="SystemMusicEditor"
+                                                IsVisible="False"
+                                                IsEnabled="False" />
+
+                    <tabs:SystemSoundEditorView Name="SystemSoundEditor"
+                                                IsVisible="False"
+                                                IsEnabled="False" />
+
+                    <tabs:TitleEditorView Name="TitleEditor"
                                           IsVisible="False"
                                           IsEnabled="False" />
+                </Panel>
+            </StackPanel>
 
-                <tabs:PlateEditorView Name="PlateEditor"
-                                      IsVisible="False"
-                                      IsEnabled="False" />
+            <Rectangle Grid.Column="1"
+                       VerticalAlignment="Stretch"
+                       Fill="{DynamicResource SeparatorPrimary}" />
+            <GridSplitter Grid.Column="1"
+                          Background="Transparent" />
 
-                <tabs:SystemMusicEditorView Name="SystemMusicEditor"
-                                            IsVisible="False"
-                                            IsEnabled="False" />
+            <Rectangle Grid.Column="2" Fill="{DynamicResource BackgroundSecondary}"/>
 
-                <tabs:SystemSoundEditorView Name="SystemSoundEditor"
-                                            IsVisible="False"
-                                            IsEnabled="False" />
-
-                <tabs:TitleEditorView Name="TitleEditor"
-                                      IsVisible="False"
-                                      IsEnabled="False" />
-            </Panel>
-        </StackPanel>
+            <TextBlock Grid.Column="2"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="Under Construction"
+                       Foreground="{DynamicResource ForegroundTertiary}" />
+        </Grid>
     </Grid>
 </UserControl>

@@ -34,6 +34,11 @@ public class SkiaSharpCanvas : UserControl
     public override void Render(DrawingContext context)
     {
         if (RenderAction == null) return;
+        if (!IsEffectivelyEnabled)
+        {
+            Dispatcher.UIThread.InvokeAsync(InvalidateVisual, DispatcherPriority.Background);
+            return;
+        }
         
         context.Custom(new SkiaDrawOperation(new(0, 0, DesiredSize.Width, DesiredSize.Height), RenderAction));
         Dispatcher.UIThread.InvokeAsync(InvalidateVisual, DispatcherPriority.Background);

@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
+using SkiaSharp;
 using ConsoleColor = SaturnData.Content.Cosmetics.ConsoleColor;
 
 namespace SaturnEdit.Windows.CosmeticsEditor;
@@ -21,6 +24,8 @@ public partial class CosmeticsEditorView : UserControl
     {
         InitializeComponent();
 
+        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
+        
         KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
         KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
         
@@ -31,6 +36,16 @@ public partial class CosmeticsEditorView : UserControl
         CosmeticBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
+    private SKColor backgroundColor = new(0xFF000000);
+    
+    private readonly SKPaint gridPaint = new()
+    {
+        Color = 0xFFFFFFFF,
+        StrokeWidth = 1,
+        IsAntialias = false,
+        Style = SKPaintStyle.Stroke,
+    };
+    
 #region Methods
     private async void File_New(CosmeticType cosmeticType)
     {
@@ -298,6 +313,8 @@ public partial class CosmeticsEditorView : UserControl
     {
         Dispatcher.UIThread.Post(() =>
         {
+            MenuItemReloadFromDisk.IsEnabled = File.Exists(CosmeticSystem.CosmeticItem.AbsoluteSourcePath);
+            
             ConsoleColorEditor.IsVisible = CosmeticSystem.CosmeticItem is ConsoleColor;
             ConsoleColorEditor.IsEnabled = ConsoleColorEditor.IsVisible;
             
@@ -329,6 +346,33 @@ public partial class CosmeticsEditorView : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    private async void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
+    {
+        try
+        {
+            await Task.Delay(1);
+
+            if (Application.Current == null) return;
+            if (!Application.Current.TryGetResource("BackgroundSecondary", Application.Current.ActualThemeVariant, out object? resource)) return;
+            if (resource is not SolidColorBrush brush) return;
+        
+            backgroundColor = new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
+            
+            if (!Application.Current.TryGetResource("BackgroundGrid", Application.Current.ActualThemeVariant, out resource)) return;
+            if (resource is not SolidColorBrush brush2) return;
+            
+            gridPaint.Color = new(brush2.Color.R, brush2.Color.G, brush2.Color.B, brush2.Color.A);
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+            
+            backgroundColor = new(0xFFFF00FF);
+            gridPaint.Color = new(0xFFFF00FF);
+        }
+    }
+    
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         if (!IsEnabled) return;

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Media.Imaging;
+using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
@@ -17,6 +18,7 @@ using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.StageOperations;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
+using SkiaSharp;
 
 namespace SaturnEdit.Windows.StageEditor;
 
@@ -25,7 +27,7 @@ public partial class StageEditorView : UserControl
     public StageEditorView()
     {
         InitializeComponent();
-
+        
         KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
         KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
         
@@ -255,6 +257,8 @@ public partial class StageEditorView : UserControl
         {
             blockEvents = true;
 
+            MenuItemReloadFromDisk.IsEnabled = File.Exists(StageSystem.StageUpStage.AbsoluteSourcePath);
+            
             TextBoxStageId.Text = StageSystem.StageUpStage.Id;
             TextBoxStageName.Text = StageSystem.StageUpStage.Name;
             TextBoxStageIconPath.Text = StageSystem.StageUpStage.IconPath;
@@ -282,18 +286,6 @@ public partial class StageEditorView : UserControl
             
             bool iconExists = File.Exists(StageSystem.StageUpStage.AbsoluteIconPath);
             IconFileNotFoundWarning.IsVisible = StageSystem.StageUpStage.AbsoluteIconPath != "" && !iconExists;
-            
-            try
-            {
-                ImageStageIcon.Source = iconExists ? new Bitmap(StageSystem.StageUpStage.AbsoluteIconPath) : null;
-                ImageStageIcon.IsVisible = iconExists;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                ImageStageIcon.IsVisible = false;
-                IconFileNotFoundWarning.IsVisible = true;
-            }
             
             blockEvents = false;
         });

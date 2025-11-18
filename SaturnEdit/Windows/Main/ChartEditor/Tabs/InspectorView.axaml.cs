@@ -34,7 +34,7 @@ public partial class InspectorView : UserControl
 
     private bool blockEvents = false;
 
-    private Dictionary<Bookmark, uint> recoloredBookmarks = [];
+    private readonly Dictionary<Bookmark, uint> recoloredBookmarks = [];
     
 #region System Event Delegates
     private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)

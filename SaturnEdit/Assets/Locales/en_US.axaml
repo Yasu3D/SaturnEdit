@@ -373,6 +373,12 @@
     <system:String x:Key="CosmeticEditor.Property.Rarity">Cosmetic Rarity</system:String>
     <system:String x:Key="CosmeticEditor.ToolTip.GenerateNewId">Generate New Id</system:String>
     <system:String x:Key="CosmeticEditor.ToolTip.GenerateNewId.Description">Generates a new UUID to use as the Cosmetic Id.</system:String>
+    <system:String x:Key="CosmeticEditor.ConsoleColor.Property.UIColorsA">UI Color A</system:String>
+    <system:String x:Key="CosmeticEditor.ConsoleColor.Property.UIColorsB">UI Color B</system:String>
+    <system:String x:Key="CosmeticEditor.ConsoleColor.Property.UIColorsC">UI Color C</system:String>
+    <system:String x:Key="CosmeticEditor.ConsoleColor.Property.LedColorsA">LED Color A </system:String>
+    <system:String x:Key="CosmeticEditor.ConsoleColor.Property.LedColorsB">LED Color B</system:String>
+    <system:String x:Key="CosmeticEditor.ConsoleColor.Property.LedColorsC">LED Color C</system:String>
     <system:String x:Key="Main.Window.Title">SaturnEdit — Main Window</system:String>
     <system:String x:Key="Main.ToolTip.Update">Update Available!</system:String>
     <system:String x:Key="Main.ToolTip.Update.Description">Click to download latest version.</system:String>

@@ -370,6 +370,12 @@ CosmeticEditor.Property.Author,Cosmetic Author
 CosmeticEditor.Property.Rarity,Cosmetic Rarity
 CosmeticEditor.ToolTip.GenerateNewId,Generate New Id
 CosmeticEditor.ToolTip.GenerateNewId.Description,Generates a new UUID to use as the Cosmetic Id.
+CosmeticEditor.ConsoleColor.Property.UIColorsA,UI Color A
+CosmeticEditor.ConsoleColor.Property.UIColorsB,UI Color B
+CosmeticEditor.ConsoleColor.Property.UIColorsC,UI Color C
+CosmeticEditor.ConsoleColor.Property.LedColorsA,LED Color A 
+CosmeticEditor.ConsoleColor.Property.LedColorsB,LED Color B
+CosmeticEditor.ConsoleColor.Property.LedColorsC,LED Color C
 Main.Window.Title,SaturnEdit — Main Window
 Main.ToolTip.Update,Update Available!
 Main.ToolTip.Update.Description,Click to download latest version.

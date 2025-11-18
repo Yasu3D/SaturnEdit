@@ -49,9 +49,6 @@ public partial class ChartEditorView : UserControl
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
-
-        ChartSystem.EntryChanged += OnEntryChanged;
-        OnEntryChanged(null, EventArgs.Empty);
         
         UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
         ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
@@ -904,20 +901,14 @@ public partial class ChartEditorView : UserControl
         });
     }
     
-    private void OnEntryChanged(object? sender, EventArgs e)
-    {
-        Dispatcher.UIThread.Post(() =>
-        {
-            MenuItemReloadFromDisk.IsEnabled = File.Exists(ChartSystem.Entry.ChartFile);
-        });
-    }
-    
     private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
         {
             MenuItemUndo.IsEnabled = UndoRedoSystem.ChartBranch.CanUndo;
             MenuItemRedo.IsEnabled = UndoRedoSystem.ChartBranch.CanRedo;
+            
+            MenuItemReloadFromDisk.IsEnabled = File.Exists(ChartSystem.Entry.ChartFile);
         });
     }
     

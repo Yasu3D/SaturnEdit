@@ -30,9 +30,10 @@
                     CornerRadius="2" />
         </Border>
 
-        <Button Classes="Themed Square Concave"
+        <Button Classes="Themed Concave"
                 Margin="1"
-                Width="32"
+                MinWidth="32"
+                HorizontalAlignment="Stretch"
                 Height="32">
             <Button.Flyout>
                 <Flyout PlacementAnchor="Bottom"

@@ -16,6 +16,7 @@ public partial class SaturnColorPicker : UserControl
         InitializeComponent();
         
         ActualThemeVariantChanged += OnActualThemeVariantChanged;
+        BorderColorPreview.Background = new SolidColorBrush(Color);
     }
 
     public event EventHandler? ColorPickStarted; 
