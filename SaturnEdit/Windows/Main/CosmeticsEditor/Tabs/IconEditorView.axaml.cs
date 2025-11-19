@@ -108,7 +108,7 @@ public partial class IconEditorView : UserControl
             if (icon.AbsoluteSourcePath == "")
             {
                 // Define new source path.
-                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "Icon.toml");
+                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "icon.toml");
 
                 StringEditOperation op0 = new(value => { icon.AbsoluteSourcePath = value; }, icon.AbsoluteSourcePath, newSourcePath);
                 StringEditOperation op1 = new(value => { icon.ImagePath = value; }, icon.ImagePath, Path.GetFileName(files[0].Path.LocalPath));

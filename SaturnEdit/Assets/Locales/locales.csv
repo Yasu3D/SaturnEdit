@@ -380,6 +380,21 @@ CosmeticEditor.ConsoleColor.Property.LedColorsB,LED Color B
 CosmeticEditor.ConsoleColor.Property.LedColorsC,LED Color C
 CosmeticEditor.Emblem.Property.EmblemImage,Emblem Image
 CosmeticEditor.Icon.Property.IconImage,Icon Image
+CosmeticEditor.NoteSound.Property.TouchMarvelous,Touch (Marvelous)
+CosmeticEditor.NoteSound.Property.TouchGood,Touch (Good)
+CosmeticEditor.NoteSound.Property.SlideMarvelous,Slide (Marvelous)
+CosmeticEditor.NoteSound.Property.SlideGood,Slide (Good)
+CosmeticEditor.NoteSound.Property.SnapMarvelous,Snap (Marvelous)
+CosmeticEditor.NoteSound.Property.SnapGood,Snap (Good)
+CosmeticEditor.NoteSound.Property.Hold,Hold
+CosmeticEditor.NoteSound.Property.ReHold,Re-Hold
+CosmeticEditor.NoteSound.Property.Chain,Chain
+CosmeticEditor.NoteSound.Property.Bonus,Bonus Effect
+CosmeticEditor.NoteSound.Property.R,R-Note Effect
+CosmeticEditor.NoteSound.Property.HoldLoopStartTime,Hold Loop Start
+CosmeticEditor.NoteSound.Property.HoldLoopEndTime,Hold Loop End
+CosmeticEditor.NoteSound.Property.ReHoldLoopStartTime,Re-Hold Loop Start
+CosmeticEditor.NoteSound.Property.ReHoldLoopEndTime,Re-Hold Loop End
 CosmeticEditor.Plate.Property.PlateImage,Plate Image
 CosmeticEditor.Title.Property.Message,Title Message
 Main.Window.Title,SaturnEdit — Main Window
