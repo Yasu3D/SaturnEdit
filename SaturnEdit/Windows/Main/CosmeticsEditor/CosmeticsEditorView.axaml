@@ -256,53 +256,55 @@
                 <ColumnDefinition MinWidth="50" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0"
-                        Background="{DynamicResource BackgroundPrimary}">
-                <tabs:CosmeticItemEditorView />
+            <ScrollViewer Grid.Column="0"
+                          Background="{DynamicResource BackgroundPrimary}">
+                <StackPanel>
+                    <tabs:CosmeticItemEditorView />
 
-                <Rectangle Height="1"
-                           HorizontalAlignment="Stretch"
-                           Margin="10,5"
-                           Fill="{DynamicResource SeparatorPrimary}" />
+                    <Rectangle Height="1"
+                               HorizontalAlignment="Stretch"
+                               Margin="10,5"
+                               Fill="{DynamicResource SeparatorPrimary}" />
 
-                <Panel>
-                    <tabs:ConsoleColorEditorView Name="ConsoleColorEditor"
-                                                 IsVisible="False"
-                                                 IsEnabled="False" />
+                    <Panel>
+                        <tabs:ConsoleColorEditorView Name="ConsoleColorEditor"
+                                                     IsVisible="False"
+                                                     IsEnabled="False" />
 
-                    <tabs:EmblemEditorView Name="EmblemEditor"
-                                           IsVisible="False"
-                                           IsEnabled="False" />
+                        <tabs:EmblemEditorView Name="EmblemEditor"
+                                               IsVisible="False"
+                                               IsEnabled="False" />
 
-                    <tabs:IconEditorView Name="IconEditor"
-                                         IsVisible="False"
-                                         IsEnabled="False" />
+                        <tabs:IconEditorView Name="IconEditor"
+                                             IsVisible="False"
+                                             IsEnabled="False" />
 
-                    <tabs:NavigatorEditorView Name="NavigatorEditor"
+                        <tabs:NavigatorEditorView Name="NavigatorEditor"
+                                                  IsVisible="False"
+                                                  IsEnabled="False" />
+
+                        <tabs:NoteSoundEditorView Name="NoteSoundEditor"
+                                                  IsVisible="False"
+                                                  IsEnabled="False" />
+
+                        <tabs:PlateEditorView Name="PlateEditor"
                                               IsVisible="False"
                                               IsEnabled="False" />
 
-                    <tabs:NoteSoundEditorView Name="NoteSoundEditor"
+                        <tabs:SystemMusicEditorView Name="SystemMusicEditor"
+                                                    IsVisible="False"
+                                                    IsEnabled="False" />
+
+                        <tabs:SystemSoundEditorView Name="SystemSoundEditor"
+                                                    IsVisible="False"
+                                                    IsEnabled="False" />
+
+                        <tabs:TitleEditorView Name="TitleEditor"
                                               IsVisible="False"
                                               IsEnabled="False" />
-
-                    <tabs:PlateEditorView Name="PlateEditor"
-                                          IsVisible="False"
-                                          IsEnabled="False" />
-
-                    <tabs:SystemMusicEditorView Name="SystemMusicEditor"
-                                                IsVisible="False"
-                                                IsEnabled="False" />
-
-                    <tabs:SystemSoundEditorView Name="SystemSoundEditor"
-                                                IsVisible="False"
-                                                IsEnabled="False" />
-
-                    <tabs:TitleEditorView Name="TitleEditor"
-                                          IsVisible="False"
-                                          IsEnabled="False" />
-                </Panel>
-            </StackPanel>
+                    </Panel>
+                </StackPanel>
+            </ScrollViewer>
 
             <Rectangle Grid.Column="1"
                        VerticalAlignment="Stretch"

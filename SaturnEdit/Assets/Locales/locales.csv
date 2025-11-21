@@ -380,6 +380,46 @@ CosmeticEditor.ConsoleColor.Property.LedColorsB,LED Color B
 CosmeticEditor.ConsoleColor.Property.LedColorsC,LED Color C
 CosmeticEditor.Emblem.Property.EmblemImage,Emblem Image
 CosmeticEditor.Icon.Property.IconImage,Icon Image
+CosmeticEditor.Navigator.Property.Width,Base Width
+CosmeticEditor.Navigator.Property.Height,Base Height
+CosmeticEditor.Navigator.Property.OffsetX,Base Offset X
+CosmeticEditor.Navigator.Property.OffsetY,Base Offset Y
+CosmeticEditor.Navigator.Property.FaceMarginTop,Face Margin (Top)
+CosmeticEditor.Navigator.Property.FaceMarginBottom,Face Margin (Bottom)
+CosmeticEditor.Navigator.Property.FaceMarginLeft,Face Margin (Left)
+CosmeticEditor.Navigator.Property.FaceMarginRight,Face Margin (Right)
+CosmeticEditor.Navigator.Property.FaceMarginRight,Face Margin (Right)
+CosmeticEditor.Navigator.Property.BlinkInterval,Blink Interval
+CosmeticEditor.Navigator.Property.BlinkDuration,Blink Duration
+CosmeticEditor.Navigator.Property.Texture.Icon,Navigator Icon
+CosmeticEditor.Navigator.Property.Texture.Base,Navigator Base
+CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.A,Neutral (Eyes Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.B,Neutral (Eyes Half-Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.C,Neutral (Eyes Closed)
+CosmeticEditor.Navigator.Property.Texture.Expression.Amazed.A,Amazed (Eyes Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Amazed.B,Amazed (Eyes Half-Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Amazed.C,Amazed (Eyes Closed)
+CosmeticEditor.Navigator.Property.Texture.Expression.Troubled.A,Troubled (Eyes Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Troubled.B,Troubled (Eyes Half-Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Troubled.C,Troubled (Eyes Closed)
+CosmeticEditor.Navigator.Property.Texture.Expression.Surprised.A,Surprised (Eyes Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Surprised.B,Surprised (Eyes Half-Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Surprised.C,Surprised (Eyes Closed)
+CosmeticEditor.Navigator.Property.Texture.Expression.Startled.A,Startled (Eyes Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Startled.B,Startled (Eyes Half-Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Startled.C,Startled (Eyes Closed)
+CosmeticEditor.Navigator.Property.Texture.Expression.Angry.A,Angry (Eyes Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Angry.B,Angry (Eyes Half-Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Angry.C,Angry (Eyes Closed)
+CosmeticEditor.Navigator.Property.Texture.Expression.Laughing.A,Laughing (Eyes Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Laughing.B,Laughing (Eyes Half-Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Laughing.C,Laughing (Eyes Closed)
+CosmeticEditor.Navigator.Property.Texture.Expression.Smiling.A,Smiling (Eyes Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Smiling.B,Smiling (Eyes Half-Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Smiling.C,Smiling (Eyes Closed)
+CosmeticEditor.Navigator.Property.Texture.Expression.Grinning.A,Grinning (Eyes Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Grinning.B,Grinning (Eyes Half-Open)
+CosmeticEditor.Navigator.Property.Texture.Expression.Grinning.C,Grinning (Eyes Closed)
 CosmeticEditor.NoteSound.Property.TouchMarvelous,Touch (Marvelous)
 CosmeticEditor.NoteSound.Property.TouchGood,Touch (Good)
 CosmeticEditor.NoteSound.Property.SlideMarvelous,Slide (Marvelous)
@@ -396,6 +436,36 @@ CosmeticEditor.NoteSound.Property.HoldLoopEndTime,Hold Loop End
 CosmeticEditor.NoteSound.Property.ReHoldLoopStartTime,Re-Hold Loop Start
 CosmeticEditor.NoteSound.Property.ReHoldLoopEndTime,Re-Hold Loop End
 CosmeticEditor.Plate.Property.PlateImage,Plate Image
+CosmeticEditor.SystemMusic.Property.AudioAttractPath,Attract Audio Path
+CosmeticEditor.SystemMusic.Property.AudioSelectPath,Select Audio Path
+CosmeticEditor.SystemMusic.Property.AudioResultPath,Result Audio Path
+CosmeticEditor.SystemMusic.Property.AudioStageUpSelectPath,Stage-Up Select Audio Path
+CosmeticEditor.SystemMusic.Property.AudioStageUpSecretPath,Stage-Up Secret Audio Path
+CosmeticEditor.SystemMusic.Property.AudioSeeYouPath,See-You Audio Path
+CosmeticEditor.SystemSound.Property.AudioLoginPath,Login Audio Path
+CosmeticEditor.SystemSound.Property.AudioCycleModePath,Cycle Mode Audio Path
+CosmeticEditor.SystemSound.Property.AudioCycleFolderPath,Cycle Folder Audio Path
+CosmeticEditor.SystemSound.Property.AudioCycleSongPath,Cycle Song Audio Path
+CosmeticEditor.SystemSound.Property.AudioCycleOptionPath,Cycle Option Audio Path
+CosmeticEditor.SystemSound.Property.AudioSelectOkPath,Select Ok Audio Path
+CosmeticEditor.SystemSound.Property.AudioSelectBackPath,Select Back Audio Path
+CosmeticEditor.SystemSound.Property.AudioSelectDeniedPath,Select Denied Audio Path
+CosmeticEditor.SystemSound.Property.AudioSelectDecidePath,Select Decide Audio Path
+CosmeticEditor.SystemSound.Property.AudioSelectPreviewSongPath,Select Preview Song Audio Path
+CosmeticEditor.SystemSound.Property.AudioSelectStartSongPath,Select Start Song Audio Path
+CosmeticEditor.SystemSound.Property.AudioSelectStartSongAltPath,Select Start Song Alt Audio Path
+CosmeticEditor.SystemSound.Property.AudioFavoriteAddPath,Favorite Add Audio Path
+CosmeticEditor.SystemSound.Property.AudioFavoriteRemovePath,Favorite Remove Audio Path
+CosmeticEditor.SystemSound.Property.AudioResultScoreCountPath,Result Score Count Audio Path
+CosmeticEditor.SystemSound.Property.AudioResultScoreFinishedPath,Result Score Finished Audio Path
+CosmeticEditor.SystemSound.Property.AudioResultRateBadPath,Result Rate Bad Audio Path
+CosmeticEditor.SystemSound.Property.AudioResultRateGoodPath,Result Rate Good Audio Path
+CosmeticEditor.SystemSound.Property.AudioRhythmGameReadyPath,Rhythm Game Ready Audio Path
+CosmeticEditor.SystemSound.Property.AudioRhythmGameFailPath,Rhythm Game Fail Audio Path
+CosmeticEditor.SystemSound.Property.AudioRhythmGameClearPath,Rhythm Game Clear Audio Path
+CosmeticEditor.SystemSound.Property.AudioRhythmGameSpecialClearPath,Rhythm Game Special Clear Audio Path
+CosmeticEditor.SystemSound.Property.AudioTimerWarningPath,Timer Warning Audio Path
+CosmeticEditor.SystemSound.Property.AudioTextboxAppearPath,Textbox Appear Audio Path
 CosmeticEditor.Title.Property.Message,Title Message
 Main.Window.Title,SaturnEdit — Main Window
 Main.ToolTip.Update,Update Available!
