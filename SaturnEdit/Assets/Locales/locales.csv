@@ -380,6 +380,12 @@ CosmeticEditor.ConsoleColor.Property.LedColorsB,LED Color B
 CosmeticEditor.ConsoleColor.Property.LedColorsC,LED Color C
 CosmeticEditor.Emblem.Property.EmblemImage,Emblem Image
 CosmeticEditor.Icon.Property.IconImage,Icon Image
+CosmeticEditor.Navigator.Header.Metadata,Metadata
+CosmeticEditor.Navigator.Header.Textures,Textures
+CosmeticEditor.Navigator.Header.Dialogues,Dialogues
+CosmeticEditor.Navigator.List.Languages,Languages
+CosmeticEditor.Navigator.List.Dialogues,Dialogues
+CosmeticEditor.Navigator.List.Variants,Variants
 CosmeticEditor.Navigator.Property.Width,Base Width
 CosmeticEditor.Navigator.Property.Height,Base Height
 CosmeticEditor.Navigator.Property.OffsetX,Base Offset X

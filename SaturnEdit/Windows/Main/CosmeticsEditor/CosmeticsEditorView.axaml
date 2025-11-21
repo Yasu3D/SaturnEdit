@@ -258,15 +258,17 @@
 
             <ScrollViewer Grid.Column="0"
                           Background="{DynamicResource BackgroundPrimary}">
-                <StackPanel>
-                    <tabs:CosmeticItemEditorView />
+                <Grid RowDefinitions="Auto,11,*">
+                    <tabs:CosmeticItemEditorView Grid.Row="0"/>
 
-                    <Rectangle Height="1"
+                    <Rectangle Grid.Row="1"
+                               Height="1"
                                HorizontalAlignment="Stretch"
+                               VerticalAlignment="Center"
                                Margin="10,5"
                                Fill="{DynamicResource SeparatorPrimary}" />
 
-                    <Panel>
+                    <Panel Grid.Row="2">
                         <tabs:ConsoleColorEditorView Name="ConsoleColorEditor"
                                                      IsVisible="False"
                                                      IsEnabled="False" />
@@ -303,7 +305,7 @@
                                               IsVisible="False"
                                               IsEnabled="False" />
                     </Panel>
-                </StackPanel>
+                </Grid>
             </ScrollViewer>
 
             <Rectangle Grid.Column="1"

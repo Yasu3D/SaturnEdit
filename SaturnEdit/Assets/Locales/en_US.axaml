@@ -383,6 +383,12 @@
     <system:String x:Key="CosmeticEditor.ConsoleColor.Property.LedColorsC">LED Color C</system:String>
     <system:String x:Key="CosmeticEditor.Emblem.Property.EmblemImage">Emblem Image</system:String>
     <system:String x:Key="CosmeticEditor.Icon.Property.IconImage">Icon Image</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Header.Metadata">Metadata</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Header.Textures">Textures</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Header.Dialogues">Dialogues</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.List.Languages">Languages</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.List.Dialogues">Dialogues</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.List.Variants">Variants</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Width">Base Width</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Height">Base Height</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.OffsetX">Base Offset X</system:String>

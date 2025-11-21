@@ -8,8 +8,7 @@
              d:DesignHeight="700"
              Background="{DynamicResource BackgroundPrimary}"
              x:Class="SaturnEdit.Windows.Main.ChartEditor.Tabs.EventListView">
-    <Grid DockPanel.Dock="Top"
-          RowDefinitions="40,1,*,31">
+    <Grid RowDefinitions="40,1,*,31">
         <TextBlock Grid.Row="0"
                    Text="{DynamicResource ChartEditor.EventList.Header.Events}"
                    FontWeight="Regular"

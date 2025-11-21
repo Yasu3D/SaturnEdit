@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
@@ -527,6 +528,46 @@ public partial class NavigatorEditorView : UserControl
             // don't throw
             Console.WriteLine(ex);
         }
+    }
+
+    private void ButtonDelete_OnClick(object? sender, RoutedEventArgs e)
+    {
+        
+    }
+
+    private void ButtonAdd_OnClick(object? sender, RoutedEventArgs e)
+    {
+        
+    }
+    
+    private void ListBoxLanguages_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        
+    }
+    
+    private void ListBoxLanguages_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        
+    }
+    
+    private void ListBoxDialogues_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        
+    }
+    
+    private void ListBoxDialogues_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        
+    }
+    
+    private void ListBoxVariants_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        
+    }
+    
+    private void ListBoxVariants_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        
     }
 #endregion UI Event Handlers
 }
