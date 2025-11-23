@@ -287,6 +287,7 @@ public partial class ChartEditorView : UserControl
             };
 
             ChartSystem.ReadChart(ChartSystem.Entry.ChartFile, args);
+            ChartSystem.ReadChart(ChartSystem.Entry.ChartPath, args);
             return true;
         }
         catch (Exception ex)
@@ -363,17 +364,15 @@ public partial class ChartEditorView : UserControl
                 FormatVersion.SatV3 => "Menu.File.SaturnChartFile",
                 _ => "Menu.File.UnknownChartFile",
             };
-
-            TryGetResource(key, ActualThemeVariant, out object? resource);
-            string filePickerFileTypeName = resource as string ?? "";
-
+            
             return new()
             {
+                
                 DefaultExtension = defaultExtension,
                 SuggestedFileName = suggestedFileName,
                 FileTypeChoices =
                 [
-                    new(filePickerFileTypeName)
+                    new("Chart Files")
                     {
                         Patterns = [$"*{defaultExtension}"],
                     },
@@ -909,7 +908,7 @@ public partial class ChartEditorView : UserControl
             MenuItemUndo.IsEnabled = UndoRedoSystem.ChartBranch.CanUndo;
             MenuItemRedo.IsEnabled = UndoRedoSystem.ChartBranch.CanRedo;
             
-            MenuItemReloadFromDisk.IsEnabled = File.Exists(ChartSystem.Entry.ChartFile);
+            MenuItemReloadFromDisk.IsEnabled = File.Exists(ChartSystem.Entry.ChartPath);
         });
     }
     
