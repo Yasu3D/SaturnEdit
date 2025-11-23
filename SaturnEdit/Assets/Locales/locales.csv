@@ -399,6 +399,9 @@ CosmeticEditor.Navigator.Property.BlinkInterval,Blink Interval
 CosmeticEditor.Navigator.Property.BlinkDuration,Blink Duration
 CosmeticEditor.Navigator.Property.Texture.Icon,Navigator Icon
 CosmeticEditor.Navigator.Property.Texture.Base,Navigator Base
+CosmeticEditor.Navigator.Property.Texture.SeeYouA,See You (A)
+CosmeticEditor.Navigator.Property.Texture.SeeYouB,See You (B)
+CosmeticEditor.Navigator.Property.Texture.SeeYouC,See You (C)
 CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.A,Neutral (Eyes Open)
 CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.B,Neutral (Eyes Half-Open)
 CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.C,Neutral (Eyes Closed)
@@ -426,6 +429,22 @@ CosmeticEditor.Navigator.Property.Texture.Expression.Smiling.C,Smiling (Eyes Clo
 CosmeticEditor.Navigator.Property.Texture.Expression.Grinning.A,Grinning (Eyes Open)
 CosmeticEditor.Navigator.Property.Texture.Expression.Grinning.B,Grinning (Eyes Half-Open)
 CosmeticEditor.Navigator.Property.Texture.Expression.Grinning.C,Grinning (Eyes Closed)
+CosmeticEditor.Navigator.Language.Property.LocaleKey,Locale Key
+CosmeticEditor.Navigator.VariantCollection.Property.DialogueKey,Dialogue Key
+CosmeticEditor.Navigator.Dialogue.Property.Message,Message
+CosmeticEditor.Navigator.Dialogue.Property.AudioFile,Message Audio File
+CosmeticEditor.Navigator.Dialogue.Property.Duration,Message Duration
+CosmeticEditor.Navigator.Dialogue.Property.Expression,Expression
+CosmeticEditor.Navigator.Dialogue.Property.ShowSkipButton,Show Skip Button
+CosmeticEditor.Navigator.Dialogue.Property.Expression.Neutral,Neutral
+CosmeticEditor.Navigator.Dialogue.Property.Expression.Amazed,Amazed
+CosmeticEditor.Navigator.Dialogue.Property.Expression.Troubled,Troubled
+CosmeticEditor.Navigator.Dialogue.Property.Expression.Surprised,Surprised
+CosmeticEditor.Navigator.Dialogue.Property.Expression.Startled,Startled
+CosmeticEditor.Navigator.Dialogue.Property.Expression.Angry,Angry
+CosmeticEditor.Navigator.Dialogue.Property.Expression.Laughing,Laughing
+CosmeticEditor.Navigator.Dialogue.Property.Expression.Smiling,Smiling
+CosmeticEditor.Navigator.Dialogue.Property.Expression.Grinning,Grinning
 CosmeticEditor.NoteSound.Property.TouchMarvelous,Touch (Marvelous)
 CosmeticEditor.NoteSound.Property.TouchGood,Touch (Good)
 CosmeticEditor.NoteSound.Property.SlideMarvelous,Slide (Marvelous)

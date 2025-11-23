@@ -59,10 +59,10 @@ public partial class NoteSoundEditorView : UserControl
             IconFileNotFoundWarningAudioBonus.IsVisible = noteSound.AudioBonusPath != "" && !File.Exists(noteSound.AbsoluteAudioBonusPath);
             IconFileNotFoundWarningAudioR.IsVisible = noteSound.AudioRPath != "" && !File.Exists(noteSound.AbsoluteAudioRPath);
 
-            TextBoxHoldLoopStartTime.Text = noteSound.HoldLoopStartTime.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxHoldLoopEndTime.Text = noteSound.HoldLoopEndTime.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxReHoldLoopStartTime.Text = noteSound.ReHoldLoopStartTime.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxReHoldLoopEndTime.Text = noteSound.ReHoldLoopEndTime.ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxHoldLoopStartTime.Text   = (0.001f * noteSound.HoldLoopStartTime).ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxHoldLoopEndTime.Text     = (0.001f * noteSound.HoldLoopEndTime).ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxReHoldLoopStartTime.Text = (0.001f * noteSound.ReHoldLoopStartTime).ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxReHoldLoopEndTime.Text   = (0.001f * noteSound.ReHoldLoopEndTime).ToString("0.000000", CultureInfo.InvariantCulture);
             
             blockEvents = false;
         });
@@ -277,7 +277,7 @@ public partial class NoteSoundEditorView : UserControl
         try
         {
             float oldValue = noteSound.HoldLoopStartTime;
-            float newValue = Convert.ToSingle(TextBoxHoldLoopStartTime.Text ?? "", CultureInfo.InvariantCulture);
+            float newValue = 1000 * Convert.ToSingle(TextBoxHoldLoopStartTime.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
             UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.HoldLoopStartTime = value; }, oldValue, newValue));
@@ -303,7 +303,7 @@ public partial class NoteSoundEditorView : UserControl
         try
         {
             float oldValue = noteSound.HoldLoopEndTime;
-            float newValue = Convert.ToSingle(TextBoxHoldLoopEndTime.Text ?? "", CultureInfo.InvariantCulture);
+            float newValue = 1000 * Convert.ToSingle(TextBoxHoldLoopEndTime.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
             UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.HoldLoopEndTime = value; }, oldValue, newValue));
@@ -329,7 +329,7 @@ public partial class NoteSoundEditorView : UserControl
         try
         {
             float oldValue = noteSound.ReHoldLoopStartTime;
-            float newValue = Convert.ToSingle(TextBoxReHoldLoopStartTime.Text ?? "", CultureInfo.InvariantCulture);
+            float newValue = 1000 * Convert.ToSingle(TextBoxReHoldLoopStartTime.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
             UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.ReHoldLoopStartTime = value; }, oldValue, newValue));
@@ -355,7 +355,7 @@ public partial class NoteSoundEditorView : UserControl
         try
         {
             float oldValue = noteSound.ReHoldLoopEndTime;
-            float newValue = Convert.ToSingle(TextBoxReHoldLoopEndTime.Text ?? "", CultureInfo.InvariantCulture);
+            float newValue = 1000 * Convert.ToSingle(TextBoxReHoldLoopEndTime.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
             UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.ReHoldLoopEndTime = value; }, oldValue, newValue));

@@ -1,0 +1,105 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             mc:Ignorable="d"
+             d:DesignWidth="350"
+             d:DesignHeight="220"
+             x:Class="SaturnEdit.Controls.NavigatorDialogueItem">
+    <Grid ColumnDefinitions="155,20,*,50"
+          RowDefinitions="40,40,40,40,40"
+          Margin="10">
+        <Rectangle Grid.Row="0"
+                   Grid.Column="1"
+                   Grid.RowSpan="5"
+                   Fill="{DynamicResource SeparatorPrimary}"
+                   Width="1"
+                   HorizontalAlignment="Left" />
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="0"
+                   Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Message}"
+                   VerticalAlignment="Center" />
+        <TextBox Grid.Column="2"
+                 Grid.Row="0"
+                 Name="TextBoxMessage"
+                 Height="30"
+                 LostFocus="TextBoxMessage_OnLostFocus"/>
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="1"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.AudioFile}" />
+        <TextBox Grid.Column="2"
+                 Grid.Row="1"
+                 Name="TextBoxAudioFilePath"
+                 Height="18"
+                 LostFocus="TextBoxAudioPath_OnLostFocus" />
+        <Button Grid.Column="3"
+                Grid.Row="1"
+                Name="ButtonAudioFilePath"
+                Classes="Themed Square Outlined"
+                HorizontalAlignment="Left"
+                Margin="5,0,0,0"
+                Click="ButtonPickAudioFile_OnClick">
+            <ToolTip.Tip>
+                <TextBlock Text="{DynamicResource Generic.PickFile}" />
+            </ToolTip.Tip>
+            <icon:FluentIcon Icon="FolderOpen" />
+        </Button>
+        <icon:FluentIcon Grid.Column="0"
+                         Grid.Row="1"
+                         Name="IconFileNotFoundWarning"
+                         HorizontalAlignment="Right"
+                         Margin="0,0,10,0"
+                         Icon="Warning"
+                         Foreground="{DynamicResource ForegroundWarning}">
+            <ToolTip.Tip>
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                               Foreground="{DynamicResource ForegroundSecondary}" />
+                </StackPanel>
+            </ToolTip.Tip>
+        </icon:FluentIcon>
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="2"
+                   Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Duration}"
+                   VerticalAlignment="Center" />
+        <TextBox Grid.Column="2"
+                 Grid.Row="2"
+                 Name="TextBoxMessageDuration"
+                 Height="30" 
+                 LostFocus="TextBoxMessageDuration_OnLostFocus"/>
+        
+        <TextBlock Grid.Column="0"
+                   Grid.Row="3"
+                   Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression}"
+                   VerticalAlignment="Center" />
+        <ComboBox Grid.Column="2"
+                  Grid.Row="3"
+                  Name="ComboBoxExpression"
+                  SelectionChanged="ComboBoxExpression_OnSelectionChanged">
+            <ComboBoxItem Content="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Neutral}"/>
+            <ComboBoxItem Content="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Amazed}"/>
+            <ComboBoxItem Content="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Troubled}"/>
+            <ComboBoxItem Content="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Surprised}"/>
+            <ComboBoxItem Content="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Startled}"/>
+            <ComboBoxItem Content="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Angry}"/>
+            <ComboBoxItem Content="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Laughing}"/>
+            <ComboBoxItem Content="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Smiling}"/>
+            <ComboBoxItem Content="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Grinning}"/>
+        </ComboBox>
+        
+        <TextBlock Grid.Column="0"
+                   Grid.Row="4"
+                   Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.ShowSkipButton}"
+                   VerticalAlignment="Center" />
+        <CheckBox Grid.Column="2"
+                  Grid.Row="4"
+                  Name="CheckBoxShowSkipButton"
+                  IsCheckedChanged="CheckBoxShowSkipButton_OnIsCheckedChanged"/>
+    </Grid>
+</UserControl>

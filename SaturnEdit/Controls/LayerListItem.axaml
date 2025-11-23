@@ -8,24 +8,24 @@
              d:DesignHeight="40"
              x:Class="SaturnEdit.Controls.LayerListItem">
     <Grid ColumnDefinitions="40,*">
-            <Button Grid.Column="0" 
-                    Name="ButtonLayerVisibility" 
-                    Classes="Themed Square Standard"
-                    Margin="5"
-                    CornerRadius="3"
-                    Click="ButtonLayerVisibility_OnClick">
-                <icon:FluentIcon Name="IconLayerVisibility"
-                                 Icon="Eye" />
-            </Button>
-            <TextBox Grid.Column="1"
-                     Name="TextBoxLayerName"
-                     Text="Layer"
-                     HorizontalAlignment="Left"
-                     BorderBrush="Transparent"
-                     Background="Transparent"
-                     Height="30"
-                     CornerRadius="3"
-                     VerticalContentAlignment="Center"  
-                     LostFocus="TextBoxLayerName_OnLostFocus"/>
-        </Grid>
+        <Button Grid.Column="0"
+                Name="ButtonLayerVisibility"
+                Classes="Themed Square Standard"
+                Margin="5"
+                CornerRadius="3"
+                Click="ButtonLayerVisibility_OnClick">
+            <icon:FluentIcon Name="IconLayerVisibility"
+                             Icon="Eye" />
+        </Button>
+        <TextBox Grid.Column="1"
+                 Name="TextBoxLayerName"
+                 Text="Layer"
+                 HorizontalAlignment="Left"
+                 BorderBrush="Transparent"
+                 Background="Transparent"
+                 Height="30"
+                 CornerRadius="3"
+                 VerticalContentAlignment="Center"
+                 LostFocus="TextBoxLayerName_OnLostFocus" />
+    </Grid>
 </UserControl>

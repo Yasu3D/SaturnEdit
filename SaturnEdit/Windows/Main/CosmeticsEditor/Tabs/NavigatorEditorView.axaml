@@ -141,7 +141,7 @@
                          Grid.Column="2"
                          Name="TextBoxBlinkInterval"
                          Height="18"
-                         LostFocus="TextBoxFaceMarginRight_OnLostFocus" />
+                         LostFocus="TextBoxBlinkInterval_OnLostFocus" />
 
                 <TextBlock Grid.Row="11"
                            Grid.Column="0"
@@ -151,7 +151,7 @@
                          Grid.Column="2"
                          Name="TextBoxBlinkDuration"
                          Height="18"
-                         LostFocus="TextBoxFaceMarginRight_OnLostFocus" />
+                         LostFocus="TextBoxBlinkDuration_OnLostFocus" />
             </Grid>
         </Expander>
 
@@ -168,7 +168,7 @@
                 <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Header.Textures}" />
             </Expander.Header>
 
-            <Grid RowDefinitions="40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,40"
+            <Grid RowDefinitions="40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,40"
                   ColumnDefinitions="200,20,*,50"
                   Margin="15">
                 <Rectangle Grid.Row="0"
@@ -1235,18 +1235,20 @@
                 <TextBlock Grid.Row="28"
                            Grid.Column="0"
                            VerticalAlignment="Center"
-                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.Expression.Grinning.C}" />
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.Expression.Grinning.C}" 
+                           Margin="0,0,0,10"/>
                 <TextBox Grid.Row="28"
                          Grid.Column="2"
                          Name="TextBoxTextureFaceGrinningCPath"
                          Height="18"
-                         LostFocus="TextBoxTexturePath_OnLostFocus" />
+                         LostFocus="TextBoxTexturePath_OnLostFocus"
+                         Margin="0,0,0,10"/>
                 <Button Grid.Row="28"
                         Grid.Column="3"
                         Name="ButtonTextureFaceGrinningCPath"
                         Classes="Themed Square Outlined"
                         HorizontalAlignment="Left"
-                        Margin="5,0,0,0"
+                        Margin="5,0,0,10"
                         Click="ButtonPickTextureFile_OnClick">
                     <ToolTip.Tip>
                         <TextBlock Text="{DynamicResource Generic.PickFile}" />
@@ -1257,7 +1259,120 @@
                                  Grid.Column="0"
                                  Name="IconFileNotFoundWarningFaceGrinningCPath"
                                  HorizontalAlignment="Right"
+                                 Margin="0,0,10,10"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
+                
+                <TextBlock Grid.Row="29"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.SeeYouA}" />
+                <TextBox Grid.Row="29"
+                         Grid.Column="2"
+                         Name="TextBoxTextureSeeYouAPath"
+                         Height="18"
+                         LostFocus="TextBoxTexturePath_OnLostFocus" />
+                <Button Grid.Row="29"
+                        Grid.Column="3"
+                        Name="ButtonTextureSeeYouAPath"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,0"
+                        Click="ButtonPickTextureFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <icon:FluentIcon Grid.Row="29"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarningSeeYouAPath"
+                                 HorizontalAlignment="Right"
                                  Margin="0,0,10,0"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
+
+                <TextBlock Grid.Row="30"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.SeeYouB}" />
+                <TextBox Grid.Row="30"
+                         Grid.Column="2"
+                         Name="TextBoxTextureSeeYouBPath"
+                         Height="18"
+                         LostFocus="TextBoxTexturePath_OnLostFocus" />
+                <Button Grid.Row="30"
+                        Grid.Column="3"
+                        Name="ButtonTextureSeeYouBPath"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,0"
+                        Click="ButtonPickTextureFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <icon:FluentIcon Grid.Row="30"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarningSeeYouBPath"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,10,0"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
+
+                <TextBlock Grid.Row="31"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.SeeYouC}"
+                           Margin="0,0,0,10" />
+                <TextBox Grid.Row="31"
+                         Grid.Column="2"
+                         Name="TextBoxTextureSeeYouCPath"
+                         Height="18"
+                         Margin="0,0,0,10"
+                         LostFocus="TextBoxTexturePath_OnLostFocus" />
+                <Button Grid.Row="31"
+                        Grid.Column="3"
+                        Name="ButtonTextureSeeYouCPath"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,10"
+                        Click="ButtonPickTextureFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <icon:FluentIcon Grid.Row="31"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarningSeeYouCPath"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,10,10"
                                  Icon="Warning"
                                  Foreground="{DynamicResource ForegroundWarning}">
                     <ToolTip.Tip>
@@ -1277,9 +1392,15 @@
                    Margin="10,5"
                    VerticalAlignment="Center" />
 
-        <!-- Dialogues -->
-        <Grid Grid.Row="4"
-              ColumnDefinitions="*,1,*,1,2*">
+        <!-- Dialogues -->  
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="30"/>
+                <ColumnDefinition Width="1" />
+                <ColumnDefinition Width="*" MinWidth="30"/>
+                <ColumnDefinition Width="1" />
+                <ColumnDefinition Width="2*" MinWidth="30"/>
+            </Grid.ColumnDefinitions>
             <Grid Grid.Column="0"
                   RowDefinitions="40,*,31">
                 <TextBlock Grid.Row="0"
@@ -1296,18 +1417,11 @@
                             CornerRadius="3"
                             Width="22"
                             Height="22"
-                            Click="ButtonDelete_OnClick">
+                            Click="ButtonDeleteLanguage_OnClick">
                         <icon:FluentIcon Icon="Delete"
                                          FontSize="16" />
                         <ToolTip.Tip>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
-                                <TextBlock Name="TextBlockShortcutDeleteSelectionLanguages"
-                                           Text="SHORTCUT"
-                                           Margin="15,0,0,0"
-                                           HorizontalAlignment="Right"
-                                           Foreground="{DynamicResource ForegroundSecondary}" />
-                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
                         </ToolTip.Tip>
                     </Button>
 
@@ -1315,7 +1429,7 @@
                             CornerRadius="3"
                             Width="22"
                             Height="22"
-                            Click="ButtonAdd_OnClick">
+                            Click="ButtonAddLanguage_OnClick">
                         <icon:FluentIcon Icon="Add"
                                          FontSize="16" />
                         <ToolTip.Tip>
@@ -1327,9 +1441,8 @@
                 <ScrollViewer Grid.Row="1">
                     <ListBox Name="ListBoxLanguages"
                              Background="{DynamicResource BackgroundSecondary}"
-                             SelectionMode="Multiple"
-                             SelectionChanged="ListBoxLanguages_OnSelectionChanged"
-                             KeyDown="ListBoxLanguages_OnKeyDown" />
+                             SelectionMode="Single"
+                             SelectionChanged="ListBoxLanguages_OnSelectionChanged"/>
                 </ScrollViewer>
 
                 <Border Grid.Row="2"
@@ -1343,6 +1456,9 @@
                 </Border>
             </Grid>
 
+            <GridSplitter Grid.Column="1"
+                          Background="Transparent"/>
+            
             <Grid Grid.Column="2"
                   RowDefinitions="40,*,31">
                 <TextBlock Grid.Row="0"
@@ -1359,18 +1475,11 @@
                             CornerRadius="3"
                             Width="22"
                             Height="22"
-                            Click="ButtonDelete_OnClick">
+                            Click="ButtonDeleteDialogue_OnClick">
                         <icon:FluentIcon Icon="Delete"
                                          FontSize="16" />
                         <ToolTip.Tip>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
-                                <TextBlock Name="TextBlockShortcutDeleteSelectionDialogues"
-                                           Text="SHORTCUT"
-                                           Margin="15,0,0,0"
-                                           HorizontalAlignment="Right"
-                                           Foreground="{DynamicResource ForegroundSecondary}" />
-                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
                         </ToolTip.Tip>
                     </Button>
 
@@ -1378,7 +1487,7 @@
                             CornerRadius="3"
                             Width="22"
                             Height="22"
-                            Click="ButtonAdd_OnClick">
+                            Click="ButtonAddDialogue_OnClick">
                         <icon:FluentIcon Icon="Add"
                                          FontSize="16" />
                         <ToolTip.Tip>
@@ -1390,9 +1499,8 @@
                 <ScrollViewer Grid.Row="1">
                     <ListBox Name="ListBoxDialogues"
                              Background="{DynamicResource BackgroundSecondary}"
-                             SelectionMode="Multiple"
-                             SelectionChanged="ListBoxDialogues_OnSelectionChanged"
-                             KeyDown="ListBoxDialogues_OnKeyDown" />
+                             SelectionMode="Single"
+                             SelectionChanged="ListBoxDialogues_OnSelectionChanged"/>
                 </ScrollViewer>
 
                 <Border Grid.Row="2"
@@ -1406,6 +1514,9 @@
                 </Border>
             </Grid>
 
+            <GridSplitter Grid.Column="3"
+                          Background="Transparent"/>
+            
             <Grid Grid.Column="4"
                   RowDefinitions="40,*,31">
                 <TextBlock Grid.Row="0"
@@ -1422,18 +1533,11 @@
                             CornerRadius="3"
                             Width="22"
                             Height="22"
-                            Click="ButtonDelete_OnClick">
+                            Click="ButtonDeleteVariant_OnClick">
                         <icon:FluentIcon Icon="Delete"
                                          FontSize="16" />
                         <ToolTip.Tip>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
-                                <TextBlock Name="TextBlockShortcutDeleteSelectionVariants"
-                                           Text="SHORTCUT"
-                                           Margin="15,0,0,0"
-                                           HorizontalAlignment="Right"
-                                           Foreground="{DynamicResource ForegroundSecondary}" />
-                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.List.ToolTip.DeleteSelection}" />
                         </ToolTip.Tip>
                     </Button>
 
@@ -1441,7 +1545,7 @@
                             CornerRadius="3"
                             Width="22"
                             Height="22"
-                            Click="ButtonAdd_OnClick">
+                            Click="ButtonAddVariant_OnClick">
                         <icon:FluentIcon Icon="Add"
                                          FontSize="16" />
                         <ToolTip.Tip>
@@ -1453,9 +1557,8 @@
                 <ScrollViewer Grid.Row="1">
                     <ListBox Name="ListBoxVariants"
                              Background="{DynamicResource BackgroundSecondary}"
-                             SelectionMode="Multiple"
-                             SelectionChanged="ListBoxVariants_OnSelectionChanged"
-                             KeyDown="ListBoxVariants_OnKeyDown" />
+                             SelectionMode="Single"
+                             SelectionChanged="ListBoxVariants_OnSelectionChanged"/>
                 </ScrollViewer>
 
                 <Border Grid.Row="2"

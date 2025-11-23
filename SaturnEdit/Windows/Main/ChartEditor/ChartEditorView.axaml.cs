@@ -314,6 +314,7 @@ public partial class ChartEditorView : UserControl
             // Open the file picker.
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return false;
+            
             IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(getOptions(exportArgsWindow.NotationWriteArgs));
             if (file == null) return false;
 

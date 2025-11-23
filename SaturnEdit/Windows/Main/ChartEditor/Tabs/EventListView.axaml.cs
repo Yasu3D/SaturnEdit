@@ -102,7 +102,7 @@ public partial class EventListView : UserControl
         UpdateEvents();
     }
 #endregion System Event Handlers
-    
+
 #region UI Event Handlers
     private void ListBoxEvents_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {

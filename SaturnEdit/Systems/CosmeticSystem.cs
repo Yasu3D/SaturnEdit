@@ -19,7 +19,7 @@ public enum CosmeticType
     Title = 8,
 }
 
-public class CosmeticSystem
+public static class CosmeticSystem
 {
     public static event EventHandler? CosmeticLoaded;
     
@@ -27,7 +27,22 @@ public class CosmeticSystem
     /// The cosmetic being edited/displayed.
     /// </summary>
     public static CosmeticItem CosmeticItem { get; private set; } = new Icon { Id = Guid.NewGuid().ToString() };
-    
+
+    /// <summary>
+    /// The selected <see cref="NavigatorDialogueLanguage"/> if <see cref="CosmeticItem"/> is of type <see cref="Navigator"/>, otherwise <c>null</c>.
+    /// </summary>
+    public static NavigatorDialogueLanguage? SelectedNavigatorDialogueLanguage { get; set; } = null;
+
+    /// <summary>
+    /// The selected <see cref="NavigatorDialogueVariantCollection"/> if <see cref="CosmeticItem"/> is of type <see cref="Navigator"/>, otherwise <c>null</c>.
+    /// </summary>
+    public static NavigatorDialogueVariantCollection? SelectedNavigatorDialogueVariantCollection { get; set; } = null;
+
+    /// <summary>
+    /// The selected <see cref="NavigatorDialogue"/> if <see cref="CosmeticItem"/> is of type <see cref="Navigator"/>, otherwise <c>null</c>.
+    /// </summary>
+    public static NavigatorDialogue? SelectedNavigatorDialogue { get; set; } = null;
+
     /// <summary>
     /// Determines if the editor will prompt the user to save when a cosmetic is closed.
     /// </summary>
@@ -55,6 +70,10 @@ public class CosmeticSystem
         };
         
         CosmeticItem.Id = Guid.NewGuid().ToString();
+        
+        SelectedNavigatorDialogueLanguage = null;
+        SelectedNavigatorDialogueVariantCollection = null;
+        SelectedNavigatorDialogue = null;
         
         CosmeticLoaded?.Invoke(null, EventArgs.Empty);
         
@@ -86,6 +105,10 @@ public class CosmeticSystem
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
             };
             CosmeticItem.AbsoluteSourcePath = path;
+            
+            SelectedNavigatorDialogueLanguage = null;
+            SelectedNavigatorDialogueVariantCollection = null;
+            SelectedNavigatorDialogue = null;
             
             CosmeticLoaded?.Invoke(null, EventArgs.Empty);
             

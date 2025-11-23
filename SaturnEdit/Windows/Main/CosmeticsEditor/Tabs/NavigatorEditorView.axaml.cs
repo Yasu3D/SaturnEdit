@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
+using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.PrimitiveOperations;
@@ -25,11 +26,12 @@ public partial class NavigatorEditorView : UserControl
     }
 
     private bool blockEvents = false;
-    
+
 #region System Event Handlers
     private void CosmeticBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
+        
         Dispatcher.UIThread.Post(() =>
         {
             blockEvents = true;
@@ -45,8 +47,8 @@ public partial class NavigatorEditorView : UserControl
             TextBoxFaceMarginBottom.Text = navigator.FaceMarginBottom.ToString("0.000000", CultureInfo.InvariantCulture);
             TextBoxFaceMarginLeft.Text = navigator.FaceMarginLeft.ToString("0.000000", CultureInfo.InvariantCulture);
             TextBoxFaceMarginRight.Text = navigator.FaceMarginRight.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxBlinkInterval.Text = navigator.BlinkAnimationInterval.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxBlinkDuration.Text = navigator.BlinkAnimationDuration.ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxBlinkInterval.Text = (0.001f * navigator.BlinkAnimationInterval).ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxBlinkDuration.Text = (0.001f * navigator.BlinkAnimationDuration).ToString("0.000000", CultureInfo.InvariantCulture);
             
             TextBoxTextureIconPath.Text           = navigator.TexturePaths.GetValueOrDefault("icon",             "");
             TextBoxTextureBodyPath.Text           = navigator.TexturePaths.GetValueOrDefault("body",             "");
@@ -77,6 +79,9 @@ public partial class NavigatorEditorView : UserControl
             TextBoxTextureFaceGrinningAPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_grinning_a",  "");
             TextBoxTextureFaceGrinningBPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_grinning_b",  "");
             TextBoxTextureFaceGrinningCPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_grinning_c",  "");
+            TextBoxTextureSeeYouAPath.Text        = navigator.TexturePaths.GetValueOrDefault("see_you_a",        "");
+            TextBoxTextureSeeYouBPath.Text        = navigator.TexturePaths.GetValueOrDefault("see_you_b",        "");
+            TextBoxTextureSeeYouCPath.Text        = navigator.TexturePaths.GetValueOrDefault("see_you_c",        "");
             
             IconFileNotFoundWarningIconPath.IsVisible           = TextBoxTextureIconPath.Text           != "" && !File.Exists(navigator.AbsoluteTexturePath("icon"));
             IconFileNotFoundWarningBodyPath.IsVisible           = TextBoxTextureBodyPath.Text           != "" && !File.Exists(navigator.AbsoluteTexturePath("body"));
@@ -107,7 +112,152 @@ public partial class NavigatorEditorView : UserControl
             IconFileNotFoundWarningFaceGrinningAPath.IsVisible  = TextBoxTextureFaceGrinningAPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("face_grinning_a"));
             IconFileNotFoundWarningFaceGrinningBPath.IsVisible  = TextBoxTextureFaceGrinningBPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("face_grinning_b"));
             IconFileNotFoundWarningFaceGrinningCPath.IsVisible  = TextBoxTextureFaceGrinningCPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("face_grinning_c"));
+            IconFileNotFoundWarningSeeYouAPath.IsVisible        = TextBoxTextureSeeYouAPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("see_you_a"));
+            IconFileNotFoundWarningSeeYouBPath.IsVisible        = TextBoxTextureSeeYouBPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("see_you_b"));
+            IconFileNotFoundWarningSeeYouCPath.IsVisible        = TextBoxTextureSeeYouCPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("see_you_c"));
             
+            List<KeyValuePair<string, NavigatorDialogueLanguage>> languages = navigator.DialogueLanguages.ToList();
+            
+            // Update existing language items
+            for (int i = 0; i < languages.Count; i++)
+            {
+                KeyValuePair<string, NavigatorDialogueLanguage> language = languages[i];
+                
+                if (i < ListBoxLanguages.Items.Count)
+                {
+                    // Modify existing item.
+                    if (ListBoxLanguages.Items[i] is not NavigatorDialogueLanguageItem item) continue;
+
+                    item.SetItem(language.Value, language.Key);
+                }
+                else
+                {
+                    // Create new item.
+                    NavigatorDialogueLanguageItem item = new();
+                    item.SetItem(language.Value, language.Key);
+                    
+                    ListBoxLanguages.Items.Add(item);
+                }
+            }
+
+            // Delete redundant language items.
+            for (int i = ListBoxLanguages.Items.Count - 1; i >= languages.Count; i--)
+            {
+                if (ListBoxLanguages.Items[i] is not NavigatorDialogueLanguageItem item) continue;
+
+                ListBoxLanguages.Items.Remove(item);
+            }
+
+            // Set language selection.
+            ListBoxLanguages.SelectedItem = ListBoxLanguages.Items.FirstOrDefault(x =>
+            {
+                if (x is not NavigatorDialogueLanguageItem item) return false;
+                if (item.NavigatorDialogueLanguage == null) return false;
+                if (item.NavigatorDialogueLanguage != CosmeticSystem.SelectedNavigatorDialogueLanguage) return false;
+
+                return true;
+            });
+
+
+            if (CosmeticSystem.SelectedNavigatorDialogueLanguage != null)
+            {
+                List<KeyValuePair<string, NavigatorDialogueVariantCollection>> variantCollections = CosmeticSystem.SelectedNavigatorDialogueLanguage.Dialogues.ToList();
+
+                // Update existing dialogue items
+                for (int i = 0; i < variantCollections.Count; i++)
+                {
+                    KeyValuePair<string, NavigatorDialogueVariantCollection> variantCollection = variantCollections[i];
+
+                    if (i < ListBoxDialogues.Items.Count)
+                    {
+                        // Modify existing item.
+                        if (ListBoxDialogues.Items[i] is not NavigatorDialogueVariantCollectionItem item) continue;
+
+                        item.SetItem(variantCollection.Value, variantCollection.Key);
+                    }
+                    else
+                    {
+                        // Create new item.
+                        NavigatorDialogueVariantCollectionItem item = new();
+                        item.SetItem(variantCollection.Value, variantCollection.Key);
+
+                        ListBoxDialogues.Items.Add(item);
+                    }
+                }
+
+                // Delete redundant dialogue items.
+                for (int i = ListBoxDialogues.Items.Count - 1; i >= variantCollections.Count; i--)
+                {
+                    if (ListBoxDialogues.Items[i] is not NavigatorDialogueVariantCollectionItem item) continue;
+
+                    ListBoxDialogues.Items.Remove(item);
+                }
+
+                // Set dialogue selection.
+                ListBoxDialogues.SelectedItem = ListBoxDialogues.Items.FirstOrDefault(x =>
+                {
+                    if (x is not NavigatorDialogueVariantCollectionItem item) return false;
+                    if (item.NavigatorDialogueVariantCollection == null) return false;
+                    if (item.NavigatorDialogueVariantCollection != CosmeticSystem.SelectedNavigatorDialogueVariantCollection) return false;
+
+                    return true;
+                });
+            }
+            else
+            {
+                ListBoxDialogues.Items.Clear();
+            }
+
+
+            if (CosmeticSystem.SelectedNavigatorDialogueVariantCollection != null)
+            {
+                List<NavigatorDialogue> variants = CosmeticSystem.SelectedNavigatorDialogueVariantCollection.Variants;
+
+                // Update existing dialogue items
+                for (int i = 0; i < variants.Count; i++)
+                {
+                    NavigatorDialogue variant = variants[i];
+
+                    if (i < ListBoxVariants.Items.Count)
+                    {
+                        // Modify existing item.
+                        if (ListBoxVariants.Items[i] is not NavigatorDialogueItem item) continue;
+
+                        item.SetItem(variant);
+                    }
+                    else
+                    {
+                        // Create new item.
+                        NavigatorDialogueItem item = new();
+                        item.SetItem(variant);
+
+                        ListBoxVariants.Items.Add(item);
+                    }
+                }
+
+                // Delete redundant dialogue items.
+                for (int i = ListBoxVariants.Items.Count - 1; i >= variants.Count; i--)
+                {
+                    if (ListBoxVariants.Items[i] is not NavigatorDialogueItem item) continue;
+
+                    ListBoxVariants.Items.Remove(item);
+                }
+
+                // Set dialogue selection.
+                ListBoxVariants.SelectedItem = ListBoxVariants.Items.FirstOrDefault(x =>
+                {
+                    if (x is not NavigatorDialogueItem item) return false;
+                    if (item.NavigatorDialogue == null) return false;
+                    if (item.NavigatorDialogue != CosmeticSystem.SelectedNavigatorDialogue) return false;
+
+                    return true;
+                });
+            }
+            else
+            {
+                ListBoxVariants.Items.Clear();
+            }
+
             blockEvents = false;
         });
     }
@@ -350,6 +500,58 @@ public partial class NavigatorEditorView : UserControl
         }
     }
     
+    
+    private void TextBoxBlinkInterval_OnLostFocus(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
+
+        try
+        {
+            float oldValue = navigator.BlinkAnimationInterval;
+            float newValue = 1000 * Convert.ToSingle(TextBoxBlinkInterval.Text ?? "", CultureInfo.InvariantCulture);
+            if (oldValue == newValue) return;
+
+            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.BlinkAnimationInterval = value; }, oldValue, newValue));
+        }
+        catch (Exception ex)
+        {
+            // Reset Value
+            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.BlinkAnimationInterval = value; }, navigator.BlinkAnimationInterval, 5000));
+
+            if (ex is not (FormatException or OverflowException))
+            {
+                Console.WriteLine(ex);
+            }
+        }
+    }
+
+    private void TextBoxBlinkDuration_OnLostFocus(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
+
+        try
+        {
+            float oldValue = navigator.BlinkAnimationDuration;
+            float newValue = 1000 * Convert.ToSingle(TextBoxBlinkDuration.Text ?? "", CultureInfo.InvariantCulture);
+            if (oldValue == newValue) return;
+
+            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.BlinkAnimationDuration = value; }, oldValue, newValue));
+        }
+        catch (Exception ex)
+        {
+            // Reset Value
+            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.BlinkAnimationDuration = value; }, navigator.BlinkAnimationDuration, 5000));
+
+            if (ex is not (FormatException or OverflowException))
+            {
+                Console.WriteLine(ex);
+            }
+        }
+    }
+    
+    
     private void TextBoxTexturePath_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
@@ -386,6 +588,9 @@ public partial class NavigatorEditorView : UserControl
         else if (textBox == TextBoxTextureFaceGrinningAPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_grinning_a",  ""); }
         else if (textBox == TextBoxTextureFaceGrinningBPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_grinning_b",  ""); }
         else if (textBox == TextBoxTextureFaceGrinningCPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_grinning_c",  ""); }
+        else if (textBox == TextBoxTextureSeeYouAPath)        { oldValue = navigator.TexturePaths.GetValueOrDefault("see_you_a",        ""); }
+        else if (textBox == TextBoxTextureSeeYouBPath)        { oldValue = navigator.TexturePaths.GetValueOrDefault("see_you_b",        ""); }
+        else if (textBox == TextBoxTextureSeeYouCPath)        { oldValue = navigator.TexturePaths.GetValueOrDefault("see_you_c",        ""); }
         
         string newValue = textBox.Text ?? "";
         if (oldValue == newValue)
@@ -425,6 +630,9 @@ public partial class NavigatorEditorView : UserControl
         else if (textBox == TextBoxTextureFaceGrinningAPath)  { action = value => { navigator.TexturePaths["face_grinning_a"] = value; }; }
         else if (textBox == TextBoxTextureFaceGrinningBPath)  { action = value => { navigator.TexturePaths["face_grinning_b"] = value; }; }
         else if (textBox == TextBoxTextureFaceGrinningCPath)  { action = value => { navigator.TexturePaths["face_grinning_c"] = value; }; }
+        else if (textBox == TextBoxTextureSeeYouAPath)        { action = value => { navigator.TexturePaths["see_you_a"] = value; }; }
+        else if (textBox == TextBoxTextureSeeYouBPath)        { action = value => { navigator.TexturePaths["see_you_b"] = value; }; }
+        else if (textBox == TextBoxTextureSeeYouCPath)        { action = value => { navigator.TexturePaths["see_you_c"] = value; }; }
 
         if (action == null) return;
         
@@ -472,6 +680,9 @@ public partial class NavigatorEditorView : UserControl
             else if (button == ButtonTextureFaceGrinningAPath)  { key = "face_grinning_a"; }
             else if (button == ButtonTextureFaceGrinningBPath)  { key = "face_grinning_b"; }
             else if (button == ButtonTextureFaceGrinningCPath)  { key = "face_grinning_c"; }
+            else if (button == ButtonTextureSeeYouAPath)        { key = "see_you_a"; }
+            else if (button == ButtonTextureSeeYouBPath)        { key = "see_you_b"; }
+            else if (button == ButtonTextureSeeYouCPath)        { key = "see_you_c"; }
             
             if (key == null) return;
             
@@ -530,44 +741,156 @@ public partial class NavigatorEditorView : UserControl
         }
     }
 
-    private void ButtonDelete_OnClick(object? sender, RoutedEventArgs e)
+
+    private void ButtonDeleteLanguage_OnClick(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
+        if (ListBoxLanguages?.SelectedItem is not NavigatorDialogueLanguageItem item) return;
+        if (item.Key == null) return;
+        if (item.NavigatorDialogueLanguage == null) return;
         
+        if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
+
+        DictionaryRemoveOperation<string, NavigatorDialogueLanguage> op0 = new(() => navigator.DialogueLanguages, item.Key, item.NavigatorDialogueLanguage);
+        GenericEditOperation<NavigatorDialogueLanguage?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogueLanguage = value; }, CosmeticSystem.SelectedNavigatorDialogueLanguage, null);
+        GenericEditOperation<NavigatorDialogueVariantCollection?> op2 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, null);
+        GenericEditOperation<NavigatorDialogue?> op3 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, null);
+
+        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1, op2, op3]));
     }
 
-    private void ButtonAdd_OnClick(object? sender, RoutedEventArgs e)
+    private void ButtonAddLanguage_OnClick(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
+        if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
+
+        int c = 1;
+        while (navigator.DialogueLanguages.ContainsKey($"xx-XX {c.ToString(CultureInfo.InvariantCulture)}"))
+        {
+            c++;
+        }
         
+        string key = $"xx-XX {c}";
+        NavigatorDialogueLanguage language = new();
+
+        DictionaryAddOperation<string, NavigatorDialogueLanguage> op0 = new(() => navigator.DialogueLanguages, key, language);
+        GenericEditOperation<NavigatorDialogueLanguage?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogueLanguage = value; }, CosmeticSystem.SelectedNavigatorDialogueLanguage, language);
+        
+        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
     }
     
     private void ListBoxLanguages_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        if (blockEvents) return;
+        if (ListBoxLanguages?.SelectedItem is not NavigatorDialogueLanguageItem item) return;
+        if (item.Key == null) return;
+        if (item.NavigatorDialogueLanguage == null) return;
+
+        if (CosmeticSystem.SelectedNavigatorDialogueLanguage == item.NavigatorDialogueLanguage) return;
         
+        NavigatorDialogueVariantCollection? newSelectedVariantCollection = item.NavigatorDialogueLanguage.Dialogues.FirstOrDefault().Value;
+        NavigatorDialogue? newSelectedDialogue = newSelectedVariantCollection?.Variants.FirstOrDefault();
+        
+        GenericEditOperation<NavigatorDialogueLanguage?> op0 = new(value => { CosmeticSystem.SelectedNavigatorDialogueLanguage = value; }, CosmeticSystem.SelectedNavigatorDialogueLanguage, item.NavigatorDialogueLanguage);
+        GenericEditOperation<NavigatorDialogueVariantCollection?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, newSelectedVariantCollection);
+        GenericEditOperation<NavigatorDialogue?> op2 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, newSelectedDialogue);
+        
+        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1, op2]));
     }
     
-    private void ListBoxLanguages_OnKeyDown(object? sender, KeyEventArgs e)
+    
+    private void ButtonDeleteDialogue_OnClick(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
+        if (ListBoxDialogues?.SelectedItem is not NavigatorDialogueVariantCollectionItem item) return;
+        if (item.Key == null) return;
+        if (item.NavigatorDialogueVariantCollection == null) return;
         
+        if (CosmeticSystem.SelectedNavigatorDialogueLanguage == null) return;
+
+        DictionaryRemoveOperation<string, NavigatorDialogueVariantCollection> op0 = new(() => CosmeticSystem.SelectedNavigatorDialogueLanguage.Dialogues, item.Key, item.NavigatorDialogueVariantCollection);
+        GenericEditOperation<NavigatorDialogueVariantCollection?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, null);
+        GenericEditOperation<NavigatorDialogue?> op2 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, null);
+        
+        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1, op2]));
+    }
+
+    private void ButtonAddDialogue_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (CosmeticSystem.SelectedNavigatorDialogueLanguage == null) return;
+        
+        int c = 1;
+        while (CosmeticSystem.SelectedNavigatorDialogueLanguage.Dialogues.ContainsKey($"new_dialogue {c.ToString(CultureInfo.InvariantCulture)}"))
+        {
+            c++;
+        }
+        
+        string key = $"new_dialogue {c}";
+        NavigatorDialogueVariantCollection dialogue = new();
+
+        DictionaryAddOperation<string, NavigatorDialogueVariantCollection> op0 = new(() => CosmeticSystem.SelectedNavigatorDialogueLanguage.Dialogues, key, dialogue);
+        GenericEditOperation<NavigatorDialogueVariantCollection?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, dialogue);
+        
+        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
     }
     
     private void ListBoxDialogues_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        if (blockEvents) return;
+        if (ListBoxDialogues?.SelectedItem is not NavigatorDialogueVariantCollectionItem item) return;
+        if (item.Key == null) return;
+        if (item.NavigatorDialogueVariantCollection == null) return;
         
+        if (CosmeticSystem.SelectedNavigatorDialogueLanguage == null) return;
+        if (CosmeticSystem.SelectedNavigatorDialogueVariantCollection== item.NavigatorDialogueVariantCollection) return;
+        
+        NavigatorDialogue? newSelectedDialogue = item.NavigatorDialogueVariantCollection.Variants.FirstOrDefault();
+        
+        GenericEditOperation<NavigatorDialogueVariantCollection?> op0 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, item.NavigatorDialogueVariantCollection);
+        GenericEditOperation<NavigatorDialogue?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, newSelectedDialogue);
+        
+        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
     }
     
-    private void ListBoxDialogues_OnKeyDown(object? sender, KeyEventArgs e)
+    
+    private void ButtonDeleteVariant_OnClick(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
+        if (ListBoxVariants?.SelectedItem is not NavigatorDialogueItem item) return;
+        if (item.NavigatorDialogue == null) return;
+
+        if (CosmeticSystem.SelectedNavigatorDialogueVariantCollection == null) return;
+
+        ListRemoveOperation<NavigatorDialogue> op0 = new(() => CosmeticSystem.SelectedNavigatorDialogueVariantCollection.Variants, item.NavigatorDialogue);
+        GenericEditOperation<NavigatorDialogue?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, null);
         
+        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
+    }
+
+    private void ButtonAddVariant_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (CosmeticSystem.SelectedNavigatorDialogueVariantCollection == null) return;
+
+        NavigatorDialogue variant = new();
+
+        ListAddOperation<NavigatorDialogue> op0 = new(() => CosmeticSystem.SelectedNavigatorDialogueVariantCollection.Variants, variant);
+        GenericEditOperation<NavigatorDialogue?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, variant);
+        
+        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
     }
     
     private void ListBoxVariants_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        if (blockEvents) return;
+        if (ListBoxVariants?.SelectedItem is not NavigatorDialogueItem item) return;
+        if (CosmeticSystem.SelectedNavigatorDialogueVariantCollection == null) return;
+        if (item.NavigatorDialogue == null) return;
+
+        if (CosmeticSystem.SelectedNavigatorDialogue == item.NavigatorDialogue) return;
         
-    }
-    
-    private void ListBoxVariants_OnKeyDown(object? sender, KeyEventArgs e)
-    {
-        
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<NavigatorDialogue?>(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, item.NavigatorDialogue));
     }
 #endregion UI Event Handlers
 }
