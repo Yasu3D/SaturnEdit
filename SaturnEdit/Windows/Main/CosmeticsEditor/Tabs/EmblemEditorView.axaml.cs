@@ -83,7 +83,7 @@ public partial class EmblemEditorView : UserControl
             
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return;
-
+            
             // Open file picker.
             IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
             {
@@ -109,7 +109,7 @@ public partial class EmblemEditorView : UserControl
             {
                 // Define new source path.
                 string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "emblem.toml");
-
+                
                 StringEditOperation op0 = new(value => { emblem.AbsoluteSourcePath = value; }, emblem.AbsoluteSourcePath, newSourcePath);
                 StringEditOperation op1 = new(value => { emblem.ImagePath = value; }, emblem.ImagePath, Path.GetFileName(files[0].Path.LocalPath));
                 
@@ -118,13 +118,14 @@ public partial class EmblemEditorView : UserControl
             else
             {
                 // Use existing root directory.
-                string filename = Path.GetFileName(files[0].Path.LocalPath);
-                string pathFromRootDirectory = Path.Combine(Path.GetDirectoryName(emblem.AbsoluteSourcePath) ?? "", filename);
+                string directoryPath = Path.GetDirectoryName(emblem.AbsoluteSourcePath) ?? "";
+                string localPath = Path.GetRelativePath(directoryPath, files[0].Path.LocalPath);
+                string pathFromRootDirectory = Path.Combine(directoryPath, localPath);
 
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { emblem.ImagePath = value; }, emblem.ImagePath, filename));
+                UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { emblem.ImagePath = value; }, emblem.ImagePath, localPath));
             }
         }
         catch (Exception ex)

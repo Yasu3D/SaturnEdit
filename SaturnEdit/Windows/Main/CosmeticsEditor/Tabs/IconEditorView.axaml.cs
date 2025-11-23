@@ -83,7 +83,7 @@ public partial class IconEditorView : UserControl
             
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return;
-
+            
             // Open file picker.
             IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
             {
@@ -118,13 +118,14 @@ public partial class IconEditorView : UserControl
             else
             {
                 // Use existing root directory.
-                string filename = Path.GetFileName(files[0].Path.LocalPath);
-                string pathFromRootDirectory = Path.Combine(Path.GetDirectoryName(icon.AbsoluteSourcePath) ?? "", filename);
+                string directoryPath = Path.GetDirectoryName(icon.AbsoluteSourcePath) ?? "";
+                string localPath = Path.GetRelativePath(directoryPath, files[0].Path.LocalPath);
+                string pathFromRootDirectory = Path.Combine(directoryPath, localPath);
 
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { icon.ImagePath = value; }, icon.ImagePath, filename));
+                UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { icon.ImagePath = value; }, icon.ImagePath, localPath));
             }
         }
         catch (Exception ex)
