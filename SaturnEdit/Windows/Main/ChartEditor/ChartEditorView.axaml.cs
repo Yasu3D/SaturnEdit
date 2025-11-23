@@ -286,7 +286,6 @@ public partial class ChartEditorView : UserControl
                 SortCollections = true,
             };
 
-            ChartSystem.ReadChart(ChartSystem.Entry.ChartFile, args);
             ChartSystem.ReadChart(ChartSystem.Entry.ChartPath, args);
             return true;
         }
@@ -367,7 +366,6 @@ public partial class ChartEditorView : UserControl
             
             return new()
             {
-                
                 DefaultExtension = defaultExtension,
                 SuggestedFileName = suggestedFileName,
                 FileTypeChoices =
