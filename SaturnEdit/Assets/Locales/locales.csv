@@ -730,12 +730,12 @@ ModalDialog.SavePrompt.Paragraph,Your changes will be lost if you don't save the
 ModalDialog.SavePrompt.DontSave,Don't Save
 ModalDialog.FileMovePrompt.Title,Move or copy selected file.
 ModalDialog.FileMovePrompt.Header,Do you want to copy or move the selected file?
-ModalDialog.FileMovePrompt.Paragraph,The selected file is in an external directory. To be loaded it must be copied or moved to the same directory as the chart.
+ModalDialog.FileMovePrompt.Paragraph,The selected file is in an external directory. To be loaded it must be copied or moved to the same directory as main file.
 ModalDialog.FileMovePrompt.CopyFile,Copy File
 ModalDialog.FileMovePrompt.MoveFile,Move File
 ModalDialog.FileOverwritePrompt.Title,Overwrite existing file(s).
 ModalDialog.FileOverwritePrompt.Header,Do you want to overwrite an existing file?
-ModalDialog.FileOverwritePrompt.Paragraph,A file with the same name already exists in the chart directory.
+ModalDialog.FileOverwritePrompt.Paragraph,A file with the same name already exists in the main directory.
 ModalDialog.FileOverwritePrompt.OverwriteFile,Overwrite File
 ModalDialog.FileWriteError.Title,File Write Error
 ModalDialog.FileWriteError.Header,An error occurred during a file write.

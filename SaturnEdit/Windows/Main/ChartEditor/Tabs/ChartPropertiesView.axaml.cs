@@ -593,7 +593,7 @@ public partial class ChartPropertiesView : UserControl
                 [
                     new("Image Files")
                     {
-                        Patterns = ["*.png", "*.jpeg*", "*.jpg"],
+                        Patterns = ["*.png", "*.jpeg", "*.jpg"],
                     },
                 ],
             });
@@ -609,7 +609,7 @@ public partial class ChartPropertiesView : UserControl
             else
             {
                 // Use existing root directory.
-                string directoryPath = Path.GetDirectoryName(ChartSystem.Entry.RootDirectory) ?? "";
+                string directoryPath = ChartSystem.Entry.RootDirectory;
                 string localPath = Path.GetRelativePath(directoryPath, files[0].Path.LocalPath);
                 string pathFromRootDirectory = Path.Combine(directoryPath, localPath);
                 
@@ -657,7 +657,7 @@ public partial class ChartPropertiesView : UserControl
             else
             {
                 // Use existing root directory.
-                string directoryPath = Path.GetDirectoryName(ChartSystem.Entry.RootDirectory) ?? "";
+                string directoryPath = ChartSystem.Entry.RootDirectory;
                 string localPath = Path.GetRelativePath(directoryPath, files[0].Path.LocalPath);
                 string pathFromRootDirectory = Path.Combine(directoryPath, localPath);
 
@@ -705,7 +705,7 @@ public partial class ChartPropertiesView : UserControl
             else
             {
                 // Use existing root directory.
-                string directoryPath = Path.GetDirectoryName(ChartSystem.Entry.RootDirectory) ?? "";
+                string directoryPath = ChartSystem.Entry.RootDirectory;
                 string localPath = Path.GetRelativePath(directoryPath, files[0].Path.LocalPath);
                 string pathFromRootDirectory = Path.Combine(directoryPath, localPath);
 
