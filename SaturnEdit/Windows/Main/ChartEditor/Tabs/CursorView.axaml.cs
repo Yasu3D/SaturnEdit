@@ -18,8 +18,8 @@ public partial class CursorView : UserControl
         TimeSystem.DivisionChanged += OnDivisionChanged;
         OnDivisionChanged(null, EventArgs.Empty);
         
-        CursorSystem.ShapeChanged += OnShapeChanged;
-        OnShapeChanged(null, EventArgs.Empty);
+        CursorSystem.CursorChanged += OnCursorChanged;
+        OnCursorChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
@@ -56,7 +56,7 @@ public partial class CursorView : UserControl
         });
     }
 
-    private void OnShapeChanged(object? sender, EventArgs e)
+    private void OnCursorChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
         {

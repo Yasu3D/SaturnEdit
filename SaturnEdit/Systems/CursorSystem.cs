@@ -32,7 +32,7 @@ public static class CursorSystem
         MeasureLineNote = new(Timestamp.Zero, false);
     }
     
-    public static event EventHandler? ShapeChanged;
+    public static event EventHandler? CursorChanged;
     
     public static Note CurrentType
     {
@@ -83,7 +83,7 @@ public static class CursorSystem
             }
             
             backupPosition = value;
-            ShapeChanged?.Invoke(null, EventArgs.Empty);
+            CursorChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static int backupPosition = 30;
@@ -103,7 +103,7 @@ public static class CursorSystem
             }
             
             backupSize = value;
-            ShapeChanged?.Invoke(null, EventArgs.Empty);
+            CursorChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static int backupSize = 15;
@@ -121,7 +121,7 @@ public static class CursorSystem
             }
             
             backupBonusType = value;
-            ShapeChanged?.Invoke(null, EventArgs.Empty);
+            CursorChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static BonusType backupBonusType = BonusType.Normal;
@@ -139,7 +139,7 @@ public static class CursorSystem
             }
             
             backupJudgementType = value;
-            ShapeChanged?.Invoke(null, EventArgs.Empty);
+            CursorChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static JudgementType backupJudgementType = JudgementType.Normal;
@@ -157,7 +157,7 @@ public static class CursorSystem
             }
             
             backupRenderType = value;
-            ShapeChanged?.Invoke(null, EventArgs.Empty);
+            CursorChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static HoldPointRenderType backupRenderType = HoldPointRenderType.Visible;
@@ -175,7 +175,7 @@ public static class CursorSystem
             }
             
             backupDirection = value;
-            ShapeChanged?.Invoke(null, EventArgs.Empty);
+            CursorChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static LaneSweepDirection backupDirection = LaneSweepDirection.Center;

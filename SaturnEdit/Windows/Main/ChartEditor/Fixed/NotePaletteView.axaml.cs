@@ -19,8 +19,10 @@ public partial class NotePaletteView : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
+        CursorSystem.CursorChanged += OnCursorChanged;
+        OnCursorChanged(null, EventArgs.Empty);
+        
         UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
-        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents;
@@ -174,10 +176,15 @@ public partial class NotePaletteView : UserControl
         }
     }
 
+    private void OnCursorChanged(object? sender, EventArgs e)
+    {
+        UpdateBonusTypeIcons();
+        SetSelection();
+    }
+    
     private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         UpdateBonusTypeIcons();
-        
         SetSelection();
     }
 #endregion System Event Handlers
