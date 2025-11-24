@@ -489,14 +489,16 @@ public static class TimeSystem
         UpdateTick?.Invoke(null, EventArgs.Empty);
         
         // Stop playback and seek to preview begin when preview end is reached.
-        if (PlaybackState == PlaybackState.Preview && Timestamp.Time > ChartSystem.Entry.PreviewEnd.Time)
+        // 0.01 offset to prevent the playhead from getting stuck in a loop.
+        if (PlaybackState == PlaybackState.Preview && Timestamp.Time > ChartSystem.Entry.PreviewEnd.Time + 0.01f)
         {
             PlaybackState = PlaybackState.Stopped;
             SeekTime(ChartSystem.Entry.PreviewBegin.Time, Division);
         }
         
         // Seek to PreviewBegin when playback state is preview
-        if (PlaybackState == PlaybackState.Preview && Timestamp.Time < ChartSystem.Entry.PreviewBegin.Time)
+        // 0.01 offset to prevent the playhead from getting stuck in a loop.
+        if (PlaybackState == PlaybackState.Preview && Timestamp.Time < ChartSystem.Entry.PreviewBegin.Time - 0.01f)
         {
             SeekTime(ChartSystem.Entry.PreviewBegin.Time, Division);
         }
