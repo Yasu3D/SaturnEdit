@@ -518,6 +518,7 @@
     <system:String x:Key="Menu.File.Save">Save</system:String>
     <system:String x:Key="Menu.File.SaveAs">Save As...</system:String>
     <system:String x:Key="Menu.File.ReloadFromDisk">Reload from Disk</system:String>
+    <system:String x:Key="Menu.File.NewDifficultyFromChart">New Difficulty from Chart</system:String>
     <system:String x:Key="Menu.File.Export">Export...</system:String>
     <system:String x:Key="Menu.File.RenderAsImage">Render as Image...</system:String>
     <system:String x:Key="Menu.File.Settings">Settings...</system:String>
@@ -732,12 +733,12 @@
     <system:String x:Key="ModalDialog.SavePrompt.DontSave">Don't Save</system:String>
     <system:String x:Key="ModalDialog.FileMovePrompt.Title">Move or copy selected file.</system:String>
     <system:String x:Key="ModalDialog.FileMovePrompt.Header">Do you want to copy or move the selected file?</system:String>
-    <system:String x:Key="ModalDialog.FileMovePrompt.Paragraph">The selected file is in an external directory. To be loaded it must be copied or moved to the same directory as the chart.</system:String>
+    <system:String x:Key="ModalDialog.FileMovePrompt.Paragraph">The selected file is in an external directory. To be loaded it must be copied or moved to the same directory as main file.</system:String>
     <system:String x:Key="ModalDialog.FileMovePrompt.CopyFile">Copy File</system:String>
     <system:String x:Key="ModalDialog.FileMovePrompt.MoveFile">Move File</system:String>
     <system:String x:Key="ModalDialog.FileOverwritePrompt.Title">Overwrite existing file(s).</system:String>
     <system:String x:Key="ModalDialog.FileOverwritePrompt.Header">Do you want to overwrite an existing file?</system:String>
-    <system:String x:Key="ModalDialog.FileOverwritePrompt.Paragraph">A file with the same name already exists in the chart directory.</system:String>
+    <system:String x:Key="ModalDialog.FileOverwritePrompt.Paragraph">A file with the same name already exists in the main directory.</system:String>
     <system:String x:Key="ModalDialog.FileOverwritePrompt.OverwriteFile">Overwrite File</system:String>
     <system:String x:Key="ModalDialog.FileWriteError.Title">File Write Error</system:String>
     <system:String x:Key="ModalDialog.FileWriteError.Header">An error occurred during a file write.</system:String>

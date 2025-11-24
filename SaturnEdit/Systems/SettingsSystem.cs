@@ -701,14 +701,15 @@ public class ShortcutSettings
     /// </remarks>
     public Dictionary<string, Shortcut> Shortcuts { get; } = new()
     {
-        ["File.New"]            = new(Key.N,    true,  false, false, "Menu.File", "Menu.File.New"),
-        ["File.Open"]           = new(Key.O,    true,  false, false, "Menu.File", "Menu.File.Open"),
-        ["File.Save"]           = new(Key.S,    true,  false, false, "Menu.File", "Menu.File.Save"),
-        ["File.SaveAs"]         = new(Key.S,    true,  false, true,  "Menu.File", "Menu.File.SaveAs"),
-        ["File.ReloadFromDisk"] = new(Key.R,    true,  true,  false, "Menu.File", "Menu.File.ReloadFromDisk"),
-        ["File.Export"]         = new(Key.None, false, false, false, "Menu.File", "Menu.File.Export"),
-        ["File.RenderAsImage"]  = new(Key.None, false, false, false, "Menu.File", "Menu.File.RenderAsImage"),
-        ["File.Quit"]           = new(Key.None, false, false, false, "Menu.File", "Menu.File.Quit"),
+        ["File.New"]                    = new(Key.N,    true,  false, false, "Menu.File", "Menu.File.New"),
+        ["File.Open"]                   = new(Key.O,    true,  false, false, "Menu.File", "Menu.File.Open"),
+        ["File.Save"]                   = new(Key.S,    true,  false, false, "Menu.File", "Menu.File.Save"),
+        ["File.SaveAs"]                 = new(Key.S,    true,  false, true,  "Menu.File", "Menu.File.SaveAs"),
+        ["File.ReloadFromDisk"]         = new(Key.R,    true,  true,  false, "Menu.File", "Menu.File.ReloadFromDisk"),
+        ["File.NewDifficultyFromChart"] = new(Key.None, false, false, false, "Menu.File", "Menu.File.NewDifficultyFromChart"),
+        ["File.Export"]                 = new(Key.None, false, false, false, "Menu.File", "Menu.File.Export"),
+        ["File.RenderAsImage"]          = new(Key.None, false, false, false, "Menu.File", "Menu.File.RenderAsImage"),
+        ["File.Quit"]                   = new(Key.None, false, false, false, "Menu.File", "Menu.File.Quit"),
 
         ["Edit.Undo"]             = new(Key.Z,    true,  false, false, "Menu.Edit", "Menu.Edit.Undo"),
         ["Edit.Redo"]             = new(Key.Y,    true,  false, false, "Menu.Edit", "Menu.Edit.Redo"),

@@ -101,7 +101,7 @@ public static class ChartSystem
     }
 
     /// <summary>
-    /// Creates a new chart to work on by reading data from a file, then invokes <see cref="ChartChanged"/>, <see cref="EntryChanged"/>, <see cref="AudioChanged"/> and <see cref="JacketChanged"/>
+    /// Creates a new chart to work on by reading data from a file, then invokes <see cref="ChartLoaded"/>, <see cref="EntryChanged"/>, <see cref="AudioChanged"/> and <see cref="JacketChanged"/>
     /// </summary>
     /// <param name="path">Path to the file to read from.</param>
     /// <param name="args">Arguments for how the chart should be read.</param>
@@ -130,7 +130,7 @@ public static class ChartSystem
     }
     
     /// <summary>
-    /// Updates a chart to  work on by reading data from ChartViewTxt, then invokes <see cref="ChartChanged"/>, <see cref="EntryChanged"/>, <see cref="AudioChanged"/> and <see cref="JacketChanged"/>
+    /// Updates a chart to  work on by reading data from ChartViewTxt, then invokes <see cref="ChartLoaded"/>, <see cref="EntryChanged"/>, <see cref="AudioChanged"/> and <see cref="JacketChanged"/>
     /// </summary>
     /// <param name="text"></param>
     /// <param name="args"></param>
@@ -198,6 +198,28 @@ public static class ChartSystem
         return true;
     }
 
+    /// <summary>
+    /// Creates a new empty chart from the current existing chart, then invokes <see cref="ChartLoaded"/> and <see cref="EntryChanged"/>.
+    /// </summary>
+    public static void NewDifficultyFromChart()
+    {
+        Entry.ChartFile = "";
+        Entry.NotesDesigner = "";
+        Entry.Revision = "";
+        Entry.Id = Entry.NewId;
+
+        IEnumerable<Event> events = Chart.Events.Where(x => x is TempoChangeEvent or MetreChangeEvent);
+        
+        Chart = ChartTemplate;
+        Chart.Events.Clear();
+        Chart.Events.AddRange(events);
+        
+        ChartLoaded?.Invoke(null, EventArgs.Empty);
+        EntryChanged?.Invoke(null, EventArgs.Empty);
+
+        IsSaved = false;
+    }
+    
     /// <summary>
     /// Rebuilds the chart.
     /// </summary>

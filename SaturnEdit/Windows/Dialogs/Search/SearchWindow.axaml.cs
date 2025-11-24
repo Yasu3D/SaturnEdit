@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
@@ -13,6 +12,7 @@ using SaturnView;
 
 namespace SaturnEdit.Windows.Dialogs.Search;
 
+// TODO: Automate Shortcut to Operation somehow.
 public partial class SearchWindow : Window
 {
     public SearchWindow()
@@ -115,6 +115,11 @@ public partial class SearchWindow : Window
         else if (item.Key == "File.RenderAsImage") 
         {
             MainWindow.Instance?.ChartEditor.File_RenderAsImage();
+            e.Handled = true;
+        }
+        else if (item.Key == "File.NewDifficultyFromChart")
+        {
+            MainWindow.Instance?.ChartEditor.File_NewDifficultyFromChart();
             e.Handled = true;
         }
         else if (item.Key == "File.Quit") 
@@ -814,7 +819,7 @@ public partial class SearchWindow : Window
             SettingsSystem.RenderSettings.HideBookmarksDuringPlayback = !SettingsSystem.RenderSettings.HideBookmarksDuringPlayback;
             e.Handled = true;
         }
-
+        
         if (close)
         {
             Close();

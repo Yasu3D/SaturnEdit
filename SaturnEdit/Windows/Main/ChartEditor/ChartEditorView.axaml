@@ -56,6 +56,16 @@
                             </MenuItem.Header>
                         </MenuItem>
                     </MenuItem>
+                    
+                    <MenuItem Name="MenuItemNewDifficultyFromChart"
+                              Click="MenuItemNewDifficultyFromChart_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.NewDifficultyFromChart}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="New" />
+                        </MenuItem.Icon>
+                    </MenuItem>
 
                     <Separator />
 
@@ -68,12 +78,14 @@
                             <icon:FluentIcon Icon="Save" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    
                     <MenuItem Name="MenuItemSaveAs"
                               Click="MenuItemSaveAs_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.File.SaveAs}" />
                         </MenuItem.Header>
                     </MenuItem>
+                    
                     <MenuItem Name="MenuItemReloadFromDisk"
                               Click="MenuItemReloadFromDisk_OnClick">
                         <MenuItem.Header>

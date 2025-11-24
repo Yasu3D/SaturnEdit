@@ -296,6 +296,42 @@ public partial class ChartEditorView : UserControl
         }
     }
 
+    public async Task<bool> File_NewDifficultyFromChart()
+    {
+        try
+        {
+            // Prompt to save an unsaved chart first.
+            if (!ChartSystem.IsSaved)
+            {
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Chart);
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return false;
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort opening new file if save was unsuccessful.
+                    if (!success) return false;
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            ChartSystem.NewDifficultyFromChart();
+            
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
+    }
+    
     public async Task<bool> File_Export()
     {
         try
@@ -353,15 +389,6 @@ public partial class ChartEditorView : UserControl
                 Difficulty.Inferno => $"3_inferno{defaultExtension}",
                 Difficulty.WorldsEnd => $"4_worldsend{defaultExtension}",
                 _ => $"chart.{defaultExtension}",
-            };
-
-            string key = args.FormatVersion switch
-            {
-                FormatVersion.Mer => "Menu.File.MerChartFile",
-                FormatVersion.SatV1 => "Menu.File.SaturnChartFile",
-                FormatVersion.SatV2 => "Menu.File.SaturnChartFile",
-                FormatVersion.SatV3 => "Menu.File.SaturnChartFile",
-                _ => "Menu.File.UnknownChartFile",
             };
             
             return new()
@@ -975,6 +1002,11 @@ public partial class ChartEditorView : UserControl
             _ = File_ReloadFromDisk();
             e.Handled = true;
         }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.NewDifficultyFromChart"]))
+        {
+            _ = File_NewDifficultyFromChart();
+            e.Handled = true;
+        }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Export"]))
         {
             _ = File_Export();
@@ -1436,6 +1468,8 @@ public partial class ChartEditorView : UserControl
     private void MenuItemSaveAs_OnClick(object? sender, RoutedEventArgs e) => _ = File_SaveAs();
 
     private void MenuItemReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => _ = File_ReloadFromDisk();
+    
+    private void MenuItemNewDifficultyFromChart_OnClick(object? sender, RoutedEventArgs e) => _ = File_NewDifficultyFromChart();
 
     private void MenuItemExport_OnClick(object? sender, RoutedEventArgs e) => _ = File_Export();
 
