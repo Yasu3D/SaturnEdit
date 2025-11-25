@@ -339,6 +339,7 @@ ChartEditor.Cursor.IncreasePosition,Increase Position
 ChartEditor.Cursor.DecreasePosition,Decrease Position
 ChartEditor.Cursor.IncreaseSize,Increase Size
 ChartEditor.Cursor.DecreaseSize,Decrease Size
+StageEditor.File.LoadMusicData,Load Music Data
 StageEditor.Property.Id,Stage Id
 StageEditor.Property.Name,Stage Name
 StageEditor.Property.Icon,Stage Icon
@@ -355,6 +356,9 @@ StageEditor.ToolTip.GenerateNewId,Generate New Id
 StageEditor.ToolTip.GenerateNewId.Description,Generates a new UUID to use as the Stage Id.
 StageEditor.ToolTip.Secret,Secret Song
 StageEditor.ToolTip.Secret.Description,Should the song be hidden in the preview?
+StageEditor.Preview.Song1,1st
+StageEditor.Preview.Song2,2nd
+StageEditor.Preview.Song3,3rd
 CosmeticEditor.Type.ConsoleColor,Console Color
 CosmeticEditor.Type.Emblem,Emblem
 CosmeticEditor.Type.Icon,Icon
@@ -366,6 +370,7 @@ CosmeticEditor.Type.SystemSound,System Sound
 CosmeticEditor.Type.Title,Title
 CosmeticEditor.Property.Id,Cosmetic Id
 CosmeticEditor.Property.Name,Cosmetic Name
+CosmeticEditor.Property.Description,Cosmetic Description
 CosmeticEditor.Property.Author,Cosmetic Author
 CosmeticEditor.Property.Rarity,Cosmetic Rarity
 CosmeticEditor.Property.ImageArtist,Image Artist

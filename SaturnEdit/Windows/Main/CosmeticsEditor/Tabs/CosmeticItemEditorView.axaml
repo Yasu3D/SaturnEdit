@@ -7,12 +7,12 @@
              d:DesignWidth="800"
              d:DesignHeight="450"
              x:Class="SaturnEdit.Windows.Main.CosmeticsEditor.Tabs.CosmeticItemEditorView">
-    <Grid RowDefinitions="40,40,40,40"
-          ColumnDefinitions="120,20,*,50"
+    <Grid RowDefinitions="40,40,40,40,40"
+          ColumnDefinitions="160,20,*,50"
           Margin="15">
         <Rectangle Grid.Row="0"
                    Grid.Column="1"
-                   Grid.RowSpan="4"
+                   Grid.RowSpan="5"
                    Fill="{DynamicResource SeparatorPrimary}"
                    Width="1"
                    HorizontalAlignment="Left" />
@@ -56,18 +56,28 @@
         <TextBlock Grid.Row="2"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.Property.Author}" />
+                   Text="{DynamicResource CosmeticEditor.Property.Description}" />
         <TextBox Grid.Row="2"
+                 Grid.Column="2"
+                 Name="TextBoxCosmeticDescription"
+                 Height="30"
+                 LostFocus="TextBoxCosmeticDescription_OnLostFocus" />
+        
+        <TextBlock Grid.Row="3"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Property.Author}" />
+        <TextBox Grid.Row="3"
                  Grid.Column="2"
                  Name="TextBoxCosmeticAuthor"
                  Height="30"
                  LostFocus="TextBoxCosmeticAuthor_OnLostFocus" />
         
-        <TextBlock Grid.Row="3"
+        <TextBlock Grid.Row="4"
                    Grid.Column="0"
                    VerticalAlignment="Center"
                    Text="{DynamicResource CosmeticEditor.Property.Rarity}" />
-        <TextBox Grid.Row="3"
+        <TextBox Grid.Row="4"
                  Grid.Column="2"
                  Name="TextBoxCosmeticRarity"
                  Height="30"

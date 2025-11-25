@@ -5,6 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo.CosmeticOperations;
+using SaturnEdit.UndoRedo.PrimitiveOperations;
 
 namespace SaturnEdit.Windows.Main.CosmeticsEditor.Tabs;
 
@@ -29,6 +30,7 @@ public partial class CosmeticItemEditorView : UserControl
 
             TextBoxCosmeticId.Text = CosmeticSystem.CosmeticItem.Id;
             TextBoxCosmeticName.Text = CosmeticSystem.CosmeticItem.Name;
+            TextBoxCosmeticDescription.Text = CosmeticSystem.CosmeticItem.Description;
             TextBoxCosmeticAuthor.Text = CosmeticSystem.CosmeticItem.Author;
             TextBoxCosmeticRarity.Text = CosmeticSystem.CosmeticItem.Rarity.ToString(CultureInfo.InvariantCulture);
             
@@ -71,6 +73,18 @@ public partial class CosmeticItemEditorView : UserControl
         if (oldName == newName) return;
         
         UndoRedoSystem.CosmeticBranch.Push(new CosmeticItemNameEditOperation(oldName, newName));
+    }
+    
+    private void TextBoxCosmeticDescription_OnLostFocus(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (TextBoxCosmeticDescription == null) return;
+
+        string oldDescription = CosmeticSystem.CosmeticItem.Description;
+        string newDescription = TextBoxCosmeticDescription.Text ?? "";
+        if (oldDescription == newDescription) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { CosmeticSystem.CosmeticItem.Description = value; }, oldDescription, newDescription));
     }
 
     private void TextBoxCosmeticAuthor_OnLostFocus(object? sender, RoutedEventArgs e)

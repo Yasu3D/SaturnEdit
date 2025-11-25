@@ -314,13 +314,115 @@
             <GridSplitter Grid.Column="1"
                           Background="Transparent" />
 
-            <Rectangle Grid.Column="2" Fill="{DynamicResource BackgroundSecondary}"/>
+            <Panel Grid.Column="2"
+                   Background="{DynamicResource BackgroundSecondary}"
+                   ClipToBounds="True"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch">
+                <Panel Name="GroupNavigator">
+                    <Panel Name="PanelNavigatorContainer">
+                        <Image Name="ImageNavigatorBody"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"
+                               MinWidth="1"
+                               MinHeight="1"
+                               Stretch="Fill"/>
+                        <Image Name="ImageNavigatorFace"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"
+                               MinWidth="1"
+                               MinHeight="1"
+                               Stretch="Fill"/>
+                    </Panel>
+                    
+                    <StackPanel HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Margin="10"
+                                Spacing="5">
+                        <RadioButton Name="RadioButtonExpressionNeutral"
+                                     Classes="Themed Square Outlined"
+                                     IsChecked="True"
+                                     IsCheckedChanged="RadioButtonExpression_OnIsCheckedChanged">
+                            <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Neutral}" />
+                            </ToolTip.Tip>
+                            1
+                        </RadioButton>
 
-            <TextBlock Grid.Column="2"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Text="Under Construction"
-                       Foreground="{DynamicResource ForegroundTertiary}" />
+                        <RadioButton Name="RadioButtonExpressionAmazed"
+                                     Classes="Themed Square Outlined"
+                                     IsCheckedChanged="RadioButtonExpression_OnIsCheckedChanged">
+                            <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Amazed}" />
+                            </ToolTip.Tip>
+                            2
+                        </RadioButton>
+
+                        <RadioButton Name="RadioButtonExpressionTroubled"
+                                     Classes="Themed Square Outlined"
+                                     IsCheckedChanged="RadioButtonExpression_OnIsCheckedChanged">
+                            <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Troubled}" />
+                            </ToolTip.Tip>
+                            3
+                        </RadioButton>
+
+                        <RadioButton Name="RadioButtonExpressionSurprised"
+                                     Classes="Themed Square Outlined"
+                                     IsCheckedChanged="RadioButtonExpression_OnIsCheckedChanged">
+                            <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Surprised}" />
+                            </ToolTip.Tip>
+                            4
+                        </RadioButton>
+
+                        <RadioButton Name="RadioButtonExpressionStartled"
+                                     Classes="Themed Square Outlined"
+                                     IsCheckedChanged="RadioButtonExpression_OnIsCheckedChanged">
+                            <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Startled}" />
+                            </ToolTip.Tip>
+                            5
+                        </RadioButton>
+
+                        <RadioButton Name="RadioButtonExpressionAngry"
+                                     Classes="Themed Square Outlined"
+                                     IsCheckedChanged="RadioButtonExpression_OnIsCheckedChanged">
+                            <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Angry}" />
+                            </ToolTip.Tip>
+                            6
+                        </RadioButton>
+
+                        <RadioButton Name="RadioButtonExpressionLaughing"
+                                     Classes="Themed Square Outlined"
+                                     IsCheckedChanged="RadioButtonExpression_OnIsCheckedChanged">
+                            <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Laughing}" />
+                            </ToolTip.Tip>
+                            7
+                        </RadioButton>
+
+                        <RadioButton Name="RadioButtonExpressionSmiling"
+                                     Classes="Themed Square Outlined"
+                                     IsCheckedChanged="RadioButtonExpression_OnIsCheckedChanged">
+                            <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Smiling}" />
+                            </ToolTip.Tip>
+                            8
+                        </RadioButton>
+
+                        <RadioButton Name="RadioButtonExpressionGrinning"
+                                     Classes="Themed Square Outlined"
+                                     IsCheckedChanged="RadioButtonExpression_OnIsCheckedChanged">
+                            <ToolTip.Tip>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Grinning}" />
+                            </ToolTip.Tip>
+                            9
+                        </RadioButton>
+                    </StackPanel>
+                </Panel>
+            </Panel>
         </Grid>
     </Grid>
 </UserControl>

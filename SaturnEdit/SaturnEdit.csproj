@@ -185,6 +185,26 @@
         <AvaloniaResource Include="Assets\Cosmetics\PlaceholderEmblem.png"/>
         <AvaloniaResource Include="Assets\Cosmetics\PlaceholderIcon.png"/>
         <AvaloniaResource Include="Assets\Cosmetics\PlaceholderPlate.png"/>
+        <AvaloniaResource Include="Assets\StageUp\bottom_expert.png" />
+        <AvaloniaResource Include="Assets\StageUp\bottom_hard.png" />
+        <AvaloniaResource Include="Assets\StageUp\bottom_inferno.png" />
+        <AvaloniaResource Include="Assets\StageUp\bottom_none.png" />
+        <AvaloniaResource Include="Assets\StageUp\bottom_normal.png" />
+        <AvaloniaResource Include="Assets\StageUp\bottom_worlds_end.png" />
+        <AvaloniaResource Include="Assets\StageUp\middle_expert.png" />
+        <AvaloniaResource Include="Assets\StageUp\middle_hard.png" />
+        <AvaloniaResource Include="Assets\StageUp\middle_inferno.png" />
+        <AvaloniaResource Include="Assets\StageUp\middle_none.png" />
+        <AvaloniaResource Include="Assets\StageUp\middle_normal.png" />
+        <AvaloniaResource Include="Assets\StageUp\middle_worlds_end.png" />
+        <AvaloniaResource Include="Assets\StageUp\stage_a.png" />
+        <AvaloniaResource Include="Assets\StageUp\stage_b.png" />
+        <AvaloniaResource Include="Assets\StageUp\top_expert.png" />
+        <AvaloniaResource Include="Assets\StageUp\top_hard.png" />
+        <AvaloniaResource Include="Assets\StageUp\top_inferno.png" />
+        <AvaloniaResource Include="Assets\StageUp\top_none.png" />
+        <AvaloniaResource Include="Assets\StageUp\top_normal.png" />
+        <AvaloniaResource Include="Assets\StageUp\top_worlds_end.png" />
     </ItemGroup>
     
     <ItemGroup>

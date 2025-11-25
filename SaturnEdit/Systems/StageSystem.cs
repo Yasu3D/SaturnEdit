@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using SaturnData.Content.Lists;
 using SaturnData.Content.StageUp;
 using Tomlyn;
 
@@ -18,7 +19,12 @@ public static class StageSystem
     /// Determines if the editor will prompt the user to save when a stage is closed.
     /// </summary>
     public static bool IsSaved { get; private set; } = true;
-    
+
+    /// <summary>
+    /// A collection of entries for displaying song data in a stage up stage.
+    /// </summary>
+    public static MusicList MusicData { get; private set; } = new();
+
 #region Methods
     /// <summary>
     /// Creates a new stage to work on by resetting the <see cref="StageUpStage"/>, then invokes <see cref="StageLoaded"/>.

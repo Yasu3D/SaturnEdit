@@ -342,6 +342,7 @@
     <system:String x:Key="ChartEditor.Cursor.DecreasePosition">Decrease Position</system:String>
     <system:String x:Key="ChartEditor.Cursor.IncreaseSize">Increase Size</system:String>
     <system:String x:Key="ChartEditor.Cursor.DecreaseSize">Decrease Size</system:String>
+    <system:String x:Key="StageEditor.File.LoadMusicData">Load Music Data</system:String>
     <system:String x:Key="StageEditor.Property.Id">Stage Id</system:String>
     <system:String x:Key="StageEditor.Property.Name">Stage Name</system:String>
     <system:String x:Key="StageEditor.Property.Icon">Stage Icon</system:String>
@@ -358,6 +359,9 @@
     <system:String x:Key="StageEditor.ToolTip.GenerateNewId.Description">Generates a new UUID to use as the Stage Id.</system:String>
     <system:String x:Key="StageEditor.ToolTip.Secret">Secret Song</system:String>
     <system:String x:Key="StageEditor.ToolTip.Secret.Description">Should the song be hidden in the preview?</system:String>
+    <system:String x:Key="StageEditor.Preview.Song1">1st</system:String>
+    <system:String x:Key="StageEditor.Preview.Song2">2nd</system:String>
+    <system:String x:Key="StageEditor.Preview.Song3">3rd</system:String>
     <system:String x:Key="CosmeticEditor.Type.ConsoleColor">Console Color</system:String>
     <system:String x:Key="CosmeticEditor.Type.Emblem">Emblem</system:String>
     <system:String x:Key="CosmeticEditor.Type.Icon">Icon</system:String>
@@ -369,6 +373,7 @@
     <system:String x:Key="CosmeticEditor.Type.Title">Title</system:String>
     <system:String x:Key="CosmeticEditor.Property.Id">Cosmetic Id</system:String>
     <system:String x:Key="CosmeticEditor.Property.Name">Cosmetic Name</system:String>
+    <system:String x:Key="CosmeticEditor.Property.Description">Cosmetic Description</system:String>
     <system:String x:Key="CosmeticEditor.Property.Author">Cosmetic Author</system:String>
     <system:String x:Key="CosmeticEditor.Property.Rarity">Cosmetic Rarity</system:String>
     <system:String x:Key="CosmeticEditor.Property.ImageArtist">Image Artist</system:String>

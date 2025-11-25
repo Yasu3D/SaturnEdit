@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
-using SkiaSharp;
 using ConsoleColor = SaturnData.Content.Cosmetics.ConsoleColor;
 
 namespace SaturnEdit.Windows.CosmeticsEditor;
@@ -23,8 +22,6 @@ public partial class CosmeticsEditorView : UserControl
     public CosmeticsEditorView()
     {
         InitializeComponent();
-
-        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
         
         KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
         KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
@@ -34,17 +31,19 @@ public partial class CosmeticsEditorView : UserControl
 
         UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
         CosmeticBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+        
+        NavigatorExpressionRefresh += OnNavigatorExpressionRefresh;
     }
 
-    private SKColor backgroundColor = new(0xFF000000);
+    private static event EventHandler? NavigatorExpressionRefresh;
+        
+    // ReSharper disable once UnusedMember.Local
+    private static Timer navigatorTimer = new(NavigatorTimer_OnTick, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(10));
     
-    private readonly SKPaint gridPaint = new()
-    {
-        Color = 0xFFFFFFFF,
-        StrokeWidth = 1,
-        IsAntialias = false,
-        Style = SKPaintStyle.Stroke,
-    };
+    private static readonly Dictionary<string, Bitmap> NavigatorTextures = [];
+    private static NavigatorExpression navigatorExpression = NavigatorExpression.Neutral;
+    private static NavigatorBlinkState navigatorBlinkState = NavigatorBlinkState.Open;
+    private static float navigatorTime = 0;
     
 #region Methods
     private async void File_New(CosmeticType cosmeticType)
@@ -291,6 +290,85 @@ public partial class CosmeticsEditorView : UserControl
         if (VisualRoot is not Window rootWindow) return;
         rootWindow.Close();
     }
+
+    private void UpdateNavigator()
+    {
+        if (CosmeticSystem.CosmeticItem is not Navigator navigator)
+        {
+            GroupNavigator.IsVisible = false;
+            return;
+        }
+
+        GroupNavigator.IsVisible = true;
+        
+        NavigatorTextures.Clear();
+
+        foreach (KeyValuePair<string, string> pair in navigator.TexturePaths)
+        {
+            string absolutePath = navigator.AbsoluteTexturePath(pair.Key);
+            
+            if (!File.Exists(absolutePath)) continue;
+            
+            try
+            {
+                NavigatorTextures[absolutePath] = new(absolutePath);
+            }
+            catch (Exception ex)
+            {
+                // Don't throw.
+                Console.WriteLine(ex);
+            }
+        }
+        
+        Dispatcher.UIThread.Post(() =>
+        {
+            const float scale = 1;
+            
+            PanelNavigatorContainer.Width = navigator.Width * scale;
+            PanelNavigatorContainer.Height = navigator.Height * scale;
+
+            ImageNavigatorFace.Margin = new(navigator.FaceMarginLeft * scale, navigator.FaceMarginTop * scale, navigator.FaceMarginRight * scale, navigator.FaceMarginBottom * scale);
+            ImageNavigatorBody.Source = NavigatorTextures.GetValueOrDefault(navigator.AbsoluteTexturePath("body"));
+        });
+    }
+
+    private void UpdateNavigatorExpression()
+    {
+        if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
+
+        string expressionKey = navigatorExpression switch
+        {
+            NavigatorExpression.Neutral => "neutral",
+            NavigatorExpression.Amazed => "amazed",
+            NavigatorExpression.Troubled => "troubled",
+            NavigatorExpression.Surprised => "surprised",
+            NavigatorExpression.Startled => "startled",
+            NavigatorExpression.Angry => "angry",
+            NavigatorExpression.Laughing => "laughing",
+            NavigatorExpression.Smiling => "smiling",
+            NavigatorExpression.Grinning => "grinning",
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+            
+        string blinkStateKey = navigatorBlinkState switch
+        {
+            NavigatorBlinkState.Open => "a",
+            NavigatorBlinkState.HalfClose => "b",
+            NavigatorBlinkState.Closed => "c",
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+
+        Bitmap? neutralA = NavigatorTextures.GetValueOrDefault(navigator.AbsoluteTexturePath("face_neutral_a"));
+        Bitmap? neutralBlink = NavigatorTextures.GetValueOrDefault(navigator.AbsoluteTexturePath($"face_neutral_{blinkStateKey}"));
+        Bitmap? expressionBlink = NavigatorTextures.GetValueOrDefault(navigator.AbsoluteTexturePath($"face_{expressionKey}_{blinkStateKey}"));
+
+        Bitmap? final = expressionBlink ?? neutralBlink ?? neutralA;
+        
+        Dispatcher.UIThread.Post(() =>
+        {
+            ImageNavigatorFace.Source = final;
+        });
+    }
 #endregion Methods
     
 #region System Event Handlers
@@ -342,37 +420,12 @@ public partial class CosmeticsEditorView : UserControl
             TitleEditor.IsVisible = CosmeticSystem.CosmeticItem is Title;
             TitleEditor.IsEnabled = TitleEditor.IsVisible;
         });
+        
+        UpdateNavigator();
     }
 #endregion System Event Handlers
     
 #region UI Event Handlers
-    private async void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
-    {
-        try
-        {
-            await Task.Delay(1);
-
-            if (Application.Current == null) return;
-            if (!Application.Current.TryGetResource("BackgroundSecondary", Application.Current.ActualThemeVariant, out object? resource)) return;
-            if (resource is not SolidColorBrush brush) return;
-        
-            backgroundColor = new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
-            
-            if (!Application.Current.TryGetResource("BackgroundGrid", Application.Current.ActualThemeVariant, out resource)) return;
-            if (resource is not SolidColorBrush brush2) return;
-            
-            gridPaint.Color = new(brush2.Color.R, brush2.Color.G, brush2.Color.B, brush2.Color.A);
-        }
-        catch (Exception ex)
-        {
-            // Don't throw.
-            Console.WriteLine(ex);
-            
-            backgroundColor = new(0xFFFF00FF);
-            gridPaint.Color = new(0xFFFF00FF);
-        }
-    }
-    
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         if (!IsEnabled) return;
@@ -459,5 +512,88 @@ public partial class CosmeticsEditorView : UserControl
     private void MenuItemUndo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.CosmeticBranch.Undo();
 
     private void MenuItemRedo_OnClick(object? sender, RoutedEventArgs e) => UndoRedoSystem.CosmeticBranch.Redo();
+    
+    
+    private void RadioButtonExpression_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not RadioButton button) return;
+        if (button.IsChecked == false) return;
+
+        if (button == RadioButtonExpressionNeutral)
+        {
+            navigatorExpression = NavigatorExpression.Neutral;
+        }
+        else if (button == RadioButtonExpressionAmazed)
+        {
+            navigatorExpression = NavigatorExpression.Amazed;
+        }
+        else if (button == RadioButtonExpressionTroubled)
+        {
+            navigatorExpression = NavigatorExpression.Troubled;
+        }
+        else if (button == RadioButtonExpressionSurprised)
+        {
+            navigatorExpression = NavigatorExpression.Surprised;
+        }
+        else if (button == RadioButtonExpressionStartled)
+        {
+            navigatorExpression = NavigatorExpression.Startled;
+        }
+        else if (button == RadioButtonExpressionAngry)
+        {
+            navigatorExpression = NavigatorExpression.Angry;
+        }
+        else if (button == RadioButtonExpressionLaughing)
+        {
+            navigatorExpression = NavigatorExpression.Laughing;
+        }
+        else if (button == RadioButtonExpressionSmiling)
+        {
+            navigatorExpression = NavigatorExpression.Smiling;
+        }
+        else if (button == RadioButtonExpressionGrinning)
+        {
+            navigatorExpression = NavigatorExpression.Grinning;
+        }
+    }
 #endregion UI Event Handlers
+
+#region Internval Event Handlers
+    private static void NavigatorTimer_OnTick(object? sender)
+    {
+        if (CosmeticSystem.CosmeticItem is not Navigator navigator)
+        {
+            navigatorTime = 0;
+            return;
+        }
+        
+        navigatorTime += 10;
+        
+        if (navigatorTime > navigator.BlinkAnimationInterval + navigator.BlinkAnimationDuration)
+        {
+            navigatorTime = 0;
+        }
+        
+        if (navigatorTime > navigator.BlinkAnimationInterval + navigator.BlinkAnimationDuration * 0.66f)
+        {
+            navigatorBlinkState = NavigatorBlinkState.HalfClose;
+        }
+        else if (navigatorTime > navigator.BlinkAnimationInterval + navigator.BlinkAnimationDuration * 0.33f)
+        {
+            navigatorBlinkState = NavigatorBlinkState.Closed;
+        }
+        else if (navigatorTime > navigator.BlinkAnimationInterval)
+        {
+            navigatorBlinkState = NavigatorBlinkState.HalfClose;
+        }
+        else
+        {
+            navigatorBlinkState = NavigatorBlinkState.Open;
+        }
+
+        NavigatorExpressionRefresh?.Invoke(null, EventArgs.Empty);
+    }
+
+    private void OnNavigatorExpressionRefresh(object? sender, EventArgs e) => UpdateNavigatorExpression();
+#endregion Internal Event Handlers
 }

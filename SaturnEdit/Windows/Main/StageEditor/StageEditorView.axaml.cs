@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
@@ -18,7 +17,6 @@ using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.StageOperations;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
-using SkiaSharp;
 
 namespace SaturnEdit.Windows.StageEditor;
 
@@ -119,6 +117,29 @@ public partial class StageEditorView : UserControl
         {
             Console.WriteLine(ex);
             return false;
+        }
+    }
+    
+    private async void File_LoadMusicData()
+    {
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return;
+
+            // Open file picker.
+            IReadOnlyList<IStorageFolder> folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new()
+            {
+                AllowMultiple = false,
+            });
+            if (folders.Count != 1) return;
+
+            StageSystem.MusicData.Load(folders[0].Path.LocalPath);
+            UpdateStagePreview();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
         }
     }
 
@@ -231,6 +252,76 @@ public partial class StageEditorView : UserControl
         if (VisualRoot is not Window rootWindow) return;
         rootWindow.Close();
     }
+
+    private void UpdateStagePreview()
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            TextBlockStageName.Text = StageSystem.StageUpStage.Name;
+            
+            TextBlockTitle1.Text = getTitle(StageSystem.StageUpStage.Song1.EntryId, StageSystem.StageUpStage.Song1.Secret);
+            TextBlockTitle2.Text = getTitle(StageSystem.StageUpStage.Song2.EntryId, StageSystem.StageUpStage.Song2.Secret);
+            TextBlockTitle3.Text = getTitle(StageSystem.StageUpStage.Song3.EntryId, StageSystem.StageUpStage.Song3.Secret);
+            
+            TextBlockLevel1.Text = getLevel(StageSystem.StageUpStage.Song1.EntryId, StageSystem.StageUpStage.Song1.Secret);
+            TextBlockLevel2.Text = getLevel(StageSystem.StageUpStage.Song2.EntryId, StageSystem.StageUpStage.Song2.Secret);
+            TextBlockLevel3.Text = getLevel(StageSystem.StageUpStage.Song3.EntryId, StageSystem.StageUpStage.Song3.Secret);
+            
+            Difficulty difficulty1 = getDifficulty(StageSystem.StageUpStage.Song1.EntryId, StageSystem.StageUpStage.Song1.Secret);
+            Difficulty difficulty2 = getDifficulty(StageSystem.StageUpStage.Song2.EntryId, StageSystem.StageUpStage.Song2.Secret);
+            Difficulty difficulty3 = getDifficulty(StageSystem.StageUpStage.Song3.EntryId, StageSystem.StageUpStage.Song3.Secret);
+
+            ImageDifficultyTopNone.IsVisible = difficulty1 == Difficulty.None; 
+            ImageDifficultyTopNormal.IsVisible = difficulty1 == Difficulty.Normal; 
+            ImageDifficultyTopHard.IsVisible = difficulty1 == Difficulty.Hard; 
+            ImageDifficultyTopExpert.IsVisible = difficulty1 == Difficulty.Expert; 
+            ImageDifficultyTopInferno.IsVisible = difficulty1 == Difficulty.Inferno; 
+            ImageDifficultyTopWorldsEnd.IsVisible = difficulty1 == Difficulty.WorldsEnd; 
+            
+            ImageDifficultyMiddleNone.IsVisible = difficulty2 == Difficulty.None; 
+            ImageDifficultyMiddleNormal.IsVisible = difficulty2 == Difficulty.Normal; 
+            ImageDifficultyMiddleHard.IsVisible = difficulty2 == Difficulty.Hard; 
+            ImageDifficultyMiddleExpert.IsVisible = difficulty2 == Difficulty.Expert; 
+            ImageDifficultyMiddleInferno.IsVisible = difficulty2 == Difficulty.Inferno; 
+            ImageDifficultyMiddleWorldsEnd.IsVisible = difficulty2 == Difficulty.WorldsEnd; 
+                
+            ImageDifficultyBottomNone.IsVisible = difficulty3 == Difficulty.None; 
+            ImageDifficultyBottomNormal.IsVisible = difficulty3 == Difficulty.Normal; 
+            ImageDifficultyBottomHard.IsVisible = difficulty3 == Difficulty.Hard; 
+            ImageDifficultyBottomExpert.IsVisible = difficulty3 == Difficulty.Expert; 
+            ImageDifficultyBottomInferno.IsVisible = difficulty3 == Difficulty.Inferno; 
+            ImageDifficultyBottomWorldsEnd.IsVisible = difficulty3 == Difficulty.WorldsEnd; 
+        });
+
+        return;
+
+        string getTitle(string id, bool secret)
+        {
+            if (secret) return "??";
+            if (string.IsNullOrEmpty(id)) return "NO ENTRY FOUND";
+            if (!StageSystem.MusicData.Entries.TryGetValue(id, out Entry? entry)) return "NO ENTRY FOUND";
+
+            return entry.Title;
+        }
+
+        string getLevel(string id, bool secret)
+        {
+            if (secret) return "??";
+            if (string.IsNullOrEmpty(id)) return "??";
+            if (!StageSystem.MusicData.Entries.TryGetValue(id, out Entry? entry)) return "??";
+
+            return entry.LevelString;
+        }
+        
+        Difficulty getDifficulty(string id, bool secret)
+        {
+            if (secret) return Difficulty.None;
+            if (string.IsNullOrEmpty(id)) return Difficulty.None;
+            if (!StageSystem.MusicData.Entries.TryGetValue(id, out Entry? entry)) return Difficulty.None;
+
+            return entry.Difficulty;
+        }
+    }
 #endregion Methods
     
 #region System Event Handlers
@@ -287,8 +378,19 @@ public partial class StageEditorView : UserControl
             bool iconExists = File.Exists(StageSystem.StageUpStage.AbsoluteIconPath);
             IconFileNotFoundWarning.IsVisible = StageSystem.StageUpStage.AbsoluteIconPath != "" && !iconExists;
             
+            try
+            {
+                ImageIcon.Source = iconExists ? new Bitmap(StageSystem.StageUpStage.AbsoluteIconPath) : null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
             blockEvents = false;
         });
+        
+        UpdateStagePreview();
     }
 #endregion System Event Handlers
     
@@ -424,6 +526,8 @@ public partial class StageEditorView : UserControl
     private void MenuItemNew_OnClick(object? sender, RoutedEventArgs e) => File_New();
 
     private void MenuItemOpen_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open();
+    
+    private void MenuItemLoadMusicData_OnClick(object? sender, RoutedEventArgs e) => File_LoadMusicData();
     
     private void MenuItemSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_Save();
 
