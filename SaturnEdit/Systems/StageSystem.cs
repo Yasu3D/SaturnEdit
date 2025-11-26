@@ -8,6 +8,11 @@ namespace SaturnEdit.Systems;
 
 public static class StageSystem
 {
+    public static void Initialize()
+    {
+        UndoRedoSystem.StageBranch.OperationHistoryChanged += StageBranch_OnOperationHistoryChanged;
+    }
+    
     public static event EventHandler? StageLoaded;
     
     /// <summary>
@@ -91,4 +96,11 @@ public static class StageSystem
         return true;
     }
 #endregion Methods
+
+#region System Event Handlers
+    private static void StageBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
+    {
+        IsSaved = false;
+    }
+#endregion System Event Handlers
 }

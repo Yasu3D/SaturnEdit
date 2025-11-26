@@ -210,7 +210,13 @@ public partial class MainWindow : Window
         ModalDialogWindow dialog = new()
         {
             DialogIcon = FluentIcons.Common.Icon.Warning,
-            WindowTitleKey = "ModalDialog.SavePrompt.Title",
+            WindowTitleKey = type switch
+            {
+                SavePromptType.Chart => "ModalDialog.SavePrompt.Title.Chart",
+                SavePromptType.Stage => "ModalDialog.SavePrompt.Title.Stage",
+                SavePromptType.Cosmetic => "ModalDialog.SavePrompt.Title.Cosmetic",
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
+            },
             HeaderKey = type switch
             {
                 SavePromptType.Chart => "ModalDialog.SavePrompt.Header.Chart",

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
@@ -295,11 +296,13 @@ public partial class CosmeticsEditorView : UserControl
     {
         if (CosmeticSystem.CosmeticItem is not Navigator navigator)
         {
-            GroupNavigator.IsVisible = false;
+            Dispatcher.UIThread.Post(() =>
+            {
+                GroupNavigator.IsVisible = false;
+            });
+            
             return;
         }
-
-        GroupNavigator.IsVisible = true;
         
         NavigatorTextures.Clear();
 
@@ -323,6 +326,8 @@ public partial class CosmeticsEditorView : UserControl
         Dispatcher.UIThread.Post(() =>
         {
             const float scale = 1;
+         
+            GroupNavigator.IsVisible = true;
             
             PanelNavigatorContainer.Width = navigator.Width * scale;
             PanelNavigatorContainer.Height = navigator.Height * scale;
@@ -331,7 +336,7 @@ public partial class CosmeticsEditorView : UserControl
             ImageNavigatorBody.Source = NavigatorTextures.GetValueOrDefault(navigator.AbsoluteTexturePath("body"));
         });
     }
-
+    
     private void UpdateNavigatorExpression()
     {
         if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
@@ -367,6 +372,176 @@ public partial class CosmeticsEditorView : UserControl
         Dispatcher.UIThread.Post(() =>
         {
             ImageNavigatorFace.Source = final;
+        });
+    }
+
+    private void UpdateProfile()
+    {
+        if (CosmeticSystem.CosmeticItem is Plate plate)
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                GroupProfile.IsVisible = true;
+                
+                ImagePlaceholderIcon.IsVisible = true;
+                ImageIcon.IsVisible = false;
+                BorderIcon.IsVisible = false;
+
+                ImagePlaceholderEmblem.IsVisible = true;
+                ImageEmblem.IsVisible = false;
+                BorderEmblem.IsVisible = false;
+
+                BorderPlate.IsVisible = true;
+                
+                TextBlockTitle.Text = "TITLE";
+                
+                try
+                {
+                    ImagePlate.Source = new Bitmap(plate.AbsoluteImagePath);
+                    
+                    ImagePlaceholderPlate.IsVisible = false;
+                    ImagePlate.IsVisible = true;
+                }
+                catch (Exception ex)
+                {
+                    // Don't throw.
+                    if (ex is not (FileNotFoundException or ArgumentException))
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    
+                    ImagePlaceholderPlate.IsVisible = false;
+                    ImagePlate.IsVisible = false;
+                }
+            });
+        }
+        else if (CosmeticSystem.CosmeticItem is Icon icon)
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                GroupProfile.IsVisible = true;
+                
+                ImagePlaceholderPlate.IsVisible = true;
+                ImagePlate.IsVisible = false;
+                BorderPlate.IsVisible = false;
+
+                ImagePlaceholderEmblem.IsVisible = true;
+                ImageEmblem.IsVisible = false;
+                BorderEmblem.IsVisible = false;
+                
+                BorderIcon.IsVisible = true;
+                
+                TextBlockTitle.Text = "TITLE";
+                
+                try
+                {
+                    ImageIcon.Source = new Bitmap(icon.AbsoluteImagePath);
+                    
+                    ImagePlaceholderIcon.IsVisible = false;
+                    ImageIcon.IsVisible = true;
+                }
+                catch (Exception ex)
+                {
+                    // Don't throw.
+                    if (ex is not (FileNotFoundException or ArgumentException))
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    
+                    ImagePlaceholderIcon.IsVisible = false;
+                    ImageIcon.IsVisible = false;
+                }
+            });
+        }
+        else if (CosmeticSystem.CosmeticItem is Emblem emblem)
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                GroupProfile.IsVisible = true;
+                
+                ImagePlaceholderPlate.IsVisible = true;
+                ImagePlate.IsVisible = false;
+                BorderPlate.IsVisible = false;
+                
+                ImagePlaceholderIcon.IsVisible = true;
+                ImageIcon.IsVisible = false;
+                BorderIcon.IsVisible = false;
+                
+                BorderEmblem.IsVisible = true;
+                
+                TextBlockTitle.Text = "TITLE";
+                
+                try
+                {
+                    ImageEmblem.Source = new Bitmap(emblem.AbsoluteImagePath);
+                    
+                    ImagePlaceholderEmblem.IsVisible = false;
+                    ImageEmblem.IsVisible = true;
+                }
+                catch (Exception ex)
+                {
+                    // Don't throw.
+                    if (ex is not (FileNotFoundException or ArgumentException))
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    
+                    ImagePlaceholderEmblem.IsVisible = false;
+                    ImageEmblem.IsVisible = false;
+                }
+            });
+        }
+        else if (CosmeticSystem.CosmeticItem is Title title)
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                GroupProfile.IsVisible = true;
+                
+                ImagePlaceholderPlate.IsVisible = true;
+                ImagePlate.IsVisible = false;
+                BorderPlate.IsVisible = false;
+                
+                ImagePlaceholderIcon.IsVisible = true;
+                ImageIcon.IsVisible = false;
+                BorderIcon.IsVisible = false;
+
+                ImagePlaceholderEmblem.IsVisible = true;
+                ImageEmblem.IsVisible = false;
+                BorderEmblem.IsVisible = false;
+                
+                TextBlockTitle.Text = title.Message;
+            });
+        }
+        else
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                GroupProfile.IsVisible = false;
+            });
+        }
+        
+        
+    }
+
+    private void UpdateConsoleColor()
+    {
+        if (CosmeticSystem.CosmeticItem is not ConsoleColor consoleColor)
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                GroupConsoleColor.IsVisible = false;
+            });
+
+            return;
+        }
+        
+        Dispatcher.UIThread.Post(() =>
+        {
+            GroupConsoleColor.IsVisible = true;
+
+            PathIconConsoleColorA.Foreground = new SolidColorBrush(consoleColor.ColorA);
+            PathIconConsoleColorB.Foreground = new SolidColorBrush(consoleColor.ColorB);
+            PathIconConsoleColorC.Foreground = new SolidColorBrush(consoleColor.ColorC);
         });
     }
 #endregion Methods
@@ -422,6 +597,8 @@ public partial class CosmeticsEditorView : UserControl
         });
         
         UpdateNavigator();
+        UpdateProfile();
+        UpdateConsoleColor();
     }
 #endregion System Event Handlers
     

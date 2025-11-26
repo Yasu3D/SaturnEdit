@@ -21,6 +21,11 @@ public enum CosmeticType
 
 public static class CosmeticSystem
 {
+    public static void Initialize()
+    {
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
+    }
+    
     public static event EventHandler? CosmeticLoaded;
     
     /// <summary>
@@ -150,4 +155,11 @@ public static class CosmeticSystem
         return true;
     }
 #endregion Methods
+    
+#region System Event Handlers
+    private static void CosmeticBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
+    {
+        IsSaved = false;
+    }
+#endregion System Event Handlers
 }

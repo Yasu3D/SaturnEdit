@@ -5,7 +5,7 @@
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              xmlns:tabs="clr-namespace:SaturnEdit.Windows.Main.CosmeticsEditor.Tabs"
              mc:Ignorable="d"
-             d:DesignWidth="1000"
+             d:DesignWidth="2000"
              d:DesignHeight="600"
              x:Class="SaturnEdit.Windows.CosmeticsEditor.CosmeticsEditorView">
     <Grid RowDefinitions="40,1,*">
@@ -251,9 +251,9 @@
         <!-- Content -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="50" />
+                <ColumnDefinition MinWidth="50" Width="*" />
                 <ColumnDefinition Width="1" />
-                <ColumnDefinition MinWidth="50" />
+                <ColumnDefinition MinWidth="50" Width="2*" />
             </Grid.ColumnDefinitions>
 
             <ScrollViewer Grid.Column="0"
@@ -321,12 +321,19 @@
                    VerticalAlignment="Stretch">
                 <Panel Name="GroupNavigator">
                     <Panel Name="PanelNavigatorContainer">
-                        <Image Name="ImageNavigatorBody"
-                               HorizontalAlignment="Stretch"
-                               VerticalAlignment="Stretch"
-                               MinWidth="1"
-                               MinHeight="1"
-                               Stretch="Fill"/>
+                        <Border BorderThickness="1" 
+                                BorderBrush="{DynamicResource SeparatorPrimary}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                MinWidth="1"
+                                MinHeight="1">
+                            <Image Name="ImageNavigatorBody"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   MinWidth="1"
+                                   MinHeight="1"
+                                   Stretch="Fill" />
+                        </Border>
                         <Image Name="ImageNavigatorFace"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Stretch"
@@ -421,6 +428,110 @@
                             9
                         </RadioButton>
                     </StackPanel>
+                </Panel>
+                
+                <Panel Name="GroupProfile">
+                    <Image Name="ImagePlaceholderPlate"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="1024"
+                               Height="256"
+                               Stretch="Fill"
+                               Source="avares://SaturnEdit/Assets/Cosmetics/PlaceholderPlate.png"/>
+                    <Image Name="ImagePlate"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="1024"
+                               Height="256"
+                               Stretch="Fill"/>
+                    <Border Name="BorderPlate"
+                            Width="1024"
+                            Height="256"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource SeparatorPrimary}"/>
+                    
+                    <Image Name="ImagePlaceholderIcon"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="128"
+                               Height="128"
+                               Stretch="Fill"
+                               Margin="-510,115,0,0"
+                               Source="avares://SaturnEdit/Assets/Cosmetics/PlaceholderIcon.png"/>
+                    <Image Name="ImageIcon"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="128"
+                               Height="128"
+                               Stretch="Fill"
+                               Margin="-510,115,0,0"/>
+                    <Border Name="BorderIcon"
+                            Width="128"
+                            Height="128"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource SeparatorPrimary}"
+                            Margin="-510,115,0,0"/>
+                    
+                    <Image Name="ImagePlaceholderEmblem"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="85"
+                               Height="85"
+                               Stretch="Fill"
+                               Margin="491,130,0,0"
+                               Source="avares://SaturnEdit/Assets/Cosmetics/PlaceholderEmblem.png"/>
+                    <Image Name="ImageEmblem"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="85"
+                               Height="85"
+                               Stretch="Fill"
+                               Margin="491,130,0,0"/>
+                    <Border Name="BorderEmblem"
+                            Width="85"
+                            Height="85"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource SeparatorPrimary}"
+                            Margin="491,130,0,0"/>
+                    
+                    <TextBlock Text="PLAYER"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="#111111"
+                               FontWeight="Bold"
+                               FontSize="26"
+                               Margin="-170,130,0,0"/>
+                    
+                    <TextBlock Name="TextBlockTitle"
+                               Text="TITLE"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="#111111"
+                               FontWeight="SemiBold"
+                               FontSize="14"
+                               Margin="-185,-53,0,0"/>
+                </Panel>
+                
+                <Panel Name="GroupConsoleColor">
+                    <PathIcon Name="PathIconConsoleColorA"
+                              Width="512"
+                              Height="512"
+                              Foreground="#FF0000"
+                              Data="M256,-0.482C397.556,-0.482 512.482,114.444 512.482,256C512.482,397.556 397.556,512.482 256,512.482C114.444,512.482 -0.482,397.556 -0.482,256C-0.482,114.444 114.444,-0.482 256,-0.482ZM34.711,383.761C78.919,460.111 161.504,511.518 256,511.518C350.496,511.518 433.081,460.111 477.289,383.761L400.591,339.479C414.813,314.916 422.957,286.402 422.957,256C422.957,163.854 348.146,89.043 256,89.043C163.854,89.043 89.043,163.854 89.043,256C89.043,286.402 97.187,314.916 111.409,339.479L34.711,383.761Z"/>
+                    <PathIcon Name="PathIconConsoleColorB"
+                              Width="512"
+                              Height="512"
+                              Foreground="#00FF00"
+                              Data="M256,-0.482C397.556,-0.482 512.482,114.444 512.482,256C512.482,397.556 397.556,512.482 256,512.482C114.444,512.482 -0.482,397.556 -0.482,256C-0.482,114.444 114.444,-0.482 256,-0.482ZM477.289,383.761C499.055,346.168 511.518,302.528 511.518,256C511.518,114.976 397.024,0.482 256,0.482C114.976,0.482 0.482,114.976 0.482,256C0.482,302.528 12.945,346.168 34.711,383.761L111.409,339.479C120.21,354.679 131.338,368.365 144.305,380.05L85.057,445.852C130.347,486.664 190.294,511.518 256,511.518L256,422.957C317.744,422.957 371.705,389.367 400.591,339.479L477.289,383.761Z"/>
+                    <PathIcon Name="PathIconConsoleColorC"
+                              Width="512"
+                              Height="512"
+                              Foreground="#0000FF"
+                              Data="M256,-0.482C397.556,-0.482 512.482,114.444 512.482,256C512.482,397.556 397.556,512.482 256,512.482C114.444,512.482 -0.482,397.556 -0.482,256C-0.482,114.444 114.444,-0.482 256,-0.482ZM256,511.518C397.024,511.518 511.518,397.024 511.518,256C511.518,114.976 397.024,0.482 256,0.482C114.976,0.482 0.482,114.976 0.482,256C0.482,331.318 33.14,399.069 85.057,445.852L144.305,380.05C173.898,406.717 213.067,422.957 256,422.957L256,511.518Z"/>
+                    
+                    <Image Width="512"
+                           Height="512"
+                           Source="avares://SaturnEdit/Assets/Cosmetics/ConsoleColor.png"/>
                 </Panel>
             </Panel>
         </Grid>

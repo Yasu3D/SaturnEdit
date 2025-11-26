@@ -19,6 +19,8 @@ public partial class App : Application
         TimeSystem.Initialize();
         CursorSystem.Initialize();
         ChartSystem.Initialize();
+        StageSystem.Initialize();
+        CosmeticSystem.Initialize();
         AudioSystem.Initialize();
         SelectionSystem.Initialize();
         UndoRedoSystem.Initialize();

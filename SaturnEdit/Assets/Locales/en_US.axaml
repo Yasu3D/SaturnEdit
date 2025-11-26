@@ -730,7 +730,9 @@
     <system:String x:Key="VolumeMixer.Channel.R">R</system:String>
     <system:String x:Key="VolumeMixer.Channel.StartClick">Start Click</system:String>
     <system:String x:Key="VolumeMixer.Channel.Metronome">Metronome</system:String>
-    <system:String x:Key="ModalDialog.SavePrompt.Title">Save Chart</system:String>
+    <system:String x:Key="ModalDialog.SavePrompt.Title.Chart">Save Chart</system:String>
+    <system:String x:Key="ModalDialog.SavePrompt.Title.Stage">Save Stage</system:String>
+    <system:String x:Key="ModalDialog.SavePrompt.Title.Cosmetic">Save Cosmetic</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Header.Chart">Do you want to save changes to your chart before closing?</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Header.Stage">Do you want to save changes to your stage before closing?</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Header.Cosmetic">Do you want to save changes to your cosmetic before closing?</system:String>
