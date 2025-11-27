@@ -53,7 +53,6 @@ public partial class PlaybackView : UserControl
     }
 
     private readonly CanvasInfo canvasInfo = new();
-    private SKColor clearColor;
     private SKColor waveformColor;
     private float[]? waveform = null;
     private float sliderMaximum = 0;
@@ -257,7 +256,7 @@ public partial class PlaybackView : UserControl
             if (Application.Current == null) return;
             if (Application.Current.TryGetResource("BackgroundPrimary", Application.Current.ActualThemeVariant, out object? clearColorResource) && clearColorResource is SolidColorBrush clearColorBrush)
             {
-                clearColor = new(clearColorBrush.Color.R, clearColorBrush.Color.G, clearColorBrush.Color.B, clearColorBrush.Color.A);
+                canvasInfo.BackgroundColor = new(clearColorBrush.Color.R, clearColorBrush.Color.G, clearColorBrush.Color.B, clearColorBrush.Color.A);
             }
             
             if (Application.Current.TryGetResource("ForegroundPrimary", Application.Current.ActualThemeVariant, out object? waveformColorResource) && waveformColorResource is SolidColorBrush waveformColorBrush)
@@ -268,7 +267,7 @@ public partial class PlaybackView : UserControl
         catch (Exception ex)
         {
             // classic error pink
-            clearColor = new(0xFF, 0x00, 0xFF, 0xFF);
+            canvasInfo.BackgroundColor = new(0xFF, 0x00, 0xFF, 0xFF);
             
             Console.WriteLine(ex);
         }
@@ -302,7 +301,6 @@ public partial class PlaybackView : UserControl
         (
             canvas: canvas,
             canvasInfo: canvasInfo,
-            clearColor: clearColor,
             waveformColor: waveformColor,
             waveform: waveform,
             audioOffset: ChartSystem.Entry.AudioOffset,

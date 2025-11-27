@@ -184,6 +184,11 @@
                     <SolidColorBrush x:Key="ZigZagHoldGuide"   Color="#FFFF0000" />
                     <SolidColorBrush x:Key="ZigZagHoldSurface" Color="#AAFFFFFF" />
                     
+                    <SolidColorBrush x:Key="WaveformWave"        Color="#80FFFFFF" />
+                    <SolidColorBrush x:Key="WaveformJudgeLine"   Color="#FFAA0000" />
+                    <SolidColorBrush x:Key="WaveformMeasureLine" Color="#FFB6B6BC" />
+                    <SolidColorBrush x:Key="WaveformBeatLine"    Color="#80B6B6BC" />
+                    
                     <RadialGradientBrush x:Key="ChartEditorChromeGradient"
                                          RadiusX="225"
                                          RadiusY="225"

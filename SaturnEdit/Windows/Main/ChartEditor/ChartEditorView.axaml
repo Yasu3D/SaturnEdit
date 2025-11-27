@@ -105,7 +105,7 @@
                         </MenuItem.Header>
                     </MenuItem>
 
-                    <MenuItem Name="MenuItemRenderAsImage"
+                    <!--<MenuItem Name="MenuItemRenderAsImage"
                               Click="MenuItemRenderAsImage_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.File.RenderAsImage}" />
@@ -113,7 +113,7 @@
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="CameraSparkles" />
                         </MenuItem.Icon>
-                    </MenuItem>
+                    </MenuItem>-->
 
                     <Separator />
 
@@ -251,7 +251,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Name="MenuItemChartView2D"
+                        <!--<MenuItem Name="MenuItemChartView2D"
                                   Click="MenuItemToolWindows_OnClick">
                             <MenuItem.Header>
                                 <TextBlock Text="{DynamicResource ChartEditor.ChartView2D}" />
@@ -259,7 +259,7 @@
                             <MenuItem.Icon>
                                 <icon:FluentIcon Icon="GanttChart" />
                             </MenuItem.Icon>
-                        </MenuItem>
+                        </MenuItem>-->
 
                         <MenuItem Name="MenuItemChartViewTxt"
                                   Click="MenuItemToolWindows_OnClick">

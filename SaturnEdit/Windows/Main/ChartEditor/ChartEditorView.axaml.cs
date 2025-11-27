@@ -406,10 +406,10 @@ public partial class ChartEditorView : UserControl
         }
     }
 
-    public void File_RenderAsImage()
-    {
-        //if (VisualRoot is not Window rootWindow) return;
-    }
+    // public void File_RenderAsImage()
+    // {
+    //     
+    // }
     
     public void File_Quit()
     {
@@ -854,7 +854,7 @@ public partial class ChartEditorView : UserControl
             MenuItemSaveAs.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.SaveAs"].ToKeyGesture();
             MenuItemReloadFromDisk.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.ReloadFromDisk"].ToKeyGesture();
             MenuItemExport.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Export"].ToKeyGesture();
-            MenuItemRenderAsImage.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.RenderAsImage"].ToKeyGesture();
+            //MenuItemRenderAsImage.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.RenderAsImage"].ToKeyGesture();
             MenuItemSettings.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["QuickCommands.Settings"].ToKeyGesture();
             MenuItemQuit.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Quit"].ToKeyGesture();
 
@@ -1012,11 +1012,11 @@ public partial class ChartEditorView : UserControl
             _ = File_Export();
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.RenderAsImage"]))
-        {
-            File_RenderAsImage();
-            e.Handled = true;
-        }
+        // else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.RenderAsImage"]))
+        // {
+        //     File_RenderAsImage();
+        //     e.Handled = true;
+        // }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Quit"]))
         {
             File_Quit();
@@ -1473,7 +1473,7 @@ public partial class ChartEditorView : UserControl
 
     private void MenuItemExport_OnClick(object? sender, RoutedEventArgs e) => _ = File_Export();
 
-    private void MenuItemRenderAsImage_OnClick(object? sender, RoutedEventArgs e) => File_RenderAsImage();
+    //private void MenuItemRenderAsImage_OnClick(object? sender, RoutedEventArgs e) => File_RenderAsImage();
 
     private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ShowSettingsWindow();
 

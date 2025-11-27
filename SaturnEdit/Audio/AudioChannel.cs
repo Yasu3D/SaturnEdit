@@ -134,7 +134,7 @@ public class AudioChannel
     {
         // This code is borrowed/adapted from osu.
         
-        const float resolution = 0.001f;
+        const float resolution = 0.0005f;
         const int pointsPerIteration = 1000;
         const int bytesPerSample = 4;
 

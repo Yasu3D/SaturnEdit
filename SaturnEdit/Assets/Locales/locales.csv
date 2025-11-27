@@ -191,9 +191,9 @@ ChartEditor.NotePalette.Note.SnapForward.Description,Hit by flicking forwards wi
 ChartEditor.NotePalette.Note.SnapBackward,Snap Note (Backward)
 ChartEditor.NotePalette.Note.SnapBackward.Description,Hit by flicking backwards within its area at the right time.
 ChartEditor.NotePalette.Note.LaneShow,Lane Show
-ChartEditor.NotePalette.Note.LaneShow.Description,Shows the tunnel lanes it occupies once it reaches the judgement line.
+ChartEditor.NotePalette.Note.LaneShow.Description,Shows the tunnel lanes this note spans across once it reaches the judgement line.
 ChartEditor.NotePalette.Note.LaneHide,Lane Hide
-ChartEditor.NotePalette.Note.LaneHide.Description,Hides the tunnel lanes it occupies once it reaches the judgement line.
+ChartEditor.NotePalette.Note.LaneHide.Description,Hides the tunnel lanes this note spans across once it reaches the judgement line.
 ChartEditor.NotePalette.Note.Sync,Sync
 ChartEditor.NotePalette.Note.Sync.Description,Connects notes on the same timestamp with a blue line.
 ChartEditor.NotePalette.Note.MeasureLine,Measure Line

@@ -112,11 +112,11 @@ public partial class SearchWindow : Window
             _ = MainWindow.Instance?.ChartEditor.File_Export();
             e.Handled = true;
         }
-        else if (item.Key == "File.RenderAsImage") 
-        {
-            MainWindow.Instance?.ChartEditor.File_RenderAsImage();
-            e.Handled = true;
-        }
+        // else if (item.Key == "File.RenderAsImage") 
+        // {
+        //     MainWindow.Instance?.ChartEditor.File_RenderAsImage();
+        //     e.Handled = true;
+        // }
         else if (item.Key == "File.NewDifficultyFromChart")
         {
             MainWindow.Instance?.ChartEditor.File_NewDifficultyFromChart();
