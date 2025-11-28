@@ -44,6 +44,7 @@ public partial class MainWindow : Window
         UpdateUndoRedoButtons();
         
         Closed += AudioSystem.OnClosed;
+        Closed += AutosaveSystem.OnClosed;
         Closing += ChartEditor.OnClosing;
         Closing += Window_OnClosing;
 
@@ -590,10 +591,11 @@ public partial class MainWindow : Window
         _ = ChartEditor.File_Open();
     }
 
-    private void ButtonSplashRecoverAutosave_OnClick(object? sender, RoutedEventArgs e)
+    private void ButtonSplashRecoverLastSession_OnClick(object? sender, RoutedEventArgs e)
     {
         Splash.IsVisible = false;
-        // TODO
+
+        _ = ChartEditor.File_OpenLastSession();
     }
 
     private void ButtonSplashRecentFile_OnClick(object? sender, RoutedEventArgs e)

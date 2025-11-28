@@ -60,7 +60,7 @@ public static class ChartSystem
     /// <summary>
     /// Determines if the editor will prompt the user to save when a chart is closed.
     /// </summary>
-    public static bool IsSaved { get; private set; } = true;
+    public static bool IsSaved { get; set; } = true;
     
     private static Chart ChartTemplate => new()
     {

@@ -28,6 +28,7 @@ public partial class SettingsGeneralView : UserControl
             ComboBoxLanguage.SelectedIndex = (int)SettingsSystem.EditorSettings.Locale;
             CheckBoxShowSplashScreen.IsChecked = SettingsSystem.EditorSettings.ShowSplashScreen;
             CheckBoxContinueLastSession.IsChecked = SettingsSystem.EditorSettings.ContinueLastSession;
+            ComboBoxAutosaveFrequency.SelectedIndex = (int)SettingsSystem.EditorSettings.AutoSaveFrequency;
             
             blockEvents = false;
         });
@@ -40,13 +41,14 @@ public partial class SettingsGeneralView : UserControl
         if (blockEvents) return;
         if (ComboBoxLanguage == null) return;
 
-        SettingsSystem.EditorSettings.Locale = (EditorSettings.LocaleOptions)ComboBoxLanguage.SelectedIndex;
+        SettingsSystem.EditorSettings.Locale = (EditorSettings.LocaleOption)ComboBoxLanguage.SelectedIndex;
     }
 
     private void CheckBoxShowSplashScreen_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
         if (CheckBoxShowSplashScreen == null) return;
+        
         SettingsSystem.EditorSettings.ShowSplashScreen = CheckBoxShowSplashScreen.IsChecked ?? true;
     }
 
@@ -54,7 +56,16 @@ public partial class SettingsGeneralView : UserControl
     {
         if (blockEvents) return;
         if (CheckBoxContinueLastSession == null) return;
+        
         SettingsSystem.EditorSettings.ContinueLastSession = CheckBoxContinueLastSession.IsChecked ?? true;
+    }
+    
+    private void ComboBoxAutosaveFrequency_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (ComboBoxAutosaveFrequency == null) return;
+        
+        SettingsSystem.EditorSettings.AutoSaveFrequency = (EditorSettings.AutoSaveFrequencyOption)ComboBoxAutosaveFrequency.SelectedIndex;
     }
 #endregion UI Event Handlers
 }

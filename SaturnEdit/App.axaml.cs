@@ -15,6 +15,7 @@ public partial class App : Application
     {
         AvaloniaXamlLoader.Load(this);
         
+        AutosaveSystem.Initialize();
         SettingsSystem.Initialize();
         TimeSystem.Initialize();
         CursorSystem.Initialize();
@@ -50,8 +51,8 @@ public partial class App : Application
     {
         RequestedThemeVariant = SettingsSystem.EditorSettings.Theme switch
         {
-            EditorSettings.EditorThemeOptions.Light => ThemeVariant.Light,
-            EditorSettings.EditorThemeOptions.Dark => ThemeVariant.Dark,
+            EditorSettings.EditorThemeOption.Light => ThemeVariant.Light,
+            EditorSettings.EditorThemeOption.Dark => ThemeVariant.Dark,
             _ => throw new ArgumentOutOfRangeException(),
         };
     }
@@ -73,7 +74,7 @@ public partial class App : Application
         catch (Exception ex)
         {
             // Default to known locale if something explodes. That'll invoke the SettingsChanged event, and essentially "recursively" call this method again.
-            SettingsSystem.EditorSettings.Locale = EditorSettings.LocaleOptions.en_US;
+            SettingsSystem.EditorSettings.Locale = EditorSettings.LocaleOption.en_US;
             
             // Still complain about it though.
             Console.WriteLine(ex);

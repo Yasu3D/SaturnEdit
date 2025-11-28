@@ -85,8 +85,8 @@ public partial class ChartViewTxt : UserControl
     {
         ThemeName themeName = SettingsSystem.EditorSettings.Theme switch
         {
-            EditorSettings.EditorThemeOptions.Light => ThemeName.LightPlus,
-            EditorSettings.EditorThemeOptions.Dark => ThemeName.DarkPlus,
+            EditorSettings.EditorThemeOption.Light => ThemeName.LightPlus,
+            EditorSettings.EditorThemeOption.Dark => ThemeName.DarkPlus,
             _ => ThemeName.DarkPlus,
         };
         

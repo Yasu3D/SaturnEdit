@@ -516,9 +516,12 @@ Menu.File,File
 Menu.File.New,New
 Menu.File.NewEllipsis,New...
 Menu.File.Open,Open...
-Menu.File.Recent,Recent
+Menu.File.Recent,Open Recent
 Menu.File.ClearRecent,Clear Recent
-Menu.File.RecoverLastAutosave,Recover Last Autosave
+Menu.File.Recover,Recover
+Menu.File.Recover.LastSession,Last Session
+Menu.File.Recover.AutoSave,Auto Save...
+Menu.File.RecoverLastSession,Recover Last Session
 Menu.File.Save,Save
 Menu.File.SaveAs,Save As...
 Menu.File.ReloadFromDisk,Reload from Disk
@@ -568,6 +571,13 @@ Settings.General.OnProgramStart,On Program Start
 Settings.General.ContinueLastSession,Continue last session
 Settings.General.ShowSplashScreen,Show splash screen
 Settings.General.Languages,Languages
+Settings.General.Autosave,Autosave
+Settings.General.AutosaveFrequency,Autosave Frequency
+Settings.General.AutosaveFrequency.Never,Never
+Settings.General.AutosaveFrequency.Minutes10,Every 10 Minutes
+Settings.General.AutosaveFrequency.Minutes5,Every 5 Minutes
+Settings.General.AutosaveFrequency.Minutes1,Every Minute
+Settings.General.AutosaveFrequency.Always,Every Operation
 Settings.Appearance,Appearance
 Settings.Appearance.Themes,Themes
 Settings.Rendering,Rendering

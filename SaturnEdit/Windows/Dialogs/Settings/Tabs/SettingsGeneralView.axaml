@@ -10,7 +10,8 @@
         <StackPanel Margin="20">
             <Grid ColumnDefinitions="Auto,*"
                   Margin="0,0,0,20">
-                <TextBlock Text="{DynamicResource Settings.General.Languages}"
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.General.Languages}"
                            Margin="0,0,20,0" />
                 <Rectangle Grid.Column="1"
                            HorizontalAlignment="Stretch"
@@ -31,7 +32,8 @@
 
             <Grid ColumnDefinitions="Auto,*"
                   Margin="0,40,0,20">
-                <TextBlock Text="{DynamicResource Settings.General.OnProgramStart}"
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.General.OnProgramStart}"
                            Margin="0,0,20,0" />
                 <Rectangle Grid.Column="1"
                            HorizontalAlignment="Stretch"
@@ -42,7 +44,7 @@
 
             <StackPanel Orientation="Horizontal"
                         Margin="0,0,0,10">
-                <CheckBox Name="CheckBoxShowSplashScreen" 
+                <CheckBox Name="CheckBoxShowSplashScreen"
                           IsChecked="True"
                           IsCheckedChanged="CheckBoxShowSplashScreen_OnIsCheckedChanged" />
                 <TextBlock Text="{DynamicResource Settings.General.ShowSplashScreen}"
@@ -50,12 +52,41 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <CheckBox Name="CheckBoxContinueLastSession" 
+                <CheckBox Name="CheckBoxContinueLastSession"
                           IsChecked="False"
-                          IsCheckedChanged="CheckBoxContinueLastSession_OnIsCheckedChanged"/>
+                          IsCheckedChanged="CheckBoxContinueLastSession_OnIsCheckedChanged" />
                 <TextBlock Text="{DynamicResource Settings.General.ContinueLastSession}"
                            VerticalAlignment="Center" />
             </StackPanel>
+
+            <Grid ColumnDefinitions="Auto,*"
+                  Margin="0,40,0,20">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.General.Autosave}"
+                           Margin="0,0,20,0" />
+                <Rectangle Grid.Column="1"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Center"
+                           Height="1"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+            </Grid>
+
+            <Grid ColumnDefinitions="150,170"
+                  Margin="0">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.General.AutosaveFrequency}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,20,0" />
+                <ComboBox Grid.Column="1"
+                          Name="ComboBoxAutosaveFrequency"
+                          SelectionChanged="ComboBoxAutosaveFrequency_OnSelectionChanged">
+                    <ComboBoxItem Content="{DynamicResource Settings.General.AutosaveFrequency.Never}"/>
+                    <ComboBoxItem Content="{DynamicResource Settings.General.AutosaveFrequency.Minutes10}"/>
+                    <ComboBoxItem Content="{DynamicResource Settings.General.AutosaveFrequency.Minutes5}"/>
+                    <ComboBoxItem Content="{DynamicResource Settings.General.AutosaveFrequency.Minutes1}"/>
+                    <ComboBoxItem Content="{DynamicResource Settings.General.AutosaveFrequency.Always}"/>
+                </ComboBox>
+            </Grid>
 
         </StackPanel>
     </ScrollViewer>

@@ -356,12 +356,12 @@
                                 Grid.Column="0"
                                 Classes="Themed Concave"
                                 HorizontalAlignment="Stretch"
-                                Click="ButtonSplashRecoverAutosave_OnClick">
+                                Click="ButtonSplashRecoverLastSession_OnClick">
                             <Grid ColumnDefinitions="30,180">
                                 <icon:FluentIcon Grid.Column="0"
                                                  Icon="Clock"/>
                                 <TextBlock Grid.Column="1"
-                                           Text="{DynamicResource Menu.File.RecoverLastAutosave}"
+                                           Text="{DynamicResource Menu.File.RecoverLastSession}"
                                            VerticalAlignment="Center"/>
                             </Grid>
                         </Button>

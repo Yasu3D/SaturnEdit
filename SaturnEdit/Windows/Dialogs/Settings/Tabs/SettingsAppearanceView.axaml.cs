@@ -25,7 +25,7 @@ public partial class SettingsAppearanceView : UserControl
         {
             blockEvents = true;
         
-            if (SettingsSystem.EditorSettings.Theme == EditorSettings.EditorThemeOptions.Light)
+            if (SettingsSystem.EditorSettings.Theme == EditorSettings.EditorThemeOption.Light)
             {
                 RadioButtonThemeLight.IsChecked = true;
             }
@@ -49,8 +49,8 @@ public partial class SettingsAppearanceView : UserControl
         
         SettingsSystem.EditorSettings.Theme = button.Name switch
         {
-            "RadioButtonThemeLight" => EditorSettings.EditorThemeOptions.Light,
-            "RadioButtonThemeDark" => EditorSettings.EditorThemeOptions.Dark,
+            "RadioButtonThemeLight" => EditorSettings.EditorThemeOption.Light,
+            "RadioButtonThemeDark" => EditorSettings.EditorThemeOption.Dark,
             _ => SettingsSystem.EditorSettings.Theme,
         };
     }

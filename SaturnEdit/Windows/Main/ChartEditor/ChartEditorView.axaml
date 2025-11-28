@@ -57,6 +57,38 @@
                         </MenuItem>
                     </MenuItem>
                     
+                    <MenuItem Name="MenuItemReloadFromDisk"
+                              Click="MenuItemReloadFromDisk_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.ReloadFromDisk}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowSync" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem Name="MenuItemRecover">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.File.Recover}" />
+                        </MenuItem.Header>
+                        
+                        <MenuItem Name="MenuItemLastSession"
+                                  Click="MenuItemLastSession_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.Recover.LastSession}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                        <MenuItem Name="MenuItemAutoSave"
+                                  Click="MenuItemAutoSave_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource Menu.File.Recover.AutoSave}" />
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </MenuItem>
+                    
+                    <Separator />
+                    
                     <MenuItem Name="MenuItemNewDifficultyFromChart"
                               Click="MenuItemNewDifficultyFromChart_OnClick">
                         <MenuItem.Header>
@@ -84,16 +116,6 @@
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.File.SaveAs}" />
                         </MenuItem.Header>
-                    </MenuItem>
-                    
-                    <MenuItem Name="MenuItemReloadFromDisk"
-                              Click="MenuItemReloadFromDisk_OnClick">
-                        <MenuItem.Header>
-                            <TextBlock Text="{DynamicResource Menu.File.ReloadFromDisk}" />
-                        </MenuItem.Header>
-                        <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ArrowSync" />
-                        </MenuItem.Icon>
                     </MenuItem>
 
                     <Separator />

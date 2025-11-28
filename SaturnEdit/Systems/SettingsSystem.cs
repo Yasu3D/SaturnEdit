@@ -87,14 +87,14 @@ public static class SettingsSystem
     }
     private static ShortcutSettings shortcutSettings = new();
     
-    private static string SettingsPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Settings");
+    private static string SettingsDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Settings");
 
 #region Methods
     public static void LoadSettings()
     {
         try
         {
-            string editorSettingsPath = Path.Combine(SettingsPath, "editor_settings.toml");
+            string editorSettingsPath = Path.Combine(SettingsDirectory, "editor_settings.toml");
             string editorSettingsData = File.ReadAllText(editorSettingsPath);
             EditorSettings = Toml.ToModel<EditorSettings>(editorSettingsData);
         }
@@ -106,7 +106,7 @@ public static class SettingsSystem
         
         try
         {
-            string renderSettingsPath = Path.Combine(SettingsPath, "render_settings.toml");
+            string renderSettingsPath = Path.Combine(SettingsDirectory, "render_settings.toml");
             string renderSettingsData = File.ReadAllText(renderSettingsPath);
             RenderSettings = Toml.ToModel<RenderSettings>(renderSettingsData);
         }
@@ -118,7 +118,7 @@ public static class SettingsSystem
         
         try
         {
-            string audioSettingsPath = Path.Combine(SettingsPath, "audio_settings.toml");
+            string audioSettingsPath = Path.Combine(SettingsDirectory, "audio_settings.toml");
             string audioSettingsData = File.ReadAllText(audioSettingsPath);
             AudioSettings = Toml.ToModel<AudioSettings>(audioSettingsData);
         }
@@ -130,7 +130,7 @@ public static class SettingsSystem
         
         try
         {
-            string shortcutSettingsPath = Path.Combine(SettingsPath, "shortcut_settings.toml");
+            string shortcutSettingsPath = Path.Combine(SettingsDirectory, "shortcut_settings.toml");
             string shortcutSettingsData = File.ReadAllText(shortcutSettingsPath);
             ShortcutSettings = Toml.ToModel<ShortcutSettings>(shortcutSettingsData);
         }
@@ -145,12 +145,12 @@ public static class SettingsSystem
 
     public static void SaveSettings()
     {
-        Directory.CreateDirectory(SettingsPath);
+        Directory.CreateDirectory(SettingsDirectory);
 
-        File.WriteAllTextAsync(Path.Combine(SettingsPath, "render_settings.toml"), Toml.FromModel(RenderSettings));
-        File.WriteAllTextAsync(Path.Combine(SettingsPath, "editor_settings.toml"), Toml.FromModel(EditorSettings));
-        File.WriteAllTextAsync(Path.Combine(SettingsPath, "audio_settings.toml"), Toml.FromModel(AudioSettings));
-        File.WriteAllTextAsync(Path.Combine(SettingsPath, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "render_settings.toml"), Toml.FromModel(RenderSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "editor_settings.toml"), Toml.FromModel(EditorSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "audio_settings.toml"), Toml.FromModel(AudioSettings));
+        File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
     }
 #endregion Methods
     
@@ -181,7 +181,7 @@ public class EditorSettings
 
 #region Enum Definitions
 
-    public enum LocaleOptions
+    public enum LocaleOption
     {
         // ReSharper disable InconsistentNaming
         en_US = 0,
@@ -190,15 +190,24 @@ public class EditorSettings
         // ReSharper restore InconsistentNaming
     }
     
-    public enum EditorThemeOptions
+    public enum EditorThemeOption
     {
         Light = 0,
         Dark = 1,
     }
+
+    public enum AutoSaveFrequencyOption
+    {
+        Never = 0,
+        Minutes10 = 1,
+        Minutes5 = 2,
+        Minutes1 = 3,
+        Always = 4,
+    }
     
 #endregion Enum Definitions
     
-    public LocaleOptions Locale
+    public LocaleOption Locale
     {
         get => locale;
         set
@@ -209,9 +218,9 @@ public class EditorSettings
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    private LocaleOptions locale = LocaleOptions.en_US;
+    private LocaleOption locale = LocaleOption.en_US;
 
-    public EditorThemeOptions Theme
+    public EditorThemeOption Theme
     {
         get => theme;
         set
@@ -222,7 +231,7 @@ public class EditorSettings
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    private EditorThemeOptions theme = EditorThemeOptions.Dark;
+    private EditorThemeOption theme = EditorThemeOption.Dark;
     
     public bool ShowSplashScreen
     {
@@ -289,12 +298,30 @@ public class EditorSettings
     }
     private bool chartViewTxtSyntaxHighlighting = true;
 
+    public AutoSaveFrequencyOption AutoSaveFrequency
+    {
+        get => autoSaveFrequency;
+        set
+        {
+            if (autoSaveFrequency == value) return;
+            
+            autoSaveFrequency = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private AutoSaveFrequencyOption autoSaveFrequency = AutoSaveFrequencyOption.Minutes5;
     
     public List<string> RecentChartFiles { get; set; } = [];
     
     public void AddRecentChartFile(string path)
     {
         RecentChartFiles.Add(path);
+
+        while (RecentChartFiles.Count > 10)
+        {
+            RecentChartFiles.RemoveAt(0);
+        }
+            
         PropertyChanged?.Invoke(null, EventArgs.Empty);
     }
 

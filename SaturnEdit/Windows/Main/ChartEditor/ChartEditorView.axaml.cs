@@ -175,6 +175,144 @@ public partial class ChartEditorView : UserControl
         }
     }
 
+    public async Task<bool> File_OpenLastSession()
+    {
+        try
+        {
+            if (!File.Exists(AutosaveSystem.LastSessionPath)) return false;
+            
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return false;
+
+            // Prompt to save an unsaved chart first.
+            if (!ChartSystem.IsSaved)
+            {
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Chart);
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return false;
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort opening new file if save was unsuccessful.
+                    if (!success) return false;
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            // Get Read Args
+            NotationReadArgs args = new();
+            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(AutosaveSystem.LastSessionPath);
+            if (formatVersion == FormatVersion.Unknown) return false;
+            if (formatVersion != FormatVersion.SatV3)
+            {
+                if (VisualRoot is not Window rootWindow) return false;
+                ImportArgsWindow importArgsWindow = new();
+                importArgsWindow.Position = MainWindow.DialogPopupPosition(importArgsWindow.Width, importArgsWindow.Height);
+                
+                await importArgsWindow.ShowDialog(rootWindow);
+
+                if (importArgsWindow.Result != ModalDialogResult.Primary) return false;
+                
+                args = importArgsWindow.NotationReadArgs;
+            }
+            
+            // Read chart from file.
+            ChartSystem.ReadChart(AutosaveSystem.LastSessionPath, args);
+            
+            ChartSystem.IsSaved = false;
+            ChartSystem.Entry.ChartFile = "";
+            ChartSystem.Entry.RootDirectory = "";
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
+    }
+    
+    public async Task<bool> File_OpenAutoSave()
+    {
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return false;
+
+            // Prompt to save an unsaved chart first.
+            if (!ChartSystem.IsSaved)
+            {
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Chart);
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return false;
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort opening new file if save was unsuccessful.
+                    if (!success) return false;
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            // Open file picker.
+            IStorageFolder? startLocation = await topLevel.StorageProvider.TryGetFolderFromPathAsync(AutosaveSystem.AutosaveDirectory);
+            IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
+            {
+                AllowMultiple = false,
+                SuggestedStartLocation = startLocation,
+                FileTypeFilter =
+                [
+                    new("Chart Files")
+                    {
+                        Patterns = ["*.sat", "*.mer*", "*.map"],
+                    },
+                ],
+            });
+            if (files.Count != 1) return false;
+
+            // Get Read Args
+            NotationReadArgs args = new();
+            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(files[0].Path.LocalPath);
+            if (formatVersion == FormatVersion.Unknown) return false;
+            if (formatVersion != FormatVersion.SatV3)
+            {
+                if (VisualRoot is not Window rootWindow) return false;
+                ImportArgsWindow importArgsWindow = new();
+                importArgsWindow.Position = MainWindow.DialogPopupPosition(importArgsWindow.Width, importArgsWindow.Height);
+                
+                await importArgsWindow.ShowDialog(rootWindow);
+
+                if (importArgsWindow.Result != ModalDialogResult.Primary) return false;
+                
+                args = importArgsWindow.NotationReadArgs;
+            }
+            
+            // Read chart from file.
+            ChartSystem.ReadChart(files[0].Path.LocalPath, args);
+
+            ChartSystem.IsSaved = false;
+            ChartSystem.Entry.ChartFile = "";
+            ChartSystem.Entry.RootDirectory = "";
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
+    }
+    
     public async Task<bool> File_Save()
     {
         try
@@ -900,7 +1038,7 @@ public partial class ChartEditorView : UserControl
 
                         MenuItem item = new()
                         {
-                            Icon = (i + 1).ToString(CultureInfo.InvariantCulture),
+                            Icon = (SettingsSystem.EditorSettings.RecentChartFiles.Count - i).ToString(CultureInfo.InvariantCulture),
                             Header = new TextBlock { Text = trimmed },
                             Tag = file,
                         };
@@ -1463,13 +1601,17 @@ public partial class ChartEditorView : UserControl
         }
     }
     
+    private void MenuItemReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => _ = File_ReloadFromDisk();
+
+    private void MenuItemLastSession_OnClick(object? sender, RoutedEventArgs e) => _ = File_OpenLastSession();
+
+    private void MenuItemAutoSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_OpenAutoSave();
+    
+    private void MenuItemNewDifficultyFromChart_OnClick(object? sender, RoutedEventArgs e) => _ = File_NewDifficultyFromChart();
+    
     private void MenuItemSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_Save();
 
     private void MenuItemSaveAs_OnClick(object? sender, RoutedEventArgs e) => _ = File_SaveAs();
-
-    private void MenuItemReloadFromDisk_OnClick(object? sender, RoutedEventArgs e) => _ = File_ReloadFromDisk();
-    
-    private void MenuItemNewDifficultyFromChart_OnClick(object? sender, RoutedEventArgs e) => _ = File_NewDifficultyFromChart();
 
     private void MenuItemExport_OnClick(object? sender, RoutedEventArgs e) => _ = File_Export();
 
