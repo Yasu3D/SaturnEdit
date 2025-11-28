@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -58,6 +60,7 @@ public partial class MainWindow : Window
         }
         
         UpdateTabs();
+        UpdateSplash();
     }
 
     public static MainWindow? Instance { get; private set; }
@@ -179,6 +182,96 @@ public partial class MainWindow : Window
             ButtonUndo.IsEnabled = CanUndo;
             ButtonRedo.IsEnabled = CanRedo;
         });
+    }
+
+    private void UpdateSplash()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+        TextBlockVersion.Text = versionInfo.FileVersion;
+        
+        string file;
+        string trimmed;
+
+        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 1)
+        {
+            file = SettingsSystem.EditorSettings.RecentChartFiles[^1];
+            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
+            TextBlockRecentFile1.Text = trimmed;
+            
+            ButtonRecentFile1.IsVisible = true;
+        }
+        else
+        {
+            ButtonRecentFile1.IsVisible = false;
+        }
+        
+        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 2)
+        {
+            file = SettingsSystem.EditorSettings.RecentChartFiles[^2];
+            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
+            TextBlockRecentFile2.Text = trimmed;
+            
+            ButtonRecentFile2.IsVisible = true;
+        }
+        else
+        {
+            ButtonRecentFile2.IsVisible = false;
+        }
+        
+        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 3)
+        {
+            file = SettingsSystem.EditorSettings.RecentChartFiles[^3];
+            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
+            TextBlockRecentFile3.Text = trimmed;
+            
+            ButtonRecentFile3.IsVisible = true;
+        }
+        else
+        {
+            ButtonRecentFile3.IsVisible = false;
+        }
+        
+        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 4)
+        {
+            file = SettingsSystem.EditorSettings.RecentChartFiles[^4];
+            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
+            TextBlockRecentFile4.Text = trimmed;
+            
+            ButtonRecentFile4.IsVisible = true;
+        }
+        else
+        {
+            ButtonRecentFile4.IsVisible = false;
+        }
+        
+        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 5)
+        {
+            file = SettingsSystem.EditorSettings.RecentChartFiles[^5];
+            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
+            TextBlockRecentFile5.Text = trimmed;
+            
+            ButtonRecentFile5.IsVisible = true;
+        }
+        else
+        {
+            ButtonRecentFile5.IsVisible = false;
+        }
+        
+        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 6)
+        {
+            file = SettingsSystem.EditorSettings.RecentChartFiles[^6];
+            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
+            TextBlockRecentFile6.Text = trimmed;
+            
+            ButtonRecentFile6.IsVisible = true;
+        }
+        else
+        {
+            ButtonRecentFile6.IsVisible = false;
+        }
+        
+        Splash.IsVisible = SettingsSystem.EditorSettings.ShowSplashScreen;
     }
 
     private void Undo()
@@ -484,4 +577,96 @@ public partial class MainWindow : Window
         }
     }
 #endregion UI Event Handlers
+
+    private void ButtonSplashNewChart_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Splash.IsVisible = false;
+        ChartEditor.File_New();
+    }
+
+    private void ButtonSplashOpenChart_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Splash.IsVisible = false;
+        _ = ChartEditor.File_Open();
+    }
+
+    private void ButtonSplashRecoverAutosave_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Splash.IsVisible = false;
+        // TODO
+    }
+
+    private void ButtonSplashRecentFile_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button) return;
+        
+        Splash.IsVisible = false;
+
+        int index = button.Name switch
+        {
+            "ButtonRecentFile1" => 0,
+            "ButtonRecentFile2" => 1,
+            "ButtonRecentFile3" => 2,
+            "ButtonRecentFile4" => 3,
+            "ButtonRecentFile5" => 4,
+            "ButtonRecentFile6" => 5,
+            _ => -1,
+        };
+
+        if (index == -1) return;
+        if (index >= SettingsSystem.EditorSettings.RecentChartFiles.Count) return;
+        
+        ChartSystem.ReadChart(SettingsSystem.EditorSettings.RecentChartFiles[index], new());
+    }
+
+    private void ButtonSplashWebsite_OnClick(object? sender, RoutedEventArgs e)
+    {
+        ProcessStartInfo process = new()
+        {
+            FileName = "https://saturn.yasu3d.art",
+            UseShellExecute = true,
+        };
+
+        Process.Start(process);
+    }
+
+    private void ButtonSplashDocumentation_OnClick(object? sender, RoutedEventArgs e)
+    {
+        ProcessStartInfo process = new()
+        {
+            FileName = "https://saturn.yasu3d.art/docs/#/",
+            UseShellExecute = true,
+        };
+
+        Process.Start(process);
+    }
+
+    private void ButtonSplashWhatsNew_OnClick(object? sender, RoutedEventArgs e)
+    {
+        ProcessStartInfo process = new()
+        {
+            FileName = "https://saturn.yasu3d.art/changelog",
+            UseShellExecute = true,
+        };
+
+        Process.Start(process);
+    }
+
+    private void ButtonSplashGithub_OnClick(object? sender, RoutedEventArgs e)
+    {
+        ProcessStartInfo process = new()
+        {
+            FileName = "https://github.com/Yasu3D/SaturnEdit",
+            UseShellExecute = true,
+        };
+
+        Process.Start(process);
+    }
+
+    private void SplashBackground_OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (e.Properties.IsLeftButtonPressed == false) return;
+        
+        Splash.IsVisible = false;
+    }
 }

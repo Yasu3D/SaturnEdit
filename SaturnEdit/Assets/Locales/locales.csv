@@ -518,6 +518,7 @@ Menu.File.NewEllipsis,New...
 Menu.File.Open,Open...
 Menu.File.Recent,Recent
 Menu.File.ClearRecent,Clear Recent
+Menu.File.RecoverLastAutosave,Recover Last Autosave
 Menu.File.Save,Save
 Menu.File.SaveAs,Save As...
 Menu.File.ReloadFromDisk,Reload from Disk
@@ -751,6 +752,10 @@ ModalDialog.FileWriteError.Paragraph,"Data has not been saved. Please confirm th
 ModalDialog.ZigZagHoldWarning.Title,Zig-Zag Hold Error
 ModalDialog.ZigZagHoldWarning.Header,Unable to create a Zig-Zag Hold Note.
 ModalDialog.ZigZagHoldWarning.Paragraph,Please select one or more hold notes or hold points you wish to convert.
+Splash.Website,SATURN Website
+Splash.Documentation,SATURN Documentation
+Splash.Github,GitHub Repository
+Splash.WhatsNew,What's New
 Generic.FileNotFoundWarning,File not found.
 Generic.FileNotFoundWarning.Description,Ensure that all media files are in the same directory as the file referencing them.
 Generic.Enabled,Enabled

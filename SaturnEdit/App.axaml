@@ -16,4 +16,8 @@
         </Style>
     </Application.Styles>
     
+    <Application.Resources>
+        <FontFamily x:Key="MozillaHeadline">avares://SaturnEdit/Assets/Fonts#Mozilla Headline</FontFamily>
+        <FontFamily x:Key="NotoPlus1">avares://SaturnEdit/Assets/Fonts#NOTO PLUS 1</FontFamily>
+    </Application.Resources>
 </Application>

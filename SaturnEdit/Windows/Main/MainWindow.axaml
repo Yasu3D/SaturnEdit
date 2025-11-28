@@ -151,7 +151,7 @@
                     </ToolTip.Tip>
                     <icon:FluentIcon Icon="Search" />
                 </Button>
-                
+
                 <Button Name="ButtonVolumeMixer"
                         Classes="Themed Square Standard"
                         Margin="5"
@@ -241,7 +241,7 @@
                                        VerticalAlignment="Top" />
             </StackPanel>
         </Panel>
-        
+
         <!-- Content -->
         <Panel Margin="1,0,1,1">
             <chartEditor:ChartEditorView Name="ChartEditor"
@@ -251,10 +251,285 @@
             <stageEditor:StageEditorView Name="StageEditor"
                                          IsVisible="False"
                                          IsEnabled="False" />
-            
+
             <cosmeticsEditor:CosmeticsEditorView Name="CosmeticsEditor"
                                                  IsVisible="False"
                                                  IsEnabled="False" />
+        </Panel>
+
+        <!-- Splash -->
+        <Panel Name="Splash">
+            <Rectangle Fill="Transparent"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       IsHitTestVisible="True" 
+                       PointerPressed="SplashBackground_OnPointerPressed"/>
+            <Border Width="450"
+                    Height="440"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="{DynamicResource BackgroundPrimary}"
+                    BorderBrush="{DynamicResource SeparatorPrimary}"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    BoxShadow="0 0 10 0 #80000000">
+                <Grid RowDefinitions="166,*">
+                    <Border Grid.Row="0"
+                            CornerRadius="9,9,0,0"
+                            Background="{DynamicResource BackgroundPrimary}"
+                            ClipToBounds="True">
+                        <Image VerticalAlignment="Top"
+                               Source="avares://SaturnEdit/Assets/Splash/SplashBackground.png"/>
+                    </Border>
+                    
+                    <TextBlock Grid.Row="0"
+                               Name="TextBlockVersion"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Right"
+                               Margin="10"
+                               Text="0.0.0.0"
+                               Foreground="#FFFFFFFF"/>
+                    
+                    <TextBlock Grid.Row="0"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               Margin="15,10"
+                               FontSize="30"
+                               FontWeight="Regular"
+                               FontFamily="{StaticResource MozillaHeadline}"
+                               Text="SaturnEdit"
+                               Foreground="#FFFFFFFF"/>
+                    
+                    <TextBlock Grid.Row="0"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               Margin="15,40"
+                               FontSize="15"
+                               FontFamily="{StaticResource NotoPlus1}"
+                               Text="サタ—ンエディット"
+                               Foreground="#FFFFFFFF"/>
+                    
+                    <Grid Grid.Row="1"
+                          ColumnDefinitions="*,10,*"
+                          RowDefinitions="24,24,24,24,24,24,24,24,24,24"
+                          Margin="10,5,10,15">
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="{DynamicResource Menu.File}"
+                                   Foreground="{DynamicResource ForegroundTertiary}"
+                                   Margin="10,0,0,0"/>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="2"
+                                   Text="{DynamicResource Menu.File.Recent}"
+                                   Foreground="{DynamicResource ForegroundTertiary}"
+                                   Margin="10,0,0,0"/>
+
+                        <Button Grid.Row="1"
+                                Grid.Column="0"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashNewChart_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="DocumentAdd"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="{DynamicResource Menu.File.New}"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        <Button Grid.Row="2"
+                                Grid.Column="0"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashOpenChart_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="Folder"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="{DynamicResource Menu.File.Open}"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        <Button Grid.Row="3"
+                                Grid.Column="0"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashRecoverAutosave_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="Clock"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="{DynamicResource Menu.File.RecoverLastAutosave}"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        
+                        
+                        <Button Grid.Row="1"
+                                Grid.Column="2"
+                                Name="ButtonRecentFile1"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashRecentFile_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="DocumentTextClock"/>
+                                <TextBlock Grid.Column="1"
+                                           Name="TextBlockRecentFile1"
+                                           Text="RECENT_FILE"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        <Button Grid.Row="2"
+                                Grid.Column="2"
+                                Name="ButtonRecentFile2"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashRecentFile_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="DocumentTextClock"/>
+                                <TextBlock Grid.Column="1"
+                                           Name="TextBlockRecentFile2"
+                                           Text="RECENT_FILE"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        <Button Grid.Row="3"
+                                Grid.Column="2"
+                                Name="ButtonRecentFile3"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashRecentFile_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="DocumentTextClock"/>
+                                <TextBlock Grid.Column="1"
+                                           Name="TextBlockRecentFile3"
+                                           Text="RECENT_FILE"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        <Button Grid.Row="4"
+                                Grid.Column="2"
+                                Name="ButtonRecentFile4"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashRecentFile_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="DocumentTextClock"/>
+                                <TextBlock Grid.Column="1"
+                                           Name="TextBlockRecentFile4"
+                                           Text="RECENT_FILE"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        <Button Grid.Row="5"
+                                Grid.Column="2"
+                                Name="ButtonRecentFile5"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashRecentFile_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="DocumentTextClock"/>
+                                <TextBlock Grid.Column="1"
+                                           Name="TextBlockRecentFile5"
+                                           Text="RECENT_FILE"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        <Button Grid.Row="6"
+                                Grid.Column="2"
+                                Name="ButtonRecentFile6"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashRecentFile_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="DocumentTextClock"/>
+                                <TextBlock Grid.Column="1"
+                                           Name="TextBlockRecentFile6"
+                                           Text="RECENT_FILE"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        
+                        <Rectangle Grid.Row="7"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="3"
+                                   Height="1"
+                                   VerticalAlignment="Center"
+                                   Fill="{DynamicResource SeparatorPrimary}"/>
+                        
+                        <Button Grid.Row="8"
+                                Grid.Column="0"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashWebsite_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="Globe"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="{DynamicResource Splash.Website}"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        <Button Grid.Row="9"
+                                Grid.Column="0"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashDocumentation_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="Globe"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="{DynamicResource Splash.Documentation}"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        <Button Grid.Row="8"
+                                Grid.Column="2"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashWhatsNew_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="Globe"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="{DynamicResource Splash.WhatsNew}"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        
+                        <Button Grid.Row="9"
+                                Grid.Column="2"
+                                Classes="Themed Concave"
+                                HorizontalAlignment="Stretch"
+                                Click="ButtonSplashGithub_OnClick">
+                            <Grid ColumnDefinitions="30,180">
+                                <icon:FluentIcon Grid.Column="0"
+                                                 Icon="Globe"/>
+                                <TextBlock Grid.Column="1"
+                                           Text="{DynamicResource Splash.Github}"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Border>
         </Panel>
     </Panel>
 </Window>

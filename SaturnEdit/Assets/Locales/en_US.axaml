@@ -520,6 +520,7 @@
     <system:String x:Key="Menu.File.Open">Open...</system:String>
     <system:String x:Key="Menu.File.Recent">Recent</system:String>
     <system:String x:Key="Menu.File.ClearRecent">Clear Recent</system:String>
+    <system:String x:Key="Menu.File.RecoverLastAutosave">Recover Last Autosave</system:String>
     <system:String x:Key="Menu.File.Save">Save</system:String>
     <system:String x:Key="Menu.File.SaveAs">Save As...</system:String>
     <system:String x:Key="Menu.File.ReloadFromDisk">Reload from Disk</system:String>
@@ -753,6 +754,10 @@
     <system:String x:Key="ModalDialog.ZigZagHoldWarning.Title">Zig-Zag Hold Error</system:String>
     <system:String x:Key="ModalDialog.ZigZagHoldWarning.Header">Unable to create a Zig-Zag Hold Note.</system:String>
     <system:String x:Key="ModalDialog.ZigZagHoldWarning.Paragraph">Please select one or more hold notes or hold points you wish to convert.</system:String>
+    <system:String x:Key="Splash.Website">SATURN Website</system:String>
+    <system:String x:Key="Splash.Documentation">SATURN Documentation</system:String>
+    <system:String x:Key="Splash.Github">GitHub Repository</system:String>
+    <system:String x:Key="Splash.WhatsNew">What's New</system:String>
     <system:String x:Key="Generic.FileNotFoundWarning">File not found.</system:String>
     <system:String x:Key="Generic.FileNotFoundWarning.Description">Ensure that all media files are in the same directory as the file referencing them.</system:String>
     <system:String x:Key="Generic.Enabled">Enabled</system:String>

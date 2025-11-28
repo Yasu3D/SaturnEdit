@@ -7,6 +7,8 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
+        <Company>Yasu3D</Company>
+        <AssemblyVersion>0.1.2.3</AssemblyVersion>
     </PropertyGroup>
 
 
@@ -68,9 +70,12 @@
     </ItemGroup>
     
     <ItemGroup>
-        <AvaloniaResource Include="SaturnEdit\Assets\**"/>
-        <AvaloniaResource Include="SaturnEdit\Assets\Icons\Color\**"/>
-        <AvaloniaResource Include="SaturnEdit\Assets\Icons\Mono\**"/>
+        <AvaloniaResource Include="SaturnEdit\Assets\**" />
+        <AvaloniaResource Include="SaturnEdit\Assets\Icons\Color\**" />
+        <AvaloniaResource Include="SaturnEdit\Assets\Icons\Mono\**" />
+        
+        <AvaloniaResource Include="Assets\Fonts\MozillaHeadline-Normal.ttf" />
+        <AvaloniaResource Include="Assets\Fonts\NotoPlus1.ttf" />
         
         <AvaloniaResource Include="Assets\Icon.svg" />
         <AvaloniaResource Include="Assets\Icon.png" />
@@ -183,10 +188,10 @@
         <AvaloniaResource Include="Assets\Icons\Color\icon_sync.svg" />
         
         <AvaloniaResource Include="Assets\PlaceholderJacket.png" />
-        <AvaloniaResource Include="Assets\Cosmetics\ConsoleColor.png"/>
-        <AvaloniaResource Include="Assets\Cosmetics\PlaceholderEmblem.png"/>
-        <AvaloniaResource Include="Assets\Cosmetics\PlaceholderIcon.png"/>
-        <AvaloniaResource Include="Assets\Cosmetics\PlaceholderPlate.png"/>
+        <AvaloniaResource Include="Assets\Cosmetics\ConsoleColor.png" />
+        <AvaloniaResource Include="Assets\Cosmetics\PlaceholderEmblem.png" />
+        <AvaloniaResource Include="Assets\Cosmetics\PlaceholderIcon.png" />
+        <AvaloniaResource Include="Assets\Cosmetics\PlaceholderPlate.png" />
         <AvaloniaResource Include="Assets\StageUp\bottom_expert.png" />
         <AvaloniaResource Include="Assets\StageUp\bottom_hard.png" />
         <AvaloniaResource Include="Assets\StageUp\bottom_inferno.png" />
@@ -207,6 +212,7 @@
         <AvaloniaResource Include="Assets\StageUp\top_none.png" />
         <AvaloniaResource Include="Assets\StageUp\top_normal.png" />
         <AvaloniaResource Include="Assets\StageUp\top_worlds_end.png" />
+        <AvaloniaResource Include="Assets\Splash\SplashBackground.png" />
     </ItemGroup>
     
     <ItemGroup>
