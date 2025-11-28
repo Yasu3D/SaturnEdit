@@ -15,7 +15,8 @@
         x:Name="MainWindowView"
         Focusable="True"
         Background="{DynamicResource BackgroundSecondary}"
-        Title="{DynamicResource Main.Window.Title}">
+        Title="{DynamicResource Main.Window.Title}"
+        Icon="avares://SaturnEdit/Assets/Icon.png">
     <Panel>
         <!-- Top Bar -->
         <Panel VerticalAlignment="Top"

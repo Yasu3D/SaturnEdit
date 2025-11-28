@@ -6,6 +6,7 @@
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
     </PropertyGroup>
 
 
@@ -32,45 +33,47 @@
 
     <ItemGroup>
         <Content Include="Assets\sat.tmLanguage.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
         
     <ItemGroup>
         <ContentWithTargetPath Include="Audio\Linux_x64\libbass.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>libbass.so</TargetPath>
         </ContentWithTargetPath>
         <ContentWithTargetPath Include="Audio\Linux_x64\libbass_fx.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>libbass_fx.so</TargetPath>
         </ContentWithTargetPath>
         <ContentWithTargetPath Include="Audio\Linux_x64\libbassflac.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>libbassflac.so</TargetPath>
         </ContentWithTargetPath>
     </ItemGroup>
         
     <ItemGroup>
         <ContentWithTargetPath Include="Audio\Win_x64\bass.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>bass.dll</TargetPath>
         </ContentWithTargetPath>
         <ContentWithTargetPath Include="Audio\Win_x64\bass_fx.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>bass_fx.dll</TargetPath>
         </ContentWithTargetPath>
         <ContentWithTargetPath Include="Audio\Win_x64\bassflac.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>bassflac.dll</TargetPath>
         </ContentWithTargetPath>
     </ItemGroup>
-
     
     <ItemGroup>
         <AvaloniaResource Include="SaturnEdit\Assets\**"/>
         <AvaloniaResource Include="SaturnEdit\Assets\Icons\Color\**"/>
         <AvaloniaResource Include="SaturnEdit\Assets\Icons\Mono\**"/>
+        
+        <AvaloniaResource Include="Assets\Icon.svg" />
+        <AvaloniaResource Include="Assets\Icon.png" />
 
         <AvaloniaResource Include="Assets\Icons\Color\icon_touch_0.svg" />
         <AvaloniaResource Include="Assets\Icons\Color\icon_touch_1.svg" />
@@ -180,7 +183,6 @@
         <AvaloniaResource Include="Assets\Icons\Color\icon_sync.svg" />
         
         <AvaloniaResource Include="Assets\PlaceholderJacket.png" />
-        <AvaloniaResource Include="Assets\StageIconBackground.png" />
         <AvaloniaResource Include="Assets\Cosmetics\ConsoleColor.png"/>
         <AvaloniaResource Include="Assets\Cosmetics\PlaceholderEmblem.png"/>
         <AvaloniaResource Include="Assets\Cosmetics\PlaceholderIcon.png"/>
@@ -211,31 +213,4 @@
       <ProjectReference Include="..\SaturnData\SaturnData\SaturnData.csproj" />
       <ProjectReference Include="..\SaturnView\SaturnView\SaturnView.csproj" />
     </ItemGroup>
-    
-    <ItemGroup>
-      <Compile Update="Views\Main\ChartEditor\Tabs\BookmarkListView.axaml.cs">
-        <DependentUpon>BookmarkListView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Views\Main\ChartEditor\Tabs\Fixed\PlaybackView.axaml.cs">
-        <DependentUpon>PlaybackView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Views\Main\ChartEditor\Tabs\Fixed\NotePaletteView.axaml.cs">
-        <DependentUpon>NotePaletteView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-    </ItemGroup>
-    
-    <ItemGroup>
-      <AdditionalFiles Include="Windows\Dialogs\ProofreaderCriteria\ProofreaderCriteriaWindow.axaml" />
-      <AdditionalFiles Include="Windows\Dialogs\Settings\SettingsWindow.axaml" />
-      <AdditionalFiles Include="Windows\Dialogs\Settings\Tabs\SettingsAppearanceView.axaml" />
-      <AdditionalFiles Include="Windows\Dialogs\Settings\Tabs\SettingsGeneralView.axaml" />
-      <AdditionalFiles Include="Windows\Dialogs\Settings\Tabs\SettingsRenderingView.axaml" />
-      <AdditionalFiles Include="Windows\Dialogs\Settings\Tabs\SettingsShortcutsView.axaml" />
-      <AdditionalFiles Include="Windows\Main\ChartEditor\Fixed\NotePaletteView.axaml" />
-      <AdditionalFiles Include="Windows\Main\ChartEditor\Fixed\PlaybackView.axaml" />
-    </ItemGroup>
-
 </Project>

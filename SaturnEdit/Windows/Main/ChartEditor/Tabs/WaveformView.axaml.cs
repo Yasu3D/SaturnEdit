@@ -73,7 +73,7 @@ public partial class WaveformView : UserControl
                 }
             }
             
-            if (Application.Current.TryGetResource("WaveformJudgeline", Application.Current.ActualThemeVariant, out object? resource3))
+            if (Application.Current.TryGetResource("WaveformJudgeLine", Application.Current.ActualThemeVariant, out object? resource3))
             {
                 if (resource3 is SolidColorBrush brush)
                 {
