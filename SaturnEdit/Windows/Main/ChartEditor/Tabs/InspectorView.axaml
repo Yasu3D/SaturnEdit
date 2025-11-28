@@ -344,7 +344,8 @@
                                      Name="TextBoxTempo"
                                      Watermark="-"
                                      VerticalAlignment="Center"
-                                     LostFocus="TextBoxTempo_OnLostFocus"/>
+                                     LostFocus="TextBoxTempo_OnLostFocus"
+                                     PointerWheelChanged="TextBoxTempo_OnPointerWheelChanged"/>
                         </Grid>
                     </Expander>
                 

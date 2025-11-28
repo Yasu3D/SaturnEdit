@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
@@ -1395,6 +1396,33 @@ public partial class InspectorView : UserControl
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
+    private void TextBoxTempo_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        // This implementation is a bit crude, and weirdly "hidden".
+        // I mostly just want this as a QOL feature for myself, and it seems more frustrating than useful for users to accidentally stumble upon it.
+        // Making the implementation more elegant needs time and energy I currently do not have.
+        // TODO... i guess?
+        
+        if (blockEvents) return;
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+        if (TextBoxTempo == null) return;
+
+        if (!TextBoxTempo.IsFocused) return;
+        if (!e.KeyModifiers.HasFlag(KeyModifiers.Shift)) return;
+
+        float delta = (float)e.Delta.Y;
+
+        List<IOperation> operations = [];
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            if (obj is not TempoChangeEvent tempoChangeEvent) continue;
+
+            operations.Add(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, tempoChangeEvent.Tempo + delta));
+        }
+        
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
+    }
+    
     private void TextBoxUpper_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
