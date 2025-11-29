@@ -606,14 +606,16 @@ public partial class MainWindow : Window
 
         int index = button.Name switch
         {
-            "ButtonRecentFile1" => 0,
-            "ButtonRecentFile2" => 1,
-            "ButtonRecentFile3" => 2,
-            "ButtonRecentFile4" => 3,
-            "ButtonRecentFile5" => 4,
-            "ButtonRecentFile6" => 5,
+            "ButtonRecentFile1" => 1,
+            "ButtonRecentFile2" => 2,
+            "ButtonRecentFile3" => 3,
+            "ButtonRecentFile4" => 4,
+            "ButtonRecentFile5" => 5,
+            "ButtonRecentFile6" => 6,
             _ => -1,
         };
+
+        index = SettingsSystem.EditorSettings.RecentChartFiles.Count - index;
 
         if (index == -1) return;
         if (index >= SettingsSystem.EditorSettings.RecentChartFiles.Count) return;

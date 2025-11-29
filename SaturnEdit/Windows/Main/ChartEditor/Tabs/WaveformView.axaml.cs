@@ -20,6 +20,7 @@ public partial class WaveformView : UserControl
         ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
         
         AudioSystem.AudioLoaded += OnAudioLoaded;
+        OnAudioLoaded(null, EventArgs.Empty);
     }
     
     private readonly CanvasInfo canvasInfo = new();
@@ -33,7 +34,7 @@ public partial class WaveformView : UserControl
 #region System Event Handlers
     private static void OnAudioLoaded(object? sender, EventArgs eventArgs)
     {
-        waveform = AudioChannel.GetWaveformData(ChartSystem.Entry.AudioPath);
+        waveform = AudioChannel.GetWaveformData(ChartSystem.Entry.AudioPath, 4000);
     }
 #endregion System Event Handlers
     

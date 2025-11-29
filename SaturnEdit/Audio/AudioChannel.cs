@@ -130,14 +130,15 @@ public class AudioChannel
         }
     }
 
-    public static float[]? GetWaveformData(string path)
+    public static float[]? GetWaveformData(string path, float resolution = 2000)
     {
         // This code is borrowed/adapted from osu.
         
-        const float resolution = 0.0005f;
         const int pointsPerIteration = 1000;
         const int bytesPerSample = 4;
 
+        float resolutionMultiplier = 1.0f / resolution;
+        
         float[]? points = null;
         float[]? sampleBuffer = null;
         
@@ -157,7 +158,7 @@ public class AudioChannel
             long length = Bass.ChannelGetLength(handle);
 
             // Each "amplitude point" is generated from a number of samples, each sample contains a number of channels
-            int samplesPerPoint = (int)(info.Frequency * resolution * info.Channels);
+            int samplesPerPoint = (int)(info.Frequency * resolutionMultiplier * info.Channels);
 
             int bytesPerPoint = samplesPerPoint * bytesPerSample;
 

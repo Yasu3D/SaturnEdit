@@ -108,7 +108,10 @@ public static class AudioSystem
                         }
                         else
                         {
-                            AudioSampleMetronome?.Play();
+                            if (SettingsSystem.AudioSettings.Metronome)
+                            {
+                                AudioSampleMetronome?.Play();
+                            }
                         }
                     }
                 }
@@ -265,8 +268,8 @@ public static class AudioSystem
                 foreach (Note note in layer.GeneratedNotes)
                 {
                     if (note is not MeasureLineNote measureLineNote) continue;
-
-                    if (measureLineNote.Timestamp.Time < TimeSystem.HitsoundTime)
+                    
+                    if (measureLineNote.Timestamp.Time < TimeSystem.Timestamp.Time)
                     {
                         PassedNotes.Add(measureLineNote);
                     }
@@ -274,19 +277,19 @@ public static class AudioSystem
                 
                 foreach (Note note in layer.Notes)
                 {
-                    if (note.Timestamp.Time < TimeSystem.HitsoundTime)
+                    if (note.Timestamp.Time < TimeSystem.Timestamp.Time)
                     {
                         PassedNotes.Add(note);
                     }
 
                     if (note is HoldNote holdNote && holdNote.Points.Count > 1)
                     {
-                        if (holdNote.Points[^1].Timestamp.Time < TimeSystem.HitsoundTime)
+                        if (holdNote.Points[^1].Timestamp.Time < TimeSystem.Timestamp.Time)
                         {
                             PassedNotes.Add(holdNote.Points[^1]);
                         }
 
-                        if (holdNote.Points[0].Timestamp.Time < TimeSystem.HitsoundTime && holdNote.Points[^1].Timestamp.Time > TimeSystem.HitsoundTime)
+                        if (holdNote.Points[0].Timestamp.Time < TimeSystem.Timestamp.Time && holdNote.Points[^1].Timestamp.Time > TimeSystem.Timestamp.Time)
                         {
                             ActiveHoldNotes.Add(holdNote);
                         }
@@ -301,7 +304,7 @@ public static class AudioSystem
 
                         float bonusEffectTime = note.Timestamp.Time + effectOffset;
 
-                        if (bonusEffectTime < TimeSystem.HitsoundTime)
+                        if (bonusEffectTime < TimeSystem.Timestamp.Time)
                         {
                             PassedBonusSlides.Add(note);
                         }
