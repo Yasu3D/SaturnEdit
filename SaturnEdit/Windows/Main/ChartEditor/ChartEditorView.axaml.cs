@@ -11,6 +11,7 @@ using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using FluentIcons.Common;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnData.Notation.Serialization;
@@ -594,7 +595,9 @@ public partial class ChartEditorView : UserControl
 
     public async void ChartView_AddTempoChangeEvent()
     {
-        float? tempo = await ShowTempoDialog();
+        TempoChangeEvent? previousTempoEvent = ChartSystem.Chart.LastTempoChange(TimeSystem.Timestamp);
+        
+        float? tempo = await ShowTempoDialog(previousTempoEvent?.Tempo ?? 120);
         if (tempo == null) return;
         
         EditorSystem.Insert_AddTempoChange(tempo.Value);
@@ -602,7 +605,9 @@ public partial class ChartEditorView : UserControl
     
     public async void ChartView_AddMetreChangeEvent()
     {
-        (int?, int?) metre = await ShowMetreDialog();
+        MetreChangeEvent? previousMetreEvent = ChartSystem.Chart.LastMetreChange(TimeSystem.Timestamp);
+
+        (int?, int?) metre = await ShowMetreDialog(previousMetreEvent?.Upper ?? 4, previousMetreEvent?.Lower ?? 4);
         if (metre.Item1 == null || metre.Item2 == null) return;
         
         EditorSystem.Insert_AddMetreChange(metre.Item1.Value, metre.Item2.Value);
