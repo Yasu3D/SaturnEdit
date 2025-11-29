@@ -1406,8 +1406,7 @@ public partial class InspectorView : UserControl
         if (blockEvents) return;
         if (SelectionSystem.SelectedObjects.Count == 0) return;
         if (TextBoxTempo == null) return;
-
-        if (!TextBoxTempo.IsFocused) return;
+        
         if (!e.KeyModifiers.HasFlag(KeyModifiers.Shift)) return;
 
         float delta = (float)e.Delta.Y;

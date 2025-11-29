@@ -312,7 +312,7 @@
                     <Grid Grid.Row="1"
                           ColumnDefinitions="*,10,*"
                           RowDefinitions="24,24,24,24,24,24,24,24,24,24"
-                          Margin="10,5,10,15">
+                          Margin="10,5,20,15">
                         <TextBlock Grid.Row="0"
                                    Grid.Column="0"
                                    Text="{DynamicResource Menu.File}"

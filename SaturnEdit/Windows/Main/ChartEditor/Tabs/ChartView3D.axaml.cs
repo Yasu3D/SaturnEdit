@@ -89,7 +89,7 @@ public partial class ChartView3D : UserControl
                 {
                     if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, null, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
                     if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
                     hits.Add((hitTestResult, @event));
@@ -99,7 +99,7 @@ public partial class ChartView3D : UserControl
                 {
                     if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(bookmark, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(bookmark, null, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
                     if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
                     hits.Add((hitTestResult, bookmark));
@@ -109,7 +109,7 @@ public partial class ChartView3D : UserControl
                 {
                     if (!RenderUtils.IsVisible(laneToggle, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(laneToggle, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                    IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(laneToggle, null, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
                     if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
                     hits.Add((hitTestResult, laneToggle));
@@ -123,7 +123,7 @@ public partial class ChartView3D : UserControl
                     {
                         if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, layer, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
                         if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
                         hits.Add((hitTestResult, @event));
@@ -133,7 +133,7 @@ public partial class ChartView3D : UserControl
                     {
                         if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, layer, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
                         if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
                         hits.Add((hitTestResult, note));
@@ -154,7 +154,7 @@ public partial class ChartView3D : UserControl
                         {
                             if (!RenderUtils.IsVisible(holdPointNote, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                            IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(holdPointNote, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                            IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(holdPointNote, layer, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
                             if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
                             hits.Add((hitTestResult, holdPointNote));
@@ -163,11 +163,13 @@ public partial class ChartView3D : UserControl
                 }
                 else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
                 {
+                    Layer? layer = ChartSystem.Chart.ParentLayer(stopEffectEvent);
+                    
                     foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
                     {
                         if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(subEvent, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(subEvent, layer, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
                         if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
                         hits.Add((hitTestResult, subEvent));
@@ -175,11 +177,13 @@ public partial class ChartView3D : UserControl
                 }
                 else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
                 {
+                    Layer? layer = ChartSystem.Chart.ParentLayer(reverseEffectEvent);
+                    
                     foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
                     {
                         if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
-                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(subEvent, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
+                        IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(subEvent, layer, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
                         if (hitTestResult == IPositionable.OverlapResult.None) continue;
 
                         hits.Add((hitTestResult, subEvent));
@@ -384,7 +388,16 @@ public partial class ChartView3D : UserControl
             TextBlockShortcutEditShape.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditShape"].ToString();
             TextBlockShortcutDeleteSelection.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
             TextBlockShortcutInsertNote.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.Insert"].ToString();
-        
+            
+            MenuItemAddTempoChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"].ToKeyGesture();
+            MenuItemAddMetreChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"].ToKeyGesture();
+            MenuItemAddTutorialMarker.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TutorialMarker"].ToKeyGesture();
+            MenuItemAddSpeedChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.SpeedChange"].ToKeyGesture();
+            MenuItemAddVisibilityChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.VisibilityChange"].ToKeyGesture();
+            MenuItemAddStopEffect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.StopEffect"].ToKeyGesture();
+            MenuItemAddReverseEffect.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.ReverseEffect"].ToKeyGesture();
+            MenuItemAddBookmark.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.Bookmark"].ToKeyGesture();
+            
             MenuItemMoveSelectionBeatForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatForward"].ToKeyGesture();
             MenuItemMoveSelectionBeatBack.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveBeatBack"].ToKeyGesture();
             MenuItemMoveSelectionMeasureForward.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MoveMeasureForward"].ToKeyGesture();

@@ -145,6 +145,8 @@ public static class SelectionSystem
 
                 foreach (Layer layer in ChartSystem.Chart.Layers)
                 {
+                    if (!layer.Visible) continue;
+                    
                     foreach (Event @event in layer.Events)
                     {
                         if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
@@ -316,6 +318,8 @@ public static class SelectionSystem
 
             foreach (Layer layer in ChartSystem.Chart.Layers)
             {
+                if (!layer.Visible) continue;
+                
                 foreach (Event @event in layer.Events)
                 {
                     if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
@@ -387,6 +391,7 @@ public static class SelectionSystem
                 Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
 
                 if (layer == null) return;
+                if (!layer.Visible) return;
 
                 foreach (HoldPointNote point in holdNote.Points)
                 {
@@ -414,6 +419,11 @@ public static class SelectionSystem
             }
             else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
             {
+                Layer? layer = ChartSystem.Chart.ParentLayer(stopEffectEvent);
+
+                if (layer == null) return;
+                if (!layer.Visible) return;
+                
                 foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
                 {
                     if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
@@ -434,6 +444,11 @@ public static class SelectionSystem
             }
             else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
             {
+                Layer? layer = ChartSystem.Chart.ParentLayer(reverseEffectEvent);
+
+                if (layer == null) return;
+                if (!layer.Visible) return;
+                
                 foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
                 {
                     if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
@@ -468,13 +483,15 @@ public static class SelectionSystem
             foreach (Event @event in ChartSystem.Chart.Events)
             {
                 if (SelectedObjects.Contains(@event)) continue;
-
+                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                
                 operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
             }
 
             foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
             {
                 if (SelectedObjects.Contains(bookmark)) continue;
+                if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                 operations.Add(new SelectionAddOperation(bookmark, LastSelectedObject));
             }
@@ -482,15 +499,19 @@ public static class SelectionSystem
             foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
             {
                 if (SelectedObjects.Contains(laneToggle)) continue;
+                if (!RenderUtils.IsVisible(laneToggle, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                 operations.Add(new SelectionAddOperation(laneToggle, LastSelectedObject));
             }
 
             foreach (Layer layer in ChartSystem.Chart.Layers)
             {
+                if (!layer.Visible) continue;
+                
                 foreach (Event @event in layer.Events)
                 {
                     if (SelectedObjects.Contains(@event)) continue;
+                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                     operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
                 }
@@ -498,6 +519,7 @@ public static class SelectionSystem
                 foreach (Note note in layer.Notes)
                 {
                     if (SelectedObjects.Contains(note)) continue;
+                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                     operations.Add(new SelectionAddOperation(note, LastSelectedObject));
                 }
@@ -507,6 +529,11 @@ public static class SelectionSystem
         {
             if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
             {
+                Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
+
+                if (layer == null) return;
+                if (!layer.Visible) return;
+                
                 foreach (HoldPointNote point in holdNote.Points)
                 {
                     if (SelectedObjects.Contains(point)) continue;
@@ -516,6 +543,11 @@ public static class SelectionSystem
             }
             else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
             {
+                Layer? layer = ChartSystem.Chart.ParentLayer(stopEffectEvent);
+
+                if (layer == null) return;
+                if (!layer.Visible) return;
+                
                 foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
                 {
                     if (SelectedObjects.Contains(subEvent)) continue;
@@ -524,6 +556,11 @@ public static class SelectionSystem
             }
             else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
             {
+                Layer? layer = ChartSystem.Chart.ParentLayer(reverseEffectEvent);
+
+                if (layer == null) return;
+                if (!layer.Visible) return;
+                
                 foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
                 {
                     if (SelectedObjects.Contains(subEvent)) continue;
@@ -596,6 +633,7 @@ public static class SelectionSystem
                 foreach (Event @event in ChartSystem.Chart.Events)
                 {
                     if (SelectedObjects.Contains(@event)) continue;
+                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                     if (@event is TempoChangeEvent && !SelectByCriteriaArgs.IncludeTempoChangeEvents) continue;
                     if (@event is MetreChangeEvent && !SelectByCriteriaArgs.IncludeMetreChangeEvents) continue;
@@ -609,6 +647,7 @@ public static class SelectionSystem
                     foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
                     {
                         if (SelectedObjects.Contains(bookmark)) continue;
+                        if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                         operations.Add(new SelectionAddOperation(bookmark, LastSelectedObject));
                     }
@@ -637,6 +676,8 @@ public static class SelectionSystem
 
                 foreach (Layer layer in ChartSystem.Chart.Layers)
                 {
+                    if (!layer.Visible) continue;
+                    
                     foreach (Event @event in layer.Events)
                     {
                         if (SelectedObjects.Contains(@event)) continue;
@@ -680,6 +721,11 @@ public static class SelectionSystem
             }
             else if (EditorSystem.Mode == EditorMode.EditMode && EditorSystem.ActiveObjectGroup is HoldNote holdNote)
             {
+                Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
+
+                if (layer == null) return;
+                if (!layer.Visible) return;
+                
                 foreach (HoldPointNote point in holdNote.Points)
                 {
                     if (SelectedObjects.Contains(point)) continue;
