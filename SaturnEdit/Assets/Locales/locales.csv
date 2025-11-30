@@ -1,33 +1,33 @@
 key,en_US,ja_JP,zh_CN,Comment
 ChartEditor.General.Editor,Editor,-,-,-
 ChartEditor.General.Timestamp,Timestamp,-,-,-
-ChartEditor.General.Measure,Measure,-,-,-
-ChartEditor.General.Tick,Tick,-,-,-
-ChartEditor.General.Ticks,Ticks,-,-,-
-ChartEditor.General.Beat,Beat,-,-,-
+ChartEditor.General.Measure,Measure,-,-,Represents measure/bar from musical notation.
+ChartEditor.General.Tick,Tick,-,-,Transliteration preferred. Represents 1/1920th of a Measure.
+ChartEditor.General.Ticks,Ticks,-,-,Transliteration preferred. Plural of 'Tick'
+ChartEditor.General.Beat,Beat,-,-,Represents beat from musical notation.
 ChartEditor.General.Position,Position,-,-,-
 ChartEditor.General.Size,Size,-,-,-
-ChartEditor.General.Layer,Layer,-,-,-
+ChartEditor.General.Layer,Layer,-,-,Like an image layer in photoshop.
 ChartEditor.General.Type,Type,-,-,-
-ChartEditor.General.Type.Value.Touch,Touch,-,-,-
-ChartEditor.General.Type.Value.SnapForward,Snap Forward,-,-,-
-ChartEditor.General.Type.Value.SnapBackward,Snap Backward,-,-,-
-ChartEditor.General.Type.Value.SlideClockwise,Slide Clockwise,-,-,-
-ChartEditor.General.Type.Value.SlideCounterclockwise,Slide Counterclockwise,-,-,-
-ChartEditor.General.Type.Value.Chain,Chain,-,-,-
-ChartEditor.General.Type.Value.Hold,Hold,-,-,-
-ChartEditor.General.Type.Value.HoldPoint,Hold Point,-,-,-
-ChartEditor.General.Type.Value.LaneShow,Lane Show,-,-,-
-ChartEditor.General.Type.Value.LaneHide,Lane Hide,-,-,-
-ChartEditor.General.Type.Value.MeasureLine,Measure Line,-,-,-
-ChartEditor.General.Type.Value.BeatLine,Beat Line,-,-,-
-ChartEditor.General.Type.Value.Sync,Sync,-,-,-
-ChartEditor.General.Type.Value.TempoChange,Tempo Change,-,-,-
-ChartEditor.General.Type.Value.MetreChange,Metre Change,-,-,-
-ChartEditor.General.Type.Value.SpeedChange,Speed Change,-,-,-
+ChartEditor.General.Type.Value.Touch,Touch,-,-,Use translation from game.
+ChartEditor.General.Type.Value.SnapForward,Snap Forward,-,-,Use translation from game.
+ChartEditor.General.Type.Value.SnapBackward,Snap Backward,-,-,Use translation from game.
+ChartEditor.General.Type.Value.SlideClockwise,Slide Clockwise,-,-,Use translation from game.
+ChartEditor.General.Type.Value.SlideCounterclockwise,Slide Counterclockwise,-,-,Use translation from game.
+ChartEditor.General.Type.Value.Chain,Chain,-,-,Use translation from game.
+ChartEditor.General.Type.Value.Hold,Hold,-,-,Use translation from game.
+ChartEditor.General.Type.Value.HoldPoint,Hold Point,-,-,"Use translation from game. 'Point' like a vertex in a mesh, or a point on a mathematical curve."
+ChartEditor.General.Type.Value.LaneShow,Lane Show,-,-,"'Make lane appear', Lane as in general rhythm game term."
+ChartEditor.General.Type.Value.LaneHide,Lane Hide,-,-,"'Make lane disappear', Lane as in general rhythm game term."
+ChartEditor.General.Type.Value.MeasureLine,Measure Line,-,-,See [ChartEditor.General.Measure]
+ChartEditor.General.Type.Value.BeatLine,Beat Line,-,-,See [ChartEditor.General.Beat]
+ChartEditor.General.Type.Value.Sync,Sync,-,-,"Transliteration preferred. 'Sync', 'Same Time', 'Simultaneous'. Represents the blue line connecting two simultaneous notes."
+ChartEditor.General.Type.Value.TempoChange,Tempo Change,-,-,"Prefer 'Tempo', avoid saying 'BPM'"
+ChartEditor.General.Type.Value.MetreChange,Metre Change,-,-,"Prefer 'Metre', avoid saying 'Time Signature'"
+ChartEditor.General.Type.Value.SpeedChange,Speed Change,-,-,"Prefer 'Speed', avoid saying 'Hi-Speed', 'Soflan'"
 ChartEditor.General.Type.Value.VisibilityChange,Visibility Change,-,-,-
-ChartEditor.General.Type.Value.ReverseEffect,Reverse Effect,-,-,-
-ChartEditor.General.Type.Value.StopEffect,Stop Effect,-,-,-
+ChartEditor.General.Type.Value.ReverseEffect,Reverse Effect,-,-,"Reverse as in 'Going backwards', 'Rewinding'"
+ChartEditor.General.Type.Value.StopEffect,Stop Effect,-,-,"Stop as in 'Stop Moving', 'Freeze'"
 ChartEditor.General.Type.Value.TutorialMarker,Tutorial Marker,-,-,-
 ChartEditor.General.Type.Value.Bookmark,Bookmark,-,-,-
 ChartEditor.General.BonusType,Bonus Type,-,-,-
@@ -42,10 +42,10 @@ ChartEditor.General.RenderType,Render Type,-,-,-
 ChartEditor.General.RenderType.Value.Visible,Visible,-,-,-
 ChartEditor.General.RenderType.Value.Hidden,Hidden,-,-,-
 ChartEditor.General.SweepDirection,Sweep Direction,-,-,-
-ChartEditor.General.SweepDirection.Value.Instant,Instant,-,-,-
-ChartEditor.General.SweepDirection.Value.Clockwise,Clockwise,-,-,-
-ChartEditor.General.SweepDirection.Value.Counterclockwise,Counterclockwise,-,-,-
-ChartEditor.General.SweepDirection.Value.Center,Center,-,-,-
+ChartEditor.General.SweepDirection.Value.Instant,Instant,-,-,Lanes appear instantly
+ChartEditor.General.SweepDirection.Value.Clockwise,Clockwise,-,-,Lanes appear in clockwise order
+ChartEditor.General.SweepDirection.Value.Counterclockwise,Counterclockwise,-,-,Lanes appear in counterclockwise order
+ChartEditor.General.SweepDirection.Value.Center,Center,-,-,Lanes appear from center outward
 ChartEditor.General.Visibility,Visibility,-,-,-
 ChartEditor.General.Visibility.Value.Visible,Visible,-,-,-
 ChartEditor.General.Visibility.Value.Hidden,Hidden,-,-,-
@@ -67,10 +67,10 @@ ChartEditor.Playback.ToolTip.DecreasePlaybackSpeed,Decrease Playback Speed,-,-,-
 ChartEditor.Inspector,Inspector,-,-,-
 ChartEditor.Inspector.NothingSelected,Nothing selected.,-,-,-
 ChartEditor.Inspector.Header.General,General,-,-,-
-ChartEditor.Inspector.Header.Layers,Layers,-,-,-
+ChartEditor.Inspector.Header.Layers,Layers,-,-,See [ChartEditor.General.Layer]
 ChartEditor.Inspector.Header.Shape,Shape,-,-,-
 ChartEditor.Inspector.Header.Judgement,Judgement,-,-,-
-ChartEditor.Inspector.Header.Hold,Hold,-,-,-
+ChartEditor.Inspector.Header.Hold,Hold,-,-,See [ChartEditor.General.Type.Value.Hold]
 ChartEditor.Inspector.Header.LaneToggle,Lane Toggle,-,-,-
 ChartEditor.Inspector.Header.TempoChange,Tempo Change,-,-,-
 ChartEditor.Inspector.Header.MetreChange,Metre Change,-,-,-
@@ -99,45 +99,45 @@ ChartEditor.LayerList.Header.LayerEvents,Layer Events,-,-,-
 ChartEditor.LayerList.Header.LayerNotes,Layer Notes,-,-,-
 ChartEditor.ChartProperties,Chart Properties,-,-,-
 ChartEditor.ChartProperties.Header.Song,Song,-,-,-
-ChartEditor.ChartProperties.Header.Chart,Chart,-,-,-
-ChartEditor.ChartProperties.Header.Display,Display,-,-,-
+ChartEditor.ChartProperties.Header.Chart,Chart,-,-,"Use most common name for 'Chart'. Avoid 'Map', 'Beatmap'"
+ChartEditor.ChartProperties.Header.Display,Display,-,-,"Display as in 'Showcase', 'Appearance'. Not 'Television', 'Monitor'"
 ChartEditor.ChartProperties.Header.Media,Media,-,-,-
-ChartEditor.ChartProperties.Key.Revision,Revision,-,-,-
+ChartEditor.ChartProperties.Key.Revision,Revision,-,-,Version/Revision
 ChartEditor.ChartProperties.Key.Title,Title,-,-,-
-ChartEditor.ChartProperties.Key.Reading,Reading,-,-,-
+ChartEditor.ChartProperties.Key.Reading,Reading,-,-,Furigana/Rubi/Ruby/Kanji Reading
 ChartEditor.ChartProperties.Key.Artist,Artist,-,-,-
-ChartEditor.ChartProperties.Key.NotesDesigner,Notes Designer,-,-,-
+ChartEditor.ChartProperties.Key.NotesDesigner,Notes Designer,-,-,"Prefer 'Notes Designer', avoid 'Author' 'Charter' etc."
 ChartEditor.ChartProperties.Key.BpmMessage,Bpm Message,-,-,-
-ChartEditor.ChartProperties.Key.Difficulty,Difficulty,-,-,-
-ChartEditor.ChartProperties.Key.Level,Level,-,-,-
+ChartEditor.ChartProperties.Key.Difficulty,Difficulty,-,-,"Difficulty Category, Normal/Hard/Expert/etc."
+ChartEditor.ChartProperties.Key.Level,Level,-,-,"Chart Constant, numerical value"
 ChartEditor.ChartProperties.Key.Clear,Clear Threshold,-,-,-
 ChartEditor.ChartProperties.Key.PreviewBegin,Preview Begin,-,-,-
 ChartEditor.ChartProperties.Key.PreviewEnd,Preview End,-,-,-
 ChartEditor.ChartProperties.Key.Background,Background,-,-,-
 ChartEditor.ChartProperties.Key.Tutorial,Tutorial Mode,-,-,-
-ChartEditor.ChartProperties.Key.Jacket,Jacket,-,-,-
+ChartEditor.ChartProperties.Key.Jacket,Jacket,-,-,Jacket as in 'Album Artwork'. Avoid 'Cover'
 ChartEditor.ChartProperties.Key.Audio,Audio,-,-,-
 ChartEditor.ChartProperties.Key.Video,Video,-,-,-
 ChartEditor.ChartProperties.Key.AudioOffset,Audio Offset,-,-,-
 ChartEditor.ChartProperties.Key.VideoOffset,Video Offset,-,-,-
 ChartEditor.ChartProperties.Key.ChartEnd,Chart End,-,-,-
-ChartEditor.ChartProperties.Difficulty.None,NONE,-,-,-
-ChartEditor.ChartProperties.Difficulty.Normal,NORMAL,-,-,-
-ChartEditor.ChartProperties.Difficulty.Hard,HARD,-,-,-
-ChartEditor.ChartProperties.Difficulty.Expert,EXPERT,-,-,-
-ChartEditor.ChartProperties.Difficulty.Inferno,INFERNO,-,-,-
-ChartEditor.ChartProperties.Difficulty.WorldsEnd,WORLD'S END,-,-,-
+ChartEditor.ChartProperties.Difficulty.None,NONE,NONE,NONE,Don't translate.
+ChartEditor.ChartProperties.Difficulty.Normal,NORMAL,NORMAL,NORMAL,Don't translate.
+ChartEditor.ChartProperties.Difficulty.Hard,HARD,HARD,HARD,Don't translate.
+ChartEditor.ChartProperties.Difficulty.Expert,EXPERT,EXPERT,EXPERT,Don't translate.
+ChartEditor.ChartProperties.Difficulty.Inferno,INFERNO,INFERNO,INFERNO,Don't translate.
+ChartEditor.ChartProperties.Difficulty.WorldsEnd,WORLD'S END,WORLD'S END,WORLD'S END,Don't translate.
 ChartEditor.ChartProperties.BackgroundOption.Auto,Automatic Background,-,-,-
-ChartEditor.ChartProperties.BackgroundOption.Saturn,Saturn,-,-,-
-ChartEditor.ChartProperties.BackgroundOption.Version3,Version 3,-,-,-
-ChartEditor.ChartProperties.BackgroundOption.Version2,Version 2,-,-,-
-ChartEditor.ChartProperties.BackgroundOption.Version1,Version 1,-,-,-
-ChartEditor.ChartProperties.BackgroundOption.Boss,Boss,-,-,-
-ChartEditor.ChartProperties.BackgroundOption.StageUp,Stage Up,-,-,-
-ChartEditor.ChartProperties.BackgroundOption.WorldsEnd,World's End,-,-,-
+ChartEditor.ChartProperties.BackgroundOption.Saturn,SATURN,SATURN,SATURN,Don't translate.
+ChartEditor.ChartProperties.BackgroundOption.Version3,Version 3,バージョン3,-,-
+ChartEditor.ChartProperties.BackgroundOption.Version2,Version 2,バージョン2,-,-
+ChartEditor.ChartProperties.BackgroundOption.Version1,Version 1,バージョン1,-,-
+ChartEditor.ChartProperties.BackgroundOption.Boss,Boss,ボス,-,"Boss as in 'Final Boss', 'Opponent'"
+ChartEditor.ChartProperties.BackgroundOption.StageUp,Stage Up,ステージアップ,-,Transliteration preferred.
+ChartEditor.ChartProperties.BackgroundOption.WorldsEnd,World's End,World's End,World's End,Don't translate.
 ChartEditor.ChartProperties.BackgroundOption.Jacket,Jacket,-,-,-
 ChartEditor.ChartProperties.ToolTip.PlayPreview,Play Preview,-,-,-
-ChartEditor.ChartProperties.ToolTip.AutoReading,Auto Reading,-,-,-
+ChartEditor.ChartProperties.ToolTip.AutoReading,Auto Reading,-,-,See [Editor.ChartProperties.Key.Reading]
 ChartEditor.ChartProperties.ToolTip.AutoReading.Description,Automatically determine the reading based on the chart's title.,-,-,-
 ChartEditor.ChartProperties.ToolTip.AutoBpmMessage,Auto Bpm Message,-,-,-
 ChartEditor.ChartProperties.ToolTip.AutoBpmMessage.Description,Automatically determine the bpm message based on the chart's bpm change events.,-,-,-
@@ -152,30 +152,30 @@ ChartEditor.Proofreader.HintClickJump,Double-click on a problem to jump to its t
 ChartEditor.Proofreader.ToolTip.Criteria,Adjust Criteria,-,-,-
 ChartEditor.Proofreader.ToolTip.Criteria.Description,Adjust the things to look out for while proofreading. ,-,-,-
 ChartEditor.Proofreader.ToolTip.Run,Run Proofreader,-,-,-
-ChartEditor.Proofreader.Problem.StrictNoteSizeMer,Note Size does not conform to MER standard.,-,-,-
-ChartEditor.Proofreader.Problem.StrictNoteSizeSat,Note Size does not conform to SAT standard.,-,-,-
+ChartEditor.Proofreader.Problem.StrictNoteSizeMer,Note Size does not conform to MER standard.,-,-,MER must stay as 'MER'.
+ChartEditor.Proofreader.Problem.StrictNoteSizeSat,Note Size does not conform to SAT standard.,-,-,SAT must stay as 'SAT'.
 ChartEditor.Proofreader.Problem.StrictBonusTypeMer,Note ,-,-,-
 ChartEditor.Proofreader.Problem.OverlappingNotes,Note overlaps with another note.,-,-,-
 ChartEditor.Proofreader.Problem.EffectsOnLowers,Lower difficulties should avoid effects.,-,-,-
-ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect,Mer standard does not support Speed Changes before a Stop Effect.,-,-,-
-ChartEditor.Proofreader.Problem.SpeedChangeTooClose,Mer standard does not support Speed Changes less than 1/16th apart.,-,-,-
-ChartEditor.Proofreader.Problem.SpeedChangeTooEarly,Mer standard does not support Speed Changes before 0'240.,-,-,-
-ChartEditor.Proofreader.Problem.SpeedChangeNearZero,Mer standard does not support Speed Changes with near-zero values (except zero).,-,-,-
-ChartEditor.Proofreader.Problem.InvalidLaneToggles,Mer standard does not support Lane Toggles with overlapping sweeps.,-,-,-
+ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect,MER standard does not support Speed Changes before a Stop Effect.,-,-,MER must stay as 'MER'.
+ChartEditor.Proofreader.Problem.SpeedChangeTooClose,MER standard does not support Speed Changes less than 1/16th apart.,-,-,MER must stay as 'MER'.
+ChartEditor.Proofreader.Problem.SpeedChangeTooEarly,MER standard does not support Speed Changes before 0'240.,-,-,MER must stay as 'MER'.
+ChartEditor.Proofreader.Problem.SpeedChangeNearZero,MER standard does not support Speed Changes with near-zero values (except zero).,-,-,MER must stay as 'MER'.
+ChartEditor.Proofreader.Problem.InvalidLaneToggles,MER standard does not support Lane Toggles with overlapping sweeps.,-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Problem.NotesDuringReverse,Note during a reverse effect.,-,-,-
 ChartEditor.Proofreader.Problem.ObjectsAfterChartEnd,Object after chart end.,-,-,-
 ChartEditor.Proofreader.Criteria.Title,Proofreader Criteria,-,-,-
-ChartEditor.Proofreader.Criteria.StrictNoteSizeMer,Strict Note Size (MER),-,-,-
-ChartEditor.Proofreader.Criteria.StrictNoteSizeSat,Strict Note Size (SAT),-,-,-
-ChartEditor.Proofreader.Criteria.StrictBonusTypeMer,Strict Bonus Type (MER),-,-,-
+ChartEditor.Proofreader.Criteria.StrictNoteSizeMer,Strict Note Size (MER),-,-,MER must stay as 'MER'.
+ChartEditor.Proofreader.Criteria.StrictNoteSizeSat,Strict Note Size (SAT),-,-,SAT must stay as 'SAT'.
+ChartEditor.Proofreader.Criteria.StrictBonusTypeMer,Strict Bonus Type (MER),-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Criteria.OverlappingNotesStrict,Overlapping Notes (Strict),-,-,-
 ChartEditor.Proofreader.Criteria.OverlappingNotesLenient,Overlapping Notes (Lenient),-,-,-
-ChartEditor.Proofreader.Criteria.EffectsOnLowers,Effects on Lowers,-,-,-
-ChartEditor.Proofreader.Criteria.InvalidEffects,Invalid Effects,-,-,-
+ChartEditor.Proofreader.Criteria.EffectsOnLowers,Effects on Lowers,-,-,Effect as in Speed Change/Visibility Change/Stop Effect/Reverse Effect events.
+ChartEditor.Proofreader.Criteria.InvalidEffects,Invalid Effects,-,-,Effect as in Stop Effect/Reverse Effect events.
 ChartEditor.Proofreader.Criteria.InvalidLaneToggles,Invalid Lane Toggles,-,-,-
 ChartEditor.Proofreader.Criteria.NotesDuringReverse,Notes during Reverse,-,-,-
 ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd,Objects after Chart End,-,-,-
-ChartEditor.NotePalette,Note Palette,-,-,-
+ChartEditor.NotePalette,Note Palette,-,-,List of Note Types on the left side of the program. Use the same word as the list of tools in photoshop/etc.Photoshop/etc.
 ChartEditor.NotePalette.Note.Touch,Touch Note,-,-,-
 ChartEditor.NotePalette.Note.Touch.Description,Hit by tapping within its area at the right time.,-,-,-
 ChartEditor.NotePalette.Note.Chain,Chain Note,-,-,-
@@ -224,42 +224,42 @@ ChartEditor.NotePalette.HoldPointRenderType.Visible.Description,A normal hold po
 ChartEditor.NotePalette.HoldPointRenderType.Hidden,Render Type - Hidden,-,-,-
 ChartEditor.NotePalette.HoldPointRenderType.Hidden.Description,"A special hold point that doesn't influence the shape of a Hold Note, but still influences the judged area.",-,-,-
 ChartEditor.ChartStatistics,Chart Statistics,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfLayers,# of Layers:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfEvents,# of Events:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfTempoChanges,...of those Tempo Changes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfMetreChanges,...of those Metre Changes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfSpeedChanges,...of those Speed Changes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfVisibilityChanges,...of those Visibility Changes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfReverseEffects,...of those Reverse Effects:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfStopEffects,...of those Stop Effects:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfTutorialMarkers,...of those Tutorial Markers:,-,-,-
+ChartEditor.ChartStatistics.Label.NumberOfLayers,# of Layers:,-,-,'Number of ...'
+ChartEditor.ChartStatistics.Label.NumberOfEvents,# of Events:,-,-,Number of ...
+ChartEditor.ChartStatistics.Label.NumberOfTempoChanges,...of those Tempo Changes:,-,-,"[Number of Events = ABC] ... and of those, there are this many XYZ:"
+ChartEditor.ChartStatistics.Label.NumberOfMetreChanges,...of those Metre Changes:,-,-,"[Number of Events = ABC] ... and of those, there are this many XYZ:"
+ChartEditor.ChartStatistics.Label.NumberOfSpeedChanges,...of those Speed Changes:,-,-,"[Number of Events = ABC] ... and of those, there are this many XYZ:"
+ChartEditor.ChartStatistics.Label.NumberOfVisibilityChanges,...of those Visibility Changes:,-,-,"[Number of Events = ABC] ... and of those, there are this many XYZ:"
+ChartEditor.ChartStatistics.Label.NumberOfReverseEffects,...of those Reverse Effects:,-,-,"[Number of Events = ABC] ... and of those, there are this many XYZ:"
+ChartEditor.ChartStatistics.Label.NumberOfStopEffects,...of those Stop Effects:,-,-,"[Number of Events = ABC] ... and of those, there are this many XYZ:"
+ChartEditor.ChartStatistics.Label.NumberOfTutorialMarkers,...of those Tutorial Markers:,-,-,"[Number of Events = ABC] ... and of those, there are this many XYZ:"
 ChartEditor.ChartStatistics.Label.MaxCombo,Max Combo:,-,-,-
 ChartEditor.ChartStatistics.Label.ScorePerNote,Score per Note:,-,-,-
 ChartEditor.ChartStatistics.Label.ScorePerRNote,Score per R-Note:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfNormalNotes,# of Normal Notes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfBonusNotes,# of Bonus Notes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfRNotes,# of R-Notes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfTouchNotes,# of Touch Notes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfChainNotes,# of Chain Notes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfHoldNotes,# of Hold Notes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfSlideNotes,# of Slide Notes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfSlideClockwiseNotes,...of those Clockwise:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfSlideCounterclockwiseNotes,...of those Counterclockwise:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfSnapNotes,# of Snap Notes:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfSnapForwardNotes,...of those Forward:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfSnapBackwardNotes,...of those Backward:,-,-,-
+ChartEditor.ChartStatistics.Label.NumberOfNormalNotes,# of Normal Notes:,-,-,Number of ...
+ChartEditor.ChartStatistics.Label.NumberOfBonusNotes,# of Bonus Notes:,-,-,Number of ...
+ChartEditor.ChartStatistics.Label.NumberOfRNotes,# of R-Notes:,-,-,Number of ...
+ChartEditor.ChartStatistics.Label.NumberOfTouchNotes,# of Touch Notes:,-,-,Number of ...
+ChartEditor.ChartStatistics.Label.NumberOfChainNotes,# of Chain Notes:,-,-,Number of ...
+ChartEditor.ChartStatistics.Label.NumberOfHoldNotes,# of Hold Notes:,-,-,Number of ...
+ChartEditor.ChartStatistics.Label.NumberOfSlideNotes,# of Slide Notes:,-,-,Number of ...
+ChartEditor.ChartStatistics.Label.NumberOfSlideClockwiseNotes,...of those Clockwise:,-,-,"[Number of Notes = ABC] ... and of those, there are this many XYZ:"
+ChartEditor.ChartStatistics.Label.NumberOfSlideCounterclockwiseNotes,...of those Counterclockwise:,-,-,"[Number of Notes = ABC] ... and of those, there are this many XYZ:"
+ChartEditor.ChartStatistics.Label.NumberOfSnapNotes,# of Snap Notes:,-,-,Number of ...
+ChartEditor.ChartStatistics.Label.NumberOfSnapForwardNotes,...of those Forward:,-,-,"[Number of Notes = ABC] ... and of those, there are this many XYZ:"
+ChartEditor.ChartStatistics.Label.NumberOfSnapBackwardNotes,...of those Backward:,-,-,"[Number of Notes = ABC] ... and of those, there are this many XYZ:"
 ChartEditor.ChartStatistics.Label.NumberOfLaneToggleNotes,# of Lane Toggles:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfLaneShowNotes,...of those Lane Show:,-,-,-
-ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes,...of those Lane Hide:,-,-,-
-ChartEditor.ChartView3D,Chart View (3D),-,-,-
+ChartEditor.ChartStatistics.Label.NumberOfLaneShowNotes,...of those Lane Show:,-,-,"[Number of Notes = ABC] ... and of those, there are this many XYZ:"
+ChartEditor.ChartStatistics.Label.NumberOfLaneHideNotes,...of those Lane Hide:,-,-,"[Number of Notes = ABC] ... and of those, there are this many XYZ:"
+ChartEditor.ChartView3D,Chart View (3D),-,-,Keep (3D) untranslated.
 ChartEditor.ChartView3D.Mode.AutoMode,Change Mode (Auto),-,-,-
 ChartEditor.ChartView3D.Mode.ObjectMode,Object Mode,-,-,-
 ChartEditor.ChartView3D.Mode.EditMode,Edit Mode,-,-,-
-ChartEditor.ChartView3D.ToolTip.EditType,Edit Type,-,-,-
+ChartEditor.ChartView3D.ToolTip.EditType,Edit Type,-,-,Type = Note Type
 ChartEditor.ChartView3D.ToolTip.EditType.Description,Changes the type of all selected notes to the current note type.,-,-,-
-ChartEditor.ChartView3D.ToolTip.EditShape,Edit Shape,-,-,-
+ChartEditor.ChartView3D.ToolTip.EditShape,Edit Shape,-,-,Shape = Position and Size
 ChartEditor.ChartView3D.ToolTip.EditShape.Description,Changes the shape of all selected notes to the cursor's size and position.,-,-,-
-ChartEditor.ChartView3D.ToolTip.EditBoth,Edit Both,-,-,-
+ChartEditor.ChartView3D.ToolTip.EditBoth,Edit Both,-,-,Both = Type and Shape
 ChartEditor.ChartView3D.ToolTip.DeleteSelection,Delete Selection,-,-,-
 ChartEditor.ChartView3D.ToolTip.DeleteSelection.Description,Deletes all selected objects.,-,-,-
 ChartEditor.ChartView3D.ToolTip.InsertNote,Insert Note,-,-,-
@@ -272,9 +272,9 @@ ChartEditor.ChartView3D.ToolTip.ShowVisibilityChanges,Display the effects of Vis
 ChartEditor.ChartView3D.ToolTip.ShowLaneToggleAnimations,Display the effects of Lane Toggle Notes should be previewed or not.,-,-,-
 ChartEditor.ChartView3D.ToolTip.VisualizeLaneSweeps,Display a semi-transparent area behind Lane Toggle Notes to visualize their sweep animation.,-,-,-
 ChartEditor.ChartView3D.ToolTip.ShowJudgeAreas,Display the timing judge areas.,-,-,-
-ChartEditor.ChartView3D.ToolTip.ShowMarvelousArea,"Display the ""MARVELOUS"" timing judge area.",-,-,-
-ChartEditor.ChartView3D.ToolTip.ShowGreatArea,"Display the ""GREAT"" timing judge area.",-,-,-
-ChartEditor.ChartView3D.ToolTip.ShowGoodArea,"Display the ""GOOD"" timing judge area.",-,-,-
+ChartEditor.ChartView3D.ToolTip.ShowMarvelousArea,"Display the ""MARVELOUS"" timing judge area.",-,-,Don't translate 'MARVELOUS'
+ChartEditor.ChartView3D.ToolTip.ShowGreatArea,"Display the ""GREAT"" timing judge area.",-,-,Don't translate 'GREAT'
+ChartEditor.ChartView3D.ToolTip.ShowGoodArea,"Display the ""GOOD"" timing judge area.",-,-,Don't translate 'GOOD'
 ChartEditor.ChartView3D.ToolTip.SaturnJudgeAreas,Should judge areas follow SATURN specifications?,-,-,-
 ChartEditor.ChartView3D.Menu.Transform,Transform,-,-,-
 ChartEditor.ChartView3D.Menu.Transform.MoveSelectionBeatForward,Move Selection Beat Forward,-,-,-
@@ -285,17 +285,17 @@ ChartEditor.ChartView3D.Menu.Transform.MoveClockwise,Move Clockwise,-,-,-
 ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwise,Move Counterclockwise,-,-,-
 ChartEditor.ChartView3D.Menu.Transform.IncreaseSize,Increase Size,-,-,-
 ChartEditor.ChartView3D.Menu.Transform.DecreaseSize,Decrease Size,-,-,-
-ChartEditor.ChartView3D.Menu.Transform.MoveClockwiseIterative,Move Clockwise Iterative,-,-,-
-ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwiseIterative,Move Counterclockwise Iterative,-,-,-
-ChartEditor.ChartView3D.Menu.Transform.IncreaseSizeIterative,Increase Size Iterative,-,-,-
-ChartEditor.ChartView3D.Menu.Transform.DecreaseSizeIterative,Decrease Size Iterative,-,-,-
+ChartEditor.ChartView3D.Menu.Transform.MoveClockwiseIterative,Move Clockwise (Iterative),-,-,"Iterative = First note is edited once, Second is edited twice, etc."
+ChartEditor.ChartView3D.Menu.Transform.MoveCounterclockwiseIterative,Move Counterclockwise (Iterative),-,-,"Iterative = First note is edited once, Second is edited twice, etc."
+ChartEditor.ChartView3D.Menu.Transform.IncreaseSizeIterative,Increase Size (Iterative),-,-,"Iterative = First note is edited once, Second is edited twice, etc."
+ChartEditor.ChartView3D.Menu.Transform.DecreaseSizeIterative,Decrease Size (Iterative),-,-,"Iterative = First note is edited once, Second is edited twice, etc."
 ChartEditor.ChartView3D.Menu.Transform.Mirror,Mirror,-,-,-
-ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal,Mirror Horizontal,-,-,-
-ChartEditor.ChartView3D.Menu.Transform.MirrorVertical,Mirror Vertical,-,-,-
+ChartEditor.ChartView3D.Menu.Transform.MirrorHorizontal,Mirror Horizontal,-,-,Mirror Left/Right
+ChartEditor.ChartView3D.Menu.Transform.MirrorVertical,Mirror Vertical,-,-,Mirror Up/Down
 ChartEditor.ChartView3D.Menu.Transform.MirrorCustom,Mirror Custom,-,-,-
 ChartEditor.ChartView3D.Menu.Transform.AdjustAxis,Adjust Axis...,-,-,-
-ChartEditor.ChartView3D.Menu.Transform.FlipDirection,Flip Direction,-,-,-
-ChartEditor.ChartView3D.Menu.Transform.ReverseSelection,Reverse Selection,-,-,-
+ChartEditor.ChartView3D.Menu.Transform.FlipDirection,Flip Direction,-,-,"Clockwise Slide -> Counterclockwise Slide, etc."
+ChartEditor.ChartView3D.Menu.Transform.ReverseSelection,Reverse Selection,-,-,"Reverse in time, so that start and end switch places."
 ChartEditor.ChartView3D.Menu.Transform.ScaleSelection,Scale Selection...,-,-,-
 ChartEditor.ChartView3D.Menu.Transform.OffsetChart,Offset Chart...,-,-,-
 ChartEditor.ChartView3D.Menu.Transform.ScaleChart,Scale Chart...,-,-,-
@@ -320,10 +320,10 @@ ChartEditor.ChartView3D.Menu.Settings.ShowLaneToggleAnimations,Show Lane Toggle 
 ChartEditor.ChartView3D.Menu.Settings.VisualizeLaneSweeps,Visualize Lane Sweeps,-,-,-
 ChartEditor.ChartView3D.Menu.Settings.JudgeAreas,Judge Areas...,-,-,-
 ChartEditor.ChartView3D.Menu.Settings.ShowJudgeAreas,Show Judge Areas,-,-,-
-ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousArea,Show Marvelous Area,-,-,-
-ChartEditor.ChartView3D.Menu.Settings.ShowGreatArea,Show Great Area,-,-,-
-ChartEditor.ChartView3D.Menu.Settings.ShowGoodArea,Show Good Area,-,-,-
-ChartEditor.ChartView3D.Menu.Settings.SaturnJudgeAreas,Saturn Judge Areas,-,-,-
+ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousArea,Show MARVELOUS Area,-,-,Don't translate 'MARVELOUS'
+ChartEditor.ChartView3D.Menu.Settings.ShowGreatArea,Show GREAT Area,-,-,Don't translate 'GREAT'
+ChartEditor.ChartView3D.Menu.Settings.ShowGoodArea,Show GOOD Area,-,-,Don't translate 'GOOD'
+ChartEditor.ChartView3D.Menu.Settings.SaturnJudgeAreas,SATURN Judge Areas,-,-,Don't translate 'SATURN'
 ChartEditor.ChartView3D.Menu.Settings.ToggleVisibility,Toggle Visibility...,-,-,-
 ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback,Hide during Playback...,-,-,-
 ChartEditor.ChartView3D.Menu.Settings.HideDuringPlayback.EventMarkers,Event Markers,-,-,-
@@ -335,15 +335,15 @@ ChartEditor.ChartView3D.Menu.DecreaseNoteSpeed,Decrease Note Speed,-,-,-
 ChartEditor.ChartView3D.Menu.IncreaseBackgroundDim,Increase Background Dim,-,-,-
 ChartEditor.ChartView3D.Menu.DecreaseBackgroundDim,Decrease Background Dim,-,-,-
 ChartEditor.ChartView3D.Toolbar,Toolbar,-,-,-
-ChartEditor.ChartView2D,Chart View (2D),-,-,-
-ChartEditor.ChartViewTxt,Chart View (Text),-,-,-
+ChartEditor.ChartView2D,Chart View (2D),-,-,Keep (2D) untranslated.
+ChartEditor.ChartViewTxt,Chart View (Text),-,-,Keep (Text) untranslated.
 ChartEditor.ChartViewTxt.ToolTip.ShowSpaces,Show Spaces,-,-,-
 ChartEditor.ChartViewTxt.ToolTip.ShowSpaces.Description,Displays a bullet point dot • wherever whitespace is.,-,-,-
 ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting,Syntax Highlighting,-,-,-
 ChartEditor.ChartViewTxt.ToolTip.SyntaxHighlighting.Description,Show syntax highlighting for the chart format.,-,-,-
 ChartEditor.ChartViewTxt.ToolTip.ApplyChanges,Apply Changes,-,-,-
 ChartEditor.ChartViewTxt.ToolTip.ApplyChanges.Description,Attempt to apply changes by reading chart data.,-,-,-
-ChartEditor.Waveform,Waveform,-,-,-
+ChartEditor.Waveform,Waveform,-,-,Audio Waveform
 ChartEditor.Cursor,Cursor,-,-,-
 ChartEditor.Cursor.OddBeatDivisionWarning,Odd Beat Division,-,-,-
 ChartEditor.Cursor.OddBeatDivisionWarning.Description,The current Beat Division does not evenly divide into 1920 Ticks. Notes placed with this division may have inconsistent timestamps.,-,-,-
@@ -352,18 +352,18 @@ ChartEditor.Cursor.DecreasePosition,Decrease Position,-,-,-
 ChartEditor.Cursor.IncreaseSize,Increase Size,-,-,-
 ChartEditor.Cursor.DecreaseSize,Decrease Size,-,-,-
 StageEditor.File.LoadMusicData,Load Music Data,-,-,-
-StageEditor.Property.Id,Stage Id,-,-,-
-StageEditor.Property.Name,Stage Name,-,-,-
-StageEditor.Property.Icon,Stage Icon,-,-,-
+StageEditor.Property.Id,Stage Id,-,-,Stage as in 'Stage-Up'
+StageEditor.Property.Name,Stage Name,-,-,Stage as in 'Stage-Up'
+StageEditor.Property.Icon,Stage Icon,-,-,Stage as in 'Stage-Up'
 StageEditor.Property.Song1,First Song,-,-,-
 StageEditor.Property.Song2,Second Song,-,-,-
 StageEditor.Property.Song3,Third Song,-,-,-
 StageEditor.Property.Health,Health,-,-,-
 StageEditor.Property.HealthRecovery,Health Recovery,-,-,-
 StageEditor.Property.ErrorThreshold,Error Threshold,-,-,-
-StageEditor.Property.ErrorThreshold.Great,GREAT or worse,-,-,-
-StageEditor.Property.ErrorThreshold.Good,GOOD or worse,-,-,-
-StageEditor.Property.ErrorThreshold.Miss,MISS,-,-,-
+StageEditor.Property.ErrorThreshold.Great,GREAT or worse,-,-,Don't translate 'GREAT'
+StageEditor.Property.ErrorThreshold.Good,GOOD or worse,-,-,Don't translate 'GOOD'
+StageEditor.Property.ErrorThreshold.Miss,MISS,-,-,Don't translate 'MISS'
 StageEditor.ToolTip.GenerateNewId,Generate New Id,-,-,-
 StageEditor.ToolTip.GenerateNewId.Description,Generates a new UUID to use as the Stage Id.,-,-,-
 StageEditor.ToolTip.Secret,Secret Song,-,-,-
@@ -462,12 +462,12 @@ CosmeticEditor.Navigator.Dialogue.Property.Expression.Angry,Angry,-,-,-
 CosmeticEditor.Navigator.Dialogue.Property.Expression.Laughing,Laughing,-,-,-
 CosmeticEditor.Navigator.Dialogue.Property.Expression.Smiling,Smiling,-,-,-
 CosmeticEditor.Navigator.Dialogue.Property.Expression.Grinning,Grinning,-,-,-
-CosmeticEditor.NoteSound.Property.TouchMarvelous,Touch (Marvelous),-,-,-
-CosmeticEditor.NoteSound.Property.TouchGood,Touch (Good),-,-,-
-CosmeticEditor.NoteSound.Property.SlideMarvelous,Slide (Marvelous),-,-,-
-CosmeticEditor.NoteSound.Property.SlideGood,Slide (Good),-,-,-
-CosmeticEditor.NoteSound.Property.SnapMarvelous,Snap (Marvelous),-,-,-
-CosmeticEditor.NoteSound.Property.SnapGood,Snap (Good),-,-,-
+CosmeticEditor.NoteSound.Property.TouchMarvelous,Touch (MARVELOUS),-,-,-
+CosmeticEditor.NoteSound.Property.TouchGood,Touch (GOOD),-,-,-
+CosmeticEditor.NoteSound.Property.SlideMarvelous,Slide (MARVELOUS),-,-,-
+CosmeticEditor.NoteSound.Property.SlideGood,Slide (GOOD),-,-,-
+CosmeticEditor.NoteSound.Property.SnapMarvelous,Snap (MARVELOUS),-,-,-
+CosmeticEditor.NoteSound.Property.SnapGood,Snap (GOOD),-,-,-
 CosmeticEditor.NoteSound.Property.Hold,Hold,-,-,-
 CosmeticEditor.NoteSound.Property.ReHold,Re-Hold,-,-,-
 CosmeticEditor.NoteSound.Property.Chain,Chain,-,-,-
@@ -542,8 +542,8 @@ Menu.File.Export,Export...,-,-,-
 Menu.File.RenderAsImage,Render as Image...,-,-,-
 Menu.File.Settings,Settings...,-,-,-
 Menu.File.Quit,Quit,-,-,-
-Menu.File.SaturnChartFile,Saturn Chart File,-,-,-
-Menu.File.MerChartFile,Mer Chart File,-,-,-
+Menu.File.SaturnChartFile,SATURN Chart File,-,-,-
+Menu.File.MerChartFile,MER Chart File,-,-,-
 Menu.Edit,Edit,-,-,-
 Menu.Edit.Undo,Undo,-,-,-
 Menu.Edit.Redo,Redo,-,-,-
@@ -590,10 +590,9 @@ Settings.General.AutosaveFrequency.Minutes10,Every 10 Minutes,-,-,-
 Settings.General.AutosaveFrequency.Minutes5,Every 5 Minutes,-,-,-
 Settings.General.AutosaveFrequency.Minutes1,Every Minute,-,-,-
 Settings.General.AutosaveFrequency.Always,Every Operation,-,-,-
-Settings.General.Themes,Themes,-,-,-
+Settings.General.Themes,Themes,-,-,UI Themes (Light Mode/Dark Mode)
 Settings.Rendering,Rendering,-,-,-
 Settings.Rendering.Performance,Performance,-,-,-
-Settings.Rendering.RefreshRate,Refresh Rate:,-,-,-
 Settings.Rendering.LowPerformanceMode,Low Performance Mode,-,-,-
 Settings.Rendering.3DView,3D View,-,-,-
 Settings.Rendering.Visibility,Visibility,-,-,-
@@ -663,15 +662,15 @@ Settings.Shortcuts.Action,ACTION,-,-,-
 Settings.Shortcuts.Shortcut,SHORTCUT,-,-,-
 Settings.Shortcuts.WaitingForInput,Waiting for input...,-,-,-
 Export.Window.Title,Export Arguments,-,-,-
-Export.FormatVersion.Mer,MER,-,-,-
-Export.FormatVersion.SatV1,SATv1 (Legacy),-,-,-
-Export.FormatVersion.SatV2,SATv2 (Legacy),-,-,-
-Export.FormatVersion.SatV3,SATv3,-,-,-
+Export.FormatVersion.Mer,MER,-,-,MER must stay as 'MER'.
+Export.FormatVersion.SatV1,SATv1 (Legacy),-,-,SATv1 must stay as 'SATv1'.
+Export.FormatVersion.SatV2,SATv2 (Legacy),-,-,SATv2 must stay as 'SATv2'.
+Export.FormatVersion.SatV3,SATv3,-,-,SATv3 must stay as 'SATv3'.
 Export.ResetSettings,Reset Settings,-,-,-
-Export.Header.SatArguments,SAT Arguments,-,-,-
-Export.Header.MerArguments,MER Arguments,-,-,-
+Export.Header.SatArguments,SAT Arguments,-,-,SAT must stay as 'SAT'.
+Export.Header.MerArguments,MER Arguments,-,-,MER must stay as 'MER'.
 Export.Header.BackwardsCompatibilityArguments,Backwards Compatibility Arguments,-,-,-
-Export.Watermark,Watermark,-,-,-
+Export.Watermark,Watermark,-,-,Like an image watermark.
 Export.Watermark.Description,A comment at the top of the file to identify what created it.,-,-,-
 Export.FakeNotes,Fake Notes,-,-,-
 Export.FakeNotes.Description,How should Notes with the Fake Judgement Type be treated in formats that don't support them?,-,-,-
