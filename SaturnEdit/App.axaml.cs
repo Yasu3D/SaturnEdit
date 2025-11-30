@@ -15,6 +15,7 @@ public partial class App : Application
     {
         AvaloniaXamlLoader.Load(this);
         
+        SoftwareUpdateSystem.Initialize();
         AutosaveSystem.Initialize();
         SettingsSystem.Initialize();
         TimeSystem.Initialize();

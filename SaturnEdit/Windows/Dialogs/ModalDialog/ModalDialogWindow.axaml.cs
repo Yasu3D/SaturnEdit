@@ -35,6 +35,7 @@ public partial class ModalDialogWindow : Window
     public string ButtonPrimaryKey = "";
     public string ButtonSecondaryKey = "";
     public string ButtonTertiaryKey = "";
+    public bool CanClose = true;
 
 #region Methods
     public void InitializeDialog()
@@ -52,6 +53,8 @@ public partial class ModalDialogWindow : Window
             ButtonPrimary.IsVisible = ButtonPrimaryKey != "";
             ButtonSecondary.IsVisible = ButtonSecondaryKey != "";
             ButtonTertiary.IsVisible = ButtonTertiaryKey != "";
+
+            WindowChrome.IsVisible = CanClose;
             
             Title = TextBlockWindowTitle.Text;
         });

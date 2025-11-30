@@ -8,7 +8,7 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
         <Company>Yasu3D</Company>
-        <AssemblyVersion>0.1.2.3</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
     </PropertyGroup>
 
 
@@ -27,6 +27,7 @@
         <PackageReference Include="ManagedBass" Version="4.0.2" />
         <PackageReference Include="ManagedBass.Flac" Version="4.0.2" />
         <PackageReference Include="ManagedBass.Fx" Version="4.0.2" />
+        <PackageReference Include="Octokit" Version="14.0.0" />
         <PackageReference Include="SkiaSharp" Version="3.119.1" />
         <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.119.1" />
         <PackageReference Include="Svg.Controls.Avalonia" Version="11.3.6.2" />
@@ -39,33 +40,69 @@
         </Content>
     </ItemGroup>
         
-    <ItemGroup>
-        <ContentWithTargetPath Include="Audio\Linux_x64\libbass.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+    <ItemGroup Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+        <ContentWithTargetPath Include="Audio\Linux_x64\libbass.so">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>libbass.so</TargetPath>
         </ContentWithTargetPath>
-        <ContentWithTargetPath Include="Audio\Linux_x64\libbass_fx.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+        
+        <ContentWithTargetPath Include="Audio\Linux_x64\libbass_fx.so">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>libbass_fx.so</TargetPath>
         </ContentWithTargetPath>
-        <ContentWithTargetPath Include="Audio\Linux_x64\libbassflac.so" Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+        
+        <ContentWithTargetPath Include="Audio\Linux_x64\libbassflac.so">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>libbassflac.so</TargetPath>
         </ContentWithTargetPath>
     </ItemGroup>
         
-    <ItemGroup>
-        <ContentWithTargetPath Include="Audio\Win_x64\bass.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+    <ItemGroup Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+        <ContentWithTargetPath Include="Audio\Win_x64\bass.dll" >
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>bass.dll</TargetPath>
         </ContentWithTargetPath>
-        <ContentWithTargetPath Include="Audio\Win_x64\bass_fx.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+        
+        <ContentWithTargetPath Include="Audio\Win_x64\bass_fx.dll">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>bass_fx.dll</TargetPath>
         </ContentWithTargetPath>
-        <ContentWithTargetPath Include="Audio\Win_x64\bassflac.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+        
+        <ContentWithTargetPath Include="Audio\Win_x64\bassflac.dll">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>bassflac.dll</TargetPath>
+        </ContentWithTargetPath>
+    </ItemGroup>
+    
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <ContentWithTargetPath Include="Audio\Win_x64\bass.dll" >
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>bass.dll</TargetPath>
+        </ContentWithTargetPath>
+        
+        <ContentWithTargetPath Include="Audio\Win_x64\bass_fx.dll">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>bass_fx.dll</TargetPath>
+        </ContentWithTargetPath>
+        
+        <ContentWithTargetPath Include="Audio\Win_x64\bassflac.dll">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>bassflac.dll</TargetPath>
+        </ContentWithTargetPath>
+        
+        <ContentWithTargetPath Include="Audio\Linux_x64\libbass.so">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>libbass.so</TargetPath>
+        </ContentWithTargetPath>
+        
+        <ContentWithTargetPath Include="Audio\Linux_x64\libbass_fx.so">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>libbass_fx.so</TargetPath>
+        </ContentWithTargetPath>
+        
+        <ContentWithTargetPath Include="Audio\Linux_x64\libbassflac.so">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>libbassflac.so</TargetPath>
         </ContentWithTargetPath>
     </ItemGroup>
     

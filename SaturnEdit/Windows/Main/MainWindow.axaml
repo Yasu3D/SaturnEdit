@@ -120,6 +120,7 @@
                 <Button Name="ButtonUpdate"
                         Classes="Themed Square AccentFull"
                         Margin="5"
+                        IsVisible="False"
                         Click="ButtonUpdate_OnClick"
                         ToolTip.VerticalOffset="5"
                         ToolTip.Placement="Bottom">

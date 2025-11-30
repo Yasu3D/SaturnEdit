@@ -764,6 +764,17 @@
     <system:String x:Key="ModalDialog.ZigZagHoldWarning.Title">Zig-Zag Hold Error</system:String>
     <system:String x:Key="ModalDialog.ZigZagHoldWarning.Header">Unable to create a Zig-Zag Hold Note.</system:String>
     <system:String x:Key="ModalDialog.ZigZagHoldWarning.Paragraph">Please select one or more hold notes or hold points you wish to convert.</system:String>
+    <system:String x:Key="ModalDialog.Update.Title">Software Update</system:String>
+    <system:String x:Key="ModalDialog.Update.Header">Would you like to update SaturnEdit?</system:String>
+    <system:String x:Key="ModalDialog.Update.Paragraph">The latest version will be downloaded, and SaturnEdit will restart on its own. This process may take a while.</system:String>
+    <system:String x:Key="ModalDialog.Update.Active.Header">Updating SaturnEdit...</system:String>
+    <system:String x:Key="ModalDialog.Update.Active.Paragraph">The latest version is currently being downloaded, and SaturnEdit will restart on its own. This process may take a while.</system:String>
+    <system:String x:Key="ModalDialog.Update.Error.Header">An error occurred during the software update.</system:String>
+    <system:String x:Key="ModalDialog.Update.Error.GitHubNotFound">GitHub could not be reached. Please update manually.</system:String>
+    <system:String x:Key="ModalDialog.Update.Error.ReleaseNotFound">The latest release could not be found. Please try again, or update manually.</system:String>
+    <system:String x:Key="ModalDialog.Update.Error.AssetNotFound">The asset for your operating system could not be found. Please try again, or update manually.</system:String>
+    <system:String x:Key="ModalDialog.Update.Error.ProcessNotFound">The process to update could not be found. Please update manually.</system:String>
+    <system:String x:Key="ModalDialog.Update.Error.Unknown">An unknown error occurred. Please try again, or update manually.</system:String>
     <system:String x:Key="Splash.Website">SATURN Website</system:String>
     <system:String x:Key="Splash.Documentation">SATURN Documentation</system:String>
     <system:String x:Key="Splash.Github">GitHub Repository</system:String>
@@ -775,4 +786,6 @@
     <system:String x:Key="Generic.Cancel">Cancel</system:String>
     <system:String x:Key="Generic.PickFile">Pick File...</system:String>
     <system:String x:Key="Generic.Ok">Ok</system:String>
+    <system:String x:Key="Generic.Yes">Yes</system:String>
+    <system:String x:Key="Generic.No">No</system:String>
 </ResourceDictionary>

@@ -62,6 +62,7 @@ public partial class MainWindow : Window
         
         UpdateTabs();
         UpdateSplash();
+        UpdateUpdateButton();
     }
 
     public static MainWindow? Instance { get; private set; }
@@ -275,6 +276,16 @@ public partial class MainWindow : Window
         Splash.IsVisible = SettingsSystem.EditorSettings.ShowSplashScreen;
     }
 
+    private async void UpdateUpdateButton()
+    {
+        bool updateAvailable = await SoftwareUpdateSystem.UpdateAvailable();
+        
+        Dispatcher.UIThread.Post(() =>
+        {
+            ButtonUpdate.IsVisible = updateAvailable;
+        });
+    }
+
     private void Undo()
     {
         if (ChartEditor.IsVisible) UndoRedoSystem.ChartBranch.Undo();
@@ -480,96 +491,110 @@ public partial class MainWindow : Window
     
     private void ButtonSettings_OnClick(object? sender, RoutedEventArgs e) => ShowSettingsWindow();
 
-    private void ButtonUpdate_OnClick(object? sender, RoutedEventArgs e)
-    {
-        
-    }
-
-    private void ButtonUndo_OnClick(object? sender, RoutedEventArgs e) => Undo();
-    
-    private void ButtonRedo_OnClick(object? sender, RoutedEventArgs e) => Redo();
-    
-    private async void Window_OnClosing(object? sender, WindowClosingEventArgs e)
+    private async void ButtonUpdate_OnClick(object? sender, RoutedEventArgs e)
     {
         try
         {
-            // Prompt the user to save unsaved work in...
-
-            // Chart Editor
-            if (!bypassChartSave && !ChartSystem.IsSaved)
+            ModalDialogWindow dialog = new()
             {
-                e.Cancel = true;
-                ModalDialogResult result = await ShowSavePrompt(SavePromptType.Chart);
+                DialogIcon = FluentIcons.Common.Icon.ArrowDownload,
+                WindowTitleKey = "ModalDialog.Update.Title",
+                HeaderKey = "ModalDialog.Update.Header",
+                ParagraphKey = "ModalDialog.Update.Paragraph",
+                ButtonPrimaryKey = "Generic.Yes",
+                ButtonSecondaryKey = "Generic.No",
+            };
 
+            dialog.Position = DialogPopupPosition(dialog.Width, dialog.Height);
+            dialog.InitializeDialog();
+            await dialog.ShowDialog(this);
+
+            if (dialog.Result != ModalDialogResult.Primary) return;
+
+            ModalDialogResult result;
+            if (!ChartSystem.IsSaved)
+            {
+                result = await ShowSavePrompt(SavePromptType.Chart);
                 if (result is ModalDialogResult.Primary)
                 {
                     bool saved = await ChartEditor.File_Save();
 
-                    if (saved)
-                    {
-                        Close();
-                        return;
-                    }
+                    if (!saved) return;
                 }
-                else if (result is ModalDialogResult.Secondary)
+                else if (result is not ModalDialogResult.Secondary)
                 {
-                    bypassChartSave = true;
-                    Close();
                     return;
                 }
             }
 
-            // Stage Editor
-            if (!bypassStageSave && !StageSystem.IsSaved)
+            if (!StageSystem.IsSaved)
             {
-                e.Cancel = true;
-                ModalDialogResult result = await ShowSavePrompt(SavePromptType.Stage);
-
+                result = await ShowSavePrompt(SavePromptType.Stage);
                 if (result is ModalDialogResult.Primary)
                 {
                     bool saved = await StageEditor.File_Save();
 
-                    if (saved)
-                    {
-                        Close();
-                        return;
-                    }
+                    if (!saved) return;
                 }
-                else if (result is ModalDialogResult.Secondary)
+                else if (result is not ModalDialogResult.Secondary)
                 {
-                    bypassStageSave = true;
-                    Close();
                     return;
                 }
             }
-            
-            // Cosmetic Editor
-            if (!bypassCosmeticsSave && !CosmeticSystem.IsSaved)
-            {
-                e.Cancel = true;
-                ModalDialogResult result = await ShowSavePrompt(SavePromptType.Cosmetic);
 
+            if (!CosmeticSystem.IsSaved)
+            {
+                result = await ShowSavePrompt(SavePromptType.Cosmetic);
                 if (result is ModalDialogResult.Primary)
                 {
                     bool saved = await CosmeticsEditor.File_Save();
 
-                    if (saved)
-                    {
-                        Close();
-                        return;
-                    }
+                    if (!saved) return;
                 }
-                else if (result is ModalDialogResult.Secondary)
+                else if (result is not ModalDialogResult.Secondary)
                 {
-                    bypassStageSave = true;
-                    Close();
                     return;
                 }
             }
+
+            // Show "update in progress" dialog.
+            dialog = new()
+            {
+                DialogIcon = FluentIcons.Common.Icon.HourglassThreeQuarter,
+                WindowTitleKey = "ModalDialog.Update.Title",
+                HeaderKey = "ModalDialog.Update.Active.Header",
+                ParagraphKey = "ModalDialog.Update.Active.Paragraph",
+                CanClose = false,
+            };
             
-            bypassChartSave = false;
-            bypassStageSave = false;
-            bypassCosmeticsSave = false;
+            dialog.Position = DialogPopupPosition(dialog.Width, dialog.Height);
+            dialog.InitializeDialog();
+            _ = dialog.ShowDialog(this);
+            
+            (bool, string) updateStatus = await SoftwareUpdateSystem.Update();
+
+            // If this point is reached, something exploded.
+            // For UX reasons, add a ~1 second "fake" wait before showing the error dialog, to not have a window flicker on and off instantly.
+            await Task.Delay(1000);
+            
+            // Show error dialog.
+            if (!updateStatus.Item1)
+            {
+                dialog.Close();
+                
+                dialog = new()
+                {
+                    DialogIcon = FluentIcons.Common.Icon.Warning,
+                    WindowTitleKey = "ModalDialog.Update.Title",
+                    HeaderKey = "ModalDialog.Update.Error.Header",
+                    ParagraphKey = updateStatus.Item2,
+                    ButtonPrimaryKey = "Generic.Ok",
+                };
+                
+                dialog.Position = DialogPopupPosition(dialog.Width, dialog.Height);
+                dialog.InitializeDialog();
+                _ = dialog.ShowDialog(this);
+            }
         }
         catch (Exception ex)
         {
@@ -577,8 +602,11 @@ public partial class MainWindow : Window
             Console.WriteLine(ex);
         }
     }
-#endregion UI Event Handlers
 
+    private void ButtonUndo_OnClick(object? sender, RoutedEventArgs e) => Undo();
+    
+    private void ButtonRedo_OnClick(object? sender, RoutedEventArgs e) => Redo();
+    
     private void ButtonSplashNewChart_OnClick(object? sender, RoutedEventArgs e)
     {
         Splash.IsVisible = false;
@@ -673,4 +701,94 @@ public partial class MainWindow : Window
         
         Splash.IsVisible = false;
     }
+    
+    private async void Window_OnClosing(object? sender, WindowClosingEventArgs e)
+    {
+        try
+        {
+            // Prompt the user to save unsaved work in...
+
+            // Chart Editor
+            if (!bypassChartSave && !ChartSystem.IsSaved)
+            {
+                e.Cancel = true;
+                ModalDialogResult result = await ShowSavePrompt(SavePromptType.Chart);
+
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool saved = await ChartEditor.File_Save();
+
+                    if (saved)
+                    {
+                        Close();
+                        return;
+                    }
+                }
+                else if (result is ModalDialogResult.Secondary)
+                {
+                    bypassChartSave = true;
+                    Close();
+                    return;
+                }
+            }
+
+            // Stage Editor
+            if (!bypassStageSave && !StageSystem.IsSaved)
+            {
+                e.Cancel = true;
+                ModalDialogResult result = await ShowSavePrompt(SavePromptType.Stage);
+
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool saved = await StageEditor.File_Save();
+
+                    if (saved)
+                    {
+                        Close();
+                        return;
+                    }
+                }
+                else if (result is ModalDialogResult.Secondary)
+                {
+                    bypassStageSave = true;
+                    Close();
+                    return;
+                }
+            }
+            
+            // Cosmetic Editor
+            if (!bypassCosmeticsSave && !CosmeticSystem.IsSaved)
+            {
+                e.Cancel = true;
+                ModalDialogResult result = await ShowSavePrompt(SavePromptType.Cosmetic);
+
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool saved = await CosmeticsEditor.File_Save();
+
+                    if (saved)
+                    {
+                        Close();
+                        return;
+                    }
+                }
+                else if (result is ModalDialogResult.Secondary)
+                {
+                    bypassStageSave = true;
+                    Close();
+                    return;
+                }
+            }
+            
+            bypassChartSave = false;
+            bypassStageSave = false;
+            bypassCosmeticsSave = false;
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
+    }
+#endregion UI Event Handlers
 }

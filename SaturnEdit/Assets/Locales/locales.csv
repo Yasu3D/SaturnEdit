@@ -762,6 +762,17 @@ ModalDialog.FileWriteError.Paragraph,"Data has not been saved. Please confirm th
 ModalDialog.ZigZagHoldWarning.Title,Zig-Zag Hold Error
 ModalDialog.ZigZagHoldWarning.Header,Unable to create a Zig-Zag Hold Note.
 ModalDialog.ZigZagHoldWarning.Paragraph,Please select one or more hold notes or hold points you wish to convert.
+ModalDialog.Update.Title,Software Update
+ModalDialog.Update.Header,Would you like to update SaturnEdit?
+ModalDialog.Update.Paragraph,"The latest version will be downloaded, and SaturnEdit will restart on its own. This process may take a while."
+ModalDialog.Update.Active.Header,Updating SaturnEdit...
+ModalDialog.Update.Active.Paragraph,"The latest version is currently being downloaded, and SaturnEdit will restart on its own. This process may take a while."
+ModalDialog.Update.Error.Header,An error occurred during the software update.
+ModalDialog.Update.Error.GitHubNotFound,"GitHub could not be reached. Please update manually."
+ModalDialog.Update.Error.ReleaseNotFound,"The latest release could not be found. Please try again, or update manually."
+ModalDialog.Update.Error.AssetNotFound,"The asset for your operating system could not be found. Please try again, or update manually."
+ModalDialog.Update.Error.ProcessNotFound,"The process to update could not be found. Please update manually."
+ModalDialog.Update.Error.Unknown,"An unknown error occurred. Please try again, or update manually."
 Splash.Website,SATURN Website
 Splash.Documentation,SATURN Documentation
 Splash.Github,GitHub Repository
@@ -773,3 +784,5 @@ Generic.Disabled,Disabled
 Generic.Cancel,Cancel
 Generic.PickFile,Pick File...
 Generic.Ok,Ok
+Generic.Yes,Yes
+Generic.No,No
