@@ -16,17 +16,49 @@
             <StackPanel Orientation="Horizontal"
                         Margin="5"
                         Spacing="5">
-                <ComboBox Name="ComboBoxEditMode"
+                <ComboBox Name="ComboBoxMode"
                           Classes="Outlined"
                           Height="32"
                           Width="150"
                           CornerRadius="7"
                           SelectedIndex="0"
                           SelectionChanged="ComboBoxEditMode_OnSelectionChanged">
+                    <ToolTip.Tip>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.Mode}" />
+                            <TextBlock Name="TextBlockShortcutMode"
+                                       Text="SHORTCUT"
+                                       Margin="15,0,0,0"
+                                       HorizontalAlignment="Right"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
                     <ComboBoxItem Name="ComboBoxItemNoteEditMode"
-                                  Content="{DynamicResource ChartEditor.ChartView3D.Mode.ObjectMode}" />
+                                  Content="{DynamicResource ChartEditor.ChartView3D.Mode.ObjectMode}">
+                        <ToolTip.Tip>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.ObjectMode}" />
+                                <TextBlock Name="TextBlockShortcutObjectMode"
+                                           Text="SHORTCUT"
+                                           Margin="15,0,0,0"
+                                           HorizontalAlignment="Right"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </ComboBoxItem>
                     <ComboBoxItem Name="ComboBoxItemHoldEditMode"
-                                  Content="{DynamicResource ChartEditor.ChartView3D.Mode.EditMode}" />
+                                  Content="{DynamicResource ChartEditor.ChartView3D.Mode.EditMode}">
+                        <ToolTip.Tip>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.EditMode}" />
+                                <TextBlock Name="TextBlockShortcutEditMode"
+                                           Text="SHORTCUT"
+                                           Margin="15,0,0,0"
+                                           HorizontalAlignment="Right"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </ComboBoxItem>
                 </ComboBox>
 
                 <Rectangle Width="1"
@@ -431,6 +463,9 @@
                                       ToggleType="CheckBox"
                                       StaysOpenOnClick="True"
                                       Click="MenuItemSettings_OnClick">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.ShowSpeedChanges}" />
+                                </ToolTip.Tip>
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowSpeedChanges}" />
                                 </MenuItem.Header>
@@ -440,6 +475,9 @@
                                       ToggleType="CheckBox"
                                       StaysOpenOnClick="True"
                                       Click="MenuItemSettings_OnClick">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.ShowVisibilityChanges}" />
+                                </ToolTip.Tip>
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowVisibilityChanges}" />
                                 </MenuItem.Header>
@@ -449,6 +487,9 @@
                                       ToggleType="CheckBox"
                                       StaysOpenOnClick="True"
                                       Click="MenuItemSettings_OnClick">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.ShowLaneToggleAnimations}" />
+                                </ToolTip.Tip>
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowLaneToggleAnimations}" />
                                 </MenuItem.Header>
@@ -460,6 +501,9 @@
                                       ToggleType="CheckBox"
                                       StaysOpenOnClick="True"
                                       Click="MenuItemSettings_OnClick">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.VisualizeLaneSweeps}" />
+                                </ToolTip.Tip>
                                 <MenuItem.Header>
                                     <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.VisualizeLaneSweeps}" />
                                 </MenuItem.Header>
@@ -476,6 +520,9 @@
                                           ToggleType="CheckBox"
                                           StaysOpenOnClick="True"
                                           Click="MenuItemSettings_OnClick">
+                                    <ToolTip.Tip>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.ShowJudgeAreas}" />
+                                    </ToolTip.Tip>
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowJudgeAreas}" />
                                     </MenuItem.Header>
@@ -488,6 +535,9 @@
                                           IsChecked="True"
                                           StaysOpenOnClick="True"
                                           Click="MenuItemSettings_OnClick">
+                                    <ToolTip.Tip>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.ShowMarvelousArea}" />
+                                    </ToolTip.Tip>
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowMarvelousArea}" />
                                     </MenuItem.Header>
@@ -497,6 +547,9 @@
                                           IsChecked="True"
                                           StaysOpenOnClick="True"
                                           Click="MenuItemSettings_OnClick">
+                                    <ToolTip.Tip>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.ShowGreatArea}" />
+                                    </ToolTip.Tip>
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGreatArea}" />
                                     </MenuItem.Header>
@@ -506,6 +559,9 @@
                                           IsChecked="True"
                                           StaysOpenOnClick="True"
                                           Click="MenuItemSettings_OnClick">
+                                    <ToolTip.Tip>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.ShowGoodArea}" />
+                                    </ToolTip.Tip>
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.ShowGoodArea}" />
                                     </MenuItem.Header>
@@ -518,6 +574,9 @@
                                           IsChecked="True"
                                           StaysOpenOnClick="True"
                                           Click="MenuItemSettings_OnClick">
+                                    <ToolTip.Tip>
+                                        <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.ToolTip.SaturnJudgeAreas}" />
+                                    </ToolTip.Tip>
                                     <MenuItem.Header>
                                         <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Settings.SaturnJudgeAreas}" />
                                     </MenuItem.Header>

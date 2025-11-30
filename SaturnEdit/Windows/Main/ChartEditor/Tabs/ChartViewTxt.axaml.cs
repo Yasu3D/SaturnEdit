@@ -39,6 +39,8 @@ public partial class ChartViewTxt : UserControl
     private TextMate.Installation? installation;
     private readonly NotationWriteArgs writeArgs;
     private readonly NotationReadArgs readArgs;
+
+    private bool blockEvents = false;
     
 #region Methods
     private void UpdateChartFromText()
@@ -71,8 +73,34 @@ public partial class ChartViewTxt : UserControl
 #region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
-        ToggleButtonShowSpaces.IsChecked = SettingsSystem.EditorSettings.ChartViewTxtShowSpaces;
-        ToggleButtonSyntaxHighlighting.IsChecked = SettingsSystem.EditorSettings.ChartViewTxtSyntaxHighlighting;
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
+            
+            ToggleButtonShowSpaces.IsChecked = SettingsSystem.EditorSettings.ChartViewTxtShowSpaces;
+            ToggleButtonSyntaxHighlighting.IsChecked = SettingsSystem.EditorSettings.ChartViewTxtSyntaxHighlighting;
+
+            blockEvents = false;
+            
+            TextEditorChart.Options.ShowSpaces = ToggleButtonShowSpaces.IsChecked ?? false;
+            
+            try
+            {
+                if (ToggleButtonSyntaxHighlighting.IsChecked ?? true)
+                {
+                    installation?.SetGrammar("source.sat");
+                }
+                else
+                {
+                    installation?.SetGrammar(null);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Don't throw.
+                Console.WriteLine(ex);
+            }
+        });
     }
     
     private void ChartBranch_OnOperationHistoryChanged(object? sender, EventArgs e) => UpdateTextFromChart();
@@ -99,33 +127,18 @@ public partial class ChartViewTxt : UserControl
     
     private void ToggleButtonShowSpaces_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
         if (TextEditorChart == null || ToggleButtonShowSpaces == null) return;
-
-        TextEditorChart.Options.ShowSpaces = ToggleButtonShowSpaces.IsChecked ?? false;
+        
         SettingsSystem.EditorSettings.ChartViewTxtShowSpaces = ToggleButtonShowSpaces.IsChecked ?? false;
     }
 
     private void ToggleButtonSyntaxHighlighting_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
         if (installation == null || ToggleButtonSyntaxHighlighting == null) return;
 
-        try
-        {
-            if (ToggleButtonSyntaxHighlighting.IsChecked ?? true)
-            {
-                installation.SetGrammar("source.sat");
-            }
-            else
-            {
-                installation.SetGrammar(null);
-            }
-
-            SettingsSystem.EditorSettings.ChartViewTxtSyntaxHighlighting = ToggleButtonSyntaxHighlighting.IsChecked ?? false;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
+        SettingsSystem.EditorSettings.ChartViewTxtSyntaxHighlighting = ToggleButtonSyntaxHighlighting.IsChecked ?? false;
     }
 #endregion UI Event Handlers
 }

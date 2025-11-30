@@ -30,7 +30,6 @@ public partial class SettingsWindow : Window
     private readonly string shortcutSettingsBackup;
     
     private readonly SettingsGeneralView settingsGeneralView = new();
-    private readonly SettingsAppearanceView settingsAppearanceView = new();
     private readonly SettingsRenderingView settingsRenderingView = new();
     private readonly SettingsShortcutsView settingsShortcutsView = new();
 
@@ -45,7 +44,6 @@ public partial class SettingsWindow : Window
         SettingsTabContainer.Content = button.Name switch
         {
             "RadioButtonGeneral"    => settingsGeneralView,
-            "RadioButtonAppearance" => settingsAppearanceView,
             "RadioButtonRendering"  => settingsRenderingView,
             "RadioButtonShortcuts"  => settingsShortcutsView,
             _ => null,

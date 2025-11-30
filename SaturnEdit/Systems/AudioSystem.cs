@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using ManagedBass;
 using SaturnData.Notation.Core;
-using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.Audio;
@@ -66,7 +65,7 @@ public static class AudioSystem
 #region Methods
     private static void TriggerHitsounds()
     {
-        lock (PassedNotes) lock (PassedBonusSlides) lock (ActiveHoldNotes)
+        lock (PassedNotes) lock (PassedBonusSlides) lock (ActiveHoldNotes) lock (ChartSystem.Chart) lock (ChartSystem.Entry)
         {
             if (TimeSystem.PlaybackState == PlaybackState.Stopped)
             {
@@ -89,128 +88,137 @@ public static class AudioSystem
             
             // Notes
             ActiveHoldNotes.Clear();
-            
-            foreach (Layer l in ChartSystem.Chart.Layers)
+
+            lock (ChartSystem.Chart.Layers)
             {
-                foreach (Note note in l.GeneratedNotes)
+                foreach (Layer l in ChartSystem.Chart.Layers)
                 {
-                    if (note is not MeasureLineNote) continue;
-                    
-                    if (PassedNotes.Contains(note)) continue;
-                
-                    if (note.Timestamp.Time < TimeSystem.HitsoundTime)
+                    lock (l.GeneratedNotes)
                     {
-                        PassedNotes.Add(note);
+                        foreach (Note note in l.GeneratedNotes)
+                        {
+                            if (note is not MeasureLineNote) continue;
 
-                        if (note.Timestamp.FullTick < 1920)
-                        {
-                            AudioSampleStartClick?.Play();
-                        }
-                        else
-                        {
-                            if (SettingsSystem.AudioSettings.Metronome)
+                            if (PassedNotes.Contains(note)) continue;
+                            
+                            if (note.Timestamp.Time < TimeSystem.HitsoundTime)
                             {
-                                AudioSampleMetronome?.Play();
+                                PassedNotes.Add(note);
+
+                                if (note.Timestamp.FullTick < 1920)
+                                {
+                                    AudioSampleStartClick?.Play();
+                                }
+                                else
+                                {
+                                    if (SettingsSystem.AudioSettings.Metronome)
+                                    {
+                                        AudioSampleMetronome?.Play();
+                                    }
+                                }
                             }
                         }
                     }
-                }
-                
-                foreach (Note n in l.Notes)
-                {
-                    Note note = n;
 
-                    if (note is HoldNote holdNote && holdNote.Points.Count > 1)
+                    lock (l.Notes)
                     {
-                        if (holdNote.Points[0].Timestamp.Time < TimeSystem.HitsoundTime && holdNote.Points[^1].Timestamp.Time > TimeSystem.HitsoundTime)
+                        foreach (Note n in l.Notes)
                         {
-                            ActiveHoldNotes.Add(holdNote);
-                        }
-                    
-                        // Hold notes need to play hitsounds for both the hold start and hold end notes.
-                        // Always check if the end of the hold note is passed before discarding the note entirely.
-                        if (PassedNotes.Contains(holdNote))
-                        {
-                            // Hold Start has already passed
-                            HoldPointNote holdEnd = holdNote.Points[^1];
-                        
-                            // Hold End has not passed yet.
-                            if (!PassedNotes.Contains(holdEnd))
+                            Note note = n;
+
+                            if (note is HoldNote holdNote && holdNote.Points.Count > 1)
                             {
-                                // Make Hold End the subject now.
-                                note = holdEnd;
+                                if (holdNote.Points[0].Timestamp.Time < TimeSystem.HitsoundTime && holdNote.Points[^1].Timestamp.Time > TimeSystem.HitsoundTime)
+                                {
+                                    ActiveHoldNotes.Add(holdNote);
+                                }
+
+                                // Hold notes need to play hitsounds for both the hold start and hold end notes.
+                                // Always check if the end of the hold note is passed before discarding the note entirely.
+                                if (PassedNotes.Contains(holdNote))
+                                {
+                                    // Hold Start has already passed
+                                    HoldPointNote holdEnd = holdNote.Points[^1];
+
+                                    // Hold End has not passed yet.
+                                    if (!PassedNotes.Contains(holdEnd))
+                                    {
+                                        // Make Hold End the subject now.
+                                        note = holdEnd;
+                                    }
+                                }
                             }
-                        }
-                    }
-                
-                    if (note is MeasureLineNote or SyncNote) continue;
-                    if (note is IPlayable playable && playable.JudgementType == JudgementType.Fake) continue;
-                
-                    // Bonus effects on slide notes play hitsounds after a fancy animation. Account for the delay here before discarding passed notes.
-                    if (note is SlideClockwiseNote or SlideCounterclockwiseNote && note is IPlayable playableSlide && playableSlide.BonusType == BonusType.Bonus && !PassedBonusSlides.Contains(note))
-                    {
-                        float bpm = ChartSystem.Chart.LastTempoChange(note.Timestamp.Time)?.Tempo ?? 120;
-                        int effectOffset = bpm > 200 ? 3840 : 1920;
-                    
-                        float bonusEffectTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, note.Timestamp + effectOffset);
-                    
-                        if (bonusEffectTime < TimeSystem.HitsoundTime)
-                        {
-                            PassedBonusSlides.Add(note);
 
-                            AudioSampleBonus?.Play();
-                        }
-                    }
+                            if (note is MeasureLineNote or SyncNote) continue;
+                            if (note is IPlayable playable && playable.JudgementType == JudgementType.Fake) continue;
 
-                    if (PassedNotes.Contains(note)) continue;
-                
-                    if (note.Timestamp.Time < TimeSystem.HitsoundTime)
-                    {
-                        PassedNotes.Add(note);
-                    
-                        // Always play guide sounds.
-                        AudioSampleGuide?.Play();
-                    
-                        // Touch note sounds
-                        if (note is TouchNote)
-                        {
-                            AudioSampleTouch?.Play();
-                        }
-                    
-                        // Chain note sounds
-                        if (note is ChainNote)
-                        {
-                            AudioSampleTouch?.Play();
-                        }
-                    
-                        // Hold start/end note sounds
-                        if (note is HoldNote or HoldPointNote)
-                        {
-                            AudioSampleTouch?.Play();
-                        }
-                    
-                        // Slide note sounds
-                        if (note is SlideClockwiseNote or SlideCounterclockwiseNote)
-                        {
-                            AudioSampleSlide?.Play();
-                        }
-                    
-                        // Snap note sounds
-                        if (note is SnapForwardNote or SnapBackwardNote)
-                        {
-                            AudioSampleSlide?.Play();
-                        }
+                            // Bonus effects on slide notes play hitsounds after a fancy animation. Account for the delay here before discarding passed notes.
+                            if (note is SlideClockwiseNote or SlideCounterclockwiseNote && note is IPlayable playableSlide && playableSlide.BonusType == BonusType.Bonus && !PassedBonusSlides.Contains(note))
+                            {
+                                float bpm = ChartSystem.Chart.LastTempoChange(note.Timestamp.Time)?.Tempo ?? 120;
+                                int effectOffset = bpm > 200 ? 3840 : 1920;
 
-                        // Bonus sounds
-                        if (note is IPlayable bonus && bonus.BonusType == BonusType.Bonus && note is not (SlideClockwiseNote or SlideCounterclockwiseNote))
-                        {
-                            AudioSampleBonus?.Play();
-                        }
-                    
-                        // R sounds
-                        if (note is IPlayable r && r.BonusType == BonusType.R)
-                        {
-                            AudioSampleR?.Play();
+                                float bonusEffectTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, note.Timestamp + effectOffset);
+
+                                if (bonusEffectTime < TimeSystem.HitsoundTime)
+                                {
+                                    PassedBonusSlides.Add(note);
+
+                                    AudioSampleBonus?.Play();
+                                }
+                            }
+
+                            if (PassedNotes.Contains(note)) continue;
+
+                            if (note.Timestamp.Time < TimeSystem.HitsoundTime)
+                            {
+                                PassedNotes.Add(note);
+
+                                // Always play guide sounds.
+                                AudioSampleGuide?.Play();
+
+                                // Touch note sounds
+                                if (note is TouchNote)
+                                {
+                                    AudioSampleTouch?.Play();
+                                }
+
+                                // Chain note sounds
+                                if (note is ChainNote)
+                                {
+                                    AudioSampleTouch?.Play();
+                                }
+
+                                // Hold start/end note sounds
+                                if (note is HoldNote or HoldPointNote)
+                                {
+                                    AudioSampleTouch?.Play();
+                                }
+
+                                // Slide note sounds
+                                if (note is SlideClockwiseNote or SlideCounterclockwiseNote)
+                                {
+                                    AudioSampleSlide?.Play();
+                                }
+
+                                // Snap note sounds
+                                if (note is SnapForwardNote or SnapBackwardNote)
+                                {
+                                    AudioSampleSlide?.Play();
+                                }
+
+                                // Bonus sounds
+                                if (note is IPlayable bonus && bonus.BonusType == BonusType.Bonus && note is not (SlideClockwiseNote or SlideCounterclockwiseNote))
+                                {
+                                    AudioSampleBonus?.Play();
+                                }
+
+                                // R sounds
+                                if (note is IPlayable r && r.BonusType == BonusType.R)
+                                {
+                                    AudioSampleR?.Play();
+                                }
+                            }
                         }
                     }
                 }

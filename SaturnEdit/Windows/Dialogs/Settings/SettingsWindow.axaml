@@ -64,23 +64,6 @@
                                                    VerticalAlignment="Center" />
                                     </Grid>
                                 </RadioButton>
-
-                                <RadioButton Name="RadioButtonAppearance"
-                                             GroupName="SettingsTabs"
-                                             Classes="Themed Accent"
-                                             CornerRadius="0"
-                                             HorizontalAlignment="Stretch"
-                                             HorizontalContentAlignment="Left"
-                                             IsCheckedChanged="SettingsTab_OnIsCheckedChanged">
-                                    <Grid ColumnDefinitions="60,190">
-                                        <icon:FluentIcon Grid.Column="0"
-                                                         Icon="Eye"
-                                                         Margin="10" />
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{DynamicResource Settings.Appearance}"
-                                                   VerticalAlignment="Center" />
-                                    </Grid>
-                                </RadioButton>
                                 
                                 <RadioButton Name="RadioButtonRendering"
                                              GroupName="SettingsTabs"
@@ -115,7 +98,6 @@
                                                    VerticalAlignment="Center" />
                                     </Grid>
                                 </RadioButton>
-
                             </StackPanel>
                         </ScrollViewer>
                     </Border>

@@ -244,83 +244,25 @@ public static class SelectionSystem
     
     public static void AttemptBoxSelection()
     {
-        if (BoxSelectArgs.GlobalStartTime == null 
-            || BoxSelectArgs.GlobalEndTime == null 
-            || BoxSelectArgs.ScaledStartTimes.Count == 0 
-            || BoxSelectArgs.ScaledEndTimes.Count == 0)
+        try
         {
-            BoxSelectArgs = new();
-            return;
-        }
-    
-        float globalMin = MathF.Min((float)BoxSelectArgs.GlobalStartTime, (float)BoxSelectArgs.GlobalEndTime);
-        float globalMax = MathF.Max((float)BoxSelectArgs.GlobalStartTime, (float)BoxSelectArgs.GlobalEndTime);
-
-        List<IOperation> operations = [];
-
-        if (EditorSystem.Mode == EditorMode.ObjectMode)
-        {
-            foreach (Event @event in ChartSystem.Chart.Events)
+            if (BoxSelectArgs.GlobalStartTime == null
+                || BoxSelectArgs.GlobalEndTime == null
+                || BoxSelectArgs.ScaledStartTimes.Count == 0
+                || BoxSelectArgs.ScaledEndTimes.Count == 0)
             {
-                if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-                if (@event.Timestamp.Time < globalMin) continue;
-                if (@event.Timestamp.Time > globalMax) continue;
-
-                if (BoxSelectArgs.NegativeSelection)
-                {
-                    if (!SelectedObjects.Contains(@event)) continue;
-                    operations.Add(new SelectionRemoveOperation(@event, LastSelectedObject));
-                }
-                else
-                {
-                    if (SelectedObjects.Contains(@event)) continue;
-                    operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
-                }
+                BoxSelectArgs = new();
+                return;
             }
 
-            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            float globalMin = MathF.Min((float)BoxSelectArgs.GlobalStartTime, (float)BoxSelectArgs.GlobalEndTime);
+            float globalMax = MathF.Max((float)BoxSelectArgs.GlobalStartTime, (float)BoxSelectArgs.GlobalEndTime);
+
+            List<IOperation> operations = [];
+
+            if (EditorSystem.Mode == EditorMode.ObjectMode)
             {
-                if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-                if (bookmark.Timestamp.Time < globalMin) continue;
-                if (bookmark.Timestamp.Time > globalMax) continue;
-
-                if (BoxSelectArgs.NegativeSelection)
-                {
-                    if (!SelectedObjects.Contains(bookmark)) continue;
-                    operations.Add(new SelectionRemoveOperation(bookmark, LastSelectedObject));
-                }
-                else
-                {
-                    if (SelectedObjects.Contains(bookmark)) continue;
-                    operations.Add(new SelectionAddOperation(bookmark, LastSelectedObject));
-                }
-            }
-
-            foreach (Note note in ChartSystem.Chart.LaneToggles)
-            {
-                if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-                if (note.Timestamp.Time < globalMin) continue;
-                if (note.Timestamp.Time > globalMax) continue;
-
-                if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
-
-                if (BoxSelectArgs.NegativeSelection)
-                {
-                    if (!SelectedObjects.Contains(note)) continue;
-                    operations.Add(new SelectionRemoveOperation(note, LastSelectedObject));
-                }
-                else
-                {
-                    if (SelectedObjects.Contains(note)) continue;
-                    operations.Add(new SelectionAddOperation(note, LastSelectedObject));
-                }
-            }
-
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            {
-                if (!layer.Visible) continue;
-                
-                foreach (Event @event in layer.Events)
+                foreach (Event @event in ChartSystem.Chart.Events)
                 {
                     if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                     if (@event.Timestamp.Time < globalMin) continue;
@@ -338,38 +280,31 @@ public static class SelectionSystem
                     }
                 }
 
-                foreach (Note note in layer.Notes)
+                foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
                 {
-                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                    if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                    if (bookmark.Timestamp.Time < globalMin) continue;
+                    if (bookmark.Timestamp.Time > globalMax) continue;
 
-                    float min = MathF.Min(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
-                    float max = MathF.Max(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
-
-                    if (note is HoldNote holdNote && holdNote.Points.Count > 1)
+                    if (BoxSelectArgs.NegativeSelection)
                     {
-                        if (holdNote.Points[^1].Timestamp.ScaledTime < min) continue;
-                        if (holdNote.Points[0].Timestamp.ScaledTime > max) continue;
-
-                        bool overlap = false;
-                        foreach (HoldPointNote point in holdNote.Points)
-                        {
-                            if (point.Timestamp.ScaledTime < min) continue;
-                            if (point.Timestamp.ScaledTime > max) continue;
-                            if (!IPositionable.IsAnyOverlap(point.Position, point.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
-
-                            overlap = true;
-                            break;
-                        }
-
-                        if (!overlap) continue;
+                        if (!SelectedObjects.Contains(bookmark)) continue;
+                        operations.Add(new SelectionRemoveOperation(bookmark, LastSelectedObject));
                     }
                     else
                     {
-                        if (note.Timestamp.ScaledTime < min) continue;
-                        if (note.Timestamp.ScaledTime > max) continue;
-
-                        if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
+                        if (SelectedObjects.Contains(bookmark)) continue;
+                        operations.Add(new SelectionAddOperation(bookmark, LastSelectedObject));
                     }
+                }
+
+                foreach (Note note in ChartSystem.Chart.LaneToggles)
+                {
+                    if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                    if (note.Timestamp.Time < globalMin) continue;
+                    if (note.Timestamp.Time > globalMax) continue;
+
+                    if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
 
                     if (BoxSelectArgs.NegativeSelection)
                     {
@@ -382,94 +317,167 @@ public static class SelectionSystem
                         operations.Add(new SelectionAddOperation(note, LastSelectedObject));
                     }
                 }
+
+                foreach (Layer layer in ChartSystem.Chart.Layers)
+                {
+                    if (!layer.Visible) continue;
+
+                    foreach (Event @event in layer.Events)
+                    {
+                        if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                        if (@event.Timestamp.Time < globalMin) continue;
+                        if (@event.Timestamp.Time > globalMax) continue;
+
+                        if (BoxSelectArgs.NegativeSelection)
+                        {
+                            if (!SelectedObjects.Contains(@event)) continue;
+                            operations.Add(new SelectionRemoveOperation(@event, LastSelectedObject));
+                        }
+                        else
+                        {
+                            if (SelectedObjects.Contains(@event)) continue;
+                            operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
+                        }
+                    }
+
+                    foreach (Note note in layer.Notes)
+                    {
+                        if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                        float min = MathF.Min(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
+                        float max = MathF.Max(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
+
+                        if (note is HoldNote holdNote && holdNote.Points.Count > 1)
+                        {
+                            if (holdNote.Points[^1].Timestamp.ScaledTime < min) continue;
+                            if (holdNote.Points[0].Timestamp.ScaledTime > max) continue;
+
+                            bool overlap = false;
+                            foreach (HoldPointNote point in holdNote.Points)
+                            {
+                                if (point.Timestamp.ScaledTime < min) continue;
+                                if (point.Timestamp.ScaledTime > max) continue;
+                                if (!IPositionable.IsAnyOverlap(point.Position, point.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
+
+                                overlap = true;
+                                break;
+                            }
+
+                            if (!overlap) continue;
+                        }
+                        else
+                        {
+                            if (note.Timestamp.ScaledTime < min) continue;
+                            if (note.Timestamp.ScaledTime > max) continue;
+
+                            if (note is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
+                        }
+
+                        if (BoxSelectArgs.NegativeSelection)
+                        {
+                            if (!SelectedObjects.Contains(note)) continue;
+                            operations.Add(new SelectionRemoveOperation(note, LastSelectedObject));
+                        }
+                        else
+                        {
+                            if (SelectedObjects.Contains(note)) continue;
+                            operations.Add(new SelectionAddOperation(note, LastSelectedObject));
+                        }
+                    }
+                }
             }
+            else if (EditorSystem.Mode == EditorMode.EditMode)
+            {
+                if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+                {
+                    Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
+
+                    if (layer == null) return;
+                    if (!layer.Visible) return;
+
+                    foreach (HoldPointNote point in holdNote.Points)
+                    {
+                        if (!RenderUtils.IsVisible(point, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                        float min = MathF.Min(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
+                        float max = MathF.Max(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
+
+                        if (point.Timestamp.ScaledTime < min) continue;
+                        if (point.Timestamp.ScaledTime > max) continue;
+
+                        if (point is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
+
+                        if (BoxSelectArgs.NegativeSelection)
+                        {
+                            if (!SelectedObjects.Contains(point)) continue;
+                            operations.Add(new SelectionRemoveOperation(point, LastSelectedObject));
+                        }
+                        else
+                        {
+                            if (SelectedObjects.Contains(point)) continue;
+                            operations.Add(new SelectionAddOperation(point, LastSelectedObject));
+                        }
+                    }
+                }
+                else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+                {
+                    Layer? layer = ChartSystem.Chart.ParentLayer(stopEffectEvent);
+
+                    if (layer == null) return;
+                    if (!layer.Visible) return;
+
+                    foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                    {
+                        if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                        if (subEvent.Timestamp.Time < globalMin) continue;
+                        if (subEvent.Timestamp.Time > globalMax) continue;
+
+                        if (BoxSelectArgs.NegativeSelection)
+                        {
+                            if (!SelectedObjects.Contains(subEvent)) continue;
+                            operations.Add(new SelectionRemoveOperation(subEvent, LastSelectedObject));
+                        }
+                        else
+                        {
+                            if (SelectedObjects.Contains(subEvent)) continue;
+                            operations.Add(new SelectionAddOperation(subEvent, LastSelectedObject));
+                        }
+                    }
+                }
+                else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
+                {
+                    Layer? layer = ChartSystem.Chart.ParentLayer(reverseEffectEvent);
+
+                    if (layer == null) return;
+                    if (!layer.Visible) return;
+
+                    foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                    {
+                        if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+                        if (subEvent.Timestamp.Time < globalMin) continue;
+                        if (subEvent.Timestamp.Time > globalMax) continue;
+
+                        if (BoxSelectArgs.NegativeSelection)
+                        {
+                            if (!SelectedObjects.Contains(subEvent)) continue;
+                            operations.Add(new SelectionRemoveOperation(subEvent, LastSelectedObject));
+                        }
+                        else
+                        {
+                            if (SelectedObjects.Contains(subEvent)) continue;
+                            operations.Add(new SelectionAddOperation(subEvent, LastSelectedObject));
+                        }
+                    }
+                }
+            }
+
+            UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
         }
-        else if (EditorSystem.Mode == EditorMode.EditMode)
+        catch (Exception ex)
         {
-            if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
-            {
-                Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
-
-                if (layer == null) return;
-                if (!layer.Visible) return;
-
-                foreach (HoldPointNote point in holdNote.Points)
-                {
-                    if (!RenderUtils.IsVisible(point, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-
-                    float min = MathF.Min(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
-                    float max = MathF.Max(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
-
-                    if (point.Timestamp.ScaledTime < min) continue;
-                    if (point.Timestamp.ScaledTime > max) continue;
-
-                    if (point is IPositionable positionable && !IPositionable.IsAnyOverlap(positionable.Position, positionable.Size, BoxSelectArgs.Position, BoxSelectArgs.Size)) continue;
-
-                    if (BoxSelectArgs.NegativeSelection)
-                    {
-                        if (!SelectedObjects.Contains(point)) continue;
-                        operations.Add(new SelectionRemoveOperation(point, LastSelectedObject));
-                    }
-                    else
-                    {
-                        if (SelectedObjects.Contains(point)) continue;
-                        operations.Add(new SelectionAddOperation(point, LastSelectedObject));
-                    }
-                }
-            }
-            else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
-            {
-                Layer? layer = ChartSystem.Chart.ParentLayer(stopEffectEvent);
-
-                if (layer == null) return;
-                if (!layer.Visible) return;
-                
-                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
-                {
-                    if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-                    if (subEvent.Timestamp.Time < globalMin) continue;
-                    if (subEvent.Timestamp.Time > globalMax) continue;
-
-                    if (BoxSelectArgs.NegativeSelection)
-                    {
-                        if (!SelectedObjects.Contains(subEvent)) continue;
-                        operations.Add(new SelectionRemoveOperation(subEvent, LastSelectedObject));
-                    }
-                    else
-                    {
-                        if (SelectedObjects.Contains(subEvent)) continue;
-                        operations.Add(new SelectionAddOperation(subEvent, LastSelectedObject));
-                    }
-                }
-            }
-            else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
-            {
-                Layer? layer = ChartSystem.Chart.ParentLayer(reverseEffectEvent);
-
-                if (layer == null) return;
-                if (!layer.Visible) return;
-                
-                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
-                {
-                    if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-                    if (subEvent.Timestamp.Time < globalMin) continue;
-                    if (subEvent.Timestamp.Time > globalMax) continue;
-
-                    if (BoxSelectArgs.NegativeSelection)
-                    {
-                        if (!SelectedObjects.Contains(subEvent)) continue;
-                        operations.Add(new SelectionRemoveOperation(subEvent, LastSelectedObject));
-                    }
-                    else
-                    {
-                        if (SelectedObjects.Contains(subEvent)) continue;
-                        operations.Add(new SelectionAddOperation(subEvent, LastSelectedObject));
-                    }
-                }
-            }
+            // Don't throw.
+            Console.WriteLine(ex);
         }
-        
-        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
         
         BoxSelectArgs = new();
     }

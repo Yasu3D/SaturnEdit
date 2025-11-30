@@ -30,6 +30,15 @@ public partial class SettingsGeneralView : UserControl
             CheckBoxContinueLastSession.IsChecked = SettingsSystem.EditorSettings.ContinueLastSession;
             ComboBoxAutosaveFrequency.SelectedIndex = (int)SettingsSystem.EditorSettings.AutoSaveFrequency;
             
+            if (SettingsSystem.EditorSettings.Theme == EditorSettings.EditorThemeOption.Light)
+            {
+                RadioButtonThemeLight.IsChecked = true;
+            }
+            else
+            {
+                RadioButtonThemeDark.IsChecked = true;
+            }
+            
             blockEvents = false;
         });
     }
@@ -66,6 +75,21 @@ public partial class SettingsGeneralView : UserControl
         if (ComboBoxAutosaveFrequency == null) return;
         
         SettingsSystem.EditorSettings.AutoSaveFrequency = (EditorSettings.AutoSaveFrequencyOption)ComboBoxAutosaveFrequency.SelectedIndex;
+    }
+    
+    private void RadioButtonTheme_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (RadioButtonThemeLight == null || RadioButtonThemeDark == null) return;
+        if (sender is not RadioButton button) return;
+        if (!button.IsChecked ?? false) return;
+        
+        SettingsSystem.EditorSettings.Theme = button.Name switch
+        {
+            "RadioButtonThemeLight" => EditorSettings.EditorThemeOption.Light,
+            "RadioButtonThemeDark" => EditorSettings.EditorThemeOption.Dark,
+            _ => SettingsSystem.EditorSettings.Theme,
+        };
     }
 #endregion UI Event Handlers
 }

@@ -7,7 +7,7 @@
              d:DesignHeight="400"
              Background="{DynamicResource BackgroundPrimary}"
              x:Class="SaturnEdit.Windows.Main.ChartEditor.Tabs.ChartStatisticsView">
-    <Grid ColumnDefinitions="20,*">
+    <Grid ColumnDefinitions="20,1,*">
         <StackPanel Grid.Column="0"
                     Name="StackPanelGraph">
             <Border Name="GraphTouchNote" HorizontalAlignment="Stretch"
@@ -122,7 +122,10 @@
             </Border>
         </StackPanel>
         
-        <ScrollViewer Grid.Column="1">
+        <Rectangle Grid.Column="1"
+                   Fill="{DynamicResource SeparatorSecondary}"/>
+        
+        <ScrollViewer Grid.Column="2">
             <StackPanel Margin="10,10,26,10"
                         Spacing="5">
 

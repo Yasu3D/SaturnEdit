@@ -339,7 +339,7 @@ public partial class ChartView3D : UserControl
         Dispatcher.UIThread.Post(() =>
         {
             blockEvents = true;
-
+            
             MenuItemShowSpeedChanges.IsChecked = SettingsSystem.RenderSettings.ShowSpeedChanges;
             MenuItemShowVisibilityChanges.IsChecked = SettingsSystem.RenderSettings.ShowVisibilityChanges;
             MenuItemShowLaneToggleAnimations.IsChecked = SettingsSystem.RenderSettings.ShowLaneToggleAnimations;
@@ -383,11 +383,15 @@ public partial class ChartView3D : UserControl
             MenuItemShowGoodArea.IsEnabled = MenuItemShowJudgeAreas.IsChecked;
 
             blockEvents = false;
-        
+            
             TextBlockShortcutEditType.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditType"].ToString();
             TextBlockShortcutEditShape.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.EditShape"].ToString();
             TextBlockShortcutDeleteSelection.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.DeleteSelection"].ToString();
             TextBlockShortcutInsertNote.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Toolbar.Insert"].ToString();
+
+            TextBlockShortcutMode.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.AutoMode"].ToString();
+            TextBlockShortcutObjectMode.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.ObjectMode"].ToString();
+            TextBlockShortcutEditMode.Text = SettingsSystem.ShortcutSettings.Shortcuts["Editor.EditMode"].ToString();
             
             MenuItemAddTempoChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.TempoChange"].ToKeyGesture();
             MenuItemAddMetreChange.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Insert.MetreChange"].ToKeyGesture();
@@ -474,7 +478,7 @@ public partial class ChartView3D : UserControl
         
         Dispatcher.UIThread.Post(() =>
         {
-            ComboBoxEditMode.SelectedIndex = EditorSystem.Mode switch
+            ComboBoxMode.SelectedIndex = EditorSystem.Mode switch
             {
                 EditorMode.ObjectMode => 0,
                 EditorMode.EditMode => 1,
@@ -489,7 +493,7 @@ public partial class ChartView3D : UserControl
     {
         Dispatcher.UIThread.Post(() =>
         {
-            ComboBoxEditMode.SelectedIndex = EditorSystem.Mode switch
+            ComboBoxMode.SelectedIndex = EditorSystem.Mode switch
             {
                 EditorMode.ObjectMode => 0,
                 EditorMode.EditMode => 1,
@@ -1253,9 +1257,9 @@ public partial class ChartView3D : UserControl
     private void ComboBoxEditMode_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
-        if (ComboBoxEditMode == null) return;
+        if (ComboBoxMode == null) return;
 
-        Task.Run(() => EditorSystem.ChangeEditMode((EditorMode)ComboBoxEditMode.SelectedIndex));
+        Task.Run(() => EditorSystem.ChangeEditMode((EditorMode)ComboBoxMode.SelectedIndex));
     }
     
     private void MenuItemSettings_OnClick(object? sender, RoutedEventArgs e)

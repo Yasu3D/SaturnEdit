@@ -126,19 +126,34 @@
             <Grid ColumnDefinitions="250,*"
                   Margin="0,20,0,10">
                 <TextBlock Grid.Column="0"
-                           Text="{DynamicResource Settings.Rendering.HiddenOpacity}"
+                           Text="{DynamicResource Settings.Rendering.NoteThickness}"
                            VerticalAlignment="Center"
                            Margin="0,0,10,0" />
-                <NumericUpDown Grid.Column="1"
-                               Name="NumericUpDownHiddenOpacity"
-                               HorizontalAlignment="Left"
-                               Width="170"
-                               Minimum="0.0"
-                               Maximum="1.0"
-                               Increment="0.1"
-                               Value="0.1"
-                               FormatString="F1" 
-                               ValueChanged="NumericUpDownHiddenOpacity_OnValueChanged"/>
+                <ComboBox Grid.Column="1"
+                          Name="ComboBoxNoteThickness"
+                          HorizontalAlignment="Left"
+                          Width="170"
+                          SelectedIndex="2"
+                          SelectionChanged="ComboBoxNoteThickness_OnSelectionChanged">
+                    <ComboBoxItem Content="1" />
+                    <ComboBoxItem Content="2" />
+                    <ComboBoxItem Content="3" />
+                    <ComboBoxItem Content="4" />
+                    <ComboBoxItem Content="5" />
+                </ComboBox>
+            </Grid>
+            
+            <!-- Visibility -->
+            <Grid ColumnDefinitions="Auto,*"
+                  Margin="0,40,0,20">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.Visibility}"
+                           Margin="0,0,20,0" />
+                <Rectangle Grid.Column="1"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Center"
+                           Height="1"
+                           Fill="{DynamicResource SeparatorPrimary}" />
             </Grid>
             
             <Grid ColumnDefinitions="250,*"
@@ -158,6 +173,24 @@
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.OnlyWhenPlaying}" />
                     <ComboBoxItem Content="{DynamicResource Settings.Rendering.EffectVisibility.OnlyWhenPaused}" />
                 </ComboBox>
+            </Grid>
+            
+            <Grid ColumnDefinitions="250,*"
+                  Margin="0,0,0,10">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Rendering.HiddenOpacity}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <NumericUpDown Grid.Column="1"
+                               Name="NumericUpDownHiddenOpacity"
+                               HorizontalAlignment="Left"
+                               Width="170"
+                               Minimum="0.0"
+                               Maximum="1.0"
+                               Increment="0.1"
+                               Value="0.1"
+                               FormatString="F1" 
+                               ValueChanged="NumericUpDownHiddenOpacity_OnValueChanged"/>
             </Grid>
             
             <Grid ColumnDefinitions="250,*"
@@ -288,11 +321,11 @@
                 </ComboBox>
             </Grid>
             
-            <!-- Notes -->
+            <!-- Colors -->
             <Grid ColumnDefinitions="Auto,*"
                   Margin="0,40,0,20">
                 <TextBlock Grid.Column="0"
-                           Text="{DynamicResource Settings.Rendering.Notes}"
+                           Text="{DynamicResource Settings.Rendering.Colors}"
                            Margin="0,0,20,0" />
                 <Rectangle Grid.Column="1"
                            HorizontalAlignment="Stretch"
@@ -301,25 +334,7 @@
                            Fill="{DynamicResource SeparatorPrimary}" />
             </Grid>
 
-            <Grid ColumnDefinitions="250,*"
-                  Margin="0,0,0,10">
-                <TextBlock Grid.Column="0"
-                           Text="{DynamicResource Settings.Rendering.NoteThickness}"
-                           VerticalAlignment="Center"
-                           Margin="0,0,10,0" />
-                <ComboBox Grid.Column="1"
-                          Name="ComboBoxNoteThickness"
-                          HorizontalAlignment="Left"
-                          Width="170"
-                          SelectedIndex="2"
-                          SelectionChanged="ComboBoxNoteThickness_OnSelectionChanged">
-                    <ComboBoxItem Content="1" />
-                    <ComboBoxItem Content="2" />
-                    <ComboBoxItem Content="3" />
-                    <ComboBoxItem Content="4" />
-                    <ComboBoxItem Content="5" />
-                </ComboBox>
-            </Grid>
+            
 
             <Grid ColumnDefinitions="250,*"
                   Margin="0,0,0,10">
