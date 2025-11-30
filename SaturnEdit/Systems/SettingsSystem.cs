@@ -186,7 +186,7 @@ public class EditorSettings
         // ReSharper disable InconsistentNaming
         en_US = 0,
         ja_JP = 1,
-        cmn_CN = 2,
+        zh_CN = 2,
         // ReSharper restore InconsistentNaming
     }
     
