@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
@@ -19,6 +20,32 @@ public partial class ProofreaderCriteriaWindow : Window
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
     public Main.ChartEditor.Tabs.ProofreaderCriteria Criteria = new();
 
+    private bool blockEvents = false;
+    
+#region Methods
+    public void SetCriteria(Main.ChartEditor.Tabs.ProofreaderCriteria criteria)
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
+            
+            CheckBoxStrictNoteSizeMer.IsChecked = criteria.StrictNoteSizeMer;
+            CheckBoxStrictNoteSizeSat.IsChecked = criteria.StrictNoteSizeSat;
+            CheckBoxStrictBonusTypeMer.IsChecked = criteria.StrictBonusTypeMer;
+            CheckBoxOverlappingNotesStrict.IsChecked = criteria.OverlappingNotesStrict;
+            CheckBoxOverlappingNotesLenient.IsChecked = criteria.OverlappingNotesLenient;
+            CheckBoxAmbiguousHoldNoteDefinition.IsChecked = criteria.AmbiguousHoldNoteDefinition;
+            CheckBoxEffectsOnLowers.IsChecked = criteria.EffectsOnLowers;
+            CheckBoxInvalidEffectsMer.IsChecked = criteria.InvalidEffectsMer;
+            CheckBoxInvalidLaneToggles.IsChecked = criteria.InvalidLaneToggles;
+            CheckBoxNotesDuringReverse.IsChecked = criteria.NotesDuringReverse;
+            CheckBoxObjectsAfterChartEnd.IsChecked = criteria.ObjectsAfterChartEnd;
+
+            blockEvents = false;
+        });
+    }
+#endregion Methods
+    
 #region UI Event Handlers
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
@@ -44,18 +71,20 @@ public partial class ProofreaderCriteriaWindow : Window
     
     private void CheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
+        if (blockEvents) return;
         if (sender is not CheckBox checkBox) return;
         
-        if      (checkBox == CheckBoxStrictNoteSizeMer)       { Criteria.StrictNoteSizeMer       = checkBox.IsChecked ?? false; }
-        else if (checkBox == CheckBoxStrictNoteSizeSat)       { Criteria.StrictNoteSizeSat       = checkBox.IsChecked ?? false; }
-        else if (checkBox == CheckBoxStrictBonusTypeMer)      { Criteria.StrictBonusTypeMer      = checkBox.IsChecked ?? false; }
-        else if (checkBox == CheckBoxOverlappingNotesStrict)  { Criteria.OverlappingNotesStrict  = checkBox.IsChecked ?? false; }
-        else if (checkBox == CheckBoxOverlappingNotesLenient) { Criteria.OverlappingNotesLenient = checkBox.IsChecked ?? false; }
-        else if (checkBox == CheckBoxEffectsOnLowers)         { Criteria.EffectsOnLowers         = checkBox.IsChecked ?? false; }
-        else if (checkBox == CheckBoxInvalidEffects)          { Criteria.InvalidEffectsMer       = checkBox.IsChecked ?? false; }
-        else if (checkBox == CheckBoxInvalidLaneToggles)      { Criteria.InvalidLaneToggles      = checkBox.IsChecked ?? false; }
-        else if (checkBox == CheckBoxNotesDuringReverse)      { Criteria.NotesDuringReverse      = checkBox.IsChecked ?? false; }
-        else if (checkBox == CheckBoxObjectsAfterChartEnd)    { Criteria.ObjectsAfterChartEnd    = checkBox.IsChecked ?? false; }
+        if      (checkBox == CheckBoxStrictNoteSizeMer)           { Criteria.StrictNoteSizeMer           = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxStrictNoteSizeSat)           { Criteria.StrictNoteSizeSat           = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxStrictBonusTypeMer)          { Criteria.StrictBonusTypeMer          = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxOverlappingNotesStrict)      { Criteria.OverlappingNotesStrict      = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxOverlappingNotesLenient)     { Criteria.OverlappingNotesLenient     = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxAmbiguousHoldNoteDefinition) { Criteria.AmbiguousHoldNoteDefinition = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxEffectsOnLowers)             { Criteria.EffectsOnLowers             = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxInvalidEffectsMer)           { Criteria.InvalidEffectsMer           = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxInvalidLaneToggles)          { Criteria.InvalidLaneToggles          = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxNotesDuringReverse)          { Criteria.NotesDuringReverse          = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxObjectsAfterChartEnd)        { Criteria.ObjectsAfterChartEnd        = checkBox.IsChecked ?? false; }
     }
     
     private void ButtonSave_OnClick(object? sender, RoutedEventArgs e)

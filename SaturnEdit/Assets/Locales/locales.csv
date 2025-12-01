@@ -156,6 +156,7 @@ ChartEditor.Proofreader.Problem.StrictNoteSizeMer,Note Size does not conform to 
 ChartEditor.Proofreader.Problem.StrictNoteSizeSat,Note Size does not conform to SAT standard.,-,-,SAT must stay as 'SAT'.
 ChartEditor.Proofreader.Problem.StrictBonusTypeMer,Note ,-,-,-
 ChartEditor.Proofreader.Problem.OverlappingNotes,Note overlaps with another note.,-,-,-
+ChartEditor.Proofreader.Problem.AmbiguousHoldNoteDefinition,Direction of Hold Note is ambiguous. Hold Points should not be directly opposite of each other.,-,-,-
 ChartEditor.Proofreader.Problem.EffectsOnLowers,Lower difficulties should avoid effects.,-,-,-
 ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect,MER standard does not support Speed Changes before a Stop Effect.,-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Problem.SpeedChangeTooClose,MER standard does not support Speed Changes less than 1/16th apart.,-,-,MER must stay as 'MER'.
@@ -170,8 +171,9 @@ ChartEditor.Proofreader.Criteria.StrictNoteSizeSat,Strict Note Size (SAT),-,-,SA
 ChartEditor.Proofreader.Criteria.StrictBonusTypeMer,Strict Bonus Type (MER),-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Criteria.OverlappingNotesStrict,Overlapping Notes (Strict),-,-,-
 ChartEditor.Proofreader.Criteria.OverlappingNotesLenient,Overlapping Notes (Lenient),-,-,-
+ChartEditor.Proofreader.Criteria.AmbiguousHoldNoteDefinition,Ambiguous Hold Note Definition,-,-,-
 ChartEditor.Proofreader.Criteria.EffectsOnLowers,Effects on Lowers,-,-,Effect as in Speed Change/Visibility Change/Stop Effect/Reverse Effect events.
-ChartEditor.Proofreader.Criteria.InvalidEffects,Invalid Effects,-,-,Effect as in Stop Effect/Reverse Effect events.
+ChartEditor.Proofreader.Criteria.InvalidEffectsMer,Invalid Effects (MER),-,-,Effect as in Stop Effect/Reverse Effect events.
 ChartEditor.Proofreader.Criteria.InvalidLaneToggles,Invalid Lane Toggles,-,-,-
 ChartEditor.Proofreader.Criteria.NotesDuringReverse,Notes during Reverse,-,-,-
 ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd,Objects after Chart End,-,-,-

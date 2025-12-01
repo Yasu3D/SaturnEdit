@@ -159,6 +159,7 @@
     <system:String x:Key="ChartEditor.Proofreader.Problem.StrictNoteSizeSat">Note Size does not conform to SAT standard.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.StrictBonusTypeMer">Note </system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.OverlappingNotes">Note overlaps with another note.</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Problem.AmbiguousHoldNoteDefinition">Direction of Hold Note is ambiguous. Hold Points should not be directly opposite of each other.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.EffectsOnLowers">Lower difficulties should avoid effects.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect">MER standard does not support Speed Changes before a Stop Effect.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.SpeedChangeTooClose">MER standard does not support Speed Changes less than 1/16th apart.</system:String>
@@ -173,8 +174,9 @@
     <system:String x:Key="ChartEditor.Proofreader.Criteria.StrictBonusTypeMer">Strict Bonus Type (MER)</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.OverlappingNotesStrict">Overlapping Notes (Strict)</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.OverlappingNotesLenient">Overlapping Notes (Lenient)</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.AmbiguousHoldNoteDefinition">Ambiguous Hold Note Definition</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.EffectsOnLowers">Effects on Lowers</system:String>
-    <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidEffects">Invalid Effects</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidEffectsMer">Invalid Effects (MER)</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidLaneToggles">Invalid Lane Toggles</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.NotesDuringReverse">Notes during Reverse</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd">Objects after Chart End</system:String>

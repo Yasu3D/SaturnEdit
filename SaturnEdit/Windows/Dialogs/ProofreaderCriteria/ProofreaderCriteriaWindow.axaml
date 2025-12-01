@@ -5,10 +5,10 @@
         xmlns:controls="clr-namespace:SaturnEdit.Controls"
         mc:Ignorable="d"
         d:DesignWidth="450"
-        d:DesignHeight="500"
+        d:DesignHeight="530"
         x:Class="SaturnEdit.Windows.Dialogs.ProofreaderCriteria.ProofreaderCriteriaWindow"
         Width="450"
-        Height="500"
+        Height="530"
         CanResize="False"
         Focusable="True"
         Title="{DynamicResource ChartEditor.Proofreader.Criteria.Title}"
@@ -75,6 +75,14 @@
                            VerticalAlignment="Center"
                            Margin="10,0,0,0" />
             </StackPanel>
+            
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxAmbiguousHoldNoteDefinition"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.AmbiguousHoldNoteDefinition}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
 
             <StackPanel Orientation="Horizontal">
                 <CheckBox Name="CheckBoxEffectsOnLowers"
@@ -85,9 +93,9 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <CheckBox Name="CheckBoxInvalidEffects"
+                <CheckBox Name="CheckBoxInvalidEffectsMer"
                           IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
-                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.InvalidEffects}"
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.InvalidEffectsMer}"
                            VerticalAlignment="Center"
                            Margin="10,0,0,0" />
             </StackPanel>

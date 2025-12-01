@@ -30,21 +30,23 @@ public partial class ProofreaderView : UserControl
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
+        ChartSystem.ChartLoaded += OnChartLoaded;
+        
         ProofreadChanged += OnProofreadChanged;
         OnProofreadChanged(null, EventArgs.Empty);
     }
-    
+
     private static event EventHandler? ProofreadChanged;
     
     private static ProofreaderCriteria criteria = new();
-    private static List<ProofreaderProblem> problems = [];
+    private static readonly List<ProofreaderProblem> Problems = [];
     
     private bool blockEvents = false;
 
 #region Methods
     private void RunProofreader()
     {
-        problems.Clear();
+        Problems.Clear();
 
         if (criteria.StrictNoteSizeMer)
         {
@@ -82,7 +84,7 @@ public partial class ProofreaderView : UserControl
 
                 if (positionable.Size >= minSize) continue;
                 
-                problems.Add(new()
+                Problems.Add(new()
                 {
                     Measure = note.Timestamp.Measure,
                     Tick = note.Timestamp.Tick,
@@ -102,7 +104,7 @@ public partial class ProofreaderView : UserControl
                 if (note is not IPlayable) continue;
                 if (positionable.Size > 2) continue;
                 
-                problems.Add(new()
+                Problems.Add(new()
                 {
                     Measure = note.Timestamp.Measure,
                     Tick = note.Timestamp.Tick,
@@ -124,7 +126,7 @@ public partial class ProofreaderView : UserControl
                 if (playable.BonusType != BonusType.Bonus) continue;
                 if (note is TouchNote or SlideClockwiseNote or SlideCounterclockwiseNote) continue;
                 
-                problems.Add(new()
+                Problems.Add(new()
                 {
                     Measure = note.Timestamp.Measure,
                     Tick = note.Timestamp.Tick,
@@ -170,7 +172,7 @@ public partial class ProofreaderView : UserControl
 
                     if (!IPositionable.IsAnyOverlap((IPositionable)root, (IPositionable)compare)) continue;
                     
-                    problems.Add(new()
+                    Problems.Add(new()
                     {
                         Measure = compare.Timestamp.Measure,
                         Tick = compare.Timestamp.Tick,
@@ -183,12 +185,43 @@ public partial class ProofreaderView : UserControl
             }
         }
 
+        if (criteria.AmbiguousHoldNoteDefinition)
+        {
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            foreach (Note note in layer.Notes)
+            {
+                if (note is not HoldNote holdNote) continue;
+                if (holdNote.Points.Count < 2) continue;
+
+                for (int i = 1; i < holdNote.Points.Count; i++)
+                {
+                    HoldPointNote previousPoint = holdNote.Points[i - 1];
+                    HoldPointNote currentPoint = holdNote.Points[i];
+
+                    int previousCenter = previousPoint.Position * 2 + previousPoint.Size;
+                    int currentCenter = currentPoint.Position * 2 + currentPoint.Size;
+
+                    if (Math.Abs(previousCenter - currentCenter) != 60) continue;
+                    
+                    Problems.Add(new()
+                    {
+                        Measure = previousPoint.Timestamp.Measure,
+                        Tick = previousPoint.Timestamp.Tick,
+                        Position = previousPoint.Position,
+                        Size = previousPoint.Size,
+                        ProblemKey = "ChartEditor.Proofreader.Problem.AmbiguousHoldNoteDefinition",
+                        TypeKey = typeKey(previousPoint),
+                    });
+                }
+            }
+        }
+        
         if (criteria.EffectsOnLowers && ChartSystem.Entry.Difficulty is Difficulty.Normal or Difficulty.Hard)
         {
             foreach (Layer layer in ChartSystem.Chart.Layers)
             foreach (Event @event in layer.Events)
             {
-                problems.Add(new()
+                Problems.Add(new()
                 {
                     Measure = @event.Timestamp.Measure,
                     Tick = @event.Timestamp.Tick,
@@ -219,7 +252,7 @@ public partial class ProofreaderView : UserControl
 
                     if (@event is SpeedChangeEvent && lastStop != null)
                     {
-                        problems.Add(new()
+                        Problems.Add(new()
                         {
                             Measure = @event.Timestamp.Measure,
                             Tick = @event.Timestamp.Tick,
@@ -235,7 +268,7 @@ public partial class ProofreaderView : UserControl
             foreach (Layer layer in ChartSystem.Chart.Layers)
             foreach (Event @event in layer.Events)
             {
-                problems.Add(new()
+                Problems.Add(new()
                 {
                     Measure = @event.Timestamp.Measure,
                     Tick = @event.Timestamp.Tick,
@@ -260,7 +293,7 @@ public partial class ProofreaderView : UserControl
                     if (delta == 0) continue;
                     if (delta >= 120) continue;
                     
-                    problems.Add(new()
+                    Problems.Add(new()
                     {
                         Measure = previous.Timestamp.Measure,
                         Tick = previous.Timestamp.Tick,
@@ -279,7 +312,7 @@ public partial class ProofreaderView : UserControl
                 if (@event is not SpeedChangeEvent) continue;
                 if (@event.Timestamp.FullTick >= 240) continue;
                 
-                problems.Add(new()
+                Problems.Add(new()
                 {
                     Measure = @event.Timestamp.Measure,
                     Tick = @event.Timestamp.Tick,
@@ -298,7 +331,7 @@ public partial class ProofreaderView : UserControl
                 if (speedChangeEvent.Speed == 0) continue;
                 if (Math.Abs(speedChangeEvent.Speed) >= 0.1) continue;
                 
-                problems.Add(new()
+                Problems.Add(new()
                 {
                     Measure = @event.Timestamp.Measure,
                     Tick = @event.Timestamp.Tick,
@@ -315,16 +348,21 @@ public partial class ProofreaderView : UserControl
             for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
             {
                 Note current = ChartSystem.Chart.LaneToggles[i];
-                float sweepEnd = current.Timestamp.Time + ILaneToggle.SweepDuration(((ILaneToggle)current).Direction, ((IPositionable)current).Size);
+                if (current is not IPositionable currentPositionable) continue;
+                
+                float sweepEnd = current.Timestamp.Time + ILaneToggle.SweepDuration(((ILaneToggle)currentPositionable).Direction, currentPositionable.Size);
                 
                 for (int j = i + 1; j < ChartSystem.Chart.LaneToggles.Count; j++)
                 {
                     Note next = ChartSystem.Chart.LaneToggles[j];
 
+                    if (next is not IPositionable nextPositionable) continue;
+                    if (!IPositionable.IsAnyOverlap(currentPositionable, nextPositionable)) continue;
+                    
                     if (next.Timestamp.Time < current.Timestamp.Time) continue;
                     if (next.Timestamp.Time >= sweepEnd) break;
                     
-                    problems.Add(new()
+                    Problems.Add(new()
                     {
                         Measure = next.Timestamp.Measure,
                         Tick = next.Timestamp.Tick,
@@ -359,7 +397,7 @@ public partial class ProofreaderView : UserControl
                         if (note.Timestamp.FullTick < reverse.SubEvents[0].Timestamp.FullTick) continue;
                         if (note.Timestamp.FullTick > reverse.SubEvents[1].Timestamp.FullTick) continue;
                         
-                        problems.Add(new()
+                        Problems.Add(new()
                         {
                             Measure = note.Timestamp.Measure,
                             Tick = note.Timestamp.Tick,
@@ -380,7 +418,7 @@ public partial class ProofreaderView : UserControl
             {
                 if (@event.Timestamp.FullTick < ChartSystem.Entry.ChartEnd.FullTick) continue;
                 
-                problems.Add(new()
+                Problems.Add(new()
                 {
                     Measure = @event.Timestamp.Measure,
                     Tick = @event.Timestamp.Tick,
@@ -395,7 +433,7 @@ public partial class ProofreaderView : UserControl
             {
                 if (laneToggle.Timestamp.FullTick < ChartSystem.Entry.ChartEnd.FullTick) continue;
                 
-                problems.Add(new()
+                Problems.Add(new()
                 {
                     Measure = laneToggle.Timestamp.Measure,
                     Tick = laneToggle.Timestamp.Tick,
@@ -412,7 +450,7 @@ public partial class ProofreaderView : UserControl
                 {
                     if (@event.Timestamp.FullTick < ChartSystem.Entry.ChartEnd.FullTick) continue;
                 
-                    problems.Add(new()
+                    Problems.Add(new()
                     {
                         Measure = @event.Timestamp.Measure,
                         Tick = @event.Timestamp.Tick,
@@ -437,7 +475,7 @@ public partial class ProofreaderView : UserControl
                         size = positionable.Size;
                     }
                     
-                    problems.Add(new()
+                    Problems.Add(new()
                     {
                         Measure = note.Timestamp.Measure,
                         Tick = note.Timestamp.Tick,
@@ -488,9 +526,9 @@ public partial class ProofreaderView : UserControl
         {
             blockEvents = true;
             
-            for (int i = 0; i < problems.Count; i++)
+            for (int i = 0; i < Problems.Count; i++)
             {
-                ProofreaderProblem problem = problems[i];
+                ProofreaderProblem problem = Problems[i];
                 
                 if (i < ListBoxProblems.Items.Count)
                 {
@@ -510,9 +548,9 @@ public partial class ProofreaderView : UserControl
             }
             
             // Delete redundant items.
-            for (int i = ListBoxProblems.Items.Count - 1; i >= problems.Count; i--)
+            for (int i = ListBoxProblems.Items.Count - 1; i >= Problems.Count; i--)
             {
-                if (ListBoxProblems.Items[i] is not EventListItem item) continue;
+                if (ListBoxProblems.Items[i] is not ProofreaderProblemItem item) continue;
                 
                 ListBoxProblems.Items.Remove(item);
             }
@@ -529,6 +567,12 @@ public partial class ProofreaderView : UserControl
         {
             TextBlockShortcutRunProofreader.Text = SettingsSystem.ShortcutSettings.Shortcuts["Proofreader.Run"].ToString();
         });
+    }
+    
+    private void OnChartLoaded(object? sender, EventArgs e)
+    {
+        Problems.Clear();
+        UpdateProblems();
     }
     
     private void OnProofreadChanged(object? sender, EventArgs e)
@@ -564,6 +608,8 @@ public partial class ProofreaderView : UserControl
 
             ProofreaderCriteriaWindow proofreaderCriteriaWindow = new();
             proofreaderCriteriaWindow.Position = MainWindow.DialogPopupPosition(proofreaderCriteriaWindow.Width, proofreaderCriteriaWindow.Height);
+
+            proofreaderCriteriaWindow.SetCriteria(criteria);
             
             await proofreaderCriteriaWindow.ShowDialog(window);
 
@@ -599,6 +645,7 @@ public struct ProofreaderCriteria()
     public bool StrictBonusTypeMer = false;
     public bool OverlappingNotesLenient = true;
     public bool OverlappingNotesStrict = false;
+    public bool AmbiguousHoldNoteDefinition = true;
     public bool EffectsOnLowers = true;
     public bool InvalidEffectsMer = false;
     public bool InvalidLaneToggles = true;

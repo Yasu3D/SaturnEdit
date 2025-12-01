@@ -159,6 +159,7 @@
     <system:String x:Key="ChartEditor.Proofreader.Problem.StrictNoteSizeSat">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.StrictBonusTypeMer">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.OverlappingNotes">-</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Problem.AmbiguousHoldNoteDefinition">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.EffectsOnLowers">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.SpeedChangeTooClose">-</system:String>
@@ -173,8 +174,9 @@
     <system:String x:Key="ChartEditor.Proofreader.Criteria.StrictBonusTypeMer">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.OverlappingNotesStrict">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.OverlappingNotesLenient">-</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.AmbiguousHoldNoteDefinition">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.EffectsOnLowers">-</system:String>
-    <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidEffects">-</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidEffectsMer">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidLaneToggles">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.NotesDuringReverse">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd">-</system:String>
