@@ -96,8 +96,18 @@ public static class TimeSystem
         set
         {
             if (division == value) return;
+
+            int newDivision = Math.Clamp(value, 1, 1920);
             
-            division = Math.Clamp(value, 1, 1920);
+            int measure = Timestamp.Measure;
+            int beat = Timestamp.Tick / DivisionInterval;
+
+            decimal t = (decimal)beat / division;
+            int adjustedBeat = (int)(t * value);
+            
+            division = newDivision;
+            SeekMeasureTick(measure, adjustedBeat * DivisionInterval);
+            
             DivisionChanged?.Invoke(null, EventArgs.Empty);
         }
     }
@@ -141,15 +151,16 @@ public static class TimeSystem
     }
     private static float loopEnd = -1;
     
-    public const float TickInterval = 1000.0f / 120.0f;
+    public const float UpdateInterval = 1000.0f / 120.0f;
     public const int DefaultDivision = 8;
     
-    public static readonly Timer UpdateTimer = new(UpdateTimer_OnTick, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(TickInterval));
+    public static readonly Timer UpdateTimer = new(UpdateTimer_OnTick, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(UpdateInterval));
 
 #region Methods
     public static void SeekMeasureTick(int measure, int tick)
     {
-        SeekFullTick(measure * 1920 + tick);
+        int fullTick = Math.Max(0, measure * 1920 + tick);
+        SeekFullTick(fullTick);
     }
     
     public static void SeekFullTick(int fullTick)
@@ -217,12 +228,41 @@ public static class TimeSystem
     
     public static void Navigate_MoveBeatForward()
     {
-        SeekFullTick(Timestamp.FullTick + DivisionInterval);
+        int measure = Timestamp.Measure;
+        int beat = Timestamp.Tick / DivisionInterval + 1;
+
+        if (beat == Division)
+        {
+            measure++;
+            beat = 0;
+        }
+
+        int tick = beat * DivisionInterval;
+        
+        SeekMeasureTick(measure, tick);
     }
     
     public static void Navigate_MoveBeatBack()
     {
-        SeekFullTick(Math.Max(0, Timestamp.FullTick - DivisionInterval));
+        int measure = Timestamp.Measure;
+        int beat = Timestamp.Tick / DivisionInterval - 1;
+
+        if (beat == -1)
+        {
+            if (measure == 0)
+            {
+                beat = 0;
+            }
+            else
+            {
+                measure = Math.Max(0, measure - 1);
+                beat = Division - 1;
+            }
+        }
+        
+        int tick = beat * DivisionInterval;
+        
+        SeekMeasureTick(measure, tick);
     }
     
     public static void Navigate_MoveMeasureForward()
@@ -551,7 +591,7 @@ public static class TimeSystem
         {
             // AudioSystem isn't playing audio, or there's no loaded audio.
             // Keep counting up with UpdateTimer, and synchronise the AudioTimer to it.
-            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, Timestamp.Time + TickInterval * PlaybackSpeed * 0.01f, Division);
+            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, Timestamp.Time + UpdateInterval * PlaybackSpeed * 0.01f, Division);
             if (AudioSystem.AudioChannelAudio != null) AudioSystem.AudioChannelAudio.Position = AudioTime;
         }
         else

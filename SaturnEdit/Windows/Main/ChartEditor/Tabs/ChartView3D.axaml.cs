@@ -1172,14 +1172,14 @@ public partial class ChartView3D : UserControl
         {
             if (e.Delta.Y <= 0) return;
             
-            TimeSystem.SeekFullTick(TimeSystem.Timestamp.FullTick + TimeSystem.DivisionInterval);
+            TimeSystem.Navigate_MoveBeatForward();
         }
 
         void onScrollDown()
         {
             if (e.Delta.Y >= 0) return;
             
-            TimeSystem.SeekFullTick(Math.Max(0, TimeSystem.Timestamp.FullTick - TimeSystem.DivisionInterval));
+            TimeSystem.Navigate_MoveBeatBack();
         }
     }
 

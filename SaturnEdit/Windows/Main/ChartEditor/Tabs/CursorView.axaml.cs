@@ -129,15 +129,17 @@ public partial class CursorView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
 
-        int measure = (int?)NumericUpDownMeasure.Value ?? 0;
-        int beat = (int?)NumericUpDownBeat.Value ?? 0;
-        int division = (int?)NumericUpDownDivision.Value ?? TimeSystem.DefaultDivision;
-        
-        decimal t = (decimal)beat / TimeSystem.Division;
-        int readjustedBeat = (int)(t * division);
-        
-        TimeSystem.Division = division;
-        TimeSystem.SeekMeasureTick(measure, readjustedBeat * TimeSystem.DivisionInterval);
+        TimeSystem.Division = (int?)NumericUpDownDivision.Value ?? TimeSystem.DefaultDivision;
+
+        // int measure = (int?)NumericUpDownMeasure.Value ?? 0;
+        // int beat = (int?)NumericUpDownBeat.Value ?? 0;
+        // int division = (int?)NumericUpDownDivision.Value ?? TimeSystem.DefaultDivision;
+        //
+        // decimal t = (decimal)beat / TimeSystem.Division;
+        // int readjustedBeat = (int)(t * division);
+        //
+        // TimeSystem.Division = division;
+        // TimeSystem.SeekMeasureTick(measure, readjustedBeat * TimeSystem.DivisionInterval);
     }
 #endregion UI Event Handlers
 }

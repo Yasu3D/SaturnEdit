@@ -232,7 +232,7 @@ public static class AudioSystem
                     // Fade out audio when no hold is active.
                     if (AudioChannelHold.Volume > 0)
                     {
-                        holdLoopVolumeMultiplier = Math.Max(0, holdLoopVolumeMultiplier - TimeSystem.TickInterval * 0.004f);
+                        holdLoopVolumeMultiplier = Math.Max(0, holdLoopVolumeMultiplier - TimeSystem.UpdateInterval * 0.004f);
                     }
                     else
                     {
