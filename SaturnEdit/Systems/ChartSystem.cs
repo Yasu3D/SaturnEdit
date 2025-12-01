@@ -207,6 +207,7 @@ public static class ChartSystem
         Entry.NotesDesigner = "";
         Entry.Revision = "";
         Entry.Id = Entry.NewId;
+        Entry.FormatVersion = FormatVersion.SatV3;
 
         IEnumerable<Event> events = Chart.Events.Where(x => x is TempoChangeEvent or MetreChangeEvent);
         
