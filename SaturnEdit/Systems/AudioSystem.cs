@@ -105,7 +105,7 @@ public static class AudioSystem
                             {
                                 PassedNotes.Add(note);
 
-                                if (note.Timestamp.FullTick < 1920)
+                                if (note.Timestamp.FullTick < 1920 && TimeSystem.Timestamp.Measure < 1)
                                 {
                                     AudioSampleStartClick?.Play();
                                 }

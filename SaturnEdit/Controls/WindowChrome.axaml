@@ -36,12 +36,24 @@
             <Setter Property="Background" Value="Transparent"/>
         </Style>
         
-        <Style Selector="Button.WindowChromeClose:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="#C42B1C"/>
+        <Style Selector="Button.WindowChromeClose:pointerover">
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="#FFC42B1C"/>
+            </Style>
+            
+            <Style Selector="^ PathIcon">
+                <Setter Property="Foreground" Value="#FFEEEEEE"/>
+            </Style>
         </Style>
         
-        <Style Selector="Button.WindowChromeClose:pressed /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="#B32B1C"/>
+        <Style Selector="Button.WindowChromeClose:pressed">
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="#FFB32B1C"/>
+            </Style>
+            
+            <Style Selector="^ PathIcon">
+                <Setter Property="Foreground" Value="#FFEEEEEE"/>
+            </Style>
         </Style>
     </UserControl.Styles>
     

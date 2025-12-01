@@ -315,6 +315,11 @@ public class EditorSettings
     
     public void AddRecentChartFile(string path)
     {
+        // Don't add autosaved files to recent files.
+        DirectoryInfo fileDirectory = new(Path.GetDirectoryName(path) ?? "");
+        DirectoryInfo autosaveDirectory = new(AutosaveSystem.AutosaveDirectory);
+        if (fileDirectory.FullName == autosaveDirectory.FullName) return;
+        
         RecentChartFiles.Add(path);
 
         while (RecentChartFiles.Count > 10)

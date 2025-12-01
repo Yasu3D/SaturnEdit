@@ -42,7 +42,7 @@ public partial class PlaybackView : UserControl
 
         ChartSystem.EntryChanged += OnEntryChanged;
         AudioSystem.AudioLoaded += OnAudioLoaded;
-        UpdateSeekSlider();
+        OnAudioLoaded(null, EventArgs.Empty);
         
         UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
         

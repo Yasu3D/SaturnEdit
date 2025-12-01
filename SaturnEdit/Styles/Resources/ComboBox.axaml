@@ -171,7 +171,7 @@
         <!--  Disabled State  -->
         <Style Selector="^:disabled">
             <Style Selector="^ /template/ Border#Background">
-                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Background" Value="{DynamicResource TextBoxDisabled}" />
             </Style>
             <Style Selector="^ /template/ ContentControl#ContentPresenter">
                 <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />
@@ -215,7 +215,7 @@
             <!--  Disabled State  -->
             <Style Selector="^:disabled">
                 <Style Selector="^ /template/ Border#Background">
-                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Background" Value="{DynamicResource TextBoxDisabled}" />
                 </Style>
                 <Style Selector="^ /template/ ContentControl#ContentPresenter">
                     <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}" />

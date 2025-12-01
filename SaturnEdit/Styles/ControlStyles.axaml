@@ -11,7 +11,7 @@
     <Style Selector="TextBlock">
         <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}"/>
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="FontWeight" Value="Light" />
+        <Setter Property="FontWeight" Value="{DynamicResource StandardFontWeight}" />
         
         <Style Selector="^:disabled">
             <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}"/>
@@ -21,7 +21,7 @@
     <Style Selector="TextBox">
         <Setter Property="Foreground" Value="{DynamicResource ForegroundPrimary}"/>
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="FontWeight" Value="Light" />
+        <Setter Property="FontWeight" Value="{DynamicResource StandardFontWeight}" />
         
         <Style Selector="^:disabled">
             <Setter Property="Foreground" Value="{DynamicResource ForegroundTertiary}"/>
@@ -46,7 +46,7 @@
     
     <Style Selector="SelectableTextBlock">
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="FontWeight" Value="Light" />
+        <Setter Property="FontWeight" Value="{DynamicResource StandardFontWeight}" />
     </Style>
 
     <!-- Sliders -->

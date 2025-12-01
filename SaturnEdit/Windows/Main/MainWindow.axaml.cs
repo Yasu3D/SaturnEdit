@@ -35,6 +35,8 @@ public partial class MainWindow : Window
         KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
         KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
         
+        ActualThemeVariantChanged += OnActualThemeVariantChanged;
+        
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
 
@@ -47,18 +49,6 @@ public partial class MainWindow : Window
         Closed += AutosaveSystem.OnClosed;
         Closing += ChartEditor.OnClosing;
         Closing += Window_OnClosing;
-
-        if (Application.Current != null)
-        {
-            Application.Current.TryGetResource("ChartEditorChromeGradient", Application.Current.ActualThemeVariant, out object? resource);
-            chartEditorChromeGradient = (IBrush?)resource;
-            
-            Application.Current.TryGetResource("StageEditorChromeGradient", Application.Current.ActualThemeVariant, out resource);
-            stageEditorChromeGradient = (IBrush?)resource;
-            
-            Application.Current.TryGetResource("CosmeticsEditorChromeGradient", Application.Current.ActualThemeVariant, out resource);
-            cosmeticsEditorChromeGradient = (IBrush?)resource;
-        }
         
         UpdateTabs();
         UpdateSplash();
@@ -91,9 +81,9 @@ public partial class MainWindow : Window
         }
     }
     
-    private readonly IBrush? chartEditorChromeGradient = null;
-    private readonly IBrush? stageEditorChromeGradient = null;
-    private readonly IBrush? cosmeticsEditorChromeGradient = null;
+    private IBrush? chartEditorChromeGradient = null;
+    private IBrush? stageEditorChromeGradient = null;
+    private IBrush? cosmeticsEditorChromeGradient = null;
 
     private bool bypassChartSave = false;
     private bool bypassStageSave = false;
@@ -449,10 +439,28 @@ public partial class MainWindow : Window
             TextBlockShortcutUndo.Text = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Undo"].ToString();
             TextBlockShortcutRedo.Text = SettingsSystem.ShortcutSettings.Shortcuts["Edit.Redo"].ToString();
         });
+        
+        UpdateTabs();
     }
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    private void OnActualThemeVariantChanged(object? sender, EventArgs e)
+    {
+        if (Application.Current == null) return;
+        
+        Application.Current.TryGetResource("ChartEditorChromeGradient", Application.Current.ActualThemeVariant, out object? resource);
+        chartEditorChromeGradient = (IBrush?)resource;
+        
+        Application.Current.TryGetResource("StageEditorChromeGradient", Application.Current.ActualThemeVariant, out resource);
+        stageEditorChromeGradient = (IBrush?)resource;
+        
+        Application.Current.TryGetResource("CosmeticsEditorChromeGradient", Application.Current.ActualThemeVariant, out resource);
+        cosmeticsEditorChromeGradient = (IBrush?)resource;
+        
+        UpdateTabs();
+    }
+    
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();

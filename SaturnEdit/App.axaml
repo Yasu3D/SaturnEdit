@@ -6,7 +6,7 @@
         <FluentTheme />
         
         <StyleInclude Source="Styles/ControlStyles.axaml" />
-        <StyleInclude Source="Styles/ColorStyles.axaml" />
+        <StyleInclude Source="Styles/ThemeStyles.axaml" />
         <StyleInclude Source="Styles/IconStyles.axaml" />
         
         <!-- Window -->

@@ -123,7 +123,7 @@
                              CornerRadius="3"
                              IsCheckedChanged="RadioButtonTheme_OnIsCheckedChanged">
                     <ThemeVariantScope RequestedThemeVariant="Dark">
-                        <controls:ThemePreview />
+                        <controls:ThemePreview/>
                     </ThemeVariantScope>
                 </RadioButton>
             </StackPanel>

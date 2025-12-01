@@ -1061,6 +1061,7 @@ public partial class ChartEditorView : UserControl
                 
                 MenuItemRecent.Items.Add(new Separator());
                 MenuItemRecent.Items.Add(MenuItemClearRecent);
+                MenuItemRecent.IsEnabled = true;
             }
             else
             {
