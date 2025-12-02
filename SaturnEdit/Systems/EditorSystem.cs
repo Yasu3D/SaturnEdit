@@ -97,8 +97,7 @@ public static class EditorSystem
 
                 if (layer != null)
                 {
-                    int index = layer.Notes.IndexOf(holdNote);
-                    operations.Add(new NoteRemoveOperation(layer, holdNote, index));
+                    operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, holdNote));
                 }
             }
             
@@ -341,7 +340,7 @@ public static class EditorSystem
             }
             else if (SelectionSystem.SelectedLayer != null)
             {
-                operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, note, SelectionSystem.SelectedLayer.Notes.Count));
+                operations.Add(new ListAddOperation<Note>(() => SelectionSystem.SelectedLayer.Notes, note));
             }
         }
         else if (Mode == EditorMode.EditMode && ActiveObjectGroup is HoldNote holdNote)
@@ -424,7 +423,7 @@ public static class EditorSystem
                 if (!SelectionSystem.SelectedObjects.Contains(note)) continue;
                 
                 operations.Add(new SelectionRemoveOperation(note, SelectionSystem.LastSelectedObject));
-                operations.Add(new NoteRemoveOperation(layer, note, i));
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, note));
             }
         }
         
@@ -527,7 +526,7 @@ public static class EditorSystem
                 operations.Add(new SelectionAddOperation(holdNote, SelectionSystem.LastSelectedObject));
             }
 
-            operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, holdNote, 0));
+            operations.Add(new ListAddOperation<Note>(() => SelectionSystem.SelectedLayer.Notes, holdNote));
         }
         else
         {
@@ -572,7 +571,7 @@ public static class EditorSystem
                         }
                         else if (newObject is Note newNote)
                         {
-                            operations.Add(new NoteAddOperation(layer, newNote, 0));
+                            operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                         }
                     }
                 }
@@ -615,7 +614,7 @@ public static class EditorSystem
                     }
                     else if (newObject is Note newNote)
                     {
-                        operations.Add(new NoteAddOperation(layer, newNote, 0));
+                        operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                     }
                 }
             }
@@ -629,45 +628,27 @@ public static class EditorSystem
             operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
             if (obj is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event globalEvent)
             {
-                int index = ChartSystem.Chart.Events.IndexOf(globalEvent);
-                if (index == -1) return;
-                
-                operations.Add(new GlobalEventRemoveOperation(globalEvent, index));
+                operations.Add(new GlobalEventRemoveOperation(globalEvent, 0));
             }
             else if (obj is ILaneToggle and Note laneToggle)
             {
-                int index = ChartSystem.Chart.LaneToggles.IndexOf(laneToggle);
-                if (index == -1) return;
-                
-                operations.Add(new LaneToggleRemoveOperation(laneToggle, index));
+                operations.Add(new LaneToggleRemoveOperation(laneToggle, 0));
             }
             else if (obj is Bookmark bookmark)
             {
-                int index = ChartSystem.Chart.Bookmarks.IndexOf(bookmark);
-                if (index == -1) return;
-
                 operations.Add(new ListRemoveOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
             }
             else if (obj is HoldPointNote holdPointNote)
             {
-                int index = holdPointNote.Parent.Points.IndexOf(holdPointNote);
-                if (index == -1) return;
-                
-                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, index));
+                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, 0));
             }
             else if (obj is Event @event)
             {
-                int index = layer.Events.IndexOf(@event);
-                if (index == -1) return;
-                
-                operations.Add(new EventRemoveOperation(layer, @event, index));
+                operations.Add(new EventRemoveOperation(layer, @event, 0));
             }
             else if (obj is Note note)
             {
-                int index = layer.Notes.IndexOf(note);
-                if (index == -1) return;
-                
-                operations.Add(new NoteRemoveOperation(layer, note, index));
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, note));
             }
         }
     }
@@ -742,7 +723,7 @@ public static class EditorSystem
                 operations.Add(new SelectionAddOperation(holdNote, SelectionSystem.LastSelectedObject));
             }
 
-            operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, holdNote, 0));
+            operations.Add(new ListAddOperation<Note>(() => SelectionSystem.SelectedLayer.Notes, holdNote));
         }
         else
         {
@@ -787,7 +768,7 @@ public static class EditorSystem
                         }
                         else if (newObject is Note newNote)
                         {
-                            operations.Add(new NoteAddOperation(layer, newNote, 0));
+                            operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                         }
                     }
                 }
@@ -821,7 +802,7 @@ public static class EditorSystem
                     }
                     else if (newObject is Note newNote)
                     {
-                        operations.Add(new NoteAddOperation(layer, newNote, 0));
+                        operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                     }
                 }
             }
@@ -835,45 +816,27 @@ public static class EditorSystem
             operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
             if (obj is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event globalEvent)
             {
-                int index = ChartSystem.Chart.Events.IndexOf(globalEvent);
-                if (index == -1) return;
-                
-                operations.Add(new GlobalEventRemoveOperation(globalEvent, index));
+                operations.Add(new GlobalEventRemoveOperation(globalEvent, 0));
             }
             else if (obj is ILaneToggle and Note laneToggle)
             {
-                int index = ChartSystem.Chart.LaneToggles.IndexOf(laneToggle);
-                if (index == -1) return;
-                
-                operations.Add(new LaneToggleRemoveOperation(laneToggle, index));
+                operations.Add(new LaneToggleRemoveOperation(laneToggle, 0));
             }
             else if (obj is Bookmark bookmark)
             {
-                int index = ChartSystem.Chart.Bookmarks.IndexOf(bookmark);
-                if (index == -1) return;
-                
                 operations.Add(new ListRemoveOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
             }
             else if (obj is HoldPointNote holdPointNote)
             {
-                int index = holdPointNote.Parent.Points.IndexOf(holdPointNote);
-                if (index == -1) return;
-                
-                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, index));
+                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, 0));
             }
             else if (obj is Event @event)
             {
-                int index = layer.Events.IndexOf(@event);
-                if (index == -1) return;
-                
-                operations.Add(new EventRemoveOperation(layer, @event, index));
+                operations.Add(new EventRemoveOperation(layer, @event, 0));
             }
             else if (obj is Note note)
             {
-                int index = layer.Notes.IndexOf(note);
-                if (index == -1) return;
-                
-                operations.Add(new NoteRemoveOperation(layer, note, index));
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, note));
             }
         }
     }
@@ -1066,7 +1029,7 @@ public static class EditorSystem
                             note.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                         }
                         
-                        operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, note, SelectionSystem.SelectedLayer.Notes.Count));
+                        operations.Add(new ListAddOperation<Note>(() => SelectionSystem.SelectedLayer.Notes, note));
                         operations.Add(new SelectionAddOperation(note, SelectionSystem.LastSelectedObject));
                     }
                 }
@@ -1755,8 +1718,7 @@ public static class EditorSystem
             {
                 Layer? layer = ChartSystem.Chart.ParentLayer(sourceClw);
                 if (layer == null) continue;
-
-                int index = layer.Notes.IndexOf(sourceClw);
+                
                 int newPosition = axis - sourceClw.Size - sourceClw.Position;
                 
                 SlideCounterclockwiseNote newNote = new
@@ -1768,18 +1730,17 @@ public static class EditorSystem
                     judgementType: sourceClw.JudgementType
                 );
                 
-                operations.Add(new NoteRemoveOperation(layer, sourceClw, index));
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, sourceClw));
                 operations.Add(new SelectionRemoveOperation(sourceClw, SelectionSystem.LastSelectedObject));
                 
-                operations.Add(new NoteAddOperation(layer, newNote, index));
+                operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                 operations.Add(new SelectionAddOperation(newNote, SelectionSystem.LastSelectedObject));
             }
             else if (obj is SlideCounterclockwiseNote sourceCcw)
             {
                 Layer? layer = ChartSystem.Chart.ParentLayer(sourceCcw);
                 if (layer == null) continue;
-
-                int index = layer.Notes.IndexOf(sourceCcw);
+                
                 int newPosition = axis - sourceCcw.Size - sourceCcw.Position;
                 
                 SlideClockwiseNote newNote = new
@@ -1791,10 +1752,10 @@ public static class EditorSystem
                     judgementType: sourceCcw.JudgementType
                 );
                 
-                operations.Add(new NoteRemoveOperation(layer, sourceCcw, index));
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, sourceCcw));
                 operations.Add(new SelectionRemoveOperation(sourceCcw, SelectionSystem.LastSelectedObject));
                 
-                operations.Add(new NoteAddOperation(layer, newNote, index));
+                operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                 operations.Add(new SelectionAddOperation(newNote, SelectionSystem.LastSelectedObject));
             }
             else if (obj is HoldNote sourceHoldNote)
@@ -1840,9 +1801,7 @@ public static class EditorSystem
             {
                 Layer? layer = ChartSystem.Chart.ParentLayer(sourceClw);
                 if (layer == null) continue;
-
-                int index = layer.Notes.IndexOf(sourceClw);
-
+                
                 SlideCounterclockwiseNote newNote = new
                 (
                     timestamp:     new(sourceClw.Timestamp.FullTick),
@@ -1852,19 +1811,17 @@ public static class EditorSystem
                     judgementType: sourceClw.JudgementType
                 );
                 
-                operations.Add(new NoteRemoveOperation(layer, sourceClw, index));
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, sourceClw));
                 operations.Add(new SelectionRemoveOperation(sourceClw, SelectionSystem.LastSelectedObject));
                 
-                operations.Add(new NoteAddOperation(layer, newNote, index));
+                operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                 operations.Add(new SelectionAddOperation(newNote, SelectionSystem.LastSelectedObject));
             }
             else if (obj is SlideCounterclockwiseNote sourceCcw)
             {
                 Layer? layer = ChartSystem.Chart.ParentLayer(sourceCcw);
                 if (layer == null) continue;
-
-                int index = layer.Notes.IndexOf(sourceCcw);
-
+                
                 SlideClockwiseNote newNote = new
                 (
                     timestamp:     new(sourceCcw.Timestamp.FullTick),
@@ -1874,10 +1831,10 @@ public static class EditorSystem
                     judgementType: sourceCcw.JudgementType
                 );
                 
-                operations.Add(new NoteRemoveOperation(layer, sourceCcw, index));
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, sourceCcw));
                 operations.Add(new SelectionRemoveOperation(sourceCcw, SelectionSystem.LastSelectedObject));
                 
-                operations.Add(new NoteAddOperation(layer, newNote, index));
+                operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                 operations.Add(new SelectionAddOperation(newNote, SelectionSystem.LastSelectedObject));
             }
             else if (obj is ILaneToggle laneToggle)
@@ -2207,8 +2164,7 @@ public static class EditorSystem
             {
                 Layer? layer = ChartSystem.Chart.ParentLayer(sourceClw);
                 if (layer == null) return;
-
-                int index = layer.Notes.IndexOf(sourceClw);
+                
                 int newPosition = axis - sourceClw.Size - sourceClw.Position;
                 
                 SlideCounterclockwiseNote newNote = new
@@ -2220,8 +2176,8 @@ public static class EditorSystem
                     judgementType: sourceClw.JudgementType
                 );
                 
-                operations.Add(new NoteRemoveOperation(layer, sourceClw, index));
-                operations.Add(new NoteAddOperation(layer, newNote, index));
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, sourceClw));
+                operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
 
                 if (SelectionSystem.SelectedObjects.Contains(sourceClw))
                 {
@@ -2233,8 +2189,7 @@ public static class EditorSystem
             {
                 Layer? layer = ChartSystem.Chart.ParentLayer(sourceCcw);
                 if (layer == null) return;
-
-                int index = layer.Notes.IndexOf(sourceCcw);
+                
                 int newPosition = axis - sourceCcw.Size - sourceCcw.Position;
                 
                 SlideClockwiseNote newNote = new
@@ -2246,8 +2201,8 @@ public static class EditorSystem
                     judgementType: sourceCcw.JudgementType
                 );
                 
-                operations.Add(new NoteRemoveOperation(layer, sourceCcw, index));
-                operations.Add(new NoteAddOperation(layer, newNote, index));
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, sourceCcw));
+                operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
 
                 if (SelectionSystem.SelectedObjects.Contains(sourceCcw))
                 {
@@ -2424,7 +2379,7 @@ public static class EditorSystem
                 // - push hold if points > 1
                 if (newHoldNote.Points.Count > 1)
                 {
-                    operations.Add(new NoteAddOperation(layer, newHoldNote, 0));
+                    operations.Add(new ListAddOperation<Note>(() => layer.Notes, newHoldNote));
                 }
                 
                 // - create new hold
@@ -2456,7 +2411,7 @@ public static class EditorSystem
                 // - push hold if points > 1
                 if (newHoldNote.Points.Count > 1)
                 {
-                    operations.Add(new NoteAddOperation(layer, newHoldNote, 0));
+                    operations.Add(new ListAddOperation<Note>(() => layer.Notes, newHoldNote));
                 }
             }
             // when encountering normal point:
@@ -2483,8 +2438,7 @@ public static class EditorSystem
         operations.Add(op);
         
         // Remove original hold note.
-        int index = layer.Notes.IndexOf(sourceHoldNote);
-        operations.Add(new NoteRemoveOperation(layer, sourceHoldNote, index));
+        operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, sourceHoldNote));
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
@@ -2535,14 +2489,13 @@ public static class EditorSystem
                 ));
             }
             
-            int i = l.Notes.IndexOf(h);
-            operations.Add(new NoteRemoveOperation(l, h, i));
+            operations.Add(new ListRemoveOperation<Note>(() => l.Notes, h));
             operations.Add(new SelectionRemoveOperation(h, SelectionSystem.LastSelectedObject));
         }
 
         if (rootLayer == null) return;
 
-        operations.Add(new NoteAddOperation(rootLayer, newHoldNote, 0));
+        operations.Add(new ListAddOperation<Note>(() => rootLayer.Notes, newHoldNote));
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
@@ -2556,12 +2509,9 @@ public static class EditorSystem
         foreach (Event @event in ChartSystem.Chart.Events)
         {
             if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
-
-            int index = ChartSystem.Chart.Events.IndexOf(@event);
-            if (index == -1) continue;
             
             operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
-            operations.Add(new GlobalEventRemoveOperation(@event, index));
+            operations.Add(new GlobalEventRemoveOperation(@event, 0));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -2645,12 +2595,9 @@ public static class EditorSystem
         foreach (Event @event in SelectionSystem.SelectedLayer.Events)
         {
             if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
-
-            int index = SelectionSystem.SelectedLayer.Events.IndexOf(@event);
-            if (index == -1) continue;
             
             operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
-            operations.Add(new EventRemoveOperation(SelectionSystem.SelectedLayer, @event, index));
+            operations.Add(new EventRemoveOperation(SelectionSystem.SelectedLayer, @event, 0));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));

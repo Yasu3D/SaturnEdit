@@ -14,8 +14,6 @@ using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.HoldNoteOperations;
-using SaturnEdit.UndoRedo.NoteOperations;
-using SaturnEdit.UndoRedo.PlayableOperations;
 using SaturnEdit.UndoRedo.PrimitiveOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
 
@@ -510,7 +508,7 @@ public partial class InspectorView : UserControl
                 operations.Add(new SelectionAddOperation(holdNote, SelectionSystem.LastSelectedObject));
             }
 
-            operations.Add(new NoteAddOperation(SelectionSystem.SelectedLayer, holdNote, 0));
+            operations.Add(new ListAddOperation<Note>(() => SelectionSystem.SelectedLayer.Notes, holdNote));
         }
         else if (ComboBoxType.SelectedIndex == 15)
         {
@@ -607,7 +605,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is ILaneToggle and Note newLaneToggle)
                         {
-                            operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                            operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneToggle));
                         }
                         else if (newObject is Bookmark bookmark)
                         {
@@ -619,7 +617,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is Note newNote)
                         {
-                            operations.Add(new NoteAddOperation(layer, newNote, 0));
+                            operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                         }
                     }
                 }
@@ -663,7 +661,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is ILaneToggle and Note newLaneToggle)
                         {
-                            operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                            operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneToggle));
                         }
                         else if (newObject is Bookmark bookmark)
                         {
@@ -675,7 +673,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is Note newNote)
                         {
-                            operations.Add(new NoteAddOperation(layer, newNote, 0));
+                            operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                         }
                     }
                 }
@@ -719,7 +717,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is ILaneToggle and Note newLaneToggle)
                         {
-                            operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                            operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneToggle));
                         }
                         else if (newObject is Bookmark bookmark)
                         {
@@ -731,7 +729,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is Note newNote)
                         {
-                            operations.Add(new NoteAddOperation(layer, newNote, 0));
+                            operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                         }
                     }
                 }
@@ -803,7 +801,7 @@ public partial class InspectorView : UserControl
                     }
                     else if (newObject is ILaneToggle and Note newLaneToggle)
                     {
-                        operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                        operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneToggle));
                     }
                     else if (newObject is Bookmark bookmark)
                     {
@@ -815,7 +813,7 @@ public partial class InspectorView : UserControl
                     }
                     else if (newObject is Note newNote)
                     {
-                        operations.Add(new NoteAddOperation(layer, newNote, 0));
+                        operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                     }
                 }
             }
@@ -829,45 +827,27 @@ public partial class InspectorView : UserControl
             operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
             if (obj is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event globalEvent)
             {
-                int index = ChartSystem.Chart.Events.IndexOf(globalEvent);
-                if (index == -1) return;
-                
-                operations.Add(new GlobalEventRemoveOperation(globalEvent, index));
+                operations.Add(new GlobalEventRemoveOperation(globalEvent, 0));
             }
             else if (obj is ILaneToggle and Note laneToggle)
             {
-                int index = ChartSystem.Chart.LaneToggles.IndexOf(laneToggle);
-                if (index == -1) return;
-                
-                operations.Add(new LaneToggleRemoveOperation(laneToggle, index));
+                operations.Add(new ListRemoveOperation<Note>(() => ChartSystem.Chart.LaneToggles, laneToggle));
             }
             else if (obj is Bookmark bookmark)
             {
-                int index = ChartSystem.Chart.Bookmarks.IndexOf(bookmark);
-                if (index == -1) return;
-                
                 operations.Add(new ListRemoveOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
             }
             else if (obj is HoldPointNote holdPointNote)
             {
-                int index = holdPointNote.Parent.Points.IndexOf(holdPointNote);
-                if (index == -1) return;
-                
-                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, index));
+                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, 0));
             }
             else if (obj is Event @event)
             {
-                int index = layer.Events.IndexOf(@event);
-                if (index == -1) return;
-                
-                operations.Add(new EventRemoveOperation(layer, @event, index));
+                operations.Add(new EventRemoveOperation(layer, @event, 0));
             }
             else if (obj is Note note)
             {
-                int index = layer.Notes.IndexOf(note);
-                if (index == -1) return;
-                
-                operations.Add(new NoteRemoveOperation(layer, note, index));
+                operations.Add(new ListAddOperation<Note>(() => layer.Notes, note));
             }
         }
     }
@@ -1142,15 +1122,13 @@ public partial class InspectorView : UserControl
 
             if (obj is Note note)
             {
-                int index = parentLayer.Notes.IndexOf(note);
-                operations.Add(new NoteRemoveOperation(parentLayer, note, index));
-                operations.Add(new NoteAddOperation(newLayer, note, 0));
+                operations.Add(new ListRemoveOperation<Note>(() => parentLayer.Notes, note));
+                operations.Add(new ListAddOperation<Note>(() => newLayer.Notes, note));
             }
             else if (obj is Event @event)
             {
-                int index = parentLayer.Events.IndexOf(@event);
-                operations.Add(new EventRemoveOperation(parentLayer, @event, index));
-                operations.Add(new EventAddOperation(newLayer, @event, index));
+                operations.Add(new EventRemoveOperation(parentLayer, @event, 0));
+                operations.Add(new EventAddOperation(newLayer, @event, 0));
             }
         }
 
@@ -1282,7 +1260,7 @@ public partial class InspectorView : UserControl
         {
             if (obj is not IPlayable playable) continue;
 
-            operations.Add(new PlayableEditOperation(playable, playable.BonusType, newBonusType, playable.JudgementType, playable.JudgementType));
+            operations.Add(new GenericEditOperation<BonusType>(value => { playable.BonusType = value; }, playable.BonusType, newBonusType));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -1303,7 +1281,7 @@ public partial class InspectorView : UserControl
         {
             if (obj is not IPlayable playable) continue;
 
-            operations.Add(new PlayableEditOperation(playable, playable.BonusType, playable.BonusType, playable.JudgementType, newJudgementType));
+            operations.Add(new GenericEditOperation<JudgementType>(value => { playable.JudgementType = value; }, playable.JudgementType, newJudgementType));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -1345,7 +1323,7 @@ public partial class InspectorView : UserControl
         {
             if (obj is not ILaneToggle laneToggle) continue;
             
-            operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, newDirection));
+            operations.Add(new GenericEditOperation<LaneSweepDirection>(value => { laneToggle.Direction = value; }, laneToggle.Direction, newDirection));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
