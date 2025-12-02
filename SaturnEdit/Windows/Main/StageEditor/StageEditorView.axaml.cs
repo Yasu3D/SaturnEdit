@@ -14,7 +14,7 @@ using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.StageOperations;
+using SaturnEdit.UndoRedo.PrimitiveOperations;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
@@ -554,7 +554,7 @@ public partial class StageEditorView : UserControl
         string newId = TextBoxStageId.Text ?? "";
         if (oldId == newId) return;
         
-        UndoRedoSystem.StageBranch.Push(new StageIdEditOperation(oldId, newId));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.Id = value; }, oldId, newId));
     }
 
     private void ButtonRegenerateStageId_OnClick(object? sender, RoutedEventArgs e)
@@ -565,7 +565,7 @@ public partial class StageEditorView : UserControl
         string newId = Guid.NewGuid().ToString();
         if (oldId == newId) return;
 
-        UndoRedoSystem.StageBranch.Push(new StageIdEditOperation(oldId, newId));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.Id = value; }, oldId, newId));
     }
     
     private void TextBoxStageName_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -577,7 +577,7 @@ public partial class StageEditorView : UserControl
         string newName = TextBoxStageName.Text ?? "";
         if (oldName == newName) return;
         
-        UndoRedoSystem.StageBranch.Push(new StageNameEditOperation(oldName, newName));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.Name = value; }, oldName, newName));
     }
     
     private void TextBoxStageIcon_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -594,7 +594,7 @@ public partial class StageEditorView : UserControl
             return;
         }
 
-        UndoRedoSystem.StageBranch.Push(new StageIconPathEditOperation(oldIconPath, newIconPath));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.IconPath = value; }, oldIconPath, newIconPath));
     }
     
     private async void ButtonPickStageIconFile_OnClick(object? sender, RoutedEventArgs e)
@@ -632,9 +632,9 @@ public partial class StageEditorView : UserControl
                 // Define new source path.
                 string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "stage.toml");
 
-                StageSourcePathEditOperation op0 = new(StageSystem.StageUpStage.AbsoluteSourcePath, newSourcePath);
-                StageIconPathEditOperation op1 = new(StageSystem.StageUpStage.IconPath, Path.GetFileName(files[0].Path.LocalPath));
-                
+                GenericEditOperation<string> op0 = new(value => { StageSystem.StageUpStage.AbsoluteSourcePath = value; }, StageSystem.StageUpStage.AbsoluteSourcePath, newSourcePath);
+                GenericEditOperation<string> op1 = new(value => { StageSystem.StageUpStage.IconPath = value; }, StageSystem.StageUpStage.IconPath, Path.GetFileName(files[0].Path.LocalPath));
+                 
                 UndoRedoSystem.StageBranch.Push(new CompositeOperation([op0, op1]));
             }
             else
@@ -647,7 +647,7 @@ public partial class StageEditorView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.StageBranch.Push(new StageIconPathEditOperation(StageSystem.StageUpStage.IconPath, localPath));
+                UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.IconPath = value; }, StageSystem.StageUpStage.IconPath, localPath));
             }
         }
         catch (Exception ex)
@@ -685,7 +685,7 @@ public partial class StageEditorView : UserControl
         if (index == -1) return;
         if (oldEntryId == newEntryId) return;
 
-        UndoRedoSystem.StageBranch.Push(new StageSongEntryIdEditOperation(index, oldEntryId, newEntryId));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.SongById(index).EntryId = value; }, oldEntryId, newEntryId));
     }
     
     private async void ButtonPickChartFile_OnClick(object? sender, RoutedEventArgs e)
@@ -744,7 +744,7 @@ public partial class StageEditorView : UserControl
             string newEntryId = entry.Id;
             if (oldEntryId == newEntryId) return;
 
-            UndoRedoSystem.StageBranch.Push(new StageSongEntryIdEditOperation(index, oldEntryId, newEntryId));
+            UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.SongById(index).EntryId = value; }, oldEntryId, newEntryId));
         }
         catch (Exception ex)
         {
@@ -781,7 +781,7 @@ public partial class StageEditorView : UserControl
         if (index == -1) return;
         if (oldSecret == newSecret) return;
 
-        UndoRedoSystem.StageBranch.Push(new StageSongSecretEditOperation(index, oldSecret, newSecret));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<bool>(value => { StageSystem.StageUpStage.SongById(index).Secret = value; }, oldSecret, newSecret));
     }
 
     private void TextBoxHealth_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -795,12 +795,12 @@ public partial class StageEditorView : UserControl
             int newHealth = Convert.ToInt32(TextBoxHealth.Text ?? "", CultureInfo.InvariantCulture);
             if (oldHealth == newHealth) return;
         
-            UndoRedoSystem.StageBranch.Push(new StageHealthEditOperation(oldHealth, newHealth));
+            UndoRedoSystem.StageBranch.Push(new GenericEditOperation<int>(value => { StageSystem.StageUpStage.Health = value; }, oldHealth, newHealth));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.StageBranch.Push(new StageHealthEditOperation(StageSystem.StageUpStage.Health, 100));
+            UndoRedoSystem.StageBranch.Push(new GenericEditOperation<int>(value => { StageSystem.StageUpStage.Health = value; }, StageSystem.StageUpStage.Health, 100));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -820,12 +820,12 @@ public partial class StageEditorView : UserControl
             int newHealthRecovery = Convert.ToInt32(TextBoxHealthRecovery.Text ?? "", CultureInfo.InvariantCulture);
             if (oldHealthRecovery == newHealthRecovery) return;
         
-            UndoRedoSystem.StageBranch.Push(new StageHealthRecoveryEditOperation(oldHealthRecovery, newHealthRecovery));
+            UndoRedoSystem.StageBranch.Push(new GenericEditOperation<int>(value => { StageSystem.StageUpStage.HealthRecovery = value; }, oldHealthRecovery, newHealthRecovery));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.StageBranch.Push(new StageHealthRecoveryEditOperation(StageSystem.StageUpStage.HealthRecovery, 10));
+            UndoRedoSystem.StageBranch.Push(new GenericEditOperation<int>(value => { StageSystem.StageUpStage.HealthRecovery = value; }, StageSystem.StageUpStage.HealthRecovery, 10));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -850,7 +850,7 @@ public partial class StageEditorView : UserControl
         
         if (oldErrorThreshold == newErrorThreshold) return;
         
-        UndoRedoSystem.StageBranch.Push(new StageErrorThresholdEditOperation(oldErrorThreshold, newErrorThreshold));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<JudgementGrade>(value => { StageSystem.StageUpStage.ErrorThreshold = value; }, oldErrorThreshold, newErrorThreshold));
     }
 #endregion UI Event Handlers
 }
