@@ -4,7 +4,6 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnEdit.Systems;
-using SaturnEdit.UndoRedo.CosmeticOperations;
 using SaturnEdit.UndoRedo.PrimitiveOperations;
 
 namespace SaturnEdit.Windows.Main.CosmeticsEditor.Tabs;
@@ -49,7 +48,7 @@ public partial class CosmeticItemEditorView : UserControl
         string newId = TextBoxCosmeticId.Text ?? "";
         if (oldId == newId) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new CosmeticItemIdEditOperation(oldId, newId));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { CosmeticSystem.CosmeticItem.Id = value; }, oldId, newId));
     }
 
     private void ButtonRegenerateCosmeticId_OnClick(object? sender, RoutedEventArgs e)
@@ -60,7 +59,7 @@ public partial class CosmeticItemEditorView : UserControl
         string newId = Guid.NewGuid().ToString();
         if (oldId == newId) return;
 
-        UndoRedoSystem.CosmeticBranch.Push(new CosmeticItemIdEditOperation(oldId, newId));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { CosmeticSystem.CosmeticItem.Id = value; }, oldId, newId));
     }
 
     private void TextBoxCosmeticName_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -72,7 +71,7 @@ public partial class CosmeticItemEditorView : UserControl
         string newName = TextBoxCosmeticName.Text ?? "";
         if (oldName == newName) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new CosmeticItemNameEditOperation(oldName, newName));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { CosmeticSystem.CosmeticItem.Name = value; }, oldName, newName));
     }
     
     private void TextBoxCosmeticDescription_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -96,7 +95,7 @@ public partial class CosmeticItemEditorView : UserControl
         string newAuthor = TextBoxCosmeticAuthor.Text ?? "";
         if (oldAuthor == newAuthor) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new CosmeticItemAuthorEditOperation(oldAuthor, newAuthor));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { CosmeticSystem.CosmeticItem.Author = value; }, oldAuthor, newAuthor));
     }
     
     private void TextBoxCosmeticRarity_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -110,12 +109,12 @@ public partial class CosmeticItemEditorView : UserControl
             int newRarity = Convert.ToInt32(TextBoxCosmeticRarity.Text ?? "", CultureInfo.InvariantCulture);
             if (oldRarity == newRarity) return;
         
-            UndoRedoSystem.CosmeticBranch.Push(new CosmeticItemRarityEditOperation(oldRarity, newRarity));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<int>(value => { CosmeticSystem.CosmeticItem.Rarity = value; }, oldRarity, newRarity));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new CosmeticItemRarityEditOperation(CosmeticSystem.CosmeticItem.Rarity, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<int>(value => { CosmeticSystem.CosmeticItem.Rarity = value; }, CosmeticSystem.CosmeticItem.Rarity, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
