@@ -598,7 +598,15 @@ public static class TimeSystem
         {
             // AudioSystem is playing audio.
             // ManagedBass is absolutely cracked at keeping time, so just sync directly to that.
-            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, (float)AudioSystem.AudioChannelAudio.Position + ChartSystem.Entry.AudioOffset, Division);
+            
+            // A bit of a silly fix to allow seeking forward without playback getting stuck. Hacky, but hey, it works!
+            // AudioChannel.Position can only progress forward, and this method is only called to update Timestamp from AudioChannel.Position
+            // Therefore, if AudioChannel.Position is less than Timestamp.Time, that means it's lagging behind and not a "valid state", and shouldn't drag Timestamp.Time back to itself.
+            // If that's the case, then skip updating Timestamp.Time to an "invalid" time, and just let the AudioChannel catch up on its own.
+            float audioTime = (float)AudioSystem.AudioChannelAudio.Position + ChartSystem.Entry.AudioOffset;
+            if (Timestamp.Time > audioTime) return;
+            
+            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, audioTime, Division);
         }
     }
 #endregion Internal Event Handlers
