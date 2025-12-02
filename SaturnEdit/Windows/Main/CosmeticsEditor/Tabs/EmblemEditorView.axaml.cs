@@ -54,7 +54,7 @@ public partial class EmblemEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { emblem.Artist = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { emblem.Artist = value; }, oldValue, newValue));
     }
 
     private void TextBoxEmblemImagePath_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -71,7 +71,7 @@ public partial class EmblemEditorView : UserControl
             return;
         }
         
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { emblem.ImagePath = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { emblem.ImagePath = value; }, oldValue, newValue));
     }
 
     private async void ButtonPickEmblemFile_OnClick(object? sender, RoutedEventArgs e)
@@ -110,8 +110,8 @@ public partial class EmblemEditorView : UserControl
                 // Define new source path.
                 string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "emblem.toml");
                 
-                StringEditOperation op0 = new(value => { emblem.AbsoluteSourcePath = value; }, emblem.AbsoluteSourcePath, newSourcePath);
-                StringEditOperation op1 = new(value => { emblem.ImagePath = value; }, emblem.ImagePath, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op0 = new(value => { emblem.AbsoluteSourcePath = value; }, emblem.AbsoluteSourcePath, newSourcePath);
+                GenericEditOperation<string> op1 = new(value => { emblem.ImagePath = value; }, emblem.ImagePath, Path.GetFileName(files[0].Path.LocalPath));
                 
                 UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
             }
@@ -125,7 +125,7 @@ public partial class EmblemEditorView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { emblem.ImagePath = value; }, emblem.ImagePath, localPath));
+                UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { emblem.ImagePath = value; }, emblem.ImagePath, localPath));
             }
         }
         catch (Exception ex)

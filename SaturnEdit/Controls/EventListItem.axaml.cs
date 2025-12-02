@@ -8,7 +8,7 @@ using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo.EventOperations;
-using SaturnEdit.UndoRedo.TimeableOperations;
+using SaturnEdit.UndoRedo.PrimitiveOperations;
 
 namespace SaturnEdit.Controls;
 
@@ -158,8 +158,8 @@ public partial class EventListItem : UserControl
 
         int oldFullTick = Event.Timestamp.FullTick;
         int newFullTick = newValue + Event.Timestamp.Tick;
-        
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(Event, oldFullTick, newFullTick));
+
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { Event.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 
     private void TextBoxTick_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -192,7 +192,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = Event.Timestamp.FullTick;
         int newFullTick = newValue + Event.Timestamp.Measure * 1920;
         
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(Event, oldFullTick, newFullTick));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { Event.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 
     private void TextBoxTextValue_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -349,7 +349,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = stopEffectEvent.SubEvents[0].Timestamp.FullTick;
         int newFullTick = newValue + stopEffectEvent.SubEvents[0].Timestamp.Tick;
         
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(stopEffectEvent.SubEvents[0], oldFullTick, newFullTick));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { stopEffectEvent.SubEvents[0].Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 
     private void TextBoxStopTick0_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -382,7 +382,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = stopEffectEvent.SubEvents[0].Timestamp.FullTick;
         int newFullTick = newValue + stopEffectEvent.SubEvents[0].Timestamp.Measure * 1920;
         
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(stopEffectEvent.SubEvents[0], oldFullTick, newFullTick));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { stopEffectEvent.SubEvents[0].Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 
     private void TextBoxStopMeasure1_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -416,7 +416,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = stopEffectEvent.SubEvents[1].Timestamp.FullTick;
         int newFullTick = newValue + stopEffectEvent.SubEvents[1].Timestamp.Tick;
         
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(stopEffectEvent.SubEvents[1], oldFullTick, newFullTick));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { stopEffectEvent.SubEvents[1].Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 
     private void TextBoxStopTick1_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -449,7 +449,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = stopEffectEvent.SubEvents[1].Timestamp.FullTick;
         int newFullTick = newValue + stopEffectEvent.SubEvents[1].Timestamp.Measure * 1920;
         
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(stopEffectEvent.SubEvents[1], oldFullTick, newFullTick));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { stopEffectEvent.SubEvents[1].Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseMeasure0_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -483,7 +483,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[0].Timestamp.Tick;
         
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[0], oldFullTick, newFullTick));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[0].Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseTick0_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -516,7 +516,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[0].Timestamp.Measure * 1920;
         
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[0], oldFullTick, newFullTick));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[0].Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseMeasure1_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -550,7 +550,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[1].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[1].Timestamp.Tick;
         
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[1], oldFullTick, newFullTick));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[1].Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseTick1_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -583,7 +583,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[1].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[1].Timestamp.Measure * 1920;
         
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[1], oldFullTick, newFullTick));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[1].Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseMeasure2_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -617,7 +617,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[2].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[2].Timestamp.Tick;
         
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[2], oldFullTick, newFullTick));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[2].Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 
     private void TextBoxReverseTick2_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -650,7 +650,7 @@ public partial class EventListItem : UserControl
         int oldFullTick = reverseEffectEvent.SubEvents[2].Timestamp.FullTick;
         int newFullTick = newValue + reverseEffectEvent.SubEvents[2].Timestamp.Measure * 1920;
         
-        UndoRedoSystem.ChartBranch.Push(new TimeableEditOperation(reverseEffectEvent.SubEvents[2], oldFullTick, newFullTick));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[2].Timestamp.FullTick = value; }, oldFullTick, newFullTick));
     }
 #endregion UI Event Handlers
 }

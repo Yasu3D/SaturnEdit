@@ -7,7 +7,7 @@ using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.PositionableOperations;
-using SaturnEdit.UndoRedo.TimeableOperations;
+using SaturnEdit.UndoRedo.PrimitiveOperations;
 
 namespace SaturnEdit.Utilities;
 
@@ -149,7 +149,7 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
             if (DragType == IPositionable.OverlapResult.Body)
             {
                 int newFullTick = item.Tick + EndTick - StartTick;
-                operations.Add(new TimeableEditOperation(item.Timeable, item.Tick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { item.Timeable.Timestamp.FullTick = value; }, item.Tick, newFullTick));
 
                 if (item.Timeable is IPositionable positionable)
                 {

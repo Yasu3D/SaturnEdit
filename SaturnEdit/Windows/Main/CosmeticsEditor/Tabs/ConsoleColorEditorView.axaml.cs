@@ -60,7 +60,7 @@ public partial class ConsoleColorEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorA = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.ColorA = value; }, oldValue, newValue));
     }
 
     private void TextBoxLedA_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -73,7 +73,7 @@ public partial class ConsoleColorEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedA = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.LedA = value; }, oldValue, newValue));
     }
     
     private void TextBoxColorB_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -86,7 +86,7 @@ public partial class ConsoleColorEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorB = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.ColorB = value; }, oldValue, newValue));
     }
     
     private void TextBoxLedB_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -99,7 +99,7 @@ public partial class ConsoleColorEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedB = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.LedB = value; }, oldValue, newValue));
     }
     
     private void TextBoxColorC_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -112,7 +112,7 @@ public partial class ConsoleColorEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorC = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.ColorC = value; }, oldValue, newValue));
     }
     
     private void TextBoxLedC_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -125,7 +125,7 @@ public partial class ConsoleColorEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedC = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.LedC = value; }, oldValue, newValue));
     }
 
     
@@ -139,7 +139,7 @@ public partial class ConsoleColorEditorView : UserControl
         
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorA = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.ColorA = value; }, oldValue, newValue));
     }
     
     private void ColorPickerLedA_OnColorPickFinished(object? sender, EventArgs e)
@@ -152,7 +152,7 @@ public partial class ConsoleColorEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedA = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.LedA = value; }, oldValue, newValue));
     }
     
     private void ColorPickerColorB_OnColorPickFinished(object? sender, EventArgs e)
@@ -165,7 +165,7 @@ public partial class ConsoleColorEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorB = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.ColorB = value; }, oldValue, newValue));
     }
     
     private void ColorPickerLedB_OnColorPickFinished(object? sender, EventArgs e)
@@ -178,7 +178,7 @@ public partial class ConsoleColorEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedB = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.LedB = value; }, oldValue, newValue));
     }
 
     private void ColorPickerColorC_OnColorPickFinished(object? sender, EventArgs e)
@@ -191,7 +191,7 @@ public partial class ConsoleColorEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.ColorC = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.ColorC = value; }, oldValue, newValue));
     }
 
     private void ColorPickerLedC_OnColorPickFinished(object? sender, EventArgs e)
@@ -204,7 +204,7 @@ public partial class ConsoleColorEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new UIntEditOperation(value => { consoleColor.LedC = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<uint>(value => { consoleColor.LedC = value; }, oldValue, newValue));
     }
 
 

@@ -54,7 +54,7 @@ public partial class PlateEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { plate.Artist = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { plate.Artist = value; }, oldValue, newValue));
     }
 
     private void TextBoxPlateImagePath_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -71,7 +71,7 @@ public partial class PlateEditorView : UserControl
             return;
         }
         
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { plate.ImagePath = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { plate.ImagePath = value; }, oldValue, newValue));
     }
 
     private async void ButtonPickPlateFile_OnClick(object? sender, RoutedEventArgs e)
@@ -110,8 +110,8 @@ public partial class PlateEditorView : UserControl
                 // Define new source path.
                 string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "plate.toml");
 
-                StringEditOperation op0 = new(value => { plate.AbsoluteSourcePath = value; }, plate.AbsoluteSourcePath, newSourcePath);
-                StringEditOperation op1 = new(value => { plate.ImagePath = value; }, plate.ImagePath, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op0 = new(value => { plate.AbsoluteSourcePath = value; }, plate.AbsoluteSourcePath, newSourcePath);
+                GenericEditOperation<string> op1 = new(value => { plate.ImagePath = value; }, plate.ImagePath, Path.GetFileName(files[0].Path.LocalPath));
                 
                 UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
             }
@@ -125,7 +125,7 @@ public partial class PlateEditorView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { plate.ImagePath = value; }, plate.ImagePath, localPath));
+                UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { plate.ImagePath = value; }, plate.ImagePath, localPath));
             }
         }
         catch (Exception ex)

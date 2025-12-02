@@ -85,7 +85,7 @@ public partial class NoteSoundEditorView : UserControl
             return;
         }
         
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { noteSound.Artist = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { noteSound.Artist = value; }, oldValue, newValue));
     }
     
     private void TextBoxPath_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -130,7 +130,7 @@ public partial class NoteSoundEditorView : UserControl
 
         if (action == null) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(action, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(action, oldValue, newValue));
     }
 
     private async void ButtonPickFile_OnClick(object? sender, RoutedEventArgs e)
@@ -244,8 +244,8 @@ public partial class NoteSoundEditorView : UserControl
                 // Define new source path.
                 string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "note_sound.toml");
                 
-                StringEditOperation op0 = new(value => { noteSound.AbsoluteSourcePath = value; }, noteSound.AbsoluteSourcePath, newSourcePath);
-                StringEditOperation op1 = new(action, oldLocalPath, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op0 = new(value => { noteSound.AbsoluteSourcePath = value; }, noteSound.AbsoluteSourcePath, newSourcePath);
+                GenericEditOperation<string> op1 = new(action, oldLocalPath, Path.GetFileName(files[0].Path.LocalPath));
                 
                 UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
             }
@@ -259,7 +259,7 @@ public partial class NoteSoundEditorView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(action, oldLocalPath, localPath));
+                UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(action, oldLocalPath, localPath));
             }
         }
         catch (Exception ex)
@@ -281,12 +281,12 @@ public partial class NoteSoundEditorView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxHoldLoopStartTime.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.HoldLoopStartTime = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { noteSound.HoldLoopStartTime = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.HoldLoopStartTime = value; }, noteSound.HoldLoopStartTime, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { noteSound.HoldLoopStartTime = value; }, noteSound.HoldLoopStartTime, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -307,12 +307,12 @@ public partial class NoteSoundEditorView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxHoldLoopEndTime.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.HoldLoopEndTime = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { noteSound.HoldLoopEndTime = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.HoldLoopEndTime = value; }, noteSound.HoldLoopEndTime, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { noteSound.HoldLoopEndTime = value; }, noteSound.HoldLoopEndTime, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -333,12 +333,12 @@ public partial class NoteSoundEditorView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxReHoldLoopStartTime.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.ReHoldLoopStartTime = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { noteSound.ReHoldLoopStartTime = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.ReHoldLoopStartTime = value; }, noteSound.ReHoldLoopStartTime, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { noteSound.ReHoldLoopStartTime = value; }, noteSound.ReHoldLoopStartTime, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -359,12 +359,12 @@ public partial class NoteSoundEditorView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxReHoldLoopEndTime.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.ReHoldLoopEndTime = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { noteSound.ReHoldLoopEndTime = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { noteSound.ReHoldLoopEndTime = value; }, noteSound.ReHoldLoopEndTime, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { noteSound.ReHoldLoopEndTime = value; }, noteSound.ReHoldLoopEndTime, 0));
 
             if (ex is not (FormatException or OverflowException))
             {

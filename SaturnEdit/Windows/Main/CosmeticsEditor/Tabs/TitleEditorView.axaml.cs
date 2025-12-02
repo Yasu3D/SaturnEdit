@@ -46,7 +46,7 @@ public partial class TitleEditorView : UserControl
 
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { title.Message = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { title.Message = value; }, oldValue, newValue));
     }
 #endregion UI Event Handlers
 }

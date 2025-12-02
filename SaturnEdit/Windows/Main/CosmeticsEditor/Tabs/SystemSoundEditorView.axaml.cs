@@ -105,7 +105,7 @@ public partial class SystemSoundEditorView : UserControl
             return;
         }
 
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { systemSound.Artist = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { systemSound.Artist = value; }, oldValue, newValue));
     }
 
     private void TextBoxPath_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -176,7 +176,7 @@ public partial class SystemSoundEditorView : UserControl
 
         if (action == null) return;
 
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(action, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(action, oldValue, newValue));
     }
 
     private async void ButtonPickFile_OnClick(object? sender, RoutedEventArgs e)
@@ -368,8 +368,8 @@ public partial class SystemSoundEditorView : UserControl
                 // Define new source path.
                 string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "system_music.toml");
 
-                StringEditOperation op0 = new(value => { systemSound.AbsoluteSourcePath = value; }, systemSound.AbsoluteSourcePath, newSourcePath);
-                StringEditOperation op1 = new(action, oldLocalPath, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op0 = new(value => { systemSound.AbsoluteSourcePath = value; }, systemSound.AbsoluteSourcePath, newSourcePath);
+                GenericEditOperation<string> op1 = new(action, oldLocalPath, Path.GetFileName(files[0].Path.LocalPath));
 
                 UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
             }
@@ -383,7 +383,7 @@ public partial class SystemSoundEditorView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(action, oldLocalPath, localPath));
+                UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(action, oldLocalPath, localPath));
             }
         }
         catch (Exception ex)

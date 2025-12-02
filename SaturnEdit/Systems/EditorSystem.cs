@@ -10,15 +10,14 @@ using SaturnData.Notation.Notes;
 using SaturnData.Notation.Serialization;
 using SaturnData.Utilities;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.BookmarkOperations;
 using SaturnEdit.UndoRedo.EditModeOperations;
 using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.HoldNoteOperations;
 using SaturnEdit.UndoRedo.LayerOperations;
 using SaturnEdit.UndoRedo.NoteOperations;
 using SaturnEdit.UndoRedo.PositionableOperations;
+using SaturnEdit.UndoRedo.PrimitiveOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
-using SaturnEdit.UndoRedo.TimeableOperations;
 
 namespace SaturnEdit.Systems;
 
@@ -375,7 +374,7 @@ public static class EditorSystem
             if (!SelectionSystem.SelectedObjects.Contains(bookmark)) continue;
 
             operations.Add(new SelectionRemoveOperation(bookmark, SelectionSystem.LastSelectedObject));
-            operations.Add(new BookmarkRemoveOperation(bookmark, i));
+            operations.Add(new ListRemoveOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
         }
         
         for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
@@ -646,8 +645,8 @@ public static class EditorSystem
             {
                 int index = ChartSystem.Chart.Bookmarks.IndexOf(bookmark);
                 if (index == -1) return;
-                
-                operations.Add(new BookmarkRemoveOperation(bookmark, index));
+
+                operations.Add(new ListRemoveOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
             }
             else if (obj is HoldPointNote holdPointNote)
             {
@@ -853,7 +852,7 @@ public static class EditorSystem
                 int index = ChartSystem.Chart.Bookmarks.IndexOf(bookmark);
                 if (index == -1) return;
                 
-                operations.Add(new BookmarkRemoveOperation(bookmark, index));
+                operations.Add(new ListRemoveOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
             }
             else if (obj is HoldPointNote holdPointNote)
             {
@@ -1002,7 +1001,7 @@ public static class EditorSystem
             {
                 bookmark.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                 
-                operations.Add(new BookmarkAddOperation(bookmark, ChartSystem.Chart.Bookmarks.Count));
+                operations.Add(new ListAddOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
                 operations.Add(new SelectionAddOperation(bookmark, SelectionSystem.LastSelectedObject));
             }
 
@@ -1192,7 +1191,7 @@ public static class EditorSystem
     {
         Bookmark bookmark = new(new(TimeSystem.Timestamp.FullTick), color, message);
 
-        BookmarkAddOperation op0 = new(bookmark, ChartSystem.Chart.Bookmarks.Count);
+        ListAddOperation<Bookmark> op0 = new(() => ChartSystem.Chart.Bookmarks, bookmark);
         SelectionAddOperation op1 = new(bookmark, SelectionSystem.LastSelectedObject);
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
@@ -1243,7 +1242,7 @@ public static class EditorSystem
 
             newFullTick = Math.Max(0, newFullTick);
             
-            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
         }
     }
 
@@ -1291,7 +1290,7 @@ public static class EditorSystem
 
             newFullTick = Math.Max(0, newFullTick);
             
-            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
         }
     }
 
@@ -1339,7 +1338,7 @@ public static class EditorSystem
 
             newFullTick = Math.Max(0, newFullTick);
             
-            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
         }
     }
 
@@ -1387,7 +1386,7 @@ public static class EditorSystem
 
             newFullTick = Math.Max(0, newFullTick);
             
-            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
         }
     }
 
@@ -1935,32 +1934,32 @@ public static class EditorSystem
                 foreach (HoldPointNote point in holdNote.Points)
                 {
                     int newFullTick = min + max - point.Timestamp.FullTick;
-                    operations.Add(new TimeableEditOperation(point, point.Timestamp.FullTick, newFullTick));
+                    operations.Add(new GenericEditOperation<int>(value => { point.Timestamp.FullTick = value; }, point.Timestamp.FullTick, newFullTick));
                 }
             }
             else if (obj is StopEffectEvent stopEffectEvent)
             {
                 int newFullTick = min + max - stopEffectEvent.SubEvents[0].Timestamp.FullTick;
-                operations.Add(new TimeableEditOperation(stopEffectEvent.SubEvents[0], stopEffectEvent.SubEvents[0].Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { stopEffectEvent.SubEvents[0].Timestamp.FullTick = value; }, stopEffectEvent.SubEvents[0].Timestamp.FullTick, newFullTick));
                 
                 newFullTick = min + max - stopEffectEvent.SubEvents[1].Timestamp.FullTick;
-                operations.Add(new TimeableEditOperation(stopEffectEvent.SubEvents[1], stopEffectEvent.SubEvents[1].Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { stopEffectEvent.SubEvents[1].Timestamp.FullTick = value; }, stopEffectEvent.SubEvents[1].Timestamp.FullTick, newFullTick));
             }
             else if (obj is ReverseEffectEvent reverseEffectEvent)
             {
                 int newFullTick = min + max - reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
-                operations.Add(new TimeableEditOperation(reverseEffectEvent.SubEvents[0], reverseEffectEvent.SubEvents[0].Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[0].Timestamp.FullTick = value; }, reverseEffectEvent.SubEvents[0].Timestamp.FullTick, newFullTick));
                 
                 newFullTick = min + max - reverseEffectEvent.SubEvents[1].Timestamp.FullTick;
-                operations.Add(new TimeableEditOperation(reverseEffectEvent.SubEvents[1], reverseEffectEvent.SubEvents[1].Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[1].Timestamp.FullTick = value; }, reverseEffectEvent.SubEvents[1].Timestamp.FullTick, newFullTick));
                 
                 newFullTick = min + max - reverseEffectEvent.SubEvents[2].Timestamp.FullTick;
-                operations.Add(new TimeableEditOperation(reverseEffectEvent.SubEvents[2], reverseEffectEvent.SubEvents[2].Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[2].Timestamp.FullTick = value; }, reverseEffectEvent.SubEvents[2].Timestamp.FullTick, newFullTick));
             }
             else
             {
                 int newFullTick = min + max - obj.Timestamp.FullTick;
-                operations.Add(new TimeableEditOperation(obj, obj.Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, obj.Timestamp.FullTick, newFullTick));
             }
         }
         
@@ -1985,32 +1984,32 @@ public static class EditorSystem
                 foreach (HoldPointNote point in holdNote.Points)
                 {
                     int newFullTick = (int)Math.Round(min + (point.Timestamp.FullTick - min) * scale);
-                    operations.Add(new TimeableEditOperation(point, point.Timestamp.FullTick, newFullTick));
+                    operations.Add(new GenericEditOperation<int>(value => { point.Timestamp.FullTick = value; }, point.Timestamp.FullTick, newFullTick));
                 }
             }
             else if (obj is StopEffectEvent stopEffectEvent)
             {
                 int newFullTick = (int)Math.Round(min + (stopEffectEvent.SubEvents[0].Timestamp.FullTick - min) * scale);
-                operations.Add(new TimeableEditOperation(stopEffectEvent.SubEvents[0], stopEffectEvent.SubEvents[0].Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { stopEffectEvent.SubEvents[0].Timestamp.FullTick = value; }, stopEffectEvent.SubEvents[0].Timestamp.FullTick, newFullTick));
                 
                 newFullTick = (int)Math.Round(min + (stopEffectEvent.SubEvents[1].Timestamp.FullTick - min) * scale);
-                operations.Add(new TimeableEditOperation(stopEffectEvent.SubEvents[1], stopEffectEvent.SubEvents[1].Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { stopEffectEvent.SubEvents[1].Timestamp.FullTick = value; }, stopEffectEvent.SubEvents[1].Timestamp.FullTick, newFullTick));
             }
             else if (obj is ReverseEffectEvent reverseEffectEvent)
             {
                 int newFullTick = (int)Math.Round(min + (reverseEffectEvent.SubEvents[0].Timestamp.FullTick - min) * scale);
-                operations.Add(new TimeableEditOperation(reverseEffectEvent.SubEvents[0], reverseEffectEvent.SubEvents[0].Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[0].Timestamp.FullTick = value; }, reverseEffectEvent.SubEvents[0].Timestamp.FullTick, newFullTick));
                 
                 newFullTick = (int)Math.Round(min + (reverseEffectEvent.SubEvents[1].Timestamp.FullTick - min) * scale);
-                operations.Add(new TimeableEditOperation(reverseEffectEvent.SubEvents[1], reverseEffectEvent.SubEvents[1].Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[1].Timestamp.FullTick = value; }, reverseEffectEvent.SubEvents[1].Timestamp.FullTick, newFullTick));
                 
                 newFullTick = (int)Math.Round(min + (reverseEffectEvent.SubEvents[2].Timestamp.FullTick - min) * scale);
-                operations.Add(new TimeableEditOperation(reverseEffectEvent.SubEvents[2], reverseEffectEvent.SubEvents[2].Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { reverseEffectEvent.SubEvents[2].Timestamp.FullTick = value; }, reverseEffectEvent.SubEvents[2].Timestamp.FullTick, newFullTick));
             }
             else
             {
                 int newFullTick = (int)Math.Round(min + (obj.Timestamp.FullTick - min) * scale);
-                operations.Add(new TimeableEditOperation(obj, obj.Timestamp.FullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, obj.Timestamp.FullTick, newFullTick));
             }
         }
         
@@ -2091,7 +2090,7 @@ public static class EditorSystem
 
             newFullTick = Math.Max(0, newFullTick);
             
-            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
         }
     }
 
@@ -2165,7 +2164,8 @@ public static class EditorSystem
 
             newFullTick = Math.Max(0, newFullTick);
             
-            operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+            operations.Add(new GenericEditOperation<int>(value =>
+            { obj.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
         }
     }
 

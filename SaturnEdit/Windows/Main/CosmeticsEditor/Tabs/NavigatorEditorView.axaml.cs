@@ -279,7 +279,7 @@ public partial class NavigatorEditorView : UserControl
             return;
         }
         
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { navigator.Artist = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { navigator.Artist = value; }, oldValue, newValue));
     }
     
     private void TextBoxAudioArtist_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -297,7 +297,7 @@ public partial class NavigatorEditorView : UserControl
             return;
         }
         
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(value => { navigator.Voice = value; }, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { navigator.Voice = value; }, oldValue, newValue));
     }
     
     private void TextBoxWidth_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -311,12 +311,12 @@ public partial class NavigatorEditorView : UserControl
             float newValue = Convert.ToSingle(TextBoxWidth.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.Width = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Width = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.Width = value; }, navigator.Width, 1024));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Width = value; }, navigator.Width, 1024));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -336,12 +336,12 @@ public partial class NavigatorEditorView : UserControl
             float newValue = Convert.ToSingle(TextBoxHeight.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.Height = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Height = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.Height = value; }, navigator.Height, 1024));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Height = value; }, navigator.Height, 1024));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -361,12 +361,12 @@ public partial class NavigatorEditorView : UserControl
             float newValue = Convert.ToSingle(TextBoxOffsetX.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.OffsetX = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.OffsetX = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.OffsetX = value; }, navigator.OffsetX, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.OffsetX = value; }, navigator.OffsetX, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -386,12 +386,12 @@ public partial class NavigatorEditorView : UserControl
             float newValue = Convert.ToSingle(TextBoxOffsetY.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.OffsetY = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.OffsetY = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.OffsetY = value; }, navigator.OffsetY, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.OffsetY = value; }, navigator.OffsetY, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -411,12 +411,12 @@ public partial class NavigatorEditorView : UserControl
             float newValue = Convert.ToSingle(TextBoxFaceMarginTop.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.FaceMarginTop = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginTop = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.FaceMarginTop = value; }, navigator.FaceMarginTop, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginTop = value; }, navigator.FaceMarginTop, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -436,12 +436,12 @@ public partial class NavigatorEditorView : UserControl
             float newValue = Convert.ToSingle(TextBoxFaceMarginBottom.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.FaceMarginBottom = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginBottom = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.FaceMarginBottom = value; }, navigator.FaceMarginBottom, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginBottom = value; }, navigator.FaceMarginBottom, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -461,12 +461,12 @@ public partial class NavigatorEditorView : UserControl
             float newValue = Convert.ToSingle(TextBoxFaceMarginLeft.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.FaceMarginLeft = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginLeft = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.FaceMarginLeft = value; }, navigator.FaceMarginLeft, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginLeft = value; }, navigator.FaceMarginLeft, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -486,12 +486,12 @@ public partial class NavigatorEditorView : UserControl
             float newValue = Convert.ToSingle(TextBoxFaceMarginRight.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.FaceMarginRight = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginRight = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.FaceMarginRight = value; }, navigator.FaceMarginRight, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginRight = value; }, navigator.FaceMarginRight, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -512,12 +512,12 @@ public partial class NavigatorEditorView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxBlinkInterval.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.BlinkAnimationInterval = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.BlinkAnimationInterval = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.BlinkAnimationInterval = value; }, navigator.BlinkAnimationInterval, 5000));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.BlinkAnimationInterval = value; }, navigator.BlinkAnimationInterval, 5000));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -537,12 +537,12 @@ public partial class NavigatorEditorView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxBlinkDuration.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.BlinkAnimationDuration = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.BlinkAnimationDuration = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new FloatEditOperation(value => { navigator.BlinkAnimationDuration = value; }, navigator.BlinkAnimationDuration, 5000));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.BlinkAnimationDuration = value; }, navigator.BlinkAnimationDuration, 5000));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -636,7 +636,7 @@ public partial class NavigatorEditorView : UserControl
 
         if (action == null) return;
         
-        UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(action, oldValue, newValue));
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(action, oldValue, newValue));
     }
 
     private async void ButtonPickTextureFile_OnClick(object? sender, RoutedEventArgs e)
@@ -717,8 +717,8 @@ public partial class NavigatorEditorView : UserControl
                 // Define new source path.
                 string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "navigator.toml");
                 
-                StringEditOperation op0 = new(value => { navigator.AbsoluteSourcePath = value; }, navigator.AbsoluteSourcePath, newSourcePath);
-                StringEditOperation op1 = new(action, oldLocalPath, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op0 = new(value => { navigator.AbsoluteSourcePath = value; }, navigator.AbsoluteSourcePath, newSourcePath);
+                GenericEditOperation<string> op1 = new(action, oldLocalPath, Path.GetFileName(files[0].Path.LocalPath));
                 
                 UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
             }
@@ -732,7 +732,7 @@ public partial class NavigatorEditorView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.CosmeticBranch.Push(new StringEditOperation(action, oldLocalPath, localPath));
+                UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(action, oldLocalPath, localPath));
             }
         }
         catch (Exception ex)

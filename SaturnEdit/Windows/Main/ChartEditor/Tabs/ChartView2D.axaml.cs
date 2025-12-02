@@ -14,8 +14,9 @@ using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnData.Utilities;
 using SaturnEdit.Systems;
-using SaturnEdit.UndoRedo.BookmarkOperations;
+using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.EventOperations;
+using SaturnEdit.UndoRedo.PrimitiveOperations;
 using SaturnEdit.Utilities;
 using SaturnView;
 using SkiaSharp;
@@ -1081,8 +1082,11 @@ public partial class ChartView2D : UserControl
             { 
                 (string?, uint?) data = await MainWindow.Instance.ChartEditor.ShowBookmarkDialog(bookmark.Message, bookmark.Color);
                 if (data.Item1 == null || data.Item2 == null) return;
+
+                GenericEditOperation<string> op0 = new(value => { bookmark.Message = value; }, bookmark.Message, data.Item1);
+                GenericEditOperation<uint> op1 = new(value => { bookmark.Color = value; }, bookmark.Color, data.Item2.Value);
                 
-                UndoRedoSystem.ChartBranch.Push(new BookmarkEditOperation(bookmark, bookmark.Color, data.Item2.Value, bookmark.Message, data.Item1));
+                UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
             }
             else if (SelectionSystem.PointerOverObject is HoldNote holdNote)
             {

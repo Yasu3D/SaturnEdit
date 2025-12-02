@@ -12,14 +12,13 @@ using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.BookmarkOperations;
 using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.HoldNoteOperations;
 using SaturnEdit.UndoRedo.NoteOperations;
 using SaturnEdit.UndoRedo.PlayableOperations;
 using SaturnEdit.UndoRedo.PositionableOperations;
+using SaturnEdit.UndoRedo.PrimitiveOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
-using SaturnEdit.UndoRedo.TimeableOperations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -613,7 +612,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is Bookmark bookmark)
                         {
-                            operations.Add(new BookmarkAddOperation(bookmark, 0));
+                            operations.Add(new ListAddOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
                         }
                         else if (newObject is Event newEvent)
                         {
@@ -669,7 +668,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is Bookmark bookmark)
                         {
-                            operations.Add(new BookmarkAddOperation(bookmark, 0));
+                            operations.Add(new ListAddOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
                         }
                         else if (newObject is Event newEvent)
                         {
@@ -725,7 +724,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is Bookmark bookmark)
                         {
-                            operations.Add(new BookmarkAddOperation(bookmark, 0));
+                            operations.Add(new ListAddOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
                         }
                         else if (newObject is Event newEvent)
                         {
@@ -809,7 +808,7 @@ public partial class InspectorView : UserControl
                     }
                     else if (newObject is Bookmark bookmark)
                     {
-                        operations.Add(new BookmarkAddOperation(bookmark, 0));
+                        operations.Add(new ListAddOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
                     }
                     else if (newObject is Event newEvent)
                     {
@@ -848,7 +847,7 @@ public partial class InspectorView : UserControl
                 int index = ChartSystem.Chart.Bookmarks.IndexOf(bookmark);
                 if (index == -1) return;
                 
-                operations.Add(new BookmarkRemoveOperation(bookmark, index));
+                operations.Add(new ListRemoveOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
             }
             else if (obj is HoldPointNote holdPointNote)
             {
@@ -919,7 +918,7 @@ public partial class InspectorView : UserControl
                     int oldFullTick = point.Timestamp.FullTick;
                     int newFullTick = oldFullTick + (newStartFullTick - oldStartFullTick);
                     
-                    operations.Add(new TimeableEditOperation(point, oldFullTick, newFullTick));
+                    operations.Add(new GenericEditOperation<int>(value => { point.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
                 }
             }
             else if (obj is StopEffectEvent stopEffectEvent)
@@ -932,7 +931,7 @@ public partial class InspectorView : UserControl
                     int oldFullTick = subEvent.Timestamp.FullTick;
                     int newFullTick = oldFullTick + (newStartTick - oldStartTick);
                     
-                    operations.Add(new TimeableEditOperation(subEvent, oldFullTick, newFullTick));
+                    operations.Add(new GenericEditOperation<int>(value => { subEvent.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
                 }
             }
             else if (obj is ReverseEffectEvent reverseEffectEvent)
@@ -945,7 +944,7 @@ public partial class InspectorView : UserControl
                     int oldFullTick = subEvent.Timestamp.FullTick;
                     int newFullTick = oldFullTick + (newStartTick - oldStartTick);
                     
-                    operations.Add(new TimeableEditOperation(subEvent, oldFullTick, newFullTick));
+                    operations.Add(new GenericEditOperation<int>(value => { subEvent.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
                 }
             }
             else
@@ -953,7 +952,7 @@ public partial class InspectorView : UserControl
                 int oldFullTick = obj.Timestamp.FullTick;
                 int newFullTick = newValue + obj.Timestamp.Tick;
                 
-                operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
             }
         }
 
@@ -1004,7 +1003,7 @@ public partial class InspectorView : UserControl
                     int oldFullTick = point.Timestamp.FullTick;
                     int newFullTick = oldFullTick + (newStartTick - oldStartTick);
                     
-                    operations.Add(new TimeableEditOperation(point, oldFullTick, newFullTick));
+                    operations.Add(new GenericEditOperation<int>(value => { point.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
                 }
             }
             else if (obj is StopEffectEvent stopEffectEvent)
@@ -1017,7 +1016,7 @@ public partial class InspectorView : UserControl
                     int oldFullTick = subEvent.Timestamp.FullTick;
                     int newFullTick = oldFullTick + (newStartTick - oldStartTick);
                     
-                    operations.Add(new TimeableEditOperation(subEvent, oldFullTick, newFullTick));
+                    operations.Add(new GenericEditOperation<int>(value => { subEvent.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
                 }
             }
             else if (obj is ReverseEffectEvent reverseEffectEvent)
@@ -1030,7 +1029,7 @@ public partial class InspectorView : UserControl
                     int oldFullTick = subEvent.Timestamp.FullTick;
                     int newFullTick = oldFullTick + (newStartTick - oldStartTick);
                     
-                    operations.Add(new TimeableEditOperation(subEvent, oldFullTick, newFullTick));
+                    operations.Add(new GenericEditOperation<int>(value => { subEvent.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
                 }
             }
             else
@@ -1038,7 +1037,7 @@ public partial class InspectorView : UserControl
                 int oldFullTick = obj.Timestamp.FullTick;
                 int newFullTick = obj.Timestamp.Measure * 1920 + newValue;
                 
-                operations.Add(new TimeableEditOperation(obj, oldFullTick, newFullTick));
+                operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
             }
         }
 
@@ -1088,7 +1087,7 @@ public partial class InspectorView : UserControl
                     int oldPointFullTick = point.Timestamp.FullTick;
                     int newPointFullTick = oldPointFullTick + (newValue - oldStartTick);
                     
-                    operations.Add(new TimeableEditOperation(point, oldPointFullTick, newPointFullTick));
+                    operations.Add(new GenericEditOperation<int>(value => { point.Timestamp.FullTick = value; }, oldPointFullTick, newPointFullTick));
                 }
             }
             else if (timeable is StopEffectEvent stopEffectEvent)
@@ -1100,7 +1099,7 @@ public partial class InspectorView : UserControl
                     int oldPointFullTick = subEvent.Timestamp.FullTick;
                     int newPointFullTick = oldPointFullTick + (newValue - oldStartTick);
                     
-                    operations.Add(new TimeableEditOperation(subEvent, oldPointFullTick, newPointFullTick));
+                    operations.Add(new GenericEditOperation<int>(value => { subEvent.Timestamp.FullTick = value; }, oldPointFullTick, newPointFullTick));
                 }
             }
             else if (timeable is ReverseEffectEvent reverseEffectEvent)
@@ -1112,14 +1111,14 @@ public partial class InspectorView : UserControl
                     int oldPointFullTick = subEvent.Timestamp.FullTick;
                     int newPointFullTick = oldPointFullTick + (newValue - oldStartTick);
                     
-                    operations.Add(new TimeableEditOperation(subEvent, oldPointFullTick, newPointFullTick));
+                    operations.Add(new GenericEditOperation<int>(value => { subEvent.Timestamp.FullTick = value; }, oldPointFullTick, newPointFullTick));
                 }
             }
             else
             {
                 int oldFullTick = timeable.Timestamp.FullTick;
                 
-                operations.Add(new TimeableEditOperation(timeable, oldFullTick, newValue));
+                operations.Add(new GenericEditOperation<int>(value => { timeable.Timestamp.FullTick = value; }, oldFullTick, newValue));
             }
         }
 
@@ -1613,8 +1612,8 @@ public partial class InspectorView : UserControl
         foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not Bookmark bookmark) continue;
-            
-            operations.Add(new BookmarkEditOperation(bookmark, bookmark.Color, newValue, bookmark.Message, bookmark.Message));
+
+            operations.Add(new GenericEditOperation<uint>(value => { bookmark.Color = value; }, bookmark.Color, newValue));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -1668,7 +1667,7 @@ public partial class InspectorView : UserControl
 
         foreach (KeyValuePair<Bookmark, uint> bookmark in recoloredBookmarks)
         {
-            operations.Add(new BookmarkEditOperation(bookmark.Key, bookmark.Value, newValue, bookmark.Key.Message, bookmark.Key.Message));
+            operations.Add(new GenericEditOperation<uint>(value => { bookmark.Key.Color = value; }, bookmark.Value, newValue));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -1696,8 +1695,8 @@ public partial class InspectorView : UserControl
         foreach (ITimeable obj in SelectionSystem.OrderedSelectedObjects)
         {
             if (obj is not Bookmark bookmark) continue;
-            
-            operations.Add(new BookmarkEditOperation(bookmark, bookmark.Color, bookmark.Color, bookmark.Message, newValue));
+
+            operations.Add(new GenericEditOperation<string>(value => { bookmark.Message = value; }, bookmark.Message, newValue));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
