@@ -34,6 +34,11 @@ public static class SoftwareUpdateSystem
     {
         try
         {
+            if (!SettingsSystem.EditorSettings.CheckForUpdates)
+            {
+                return false;
+            }
+            
             if (gitHubClient == null) return false;
 
             Release? latestRelease = await gitHubClient.Repository.Release.GetLatest(RepositoryOwner, RepositoryName);

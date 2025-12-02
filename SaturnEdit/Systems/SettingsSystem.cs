@@ -258,7 +258,20 @@ public class EditorSettings
         }
     }
     private bool continueLastSession = false;
-
+    
+    public bool CheckForUpdates
+    {
+        get => checkForUpdates;
+        set
+        {
+            if (checkForUpdates == value) return;
+            
+            checkForUpdates = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool checkForUpdates = true;
+    
     public string LastSessionPath
     {
         get => lastSessionPath;

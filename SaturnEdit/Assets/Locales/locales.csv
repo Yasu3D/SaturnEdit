@@ -584,6 +584,7 @@ Settings.General,General,-,-,-
 Settings.General.OnProgramStart,On Program Start,-,-,-
 Settings.General.ContinueLastSession,Continue last session,-,-,-
 Settings.General.ShowSplashScreen,Show splash screen,-,-,-
+Settings.General.CheckForUpdates,Check for updates,-,-,-
 Settings.General.Languages,Languages,-,-,-
 Settings.General.Autosave,Autosave,-,-,-
 Settings.General.AutosaveFrequency,Autosave Frequency,-,-,-

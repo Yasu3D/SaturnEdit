@@ -28,6 +28,7 @@ public partial class SettingsGeneralView : UserControl
             ComboBoxLanguage.SelectedIndex = (int)SettingsSystem.EditorSettings.Locale;
             CheckBoxShowSplashScreen.IsChecked = SettingsSystem.EditorSettings.ShowSplashScreen;
             CheckBoxContinueLastSession.IsChecked = SettingsSystem.EditorSettings.ContinueLastSession;
+            CheckBoxCheckForUpdates.IsChecked = SettingsSystem.EditorSettings.CheckForUpdates;
             ComboBoxAutosaveFrequency.SelectedIndex = (int)SettingsSystem.EditorSettings.AutoSaveFrequency;
             
             if (SettingsSystem.EditorSettings.Theme == EditorSettings.EditorThemeOption.Light)
@@ -67,6 +68,14 @@ public partial class SettingsGeneralView : UserControl
         if (CheckBoxContinueLastSession == null) return;
         
         SettingsSystem.EditorSettings.ContinueLastSession = CheckBoxContinueLastSession.IsChecked ?? true;
+    }
+    
+    private void CheckBoxCheckForUpdates_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (CheckBoxCheckForUpdates == null) return;
+        
+        SettingsSystem.EditorSettings.CheckForUpdates = CheckBoxCheckForUpdates.IsChecked ?? true;
     }
     
     private void ComboBoxAutosaveFrequency_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)

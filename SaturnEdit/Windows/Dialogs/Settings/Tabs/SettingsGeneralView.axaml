@@ -52,7 +52,8 @@
                            VerticalAlignment="Center" />
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,0,0,10">
                 <CheckBox Name="CheckBoxContinueLastSession"
                           IsChecked="False"
                           IsCheckedChanged="CheckBoxContinueLastSession_OnIsCheckedChanged" />
@@ -60,6 +61,14 @@
                            VerticalAlignment="Center" />
             </StackPanel>
 
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxCheckForUpdates"
+                          IsChecked="False"
+                          IsCheckedChanged="CheckBoxCheckForUpdates_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource Settings.General.CheckForUpdates}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+            
             <Grid ColumnDefinitions="Auto,*"
                   Margin="0,40,0,20">
                 <TextBlock Grid.Column="0"

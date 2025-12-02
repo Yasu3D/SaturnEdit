@@ -586,6 +586,7 @@
     <system:String x:Key="Settings.General.OnProgramStart">-</system:String>
     <system:String x:Key="Settings.General.ContinueLastSession">-</system:String>
     <system:String x:Key="Settings.General.ShowSplashScreen">-</system:String>
+    <system:String x:Key="Settings.General.CheckForUpdates">-</system:String>
     <system:String x:Key="Settings.General.Languages">-</system:String>
     <system:String x:Key="Settings.General.Autosave">-</system:String>
     <system:String x:Key="Settings.General.AutosaveFrequency">-</system:String>
