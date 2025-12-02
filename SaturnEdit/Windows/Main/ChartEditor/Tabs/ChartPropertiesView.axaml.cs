@@ -10,7 +10,7 @@ using Avalonia.Threading;
 using SaturnData.Notation.Core;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.EntryOperations;
+using SaturnEdit.UndoRedo.PrimitiveOperations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -118,14 +118,14 @@ public partial class ChartPropertiesView : UserControl
 
             if (ChartSystem.Entry.AutoReading)
             {
-                EntryTitleEditOperation op0 = new(oldValue, newValue);
-                EntryReadingEditOperation op1 = new(ChartSystem.Entry.Reading, await Entry.GetAutoReading(newValue));
+                GenericEditOperation<string> op0 = new(value => { ChartSystem.Entry.Title = value; }, oldValue, newValue);
+                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.Reading = value; }, ChartSystem.Entry.Reading, await Entry.GetAutoReading(newValue));
 
                 UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
             }
             else
             {
-                UndoRedoSystem.ChartBranch.Push(new EntryTitleEditOperation(oldValue, newValue));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.Title = value; }, oldValue, newValue));
             }
         }
         catch (Exception ex)
@@ -144,7 +144,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxReading.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryReadingEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.Reading = value; }, oldValue, newValue));
     }
 
     private async void ToggleButtonAutoReading_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -162,14 +162,14 @@ public partial class ChartPropertiesView : UserControl
             {
                 string reading = await Entry.GetAutoReading(ChartSystem.Entry.Title);
 
-                EntryAutoReadingEditOperation op0 = new(oldValue, newValue);
-                EntryReadingEditOperation op1 = new(ChartSystem.Entry.Reading, reading);
+                GenericEditOperation<bool> op0 = new(value => { ChartSystem.Entry.AutoReading = value; }, oldValue, newValue);
+                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.Reading = value; }, ChartSystem.Entry.Reading, reading);
 
                 UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
             }
             else
             {
-                UndoRedoSystem.ChartBranch.Push(new EntryAutoReadingEditOperation(oldValue, newValue));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<bool>(value => { ChartSystem.Entry.AutoReading = value; }, oldValue, newValue));
             }
         }
         catch (Exception ex)
@@ -188,7 +188,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxArtist.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryArtistEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.Artist = value; }, oldValue, newValue));
     }
 
     private void TextBoxBpmMessage_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -200,7 +200,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxBpmMessage.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryBpmMessageEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.BpmMessage = value; }, oldValue, newValue));
     }
 
     private void ToggleButtonAutoBpmMessage_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -214,14 +214,14 @@ public partial class ChartPropertiesView : UserControl
 
         if (newValue == true)
         {
-            EntryAutoBpmMessageEditOperation op0 = new(oldValue, newValue);
-            EntryBpmMessageEditOperation op1 = new(ChartSystem.Entry.BpmMessage, ChartSystem.Chart.GetAutoBpmMessage());
+            GenericEditOperation<bool> op0 = new(value => { ChartSystem.Entry.AutoBpmMessage = value; }, oldValue, newValue);
+            GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.BpmMessage = value; }, ChartSystem.Entry.BpmMessage, ChartSystem.Chart.GetAutoBpmMessage());
             
             UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
         }
         else
         {
-            UndoRedoSystem.ChartBranch.Push(new EntryAutoBpmMessageEditOperation(oldValue, newValue));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<bool>(value => { ChartSystem.Entry.AutoBpmMessage = value; }, oldValue, newValue));
         }
     }
 
@@ -234,7 +234,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxRevision.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryRevisionEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.Revision = value; }, oldValue, newValue));
     }
 
     private void TextBoxNotesDesigner_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -246,7 +246,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxNotesDesigner.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryNotesDesignerEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.NotesDesigner = value; }, oldValue, newValue));
     }
 
     private void ComboBoxDifficulty_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -260,14 +260,14 @@ public partial class ChartPropertiesView : UserControl
 
         if (ChartSystem.Entry.AutoClearThreshold)
         {
-            EntryDifficultyEditOperation op0 = new(oldValue, newValue);
-            EntryClearThresholdEditOperation op1 = new(ChartSystem.Entry.ClearThreshold, Entry.GetAutoClearThreshold(newValue));
+            GenericEditOperation<Difficulty> op0 = new(value => { ChartSystem.Entry.Difficulty = value; }, oldValue, newValue);
+            GenericEditOperation<float> op1 = new(value => { ChartSystem.Entry.ClearThreshold = value; }, ChartSystem.Entry.ClearThreshold, Entry.GetAutoClearThreshold(newValue));
             
             UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
         }
         else
         {
-            UndoRedoSystem.ChartBranch.Push(new EntryDifficultyEditOperation(oldValue, newValue));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<Difficulty>(value => { ChartSystem.Entry.Difficulty = value; }, oldValue, newValue));
         }
     }
 
@@ -282,12 +282,12 @@ public partial class ChartPropertiesView : UserControl
             double newValue = Convert.ToDouble(TextBoxLevel.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
-            UndoRedoSystem.ChartBranch.Push(new EntryLevelEditOperation(oldValue, newValue));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<double>(value => { ChartSystem.Entry.Level = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.ChartBranch.Push(new EntryLevelEditOperation(ChartSystem.Entry.Level, 0));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<double>(value => { ChartSystem.Entry.Level = value; }, ChartSystem.Entry.Level, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -307,12 +307,12 @@ public partial class ChartPropertiesView : UserControl
             float newValue = Convert.ToSingle(TextBoxClearThreshold.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
-            UndoRedoSystem.ChartBranch.Push(new EntryClearThresholdEditOperation(oldValue, newValue));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { ChartSystem.Entry.ClearThreshold = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.ChartBranch.Push(new EntryClearThresholdEditOperation(ChartSystem.Entry.ClearThreshold, 0));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { ChartSystem.Entry.ClearThreshold = value; }, ChartSystem.Entry.ClearThreshold, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -334,14 +334,14 @@ public partial class ChartPropertiesView : UserControl
         {
             float clearThreshold = Entry.GetAutoClearThreshold(ChartSystem.Entry.Difficulty);
 
-            EntryAutoClearThresholdEditOperation op0 = new(oldValue, newValue);
-            EntryClearThresholdEditOperation op1 = new(ChartSystem.Entry.ClearThreshold, clearThreshold);
+            GenericEditOperation<bool> op0 = new(value => { ChartSystem.Entry.AutoClearThreshold = value; }, oldValue, newValue);
+            GenericEditOperation<float> op1 = new(value => { ChartSystem.Entry.ClearThreshold = value; }, ChartSystem.Entry.ClearThreshold, clearThreshold);
 
             UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
         }
         else
         {
-            UndoRedoSystem.ChartBranch.Push(new EntryAutoClearThresholdEditOperation(oldValue, newValue));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<bool>(value => { ChartSystem.Entry.AutoClearThreshold = value; }, oldValue, newValue));
         }
     }
 
@@ -357,7 +357,7 @@ public partial class ChartPropertiesView : UserControl
         Timestamp newValue = new(measure, tick);
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryChartEndEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<Timestamp>(value => { ChartSystem.Entry.ChartEnd = value; }, oldValue, newValue));
     }
 
     private void NumericUpDownChartEndTick_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -373,7 +373,7 @@ public partial class ChartPropertiesView : UserControl
         Timestamp newValue = new(fullTick);
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryChartEndEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<Timestamp>(value => { ChartSystem.Entry.ChartEnd = value; }, oldValue, newValue));
     }
 
     private void ToggleButtonAutoChartEnd_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
@@ -387,14 +387,14 @@ public partial class ChartPropertiesView : UserControl
 
         if (newValue == true)
         {
-            EntryAutoChartEndEditOperation op0 = new(oldValue, newValue);
-            EntryChartEndEditOperation op1 = new(ChartSystem.Entry.ChartEnd, ChartSystem.Chart.FindIdealChartEnd((float?)AudioSystem.AudioChannelAudio?.Length ?? 0));
+            GenericEditOperation<bool> op0 = new(value => { ChartSystem.Entry.AutoChartEnd = value; }, oldValue, newValue);
+            GenericEditOperation<Timestamp> op1 = new(value => { ChartSystem.Entry.ChartEnd = value; }, ChartSystem.Entry.ChartEnd, ChartSystem.Chart.FindIdealChartEnd((float?)AudioSystem.AudioChannelAudio?.Length ?? 0));
             
             UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
         }
         else
         {
-            UndoRedoSystem.ChartBranch.Push(new EntryAutoChartEndEditOperation(oldValue, newValue));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<bool>(value => { ChartSystem.Entry.AutoChartEnd = value; }, oldValue, newValue));
         }
     }
 
@@ -418,7 +418,7 @@ public partial class ChartPropertiesView : UserControl
         Timestamp newValue = new(measure, tick);
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryPreviewBeginEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<Timestamp>(value => { ChartSystem.Entry.PreviewBegin = value; }, oldValue, newValue));
     }
 
     private void NumericUpDownPreviewBeginTick_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -434,7 +434,7 @@ public partial class ChartPropertiesView : UserControl
         Timestamp newValue = new(fullTick);
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryPreviewBeginEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<Timestamp>(value => { ChartSystem.Entry.PreviewBegin = value; }, oldValue, newValue));
     }
 
     private void NumericUpDownPreviewEndMeasure_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -449,7 +449,7 @@ public partial class ChartPropertiesView : UserControl
         Timestamp newValue = new(measure, tick);
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryPreviewEndEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<Timestamp>(value => { ChartSystem.Entry.PreviewEnd = value; }, oldValue, newValue));
     }
 
     private void NumericUpDownPreviewEndTick_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -465,7 +465,7 @@ public partial class ChartPropertiesView : UserControl
         Timestamp newValue = new(fullTick);
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryPreviewEndEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<Timestamp>(value => { ChartSystem.Entry.PreviewEnd = value; }, oldValue, newValue));
     }
     
     private void ComboBoxBackground_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -477,7 +477,7 @@ public partial class ChartPropertiesView : UserControl
         BackgroundOption newValue = (BackgroundOption)ComboBoxBackground.SelectedIndex;
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryBackgroundEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<BackgroundOption>(value => { ChartSystem.Entry.Background = value; }, oldValue, newValue));
     }
 
     private void ComboBoxTutorialMode_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -489,7 +489,7 @@ public partial class ChartPropertiesView : UserControl
         bool newValue = ComboBoxTutorialMode.SelectedIndex == 1;
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryTutorialModeEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<bool>(value => { ChartSystem.Entry.TutorialMode = value; }, oldValue, newValue));
     }
 
     private void TextBoxJacket_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -501,7 +501,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxJacket.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryJacketEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.JacketFile = value; }, oldValue, newValue));
     }
 
     private void TextBoxAudio_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -513,7 +513,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxAudio.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryAudioEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.AudioFile = value; }, oldValue, newValue));
     }
 
     private void TextBoxVideo_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -525,7 +525,7 @@ public partial class ChartPropertiesView : UserControl
         string newValue = TextBoxVideo.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new EntryVideoEditOperation(oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.VideoFile = value; }, oldValue, newValue));
     }
 
     private void TextBoxAudioOffset_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -539,12 +539,12 @@ public partial class ChartPropertiesView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxAudioOffset.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
-            UndoRedoSystem.ChartBranch.Push(new EntryAudioOffsetEditOperation(oldValue, newValue));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { ChartSystem.Entry.AudioOffset = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.ChartBranch.Push(new EntryAudioOffsetEditOperation(ChartSystem.Entry.AudioOffset, 0));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { ChartSystem.Entry.AudioOffset = value; }, ChartSystem.Entry.AudioOffset, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -564,12 +564,12 @@ public partial class ChartPropertiesView : UserControl
             float newValue = 1000 * Convert.ToSingle(TextBoxVideoOffset.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
-            UndoRedoSystem.ChartBranch.Push(new EntryVideoOffsetEditOperation(oldValue, newValue));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { ChartSystem.Entry.VideoOffset = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.ChartBranch.Push(new EntryVideoOffsetEditOperation(ChartSystem.Entry.VideoOffset, 0));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { ChartSystem.Entry.VideoOffset = value; }, ChartSystem.Entry.VideoOffset, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -602,8 +602,8 @@ public partial class ChartPropertiesView : UserControl
             if (ChartSystem.Entry.RootDirectory == "")
             {
                 // Define new root directory.
-                EntryRootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
-                EntryJacketEditOperation op1 = new(ChartSystem.Entry.JacketFile, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op0 = new(value => { ChartSystem.Entry.RootDirectory = value; }, ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
+                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.JacketFile = value; }, ChartSystem.Entry.JacketFile, Path.GetFileName(files[0].Path.LocalPath));
                 UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
             }
             else
@@ -616,7 +616,7 @@ public partial class ChartPropertiesView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.ChartBranch.Push(new EntryJacketEditOperation(ChartSystem.Entry.JacketFile, localPath));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.JacketFile = value; }, ChartSystem.Entry.JacketFile, localPath));
             }
         }
         catch (Exception ex)
@@ -650,8 +650,8 @@ public partial class ChartPropertiesView : UserControl
             if (ChartSystem.Entry.RootDirectory == "")
             {
                 // Define new root directory.
-                EntryRootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
-                EntryAudioEditOperation op1 = new(ChartSystem.Entry.AudioFile, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op0 = new(value => { ChartSystem.Entry.RootDirectory = value; }, ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
+                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.AudioFile = value; }, ChartSystem.Entry.AudioFile, Path.GetFileName(files[0].Path.LocalPath));
                 UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
             }
             else
@@ -664,7 +664,7 @@ public partial class ChartPropertiesView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.ChartBranch.Push(new EntryAudioEditOperation(ChartSystem.Entry.AudioFile, localPath));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.AudioFile = value; }, ChartSystem.Entry.AudioFile, localPath));
             }
         }
         catch (Exception ex)
@@ -698,8 +698,8 @@ public partial class ChartPropertiesView : UserControl
             if (ChartSystem.Entry.RootDirectory == "")
             {
                 // Define new root directory.
-                EntryRootDirectoryEditOperation op0 = new(ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
-                EntryVideoEditOperation op1 = new(ChartSystem.Entry.VideoFile, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op0 = new(value => { ChartSystem.Entry.RootDirectory = value; }, ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
+                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.VideoFile = value; }, ChartSystem.Entry.VideoFile, Path.GetFileName(files[0].Path.LocalPath));
                 UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
             }
             else
@@ -712,7 +712,7 @@ public partial class ChartPropertiesView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
                 
-                UndoRedoSystem.ChartBranch.Push(new EntryVideoEditOperation(ChartSystem.Entry.VideoFile, localPath));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.VideoFile = value; }, ChartSystem.Entry.VideoFile, localPath));
             }
         }
         catch (Exception ex)
