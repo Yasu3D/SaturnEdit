@@ -64,6 +64,7 @@ public static class CursorSystem
             }
 
             currentType = value;
+            CursorChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static Note currentType = new TouchNote(Timestamp.Zero, 30, 15, BonusType.Normal, JudgementType.Normal);
@@ -196,20 +197,20 @@ public static class CursorSystem
 #region Methods
     public static void SetType(Note newType)
     {
-        List<IOperation> operations = [new CursorTypeChangeOperation(CurrentType, newType)];
-
         // Exit edit mode when changing to another type.
         if (newType != HoldPointNote && EditorSystem.Mode == EditorMode.EditMode && EditorSystem.ActiveObjectGroup is HoldNote)
         {
-            CompositeOperation? op = EditorSystem.GetEditModeChangeOperation(EditorMode.ObjectMode, null, newType);
+            CursorTypeChangeOperation op0 = new(CurrentType, newType);
+            CompositeOperation? op1 = EditorSystem.GetEditModeChangeOperation(EditorMode.ObjectMode, null, newType);
 
-            if (op != null)
-            {
-                operations.Add(op);
-            }
+            if (op1 == null) return;
+
+            UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
         }
-        
-        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
+        else
+        {
+            CurrentType = newType;
+        }
     }
 #endregion Methods
 }

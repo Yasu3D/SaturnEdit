@@ -189,6 +189,7 @@ public static class ChartSystem
         {
             Entry.RootDirectory = Path.GetDirectoryName(path) ?? "";
             Entry.ChartFile = Path.GetFileName(path);
+            Entry.FormatVersion = args.FormatVersion;
             
             SettingsSystem.EditorSettings.RecentChartFiles.Remove(path);
             SettingsSystem.EditorSettings.AddRecentChartFile(path);
@@ -206,6 +207,8 @@ public static class ChartSystem
         Entry.ChartFile = "";
         Entry.NotesDesigner = "";
         Entry.Revision = "";
+        Entry.Level = 0;
+        Entry.Difficulty = Difficulty.Normal;
         Entry.Id = Entry.NewId;
         Entry.FormatVersion = FormatVersion.SatV3;
 

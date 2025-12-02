@@ -2319,22 +2319,50 @@ public static class EditorSystem
         {
             if (start.Parent != end.Parent) return;
             if (start.Timestamp.FullTick == end.Timestamp.FullTick) return;
+            
+            bool flip = SaturnMath.FlipHoldInterpolation(start, end);
+            
+            int startLeft = start.Position;
+            int endLeft = end.Position;
+            int startRight = start.Position + start.Size;
+            int endRight = end.Position + end.Size;
+            
+            int deltaLeft = Math.Abs(startLeft - endLeft);
+            int deltaRight = Math.Abs(startRight - endRight);
+            deltaLeft = flip ? 60 - deltaLeft : deltaLeft;
+            deltaRight = flip ? 60 - deltaRight : deltaRight;
 
+            int signLeft = Math.Sign(startLeft - endLeft);
+            int signRight = Math.Sign(startRight - endRight);
+            signLeft = flip ? signLeft : -signLeft;
+            signRight = flip ? signRight : -signRight;
+            
             bool isA = true;
             
             for (int i = start.Timestamp.FullTick + interval; i < end.Timestamp.FullTick; i += interval)
             {
-                float t = (float)(i - start.Timestamp.FullTick) / (end.Timestamp.FullTick - start.Timestamp.FullTick);
-                int position = (int)Math.Round(SaturnMath.LerpCyclic(start.Position, end.Position, t, 60));
-                int size = (int)Math.Round(SaturnMath.Lerp(start.Size, end.Size, t));
+                float t = SaturnMath.InverseLerp(start.Timestamp.FullTick, end.Timestamp.FullTick, i);
+                
+                int leftEdge = (int)Math.Round(SaturnMath.Lerp(startLeft, startLeft + deltaLeft * signLeft, t));
+                int rightEdge = (int)Math.Round(SaturnMath.Lerp(startRight, startRight + deltaRight * signRight, t));
 
-                position = isA
-                    ? position - leftEdgeOffsetA
-                    : position - leftEdgeOffsetB;
+                leftEdge -= isA ? leftEdgeOffsetA : leftEdgeOffsetB;
+                rightEdge += isA ? rightEdgeOffsetA : rightEdgeOffsetB;
 
-                size = isA
-                    ? size + leftEdgeOffsetA + rightEdgeOffsetA 
-                    : size + leftEdgeOffsetB + rightEdgeOffsetB;
+                int position;
+                int size;
+                
+                if (leftEdge > rightEdge - 60)
+                {
+                    position = SaturnMath.Modulo(leftEdge, 60);
+                    size = Math.Clamp(rightEdge - leftEdge, 1, 60);
+                }
+                else
+                {
+                    // Size 60 Overlap
+                    position = SaturnMath.Modulo(30 + (leftEdge + rightEdge) / 2, 60);
+                    size = 60;
+                }
                 
                 HoldPointNote point = new
                 (
