@@ -117,7 +117,7 @@ public static class EditorSystem
             // Change cursor to a different type again.
             if (ActiveObjectGroup is HoldNote)
             {
-                operations.Add(new CursorTypeChangeOperation(CursorSystem.CurrentType, newType ?? CursorSystem.HoldNote));
+                operations.Add(new GenericEditOperation<Note>(value => { CursorSystem.CurrentType = value; }, CursorSystem.CurrentType, newType ?? CursorSystem.HoldNote));
             }
         }
         
@@ -179,7 +179,7 @@ public static class EditorSystem
             // Switch to inserting hold point notes.
             if (newActiveObjectGroup is HoldNote)
             {
-                operations.Add(new CursorTypeChangeOperation(CursorSystem.CurrentType, CursorSystem.HoldPointNote));
+                operations.Add(new GenericEditOperation<Note>(value => { CursorSystem.CurrentType = value; }, CursorSystem.CurrentType, CursorSystem.HoldPointNote));
             }
             
             // Clear selection.
@@ -248,7 +248,7 @@ public static class EditorSystem
                 
                 parent.Points.Add(point);
                 
-                operations.Add(new CursorTypeChangeOperation(CursorSystem.CurrentType, CursorSystem.HoldPointNote));
+                operations.Add(new GenericEditOperation<Note>(value => { CursorSystem.CurrentType = value; }, CursorSystem.CurrentType, CursorSystem.HoldPointNote));
                 operations.Add(new EditorModeChangeOperation(Mode, EditorMode.EditMode, ActiveObjectGroup, parent));
             }
             else if (CursorSystem.CurrentType is SlideClockwiseNote)

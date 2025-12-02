@@ -5,6 +5,7 @@ using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.EditModeOperations;
+using SaturnEdit.UndoRedo.PrimitiveOperations;
 
 namespace SaturnEdit.Systems;
 
@@ -200,7 +201,7 @@ public static class CursorSystem
         // Exit edit mode when changing to another type.
         if (newType != HoldPointNote && EditorSystem.Mode == EditorMode.EditMode && EditorSystem.ActiveObjectGroup is HoldNote)
         {
-            CursorTypeChangeOperation op0 = new(CurrentType, newType);
+            GenericEditOperation<Note> op0 = new(value => { CurrentType = value; }, CurrentType, newType);
             CompositeOperation? op1 = EditorSystem.GetEditModeChangeOperation(EditorMode.ObjectMode, null, newType);
 
             if (op1 == null) return;
