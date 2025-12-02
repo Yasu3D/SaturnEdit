@@ -15,7 +15,6 @@ using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.HoldNoteOperations;
 using SaturnEdit.UndoRedo.LayerOperations;
 using SaturnEdit.UndoRedo.NoteOperations;
-using SaturnEdit.UndoRedo.PositionableOperations;
 using SaturnEdit.UndoRedo.PrimitiveOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
 
@@ -443,7 +442,8 @@ public static class EditorSystem
             if (obj is not IPositionable positionable) continue;
             if (positionable.Position == CursorSystem.Position && positionable.Size == CursorSystem.Size) continue;
             
-            operations.Add(new PositionableEditOperation(positionable, positionable.Position, CursorSystem.Position, positionable.Size, CursorSystem.Size));
+            operations.Add(new GenericEditOperation<int>(value => { positionable.Position = value; }, positionable.Position, CursorSystem.Position));
+            operations.Add(new GenericEditOperation<int>(value => { positionable.Size = value; }, positionable.Size, CursorSystem.Size));
         }
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -1421,7 +1421,7 @@ public static class EditorSystem
             int oldPosition = positionable.Position;
             int newPosition = oldPosition - 1;
 
-            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
+            operations.Add(new GenericEditOperation<int>(value => { positionable.Position = value; }, oldPosition, newPosition));
         }
     }
 
@@ -1456,7 +1456,7 @@ public static class EditorSystem
             int oldPosition = positionable.Position;
             int newPosition = oldPosition + 1;
 
-            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
+            operations.Add(new GenericEditOperation<int>(value => { positionable.Position = value; }, oldPosition, newPosition));
         }
     }
 
@@ -1491,7 +1491,7 @@ public static class EditorSystem
             int oldSize = positionable.Size;
             int newSize = oldSize + 1;
 
-            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
+            operations.Add(new GenericEditOperation<int>(value => { positionable.Size = value; }, oldSize, newSize));
         }
     }
 
@@ -1526,7 +1526,7 @@ public static class EditorSystem
             int oldSize = positionable.Size;
             int newSize = oldSize - 1;
 
-            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
+            operations.Add(new GenericEditOperation<int>(value => { positionable.Size = value; }, oldSize, newSize));
         }
     }
 
@@ -1575,7 +1575,7 @@ public static class EditorSystem
             int oldPosition = positionable.Position;
             int newPosition = oldPosition - offset;
 
-            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
+            operations.Add(new GenericEditOperation<int>(value => { positionable.Position = value; }, oldPosition, newPosition));
         }
     }
 
@@ -1624,7 +1624,7 @@ public static class EditorSystem
             int oldPosition = positionable.Position;
             int newPosition = oldPosition + offset;
 
-            operations.Add(new PositionableEditOperation(positionable, oldPosition, newPosition, positionable.Size, positionable.Size));
+            operations.Add(new GenericEditOperation<int>(value => { positionable.Position = value; }, oldPosition, newPosition));
         }
     }
 
@@ -1673,7 +1673,7 @@ public static class EditorSystem
             int oldSize = positionable.Size;
             int newSize = oldSize + offset;
 
-            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
+            operations.Add(new GenericEditOperation<int>(value => { positionable.Size = value; }, oldSize, newSize));
         }
     }
 
@@ -1722,7 +1722,7 @@ public static class EditorSystem
             int oldSize = positionable.Size;
             int newSize = oldSize - offset;
 
-            operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, oldSize, newSize));
+            operations.Add(new GenericEditOperation<int>(value => { positionable.Size = value; }, oldSize, newSize));
         }
     }
 
@@ -1802,13 +1802,13 @@ public static class EditorSystem
                 foreach (HoldPointNote holdPointNote in sourceHoldNote.Points)
                 {
                     int newPosition = axis - holdPointNote.Size - holdPointNote.Position;
-                    operations.Add(new PositionableEditOperation(holdPointNote, holdPointNote.Position, newPosition, holdPointNote.Size, holdPointNote.Size));
+                    operations.Add(new GenericEditOperation<int>(value => { holdPointNote.Position = value; }, holdPointNote.Position, newPosition));
                 }
             }
             else
             {
                 int newPosition = axis - positionable.Size - positionable.Position;
-                operations.Add(new PositionableEditOperation(positionable, positionable.Position, newPosition, positionable.Size, positionable.Size));
+                operations.Add(new GenericEditOperation<int>(value => { positionable.Position = value; }, positionable.Position, newPosition));
             }
 
             if (obj is ILaneToggle laneToggle)
@@ -2260,13 +2260,13 @@ public static class EditorSystem
                 foreach (HoldPointNote holdPointNote in sourceHoldNote.Points)
                 {
                     int newPosition = axis - holdPointNote.Size - holdPointNote.Position;
-                    operations.Add(new PositionableEditOperation(holdPointNote, holdPointNote.Position, newPosition, holdPointNote.Size, holdPointNote.Size));
+                    operations.Add(new GenericEditOperation<int>(value => { holdPointNote.Position = value; }, holdPointNote.Position, newPosition));
                 }
             }
             else
             {
                 int newPosition = axis - positionable.Size - positionable.Position;
-                operations.Add(new PositionableEditOperation(positionable, positionable.Position, newPosition, positionable.Size, positionable.Size));
+                operations.Add(new GenericEditOperation<int>(value => { positionable.Position = value; }, positionable.Position, newPosition));
             }
 
             if (positionable is ILaneToggle laneToggle)

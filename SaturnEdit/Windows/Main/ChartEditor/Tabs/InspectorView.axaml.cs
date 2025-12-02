@@ -16,7 +16,6 @@ using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.HoldNoteOperations;
 using SaturnEdit.UndoRedo.NoteOperations;
 using SaturnEdit.UndoRedo.PlayableOperations;
-using SaturnEdit.UndoRedo.PositionableOperations;
 using SaturnEdit.UndoRedo.PrimitiveOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
 
@@ -1201,12 +1200,12 @@ public partial class InspectorView : UserControl
                 foreach (HoldPointNote point in holdNote.Points)
                 {
                     int newPosition = (point.Position + diff + 60) % 60;
-                    operations.Add(new PositionableEditOperation(point, point.Position, newPosition, point.Size, point.Size));
+                    operations.Add(new GenericEditOperation<int>(value => { point.Position = value; }, point.Position, newPosition));
                 }
             }
             else
             {
-                operations.Add(new PositionableEditOperation(positionable, positionable.Position, newValue, positionable.Size, positionable.Size));
+                operations.Add(new GenericEditOperation<int>(value => { positionable.Position = value; }, positionable.Position, newValue));
             }
         }
 
@@ -1256,12 +1255,12 @@ public partial class InspectorView : UserControl
                 foreach (HoldPointNote point in holdNote.Points)
                 {
                     int newSize = Math.Clamp(point.Size + diff, 1, 60);
-                    operations.Add(new PositionableEditOperation(point, point.Position, point.Position, point.Size, newSize));
+                    operations.Add(new GenericEditOperation<int>(value => { point.Size = value; }, point.Size, newSize));
                 }
             }
             else
             {
-                operations.Add(new PositionableEditOperation(positionable, positionable.Position, positionable.Position, positionable.Size, newValue));
+                operations.Add(new GenericEditOperation<int>(value => { positionable.Size = value; }, positionable.Size, newValue));
             }
         }
 

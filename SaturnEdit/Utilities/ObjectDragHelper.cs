@@ -6,7 +6,6 @@ using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.PositionableOperations;
 using SaturnEdit.UndoRedo.PrimitiveOperations;
 
 namespace SaturnEdit.Utilities;
@@ -154,7 +153,8 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
                 if (item.Timeable is IPositionable positionable)
                 {
                     int newPosition = item.Position + clickDragHelper.Tally;
-                    operations.Add(new PositionableEditOperation(positionable, item.Position, newPosition, item.Size, positionable.Size));
+                    
+                    operations.Add(new GenericEditOperation<int>(value => { positionable.Position = value; }, item.Position, newPosition));
                 }
             }
             else if (DragType == IPositionable.OverlapResult.LeftEdge)
@@ -163,14 +163,16 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
 
                 int newPosition = Math.Min(item.Position + item.Size - 1, item.Position + clickDragHelper.Tally);
                 int newSize = Math.Max(1, item.Size - clickDragHelper.Tally);
-                operations.Add(new PositionableEditOperation(positionable, item.Position, newPosition, item.Size, newSize));
+                
+                operations.Add(new GenericEditOperation<int>(value => { positionable.Position = value; }, item.Position, newPosition));
+                operations.Add(new GenericEditOperation<int>(value => { positionable.Size = value; }, item.Size, newSize));
             }
             else if (DragType == IPositionable.OverlapResult.RightEdge)
             {
                 if (item.Timeable is not IPositionable positionable) return;
 
                 int newSize = Math.Max(1, item.Size + clickDragHelper.Tally);
-                operations.Add(new PositionableEditOperation(positionable, item.Position, positionable.Position, item.Size, newSize));
+                operations.Add(new GenericEditOperation<int>(value => { positionable.Size = value; }, item.Size, newSize));
             }
         }
     }
