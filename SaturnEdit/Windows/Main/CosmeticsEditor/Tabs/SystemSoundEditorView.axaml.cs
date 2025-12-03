@@ -8,7 +8,7 @@ using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.PrimitiveOperations;
+using SaturnEdit.UndoRedo.GenericOperations;
 
 namespace SaturnEdit.Windows.Main.CosmeticsEditor.Tabs;
 

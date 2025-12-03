@@ -11,7 +11,7 @@ using SaturnData.Content.Cosmetics;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.PrimitiveOperations;
+using SaturnEdit.UndoRedo.GenericOperations;
 
 namespace SaturnEdit.Windows.Main.CosmeticsEditor.Tabs;
 

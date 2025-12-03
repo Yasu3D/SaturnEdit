@@ -9,7 +9,7 @@ using SaturnData.Notation.Core;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.LayerOperations;
+using SaturnEdit.UndoRedo.GenericOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
 using SaturnEdit.Utilities;
 
@@ -178,7 +178,7 @@ public partial class LayerListView : UserControl
         string newName = item.TextBoxLayerName.Text ?? "Unnamed Layer";
         if (oldName == newName) return;
         
-        UndoRedoSystem.ChartBranch.Push(new LayerRenameOperation(item.Layer, oldName, newName));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { item.Layer.Name = value; }, oldName, newName));
     }
     
     private void LayerItem_OnVisibilityChanged(object? sender, EventArgs e)
@@ -190,7 +190,7 @@ public partial class LayerListView : UserControl
         bool newVisibility = !item.Layer.Visible;
         if (oldVisibility == newVisibility) return;
         
-        UndoRedoSystem.ChartBranch.Push(new LayerShowHideOperation(item.Layer, oldVisibility, newVisibility));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<bool>(value => { item.Layer.Visible = value; }, oldVisibility, newVisibility));
     }
     
     private void ListBoxLayers_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -201,8 +201,8 @@ public partial class LayerListView : UserControl
         Layer? oldLayer = SelectionSystem.SelectedLayer;
         Layer? newLayer = ListBoxLayers.SelectedItem is LayerListItem item ? item.Layer : null;
         if (oldLayer == newLayer) return;
-        
-        UndoRedoSystem.ChartBranch.Push(new LayerSelectOperation(oldLayer, newLayer));
+
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<Layer?>(value => { SelectionSystem.SelectedLayer = value; }, oldLayer, newLayer));
     }
     
     private void ListBoxLayers_OnKeyDown(object? sender, KeyEventArgs e)

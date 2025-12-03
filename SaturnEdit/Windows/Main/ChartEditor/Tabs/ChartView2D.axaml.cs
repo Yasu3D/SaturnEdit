@@ -15,7 +15,7 @@ using SaturnData.Notation.Notes;
 using SaturnData.Utilities;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.PrimitiveOperations;
+using SaturnEdit.UndoRedo.GenericOperations;
 using SaturnEdit.Utilities;
 using SaturnView;
 using SkiaSharp;

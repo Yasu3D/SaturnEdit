@@ -1,6 +1,6 @@
 using System;
 
-namespace SaturnEdit.UndoRedo.PrimitiveOperations;
+namespace SaturnEdit.UndoRedo.GenericOperations;
 
 public class GenericEditOperation<T>(Action<T> action, T oldValue, T newValue) : IOperation
 {

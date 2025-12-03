@@ -11,10 +11,8 @@ using SaturnData.Notation.Serialization;
 using SaturnData.Utilities;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.EditModeOperations;
-using SaturnEdit.UndoRedo.HoldNoteOperations;
 using SaturnEdit.UndoRedo.LayerOperations;
-using SaturnEdit.UndoRedo.NoteOperations;
-using SaturnEdit.UndoRedo.PrimitiveOperations;
+using SaturnEdit.UndoRedo.GenericOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
 
 namespace SaturnEdit.Systems;
@@ -335,7 +333,7 @@ public static class EditorSystem
 
             if (note is ILaneToggle)
             {
-                operations.Add(new LaneToggleAddOperation(note, ChartSystem.Chart.LaneToggles.Count));
+                operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, note));
             }
             else if (SelectionSystem.SelectedLayer != null)
             {
@@ -353,7 +351,7 @@ public static class EditorSystem
                 renderType: CursorSystem.RenderType
             );
             
-            operations.Add(new HoldPointNoteAddOperation(holdNote, point, holdNote.Points.Count));
+            operations.Add(new ListAddOperation<HoldPointNote>(() => holdNote.Points, point));
         }
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -389,7 +387,7 @@ public static class EditorSystem
             if (!SelectionSystem.SelectedObjects.Contains(laneToggle)) continue;
             
             operations.Add(new SelectionRemoveOperation(laneToggle, SelectionSystem.LastSelectedObject));
-            operations.Add(new LaneToggleRemoveOperation(laneToggle, i));
+            operations.Add(new ListRemoveOperation<Note>(() => ChartSystem.Chart.LaneToggles, laneToggle));
         }
 
         foreach (Layer layer in ChartSystem.Chart.Layers)
@@ -415,7 +413,7 @@ public static class EditorSystem
                         if (!SelectionSystem.SelectedObjects.Contains(point)) continue;
 
                         operations.Add(new SelectionRemoveOperation(point, SelectionSystem.LastSelectedObject));
-                        operations.Add(new HoldPointNoteRemoveOperation(holdNote, point, j));
+                        operations.Add(new ListRemoveOperation<HoldPointNote>(() => holdNote.Points, point));
                     }
                 }
                 
@@ -566,7 +564,7 @@ public static class EditorSystem
                         
                         if (newObject is ILaneToggle and Note newLaneToggle)
                         {
-                            operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                            operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneToggle));
                         }
                         else if (newObject is Note newNote)
                         {
@@ -609,7 +607,7 @@ public static class EditorSystem
                     
                     if (newObject is ILaneToggle and Note newLaneToggle)
                     {
-                        operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                        operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneToggle));
                     }
                     else if (newObject is Note newNote)
                     {
@@ -631,7 +629,7 @@ public static class EditorSystem
             }
             else if (obj is ILaneToggle and Note laneToggle)
             {
-                operations.Add(new LaneToggleRemoveOperation(laneToggle, 0));
+                operations.Add(new ListRemoveOperation<Note>(() => ChartSystem.Chart.LaneToggles, laneToggle));
             }
             else if (obj is Bookmark bookmark)
             {
@@ -639,7 +637,7 @@ public static class EditorSystem
             }
             else if (obj is HoldPointNote holdPointNote)
             {
-                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, 0));
+                operations.Add(new ListRemoveOperation<HoldPointNote>(() => holdPointNote.Parent.Points, holdPointNote));
             }
             else if (obj is Event @event)
             {
@@ -763,7 +761,7 @@ public static class EditorSystem
                         
                         if (newObject is ILaneToggle and Note newLaneToggle)
                         {
-                            operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                            operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneToggle));
                         }
                         else if (newObject is Note newNote)
                         {
@@ -797,7 +795,7 @@ public static class EditorSystem
                     
                     if (newObject is ILaneToggle and Note newLaneToggle)
                     {
-                        operations.Add(new LaneToggleAddOperation(newLaneToggle, 0));
+                        operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneToggle));
                     }
                     else if (newObject is Note newNote)
                     {
@@ -819,7 +817,7 @@ public static class EditorSystem
             }
             else if (obj is ILaneToggle and Note laneToggle)
             {
-                operations.Add(new LaneToggleRemoveOperation(laneToggle, 0));
+                operations.Add(new ListRemoveOperation<Note>(() => ChartSystem.Chart.LaneToggles, laneToggle));
             }
             else if (obj is Bookmark bookmark)
             {
@@ -827,7 +825,7 @@ public static class EditorSystem
             }
             else if (obj is HoldPointNote holdPointNote)
             {
-                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, 0));
+                operations.Add(new ListRemoveOperation<HoldPointNote>(() => holdPointNote.Parent.Points, holdPointNote));
             }
             else if (obj is Event @event)
             {
@@ -979,7 +977,7 @@ public static class EditorSystem
             {
                 laneToggle.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                 
-                operations.Add(new LaneToggleAddOperation(laneToggle, ChartSystem.Chart.LaneToggles.Count));
+                operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, laneToggle));
                 operations.Add(new SelectionAddOperation(laneToggle, SelectionSystem.LastSelectedObject));
             }
 
@@ -1047,7 +1045,7 @@ public static class EditorSystem
                 {
                     sourcePoint.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                         
-                    operations.Add(new HoldPointNoteAddOperation(holdNote, sourcePoint, holdNote.Points.Count));
+                    operations.Add(new ListAddOperation<HoldPointNote>(() => holdNote.Points, sourcePoint));
                     operations.Add(new SelectionAddOperation(sourcePoint, SelectionSystem.LastSelectedObject));
                 }
                     
@@ -1775,11 +1773,11 @@ public static class EditorSystem
             {
                 if (laneToggle.Direction == LaneSweepDirection.Clockwise)
                 {
-                    operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, LaneSweepDirection.Counterclockwise));
+                    operations.Add(new GenericEditOperation<LaneSweepDirection>(value => { laneToggle.Direction = value; }, laneToggle.Direction, LaneSweepDirection.Counterclockwise));
                 }
                 else if (laneToggle.Direction == LaneSweepDirection.Counterclockwise)
                 {
-                    operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, LaneSweepDirection.Clockwise));
+                    operations.Add(new GenericEditOperation<LaneSweepDirection>(value => { laneToggle.Direction = value; }, laneToggle.Direction, LaneSweepDirection.Clockwise));
                 }
             }
         }
@@ -1840,11 +1838,11 @@ public static class EditorSystem
             {
                 if (laneToggle.Direction == LaneSweepDirection.Clockwise)
                 {
-                    operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, LaneSweepDirection.Counterclockwise));
+                    operations.Add(new GenericEditOperation<LaneSweepDirection>(value => { laneToggle.Direction = value; }, laneToggle.Direction, LaneSweepDirection.Counterclockwise));
                 }
                 else if (laneToggle.Direction == LaneSweepDirection.Counterclockwise)
                 {
-                    operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, LaneSweepDirection.Clockwise));
+                    operations.Add(new GenericEditOperation<LaneSweepDirection>(value => { laneToggle.Direction = value; }, laneToggle.Direction, LaneSweepDirection.Clockwise));
                 }
             }
         }
@@ -2227,11 +2225,11 @@ public static class EditorSystem
             {
                 if (laneToggle.Direction == LaneSweepDirection.Clockwise)
                 {
-                    operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, LaneSweepDirection.Counterclockwise));
+                    operations.Add(new GenericEditOperation<LaneSweepDirection>(value => { laneToggle.Direction = value; }, laneToggle.Direction, LaneSweepDirection.Counterclockwise));
                 }
                 else if (laneToggle.Direction == LaneSweepDirection.Counterclockwise)
                 {
-                    operations.Add(new LaneToggleEditOperation(laneToggle, laneToggle.Direction, LaneSweepDirection.Clockwise));
+                    operations.Add(new GenericEditOperation<LaneSweepDirection>(value => { laneToggle.Direction = value; }, laneToggle.Direction, LaneSweepDirection.Clockwise));
                 }
             }
         }
@@ -2327,7 +2325,7 @@ public static class EditorSystem
                     renderType: HoldPointRenderType.Visible
                 );
                 
-                operations.Add(new HoldPointNoteAddOperation(start.Parent, point, 0));
+                operations.Add(new ListAddOperation<HoldPointNote>(() => start.Parent.Points, point));
                 isA = !isA;
             }
         }
@@ -2564,8 +2562,8 @@ public static class EditorSystem
                 : ChartSystem.Chart.Layers[index - 1];
         }
 
-        LayerRemoveOperation op0 = new(SelectionSystem.SelectedLayer, index);
-        LayerSelectOperation op1 = new(SelectionSystem.SelectedLayer, newSelection);
+        ListRemoveOperation<Layer> op0 = new(() => ChartSystem.Chart.Layers, SelectionSystem.SelectedLayer);
+        GenericEditOperation<Layer?> op1 = new(value => { SelectionSystem.SelectedLayer = value; }, SelectionSystem.SelectedLayer, newSelection);
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }
@@ -2576,10 +2574,8 @@ public static class EditorSystem
             ? new("Main Layer") 
             : new("New Layer");
         
-        int index = ChartSystem.Chart.Layers.Count;
-
-        LayerAddOperation op0 = new(layer, index);
-        LayerSelectOperation op1 = new(SelectionSystem.SelectedLayer, layer); 
+        ListAddOperation<Layer> op0 = new(() => ChartSystem.Chart.Layers, layer);
+        GenericEditOperation<Layer?> op1 = new(value => { SelectionSystem.SelectedLayer = value; }, SelectionSystem.SelectedLayer, layer);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
     }

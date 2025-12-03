@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SaturnEdit.UndoRedo.PrimitiveOperations;
+namespace SaturnEdit.UndoRedo.GenericOperations;
 
 public class ListRemoveOperation<T>(Func<List<T>>? list, T item) : IOperation
 {

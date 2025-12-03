@@ -10,7 +10,7 @@ using Avalonia.Threading;
 using SaturnData.Notation.Core;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.PrimitiveOperations;
+using SaturnEdit.UndoRedo.GenericOperations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 

@@ -12,8 +12,7 @@ using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.HoldNoteOperations;
-using SaturnEdit.UndoRedo.PrimitiveOperations;
+using SaturnEdit.UndoRedo.GenericOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
@@ -838,7 +837,7 @@ public partial class InspectorView : UserControl
             }
             else if (obj is HoldPointNote holdPointNote)
             {
-                operations.Add(new HoldPointNoteRemoveOperation(holdPointNote.Parent, holdPointNote, 0));
+                operations.Add(new ListRemoveOperation<HoldPointNote>(() => holdPointNote.Parent.Points, holdPointNote));
             }
             else if (obj is Event @event)
             {
@@ -1301,7 +1300,7 @@ public partial class InspectorView : UserControl
         {
             if (obj is not HoldPointNote point) continue;
 
-            operations.Add(new HoldPointNoteRenderTypeEditOperation(point, point.RenderType, newRenderType));
+            operations.Add(new GenericEditOperation<HoldPointRenderType>(value => { point.RenderType = value; }, point.RenderType, newRenderType));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
