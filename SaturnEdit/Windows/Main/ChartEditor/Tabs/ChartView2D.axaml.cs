@@ -15,7 +15,6 @@ using SaturnData.Notation.Notes;
 using SaturnData.Utilities;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.PrimitiveOperations;
 using SaturnEdit.Utilities;
 using SaturnView;
@@ -1048,35 +1047,38 @@ public partial class ChartView2D : UserControl
                 float? tempo = await MainWindow.Instance.ChartEditor.ShowTempoDialog(tempoChangeEvent.Tempo);
                 if (tempo == null) return;
                 
-                UndoRedoSystem.ChartBranch.Push(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, tempo.Value));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { tempoChangeEvent.Tempo = value; }, tempoChangeEvent.Tempo, tempo.Value));
             }
             else if (SelectionSystem.PointerOverObject is MetreChangeEvent metreChangeEvent)
             {
                 (int?, int?) metre = await MainWindow.Instance.ChartEditor.ShowMetreDialog(metreChangeEvent.Upper, metreChangeEvent.Lower);
                 if (metre.Item1 == null || metre.Item2 == null) return;
-                
-                UndoRedoSystem.ChartBranch.Push(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, metre.Item1.Value, metreChangeEvent.Lower, metre.Item2.Value));
+
+                GenericEditOperation<int> op0 = new(value => { metreChangeEvent.Upper = value; }, metreChangeEvent.Upper, metre.Item1.Value);
+                GenericEditOperation<int> op1 = new(value => { metreChangeEvent.Lower = value; }, metreChangeEvent.Lower, metre.Item2.Value);
+
+                UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
             }
             else if (SelectionSystem.PointerOverObject is TutorialMarkerEvent tutorialMarkerEvent)
             {
                 string? key = await MainWindow.Instance.ChartEditor.ShowTutorialMarkerDialog(tutorialMarkerEvent.Key);
                 if (key == null) return;
                 
-                UndoRedoSystem.ChartBranch.Push(new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, key));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { tutorialMarkerEvent.Key = value; }, tutorialMarkerEvent.Key, key));
             }
             else if (SelectionSystem.PointerOverObject is SpeedChangeEvent speedChangeEvent)
             {
                 float? speed = await MainWindow.Instance.ChartEditor.ShowSpeedDialog(speedChangeEvent.Speed);
                 if (speed == null) return;
                 
-                UndoRedoSystem.ChartBranch.Push(new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, speed.Value));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { speedChangeEvent.Speed = value; }, speedChangeEvent.Speed, speed.Value));
             }
             else if (SelectionSystem.PointerOverObject is VisibilityChangeEvent visibilityChangeEvent)
             {
                 bool? visibility = await MainWindow.Instance.ChartEditor.ShowVisibilityDialog(visibilityChangeEvent.Visibility);
                 if (visibility == null) return;
                 
-                UndoRedoSystem.ChartBranch.Push(new VisibilityChangeEditOperation(visibilityChangeEvent, visibilityChangeEvent.Visibility, visibility.Value));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<bool>(value => { visibilityChangeEvent.Visibility = value; }, visibilityChangeEvent.Visibility, visibility.Value));
             }
             else if (SelectionSystem.PointerOverObject is Bookmark bookmark)
             { 

@@ -11,7 +11,6 @@ using SaturnData.Notation.Serialization;
 using SaturnData.Utilities;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.EditModeOperations;
-using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.HoldNoteOperations;
 using SaturnEdit.UndoRedo.LayerOperations;
 using SaturnEdit.UndoRedo.NoteOperations;
@@ -381,7 +380,7 @@ public static class EditorSystem
             if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
             
             operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
-            operations.Add(new GlobalEventRemoveOperation(@event, i));
+            operations.Add(new ListRemoveOperation<Event>(() => ChartSystem.Chart.Events, @event));
         }
         
         for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
@@ -401,7 +400,7 @@ public static class EditorSystem
                 if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
                 
                 operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
-                operations.Add(new EventRemoveOperation(layer, @event, i));
+                operations.Add(new ListRemoveOperation<Event>(() => layer.Events, @event));
             }
             
             for (int i = 0; i < layer.Notes.Count; i++)
@@ -628,7 +627,7 @@ public static class EditorSystem
             operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
             if (obj is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event globalEvent)
             {
-                operations.Add(new GlobalEventRemoveOperation(globalEvent, 0));
+                operations.Add(new ListRemoveOperation<Event>(() => ChartSystem.Chart.Events, globalEvent));
             }
             else if (obj is ILaneToggle and Note laneToggle)
             {
@@ -644,7 +643,7 @@ public static class EditorSystem
             }
             else if (obj is Event @event)
             {
-                operations.Add(new EventRemoveOperation(layer, @event, 0));
+                operations.Add(new ListRemoveOperation<Event>(() => layer.Events, @event));
             }
             else if (obj is Note note)
             {
@@ -816,7 +815,7 @@ public static class EditorSystem
             operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
             if (obj is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event globalEvent)
             {
-                operations.Add(new GlobalEventRemoveOperation(globalEvent, 0));
+                operations.Add(new ListRemoveOperation<Event>(() => ChartSystem.Chart.Events, globalEvent));
             }
             else if (obj is ILaneToggle and Note laneToggle)
             {
@@ -832,7 +831,7 @@ public static class EditorSystem
             }
             else if (obj is Event @event)
             {
-                operations.Add(new EventRemoveOperation(layer, @event, 0));
+                operations.Add(new ListRemoveOperation<Event>(() => layer.Events, @event));
             }
             else if (obj is Note note)
             {
@@ -972,7 +971,7 @@ public static class EditorSystem
             {
                 globalEvent.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                 
-                operations.Add(new GlobalEventAddOperation(globalEvent, ChartSystem.Chart.Events.Count));
+                operations.Add(new ListRemoveOperation<Event>(() => ChartSystem.Chart.Events, globalEvent));
                 operations.Add(new SelectionAddOperation(globalEvent, SelectionSystem.LastSelectedObject));
             }
 
@@ -1009,7 +1008,7 @@ public static class EditorSystem
                             layerEvent.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                         }
                         
-                        operations.Add(new EventAddOperation(SelectionSystem.SelectedLayer, layerEvent, SelectionSystem.SelectedLayer.Events.Count));
+                        operations.Add(new ListRemoveOperation<Event>(() => SelectionSystem.SelectedLayer.Events, layerEvent));
                         operations.Add(new SelectionAddOperation(layerEvent, SelectionSystem.LastSelectedObject));
                     }
 
@@ -1064,7 +1063,7 @@ public static class EditorSystem
     {
         TempoChangeEvent tempoChangeEvent = new(new(TimeSystem.Timestamp.FullTick), tempo);
 
-        GlobalEventAddOperation op0 = new(tempoChangeEvent, ChartSystem.Chart.Events.Count);
+        ListAddOperation<Event> op0 = new(() => ChartSystem.Chart.Events, tempoChangeEvent);
         SelectionAddOperation op1 = new(tempoChangeEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
@@ -1074,7 +1073,7 @@ public static class EditorSystem
     {
         MetreChangeEvent metreChangeEvent = new(new(TimeSystem.Timestamp.FullTick), upper, lower);
 
-        GlobalEventAddOperation op0 = new(metreChangeEvent, ChartSystem.Chart.Events.Count);
+        ListAddOperation<Event> op0 = new(() => ChartSystem.Chart.Events, metreChangeEvent);
         SelectionAddOperation op1 = new(metreChangeEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
@@ -1084,7 +1083,7 @@ public static class EditorSystem
     {
         TutorialMarkerEvent tutorialMarkerEvent = new(new(TimeSystem.Timestamp.FullTick), key);
 
-        GlobalEventAddOperation op0 = new(tutorialMarkerEvent, ChartSystem.Chart.Events.Count);
+        ListAddOperation<Event> op0 = new(() => ChartSystem.Chart.Events, tutorialMarkerEvent);
         SelectionAddOperation op1 = new(tutorialMarkerEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
@@ -1096,7 +1095,7 @@ public static class EditorSystem
         
         SpeedChangeEvent speedChangeEvent = new(new(TimeSystem.Timestamp.FullTick), speed);
 
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, speedChangeEvent, SelectionSystem.SelectedLayer.Events.Count);
+        ListRemoveOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, speedChangeEvent);
         SelectionAddOperation op1 = new(speedChangeEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
@@ -1108,7 +1107,7 @@ public static class EditorSystem
         
         VisibilityChangeEvent visibilityChangeEvent = new(new(TimeSystem.Timestamp.FullTick), visibility);
 
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, visibilityChangeEvent, SelectionSystem.SelectedLayer.Events.Count);
+        ListRemoveOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, visibilityChangeEvent);
         SelectionAddOperation op1 = new(visibilityChangeEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
@@ -1127,7 +1126,7 @@ public static class EditorSystem
         reverseEffectEvent.SubEvents[1] = new(middle, reverseEffectEvent);
         reverseEffectEvent.SubEvents[2] = new(end, reverseEffectEvent);
         
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, reverseEffectEvent, SelectionSystem.SelectedLayer.Events.Count);
+        ListRemoveOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, reverseEffectEvent);
         SelectionAddOperation op1 = new(reverseEffectEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
@@ -1144,7 +1143,7 @@ public static class EditorSystem
         stopEffectEvent.SubEvents[0] = new(start, stopEffectEvent);
         stopEffectEvent.SubEvents[1] = new(end, stopEffectEvent);
         
-        EventAddOperation op0 = new(SelectionSystem.SelectedLayer, stopEffectEvent, SelectionSystem.SelectedLayer.Events.Count);
+        ListRemoveOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, stopEffectEvent);
         SelectionAddOperation op1 = new(stopEffectEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
@@ -2511,7 +2510,7 @@ public static class EditorSystem
             if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
             
             operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
-            operations.Add(new GlobalEventRemoveOperation(@event, 0));
+            operations.Add(new ListRemoveOperation<Event>(() => ChartSystem.Chart.Events, @event));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -2597,7 +2596,7 @@ public static class EditorSystem
             if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
             
             operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
-            operations.Add(new EventRemoveOperation(SelectionSystem.SelectedLayer, @event, 0));
+            operations.Add(new ListRemoveOperation<Event>(() => SelectionSystem.SelectedLayer.Events, @event));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));

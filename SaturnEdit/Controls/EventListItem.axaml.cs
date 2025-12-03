@@ -7,7 +7,6 @@ using Avalonia.Threading;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnEdit.Systems;
-using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.PrimitiveOperations;
 
 namespace SaturnEdit.Controls;
@@ -223,7 +222,7 @@ public partial class EventListItem : UserControl
                 Console.WriteLine(ex);
             }
 
-            UndoRedoSystem.ChartBranch.Push(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, newValue));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { tempoChangeEvent.Tempo = value; }, tempoChangeEvent.Tempo, newValue));
         }
         else if (Event is SpeedChangeEvent speedChangeEvent)
         { 
@@ -239,12 +238,12 @@ public partial class EventListItem : UserControl
                 Console.WriteLine(ex);
             }
             
-            UndoRedoSystem.ChartBranch.Push(new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, newValue));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { speedChangeEvent.Speed = value; }, speedChangeEvent.Speed, newValue));
         }
         else if (Event is TutorialMarkerEvent tutorialMarkerEvent)
         {
             if (tutorialMarkerEvent.Key == TextBoxTextValue.Text) return;
-            UndoRedoSystem.ChartBranch.Push(new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, TextBoxTextValue.Text));
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { tutorialMarkerEvent.Key = value; }, tutorialMarkerEvent.Key, TextBoxTextValue.Text));
         }
     }
 
@@ -275,7 +274,7 @@ public partial class EventListItem : UserControl
             Console.WriteLine(ex);
         }
         
-        UndoRedoSystem.ChartBranch.Push(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, newValue, metreChangeEvent.Lower, metreChangeEvent.Lower));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { metreChangeEvent.Upper = value; }, metreChangeEvent.Upper, newValue));
     }
 
     private void TextBoxMetreLower_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -305,7 +304,7 @@ public partial class EventListItem : UserControl
             Console.WriteLine(ex);
         }
         
-        UndoRedoSystem.ChartBranch.Push(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, metreChangeEvent.Upper, metreChangeEvent.Lower, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { metreChangeEvent.Lower = value; }, metreChangeEvent.Lower, newValue));
     }
     
     private void ComboBoxVisibility_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -315,7 +314,7 @@ public partial class EventListItem : UserControl
 
         bool newValue = ComboBoxVisibility.SelectedIndex != 0;
         
-        UndoRedoSystem.ChartBranch.Push(new VisibilityChangeEditOperation(visibilityChangeEvent, visibilityChangeEvent.Visibility, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<bool>(value => { visibilityChangeEvent.Visibility = value; }, visibilityChangeEvent.Visibility, newValue));
     }
     
     private void TextBoxStopMeasure0_OnLostFocus(object? sender, RoutedEventArgs e)

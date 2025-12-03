@@ -12,7 +12,6 @@ using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.EventOperations;
 using SaturnEdit.UndoRedo.HoldNoteOperations;
 using SaturnEdit.UndoRedo.PrimitiveOperations;
 using SaturnEdit.UndoRedo.SelectionOperations;
@@ -530,7 +529,7 @@ public partial class InspectorView : UserControl
                 stopEffectEvent.SubEvents[i] = new(new(obj.Timestamp.FullTick), stopEffectEvent);
             }
 
-            operations.Add(new EventAddOperation(SelectionSystem.SelectedLayer, stopEffectEvent, 0));
+            operations.Add(new ListAddOperation<Event>(() => SelectionSystem.SelectedLayer.Events, stopEffectEvent));
         }
         else if (ComboBoxType.SelectedIndex == 16)
         {
@@ -552,7 +551,7 @@ public partial class InspectorView : UserControl
                 reverseEffectEvent.SubEvents[i] = new(new(obj.Timestamp.FullTick), reverseEffectEvent);
             }
 
-            operations.Add(new EventAddOperation(SelectionSystem.SelectedLayer, reverseEffectEvent, 0));
+            operations.Add(new ListAddOperation<Event>(() => SelectionSystem.SelectedLayer.Events, reverseEffectEvent));
         }
         else
         {
@@ -601,7 +600,7 @@ public partial class InspectorView : UserControl
                         
                         if (newObject is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event newGlobalEvent)
                         {
-                            operations.Add(new GlobalEventAddOperation(newGlobalEvent, 0));
+                            operations.Add(new ListAddOperation<Event>(() => ChartSystem.Chart.Events, newGlobalEvent));
                         }
                         else if (newObject is ILaneToggle and Note newLaneToggle)
                         {
@@ -613,7 +612,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is Event newEvent)
                         {
-                            operations.Add(new EventAddOperation(layer, newEvent, 0));
+                            operations.Add(new ListAddOperation<Event>(() => layer.Events, newEvent));
                         }
                         else if (newObject is Note newNote)
                         {
@@ -657,7 +656,7 @@ public partial class InspectorView : UserControl
                         
                         if (newObject is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event newGlobalEvent)
                         {
-                            operations.Add(new GlobalEventAddOperation(newGlobalEvent, 0));
+                            operations.Add(new ListAddOperation<Event>(() => ChartSystem.Chart.Events, newGlobalEvent));
                         }
                         else if (newObject is ILaneToggle and Note newLaneToggle)
                         {
@@ -669,7 +668,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is Event newEvent)
                         {
-                            operations.Add(new EventAddOperation(layer, newEvent, 0));
+                            operations.Add(new ListAddOperation<Event>(() => layer.Events, newEvent));
                         }
                         else if (newObject is Note newNote)
                         {
@@ -713,7 +712,7 @@ public partial class InspectorView : UserControl
                         
                         if (newObject is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event newGlobalEvent)
                         {
-                            operations.Add(new GlobalEventAddOperation(newGlobalEvent, 0));
+                            operations.Add(new ListAddOperation<Event>(() => ChartSystem.Chart.Events, newGlobalEvent));
                         }
                         else if (newObject is ILaneToggle and Note newLaneToggle)
                         {
@@ -725,7 +724,7 @@ public partial class InspectorView : UserControl
                         }
                         else if (newObject is Event newEvent)
                         {
-                            operations.Add(new EventAddOperation(layer, newEvent, 0));
+                            operations.Add(new ListAddOperation<Event>(() => layer.Events, newEvent));
                         }
                         else if (newObject is Note newNote)
                         {
@@ -797,7 +796,7 @@ public partial class InspectorView : UserControl
                     
                     if (newObject is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event newGlobalEvent)
                     {
-                        operations.Add(new GlobalEventAddOperation(newGlobalEvent, 0));
+                        operations.Add(new ListAddOperation<Event>(() => ChartSystem.Chart.Events, newGlobalEvent));
                     }
                     else if (newObject is ILaneToggle and Note newLaneToggle)
                     {
@@ -809,7 +808,7 @@ public partial class InspectorView : UserControl
                     }
                     else if (newObject is Event newEvent)
                     {
-                        operations.Add(new EventAddOperation(layer, newEvent, 0));
+                        operations.Add(new ListAddOperation<Event>(() => layer.Events, newEvent));
                     }
                     else if (newObject is Note newNote)
                     {
@@ -827,7 +826,7 @@ public partial class InspectorView : UserControl
             operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
             if (obj is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event globalEvent)
             {
-                operations.Add(new GlobalEventRemoveOperation(globalEvent, 0));
+                operations.Add(new ListRemoveOperation<Event>(() => ChartSystem.Chart.Events, globalEvent));
             }
             else if (obj is ILaneToggle and Note laneToggle)
             {
@@ -843,7 +842,7 @@ public partial class InspectorView : UserControl
             }
             else if (obj is Event @event)
             {
-                operations.Add(new EventRemoveOperation(layer, @event, 0));
+                operations.Add(new ListRemoveOperation<Event>(() => layer.Events, @event));
             }
             else if (obj is Note note)
             {
@@ -1127,8 +1126,8 @@ public partial class InspectorView : UserControl
             }
             else if (obj is Event @event)
             {
-                operations.Add(new EventRemoveOperation(parentLayer, @event, 0));
-                operations.Add(new EventAddOperation(newLayer, @event, 0));
+                operations.Add(new ListRemoveOperation<Event>(() => parentLayer.Events, @event));
+                operations.Add(new ListAddOperation<Event>(() => newLayer.Events, @event));
             }
         }
 
@@ -1366,7 +1365,7 @@ public partial class InspectorView : UserControl
         {
             if (obj is not TempoChangeEvent tempoChangeEvent) continue;
             
-            operations.Add(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, newValue));
+            operations.Add(new GenericEditOperation<float>(value => { tempoChangeEvent.Tempo = value; }, tempoChangeEvent.Tempo, newValue));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -1392,7 +1391,7 @@ public partial class InspectorView : UserControl
         {
             if (obj is not TempoChangeEvent tempoChangeEvent) continue;
 
-            operations.Add(new TempoChangeEditOperation(tempoChangeEvent, tempoChangeEvent.Tempo, tempoChangeEvent.Tempo + delta));
+            operations.Add(new GenericEditOperation<float>(value => { tempoChangeEvent.Tempo = value; }, tempoChangeEvent.Tempo, tempoChangeEvent.Tempo + delta));
         }
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -1432,7 +1431,7 @@ public partial class InspectorView : UserControl
         {
             if (obj is not MetreChangeEvent metreChangeEvent) continue;
             
-            operations.Add(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, newValue, metreChangeEvent.Lower, metreChangeEvent.Lower));
+            operations.Add(new GenericEditOperation<int>(value => { metreChangeEvent.Upper = value; }, metreChangeEvent.Upper, newValue));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -1472,7 +1471,7 @@ public partial class InspectorView : UserControl
         {
             if (obj is not MetreChangeEvent metreChangeEvent) continue;
             
-            operations.Add(new MetreChangeEditOperation(metreChangeEvent, metreChangeEvent.Upper, metreChangeEvent.Upper, metreChangeEvent.Lower, newValue));
+            operations.Add(new GenericEditOperation<int>(value => { metreChangeEvent.Lower = value; }, metreChangeEvent.Lower, newValue));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -1511,7 +1510,7 @@ public partial class InspectorView : UserControl
         {
             if (obj is not SpeedChangeEvent speedChangeEvent) continue;
             
-            operations.Add(new SpeedChangeEditOperation(speedChangeEvent, speedChangeEvent.Speed, newValue));
+            operations.Add(new GenericEditOperation<float>(value => { speedChangeEvent.Speed = value; }, speedChangeEvent.Speed, newValue));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -1532,7 +1531,7 @@ public partial class InspectorView : UserControl
         {
             if (obj is not VisibilityChangeEvent visibilityChange) continue;
 
-            operations.Add(new VisibilityChangeEditOperation(visibilityChange, visibilityChange.Visibility, newVisibility));
+            operations.Add(new GenericEditOperation<bool>(value => { visibilityChange.Visibility = value; }, visibilityChange.Visibility, newVisibility));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
@@ -1561,7 +1560,7 @@ public partial class InspectorView : UserControl
         {
             if (obj is not TutorialMarkerEvent tutorialMarkerEvent) continue;
 
-            operations.Add(new TutorialMarkerEditOperation(tutorialMarkerEvent, tutorialMarkerEvent.Key, newValue));
+            operations.Add(new GenericEditOperation<string>(value => { tutorialMarkerEvent.Key = value; }, tutorialMarkerEvent.Key, newValue));
         }
 
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
