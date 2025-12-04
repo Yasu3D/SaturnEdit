@@ -177,6 +177,9 @@ public partial class PlaybackView : UserControl
             SliderSeek.Value = TimeSystem.Timestamp.Time;
             
             blockEvents = false;
+
+            TextBlockTimestampMeasureTicks.Text = $"{TimeSystem.Timestamp.Measure}' {TimeSystem.Timestamp.Tick,4}";
+            TextBlockTimestampTime.Text = TimeSpan.FromMilliseconds(TimeSystem.Timestamp.Time).ToString(@"mm\:ss\.fff");
         });
     }
     

@@ -381,6 +381,27 @@
             <!-- Bookmarks -->
             <Panel Grid.Column="1"
                    Name="PanelBookmarks"/>
+            
+            <!-- Timestamp Text -->
+            <TextBlock Grid.Column="1"
+                       Name="TextBlockTimestampMeasureTicks"
+                       Foreground="{DynamicResource ForegroundTertiary}"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       TextAlignment="Right"
+                       Margin="5,3,5,5"
+                       Text="0' 0"/>
+            
+            <TextBlock Grid.Column="1"
+                       Name="TextBlockTimestampTime"
+                       Foreground="{DynamicResource ForegroundTertiary}"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Bottom"
+                       TextAlignment="Right"
+                       Margin="5,5,5,3"
+                       Text="00:00.000"/>
         </Grid>
     </Grid>
 </UserControl>
