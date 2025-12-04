@@ -24,8 +24,8 @@ public partial class ProofreaderView : UserControl
     {
         InitializeComponent();
 
-        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
@@ -42,6 +42,9 @@ public partial class ProofreaderView : UserControl
     private static readonly List<ProofreaderProblem> Problems = [];
     
     private bool blockEvents = false;
+
+    private readonly IDisposable keyDownEventHandler;
+    private readonly IDisposable keyUpEventHandler;
 
 #region Methods
     private void RunProofreader()
@@ -582,6 +585,17 @@ public partial class ProofreaderView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        ChartSystem.ChartLoaded -= OnChartLoaded;
+        ProofreadChanged -= OnProofreadChanged;
+        keyDownEventHandler.Dispose();
+        keyUpEventHandler.Dispose();
+        
+        base.OnUnloaded(e);
+    }
+    
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();

@@ -169,6 +169,14 @@ public partial class LayerListView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged -= ChartBranch_OnOperationHistoryChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void LayerItem_OnNameChanged(object? sender, EventArgs e)
     {
         if (blockEvents) return;

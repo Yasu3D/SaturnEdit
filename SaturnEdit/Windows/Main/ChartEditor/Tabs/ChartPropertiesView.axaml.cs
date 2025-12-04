@@ -105,6 +105,14 @@ public partial class ChartPropertiesView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        ChartSystem.JacketChanged -= OnJacketChanged;
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged -= ChartBranch_OnOperationHistoryChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private async void TextBoxTitle_OnLostFocus(object? sender, RoutedEventArgs routedEventArgs)
     {
         try

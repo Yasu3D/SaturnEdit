@@ -1,3 +1,4 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -22,8 +23,8 @@ public partial class ModalDialogWindow : Window
     {
         InitializeComponent();
         
-        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
 
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
@@ -36,6 +37,9 @@ public partial class ModalDialogWindow : Window
     public string ButtonSecondaryKey = "";
     public string ButtonTertiaryKey = "";
     public bool CanClose = true;
+    
+    private readonly IDisposable keyDownEventHandler;
+    private readonly IDisposable keyUpEventHandler;
 
 #region Methods
     public void InitializeDialog()
@@ -62,6 +66,14 @@ public partial class ModalDialogWindow : Window
 #endregion Methods
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        keyDownEventHandler.Dispose();
+        keyUpEventHandler.Dispose();
+        
+        base.OnUnloaded(e);
+    }
+    
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();

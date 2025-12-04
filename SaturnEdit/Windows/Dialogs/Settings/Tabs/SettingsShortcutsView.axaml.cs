@@ -156,6 +156,14 @@ public partial class SettingsShortcutsView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        ListBoxShortcuts.RemoveHandler(KeyDownEvent, ListBoxShortcuts_OnKeyDown);
+        
+        base.OnUnloaded(e);
+    }
+    
     private void ListBoxShortcuts_OnKeyDown(object? sender, KeyEventArgs e)
     {
         if (!DefiningShortcut) return;

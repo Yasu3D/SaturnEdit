@@ -18,6 +18,17 @@ public partial class WindowChrome : UserControl
         AttachedToVisualTree += Control_OnAttachedToVisualTree;
     }
 
+#region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        ButtonMinimize.Click -= ButtonMinimize_OnClick;
+        ButtonMaximize.Click -= ButtonMaximize_OnClick;
+        ButtonClose.Click -= ButtonClose_OnClick;
+        AttachedToVisualTree -= Control_OnAttachedToVisualTree;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void Control_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
     {
         if (VisualRoot is not Window window) return;
@@ -67,4 +78,5 @@ public partial class WindowChrome : UserControl
             Console.WriteLine(ex);
         }
     }
+#endregion UI Event Handlers
 }

@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnEdit.UndoRedo;
-using SaturnEdit.UndoRedo.EditModeOperations;
 using SaturnEdit.UndoRedo.GenericOperations;
 
 namespace SaturnEdit.Systems;

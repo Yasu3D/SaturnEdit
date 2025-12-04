@@ -247,6 +247,23 @@ public partial class PlaybackView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        TimeSystem.TimestampChanged -= OnTimestampChanged;
+        TimeSystem.PlaybackStateChanged -= OnPlaybackStateChanged;
+        TimeSystem.PlaybackSpeedChanged -= OnPlaybackSpeedChanged;
+        TimeSystem.LoopChanged -= OnLoopChanged;
+        ChartSystem.EntryChanged -= OnEntryChanged;
+        AudioSystem.AudioLoaded -= OnAudioLoaded;
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged -= ChartBranch_OnOperationHistoryChanged;
+        ActualThemeVariantChanged -= Control_OnActualThemeVariantChanged;
+        SizeChanged -= Control_OnSizeChanged;
+        
+        
+        base.OnUnloaded(e);
+    }
+    
     private async void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
     {
         try

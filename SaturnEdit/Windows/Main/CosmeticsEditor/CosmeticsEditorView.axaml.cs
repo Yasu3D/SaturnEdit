@@ -24,8 +24,8 @@ public partial class CosmeticsEditorView : UserControl
     {
         InitializeComponent();
         
-        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
         
         SettingsSystem.SettingsChanged += OnSettingsChanged;
         OnSettingsChanged(null, EventArgs.Empty);
@@ -45,6 +45,9 @@ public partial class CosmeticsEditorView : UserControl
     private static NavigatorExpression navigatorExpression = NavigatorExpression.Neutral;
     private static NavigatorBlinkState navigatorBlinkState = NavigatorBlinkState.Open;
     private static float navigatorTime = 0;
+    
+    private readonly IDisposable keyDownEventHandler;
+    private readonly IDisposable keyUpEventHandler;
     
 #region Methods
     private async void File_New(CosmeticType cosmeticType)
@@ -603,6 +606,17 @@ public partial class CosmeticsEditorView : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged -= CosmeticBranch_OnOperationHistoryChanged;
+        NavigatorExpressionRefresh -= OnNavigatorExpressionRefresh;
+        keyDownEventHandler.Dispose();
+        keyUpEventHandler.Dispose();
+        
+        base.OnUnloaded(e);
+    }
+    
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         if (!IsEnabled) return;

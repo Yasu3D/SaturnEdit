@@ -24,8 +24,8 @@ public partial class ZigZagHoldArgsWindow : Window
         ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
         Control_OnActualThemeVariantChanged(null, EventArgs.Empty);
         
-        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
 
     public int Beats { get; set; } = 1;
@@ -38,6 +38,9 @@ public partial class ZigZagHoldArgsWindow : Window
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
 
     private bool blockEvents = false;
+    
+    private readonly IDisposable keyDownEventHandler;
+    private readonly IDisposable keyUpEventHandler;
     
     private SKColor backgroundColor = new(0xFF000000);
     
@@ -87,6 +90,16 @@ public partial class ZigZagHoldArgsWindow : Window
 #endregion Methods
     
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        ActualThemeVariantChanged -= Control_OnActualThemeVariantChanged;
+        
+        keyDownEventHandler.Dispose();
+        keyUpEventHandler.Dispose();
+        
+        base.OnUnloaded(e);
+    }
+    
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();

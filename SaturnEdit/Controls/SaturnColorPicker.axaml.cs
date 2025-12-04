@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using SaturnData.Utilities;
 using SkiaSharp;
@@ -155,6 +156,13 @@ public partial class SaturnColorPicker : UserControl
 #endregion 
     
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        ActualThemeVariantChanged -= OnActualThemeVariantChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private async void OnActualThemeVariantChanged(object? sender, EventArgs e)
     {
         try

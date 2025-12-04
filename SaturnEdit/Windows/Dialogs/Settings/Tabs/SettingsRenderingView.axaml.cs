@@ -63,6 +63,13 @@ public partial class SettingsRenderingView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void CheckBoxLowPerformanceMode_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;

@@ -43,8 +43,8 @@ public partial class ChartEditorView : UserControl
     {
         InitializeComponent();
 
-        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
         
         AddHandler(DragDrop.DropEvent, Control_Drop);
         
@@ -59,6 +59,9 @@ public partial class ChartEditorView : UserControl
     private static string CustomLayoutDirectory => Path.Combine(LayoutDirectory, "Custom");
     private static string PersistedLayoutFile => Path.Combine(LayoutDirectory, "persisted.layout");
 
+    private readonly IDisposable keyDownEventHandler;
+    private readonly IDisposable keyUpEventHandler;
+    
     private enum PresetLayoutType
     {
         Classic = 0,
@@ -1097,6 +1100,14 @@ public partial class ChartEditorView : UserControl
         base.OnLoaded(e);
         
         Dock_LoadPersistedLayout();
+    }
+    
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        keyDownEventHandler.Dispose();
+        keyUpEventHandler.Dispose();
+        
+        base.OnUnloaded(e);
     }
 
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)

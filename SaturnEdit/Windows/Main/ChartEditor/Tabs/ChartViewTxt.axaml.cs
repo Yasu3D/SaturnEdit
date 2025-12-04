@@ -109,6 +109,15 @@ public partial class ChartViewTxt : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged -= ChartBranch_OnOperationHistoryChanged;
+        ChartSystem.EntryChanged -= OnEntryChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
     {
         ThemeName themeName = SettingsSystem.EditorSettings.Theme switch

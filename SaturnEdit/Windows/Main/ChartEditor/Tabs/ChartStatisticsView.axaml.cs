@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
@@ -290,6 +291,15 @@ public partial class ChartStatisticsView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged -= ChartBranch_OnOperationHistoryChanged;
+        SizeChanged -= Control_OnSizeChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
         UpdateGraph();

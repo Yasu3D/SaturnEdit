@@ -53,7 +53,15 @@ public partial class SystemMusicEditorView : UserControl
     }
 #endregion System Event Handlers
     
+    
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged -= CosmeticBranch_OnOperationHistoryChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void TextBoxArtist_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
@@ -182,6 +190,8 @@ public partial class SystemMusicEditorView : UserControl
             else if (button == ButtonAudioStageUpSelectPath) { action = value => { systemMusic.AudioStageUpSelectPath = value; }; }
             else if (button == ButtonAudioStageUpSecretPath) { action = value => { systemMusic.AudioStageUpSecretPath = value; }; }
             else if (button == ButtonAudioSeeYouPath)        { action = value => { systemMusic.AudioSeeYouPath = value; }; }
+            
+            if (action == null) return;
             
             if (systemMusic.AbsoluteSourcePath == "")
             {

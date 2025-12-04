@@ -32,8 +32,8 @@ public partial class MainWindow : Window
         Instance = this;
         InitializeComponent();
 
-        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
         
         ActualThemeVariantChanged += OnActualThemeVariantChanged;
         
@@ -56,6 +56,9 @@ public partial class MainWindow : Window
     }
 
     public static MainWindow? Instance { get; private set; }
+    
+    private readonly IDisposable keyDownEventHandler;
+    private readonly IDisposable keyUpEventHandler;
 
     private bool CanUndo
     {
@@ -445,6 +448,23 @@ public partial class MainWindow : Window
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        ActualThemeVariantChanged -= OnActualThemeVariantChanged;
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged -= ChartBranch_OnOperationHistoryChanged;
+        UndoRedoSystem.StageBranch.OperationHistoryChanged -= StageBranch_OnOperationHistoryChanged;
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged -= CosmeticBranch_OnOperationHistoryChanged;
+        Closed -= AudioSystem.OnClosed;
+        Closed -= AutosaveSystem.OnClosed;
+        Closing -= ChartEditor.OnClosing;
+        Closing -= Window_OnClosing;
+        keyDownEventHandler.Dispose();
+        keyUpEventHandler.Dispose();
+        
+        base.OnUnloaded(e);
+    }
+    
     private void OnActualThemeVariantChanged(object? sender, EventArgs e)
     {
         if (Application.Current == null) return;

@@ -4,6 +4,7 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.VisualTree;
 
 namespace SaturnEdit.Docking;
@@ -369,6 +370,15 @@ public partial class DockArea : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        WindowDragStarted -= OnWindowDragStarted;
+        WindowDragEnded -= OnWindowDragEnded;
+        WindowDragged -= OnWindowDragged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void InputElement_OnPointerEntered(object? sender, PointerEventArgs e)
     {
         if (!WindowDragActive) return;

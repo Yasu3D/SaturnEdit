@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using SaturnEdit.Audio;
 using SaturnEdit.Systems;
@@ -39,6 +40,15 @@ public partial class WaveformView : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SizeChanged -= Control_OnSizeChanged;
+        ActualThemeVariantChanged -= Control_OnActualThemeVariantChanged;
+        AudioSystem.AudioLoaded -= OnAudioLoaded;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
         RenderCanvas.Width = Bounds.Width;

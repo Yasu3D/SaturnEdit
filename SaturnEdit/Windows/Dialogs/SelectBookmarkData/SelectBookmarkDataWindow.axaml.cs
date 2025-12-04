@@ -17,8 +17,8 @@ public partial class SelectBookmarkDataWindow : Window
         UpdateColorText();
         UpdateColorPicker();
         
-        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
 
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
@@ -27,6 +27,9 @@ public partial class SelectBookmarkDataWindow : Window
     public uint Color { get; set; } = 0xFFDDDDDD;
 
     private bool blockEvents = false;
+    
+    private readonly IDisposable keyDownEventHandler;
+    private readonly IDisposable keyUpEventHandler;
 
 #region Methods
     public void SetData(string message, uint color)
@@ -72,6 +75,14 @@ public partial class SelectBookmarkDataWindow : Window
 #endregion Methods
     
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        keyDownEventHandler.Dispose();
+        keyUpEventHandler.Dispose();
+        
+        base.OnUnloaded(e);
+        
+    }
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = GetTopLevel(this)?.FocusManager?.GetFocusedElement();

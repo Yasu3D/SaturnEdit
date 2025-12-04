@@ -76,6 +76,13 @@ public partial class VolumeMixerWindow : Window
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void SliderVolume_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
     {
         if (blockEvents) return;

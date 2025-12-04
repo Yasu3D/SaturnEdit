@@ -44,6 +44,13 @@ public partial class PlateEditorView : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged -= CosmeticBranch_OnOperationHistoryChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void TextBoxPlateArtist_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;

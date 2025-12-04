@@ -44,6 +44,13 @@ public partial class EmblemEditorView : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged -= CosmeticBranch_OnOperationHistoryChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void TextBoxEmblemArtist_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;

@@ -190,6 +190,15 @@ public partial class NotePaletteView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        CursorSystem.CursorChanged -= OnCursorChanged;
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged -= ChartBranch_OnOperationHistoryChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void RadioButtonNoteType_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;

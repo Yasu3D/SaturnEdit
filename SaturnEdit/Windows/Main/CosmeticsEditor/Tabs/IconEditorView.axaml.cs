@@ -44,6 +44,13 @@ public partial class IconEditorView : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged -= CosmeticBranch_OnOperationHistoryChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void TextBoxIconArtist_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;

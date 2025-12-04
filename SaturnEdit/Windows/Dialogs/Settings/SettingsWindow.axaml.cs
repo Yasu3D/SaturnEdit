@@ -36,6 +36,13 @@ public partial class SettingsWindow : Window
     private bool saveSettings = false;
     
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        Closing -= SettingsWindow_OnClosing;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void SettingsTab_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         if (sender is not RadioButton button) return;

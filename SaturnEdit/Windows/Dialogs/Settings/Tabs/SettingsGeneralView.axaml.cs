@@ -46,6 +46,13 @@ public partial class SettingsGeneralView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        
+        base.OnUnloaded(e);
+    }
+    
     private void ComboBoxLanguage_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;

@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnEdit.Systems;
 
@@ -74,6 +75,14 @@ public partial class CursorView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        TimeSystem.TimestampChanged -= OnTimestampChanged;
+        TimeSystem.DivisionChanged -= OnDivisionChanged;
+        CursorSystem.CursorChanged -= OnCursorChanged;
+        
+        base.OnUnloaded(e);
+    }
     private void SliderPosition_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
     {
         if (blockEvents) return;

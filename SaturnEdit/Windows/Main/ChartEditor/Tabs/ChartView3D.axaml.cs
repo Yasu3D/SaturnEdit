@@ -33,8 +33,8 @@ public partial class ChartView3D : UserControl
         clickDragRight = new();
         objectDrag = new(clickDragLeft);
         
-        KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
         
         SizeChanged += Control_OnSizeChanged;
         ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
@@ -67,6 +67,9 @@ public partial class ChartView3D : UserControl
     
     private Point? pointerPosition = null;
     private ITimeable? lastClickedObject = null;
+    
+    private readonly IDisposable keyDownEventHandler;
+    private readonly IDisposable keyUpEventHandler;
    
 #region Methods
     private void FindPointerOverObject(float radius, int lane, float viewDistance)
@@ -504,6 +507,21 @@ public partial class ChartView3D : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        SizeChanged -= Control_OnSizeChanged;
+        ActualThemeVariantChanged -= Control_OnActualThemeVariantChanged;
+        SettingsSystem.SettingsChanged -= OnSettingsChanged;
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged -= ChartBranch_OnOperationHistoryChanged;
+        EditorSystem.EditModeChangeAttempted -= OnEditModeChangeAttempted;
+        SelectionSystem.PointerOverOverlapChanged -= OnPointerOverOverlapChanged;
+        ChartSystem.JacketChanged -= OnJacketChanged;
+        keyDownEventHandler.Dispose();
+        keyUpEventHandler.Dispose();
+        
+        base.OnUnloaded(e);
+    }
+    
     private void Control_OnKeyDown(object? sender, KeyEventArgs e)
     {
         IInputElement? focusedElement = TopLevel.GetTopLevel(this)?.FocusManager?.GetFocusedElement();

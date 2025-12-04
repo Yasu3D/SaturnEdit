@@ -1,6 +1,7 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Threading;
 
 namespace SaturnEdit.Docking;
@@ -249,4 +250,17 @@ public partial class DockTarget : UserControl
     
     private void OnWindowDragged(object? sender, EventArgs e) => HitTestTargets();
 #endregion System Event Handlers
+
+#region UI Event Handlers
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        if (DockArea.Instance != null)
+        {
+            DockArea.Instance.WindowDragStarted -= OnWindowDragStarted;
+            DockArea.Instance.WindowDragged -= OnWindowDragged;
+        }
+        
+        base.OnUnloaded(e);
+    }
+#endregion UI Event Handlers
 }
