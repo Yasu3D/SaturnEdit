@@ -89,19 +89,13 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
         
         if (clickDragHelper.EndLane != EndLane || EndTick != fullTick)
         {
-            bool build = EndTick != fullTick;
-            
             EndLane = clickDragHelper.EndLane;
             EndTick = fullTick;
             
             CompositeOperation compositeOperation = GetOperations();
             compositeOperation.Apply();
 
-            // TODO: until the Build algorithm gets some clever optimization, rebuilds can only happen when absolutely necessary.
-            if (build)
-            {
-                ChartSystem.Rebuild();
-            }
+            ChartSystem.Rebuild();
         }
     }
 
