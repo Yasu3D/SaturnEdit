@@ -2241,6 +2241,7 @@ public static class EditorSystem
         List<IOperation> operations = [];
 
         int interval = 1920 * beats / division;
+        if (interval <= 0) return;
         
         foreach (ITimeable obj in SelectionSystem.SelectedObjects)
         {

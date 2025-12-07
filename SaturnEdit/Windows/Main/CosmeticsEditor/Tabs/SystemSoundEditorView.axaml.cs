@@ -370,6 +370,8 @@ public partial class SystemSoundEditorView : UserControl
             else if (button == ButtonAudioTimerWarningPath)           { action = value => { systemSound.AudioTimerWarningPath = value; }; }
             else if (button == ButtonAudioTextboxAppearPath)          { action = value => { systemSound.AudioTextboxAppearPath = value; }; }
 
+            if (action == null) return;
+            
             if (systemSound.AbsoluteSourcePath == "")
             {
                 // Define new source path.

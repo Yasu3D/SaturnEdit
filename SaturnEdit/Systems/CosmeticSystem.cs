@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using SaturnData.Content.Cosmetics;
+using SaturnData.Content.Cosmetics.Items;
 using Tomlyn;
 using ConsoleColor = SaturnData.Content.Cosmetics.ConsoleColor;
 
