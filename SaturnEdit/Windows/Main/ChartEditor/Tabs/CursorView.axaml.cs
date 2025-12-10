@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
+using SaturnData.Notation.Core;
 using SaturnEdit.Systems;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
@@ -33,7 +34,7 @@ public partial class CursorView : UserControl
             blockEvents = true;
             
             NumericUpDownMeasure.Value = TimeSystem.Timestamp.Measure;
-            NumericUpDownBeat.Value = TimeSystem.Timestamp.Tick / TimeSystem.DivisionInterval;
+            NumericUpDownBeat.Value = Timestamp.BeatFromTick(TimeSystem.Timestamp.Tick, TimeSystem.Division);
             
             blockEvents = false;
 
@@ -130,7 +131,9 @@ public partial class CursorView : UserControl
             measure += 1;
         }
 
-        TimeSystem.SeekMeasureTick(measure, beat * TimeSystem.DivisionInterval);
+        int tick = Timestamp.TickFromBeat(beat, TimeSystem.Division);
+        
+        TimeSystem.SeekMeasureTick(measure, tick);
     }
     
     private void NumericUpDownDivision_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -139,16 +142,6 @@ public partial class CursorView : UserControl
         if (sender == null) return;
 
         TimeSystem.Division = (int?)NumericUpDownDivision.Value ?? TimeSystem.DefaultDivision;
-
-        // int measure = (int?)NumericUpDownMeasure.Value ?? 0;
-        // int beat = (int?)NumericUpDownBeat.Value ?? 0;
-        // int division = (int?)NumericUpDownDivision.Value ?? TimeSystem.DefaultDivision;
-        //
-        // decimal t = (decimal)beat / TimeSystem.Division;
-        // int readjustedBeat = (int)(t * division);
-        //
-        // TimeSystem.Division = division;
-        // TimeSystem.SeekMeasureTick(measure, readjustedBeat * TimeSystem.DivisionInterval);
     }
 #endregion UI Event Handlers
 }

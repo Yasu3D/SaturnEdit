@@ -49,6 +49,9 @@ public static class TimeSystem
     }
     private static PlaybackState playbackState;
 
+    /// <summary>
+    /// The current playback speed.
+    /// </summary>
     public static int PlaybackSpeed
     {
         get => playbackSpeed;
@@ -99,25 +102,18 @@ public static class TimeSystem
 
             int newDivision = Math.Clamp(value, 1, 1920);
             
-            int measure = Timestamp.Measure;
-            int beat = Timestamp.Tick / DivisionInterval;
-
-            decimal t = (decimal)beat / division;
-            int adjustedBeat = (int)(t * value);
-            
+            int measure = timestamp.Measure;
+            int beat = Timestamp.BeatFromTick(timestamp.Tick, division) * newDivision / division;
             division = newDivision;
-            SeekMeasureTick(measure, adjustedBeat * DivisionInterval);
+
+            int tick = Timestamp.TickFromBeat(beat, division);
+            SeekMeasureTick(measure, tick);
             
             DivisionChanged?.Invoke(null, EventArgs.Empty);
         }
     }
     private static int division = DefaultDivision;
-
-    /// <summary>
-    /// The number of ticks between each beat.
-    /// </summary>
-    public static int DivisionInterval => 1920 / Math.Max(1, Division);
-
+    
     /// <summary>
     /// The beginning of the playback loop.
     /// </summary>
@@ -183,8 +179,12 @@ public static class TimeSystem
     public static void Quantize(AudioSettings.QuantizationOption quantizationOption)
     {
         float time = Timestamp.Time;
-        float currentBeatTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, Timestamp);
-        float nextBeatTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, Timestamp + DivisionInterval);
+        
+        int nextFullBeat = Timestamp.BeatFromTick(timestamp.FullTick, division) + 1;
+        int nextFullTick = Timestamp.TickFromBeat(nextFullBeat, division);
+        
+        float currentBeatTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, new(timestamp.FullTick));
+        float nextBeatTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, new(nextFullTick));
 
         float currentBeatDelta = Math.Abs(time - currentBeatTime);
         float nextBeatDelta = Math.Abs(time - nextBeatTime);
@@ -228,24 +228,26 @@ public static class TimeSystem
     
     public static void Navigate_MoveBeatForward()
     {
-        int measure = Timestamp.Measure;
-        int beat = Timestamp.Tick / DivisionInterval + 1;
+        int measure = timestamp.Measure;
+        int beat = Timestamp.BeatFromTick(timestamp.Tick, division);
+        beat += 1;
 
-        if (beat == Division)
+        if (beat == division)
         {
             measure++;
             beat = 0;
         }
 
-        int tick = beat * DivisionInterval;
+        int tick = (1920 * beat) / division;
         
         SeekMeasureTick(measure, tick);
     }
     
     public static void Navigate_MoveBeatBack()
     {
-        int measure = Timestamp.Measure;
-        int beat = Timestamp.Tick / DivisionInterval - 1;
+        int measure = timestamp.Measure;
+        int beat = Timestamp.BeatFromTick(timestamp.Tick, division);
+        beat -= 1;
 
         if (beat == -1)
         {
@@ -256,11 +258,11 @@ public static class TimeSystem
             else
             {
                 measure = Math.Max(0, measure - 1);
-                beat = Division - 1;
+                beat = division - 1;
             }
         }
         
-        int tick = beat * DivisionInterval;
+        int tick = (1920 * beat) / division;
         
         SeekMeasureTick(measure, tick);
     }

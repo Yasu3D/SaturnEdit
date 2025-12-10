@@ -1032,7 +1032,7 @@ public partial class ChartView2D : UserControl
             }
             else
             {
-                TimeSystem.SeekFullTick(TimeSystem.Timestamp.FullTick + TimeSystem.DivisionInterval);
+                TimeSystem.Navigate_MoveBeatForward();
             }
         }
 
@@ -1046,7 +1046,7 @@ public partial class ChartView2D : UserControl
             }
             else
             {
-                TimeSystem.SeekFullTick(Math.Max(0, TimeSystem.Timestamp.FullTick - TimeSystem.DivisionInterval));
+                TimeSystem.Navigate_MoveBeatBack();
             }
         }
     }

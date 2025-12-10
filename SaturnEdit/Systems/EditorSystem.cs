@@ -1197,12 +1197,12 @@ public static class EditorSystem
 
         void addOperation(ITimeable obj)
         {
-            int oldFullTick = obj.Timestamp.FullTick;
-            int newFullTick = oldFullTick + TimeSystem.DivisionInterval;
+            int newFullBeat = Timestamp.BeatFromTick(obj.Timestamp.FullTick, TimeSystem.Division) + 1;
+            int newFullTick = Timestamp.TickFromBeat(newFullBeat, TimeSystem.Division);
 
             newFullTick = Math.Max(0, newFullTick);
             
-            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
+            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, obj.Timestamp.FullTick, newFullTick));
         }
     }
 
@@ -1245,12 +1245,12 @@ public static class EditorSystem
 
         void addOperation(ITimeable obj)
         {
-            int oldFullTick = obj.Timestamp.FullTick;
-            int newFullTick = oldFullTick - TimeSystem.DivisionInterval;
+            int newFullBeat = Timestamp.BeatFromTick(obj.Timestamp.FullTick, TimeSystem.Division) - 1;
+            int newFullTick = Timestamp.TickFromBeat(newFullBeat, TimeSystem.Division);
 
             newFullTick = Math.Max(0, newFullTick);
             
-            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
+            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, obj.Timestamp.FullTick, newFullTick));
         }
     }
 
