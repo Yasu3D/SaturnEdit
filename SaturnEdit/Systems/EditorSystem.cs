@@ -1093,7 +1093,7 @@ public static class EditorSystem
         
         SpeedChangeEvent speedChangeEvent = new(new(TimeSystem.Timestamp.FullTick), speed);
 
-        ListRemoveOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, speedChangeEvent);
+        ListAddOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, speedChangeEvent);
         SelectionAddOperation op1 = new(speedChangeEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
@@ -1105,7 +1105,7 @@ public static class EditorSystem
         
         VisibilityChangeEvent visibilityChangeEvent = new(new(TimeSystem.Timestamp.FullTick), visibility);
 
-        ListRemoveOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, visibilityChangeEvent);
+        ListAddOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, visibilityChangeEvent);
         SelectionAddOperation op1 = new(visibilityChangeEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
@@ -1124,7 +1124,7 @@ public static class EditorSystem
         reverseEffectEvent.SubEvents[1] = new(middle, reverseEffectEvent);
         reverseEffectEvent.SubEvents[2] = new(end, reverseEffectEvent);
         
-        ListRemoveOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, reverseEffectEvent);
+        ListAddOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, reverseEffectEvent);
         SelectionAddOperation op1 = new(reverseEffectEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
@@ -1141,7 +1141,7 @@ public static class EditorSystem
         stopEffectEvent.SubEvents[0] = new(start, stopEffectEvent);
         stopEffectEvent.SubEvents[1] = new(end, stopEffectEvent);
         
-        ListRemoveOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, stopEffectEvent);
+        ListAddOperation<Event> op0 = new(() => SelectionSystem.SelectedLayer.Events, stopEffectEvent);
         SelectionAddOperation op1 = new(stopEffectEvent, SelectionSystem.LastSelectedObject);
         
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
