@@ -51,23 +51,6 @@
                                        HorizontalAlignment="Left"
                                        Fill="{DynamicResource SeparatorPrimary}" />
 
-                            <TextBlock Grid.Row="0"
-                                       Grid.Column="0"
-                                       VerticalAlignment="Center"
-                                       Text="{DynamicResource Import.SortCollections}">
-                                <ToolTip.Tip>
-                                    <TextBlock Text="{DynamicResource Import.SortCollections.Description}" />
-                                </ToolTip.Tip>
-                            </TextBlock>
-                            <CheckBox Grid.Row="0"
-                                      Grid.Column="2"
-                                      Name="CheckBoxSortCollections"
-                                      IsCheckedChanged="CheckBoxSortCollections_OnIsCheckedChanged">
-                                <ToolTip.Tip>
-                                    <TextBlock Text="{DynamicResource Import.SortCollections.Description}" />
-                                </ToolTip.Tip>
-                            </CheckBox>
-
                             <TextBlock Grid.Row="1"
                                        Grid.Column="0"
                                        VerticalAlignment="Center"

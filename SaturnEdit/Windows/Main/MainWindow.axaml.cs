@@ -83,10 +83,6 @@ public partial class MainWindow : Window
             return false;
         }
     }
-    
-    private IBrush? chartEditorChromeGradient = null;
-    private IBrush? stageEditorChromeGradient = null;
-    private IBrush? cosmeticsEditorChromeGradient = null;
 
     private bool bypassChartSave = false;
     private bool bypassStageSave = false;
@@ -155,17 +151,22 @@ public partial class MainWindow : Window
             CosmeticsEditor.IsEnabled = cosmeticsEditor;
             CosmeticsEditor.IsVisible = cosmeticsEditor;
             
+            if (Application.Current == null) return;
+            
             if (chartEditor)
             {
-                RectangleChromeGradient.Fill = chartEditorChromeGradient;
+                Application.Current.TryGetResource("ChartEditorChromeGradient", Application.Current.ActualThemeVariant, out object? resource);
+                RectangleChromeGradient.Fill = (IBrush?)resource;
             }
             else if (stageEditor)
             {
-                RectangleChromeGradient.Fill = stageEditorChromeGradient;
+                Application.Current.TryGetResource("StageEditorChromeGradient", Application.Current.ActualThemeVariant, out object? resource);
+                RectangleChromeGradient.Fill = (IBrush?)resource;
             }
             else if (cosmeticsEditor)
             {
-                RectangleChromeGradient.Fill = cosmeticsEditorChromeGradient;
+                Application.Current.TryGetResource("CosmeticsEditorChromeGradient", Application.Current.ActualThemeVariant, out object? resource);
+                RectangleChromeGradient.Fill = (IBrush?)resource;
             }
         });
     }
@@ -467,17 +468,6 @@ public partial class MainWindow : Window
     
     private void OnActualThemeVariantChanged(object? sender, EventArgs e)
     {
-        if (Application.Current == null) return;
-        
-        Application.Current.TryGetResource("ChartEditorChromeGradient", Application.Current.ActualThemeVariant, out object? resource);
-        chartEditorChromeGradient = (IBrush?)resource;
-        
-        Application.Current.TryGetResource("StageEditorChromeGradient", Application.Current.ActualThemeVariant, out resource);
-        stageEditorChromeGradient = (IBrush?)resource;
-        
-        Application.Current.TryGetResource("CosmeticsEditorChromeGradient", Application.Current.ActualThemeVariant, out resource);
-        cosmeticsEditorChromeGradient = (IBrush?)resource;
-        
         UpdateTabs();
     }
     

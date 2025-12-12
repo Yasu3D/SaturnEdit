@@ -34,8 +34,7 @@ public partial class ImportArgsWindow : Window
         Dispatcher.UIThread.Post(() =>
         {
             blockEvents = true;
-        
-            CheckBoxSortCollections.IsChecked = NotationReadArgs.SortCollections;
+            
             CheckBoxOptimizeHoldNotes.IsChecked = NotationReadArgs.OptimizeHoldNotes;
             CheckBoxInferClearThresholdFromDifficulty.IsChecked = NotationReadArgs.InferClearThresholdFromDifficulty;
             
@@ -74,15 +73,6 @@ public partial class ImportArgsWindow : Window
     }
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
-    
-    private void CheckBoxSortCollections_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
-    {
-        if (blockEvents) return;
-        if (sender == null) return;
-        
-        NotationReadArgs.SortCollections = CheckBoxSortCollections.IsChecked ?? true;
-        OnArgsChanged();
-    }
 
     private void CheckBoxOptimizeHoldNotes_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {

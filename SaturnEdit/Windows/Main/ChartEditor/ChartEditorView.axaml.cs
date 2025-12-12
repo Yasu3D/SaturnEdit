@@ -425,7 +425,6 @@ public partial class ChartEditorView : UserControl
             {
                 InferClearThresholdFromDifficulty = false,
                 OptimizeHoldNotes = false,
-                SortCollections = true,
             };
 
             ChartSystem.ReadChart(ChartSystem.Entry.ChartPath, args);

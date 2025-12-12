@@ -466,6 +466,8 @@
     <system:String x:Key="CosmeticEditor.Navigator.Dialogue.Property.Expression.Laughing">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Dialogue.Property.Expression.Smiling">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Dialogue.Property.Expression.Grinning">-</system:String>
+    <system:String x:Key="CosmeticEditor.NoteSound.Property.Click">-</system:String>
+    <system:String x:Key="CosmeticEditor.NoteSound.Property.Guide">-</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.TouchMarvelous">-</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.TouchGood">-</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.SlideMarvelous">-</system:String>
@@ -712,8 +714,6 @@
     <system:String x:Key="Export.WriteMusicPath.WithExtension">-</system:String>
     <system:String x:Key="Export.WriteMusicPath.WithExtension.Description">-</system:String>
     <system:String x:Key="Import.Window.Title">-</system:String>
-    <system:String x:Key="Import.SortCollections">-</system:String>
-    <system:String x:Key="Import.SortCollections.Description">-</system:String>
     <system:String x:Key="Import.OptimizeHoldNotes">-</system:String>
     <system:String x:Key="Import.OptimizeHoldNotes.Description">-</system:String>
     <system:String x:Key="Import.InferClearThreshold">-</system:String>

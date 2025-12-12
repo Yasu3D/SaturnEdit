@@ -464,6 +464,8 @@ CosmeticEditor.Navigator.Dialogue.Property.Expression.Angry,Angry,-,-,-
 CosmeticEditor.Navigator.Dialogue.Property.Expression.Laughing,Laughing,-,-,-
 CosmeticEditor.Navigator.Dialogue.Property.Expression.Smiling,Smiling,-,-,-
 CosmeticEditor.Navigator.Dialogue.Property.Expression.Grinning,Grinning,-,-,-
+CosmeticEditor.NoteSound.Property.Click,Click,-,-,-
+CosmeticEditor.NoteSound.Property.Guide,Guide,-,-,-
 CosmeticEditor.NoteSound.Property.TouchMarvelous,Touch (MARVELOUS),-,-,-
 CosmeticEditor.NoteSound.Property.TouchGood,Touch (GOOD),-,-,-
 CosmeticEditor.NoteSound.Property.SlideMarvelous,Slide (MARVELOUS),-,-,-
@@ -710,8 +712,6 @@ Export.WriteMusicPath.NoExtension.Description,Write the file name without the fi
 Export.WriteMusicPath.WithExtension,With Extension,-,-,-
 Export.WriteMusicPath.WithExtension.Description,Write the file name with the file extension.,-,-,-
 Import.Window.Title,Import Arguments,-,-,-
-Import.SortCollections,Sort Collections,-,-,-
-Import.SortCollections.Description,Should all objects in collections be sorted by their timestamp?,-,-,-
 Import.OptimizeHoldNotes,Optimize Hold Notes,-,-,-
 Import.OptimizeHoldNotes.Description,Should hidden hold note segments be removed?,-,-,-
 Import.InferClearThreshold,Infer Clear Threshold,-,-,-

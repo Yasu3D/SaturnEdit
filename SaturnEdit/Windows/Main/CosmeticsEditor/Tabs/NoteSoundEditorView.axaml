@@ -7,12 +7,12 @@
              d:DesignWidth="800"
              d:DesignHeight="450"
              x:Class="SaturnEdit.Windows.Main.CosmeticsEditor.Tabs.NoteSoundEditorView">
-    <Grid RowDefinitions="40,40,40,40,40,40,40,40,40,40,40,40,10,40,40,10,40,40"
+    <Grid RowDefinitions="40,40,40,40,40,40,40,40,40,40,40,40,40,40,10,40,40,10,40,40"
           ColumnDefinitions="160,20,*,50"
           Margin="15">
         <Rectangle Grid.Row="0"
                    Grid.Column="1"
-                   Grid.RowSpan="18"
+                   Grid.RowSpan="20"
                    Fill="{DynamicResource SeparatorPrimary}"
                    Width="1"
                    HorizontalAlignment="Left" />
@@ -30,15 +30,15 @@
         <TextBlock Grid.Row="1"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.TouchMarvelous}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.Click}" />
         <TextBox Grid.Row="1"
                  Grid.Column="2"
-                 Name="TextBoxAudioTouchMarvelousPath"
+                 Name="TextBoxAudioClickPath"
                  Height="30"
                  LostFocus="TextBoxPath_OnLostFocus" />
         <Button Grid.Row="1"
                 Grid.Column="3"
-                Name="ButtonAudioTouchMarvelousPath"
+                Name="ButtonAudioClickPath"
                 Classes="Themed Square Outlined"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
@@ -50,7 +50,7 @@
         </Button>
         <icon:FluentIcon Grid.Row="1"
                          Grid.Column="0"
-                         Name="IconFileNotFoundWarningAudioTouchMarvelous"
+                         Name="IconFileNotFoundWarningAudioClick"
                          HorizontalAlignment="Right"
                          Margin="0,0,10,0"
                          Icon="Warning"
@@ -67,15 +67,15 @@
         <TextBlock Grid.Row="2"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.TouchGood}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.Guide}" />
         <TextBox Grid.Row="2"
                  Grid.Column="2"
-                 Name="TextBoxAudioTouchGoodPath"
+                 Name="TextBoxAudioGuidePath"
                  Height="30"
                  LostFocus="TextBoxPath_OnLostFocus" />
         <Button Grid.Row="2"
                 Grid.Column="3"
-                Name="ButtonAudioTouchGoodPath"
+                Name="ButtonAudioGuidePath"
                 Classes="Themed Square Outlined"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
@@ -87,7 +87,7 @@
         </Button>
         <icon:FluentIcon Grid.Row="2"
                          Grid.Column="0"
-                         Name="IconFileNotFoundWarningAudioTouchGood"
+                         Name="IconFileNotFoundWarningAudioGuide"
                          HorizontalAlignment="Right"
                          Margin="0,0,10,0"
                          Icon="Warning"
@@ -104,15 +104,15 @@
         <TextBlock Grid.Row="3"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.SlideMarvelous}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.TouchMarvelous}" />
         <TextBox Grid.Row="3"
                  Grid.Column="2"
-                 Name="TextBoxAudioSlideMarvelousPath"
+                 Name="TextBoxAudioTouchMarvelousPath"
                  Height="30"
                  LostFocus="TextBoxPath_OnLostFocus" />
         <Button Grid.Row="3"
                 Grid.Column="3"
-                Name="ButtonAudioSlideMarvelousPath"
+                Name="ButtonAudioTouchMarvelousPath"
                 Classes="Themed Square Outlined"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
@@ -124,7 +124,7 @@
         </Button>
         <icon:FluentIcon Grid.Row="3"
                          Grid.Column="0"
-                         Name="IconFileNotFoundWarningAudioSlideMarvelous"
+                         Name="IconFileNotFoundWarningAudioTouchMarvelous"
                          HorizontalAlignment="Right"
                          Margin="0,0,10,0"
                          Icon="Warning"
@@ -141,15 +141,15 @@
         <TextBlock Grid.Row="4"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.SlideGood}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.TouchGood}" />
         <TextBox Grid.Row="4"
                  Grid.Column="2"
-                 Name="TextBoxAudioSlideGoodPath"
+                 Name="TextBoxAudioTouchGoodPath"
                  Height="30"
                  LostFocus="TextBoxPath_OnLostFocus" />
         <Button Grid.Row="4"
                 Grid.Column="3"
-                Name="ButtonAudioSlideGoodPath"
+                Name="ButtonAudioTouchGoodPath"
                 Classes="Themed Square Outlined"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
@@ -161,7 +161,7 @@
         </Button>
         <icon:FluentIcon Grid.Row="4"
                          Grid.Column="0"
-                         Name="IconFileNotFoundWarningAudioSlideGood"
+                         Name="IconFileNotFoundWarningAudioTouchGood"
                          HorizontalAlignment="Right"
                          Margin="0,0,10,0"
                          Icon="Warning"
@@ -178,15 +178,15 @@
         <TextBlock Grid.Row="5"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.SnapMarvelous}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.SlideMarvelous}" />
         <TextBox Grid.Row="5"
                  Grid.Column="2"
-                 Name="TextBoxAudioSnapMarvelousPath"
+                 Name="TextBoxAudioSlideMarvelousPath"
                  Height="30"
                  LostFocus="TextBoxPath_OnLostFocus" />
         <Button Grid.Row="5"
                 Grid.Column="3"
-                Name="ButtonAudioSnapMarvelousPath"
+                Name="ButtonAudioSlideMarvelousPath"
                 Classes="Themed Square Outlined"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
@@ -198,7 +198,7 @@
         </Button>
         <icon:FluentIcon Grid.Row="5"
                          Grid.Column="0"
-                         Name="IconFileNotFoundWarningAudioSnapMarvelous"
+                         Name="IconFileNotFoundWarningAudioSlideMarvelous"
                          HorizontalAlignment="Right"
                          Margin="0,0,10,0"
                          Icon="Warning"
@@ -215,15 +215,15 @@
         <TextBlock Grid.Row="6"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.SnapGood}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.SlideGood}" />
         <TextBox Grid.Row="6"
                  Grid.Column="2"
-                 Name="TextBoxAudioSnapGoodPath"
+                 Name="TextBoxAudioSlideGoodPath"
                  Height="30"
                  LostFocus="TextBoxPath_OnLostFocus" />
         <Button Grid.Row="6"
                 Grid.Column="3"
-                Name="ButtonAudioSnapGoodPath"
+                Name="ButtonAudioSlideGoodPath"
                 Classes="Themed Square Outlined"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
@@ -235,7 +235,7 @@
         </Button>
         <icon:FluentIcon Grid.Row="6"
                          Grid.Column="0"
-                         Name="IconFileNotFoundWarningAudioSnapGood"
+                         Name="IconFileNotFoundWarningAudioSlideGood"
                          HorizontalAlignment="Right"
                          Margin="0,0,10,0"
                          Icon="Warning"
@@ -252,15 +252,15 @@
         <TextBlock Grid.Row="7"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.Hold}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.SnapMarvelous}" />
         <TextBox Grid.Row="7"
                  Grid.Column="2"
-                 Name="TextBoxAudioHoldPath"
+                 Name="TextBoxAudioSnapMarvelousPath"
                  Height="30"
                  LostFocus="TextBoxPath_OnLostFocus" />
         <Button Grid.Row="7"
                 Grid.Column="3"
-                Name="ButtonAudioHoldPath"
+                Name="ButtonAudioSnapMarvelousPath"
                 Classes="Themed Square Outlined"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
@@ -272,7 +272,7 @@
         </Button>
         <icon:FluentIcon Grid.Row="7"
                          Grid.Column="0"
-                         Name="IconFileNotFoundWarningAudioHold"
+                         Name="IconFileNotFoundWarningAudioSnapMarvelous"
                          HorizontalAlignment="Right"
                          Margin="0,0,10,0"
                          Icon="Warning"
@@ -289,15 +289,15 @@
         <TextBlock Grid.Row="8"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.ReHold}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.SnapGood}" />
         <TextBox Grid.Row="8"
                  Grid.Column="2"
-                 Name="TextBoxAudioReHoldPath"
+                 Name="TextBoxAudioSnapGoodPath"
                  Height="30"
                  LostFocus="TextBoxPath_OnLostFocus" />
         <Button Grid.Row="8"
                 Grid.Column="3"
-                Name="ButtonAudioReHoldPath"
+                Name="ButtonAudioSnapGoodPath"
                 Classes="Themed Square Outlined"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
@@ -309,7 +309,7 @@
         </Button>
         <icon:FluentIcon Grid.Row="8"
                          Grid.Column="0"
-                         Name="IconFileNotFoundWarningAudioReHold"
+                         Name="IconFileNotFoundWarningAudioSnapGood"
                          HorizontalAlignment="Right"
                          Margin="0,0,10,0"
                          Icon="Warning"
@@ -326,15 +326,15 @@
         <TextBlock Grid.Row="9"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.Chain}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.Hold}" />
         <TextBox Grid.Row="9"
                  Grid.Column="2"
-                 Name="TextBoxAudioChainPath"
+                 Name="TextBoxAudioHoldPath"
                  Height="30"
                  LostFocus="TextBoxPath_OnLostFocus" />
         <Button Grid.Row="9"
                 Grid.Column="3"
-                Name="ButtonAudioChainPath"
+                Name="ButtonAudioHoldPath"
                 Classes="Themed Square Outlined"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
@@ -346,7 +346,7 @@
         </Button>
         <icon:FluentIcon Grid.Row="9"
                          Grid.Column="0"
-                         Name="IconFileNotFoundWarningAudioChain"
+                         Name="IconFileNotFoundWarningAudioHold"
                          HorizontalAlignment="Right"
                          Margin="0,0,10,0"
                          Icon="Warning"
@@ -363,15 +363,15 @@
         <TextBlock Grid.Row="10"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.Bonus}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.ReHold}" />
         <TextBox Grid.Row="10"
                  Grid.Column="2"
-                 Name="TextBoxAudioBonusPath"
+                 Name="TextBoxAudioReHoldPath"
                  Height="30"
                  LostFocus="TextBoxPath_OnLostFocus" />
         <Button Grid.Row="10"
                 Grid.Column="3"
-                Name="ButtonAudioBonusPath"
+                Name="ButtonAudioReHoldPath"
                 Classes="Themed Square Outlined"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
@@ -383,7 +383,7 @@
         </Button>
         <icon:FluentIcon Grid.Row="10"
                          Grid.Column="0"
-                         Name="IconFileNotFoundWarningAudioBonus"
+                         Name="IconFileNotFoundWarningAudioReHold"
                          HorizontalAlignment="Right"
                          Margin="0,0,10,0"
                          Icon="Warning"
@@ -400,15 +400,15 @@
         <TextBlock Grid.Row="11"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.R}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.Chain}" />
         <TextBox Grid.Row="11"
                  Grid.Column="2"
-                 Name="TextBoxAudioRPath"
+                 Name="TextBoxAudioChainPath"
                  Height="30"
                  LostFocus="TextBoxPath_OnLostFocus" />
         <Button Grid.Row="11"
                 Grid.Column="3"
-                Name="ButtonAudioRPath"
+                Name="ButtonAudioChainPath"
                 Classes="Themed Square Outlined"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
@@ -420,7 +420,44 @@
         </Button>
         <icon:FluentIcon Grid.Row="11"
                          Grid.Column="0"
-                         Name="IconFileNotFoundWarningAudioR"
+                         Name="IconFileNotFoundWarningAudioChain"
+                         HorizontalAlignment="Right"
+                         Margin="0,0,10,0"
+                         Icon="Warning"
+                         Foreground="{DynamicResource ForegroundWarning}">
+            <ToolTip.Tip>
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                               Foreground="{DynamicResource ForegroundSecondary}" />
+                </StackPanel>
+            </ToolTip.Tip>
+        </icon:FluentIcon>
+        
+        <TextBlock Grid.Row="12"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.Bonus}" />
+        <TextBox Grid.Row="12"
+                 Grid.Column="2"
+                 Name="TextBoxAudioBonusPath"
+                 Height="30"
+                 LostFocus="TextBoxPath_OnLostFocus" />
+        <Button Grid.Row="12"
+                Grid.Column="3"
+                Name="ButtonAudioBonusPath"
+                Classes="Themed Square Outlined"
+                HorizontalAlignment="Left"
+                Margin="5,0,0,0"
+                Click="ButtonPickFile_OnClick">
+            <ToolTip.Tip>
+                <TextBlock Text="{DynamicResource Generic.PickFile}" />
+            </ToolTip.Tip>
+            <icon:FluentIcon Icon="FolderOpen" />
+        </Button>
+        <icon:FluentIcon Grid.Row="12"
+                         Grid.Column="0"
+                         Name="IconFileNotFoundWarningAudioBonus"
                          HorizontalAlignment="Right"
                          Margin="0,0,10,0"
                          Icon="Warning"
@@ -437,38 +474,75 @@
         <TextBlock Grid.Row="13"
                    Grid.Column="0"
                    VerticalAlignment="Center"
-                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.HoldLoopStartTime}" />
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.R}" />
         <TextBox Grid.Row="13"
+                 Grid.Column="2"
+                 Name="TextBoxAudioRPath"
+                 Height="30"
+                 LostFocus="TextBoxPath_OnLostFocus" />
+        <Button Grid.Row="13"
+                Grid.Column="3"
+                Name="ButtonAudioRPath"
+                Classes="Themed Square Outlined"
+                HorizontalAlignment="Left"
+                Margin="5,0,0,0"
+                Click="ButtonPickFile_OnClick">
+            <ToolTip.Tip>
+                <TextBlock Text="{DynamicResource Generic.PickFile}" />
+            </ToolTip.Tip>
+            <icon:FluentIcon Icon="FolderOpen" />
+        </Button>
+        <icon:FluentIcon Grid.Row="13"
+                         Grid.Column="0"
+                         Name="IconFileNotFoundWarningAudioR"
+                         HorizontalAlignment="Right"
+                         Margin="0,0,10,0"
+                         Icon="Warning"
+                         Foreground="{DynamicResource ForegroundWarning}">
+            <ToolTip.Tip>
+                <StackPanel>
+                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                    <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                               Foreground="{DynamicResource ForegroundSecondary}" />
+                </StackPanel>
+            </ToolTip.Tip>
+        </icon:FluentIcon>
+        
+        <TextBlock Grid.Row="15"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.NoteSound.Property.HoldLoopStartTime}" />
+        <TextBox Grid.Row="15"
                  Grid.Column="2"
                  Name="TextBoxHoldLoopStartTime"
                  Height="30"
                  LostFocus="TextBoxHoldLoopStartTime_OnLostFocus" />
         
-        <TextBlock Grid.Row="14"
+        <TextBlock Grid.Row="16"
                    Grid.Column="0"
                    VerticalAlignment="Center"
                    Text="{DynamicResource CosmeticEditor.NoteSound.Property.HoldLoopEndTime}" />
-        <TextBox Grid.Row="14"
+        <TextBox Grid.Row="16"
                  Grid.Column="2"
                  Name="TextBoxHoldLoopEndTime"
                  Height="30"
                  LostFocus="TextBoxHoldLoopEndTime_OnLostFocus" />
         
-        <TextBlock Grid.Row="16"
+        <TextBlock Grid.Row="18"
                    Grid.Column="0"
                    VerticalAlignment="Center"
                    Text="{DynamicResource CosmeticEditor.NoteSound.Property.ReHoldLoopStartTime}" />
-        <TextBox Grid.Row="16"
+        <TextBox Grid.Row="18"
                  Grid.Column="2"
                  Name="TextBoxReHoldLoopStartTime"
                  Height="30"
                  LostFocus="TextBoxReHoldLoopStartTime_OnLostFocus" />
         
-        <TextBlock Grid.Row="17"
+        <TextBlock Grid.Row="19"
                    Grid.Column="0"
                    VerticalAlignment="Center"
                    Text="{DynamicResource CosmeticEditor.NoteSound.Property.ReHoldLoopEndTime}" />
-        <TextBox Grid.Row="17"
+        <TextBox Grid.Row="19"
                  Grid.Column="2"
                  Name="TextBoxReHoldLoopEndTime"
                  Height="30"
