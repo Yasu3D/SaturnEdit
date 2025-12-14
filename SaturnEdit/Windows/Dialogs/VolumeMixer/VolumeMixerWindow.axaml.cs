@@ -58,20 +58,29 @@ public partial class VolumeMixerWindow : Window
             SliderVolumeStartClick.Value = DecibelsToSliderValue(SettingsSystem.AudioSettings.StartClickVolume);
             SliderVolumeMetronome.Value  = DecibelsToSliderValue(SettingsSystem.AudioSettings.MetronomeVolume);
             
-            TextBlockVolumeMaster.Text     = $"{SettingsSystem.AudioSettings.MasterVolume.ToString(CultureInfo.InvariantCulture)}dB";
-            TextBlockVolumeAudio.Text      = $"{SettingsSystem.AudioSettings.AudioVolume.ToString(CultureInfo.InvariantCulture)}dB";
-            TextBlockVolumeHitsound.Text   = $"{SettingsSystem.AudioSettings.HitsoundVolume.ToString(CultureInfo.InvariantCulture)}dB";
-            TextBlockVolumeGuide.Text      = $"{SettingsSystem.AudioSettings.GuideVolume.ToString(CultureInfo.InvariantCulture)}dB";
-            TextBlockVolumeTouch.Text      = $"{SettingsSystem.AudioSettings.TouchVolume.ToString(CultureInfo.InvariantCulture)}dB";
-            TextBlockVolumeHold.Text       = $"{SettingsSystem.AudioSettings.HoldVolume.ToString(CultureInfo.InvariantCulture)}dB";
-            TextBlockVolumeSlide.Text      = $"{SettingsSystem.AudioSettings.SlideVolume.ToString(CultureInfo.InvariantCulture)}dB";
-            TextBlockVolumeBonus.Text      = $"{SettingsSystem.AudioSettings.BonusVolume.ToString(CultureInfo.InvariantCulture)}dB";
-            TextBlockVolumeR.Text          = $"{SettingsSystem.AudioSettings.RVolume.ToString(CultureInfo.InvariantCulture)}dB";
-            TextBlockVolumeStartClick.Text = $"{SettingsSystem.AudioSettings.StartClickVolume.ToString(CultureInfo.InvariantCulture)}dB";
-            TextBlockVolumeMetronome.Text  = $"{SettingsSystem.AudioSettings.MetronomeVolume.ToString(CultureInfo.InvariantCulture)}dB";
+            TextBlockVolumeMaster.Text     = getVolumeString(SettingsSystem.AudioSettings.MasterVolume);
+            TextBlockVolumeAudio.Text      = getVolumeString(SettingsSystem.AudioSettings.AudioVolume);
+            TextBlockVolumeHitsound.Text   = getVolumeString(SettingsSystem.AudioSettings.HitsoundVolume);
+            TextBlockVolumeGuide.Text      = getVolumeString(SettingsSystem.AudioSettings.GuideVolume);
+            TextBlockVolumeTouch.Text      = getVolumeString(SettingsSystem.AudioSettings.TouchVolume);
+            TextBlockVolumeHold.Text       = getVolumeString(SettingsSystem.AudioSettings.HoldVolume);
+            TextBlockVolumeSlide.Text      = getVolumeString(SettingsSystem.AudioSettings.SlideVolume);
+            TextBlockVolumeBonus.Text      = getVolumeString(SettingsSystem.AudioSettings.BonusVolume);
+            TextBlockVolumeR.Text          = getVolumeString(SettingsSystem.AudioSettings.RVolume);
+            TextBlockVolumeStartClick.Text = getVolumeString(SettingsSystem.AudioSettings.StartClickVolume);
+            TextBlockVolumeMetronome.Text  = getVolumeString(SettingsSystem.AudioSettings.MetronomeVolume);
         
             blockEvents = false;
         });
+        
+        return;
+
+        string getVolumeString(int volume)
+        {
+            if (volume == 0) return "0dB";
+            if (volume > 0) return $"+{volume.ToString()}dB";
+            return $"{volume.ToString()}dB";
+        }
     }
 #endregion System Event Handlers
 
