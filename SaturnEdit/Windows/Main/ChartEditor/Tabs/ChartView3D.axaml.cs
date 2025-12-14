@@ -32,26 +32,6 @@ public partial class ChartView3D : UserControl
         clickDragLeft = new();
         clickDragRight = new();
         objectDrag = new(clickDragLeft);
-        
-        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
-        
-        SizeChanged += Control_OnSizeChanged;
-        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
-        
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-
-        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
-        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
-
-        EditorSystem.EditModeChangeAttempted += OnEditModeChangeAttempted;
-        OnEditModeChangeAttempted(null, EventArgs.Empty);
-
-        SelectionSystem.PointerOverOverlapChanged += OnPointerOverOverlapChanged;
-
-        ChartSystem.JacketChanged += OnJacketChanged;
-        OnJacketChanged(null, EventArgs.Empty);
     }
 
     private static SKPaint? jacketBackgroundPaint = null;
@@ -68,8 +48,8 @@ public partial class ChartView3D : UserControl
     private Point? pointerPosition = null;
     private ITimeable? lastClickedObject = null;
     
-    private readonly IDisposable keyDownEventHandler;
-    private readonly IDisposable keyUpEventHandler;
+    private IDisposable? keyDownEventHandler;
+    private IDisposable? keyUpEventHandler;
    
 #region Methods
     private void FindPointerOverObject(float radius, int lane, float viewDistance)
@@ -507,6 +487,34 @@ public partial class ChartView3D : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        
+        SizeChanged += Control_OnSizeChanged;
+        Control_OnSizeChanged(null, new(null));
+        
+        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
+        Control_OnActualThemeVariantChanged(null, EventArgs.Empty);
+        
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+
+        EditorSystem.EditModeChangeAttempted += OnEditModeChangeAttempted;
+        OnEditModeChangeAttempted(null, EventArgs.Empty);
+
+        SelectionSystem.PointerOverOverlapChanged += OnPointerOverOverlapChanged;
+
+        ChartSystem.JacketChanged += OnJacketChanged;
+        OnJacketChanged(null, EventArgs.Empty);
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SizeChanged -= Control_OnSizeChanged;
@@ -516,8 +524,8 @@ public partial class ChartView3D : UserControl
         EditorSystem.EditModeChangeAttempted -= OnEditModeChangeAttempted;
         SelectionSystem.PointerOverOverlapChanged -= OnPointerOverOverlapChanged;
         ChartSystem.JacketChanged -= OnJacketChanged;
-        keyDownEventHandler.Dispose();
-        keyUpEventHandler.Dispose();
+        keyDownEventHandler?.Dispose();
+        keyUpEventHandler?.Dispose();
         
         base.OnUnloaded(e);
     }
@@ -926,7 +934,7 @@ public partial class ChartView3D : UserControl
     }
 
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
-    
+
     private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
         double minimum = double.Min(PanelCanvasContainer.Bounds.Width, PanelCanvasContainer.Bounds.Height);
@@ -942,17 +950,15 @@ public partial class ChartView3D : UserControl
         ComboBoxBackgroundDim.IsVisible = Bounds.Width > 620;
     }
 
-    private async void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
+    private void Control_OnActualThemeVariantChanged(object? sender, EventArgs e)
     {
         try
         {
-            await Task.Delay(1);
-
             if (Application.Current == null) return;
             if (!Application.Current.TryGetResource("BackgroundSecondary", Application.Current.ActualThemeVariant, out object? resource)) return;
             if (resource is not SolidColorBrush brush) return;
         
-            canvasInfo.BackgroundColor= new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
+            canvasInfo.BackgroundColor = new(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
         }
         catch (Exception)
         {

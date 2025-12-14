@@ -19,12 +19,6 @@ public partial class ChartPropertiesView : UserControl
     public ChartPropertiesView()
     {
         InitializeComponent();
-        
-        ChartSystem.JacketChanged += OnJacketChanged;
-        OnJacketChanged(null, EventArgs.Empty);
-
-        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
-        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
@@ -105,6 +99,17 @@ public partial class ChartPropertiesView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        ChartSystem.JacketChanged += OnJacketChanged;
+        OnJacketChanged(null, EventArgs.Empty);
+
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         ChartSystem.JacketChanged -= OnJacketChanged;

@@ -13,7 +13,13 @@ public partial class CursorView : UserControl
     public CursorView()
     {
         InitializeComponent();
-        
+    }
+
+    private bool blockEvents = false;
+    
+#region System Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
         TimeSystem.TimestampChanged += OnTimestampChanged;
         OnTimestampChanged(null, EventArgs.Empty);
         
@@ -22,11 +28,10 @@ public partial class CursorView : UserControl
         
         CursorSystem.CursorChanged += OnCursorChanged;
         OnCursorChanged(null, EventArgs.Empty);
+        
+        base.OnLoaded(e);
     }
-
-    private bool blockEvents = false;
     
-#region System Event Handlers
     private void OnTimestampChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>

@@ -436,6 +436,20 @@ public static class EditorSystem
         foreach (ITimeable obj in SelectionSystem.SelectedObjects)
         {
             if (obj is not IPositionable positionable) continue;
+
+            if (obj is HoldNote holdNote)
+            {
+                foreach (HoldPointNote point in holdNote.Points)
+                {
+                    if (point.Position == CursorSystem.Position && point.Size == CursorSystem.Size) continue;
+                    
+                    operations.Add(new GenericEditOperation<int>(value => { point.Position = value; }, point.Position, CursorSystem.Position));
+                    operations.Add(new GenericEditOperation<int>(value => { point.Size = value; }, point.Size, CursorSystem.Size));
+                }
+                
+                continue;
+            }
+            
             if (positionable.Position == CursorSystem.Position && positionable.Size == CursorSystem.Size) continue;
             
             operations.Add(new GenericEditOperation<int>(value => { positionable.Position = value; }, positionable.Position, CursorSystem.Position));
@@ -969,7 +983,7 @@ public static class EditorSystem
             {
                 globalEvent.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                 
-                operations.Add(new ListRemoveOperation<Event>(() => ChartSystem.Chart.Events, globalEvent));
+                operations.Add(new ListAddOperation<Event>(() => ChartSystem.Chart.Events, globalEvent));
                 operations.Add(new SelectionAddOperation(globalEvent, SelectionSystem.LastSelectedObject));
             }
 
@@ -1006,7 +1020,7 @@ public static class EditorSystem
                             layerEvent.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                         }
                         
-                        operations.Add(new ListRemoveOperation<Event>(() => SelectionSystem.SelectedLayer.Events, layerEvent));
+                        operations.Add(new ListAddOperation<Event>(() => SelectionSystem.SelectedLayer.Events, layerEvent));
                         operations.Add(new SelectionAddOperation(layerEvent, SelectionSystem.LastSelectedObject));
                     }
 

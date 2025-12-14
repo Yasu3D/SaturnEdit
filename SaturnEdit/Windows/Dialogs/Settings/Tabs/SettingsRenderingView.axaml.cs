@@ -12,9 +12,6 @@ public partial class SettingsRenderingView : UserControl
     public SettingsRenderingView()
     {
         InitializeComponent();
-        
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
@@ -63,6 +60,14 @@ public partial class SettingsRenderingView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SettingsSystem.SettingsChanged -= OnSettingsChanged;

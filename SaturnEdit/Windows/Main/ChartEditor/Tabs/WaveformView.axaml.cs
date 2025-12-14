@@ -16,12 +16,6 @@ public partial class WaveformView : UserControl
     public WaveformView()
     {
         InitializeComponent();
-        
-        SizeChanged += Control_OnSizeChanged;
-        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
-        
-        AudioSystem.AudioLoaded += OnAudioLoaded;
-        OnAudioLoaded(null, EventArgs.Empty);
     }
     
     private readonly CanvasInfo canvasInfo = new();
@@ -31,7 +25,7 @@ public partial class WaveformView : UserControl
     private static SKColor judgeLineColor = new();
     private static SKColor measureLineColor = new();
     private static SKColor beatLineColor = new();
-
+    
 #region System Event Handlers
     private static void OnAudioLoaded(object? sender, EventArgs eventArgs)
     {
@@ -40,15 +34,29 @@ public partial class WaveformView : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        SizeChanged += Control_OnSizeChanged;
+        Control_OnSizeChanged(null, new(null));
+        
+        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
+        Control_OnActualThemeVariantChanged(null, EventArgs.Empty);
+        
+        AudioSystem.AudioLoaded += OnAudioLoaded;
+        OnAudioLoaded(null, EventArgs.Empty);
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SizeChanged -= Control_OnSizeChanged;
         ActualThemeVariantChanged -= Control_OnActualThemeVariantChanged;
         AudioSystem.AudioLoaded -= OnAudioLoaded;
-        
+
         base.OnUnloaded(e);
     }
-    
+
     private void Control_OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
         RenderCanvas.Width = Bounds.Width;

@@ -25,23 +25,12 @@ public partial class StageEditorView : UserControl
     public StageEditorView()
     {
         InitializeComponent();
-        
-        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
-        
-        AddHandler(DragDrop.DropEvent, Control_Drop);
-        
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-
-        UndoRedoSystem.StageBranch.OperationHistoryChanged += StageBranch_OnOperationHistoryChanged;
-        StageBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
     
-    private readonly IDisposable keyDownEventHandler;
-    private readonly IDisposable keyUpEventHandler;
+    private IDisposable? keyDownEventHandler = null;
+    private IDisposable? keyUpEventHandler = null;
     
 #region Methods
     private async void File_New()
@@ -398,13 +387,29 @@ public partial class StageEditorView : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        
+        AddHandler(DragDrop.DropEvent, Control_Drop);
+        
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+
+        UndoRedoSystem.StageBranch.OperationHistoryChanged += StageBranch_OnOperationHistoryChanged;
+        StageBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         RemoveHandler(DragDrop.DropEvent, Control_Drop);
         SettingsSystem.SettingsChanged -= OnSettingsChanged;
         UndoRedoSystem.StageBranch.OperationHistoryChanged -= StageBranch_OnOperationHistoryChanged;
-        keyDownEventHandler.Dispose();
-        keyUpEventHandler.Dispose();
+        keyDownEventHandler?.Dispose();
+        keyUpEventHandler?.Dispose();
         
         base.OnUnloaded(e);
     }

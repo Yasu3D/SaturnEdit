@@ -11,14 +11,19 @@ public partial class WindowChrome : UserControl
     public WindowChrome()
     {
         InitializeComponent();
-        
+    }
+
+#region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
         ButtonMinimize.Click += ButtonMinimize_OnClick;
         ButtonMaximize.Click += ButtonMaximize_OnClick;
         ButtonClose.Click += ButtonClose_OnClick;
         AttachedToVisualTree += Control_OnAttachedToVisualTree;
+        
+        base.OnLoaded(e);
     }
-
-#region UI Event Handlers
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         ButtonMinimize.Click -= ButtonMinimize_OnClick;

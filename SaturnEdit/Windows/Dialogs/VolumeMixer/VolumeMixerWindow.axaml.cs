@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
@@ -16,9 +15,6 @@ public partial class VolumeMixerWindow : Window
     public VolumeMixerWindow()
     {
         InitializeComponent();
-
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
@@ -85,6 +81,14 @@ public partial class VolumeMixerWindow : Window
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SettingsSystem.SettingsChanged -= OnSettingsChanged;

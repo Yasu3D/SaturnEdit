@@ -12,17 +12,14 @@ public partial class SelectVisibilityWindow : Window
     public SelectVisibilityWindow()
     {
         InitializeComponent();
-        
-        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
 
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
 
     public bool Visibility { get; set; } = true;
     
-    private readonly IDisposable keyDownEventHandler;
-    private readonly IDisposable keyUpEventHandler;
+    private IDisposable? keyDownEventHandler = null;
+    private IDisposable? keyUpEventHandler = null;
 
 #region Methods
     public void SetData(bool visibility)
@@ -33,10 +30,18 @@ public partial class SelectVisibilityWindow : Window
 #endregion Methods
     
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
-        keyDownEventHandler.Dispose();
-        keyUpEventHandler.Dispose();
+        keyDownEventHandler?.Dispose();
+        keyUpEventHandler?.Dispose();
         
         base.OnUnloaded(e);
     }

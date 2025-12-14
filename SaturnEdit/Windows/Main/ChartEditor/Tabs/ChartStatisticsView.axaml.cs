@@ -19,14 +19,6 @@ public partial class ChartStatisticsView : UserControl
     public ChartStatisticsView()
     {
         InitializeComponent();
-        
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-
-        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
-        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
-        
-        SizeChanged += Control_OnSizeChanged;
     }
 
 #region Methods
@@ -291,6 +283,19 @@ public partial class ChartStatisticsView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+        
+        SizeChanged += Control_OnSizeChanged;
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SettingsSystem.SettingsChanged -= OnSettingsChanged;

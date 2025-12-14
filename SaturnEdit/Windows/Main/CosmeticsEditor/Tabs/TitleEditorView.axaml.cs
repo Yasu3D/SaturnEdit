@@ -13,14 +13,19 @@ public partial class TitleEditorView : UserControl
     public TitleEditorView()
     {
         InitializeComponent();
-        
-        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
-        CosmeticBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
     
 #region System Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
+        CosmeticBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+        
+        base.OnLoaded(e);
+    }
+    
     private void CosmeticBranch_OnOperationHistoryChanged(object? sender, EventArgs e)
     {
         if (CosmeticSystem.CosmeticItem is not Title title) return;

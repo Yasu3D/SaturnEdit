@@ -165,6 +165,7 @@
     <system:String x:Key="ChartEditor.Proofreader.Problem.SpeedChangeTooClose">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.SpeedChangeTooEarly">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.SpeedChangeNearZero">-</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Problem.MultipleReverses">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.InvalidLaneToggles">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.NotesDuringReverse">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.ObjectsAfterChartEnd">-</system:String>

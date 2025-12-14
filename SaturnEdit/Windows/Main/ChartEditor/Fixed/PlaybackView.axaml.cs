@@ -22,34 +22,6 @@ public partial class PlaybackView : UserControl
     public PlaybackView()
     {
         InitializeComponent();
-        
-        SliderSeek.AddHandler(PointerReleasedEvent, SliderSeek_OnPointerReleased, RoutingStrategies.Tunnel);
-        
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-
-        TimeSystem.TimestampChanged += OnTimestampChanged;
-        OnTimestampChanged(null, EventArgs.Empty);
-
-        TimeSystem.PlaybackStateChanged += OnPlaybackStateChanged;
-        OnPlaybackStateChanged(null, EventArgs.Empty);
-
-        TimeSystem.PlaybackSpeedChanged += OnPlaybackSpeedChanged;
-        OnPlaybackSpeedChanged(null, EventArgs.Empty);
-
-        TimeSystem.LoopChanged += OnLoopChanged;
-        OnLoopChanged(null, EventArgs.Empty);
-
-        ChartSystem.EntryChanged += OnEntryChanged;
-        AudioSystem.AudioLoaded += OnAudioLoaded;
-        OnAudioLoaded(null, EventArgs.Empty);
-        
-        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
-        
-        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
-        
-        SizeChanged += Control_OnSizeChanged;
-        Control_OnSizeChanged(null, new(null));
     }
 
     private readonly CanvasInfo canvasInfo = new();
@@ -250,6 +222,40 @@ public partial class PlaybackView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        SliderSeek.AddHandler(PointerReleasedEvent, SliderSeek_OnPointerReleased, RoutingStrategies.Tunnel);
+        
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+
+        TimeSystem.TimestampChanged += OnTimestampChanged;
+        OnTimestampChanged(null, EventArgs.Empty);
+
+        TimeSystem.PlaybackStateChanged += OnPlaybackStateChanged;
+        OnPlaybackStateChanged(null, EventArgs.Empty);
+
+        TimeSystem.PlaybackSpeedChanged += OnPlaybackSpeedChanged;
+        OnPlaybackSpeedChanged(null, EventArgs.Empty);
+
+        TimeSystem.LoopChanged += OnLoopChanged;
+        OnLoopChanged(null, EventArgs.Empty);
+
+        ChartSystem.EntryChanged += OnEntryChanged;
+        AudioSystem.AudioLoaded += OnAudioLoaded;
+        OnAudioLoaded(null, EventArgs.Empty);
+        
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        
+        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
+        Control_OnActualThemeVariantChanged(null, EventArgs.Empty);
+        
+        SizeChanged += Control_OnSizeChanged;
+        Control_OnSizeChanged(null, new(null));
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SettingsSystem.SettingsChanged -= OnSettingsChanged;

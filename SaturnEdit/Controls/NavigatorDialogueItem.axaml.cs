@@ -18,8 +18,6 @@ public partial class NavigatorDialogueItem : UserControl
     public NavigatorDialogueItem()
     {
         InitializeComponent();
-
-        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
     }
     
     public NavigatorDialogue? NavigatorDialogue { get; private set; } = null;
@@ -58,6 +56,12 @@ public partial class NavigatorDialogueItem : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         UndoRedoSystem.CosmeticBranch.OperationHistoryChanged -= CosmeticBranch_OnOperationHistoryChanged;

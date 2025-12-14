@@ -15,10 +15,6 @@ public partial class DockArea : UserControl
     {
         Instance = this;
         InitializeComponent();
-
-        WindowDragStarted += OnWindowDragStarted;
-        WindowDragEnded += OnWindowDragEnded;
-        WindowDragged += OnWindowDragged;
     }
 
     public static DockArea? Instance { get; private set; } = null;
@@ -370,6 +366,15 @@ public partial class DockArea : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        WindowDragStarted += OnWindowDragStarted;
+        WindowDragEnded += OnWindowDragEnded;
+        WindowDragged += OnWindowDragged;
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         WindowDragStarted -= OnWindowDragStarted;

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using TextMateSharp.Grammars;
@@ -20,20 +19,9 @@ public partial class ChartViewTxt : UserControl
 
         writeArgs = new();
         readArgs = new();
-
-        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
         
         TextEditorChart.Options.ConvertTabsToSpaces = true;
         TextEditorChart.Options.EnableTextDragDrop = true;
-        
-        Task.Delay(5); // Hacky
-        
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-
-        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
-        ChartSystem.EntryChanged += OnEntryChanged;
-        UpdateTextFromChart();
     }
     
     private TextMate.Installation? installation;
@@ -109,8 +97,24 @@ public partial class ChartViewTxt : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        ActualThemeVariantChanged += Control_OnActualThemeVariantChanged;
+        Control_OnActualThemeVariantChanged(null, EventArgs.Empty);
+        
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        ChartSystem.EntryChanged += OnEntryChanged;
+        UpdateTextFromChart();
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
+        ActualThemeVariantChanged -= Control_OnActualThemeVariantChanged;
         SettingsSystem.SettingsChanged -= OnSettingsChanged;
         UndoRedoSystem.ChartBranch.OperationHistoryChanged -= ChartBranch_OnOperationHistoryChanged;
         ChartSystem.EntryChanged -= OnEntryChanged;

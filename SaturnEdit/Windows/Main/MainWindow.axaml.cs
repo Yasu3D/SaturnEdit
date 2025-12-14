@@ -31,34 +31,12 @@ public partial class MainWindow : Window
     {
         Instance = this;
         InitializeComponent();
-
-        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
-        
-        ActualThemeVariantChanged += OnActualThemeVariantChanged;
-        
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-
-        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
-        UndoRedoSystem.StageBranch.OperationHistoryChanged += StageBranch_OnOperationHistoryChanged;
-        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
-        UpdateUndoRedoButtons();
-        
-        Closed += AudioSystem.OnClosed;
-        Closed += AutosaveSystem.OnClosed;
-        Closing += ChartEditor.OnClosing;
-        Closing += Window_OnClosing;
-        
-        UpdateTabs();
-        UpdateSplash();
-        UpdateUpdateButton();
     }
 
     public static MainWindow? Instance { get; private set; }
     
-    private readonly IDisposable keyDownEventHandler;
-    private readonly IDisposable keyUpEventHandler;
+    private IDisposable? keyDownEventHandler = null;
+    private IDisposable? keyUpEventHandler = null;
 
     private bool CanUndo
     {
@@ -449,6 +427,33 @@ public partial class MainWindow : Window
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        
+        ActualThemeVariantChanged += OnActualThemeVariantChanged;
+        
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        UndoRedoSystem.StageBranch.OperationHistoryChanged += StageBranch_OnOperationHistoryChanged;
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
+        UpdateUndoRedoButtons();
+        
+        Closed += AudioSystem.OnClosed;
+        Closed += AutosaveSystem.OnClosed;
+        Closing += ChartEditor.OnClosing;
+        Closing += Window_OnClosing;
+        
+        UpdateTabs();
+        UpdateSplash();
+        UpdateUpdateButton();
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         ActualThemeVariantChanged -= OnActualThemeVariantChanged;
@@ -460,8 +465,8 @@ public partial class MainWindow : Window
         Closed -= AutosaveSystem.OnClosed;
         Closing -= ChartEditor.OnClosing;
         Closing -= Window_OnClosing;
-        keyDownEventHandler.Dispose();
-        keyUpEventHandler.Dispose();
+        keyDownEventHandler?.Dispose();
+        keyUpEventHandler?.Dispose();
         
         base.OnUnloaded(e);
     }

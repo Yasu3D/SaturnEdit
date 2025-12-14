@@ -17,11 +17,6 @@ public partial class SettingsShortcutsView : UserControl
     public SettingsShortcutsView()
     {
         InitializeComponent();
-
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-        
-        ListBoxShortcuts.AddHandler(KeyDownEvent, ListBoxShortcuts_OnKeyDown, RoutingStrategies.Tunnel);
     }
 
     public static bool DefiningShortcut = false; 
@@ -156,6 +151,16 @@ public partial class SettingsShortcutsView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+        
+        ListBoxShortcuts.AddHandler(KeyDownEvent, ListBoxShortcuts_OnKeyDown, RoutingStrategies.Tunnel);
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SettingsSystem.SettingsChanged -= OnSettingsChanged;

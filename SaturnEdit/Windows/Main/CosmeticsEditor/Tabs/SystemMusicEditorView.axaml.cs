@@ -17,9 +17,6 @@ public partial class SystemMusicEditorView : UserControl
     public SystemMusicEditorView()
     {
         InitializeComponent();
-        
-        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
-        CosmeticBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
 
     private bool blockEvents = false;
@@ -55,6 +52,14 @@ public partial class SystemMusicEditorView : UserControl
     
     
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
+        CosmeticBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         UndoRedoSystem.CosmeticBranch.OperationHistoryChanged -= CosmeticBranch_OnOperationHistoryChanged;

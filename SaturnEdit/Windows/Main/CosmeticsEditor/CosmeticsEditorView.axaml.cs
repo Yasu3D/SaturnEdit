@@ -23,17 +23,6 @@ public partial class CosmeticsEditorView : UserControl
     public CosmeticsEditorView()
     {
         InitializeComponent();
-        
-        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
-        
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-
-        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
-        CosmeticBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
-        
-        NavigatorExpressionRefresh += OnNavigatorExpressionRefresh;
     }
 
     private static event EventHandler? NavigatorExpressionRefresh;
@@ -46,8 +35,8 @@ public partial class CosmeticsEditorView : UserControl
     private static NavigatorBlinkState navigatorBlinkState = NavigatorBlinkState.Open;
     private static float navigatorTime = 0;
     
-    private readonly IDisposable keyDownEventHandler;
-    private readonly IDisposable keyUpEventHandler;
+    private IDisposable? keyDownEventHandler = null;
+    private IDisposable? keyUpEventHandler = null;
     
 #region Methods
     private async void File_New(CosmeticType cosmeticType)
@@ -606,13 +595,29 @@ public partial class CosmeticsEditorView : UserControl
 #endregion System Event Handlers
     
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+
+        UndoRedoSystem.CosmeticBranch.OperationHistoryChanged += CosmeticBranch_OnOperationHistoryChanged;
+        CosmeticBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+        
+        NavigatorExpressionRefresh += OnNavigatorExpressionRefresh;
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SettingsSystem.SettingsChanged -= OnSettingsChanged;
         UndoRedoSystem.CosmeticBranch.OperationHistoryChanged -= CosmeticBranch_OnOperationHistoryChanged;
         NavigatorExpressionRefresh -= OnNavigatorExpressionRefresh;
-        keyDownEventHandler.Dispose();
-        keyUpEventHandler.Dispose();
+        keyDownEventHandler?.Dispose();
+        keyUpEventHandler?.Dispose();
         
         base.OnUnloaded(e);
     }

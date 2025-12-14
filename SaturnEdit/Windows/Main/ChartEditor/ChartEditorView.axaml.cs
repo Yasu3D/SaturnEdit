@@ -17,6 +17,8 @@ using SaturnData.Notation.Notes;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Docking;
 using SaturnEdit.Systems;
+using SaturnEdit.UndoRedo;
+using SaturnEdit.UndoRedo.GenericOperations;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ChooseMirrorAxis;
 using SaturnEdit.Windows.Dialogs.ExportArgs;
@@ -597,54 +599,114 @@ public partial class ChartEditorView : UserControl
 
     public async void ChartView_AddTempoChangeEvent()
     {
-        TempoChangeEvent? previousTempoEvent = ChartSystem.Chart.LastTempoChange(TimeSystem.Timestamp);
+        TempoChangeEvent? previousTempoChangeEvent = ChartSystem.Chart.Events.LastOrDefault(x => x is TempoChangeEvent && x.Timestamp.FullTick <= TimeSystem.Timestamp.FullTick) as TempoChangeEvent;
         
-        float? tempo = await ShowTempoDialog(previousTempoEvent?.Tempo ?? 120);
+        float? tempo = await ShowTempoDialog(previousTempoChangeEvent?.Tempo ?? 120);
         if (tempo == null) return;
-        
-        EditorSystem.Insert_AddTempoChange(tempo.Value);
+
+        if (previousTempoChangeEvent?.Timestamp.FullTick == TimeSystem.Timestamp.FullTick)
+        {
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { previousTempoChangeEvent.Tempo = value; }, previousTempoChangeEvent.Tempo, tempo.Value));
+        }
+        else
+        {
+            EditorSystem.Insert_AddTempoChange(tempo.Value);
+        }
     }
     
     public async void ChartView_AddMetreChangeEvent()
     {
-        MetreChangeEvent? previousMetreEvent = ChartSystem.Chart.LastMetreChange(TimeSystem.Timestamp);
+        MetreChangeEvent? previousMetreChangeEvent = ChartSystem.Chart.Events.LastOrDefault(x => x is MetreChangeEvent && x.Timestamp.FullTick <= TimeSystem.Timestamp.FullTick) as MetreChangeEvent;
 
-        (int?, int?) metre = await ShowMetreDialog(previousMetreEvent?.Upper ?? 4, previousMetreEvent?.Lower ?? 4);
+        (int?, int?) metre = await ShowMetreDialog(previousMetreChangeEvent?.Upper ?? 4, previousMetreChangeEvent?.Lower ?? 4);
         if (metre.Item1 == null || metre.Item2 == null) return;
         
-        EditorSystem.Insert_AddMetreChange(metre.Item1.Value, metre.Item2.Value);
+        if (previousMetreChangeEvent?.Timestamp.FullTick == TimeSystem.Timestamp.FullTick)
+        {
+            GenericEditOperation<int> op0 = new(value => { previousMetreChangeEvent.Upper = value; }, previousMetreChangeEvent.Upper, metre.Item1.Value);
+            GenericEditOperation<int> op1 = new(value => { previousMetreChangeEvent.Lower = value; }, previousMetreChangeEvent.Lower, metre.Item2.Value);
+
+            UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
+        }
+        else
+        {
+            EditorSystem.Insert_AddMetreChange(metre.Item1.Value, metre.Item2.Value);
+        }
     }
     
     public async void ChartView_AddTutorialMarkerEvent()
     {
-        string? key = await ShowTutorialMarkerDialog();
+        TutorialMarkerEvent? existingTutorialMarkerEvent = ChartSystem.Chart.Events.LastOrDefault(x => x is TutorialMarkerEvent && x.Timestamp.FullTick <= TimeSystem.Timestamp.FullTick) as TutorialMarkerEvent;
+        
+        string? key = await ShowTutorialMarkerDialog(existingTutorialMarkerEvent?.Key ?? "");
         if (key == null) return;
         
-        EditorSystem.Insert_AddTutorialMarker(key);
+        if (existingTutorialMarkerEvent?.Timestamp.FullTick == TimeSystem.Timestamp.FullTick)
+        {
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { existingTutorialMarkerEvent.Key = value; }, existingTutorialMarkerEvent.Key, key));
+        }
+        else
+        {
+            EditorSystem.Insert_AddTutorialMarker(key);
+        }
     }
     
     public async void ChartView_AddSpeedChangeEvent()
     {
-        float? speed = await ShowSpeedDialog();
+        SpeedChangeEvent? existingSpeedChangeEvent = SelectionSystem.SelectedLayer == null 
+            ? null 
+            : SelectionSystem.SelectedLayer.Events.LastOrDefault(x => x is SpeedChangeEvent && x.Timestamp.FullTick == TimeSystem.Timestamp.FullTick) as SpeedChangeEvent;
+        
+        float? speed = await ShowSpeedDialog(existingSpeedChangeEvent?.Speed ?? 1);
         if (speed == null) return;
         
-        EditorSystem.Insert_AddSpeedChange(speed.Value);
+        if (existingSpeedChangeEvent?.Timestamp.FullTick == TimeSystem.Timestamp.FullTick)
+        {
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { existingSpeedChangeEvent.Speed = value; }, existingSpeedChangeEvent.Speed, speed.Value));
+        }
+        else
+        {
+            EditorSystem.Insert_AddSpeedChange(speed.Value);
+        }
     }
     
     public async void ChartView_AddVisibilityChangeEvent()
     {
-        bool? visibility = await ShowVisibilityDialog();
+        VisibilityChangeEvent? existingVisibilityChangeEvent = SelectionSystem.SelectedLayer == null 
+            ? null 
+            : SelectionSystem.SelectedLayer.Events.LastOrDefault(x => x is VisibilityChangeEvent && x.Timestamp.FullTick == TimeSystem.Timestamp.FullTick) as VisibilityChangeEvent;
+        
+        bool? visibility = await ShowVisibilityDialog(existingVisibilityChangeEvent?.Visibility ?? true);
         if (visibility == null) return;
         
-        EditorSystem.Insert_AddVisibilityChange(visibility.Value);
+        if (existingVisibilityChangeEvent?.Timestamp.FullTick == TimeSystem.Timestamp.FullTick)
+        {
+            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<bool>(value => { existingVisibilityChangeEvent.Visibility = value; }, existingVisibilityChangeEvent.Visibility, visibility.Value));
+        }
+        else
+        {
+            EditorSystem.Insert_AddVisibilityChange(visibility.Value);
+        }
     }
     
     public async void ChartView_AddBookmark()
     {
-        (string?, uint?) bookmark = await ShowBookmarkDialog();
-        if (bookmark.Item1 == null || bookmark.Item2 == null) return;
+        Bookmark? existingBookmark = ChartSystem.Chart.Bookmarks.LastOrDefault(x => x.Timestamp.FullTick == TimeSystem.Timestamp.FullTick);
+            
+        (string?, uint?) bookmarkData = await ShowBookmarkDialog(existingBookmark?.Message ?? "", existingBookmark?.Color ?? 0xFFDDDDDD);
+        if (bookmarkData.Item1 == null || bookmarkData.Item2 == null) return;
         
-        EditorSystem.Insert_AddBookmark(bookmark.Item1, bookmark.Item2.Value);
+        if (existingBookmark?.Timestamp.FullTick == TimeSystem.Timestamp.FullTick)
+        {
+            GenericEditOperation<string> op0 = new(value => { existingBookmark.Message = value; }, existingBookmark.Message, bookmarkData.Item1);
+            GenericEditOperation<uint> op1 = new(value => { existingBookmark.Color = value; }, existingBookmark.Color, bookmarkData.Item2.Value);
+            
+            UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
+        }
+        else
+        {
+            EditorSystem.Insert_AddBookmark(bookmarkData.Item1, bookmarkData.Item2.Value);
+        }
     }
     
     public async Task<float?> ShowTempoDialog(float startTempo = 120)

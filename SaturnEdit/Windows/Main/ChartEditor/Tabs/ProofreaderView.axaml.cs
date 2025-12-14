@@ -23,17 +23,6 @@ public partial class ProofreaderView : UserControl
     public ProofreaderView()
     {
         InitializeComponent();
-
-        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
-        
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-
-        ChartSystem.ChartLoaded += OnChartLoaded;
-        
-        ProofreadChanged += OnProofreadChanged;
-        OnProofreadChanged(null, EventArgs.Empty);
     }
 
     private static event EventHandler? ProofreadChanged;
@@ -43,8 +32,8 @@ public partial class ProofreaderView : UserControl
     
     private bool blockEvents = false;
 
-    private readonly IDisposable keyDownEventHandler;
-    private readonly IDisposable keyUpEventHandler;
+    private IDisposable? keyDownEventHandler = null;
+    private IDisposable? keyUpEventHandler = null;
 
 #region Methods
     private void RunProofreader()
@@ -610,13 +599,29 @@ public partial class ProofreaderView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+
+        ChartSystem.ChartLoaded += OnChartLoaded;
+        
+        ProofreadChanged += OnProofreadChanged;
+        OnProofreadChanged(null, EventArgs.Empty);
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SettingsSystem.SettingsChanged -= OnSettingsChanged;
         ChartSystem.ChartLoaded -= OnChartLoaded;
         ProofreadChanged -= OnProofreadChanged;
-        keyDownEventHandler.Dispose();
-        keyUpEventHandler.Dispose();
+        keyDownEventHandler?.Dispose();
+        keyUpEventHandler?.Dispose();
         
         base.OnUnloaded(e);
     }

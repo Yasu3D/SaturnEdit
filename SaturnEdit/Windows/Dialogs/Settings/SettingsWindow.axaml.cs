@@ -21,7 +21,6 @@ public partial class SettingsWindow : Window
         shortcutSettingsBackup = Toml.FromModel(SettingsSystem.ShortcutSettings);
         
         SettingsTabContainer.Content = settingsGeneralView;
-        Closing += SettingsWindow_OnClosing;
     }
 
     private readonly string renderSettingsBackup;
@@ -36,6 +35,13 @@ public partial class SettingsWindow : Window
     private bool saveSettings = false;
     
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        Closing += SettingsWindow_OnClosing;
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         Closing -= SettingsWindow_OnClosing;

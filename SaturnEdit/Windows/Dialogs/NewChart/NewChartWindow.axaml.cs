@@ -14,9 +14,6 @@ public partial class NewChartWindow : Window
     {
         InitializeComponent();
         InitializeDialog();
-        
-        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
-        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
     }
 
     public ModalDialogResult Result { get; private set; } = ModalDialogResult.Cancel;
@@ -26,8 +23,8 @@ public partial class NewChartWindow : Window
 
     private bool blockEvents = false;
     
-    private readonly IDisposable keyDownEventHandler;
-    private readonly IDisposable keyUpEventHandler;
+    private IDisposable? keyDownEventHandler;
+    private IDisposable? keyUpEventHandler;
 
 #region Methods
     private void InitializeDialog()
@@ -43,10 +40,18 @@ public partial class NewChartWindow : Window
 #endregion Methods
     
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        keyDownEventHandler = KeyDownEvent.AddClassHandler<TopLevel>(Control_OnKeyDown, RoutingStrategies.Tunnel);
+        keyUpEventHandler = KeyUpEvent.AddClassHandler<TopLevel>(Control_OnKeyUp, RoutingStrategies.Tunnel);
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
-        keyDownEventHandler.Dispose();
-        keyUpEventHandler.Dispose();
+        keyDownEventHandler?.Dispose();
+        keyUpEventHandler?.Dispose();
         
         base.OnUnloaded(e);
     }

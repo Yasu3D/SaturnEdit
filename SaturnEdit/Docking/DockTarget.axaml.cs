@@ -21,13 +21,6 @@ public partial class DockTarget : UserControl
     public DockTarget()
     {
         InitializeComponent();
-        Update();
-        
-        if (DockArea.Instance != null)
-        {
-            DockArea.Instance.WindowDragStarted += OnWindowDragStarted;
-            DockArea.Instance.WindowDragged += OnWindowDragged;
-        }
     }
 
     public static readonly StyledProperty<bool> UseOuterTargetsProperty = AvaloniaProperty.Register<DockTarget, bool>(nameof(UseOuterTargets), defaultValue: false);
@@ -252,6 +245,19 @@ public partial class DockTarget : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        Update();
+        
+        if (DockArea.Instance != null)
+        {
+            DockArea.Instance.WindowDragStarted += OnWindowDragStarted;
+            DockArea.Instance.WindowDragged += OnWindowDragged;
+        }
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         if (DockArea.Instance != null)

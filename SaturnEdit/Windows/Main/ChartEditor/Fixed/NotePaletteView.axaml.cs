@@ -15,14 +15,6 @@ public partial class NotePaletteView : UserControl
     public NotePaletteView()
     {
         InitializeComponent();
-        
-        SettingsSystem.SettingsChanged += OnSettingsChanged;
-        OnSettingsChanged(null, EventArgs.Empty);
-
-        CursorSystem.CursorChanged += OnCursorChanged;
-        OnCursorChanged(null, EventArgs.Empty);
-        
-        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
     }
 
     private bool blockEvents;
@@ -190,6 +182,19 @@ public partial class NotePaletteView : UserControl
 #endregion System Event Handlers
 
 #region UI Event Handlers
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        SettingsSystem.SettingsChanged += OnSettingsChanged;
+        OnSettingsChanged(null, EventArgs.Empty);
+
+        CursorSystem.CursorChanged += OnCursorChanged;
+        OnCursorChanged(null, EventArgs.Empty);
+        
+        UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
+        
+        base.OnLoaded(e);
+    }
+    
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SettingsSystem.SettingsChanged -= OnSettingsChanged;
