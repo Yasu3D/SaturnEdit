@@ -344,6 +344,31 @@ public partial class ProofreaderView : UserControl
                     TypeKey = typeKey(@event),
                 });
             }
+            
+            // Multiple Reverses
+            bool hasReverse = false;
+            foreach (Layer layer in ChartSystem.Chart.Layers)
+            foreach (Event @event in layer.Events)
+            {
+                if (@event is not ReverseEffectEvent) continue;
+
+                if (hasReverse)
+                {
+                    Problems.Add(new()
+                    {
+                        Measure = @event.Timestamp.Measure,
+                        Tick = @event.Timestamp.Tick,
+                        Position = -1,
+                        Size = -1,
+                        ProblemKey = "ChartEditor.Proofreader.Problem.MultipleReverses",
+                        TypeKey = typeKey(@event),
+                    });
+                        
+                    continue;
+                }
+
+                hasReverse = true;
+            }
         }
 
         if (criteria.InvalidLaneToggles)

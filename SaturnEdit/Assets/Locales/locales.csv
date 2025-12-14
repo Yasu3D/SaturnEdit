@@ -162,6 +162,7 @@ ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect,MER standard does no
 ChartEditor.Proofreader.Problem.SpeedChangeTooClose,MER standard does not support Speed Changes less than 1/16th apart.,-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Problem.SpeedChangeTooEarly,MER standard does not support Speed Changes before 0'240.,-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Problem.SpeedChangeNearZero,MER standard does not support Speed Changes with near-zero values (except zero).,-,-,MER must stay as 'MER'.
+ChartEditor.Proofreader.Problem.MultipleReverses,MER standard does not support multiple Reverse Effect Events.,-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Problem.InvalidLaneToggles,MER standard does not support Lane Toggles with overlapping sweeps.,-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Problem.NotesDuringReverse,Note during a reverse effect.,-,-,-
 ChartEditor.Proofreader.Problem.ObjectsAfterChartEnd,Object after chart end.,-,-,-
