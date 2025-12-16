@@ -273,9 +273,9 @@
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.Mode">Sets the object interaction mode.</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.ObjectMode">Manipulate everything as single objects.</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.EditMode">Manipulate sub-objects of Hold Notes and Stop/Reverse Effects</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.ToolTip.ShowSpeedChanges">Display the effects of Speed Change Events should be previewed or not.</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.ToolTip.ShowVisibilityChanges">Display the effects of Visibility Change Events should be previewed or not.</system:String>
-    <system:String x:Key="ChartEditor.ChartView3D.ToolTip.ShowLaneToggleAnimations">Display the effects of Lane Toggle Notes should be previewed or not.</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.ToolTip.ShowSpeedChanges">If the effects of Speed Change Events should be previewed or not.</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.ToolTip.ShowVisibilityChanges">If the effects of Visibility Change Events should be previewed or not.</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.ToolTip.ShowLaneToggleAnimations">If the effects of Lane Toggle Notes should be previewed or not.</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.VisualizeLaneSweeps">Display a semi-transparent area behind Lane Toggle Notes to visualize their sweep animation.</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.ShowJudgeAreas">Display the timing judge areas.</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.ToolTip.ShowMarvelousArea">Display the "MARVELOUS" timing judge area.</system:String>

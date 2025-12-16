@@ -1175,9 +1175,9 @@ public static class EditorSystem
     public static void Transform_MoveSelectionBeatForward()
     {
         if (SelectionSystem.SelectedObjects.Count == 0) return;
-
-        List<IOperation> operations = [];
-
+        
+        List<IOperation> operations = []; 
+        
         foreach (ITimeable obj in SelectionSystem.SelectedObjects)
         {
             if (obj is HoldNote holdNote)
@@ -1211,12 +1211,15 @@ public static class EditorSystem
 
         void addOperation(ITimeable obj)
         {
-            int newFullBeat = Timestamp.BeatFromTick(obj.Timestamp.FullTick, TimeSystem.Division) + 1;
-            int newFullTick = Timestamp.TickFromBeat(newFullBeat, TimeSystem.Division);
+            int currentBeat = Timestamp.BeatFromTick(obj.Timestamp.FullTick, TimeSystem.Division);
+            int newBeat = currentBeat + 1;
 
-            newFullTick = Math.Max(0, newFullTick);
+            int currentBeatFullTick = Timestamp.TickFromBeat(currentBeat, TimeSystem.Division);
+            int newBeatFullTick = Timestamp.TickFromBeat(newBeat, TimeSystem.Division);
+
+            int roundingDelta = obj.Timestamp.FullTick - currentBeatFullTick;
             
-            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, obj.Timestamp.FullTick, newFullTick));
+            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, obj.Timestamp.FullTick, newBeatFullTick + roundingDelta));
         }
     }
 
@@ -1225,7 +1228,7 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
-
+        
         foreach (ITimeable obj in SelectionSystem.SelectedObjects)
         {
             if (obj is HoldNote holdNote)
@@ -1259,12 +1262,15 @@ public static class EditorSystem
 
         void addOperation(ITimeable obj)
         {
-            int newFullBeat = Timestamp.BeatFromTick(obj.Timestamp.FullTick, TimeSystem.Division) - 1;
-            int newFullTick = Timestamp.TickFromBeat(newFullBeat, TimeSystem.Division);
+            int currentBeat = Timestamp.BeatFromTick(obj.Timestamp.FullTick, TimeSystem.Division);
+            int newBeat = currentBeat - 1;
 
-            newFullTick = Math.Max(0, newFullTick);
+            int currentBeatFullTick = Timestamp.TickFromBeat(currentBeat, TimeSystem.Division);
+            int newBeatFullTick = Timestamp.TickFromBeat(newBeat, TimeSystem.Division);
+
+            int roundingDelta = obj.Timestamp.FullTick - currentBeatFullTick;
             
-            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, obj.Timestamp.FullTick, newFullTick));
+            operations.Add(new GenericEditOperation<int>(value => { obj.Timestamp.FullTick = value; }, obj.Timestamp.FullTick, newBeatFullTick + roundingDelta));
         }
     }
 
