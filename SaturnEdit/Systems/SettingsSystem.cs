@@ -323,6 +323,19 @@ public class EditorSettings
         }
     }
     private AutoSaveFrequencyOption autoSaveFrequency = AutoSaveFrequencyOption.Minutes5;
+
+    public int ClickDragThreshold
+    {
+        get => clickDragThreshold;
+        set
+        {
+            if (clickDragThreshold == value) return;
+            
+            clickDragThreshold = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private int clickDragThreshold = 5;
     
     public List<string> RecentChartFiles { get; set; } = [];
     
@@ -1044,4 +1057,3 @@ public class Shortcut
         return new(Key, modifiers);
     }
 }
-    

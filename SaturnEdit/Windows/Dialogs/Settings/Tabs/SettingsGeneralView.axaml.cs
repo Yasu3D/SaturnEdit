@@ -27,6 +27,7 @@ public partial class SettingsGeneralView : UserControl
             CheckBoxContinueLastSession.IsChecked = SettingsSystem.EditorSettings.ContinueLastSession;
             CheckBoxCheckForUpdates.IsChecked = SettingsSystem.EditorSettings.CheckForUpdates;
             ComboBoxAutosaveFrequency.SelectedIndex = (int)SettingsSystem.EditorSettings.AutoSaveFrequency;
+            NumericUpDownClickDragThreshold.Value = SettingsSystem.EditorSettings.ClickDragThreshold;
             
             if (SettingsSystem.EditorSettings.Theme == EditorSettings.EditorThemeOption.Light)
             {
@@ -111,6 +112,14 @@ public partial class SettingsGeneralView : UserControl
             "RadioButtonThemeDark" => EditorSettings.EditorThemeOption.Dark,
             _ => SettingsSystem.EditorSettings.Theme,
         };
+    }
+    
+    private void NumericUpDownClickDragThreshold_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (NumericUpDownClickDragThreshold == null) return;
+
+        SettingsSystem.EditorSettings.ClickDragThreshold = (int?)NumericUpDownClickDragThreshold.Value ?? 5;
     }
 #endregion UI Event Handlers
 }

@@ -597,6 +597,8 @@ Settings.General.AutosaveFrequency.Minutes5,Every 5 Minutes,-,-,-
 Settings.General.AutosaveFrequency.Minutes1,Every Minute,-,-,-
 Settings.General.AutosaveFrequency.Always,Every Operation,-,-,-
 Settings.General.Themes,Themes,-,-,UI Themes (Light Mode/Dark Mode)
+Settings.General.Other,Other,-,-,-
+Settings.General.ClickDragThreshold,Click 'n' Drag Threshold (Pixels),-,-,-
 Settings.Rendering,Rendering,-,-,-
 Settings.Rendering.Performance,Performance,-,-,-
 Settings.Rendering.LowPerformanceMode,Low Performance Mode,-,-,-

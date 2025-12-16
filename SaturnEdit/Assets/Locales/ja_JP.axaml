@@ -599,6 +599,8 @@
     <system:String x:Key="Settings.General.AutosaveFrequency.Minutes1">-</system:String>
     <system:String x:Key="Settings.General.AutosaveFrequency.Always">-</system:String>
     <system:String x:Key="Settings.General.Themes">-</system:String>
+    <system:String x:Key="Settings.General.Other">-</system:String>
+    <system:String x:Key="Settings.General.ClickDragThreshold">-</system:String>
     <system:String x:Key="Settings.Rendering">-</system:String>
     <system:String x:Key="Settings.Rendering.Performance">-</system:String>
     <system:String x:Key="Settings.Rendering.LowPerformanceMode">-</system:String>

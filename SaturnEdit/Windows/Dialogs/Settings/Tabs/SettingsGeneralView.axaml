@@ -30,6 +30,45 @@
                 <ComboBoxItem Content="日本語 (日本)" />
                 <ComboBoxItem Content="简体中文 (中国)" />
             </ComboBox>
+            
+            <Grid ColumnDefinitions="Auto,*"
+                  Margin="0,40,0,20">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.General.Themes}"
+                           Margin="0,0,20,0" />
+                <Rectangle Grid.Column="1"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Center"
+                           Height="1"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+            </Grid>
+
+            <StackPanel Orientation="Horizontal"
+                        Spacing="30">
+                <RadioButton Name="RadioButtonThemeLight"
+                             Classes="Themed Outlined"
+                             GroupName="Themes"
+                             Width="112"
+                             Height="84"
+                             CornerRadius="3"
+                             IsCheckedChanged="RadioButtonTheme_OnIsCheckedChanged">
+                    <ThemeVariantScope RequestedThemeVariant="Light">
+                        <controls:ThemePreview />
+                    </ThemeVariantScope>
+                </RadioButton>
+
+                <RadioButton Name="RadioButtonThemeDark" 
+                             Classes="Themed Outlined"
+                             GroupName="Themes"
+                             Width="112"
+                             Height="84"
+                             CornerRadius="3"
+                             IsCheckedChanged="RadioButtonTheme_OnIsCheckedChanged">
+                    <ThemeVariantScope RequestedThemeVariant="Dark">
+                        <controls:ThemePreview/>
+                    </ThemeVariantScope>
+                </RadioButton>
+            </StackPanel>
 
             <Grid ColumnDefinitions="Auto,*"
                   Margin="0,40,0,20">
@@ -81,7 +120,7 @@
                            Fill="{DynamicResource SeparatorPrimary}" />
             </Grid>
 
-            <Grid ColumnDefinitions="150,170"
+            <Grid ColumnDefinitions="190,170"
                   Margin="0">
                 <TextBlock Grid.Column="0"
                            Text="{DynamicResource Settings.General.AutosaveFrequency}"
@@ -101,7 +140,7 @@
             <Grid ColumnDefinitions="Auto,*"
                   Margin="0,40,0,20">
                 <TextBlock Grid.Column="0"
-                           Text="{DynamicResource Settings.General.Themes}"
+                           Text="{DynamicResource Settings.General.Other}"
                            Margin="0,0,20,0" />
                 <Rectangle Grid.Column="1"
                            HorizontalAlignment="Stretch"
@@ -109,33 +148,20 @@
                            Height="1"
                            Fill="{DynamicResource SeparatorPrimary}" />
             </Grid>
-
-            <StackPanel Orientation="Horizontal"
-                        Spacing="30">
-                <RadioButton Name="RadioButtonThemeLight"
-                             Classes="Themed Outlined"
-                             GroupName="Themes"
-                             Width="112"
-                             Height="84"
-                             CornerRadius="3"
-                             IsCheckedChanged="RadioButtonTheme_OnIsCheckedChanged">
-                    <ThemeVariantScope RequestedThemeVariant="Light">
-                        <controls:ThemePreview />
-                    </ThemeVariantScope>
-                </RadioButton>
-
-                <RadioButton Name="RadioButtonThemeDark" 
-                             Classes="Themed Outlined"
-                             GroupName="Themes"
-                             Width="112"
-                             Height="84"
-                             CornerRadius="3"
-                             IsCheckedChanged="RadioButtonTheme_OnIsCheckedChanged">
-                    <ThemeVariantScope RequestedThemeVariant="Dark">
-                        <controls:ThemePreview/>
-                    </ThemeVariantScope>
-                </RadioButton>
-            </StackPanel>
+            
+            <Grid ColumnDefinitions="190,170"
+                  Margin="0">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.General.ClickDragThreshold}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,20,0" />
+                <NumericUpDown Grid.Column="1"
+                          Name="NumericUpDownClickDragThreshold"
+                          ValueChanged="NumericUpDownClickDragThreshold_OnValueChanged"
+                          Minimum="0"
+                          Maximum="50"
+                          Increment="1"/>
+            </Grid>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -1,5 +1,6 @@
 using System;
 using Avalonia.Input;
+using SaturnEdit.Systems;
 
 namespace SaturnEdit.Utilities;
 
@@ -14,7 +15,7 @@ public class ClickDragHelper
         {
             endPoint = value;
 
-            PassedMinDistance = PassedMinDistance || Distance > 5;
+            PassedMinDistance = PassedMinDistance || Distance > SettingsSystem.EditorSettings.ClickDragThreshold;
         }
     }
 
