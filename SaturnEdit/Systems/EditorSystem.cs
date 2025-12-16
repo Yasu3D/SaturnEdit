@@ -88,6 +88,7 @@ public static class EditorSystem
         if (newMode is EditorMode.ObjectMode)
         {
             // Delete edited Hold Note if it has less than 2 points.
+            bool holdDeleted = false;
             if (Mode == EditorMode.EditMode && ActiveObjectGroup is HoldNote holdNote && holdNote.Points.Count < 2)
             {
                 Layer? layer = ChartSystem.Chart.ParentLayer(holdNote);
@@ -95,6 +96,7 @@ public static class EditorSystem
                 if (layer != null)
                 {
                     operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, holdNote));
+                    holdDeleted = true;
                 }
             }
             
@@ -105,7 +107,7 @@ public static class EditorSystem
             }
             
             // Re-select the previously active object group.
-            if (ActiveObjectGroup != null)
+            if (ActiveObjectGroup != null && !holdDeleted)
             {
                 operations.Add(new SelectionAddOperation(ActiveObjectGroup, SelectionSystem.LastSelectedObject));
             }
