@@ -38,207 +38,255 @@
                     VerticalAlignment="Stretch">
                 <!-- Options -->
                 <ScrollViewer>
-                    <StackPanel Margin="20" Spacing="10">
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-                            <CheckBox Name="CheckBoxFilterSelection" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource SelectByCriteria.FilterSelection}" VerticalAlignment="Center"/>
+                    <StackPanel Margin="20"
+                                Spacing="10">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,0,0,20">
+                            <CheckBox Name="CheckBoxFilterSelection"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource SelectByCriteria.FilterSelection}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <Grid ColumnDefinitions="120,20,*">
-                                    <TextBlock Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="{DynamicResource ChartEditor.General.Position}" />
-                        <TextBlock Grid.Column="2"
-                                   Name="TextBlockPosition"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
-                                   Margin="10,0"
-                                   FontSize="15"
-                                   FontFamily="Consolas,Cascadia Code,Monospace"
-                                   Text="0" />
-                        <Slider Grid.Column="2"
-                                Name="SliderPosition"
-                                Classes="Wide"
-                                Minimum="0"
-                                Maximum="59"
-                                Value="0"
-                                TickFrequency="1"
-                                IsSnapToTickEnabled="True"
-                                ValueChanged="SliderPosition_OnValueChanged"/>
+                            <TextBlock Grid.Column="0"
+                                       VerticalAlignment="Center"
+                                       Text="{DynamicResource ChartEditor.General.Position}" />
+                            <TextBlock Grid.Column="2"
+                                       Name="TextBlockPosition"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                       Margin="10,0"
+                                       FontSize="15"
+                                       FontFamily="Consolas,Cascadia Code,Monospace"
+                                       Text="0" />
+                            <Slider Grid.Column="2"
+                                    Name="SliderPosition"
+                                    Classes="Wide"
+                                    Minimum="0"
+                                    Maximum="59"
+                                    Value="0"
+                                    TickFrequency="1"
+                                    IsSnapToTickEnabled="True"
+                                    ValueChanged="SliderPosition_OnValueChanged" />
                         </Grid>
-                        
+
                         <Grid ColumnDefinitions="120,20,*">
-                                    <TextBlock Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="{DynamicResource SelectByCriteria.PositionVariance}" />
-                        <TextBlock Grid.Column="2"
-                                   Name="TextBlockPositionVariance"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
-                                   Margin="10,0"
-                                   FontSize="15"
-                                   FontFamily="Consolas,Cascadia Code,Monospace"
-                                   Text="0" />
-                        <Slider Grid.Column="2"
-                                Name="SliderPositionVariance"
-                                Classes="Wide"
-                                Minimum="0"
-                                Maximum="59"
-                                Value="0"
-                                TickFrequency="1"
-                                IsSnapToTickEnabled="True"
-                                ValueChanged="SliderPositionVariance_OnValueChanged"/>
+                            <TextBlock Grid.Column="0"
+                                       VerticalAlignment="Center"
+                                       Text="{DynamicResource SelectByCriteria.PositionVariance}" />
+                            <TextBlock Grid.Column="2"
+                                       Name="TextBlockPositionVariance"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                       Margin="10,0"
+                                       FontSize="15"
+                                       FontFamily="Consolas,Cascadia Code,Monospace"
+                                       Text="0" />
+                            <Slider Grid.Column="2"
+                                    Name="SliderPositionVariance"
+                                    Classes="Wide"
+                                    Minimum="0"
+                                    Maximum="59"
+                                    Value="0"
+                                    TickFrequency="1"
+                                    IsSnapToTickEnabled="True"
+                                    ValueChanged="SliderPositionVariance_OnValueChanged" />
                         </Grid>
-                        
-                        <Grid ColumnDefinitions="120,20,*" Margin="0,15,0,0">
-                                    <TextBlock Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="{DynamicResource ChartEditor.General.Size}" />
-                        <TextBlock Grid.Column="2"
-                                   Name="TextBlockSize"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
-                                   Margin="10,0"
-                                   FontSize="15"
-                                   FontFamily="Consolas,Cascadia Code,Monospace"
-                                   Text="15" />
-                        <Slider Grid.Column="2"
-                                Name="SliderSize"
-                                Classes="Wide"
-                                Minimum="1"
-                                Maximum="60"
-                                Value="15"
-                                TickFrequency="1"
-                                IsSnapToTickEnabled="True"
-                                ValueChanged="SliderSize_OnValueChanged"/>
+
+                        <Grid ColumnDefinitions="120,20,*"
+                              Margin="0,15,0,0">
+                            <TextBlock Grid.Column="0"
+                                       VerticalAlignment="Center"
+                                       Text="{DynamicResource ChartEditor.General.Size}" />
+                            <TextBlock Grid.Column="2"
+                                       Name="TextBlockSize"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                       Margin="10,0"
+                                       FontSize="15"
+                                       FontFamily="Consolas,Cascadia Code,Monospace"
+                                       Text="15" />
+                            <Slider Grid.Column="2"
+                                    Name="SliderSize"
+                                    Classes="Wide"
+                                    Minimum="1"
+                                    Maximum="60"
+                                    Value="15"
+                                    TickFrequency="1"
+                                    IsSnapToTickEnabled="True"
+                                    ValueChanged="SliderSize_OnValueChanged" />
                         </Grid>
-                        
+
                         <Grid ColumnDefinitions="120,20,*">
-                                    <TextBlock Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="{DynamicResource SelectByCriteria.SizeVariance}" />
-                        <TextBlock Grid.Column="2"
-                                   Name="TextBlockSizeVariance"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Right"
-                                   Margin="10,0"
-                                   FontSize="15"
-                                   FontFamily="Consolas,Cascadia Code,Monospace"
-                                   Text="0" />
-                        <Slider Grid.Column="2"
-                                Name="SliderSizeVariance"
-                                Classes="Wide"
-                                Minimum="0"
-                                Maximum="59"
-                                Value="0"
-                                TickFrequency="1"
-                                IsSnapToTickEnabled="True"
-                                ValueChanged="SliderSizeVariance_OnValueChanged"/>
+                            <TextBlock Grid.Column="0"
+                                       VerticalAlignment="Center"
+                                       Text="{DynamicResource SelectByCriteria.SizeVariance}" />
+                            <TextBlock Grid.Column="2"
+                                       Name="TextBlockSizeVariance"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                       Margin="10,0"
+                                       FontSize="15"
+                                       FontFamily="Consolas,Cascadia Code,Monospace"
+                                       Text="0" />
+                            <Slider Grid.Column="2"
+                                    Name="SliderSizeVariance"
+                                    Classes="Wide"
+                                    Minimum="0"
+                                    Maximum="59"
+                                    Value="0"
+                                    TickFrequency="1"
+                                    IsSnapToTickEnabled="True"
+                                    ValueChanged="SliderSizeVariance_OnValueChanged" />
                         </Grid>
-                        
-                        <Grid ColumnDefinitions="Auto,10,*" Margin="0,20">
-                            <TextBlock Grid.Column="0" Text="{DynamicResource SelectByCriteria.SelectIfObjectIs}"/>
-                            <Rectangle Grid.Column="2" Height="1" HorizontalAlignment="Stretch" Fill="{DynamicResource SeparatorPrimary}"/>
+
+                        <Grid ColumnDefinitions="Auto,10,*"
+                              Margin="0,20">
+                            <TextBlock Grid.Column="0"
+                                       Text="{DynamicResource SelectByCriteria.SelectIfObjectIs}" />
+                            <Rectangle Grid.Column="2"
+                                       Height="1"
+                                       HorizontalAlignment="Stretch"
+                                       Fill="{DynamicResource SeparatorPrimary}" />
                         </Grid>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxTouch" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Touch}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxTouch"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Touch}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxChain" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxChain"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Chain}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxHold" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxHold"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Hold}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxSlideClockwise" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideClockwise}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxSlideClockwise"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideClockwise}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxSlideCounterclockwise" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideCounterclockwise}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxSlideCounterclockwise"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SlideCounterclockwise}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxSnapForward" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapForward}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxSnapForward"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapForward}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxSnapBackward" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapBackward}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxSnapBackward"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.SnapBackward}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxLaneShow" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneShow}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxLaneShow"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneShow}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxLaneHide" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneHide}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxLaneHide"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.LaneHide}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxSync" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Sync}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxSync"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.Sync}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxMeasureLine" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.MeasureLine}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxMeasureLine"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.Note.MeasureLine}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxTempoChange" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TempoChange}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxTempoChange"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TempoChange}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxMetreChange" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.MetreChange}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxMetreChange"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.MetreChange}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxSpeedChange" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SpeedChange}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxSpeedChange"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.SpeedChange}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxVisibilityChange" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.VisibilityChange}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxVisibilityChange"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.VisibilityChange}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxReverseEffect" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.ReverseEffect}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxReverseEffect"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.ReverseEffect}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxStopEffect" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.StopEffect}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxStopEffect"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.StopEffect}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxTutorialMarker" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TutorialMarker}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxTutorialMarker"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.TutorialMarker}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckBoxBookmark" IsCheckedChanged="CheckBox_OnIsCheckedChanged"/>
-                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Bookmark}" VerticalAlignment="Center"/>
+                            <CheckBox Name="CheckBoxBookmark"
+                                      IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                            <TextBlock Text="{DynamicResource ChartEditor.General.Type.Value.Bookmark}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </Border>
-            
+
             <!-- Footer -->
             <Border Grid.Row="2"
                     BorderThickness="0,1,0,0"
