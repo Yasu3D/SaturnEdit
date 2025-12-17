@@ -179,7 +179,7 @@ public partial class ChartView3D : UserControl
                 .ThenBy(x => x.Item2 is ILaneToggle)
                 .ThenBy(x => x.Item2 is SyncNote or MeasureLineNote)
                 .ThenBy(x => x.Item2 is Event or Bookmark)
-                .ThenBy(x => x.Item2 is HoldNote or HoldPointNote)
+                .ThenBy(x => x.Item2 is HoldNote holdNote && holdNote.Points.Count != 0 ? holdNote.Points[^1].Timestamp.FullTick - holdNote.Points[0].Timestamp.FullTick : 0)
                 .ThenBy(x => (x.Item2 as IPositionable)?.Size ?? 60)
                 .ToList();
 
