@@ -432,6 +432,7 @@ public partial class InspectorView : UserControl
         
         base.OnUnloaded(e);
     }
+    
     private void ComboBoxType_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
@@ -443,9 +444,9 @@ public partial class InspectorView : UserControl
         List<IOperation> operations = [];
         List<ITimeable> objects = SelectionSystem.OrderedSelectedObjects;
 
+        // Convert to Hold Note
         if (ComboBoxType.SelectedIndex == 2)
         {
-            // Convert to Hold Note
             if (objects.Count < 2) return;
             if (SelectionSystem.SelectedLayer == null) return;
             
@@ -519,9 +520,9 @@ public partial class InspectorView : UserControl
 
             operations.Add(new ListAddOperation<Note>(() => SelectionSystem.SelectedLayer.Notes, holdNote));
         }
+        // Convert to Stop Effect Event
         else if (ComboBoxType.SelectedIndex == 15)
         {
-            // Convert to Stop Effect Event
             if (SelectionSystem.SelectedObjects.Count < 2) return;
             if (SelectionSystem.SelectedLayer == null) return;
 
@@ -541,9 +542,9 @@ public partial class InspectorView : UserControl
 
             operations.Add(new ListAddOperation<Event>(() => SelectionSystem.SelectedLayer.Events, stopEffectEvent));
         }
+        // Convert to Reverse Effect Event
         else if (ComboBoxType.SelectedIndex == 16)
         {
-            // Convert to Reverse Effect Event
             if (SelectionSystem.SelectedObjects.Count < 3) return;
             if (SelectionSystem.SelectedLayer == null) return;
 
@@ -563,9 +564,9 @@ public partial class InspectorView : UserControl
 
             operations.Add(new ListAddOperation<Event>(() => SelectionSystem.SelectedLayer.Events, reverseEffectEvent));
         }
+        // Convert to all other types.
         else
         {
-            // Convert to all other types.
             foreach (ITimeable obj in objects)
             {
                 Layer layer = ChartSystem.Chart.ParentLayer(obj) ?? ChartSystem.Chart.Layers[0];
@@ -856,7 +857,7 @@ public partial class InspectorView : UserControl
             }
             else if (obj is Note note)
             {
-                operations.Add(new ListAddOperation<Note>(() => layer.Notes, note));
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, note));
             }
         }
     }
