@@ -971,6 +971,11 @@ public static class EditorSystem
 
         List<IOperation> operations = [];
 
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        {
+            operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
+        }
+        
         if (Mode == EditorMode.ObjectMode)
         {
             foreach (Bookmark bookmark in chart.Bookmarks)

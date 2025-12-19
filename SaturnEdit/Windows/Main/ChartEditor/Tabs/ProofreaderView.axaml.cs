@@ -71,7 +71,7 @@ public partial class ProofreaderView : UserControl
                     (HoldNote, BonusType.Normal) => 2,
                     (HoldNote, BonusType.Bonus) => 2,
                     (HoldNote, BonusType.R) => 8,
-                    (_, _) => 3,
+                    (_, _) => 1,
                 };
 
                 if (positionable.Size >= minSize) continue;
@@ -94,7 +94,10 @@ public partial class ProofreaderView : UserControl
             {
                 if (note is not IPositionable positionable) continue;
                 if (note is not IPlayable) continue;
+                
                 if (positionable.Size > 2) continue;
+                if (note is HoldNote && positionable.Size >= 2) continue;
+                if (note is SyncNote && positionable.Size >= 1) continue;
                 
                 Problems.Add(new()
                 {

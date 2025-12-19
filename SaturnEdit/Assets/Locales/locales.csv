@@ -146,7 +146,7 @@ ChartEditor.ChartProperties.ToolTip.AutoClearThreshold.Description,Automatically
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd,Auto Chart End,-,-,-
 ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description,Automatically determine when a chart should end and transition to the results screen.,-,-,-
 ChartEditor.Proofreader,Proofreader,-,-,-
-ChartEditor.Proofreader.Criteria,Criteria,-,-,-
+ChartEditor.Proofreader.Criteria,Criteria...,-,-,-
 ChartEditor.Proofreader.Problem,Problem,-,-,-
 ChartEditor.Proofreader.HintClickJump,Double-click on a problem to jump to its timestamp in the chart.,-,-,-
 ChartEditor.Proofreader.ToolTip.Criteria,Adjust Criteria,-,-,-
@@ -154,7 +154,7 @@ ChartEditor.Proofreader.ToolTip.Criteria.Description,Adjust the things to look o
 ChartEditor.Proofreader.ToolTip.Run,Run Proofreader,-,-,-
 ChartEditor.Proofreader.Problem.StrictNoteSizeMer,Note Size does not conform to MER standard.,-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Problem.StrictNoteSizeSat,Note Size does not conform to SAT standard.,-,-,SAT must stay as 'SAT'.
-ChartEditor.Proofreader.Problem.StrictBonusTypeMer,Note ,-,-,-
+ChartEditor.Proofreader.Problem.StrictBonusTypeMer,MER standard does not support Note with this Bonus Type,-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Problem.OverlappingNotes,Note overlaps with another note.,-,-,-
 ChartEditor.Proofreader.Problem.AmbiguousHoldNoteDefinition,Direction of Hold Note is ambiguous. Hold Points should not be directly opposite of each other.,-,-,-
 ChartEditor.Proofreader.Problem.EffectsOnLowers,Lower difficulties should avoid effects.,-,-,-
@@ -175,7 +175,7 @@ ChartEditor.Proofreader.Criteria.OverlappingNotesLenient,Overlapping Notes (Leni
 ChartEditor.Proofreader.Criteria.AmbiguousHoldNoteDefinition,Ambiguous Hold Note Definition,-,-,-
 ChartEditor.Proofreader.Criteria.EffectsOnLowers,Effects on Lowers,-,-,Effect as in Speed Change/Visibility Change/Stop Effect/Reverse Effect events.
 ChartEditor.Proofreader.Criteria.InvalidEffectsMer,Invalid Effects (MER),-,-,Effect as in Stop Effect/Reverse Effect events.
-ChartEditor.Proofreader.Criteria.InvalidLaneToggles,Invalid Lane Toggles,-,-,-
+ChartEditor.Proofreader.Criteria.InvalidLaneToggles,Invalid Lane Toggles (MER),-,-,-
 ChartEditor.Proofreader.Criteria.NotesDuringReverse,Notes during Reverse,-,-,-
 ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd,Objects after Chart End,-,-,-
 ChartEditor.NotePalette,Note Palette,-,-,List of Note Types on the left side of the program. Use the same word as the list of tools in photoshop/etc.Photoshop/etc.

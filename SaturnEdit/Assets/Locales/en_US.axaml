@@ -149,7 +149,7 @@
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd">Auto Chart End</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.AutoChartEnd.Description">Automatically determine when a chart should end and transition to the results screen.</system:String>
     <system:String x:Key="ChartEditor.Proofreader">Proofreader</system:String>
-    <system:String x:Key="ChartEditor.Proofreader.Criteria">Criteria</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria">Criteria...</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem">Problem</system:String>
     <system:String x:Key="ChartEditor.Proofreader.HintClickJump">Double-click on a problem to jump to its timestamp in the chart.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.ToolTip.Criteria">Adjust Criteria</system:String>
@@ -157,7 +157,7 @@
     <system:String x:Key="ChartEditor.Proofreader.ToolTip.Run">Run Proofreader</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.StrictNoteSizeMer">Note Size does not conform to MER standard.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.StrictNoteSizeSat">Note Size does not conform to SAT standard.</system:String>
-    <system:String x:Key="ChartEditor.Proofreader.Problem.StrictBonusTypeMer">Note </system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Problem.StrictBonusTypeMer">MER standard does not support Note with this Bonus Type</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.OverlappingNotes">Note overlaps with another note.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.AmbiguousHoldNoteDefinition">Direction of Hold Note is ambiguous. Hold Points should not be directly opposite of each other.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.EffectsOnLowers">Lower difficulties should avoid effects.</system:String>
@@ -178,7 +178,7 @@
     <system:String x:Key="ChartEditor.Proofreader.Criteria.AmbiguousHoldNoteDefinition">Ambiguous Hold Note Definition</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.EffectsOnLowers">Effects on Lowers</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidEffectsMer">Invalid Effects (MER)</system:String>
-    <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidLaneToggles">Invalid Lane Toggles</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidLaneToggles">Invalid Lane Toggles (MER)</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.NotesDuringReverse">Notes during Reverse</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd">Objects after Chart End</system:String>
     <system:String x:Key="ChartEditor.NotePalette">Note Palette</system:String>
