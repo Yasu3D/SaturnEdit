@@ -6,6 +6,7 @@ using TextMateSharp.Grammars;
 using AvaloniaEdit.TextMate;
 using System.IO;
 using Avalonia.Threading;
+using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
 
@@ -31,9 +32,14 @@ public partial class ChartViewTxt : UserControl
     private bool blockEvents = false;
     
 #region Methods
-    private void UpdateChartFromText()
+    private async void UpdateChartFromText()
     {
         ChartSystem.ReadChartEditorTxt(TextEditorChart.Text, ChartSystem.Entry.RootDirectory, readArgs, out List<Exception> exceptions);
+        
+        if (ChartSystem.Entry.AutoReading)
+        {
+            ChartSystem.Entry.Reading = await Entry.GetAutoReading(ChartSystem.Entry.Title);
+        }
         
         Dispatcher.UIThread.Post(() =>
         {
