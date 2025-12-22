@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using System;
 using System.IO;
+using SaturnEdit.Utilities;
 
 namespace SaturnEdit;
 
@@ -35,7 +36,7 @@ class Program
     {
         try
         {
-            string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/crash_log.txt");
+            string logPath = Path.Combine(PersistentDataPathHelper.PersistentDataPath, "crash_log.txt");
             File.WriteAllText(logPath, log);
         }
         catch

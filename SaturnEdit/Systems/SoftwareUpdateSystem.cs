@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Octokit;
+using SaturnEdit.Utilities;
 using FileMode = System.IO.FileMode;
 
 namespace SaturnEdit.Systems;
@@ -27,8 +28,8 @@ public static class SoftwareUpdateSystem
     private const string AssetNameWindows = "Windows-x64.zip";
     private const string AssetNameLinux = "Linux-x64.zip";
     
-    private static string DownloadPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/update.zip");
-    private static string ExtractedDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/extract");
+    private static string DownloadPath => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "update.zip");
+    private static string ExtractedDirectory => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "extract");
 
     public static async Task<bool> UpdateAvailable()
     {

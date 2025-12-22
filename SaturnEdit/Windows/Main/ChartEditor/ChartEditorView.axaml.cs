@@ -57,7 +57,7 @@ public partial class ChartEditorView : UserControl
         ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
     }
     
-    private static string LayoutDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Layout");
+    private static string LayoutDirectory => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "Layout");
     private static string CustomLayoutDirectory => Path.Combine(LayoutDirectory, "Custom");
     private static string PersistedLayoutFile => Path.Combine(LayoutDirectory, "persisted.layout");
 

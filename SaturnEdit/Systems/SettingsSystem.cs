@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Avalonia;
 using Avalonia.Input;
+using SaturnEdit.Utilities;
 using SaturnView;
 using Tomlyn;
 
@@ -87,7 +88,7 @@ public static class SettingsSystem
     }
     private static ShortcutSettings shortcutSettings = new();
     
-    private static string SettingsDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Settings");
+    private static string SettingsDirectory => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "Settings");
 
 #region Methods
     public static void LoadSettings()
@@ -100,7 +101,10 @@ public static class SettingsSystem
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            if (ex is not (FileNotFoundException or DirectoryNotFoundException))
+            {
+                Console.WriteLine(ex);
+            }
             EditorSettings = new();
         }
         
@@ -112,7 +116,10 @@ public static class SettingsSystem
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            if (ex is not (FileNotFoundException or DirectoryNotFoundException))
+            {
+                Console.WriteLine(ex);
+            }
             RenderSettings = new();
         }
         
@@ -124,7 +131,10 @@ public static class SettingsSystem
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            if (ex is not (FileNotFoundException or DirectoryNotFoundException))
+            {
+                Console.WriteLine(ex);
+            }
             AudioSettings = new();
         }
         
@@ -136,7 +146,10 @@ public static class SettingsSystem
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            if (ex is not (FileNotFoundException or DirectoryNotFoundException))
+            {
+                Console.WriteLine(ex);
+            }
             ShortcutSettings = new();
         }
         

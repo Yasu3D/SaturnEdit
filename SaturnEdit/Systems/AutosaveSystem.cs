@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using SaturnEdit.Utilities;
 
 namespace SaturnEdit.Systems;
 
@@ -18,7 +19,7 @@ public static class AutosaveSystem
         UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
     }
     
-    public static string AutosaveDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/Autosave");
+    public static string AutosaveDirectory => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "Autosave");
     private static string AutosavePath => Path.Combine(AutosaveDirectory, $"autosave_{DateTime.Now:yyyy-MM-dd-hh-mm-ss-fff}.sat");
     public static string LastSessionPath => Path.Combine(AutosaveDirectory, "last_session.sat");
 
