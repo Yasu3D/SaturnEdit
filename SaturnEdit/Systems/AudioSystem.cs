@@ -270,21 +270,24 @@ public static class AudioSystem
             PassedNotes.Clear();
             PassedBonusSlides.Clear();
             ActiveHoldNotes.Clear();
-            
-            foreach (Layer layer in ChartSystem.Chart.Layers)
+
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                foreach (Note note in layer.GeneratedNotes)
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.GeneratedNotes.Count; j++)
                 {
+                    Note note = layer.GeneratedNotes[j];
                     if (note is not MeasureLineNote measureLineNote) continue;
-                    
+
                     if (measureLineNote.Timestamp.Time < TimeSystem.Timestamp.Time)
                     {
                         PassedNotes.Add(measureLineNote);
                     }
                 }
-                
-                foreach (Note note in layer.Notes)
+
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
+                    Note note = layer.Notes[j];
                     if (note.Timestamp.Time < TimeSystem.Timestamp.Time)
                     {
                         PassedNotes.Add(note);

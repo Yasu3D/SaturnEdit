@@ -54,7 +54,7 @@ public partial class ChartView3D : UserControl
 #region Methods
     private void FindPointerOverObject(float radius, int lane, float viewDistance)
     {
-        lock (ChartSystem.Chart)
+        try
         {
             if (radius > 1.1f)
             {
@@ -68,8 +68,9 @@ public partial class ChartView3D : UserControl
 
             if (EditorSystem.Mode == EditorMode.ObjectMode)
             {
-                foreach (Event @event in ChartSystem.Chart.Events)
+                for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
                 {
+                    Event @event = ChartSystem.Chart.Events[i];
                     if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                     IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, null, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -78,8 +79,9 @@ public partial class ChartView3D : UserControl
                     hits.Add((hitTestResult, @event));
                 }
 
-                foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+                for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
                 {
+                    Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
                     if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                     IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(bookmark, null, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -88,8 +90,9 @@ public partial class ChartView3D : UserControl
                     hits.Add((hitTestResult, bookmark));
                 }
 
-                foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+                for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
                 {
+                    Note laneToggle = ChartSystem.Chart.LaneToggles[i];
                     if (!RenderUtils.IsVisible(laneToggle, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                     IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(laneToggle, null, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -98,12 +101,14 @@ public partial class ChartView3D : UserControl
                     hits.Add((hitTestResult, laneToggle));
                 }
 
-                foreach (Layer layer in ChartSystem.Chart.Layers)
+                for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
                 {
+                    Layer layer = ChartSystem.Chart.Layers[i];
                     float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
 
-                    foreach (Event @event in layer.Events)
+                    for (int j = 0; j < layer.Events.Count; j++)
                     {
+                        Event @event = layer.Events[j];
                         if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                         IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(@event, layer, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -112,8 +117,9 @@ public partial class ChartView3D : UserControl
                         hits.Add((hitTestResult, @event));
                     }
 
-                    foreach (Note note in layer.Notes)
+                    for (int j = 0; j < layer.Notes.Count; j++)
                     {
+                        Note note = layer.Notes[j];
                         if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                         IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(note, layer, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -133,8 +139,9 @@ public partial class ChartView3D : UserControl
                     {
                         float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
 
-                        foreach (HoldPointNote holdPointNote in holdNote.Points)
+                        for (int i = 0; i < holdNote.Points.Count; i++)
                         {
+                            HoldPointNote holdPointNote = holdNote.Points[i];
                             if (!RenderUtils.IsVisible(holdPointNote, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                             IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(holdPointNote, layer, radius, lane, TimeSystem.Timestamp.Time, scaledTime, viewDistance, threshold, SettingsSystem.RenderSettings.ShowSpeedChanges, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -147,9 +154,10 @@ public partial class ChartView3D : UserControl
                 else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
                 {
                     Layer? layer = ChartSystem.Chart.ParentLayer(stopEffectEvent);
-                    
-                    foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+
+                    for (int i = 0; i < stopEffectEvent.SubEvents.Length; i++)
                     {
+                        EffectSubEvent subEvent = stopEffectEvent.SubEvents[i];
                         if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                         IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(subEvent, layer, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -161,9 +169,10 @@ public partial class ChartView3D : UserControl
                 else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
                 {
                     Layer? layer = ChartSystem.Chart.ParentLayer(reverseEffectEvent);
-                    
-                    foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+
+                    for (int i = 0; i < reverseEffectEvent.SubEvents.Length; i++)
                     {
+                        EffectSubEvent subEvent = reverseEffectEvent.SubEvents[i];
                         if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                         IPositionable.OverlapResult hitTestResult = Renderer3D.HitTest(subEvent, layer, radius, lane, TimeSystem.Timestamp.Time, TimeSystem.Timestamp.Time, viewDistance, threshold, false, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -193,6 +202,11 @@ public partial class ChartView3D : UserControl
                 SelectionSystem.PointerOverObject = null;
                 SelectionSystem.PointerOverOverlap = IPositionable.OverlapResult.None;
             }
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
         }
     }
     
