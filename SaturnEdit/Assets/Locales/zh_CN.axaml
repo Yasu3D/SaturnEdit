@@ -601,6 +601,9 @@
     <system:String x:Key="Settings.General.Themes">-</system:String>
     <system:String x:Key="Settings.General.Other">-</system:String>
     <system:String x:Key="Settings.General.ClickDragThreshold">-</system:String>
+    <system:String x:Key="Settings.Audio">-</system:String>
+    <system:String x:Key="Settings.Audio.HoldLoopStart">-</system:String>
+    <system:String x:Key="Settings.Audio.HoldLoopEnd">-</system:String>
     <system:String x:Key="Settings.Rendering">-</system:String>
     <system:String x:Key="Settings.Rendering.Performance">-</system:String>
     <system:String x:Key="Settings.Rendering.LowPerformanceMode">-</system:String>

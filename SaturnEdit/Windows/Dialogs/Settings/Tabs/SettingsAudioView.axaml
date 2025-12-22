@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="SaturnEdit.Windows.Dialogs.Settings.Tabs.SettingsAudioView">
+    <ScrollViewer Background="{DynamicResource BackgroundPrimary}">
+        <StackPanel Margin="20">
+            <Grid ColumnDefinitions="Auto,*"
+                  Margin="0,0,0,20">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Audio.HoldLoop}"
+                           Margin="0,0,20,0" />
+                <Rectangle Grid.Column="1"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Center"
+                           Height="1"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+            </Grid>
+            
+            <Grid ColumnDefinitions="190,170"
+                  Margin="0">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Audio.HoldLoopStart}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,20,0" />
+                <NumericUpDown Grid.Column="1"
+                          Name="NumericUpDownHoldLoopStart"
+                          ValueChanged="NumericUpDownHoldLoopStart_OnValueChanged"
+                          Minimum="0"
+                          Increment="1"/>
+            </Grid>
+            
+            <Grid ColumnDefinitions="190,170"
+                  Margin="0,5,0,0">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource Settings.Audio.HoldLoopEnd}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,20,0" />
+                <NumericUpDown Grid.Column="1"
+                          Name="NumericUpDownHoldLoopEnd"
+                          ValueChanged="NumericUpDownHoldLoopEnd_OnValueChanged"
+                          Minimum="0"
+                          Increment="1"/>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -689,7 +689,7 @@ public partial class MainWindow : Window
     {
         ProcessStartInfo process = new()
         {
-            FileName = "https://saturn.yasu3d.art/docs/#/",
+            FileName = "https://saturn.yasu3d.art/documentation/saturn-edit/#/",
             UseShellExecute = true,
         };
 
@@ -700,7 +700,7 @@ public partial class MainWindow : Window
     {
         ProcessStartInfo process = new()
         {
-            FileName = "https://saturn.yasu3d.art/changelog",
+            FileName = "https://saturn.yasu3d.art/documentation/saturn-edit/#/changelog",
             UseShellExecute = true,
         };
 

@@ -599,6 +599,10 @@ Settings.General.AutosaveFrequency.Always,Every Operation,-,-,-
 Settings.General.Themes,Themes,-,-,UI Themes (Light Mode/Dark Mode)
 Settings.General.Other,Other,-,-,-
 Settings.General.ClickDragThreshold,Click 'n' Drag Threshold (Pixels),-,-,-
+Settings.Audio,Audio,-,-,-
+Settings.Audio.HoldLoop,Hold Loop
+Settings.Audio.HoldLoopStart,Hold Loop Start (ms),-,-,-
+Settings.Audio.HoldLoopEnd,Hold Loop End (ms),-,-,-
 Settings.Rendering,Rendering,-,-,-
 Settings.Rendering.Performance,Performance,-,-,-
 Settings.Rendering.LowPerformanceMode,Low Performance Mode,-,-,-
@@ -791,7 +795,7 @@ ModalDialog.Update.Error.AssetNotFound,"The asset for your operating system coul
 ModalDialog.Update.Error.ProcessNotFound,The process to update could not be found. Please update manually.,-,-,-
 ModalDialog.Update.Error.Unknown,"An unknown error occurred. Please try again, or update manually.",-,-,-
 Splash.Website,SATURN Website,-,-,-
-Splash.Documentation,SATURN Documentation,-,-,-
+Splash.Documentation,Documentation,-,-,-
 Splash.Github,GitHub Repository,-,-,-
 Splash.WhatsNew,What's New,-,-,-
 Generic.FileNotFoundWarning,File not found.,-,-,-
