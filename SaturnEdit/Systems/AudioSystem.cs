@@ -126,7 +126,7 @@ public static class AudioSystem
                         {
                             Note note = n;
 
-                            if (note is HoldNote holdNote && holdNote.Points.Count > 1)
+                            if (note is HoldNote holdNote && holdNote.Points.Count > 1 && holdNote.JudgementType != JudgementType.Fake)
                             {
                                 if (holdNote.Points[0].Timestamp.Time < TimeSystem.HitsoundTime && holdNote.Points[^1].Timestamp.Time > TimeSystem.HitsoundTime)
                                 {
@@ -290,7 +290,7 @@ public static class AudioSystem
                         PassedNotes.Add(note);
                     }
 
-                    if (note is HoldNote holdNote && holdNote.Points.Count > 1)
+                    if (note is HoldNote holdNote && holdNote.Points.Count > 1 && holdNote.JudgementType != JudgementType.Fake)
                     {
                         if (holdNote.Points[^1].Timestamp.Time < TimeSystem.Timestamp.Time)
                         {
