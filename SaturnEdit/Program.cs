@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using System.IO;
 
 namespace SaturnEdit;
 
@@ -11,7 +12,14 @@ class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+        try
+        {
+            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+        }
+        catch (Exception ex)
+        {
+            WriteCrashLog(ex.ToString());
+        }
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
@@ -21,5 +29,18 @@ class Program
             .UsePlatformDetect()
             .WithInterFont()
             .LogToTrace();
+    }
+    
+    private static void WriteCrashLog(string? log)
+    {
+        try
+        {
+            string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SaturnEdit/crash_log.txt");
+            File.WriteAllText(logPath, log);
+        }
+        catch
+        {
+            // ignored.
+        }
     }
 }
