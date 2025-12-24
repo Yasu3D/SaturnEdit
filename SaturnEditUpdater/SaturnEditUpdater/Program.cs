@@ -24,7 +24,7 @@ internal class Program
             // Delete temporary files.
             File.Delete(downloadPath);
             DirectoryInfo extractedDirectoryInfo = new(extractedDirectory);
-            extractedDirectoryInfo.Delete(true);
+            extractedDirectoryInfo.Parent?.Delete(true);
             
             // Start new process.
             ProcessStartInfo process = new()
@@ -38,6 +38,7 @@ internal class Program
         catch (Exception ex)
         {
             Console.WriteLine(ex);
+            Console.ReadKey();
         }
     }
     
@@ -47,7 +48,18 @@ internal class Program
 
         foreach (FileInfo file in source.GetFiles())
         {
-            file.CopyTo(Path.Combine(destination.FullName, file.Name), true);
+            try
+            {
+                file.CopyTo(Path.Combine(destination.FullName, file.Name), true);
+            }
+            catch (Exception ex)
+            {
+                // IOExceptions are caught silently?
+                if (ex is not IOException)
+                {
+                    Console.WriteLine(ex);
+                }
+            }
         }
 
         foreach (DirectoryInfo directory in source.GetDirectories())

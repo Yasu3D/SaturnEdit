@@ -594,6 +594,9 @@ public partial class MainWindow : Window
             dialog.InitializeDialog();
             _ = dialog.ShowDialog(this);
             
+            // For UX reasons, add a ~1 second "fake" wait if someone has insane internet and downloads the update instantly.
+            await Task.Delay(1000);
+            
             (bool, string) updateStatus = await SoftwareUpdateSystem.Update();
 
             // If this point is reached, something exploded.

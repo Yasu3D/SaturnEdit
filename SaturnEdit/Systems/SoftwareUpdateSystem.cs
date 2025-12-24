@@ -25,8 +25,11 @@ public static class SoftwareUpdateSystem
     private const string RepositoryOwner = "Yasu3D";
     private const string RepositoryName = "SaturnEdit";
 
-    private const string AssetNameWindows = "Windows-x64.zip";
-    private const string AssetNameLinux = "Linux-x64.zip";
+    private const string AssetNameWindows = "SaturnEdit-Windows-x64.zip";
+    private const string AssetNameLinux = "SaturnEdit-Linux-x64.zip";
+    
+    private const string AssetDirectoryWindows = "SaturnEdit-Windows-x64";
+    private const string AssetDirectoryLinux = "SaturnEdit-Linux-x64";
     
     private static string DownloadPath => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "update.zip");
     private static string ExtractedDirectory => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "extract");
@@ -126,19 +129,22 @@ public static class SoftwareUpdateSystem
             }
 
             string updaterProcessPath = Path.GetDirectoryName(processPath) ?? "";
+            string trueExtractedDirectory = "";
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 updaterProcessPath = Path.Combine(updaterProcessPath, "SaturnEditUpdater.exe");
+                trueExtractedDirectory = Path.Combine(ExtractedDirectory, AssetDirectoryWindows);
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 updaterProcessPath = Path.Combine(updaterProcessPath, "SaturnEditUpdater");
+                trueExtractedDirectory = Path.Combine(ExtractedDirectory, AssetDirectoryLinux);
             }
             
             ProcessStartInfo updaterProcess = new()
             {
                 FileName = updaterProcessPath,
-                ArgumentList = { processPath, DownloadPath, ExtractedDirectory },
+                ArgumentList = { processPath, DownloadPath, trueExtractedDirectory },
                 UseShellExecute = true,
             };
 
