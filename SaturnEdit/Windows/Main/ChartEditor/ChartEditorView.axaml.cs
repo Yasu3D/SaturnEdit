@@ -331,7 +331,7 @@ public partial class ChartEditorView : UserControl
 
             // Write chart to file.
             bool updatePath = !File.Exists(ChartSystem.Entry.ChartPath);
-            if (!ChartSystem.WriteChart(ChartSystem.Entry.ChartPath, new(), true, updatePath))
+            if (!ChartSystem.WriteChart(ChartSystem.Entry.ChartPath, new() { ExportWatermark = ChartSystem.ExportWatermarkTemplate }, true, updatePath))
             {
                 MainWindow.ShowFileWriteError();
                 return false;
@@ -380,7 +380,7 @@ public partial class ChartEditorView : UserControl
             if (file == null) return false;
 
             // Write chart to file.
-            if (!ChartSystem.WriteChart(file.Path.LocalPath, new(), true, true))
+            if (!ChartSystem.WriteChart(file.Path.LocalPath, new() { ExportWatermark = ChartSystem.ExportWatermarkTemplate }, true, true))
             {
                 MainWindow.ShowFileWriteError();
                 return false;

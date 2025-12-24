@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
@@ -68,6 +69,8 @@ public static class ChartSystem
         LaneToggles = [new LaneShowNote(Timestamp.Zero, 15, 60, LaneSweepDirection.Center)],
         Layers = [new("Main Layer")],
     };
+
+    public static string ExportWatermarkTemplate => $"Generated with SaturnEdit v{Assembly.GetExecutingAssembly().GetName().Version}";
     
     private static bool saturnJudgeAreas;
     

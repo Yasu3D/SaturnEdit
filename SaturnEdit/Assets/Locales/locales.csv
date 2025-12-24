@@ -514,7 +514,7 @@ CosmeticEditor.SystemSound.Property.AudioRhythmGameSpecialClearPath,Rhythm Game 
 CosmeticEditor.SystemSound.Property.AudioTimerWarningPath,Timer Warning Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioTextboxAppearPath,Textbox Appear Audio Path,-,-,-
 CosmeticEditor.Title.Property.Message,Title Message,-,-,-
-Main.Window.Title,SaturnEdit — Main Window,-,-,-
+Main.Window.Title,SATURN EDIT — Main Window,-,-,-
 Main.ToolTip.Update,Update Available!,-,-,-
 Main.ToolTip.Update.Description,Click to download latest version.,-,-,-
 Main.ToolTip.Search,Search for Anything...,-,-,-
@@ -528,7 +528,7 @@ Main.ToolTip.CosmeticsEditor,Cosmetics Editor,-,-,-
 Main.ToolTip.CosmeticsEditor.Description,"Create and edit Icons, Plates, Titles, etc.",-,-,-
 Main.ToolTip.StageEditor,Stage Editor,-,-,-
 Main.ToolTip.StageEditor.Description,Create and edit Stage-Up stages.,-,-,-
-Dock.Window.Title,SaturnEdit — Dock Window,-,-,-
+Dock.Window.Title,SATURN EDIT — Dock Window,-,-,-
 Menu.File,File,-,-,-
 Menu.File.New,New,-,-,-
 Menu.File.NewEllipsis,New...,-,-,-
@@ -784,10 +784,10 @@ ModalDialog.ZigZagHoldWarning.Title,Zig-Zag Hold Error,-,-,-
 ModalDialog.ZigZagHoldWarning.Header,Unable to create a Zig-Zag Hold Note.,-,-,-
 ModalDialog.ZigZagHoldWarning.Paragraph,Please select one or more hold notes or hold points you wish to convert.,-,-,-
 ModalDialog.Update.Title,Software Update,-,-,-
-ModalDialog.Update.Header,Would you like to update SaturnEdit?,-,-,-
-ModalDialog.Update.Paragraph,"The latest version will be downloaded, and SaturnEdit will restart on its own. This process may take a while.",-,-,-
-ModalDialog.Update.Active.Header,Updating SaturnEdit...,-,-,-
-ModalDialog.Update.Active.Paragraph,"The latest version is currently being downloaded, and SaturnEdit will restart on its own. This process may take a while.",-,-,-
+ModalDialog.Update.Header,Would you like to update SATURN EDIT?,-,-,-
+ModalDialog.Update.Paragraph,"The latest version will be downloaded, and SATURN EDIT will restart on its own. This process may take a while.",-,-,-
+ModalDialog.Update.Active.Header,Updating SATURN EDIT...,-,-,-
+ModalDialog.Update.Active.Paragraph,"The latest version is currently being downloaded, and SATURN EDIT will restart on its own. This process may take a while.",-,-,-
 ModalDialog.Update.Error.Header,An error occurred during the software update.,-,-,-
 ModalDialog.Update.Error.GitHubNotFound,GitHub could not be reached. Please update manually.,-,-,-
 ModalDialog.Update.Error.ReleaseNotFound,"The latest release could not be found. Please try again, or update manually.",-,-,-

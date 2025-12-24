@@ -4,6 +4,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnData.Notation.Serialization;
+using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
@@ -15,13 +16,14 @@ public partial class ExportArgsWindow : Window
     {
         InitializeComponent();
         OnArgsChanged();
-        
-        TextBoxWatermark.Watermark = DefaultExportWatermark;
+
+        string watermark = ChartSystem.ExportWatermarkTemplate;
+        TextBoxWatermark.Watermark = watermark;
+        NotationWriteArgs.ExportWatermark = watermark;
     }
 
     public ModalDialogResult Result { get; private set; }  = ModalDialogResult.Cancel;
-
-    public static string? DefaultExportWatermark => new NotationWriteArgs().ExportWatermark;
+    
     public NotationWriteArgs NotationWriteArgs = new();
     private bool blockEvents = false;
     
@@ -38,7 +40,7 @@ public partial class ExportArgsWindow : Window
             ComboBoxFileType.SelectedIndex = (int)NotationWriteArgs.FormatVersion;
             
             // Only set Watermark Text if it's different to the default watermark text.
-            TextBoxWatermark.Text = NotationWriteArgs.ExportWatermark == DefaultExportWatermark ? null : NotationWriteArgs.ExportWatermark;
+            TextBoxWatermark.Text = NotationWriteArgs.ExportWatermark == ChartSystem.ExportWatermarkTemplate ? null : NotationWriteArgs.ExportWatermark;
             ComboBoxFakeNotes.SelectedIndex = (int)NotationWriteArgs.ConvertFakeNotes;
             ComboBoxAutoplayNotes.SelectedIndex = (int)NotationWriteArgs.ConvertAutoplayNotes;
             ComboBoxExtraLayers.SelectedIndex = (int)NotationWriteArgs.MergeExtraLayers;
@@ -178,7 +180,7 @@ public partial class ExportArgsWindow : Window
         if (blockEvents) return;
         if (sender == null) return;
 
-        NotationWriteArgs.ExportWatermark = string.IsNullOrEmpty(TextBoxWatermark.Text) ? DefaultExportWatermark : TextBoxWatermark.Text;
+        NotationWriteArgs.ExportWatermark = string.IsNullOrEmpty(TextBoxWatermark.Text) ? ChartSystem.ExportWatermarkTemplate : TextBoxWatermark.Text;
         OnArgsChanged();
     }
 

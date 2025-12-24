@@ -35,7 +35,7 @@ public static class AutosaveSystem
 
         autosaved = true;
 
-        ChartSystem.WriteChart(AutosavePath, new(), false, false);
+        ChartSystem.WriteChart(AutosavePath, new() { ExportWatermark = ChartSystem.ExportWatermarkTemplate }, false, false);
 
         List<string> files = Directory.EnumerateFiles(AutosaveDirectory, "*", SearchOption.TopDirectoryOnly)
             .Where(x =>
@@ -89,7 +89,7 @@ public static class AutosaveSystem
 
     public static void OnClosed(object? sender, EventArgs eventArgs)
     {
-        ChartSystem.WriteChart(LastSessionPath, new(), false, false);
+        ChartSystem.WriteChart(LastSessionPath, new() { ExportWatermark = ChartSystem.ExportWatermarkTemplate }, false, false);
     }
 #endregion System Event Handlers
 
