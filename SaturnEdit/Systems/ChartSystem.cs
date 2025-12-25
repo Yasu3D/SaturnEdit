@@ -116,6 +116,12 @@ public static class ChartSystem
 
         Entry = NotationSerializer.ToEntry(path, args, out _);
         Chart = NotationSerializer.ToChart(path, args, out _);
+
+        // Always include a Layer if none loaded from the file.
+        if (Chart.Layers.Count == 0)
+        {
+            Chart.Layers.Add(new("Main Layer"));
+        }
         
         Entry.EntryChanged += OnInternalEntryChanged;
         Entry.AudioChanged += OnInternalAudioChanged;
