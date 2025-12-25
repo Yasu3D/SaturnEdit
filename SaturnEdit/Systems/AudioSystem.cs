@@ -346,6 +346,8 @@ public static class AudioSystem
         {
             AudioChannelAudio.Playing = false;
         }
+
+        AudioChannelAudio = null;
         
         try
         {
