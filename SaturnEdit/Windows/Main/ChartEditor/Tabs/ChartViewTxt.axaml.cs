@@ -9,6 +9,7 @@ using Avalonia.Threading;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
+using SaturnEdit.Utilities;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -38,7 +39,7 @@ public partial class ChartViewTxt : UserControl
         
         if (ChartSystem.Entry.AutoReading)
         {
-            ChartSystem.Entry.Reading = await Entry.GetAutoReading(ChartSystem.Entry.Title);
+            ChartSystem.Entry.Reading = await ReadingConverter.Convert(ChartSystem.Entry.Title);
         }
         
         Dispatcher.UIThread.Post(() =>

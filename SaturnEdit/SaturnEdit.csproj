@@ -25,6 +25,9 @@
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.9" />
         <PackageReference Include="AvaloniaEdit.TextMate" Version="11.3.0" />
         <PackageReference Include="FluentIcons.Avalonia" Version="1.2.315" />
+        <PackageReference Include="Kawazu" Version="1.1.4" />
+        <PackageReference Include="LibNMeCab" Version="0.10.2" />
+        <PackageReference Include="LibNMeCab.IpaDicBin" Version="0.10.0" />
         <PackageReference Include="ManagedBass" Version="4.0.2" />
         <PackageReference Include="ManagedBass.Flac" Version="4.0.2" />
         <PackageReference Include="ManagedBass.Fx" Version="4.0.2" />

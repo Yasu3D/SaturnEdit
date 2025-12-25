@@ -11,6 +11,7 @@ using SaturnData.Notation.Core;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;
+using SaturnEdit.Utilities;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -132,7 +133,7 @@ public partial class ChartPropertiesView : UserControl
             if (ChartSystem.Entry.AutoReading)
             {
                 GenericEditOperation<string> op0 = new(value => { ChartSystem.Entry.Title = value; }, oldValue, newValue);
-                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.Reading = value; }, ChartSystem.Entry.Reading, await Entry.GetAutoReading(newValue));
+                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.Reading = value; }, ChartSystem.Entry.Reading, await ReadingConverter.Convert(newValue));
 
                 UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
             }
@@ -173,7 +174,7 @@ public partial class ChartPropertiesView : UserControl
 
             if (newValue == true)
             {
-                string reading = await Entry.GetAutoReading(ChartSystem.Entry.Title);
+                string reading = await ReadingConverter.Convert(ChartSystem.Entry.Title);
 
                 GenericEditOperation<bool> op0 = new(value => { ChartSystem.Entry.AutoReading = value; }, oldValue, newValue);
                 GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.Reading = value; }, ChartSystem.Entry.Reading, reading);
