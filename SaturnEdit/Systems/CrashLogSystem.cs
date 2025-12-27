@@ -23,10 +23,8 @@ public class CrashLogSystem
     {
         try
         {
-            string path = CrashLogPath;
-            
-            Directory.CreateDirectory(path);
-            File.WriteAllText(path, log);
+            Directory.CreateDirectory(CrashLogDirectory);
+            File.WriteAllText(CrashLogPath, log);
         }
         catch
         {
