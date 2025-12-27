@@ -151,7 +151,16 @@ public partial class PlaybackView : UserControl
             blockEvents = false;
 
             TextBlockTimestampMeasureTicks.Text = $"{TimeSystem.Timestamp.Measure}' {TimeSystem.Timestamp.Tick,4}";
-            TextBlockTimestampTime.Text = TimeSpan.FromMilliseconds(TimeSystem.Timestamp.Time).ToString(@"mm\:ss\.fff");
+
+            try
+            {
+                TextBlockTimestampTime.Text = TimeSpan.FromMilliseconds(TimeSystem.Timestamp.Time).ToString(@"mm\:ss\.fff");
+            }
+            catch (Exception ex)
+            {
+                // Don't throw.
+                Console.WriteLine(ex);
+            }
         });
     }
     

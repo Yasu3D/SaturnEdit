@@ -1,7 +1,6 @@
 ﻿using Avalonia;
 using System;
-using System.IO;
-using SaturnEdit.Utilities;
+using SaturnEdit.Systems;
 
 namespace SaturnEdit;
 
@@ -19,7 +18,7 @@ class Program
         }
         catch (Exception ex)
         {
-            WriteCrashLog(ex.ToString());
+            CrashLogSystem.WriteCrashLog(ex.ToString());
         }
     }
 
@@ -30,18 +29,5 @@ class Program
             .UsePlatformDetect()
             .WithInterFont()
             .LogToTrace();
-    }
-    
-    private static void WriteCrashLog(string? log)
-    {
-        try
-        {
-            string logPath = Path.Combine(PersistentDataPathHelper.PersistentDataPath, "crash_log.txt");
-            File.WriteAllText(logPath, log);
-        }
-        catch
-        {
-            // ignored.
-        }
     }
 }
