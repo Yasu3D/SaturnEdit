@@ -392,40 +392,41 @@ public static class EditorSystem
             operations.Add(new ListRemoveOperation<Note>(() => ChartSystem.Chart.LaneToggles, laneToggle));
         }
 
-        foreach (Layer layer in ChartSystem.Chart.Layers)
+        for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
         {
-            for (int i = 0; i < layer.Events.Count; i++)
+            Layer layer = ChartSystem.Chart.Layers[i];
+            for (int j = 0; j < layer.Events.Count; j++)
             {
-                Event @event = layer.Events[i];
+                Event @event = layer.Events[j];
                 if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
-                
+
                 operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
                 operations.Add(new ListRemoveOperation<Event>(() => layer.Events, @event));
             }
-            
-            for (int i = 0; i < layer.Notes.Count; i++)
+
+            for (int j = 0; j < layer.Notes.Count; j++)
             {
-                Note note = layer.Notes[i];
+                Note note = layer.Notes[j];
 
                 if (note is HoldNote holdNote)
                 {
-                    for (int j = 0; j < holdNote.Points.Count; j++)
+                    for (int k = 0; k < holdNote.Points.Count; k++)
                     {
-                        HoldPointNote point = holdNote.Points[j];
+                        HoldPointNote point = holdNote.Points[k];
                         if (!SelectionSystem.SelectedObjects.Contains(point)) continue;
 
                         operations.Add(new SelectionRemoveOperation(point, SelectionSystem.LastSelectedObject));
                         operations.Add(new ListRemoveOperation<HoldPointNote>(() => holdNote.Points, point));
                     }
                 }
-                
+
                 if (!SelectionSystem.SelectedObjects.Contains(note)) continue;
-                
+
                 operations.Add(new SelectionRemoveOperation(note, SelectionSystem.LastSelectedObject));
                 operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, note));
             }
         }
-        
+
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
@@ -434,21 +435,23 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
         
         List<IOperation> operations = [];
-
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is not IPositionable positionable) continue;
 
             if (obj is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     if (point.Position == CursorSystem.Position && point.Size == CursorSystem.Size) continue;
-                    
+
                     operations.Add(new GenericEditOperation<int>(value => { point.Position = value; }, point.Position, CursorSystem.Position));
                     operations.Add(new GenericEditOperation<int>(value => { point.Size = value; }, point.Size, CursorSystem.Size));
                 }
-                
+
                 continue;
             }
             
@@ -488,8 +491,9 @@ public static class EditorSystem
 
                 if (obj is HoldNote sourceHoldNote)
                 {
-                    foreach (HoldPointNote point in sourceHoldNote.Points)
+                    for (int i = 0; i < sourceHoldNote.Points.Count; i++)
                     {
+                        HoldPointNote point = sourceHoldNote.Points[i];
                         HoldPointNote newHoldPoint = new(new(point.Timestamp.FullTick), point.Position, point.Size, holdNote, point.RenderType);
                         holdNote.Points.Add(newHoldPoint);
                     }
@@ -555,29 +559,30 @@ public static class EditorSystem
                 if (obj is HoldNote holdNote)
                 {
                     // Convert all hold note points to new objects.
-                    foreach (HoldPointNote point in holdNote.Points)
+                    for (int i = 0; i < holdNote.Points.Count; i++)
                     {
+                        HoldPointNote point = holdNote.Points[i];
                         Timestamp timestamp = new(point.Timestamp.FullTick);
                         ITimeable? newObject = CursorSystem.CurrentType switch
                         {
                             TouchNote => new TouchNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             ChainNote => new ChainNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             // Hold Note is skipped.
-                            SlideClockwiseNote        => new SlideClockwiseNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            SlideClockwiseNote => new SlideClockwiseNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
-                            SnapForwardNote  => new SnapForwardNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            SnapForwardNote => new SnapForwardNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             SnapBackwardNote => new SnapBackwardNote(timestamp, point.Position, point.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             LaneShowNote => new LaneShowNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
                             LaneHideNote => new LaneHideNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
-                            SyncNote        => new SyncNote(timestamp, point.Position, point.Size),
+                            SyncNote => new SyncNote(timestamp, point.Position, point.Size),
                             MeasureLineNote => new MeasureLineNote(timestamp, false),
-                            _  => null,
+                            _ => null,
                         };
 
                         if (newObject == null) continue;
 
                         operations.Add(new SelectionAddOperation(newObject, SelectionSystem.LastSelectedObject));
-                        
+
                         if (newObject is ILaneToggle and Note newLaneToggle)
                         {
                             operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneToggle));
@@ -693,8 +698,9 @@ public static class EditorSystem
 
                 if (obj is HoldNote sourceHoldNote)
                 {
-                    foreach (HoldPointNote point in sourceHoldNote.Points)
+                    for (int i = 0; i < sourceHoldNote.Points.Count; i++)
                     {
+                        HoldPointNote point = sourceHoldNote.Points[i];
                         HoldPointNote newHoldPoint = new(new(point.Timestamp.FullTick), CursorSystem.Position, CursorSystem.Size, holdNote, point.RenderType);
                         holdNote.Points.Add(newHoldPoint);
                     }
@@ -752,29 +758,30 @@ public static class EditorSystem
                 if (obj is HoldNote holdNote)
                 {
                     // Convert all hold note points to new objects.
-                    foreach (HoldPointNote point in holdNote.Points)
+                    for (int i = 0; i < holdNote.Points.Count; i++)
                     {
+                        HoldPointNote point = holdNote.Points[i];
                         Timestamp timestamp = new(point.Timestamp.FullTick);
                         ITimeable? newObject = CursorSystem.CurrentType switch
                         {
                             TouchNote => new TouchNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             ChainNote => new ChainNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             // Hold Note is skipped.
-                            SlideClockwiseNote        => new SlideClockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            SlideClockwiseNote => new SlideClockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             SlideCounterclockwiseNote => new SlideCounterclockwiseNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
-                            SnapForwardNote  => new SnapForwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
+                            SnapForwardNote => new SnapForwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             SnapBackwardNote => new SnapBackwardNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.BonusType, CursorSystem.JudgementType),
                             LaneShowNote => new LaneShowNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.Direction),
                             LaneHideNote => new LaneHideNote(timestamp, CursorSystem.Position, CursorSystem.Size, CursorSystem.Direction),
-                            SyncNote        => new SyncNote(timestamp, CursorSystem.Position, CursorSystem.Size),
+                            SyncNote => new SyncNote(timestamp, CursorSystem.Position, CursorSystem.Size),
                             MeasureLineNote => new MeasureLineNote(timestamp, false),
-                            _  => null,
+                            _ => null,
                         };
 
                         if (newObject == null) continue;
 
                         operations.Add(new SelectionAddOperation(newObject, SelectionSystem.LastSelectedObject));
-                        
+
                         if (newObject is ILaneToggle and Note newLaneToggle)
                         {
                             operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneToggle));
@@ -882,8 +889,9 @@ public static class EditorSystem
 
                 if (clone is HoldNote holdNote)
                 {
-                    foreach (HoldPointNote point in holdNote.Points)
+                    for (int i = 0; i < holdNote.Points.Count; i++)
                     {
+                        HoldPointNote point = holdNote.Points[i];
                         point.Timestamp.FullTick -= startFullTick;
                     }
                 }
@@ -970,44 +978,50 @@ public static class EditorSystem
         if (exceptions.Count > 0) return;
 
         List<IOperation> operations = [];
-
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             operations.Add(new SelectionRemoveOperation(obj, SelectionSystem.LastSelectedObject));
         }
         
         if (Mode == EditorMode.ObjectMode)
         {
-            foreach (Bookmark bookmark in chart.Bookmarks)
+            for (int i = 0; i < chart.Bookmarks.Count; i++)
             {
+                Bookmark bookmark = chart.Bookmarks[i];
                 bookmark.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
-                
+
                 operations.Add(new ListAddOperation<Bookmark>(() => ChartSystem.Chart.Bookmarks, bookmark));
                 operations.Add(new SelectionAddOperation(bookmark, SelectionSystem.LastSelectedObject));
             }
 
-            foreach (Event globalEvent in chart.Events)
+            for (int i = 0; i < chart.Events.Count; i++)
             {
+                Event globalEvent = chart.Events[i];
                 globalEvent.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
-                
+
                 operations.Add(new ListAddOperation<Event>(() => ChartSystem.Chart.Events, globalEvent));
                 operations.Add(new SelectionAddOperation(globalEvent, SelectionSystem.LastSelectedObject));
             }
 
-            foreach (Note laneToggle in chart.LaneToggles)
+            for (int i = 0; i < chart.LaneToggles.Count; i++)
             {
+                Note laneToggle = chart.LaneToggles[i];
                 laneToggle.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
-                
+
                 operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, laneToggle));
                 operations.Add(new SelectionAddOperation(laneToggle, SelectionSystem.LastSelectedObject));
             }
 
             if (SelectionSystem.SelectedLayer != null)
             {
-                foreach (Layer layer in chart.Layers)
+                for (int i = 0; i < chart.Layers.Count; i++)
                 {
-                    foreach (Event layerEvent in layer.Events)
+                    Layer layer = chart.Layers[i];
+                    for (int j = 0; j < layer.Events.Count; j++)
                     {
+                        Event layerEvent = layer.Events[j];
                         if (layerEvent is StopEffectEvent stopEffectEvent)
                         {
                             foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
@@ -1026,19 +1040,21 @@ public static class EditorSystem
                         {
                             layerEvent.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                         }
-                        
+
                         operations.Add(new ListAddOperation<Event>(() => SelectionSystem.SelectedLayer.Events, layerEvent));
                         operations.Add(new SelectionAddOperation(layerEvent, SelectionSystem.LastSelectedObject));
                     }
 
-                    foreach (Note note in layer.Notes)
+                    for (int j = 0; j < layer.Notes.Count; j++)
                     {
+                        Note note = layer.Notes[j];
                         if (note is HoldNote holdNote)
                         {
                             if (holdNote.Points.Count < 2) continue;
-                            
-                            foreach (HoldPointNote point in holdNote.Points)
+
+                            for (int k = 0; k < holdNote.Points.Count; k++)
                             {
+                                HoldPointNote point = holdNote.Points[k];
                                 point.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                             }
                         }
@@ -1046,7 +1062,7 @@ public static class EditorSystem
                         {
                             note.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
                         }
-                        
+
                         operations.Add(new ListAddOperation<Note>(() => SelectionSystem.SelectedLayer.Notes, note));
                         operations.Add(new SelectionAddOperation(note, SelectionSystem.LastSelectedObject));
                     }
@@ -1058,18 +1074,20 @@ public static class EditorSystem
             if (ActiveObjectGroup is not HoldNote holdNote) return;
             if (chart.Layers.Count == 0) return;
 
-            foreach (Note note in chart.Layers[0].Notes)
+            for (int i = 0; i < chart.Layers[0].Notes.Count; i++)
             {
+                Note note = chart.Layers[0].Notes[i];
                 if (note is not HoldNote sourceHold) continue;
-                
-                foreach (HoldPointNote sourcePoint in sourceHold.Points)
+
+                for (int j = 0; j < sourceHold.Points.Count; j++)
                 {
+                    HoldPointNote sourcePoint = sourceHold.Points[j];
                     sourcePoint.Timestamp.FullTick += TimeSystem.Timestamp.FullTick;
-                        
+
                     operations.Add(new ListAddOperation<HoldPointNote>(() => holdNote.Points, sourcePoint));
                     operations.Add(new SelectionAddOperation(sourcePoint, SelectionSystem.LastSelectedObject));
                 }
-                    
+
                 break;
             }
         }
@@ -1184,13 +1202,15 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
         
         List<IOperation> operations = []; 
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
         
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point);
                 }
             }
@@ -1235,13 +1255,15 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
         
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point);
                 }
             }
@@ -1286,13 +1308,15 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
-
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point);
                 }
             }
@@ -1334,13 +1358,15 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
 
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point);
                 }
             }
@@ -1382,13 +1408,15 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
-
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point);
                 }
             }
@@ -1417,13 +1445,15 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
-
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point);
                 }
             }
@@ -1452,13 +1482,15 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
-
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point);
                 }
             }
@@ -1487,13 +1519,15 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
-
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point);
                 }
             }
@@ -1535,8 +1569,9 @@ public static class EditorSystem
                     lastFullTick = holdNote.Timestamp.FullTick;
                 }
 
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point, step);
                 }
             }
@@ -1584,8 +1619,9 @@ public static class EditorSystem
                     lastFullTick = holdNote.Timestamp.FullTick;
                 }
 
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point, step);
                 }
             }
@@ -1633,8 +1669,9 @@ public static class EditorSystem
                     lastFullTick = holdNote.Timestamp.FullTick;
                 }
 
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point, step);
                 }
             }
@@ -1682,8 +1719,9 @@ public static class EditorSystem
                     lastFullTick = holdNote.Timestamp.FullTick;
                 }
 
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     addOperation(point, step);
                 }
             }
@@ -1733,8 +1771,9 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
-
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is not IPositionable positionable) continue;
             
@@ -1784,8 +1823,9 @@ public static class EditorSystem
             }
             else if (obj is HoldNote sourceHoldNote)
             {
-                foreach (HoldPointNote holdPointNote in sourceHoldNote.Points)
+                for (int i = 0; i < sourceHoldNote.Points.Count; i++)
                 {
+                    HoldPointNote holdPointNote = sourceHoldNote.Points[i];
                     int newPosition = axis - holdPointNote.Size - holdPointNote.Position;
                     operations.Add(new GenericEditOperation<int>(value => { holdPointNote.Position = value; }, holdPointNote.Position, newPosition));
                 }
@@ -1818,8 +1858,9 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
-
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is SlideClockwiseNote sourceClw)
             {
@@ -1912,8 +1953,9 @@ public static class EditorSystem
         {
             if (obj is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     int newFullTick = min + max - point.Timestamp.FullTick;
                     operations.Add(new GenericEditOperation<int>(value => { point.Timestamp.FullTick = value; }, point.Timestamp.FullTick, newFullTick));
                 }
@@ -1962,8 +2004,9 @@ public static class EditorSystem
         {
             if (obj is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     int newFullTick = (int)Math.Round(min + (point.Timestamp.FullTick - min) * scale);
                     operations.Add(new GenericEditOperation<int>(value => { point.Timestamp.FullTick = value; }, point.Timestamp.FullTick, newFullTick));
                 }
@@ -2004,28 +2047,33 @@ public static class EditorSystem
         
         List<IOperation> operations = [];
 
-        foreach (Event @event in ChartSystem.Chart.Events)
+        for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
         {
+            Event @event = ChartSystem.Chart.Events[i];
             if (@event is TempoChangeEvent && @event.Timestamp.FullTick == 0) continue;
             if (@event is MetreChangeEvent && @event.Timestamp.FullTick == 0) continue;
-            
+
             addOperation(@event);
         }
 
-        foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+        for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
         {
+            Note laneToggle = ChartSystem.Chart.LaneToggles[i];
             addOperation(laneToggle);
         }
 
-        foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+        for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
         {
+            Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
             addOperation(bookmark);
         }
 
-        foreach (Layer layer in ChartSystem.Chart.Layers)
+        for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
         {
-            foreach (Event @event in layer.Events)
+            Layer layer = ChartSystem.Chart.Layers[i];
+            for (int j = 0; j < layer.Events.Count; j++)
             {
+                Event @event = layer.Events[j];
                 if (@event is StopEffectEvent stopEffectEvent)
                 {
                     addOperation(stopEffectEvent.SubEvents[0]);
@@ -2043,12 +2091,14 @@ public static class EditorSystem
                 }
             }
 
-            foreach (Note note in layer.Notes)
+            for (int j = 0; j < layer.Notes.Count; j++)
             {
+                Note note = layer.Notes[j];
                 if (note is HoldNote holdNote)
                 {
-                    foreach (HoldPointNote point in holdNote.Points)
+                    for (int k = 0; k < holdNote.Points.Count; k++)
                     {
+                        HoldPointNote point = holdNote.Points[k];
                         addOperation(point);
                     }
                 }
@@ -2058,7 +2108,7 @@ public static class EditorSystem
                 }
             }
         }
-        
+
         if (operations.Count == 0) return;
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
@@ -2081,25 +2131,30 @@ public static class EditorSystem
         
         List<IOperation> operations = [];
 
-        foreach (Event @event in ChartSystem.Chart.Events)
+        for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
         {
+            Event @event = ChartSystem.Chart.Events[i];
             addOperation(@event);
         }
 
-        foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+        for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
         {
+            Note laneToggle = ChartSystem.Chart.LaneToggles[i];
             addOperation(laneToggle);
         }
 
-        foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+        for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
         {
+            Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
             addOperation(bookmark);
         }
 
-        foreach (Layer layer in ChartSystem.Chart.Layers)
+        for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
         {
-            foreach (Event @event in layer.Events)
+            Layer layer = ChartSystem.Chart.Layers[i];
+            for (int j = 0; j < layer.Events.Count; j++)
             {
+                Event @event = layer.Events[j];
                 if (@event is StopEffectEvent stopEffectEvent)
                 {
                     addOperation(stopEffectEvent.SubEvents[0]);
@@ -2117,12 +2172,14 @@ public static class EditorSystem
                 }
             }
 
-            foreach (Note note in layer.Notes)
+            for (int j = 0; j < layer.Notes.Count; j++)
             {
+                Note note = layer.Notes[j];
                 if (note is HoldNote holdNote)
                 {
-                    foreach (HoldPointNote point in holdNote.Points)
+                    for (int k = 0; k < holdNote.Points.Count; k++)
                     {
+                        HoldPointNote point = holdNote.Points[k];
                         addOperation(point);
                     }
                 }
@@ -2132,7 +2189,7 @@ public static class EditorSystem
                 }
             }
         }
-        
+
         if (operations.Count == 0) return;
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
@@ -2153,30 +2210,36 @@ public static class EditorSystem
     public static void Transform_MirrorChart(int axis)
     {
         List<IOperation> operations = [];
-                
-        foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+
+        for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
         {
+            Note laneToggle = ChartSystem.Chart.LaneToggles[i];
             if (laneToggle is not IPositionable positionable) continue;
-            
+
             addOperation(positionable);
         }
 
-        foreach (Layer layer in ChartSystem.Chart.Layers)
-        foreach (Note note in layer.Notes)
+        for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
         {
-            if (note is HoldNote holdNote)
+            Layer layer = ChartSystem.Chart.Layers[i];
+            for (int j = 0; j < layer.Notes.Count; j++)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                Note note = layer.Notes[j];
+                if (note is HoldNote holdNote)
                 {
-                    addOperation(point);
+                    for (int k = 0; k < holdNote.Points.Count; k++)
+                    {
+                        HoldPointNote point = holdNote.Points[k];
+                        addOperation(point);
+                    }
+                }
+                else if (note is IPositionable positionable)
+                {
+                    addOperation(positionable);
                 }
             }
-            else if (note is IPositionable positionable)
-            {
-                addOperation(positionable);
-            }
         }
-        
+
         if (operations.Count == 0) return;
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
 
@@ -2236,8 +2299,9 @@ public static class EditorSystem
             }
             else if (positionable is HoldNote sourceHoldNote)
             {
-                foreach (HoldPointNote holdPointNote in sourceHoldNote.Points)
+                for (int i = 0; i < sourceHoldNote.Points.Count; i++)
                 {
+                    HoldPointNote holdPointNote = sourceHoldNote.Points[i];
                     int newPosition = axis - holdPointNote.Size - holdPointNote.Position;
                     operations.Add(new GenericEditOperation<int>(value => { holdPointNote.Position = value; }, holdPointNote.Position, newPosition));
                 }
@@ -2270,7 +2334,9 @@ public static class EditorSystem
         int interval = 1920 * beats / division;
         if (interval <= 0) return;
         
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj is HoldNote holdNote)
             {
@@ -2499,21 +2565,22 @@ public static class EditorSystem
                 newHoldNote.JudgementType = h.JudgementType;
                 bonusTypeSet = true;
             }
-            
-            foreach (HoldPointNote p in h.Points)
+
+            for (int i = 0; i < h.Points.Count; i++)
             {
+                HoldPointNote p = h.Points[i];
                 if (!alreadyExistingPoints.Add((p.Timestamp.FullTick, p.Position, p.Size))) continue;
-                
+
                 newHoldNote.Points.Add(new
                 (
-                    timestamp:  new(p.Timestamp.FullTick),
-                    position:   p.Position,
-                    size:       p.Size,
-                    parent:     newHoldNote,
+                    timestamp: new(p.Timestamp.FullTick),
+                    position: p.Position,
+                    size: p.Size,
+                    parent: newHoldNote,
                     renderType: p.RenderType
                 ));
             }
-            
+
             operations.Add(new ListRemoveOperation<Note>(() => l.Notes, h));
             operations.Add(new SelectionRemoveOperation(h, SelectionSystem.LastSelectedObject));
         }
@@ -2530,11 +2597,12 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
-        
-        foreach (Event @event in ChartSystem.Chart.Events)
+
+        for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
         {
+            Event @event = ChartSystem.Chart.Events[i];
             if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
-            
+
             operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
             operations.Add(new ListRemoveOperation<Event>(() => ChartSystem.Chart.Events, @event));
         }
@@ -2614,11 +2682,12 @@ public static class EditorSystem
         if (SelectionSystem.SelectedObjects.Count == 0) return;
 
         List<IOperation> operations = [];
-        
-        foreach (Event @event in SelectionSystem.SelectedLayer.Events)
+
+        for (int i = 0; i < SelectionSystem.SelectedLayer.Events.Count; i++)
         {
+            Event @event = SelectionSystem.SelectedLayer.Events[i];
             if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
-            
+
             operations.Add(new SelectionRemoveOperation(@event, SelectionSystem.LastSelectedObject));
             operations.Add(new ListRemoveOperation<Event>(() => SelectionSystem.SelectedLayer.Events, @event));
         }

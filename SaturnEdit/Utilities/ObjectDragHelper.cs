@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
@@ -33,7 +34,9 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
         EndLane = clickDragHelper.StartLane;
         DraggedObjects = [];
 
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             int position = 0;
             int size = 0;
@@ -50,8 +53,9 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
             {
                 subItems = [];
 
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     subItems.Add(new(point, point.Timestamp.FullTick, point.Position, point.Size, null));
                 }
             }
@@ -120,12 +124,14 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
         if (DraggedObjects == null) return new([]);
         
         List<IOperation> operations = [];
-        foreach (ObjectDragItem item in DraggedObjects)
+        for (int i = 0; i < DraggedObjects.Count; i++)
         {
+            ObjectDragItem item = DraggedObjects[i];
             if (item.SubItems != null)
             {
-                foreach (ObjectDragItem subItem in item.SubItems)
+                for (int j = 0; j < item.SubItems.Count; j++)
                 {
+                    ObjectDragItem subItem = item.SubItems[j];
                     addOperation(subItem);
                 }
             }
@@ -134,7 +140,7 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
                 addOperation(item);
             }
         }
-        
+
         return new(operations);
 
         void addOperation(ObjectDragItem item)

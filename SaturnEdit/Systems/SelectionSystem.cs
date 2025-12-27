@@ -55,7 +55,7 @@ public static class SelectionSystem
         // - add pointerObj
         if (!control && !shift)
         {
-            foreach (ITimeable obj in SelectedObjects)
+            foreach (ITimeable obj in SelectedObjects.ToArray())
             {
                 operations.Add(new SelectionRemoveOperation(obj, LastSelectedObject));
             }
@@ -94,7 +94,7 @@ public static class SelectionSystem
 
             if (!control)
             {
-                foreach (ITimeable obj in SelectedObjects)
+                foreach (ITimeable obj in SelectedObjects.ToArray())
                 {
                     operations.Add(new SelectionRemoveOperation(obj, LastSelectedObject));
                 }
@@ -116,8 +116,9 @@ public static class SelectionSystem
 
             if (EditorSystem.Mode == EditorMode.ObjectMode)
             {
-                foreach (Event @event in ChartSystem.Chart.Events)
+                for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
                 {
+                    Event @event = ChartSystem.Chart.Events[i];
                     if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                     if (@event.Timestamp < start) continue;
                     if (@event.Timestamp > end) continue;
@@ -125,8 +126,9 @@ public static class SelectionSystem
                     operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
                 }
 
-                foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+                for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
                 {
+                    Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
                     if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                     if (bookmark.Timestamp < start) continue;
                     if (bookmark.Timestamp > end) continue;
@@ -134,8 +136,9 @@ public static class SelectionSystem
                     operations.Add(new SelectionAddOperation(bookmark, LastSelectedObject));
                 }
 
-                foreach (Note note in ChartSystem.Chart.LaneToggles)
+                for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
                 {
+                    Note note = ChartSystem.Chart.LaneToggles[i];
                     if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                     if (note.Timestamp < start) continue;
                     if (note.Timestamp > end) continue;
@@ -143,12 +146,14 @@ public static class SelectionSystem
                     operations.Add(new SelectionAddOperation(note, LastSelectedObject));
                 }
 
-                foreach (Layer layer in ChartSystem.Chart.Layers)
+                for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
                 {
+                    Layer layer = ChartSystem.Chart.Layers[i];
                     if (!layer.Visible) continue;
-                    
-                    foreach (Event @event in layer.Events)
+
+                    for (int j = 0; j < layer.Events.Count; j++)
                     {
+                        Event @event = layer.Events[j];
                         if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                         if (@event.Timestamp < start) continue;
                         if (@event.Timestamp > end) continue;
@@ -156,8 +161,9 @@ public static class SelectionSystem
                         operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
                     }
 
-                    foreach (Note note in layer.Notes)
+                    for (int j = 0; j < layer.Notes.Count; j++)
                     {
+                        Note note = layer.Notes[j];
                         if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                         if (note.Timestamp < start) continue;
                         if (note.Timestamp > end) continue;
@@ -170,8 +176,9 @@ public static class SelectionSystem
             {
                 if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
                 {
-                    foreach (HoldPointNote point in holdNote.Points)
+                    for (int i = 0; i < holdNote.Points.Count; i++)
                     {
+                        HoldPointNote point = holdNote.Points[i];
                         if (!RenderUtils.IsVisible(point, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                         if (point.Timestamp < start) continue;
                         if (point.Timestamp > end) continue;
@@ -181,8 +188,9 @@ public static class SelectionSystem
                 }
                 else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
                 {
-                    foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                    for (int i = 0; i < stopEffectEvent.SubEvents.Length; i++)
                     {
+                        EffectSubEvent subEvent = stopEffectEvent.SubEvents[i];
                         if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                         if (subEvent.Timestamp < start) continue;
                         if (subEvent.Timestamp > end) continue;
@@ -192,8 +200,9 @@ public static class SelectionSystem
                 }
                 else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
                 {
-                    foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                    for (int i = 0; i < reverseEffectEvent.SubEvents.Length; i++)
                     {
+                        EffectSubEvent subEvent = reverseEffectEvent.SubEvents[i];
                         if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                         if (subEvent.Timestamp < start) continue;
                         if (subEvent.Timestamp > end) continue;
@@ -219,9 +228,10 @@ public static class SelectionSystem
         BoxSelectArgs.NegativeSelection = negativeSelection;
         BoxSelectArgs.GlobalStartTime = TimeSystem.Timestamp.Time + viewTime;
         BoxSelectArgs.ScaledStartTimes.Clear();
-        
-        foreach (Layer layer in ChartSystem.Chart.Layers)
+
+        for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
         {
+            Layer layer = ChartSystem.Chart.Layers[i];
             float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
             BoxSelectArgs.ScaledStartTimes[layer] = scaledTime + viewTime;
         }
@@ -231,9 +241,10 @@ public static class SelectionSystem
     {
         BoxSelectArgs.GlobalEndTime = TimeSystem.Timestamp.Time + viewTime;
         BoxSelectArgs.ScaledEndTimes.Clear();
-        
-        foreach (Layer layer in ChartSystem.Chart.Layers)
+
+        for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
         {
+            Layer layer = ChartSystem.Chart.Layers[i];
             float scaledTime = Timestamp.ScaledTimeFromTime(layer, TimeSystem.Timestamp.Time);
             BoxSelectArgs.ScaledEndTimes[layer] = scaledTime + viewTime;
         }
@@ -262,8 +273,9 @@ public static class SelectionSystem
 
             if (EditorSystem.Mode == EditorMode.ObjectMode)
             {
-                foreach (Event @event in ChartSystem.Chart.Events)
+                for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
                 {
+                    Event @event = ChartSystem.Chart.Events[i];
                     if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                     if (@event.Timestamp.Time < globalMin) continue;
                     if (@event.Timestamp.Time > globalMax) continue;
@@ -280,8 +292,9 @@ public static class SelectionSystem
                     }
                 }
 
-                foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+                for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
                 {
+                    Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
                     if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                     if (bookmark.Timestamp.Time < globalMin) continue;
                     if (bookmark.Timestamp.Time > globalMax) continue;
@@ -298,8 +311,9 @@ public static class SelectionSystem
                     }
                 }
 
-                foreach (Note note in ChartSystem.Chart.LaneToggles)
+                for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
                 {
+                    Note note = ChartSystem.Chart.LaneToggles[i];
                     if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                     if (note.Timestamp.Time < globalMin) continue;
                     if (note.Timestamp.Time > globalMax) continue;
@@ -318,12 +332,14 @@ public static class SelectionSystem
                     }
                 }
 
-                foreach (Layer layer in ChartSystem.Chart.Layers)
+                for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
                 {
+                    Layer layer = ChartSystem.Chart.Layers[i];
                     if (!layer.Visible) continue;
 
-                    foreach (Event @event in layer.Events)
+                    for (int j = 0; j < layer.Events.Count; j++)
                     {
+                        Event @event = layer.Events[j];
                         if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                         if (@event.Timestamp.Time < globalMin) continue;
                         if (@event.Timestamp.Time > globalMax) continue;
@@ -340,8 +356,9 @@ public static class SelectionSystem
                         }
                     }
 
-                    foreach (Note note in layer.Notes)
+                    for (int j = 0; j < layer.Notes.Count; j++)
                     {
+                        Note note = layer.Notes[j];
                         if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                         float min = MathF.Min(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
@@ -395,8 +412,9 @@ public static class SelectionSystem
                     if (layer == null) return;
                     if (!layer.Visible) return;
 
-                    foreach (HoldPointNote point in holdNote.Points)
+                    for (int i = 0; i < holdNote.Points.Count; i++)
                     {
+                        HoldPointNote point = holdNote.Points[i];
                         if (!RenderUtils.IsVisible(point, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                         float min = MathF.Min(BoxSelectArgs.ScaledStartTimes[layer], BoxSelectArgs.ScaledEndTimes[layer]);
@@ -426,8 +444,9 @@ public static class SelectionSystem
                     if (layer == null) return;
                     if (!layer.Visible) return;
 
-                    foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                    for (int i = 0; i < stopEffectEvent.SubEvents.Length; i++)
                     {
+                        EffectSubEvent subEvent = stopEffectEvent.SubEvents[i];
                         if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                         if (subEvent.Timestamp.Time < globalMin) continue;
                         if (subEvent.Timestamp.Time > globalMax) continue;
@@ -451,8 +470,9 @@ public static class SelectionSystem
                     if (layer == null) return;
                     if (!layer.Visible) return;
 
-                    foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                    for (int i = 0; i < reverseEffectEvent.SubEvents.Length; i++)
                     {
+                        EffectSubEvent subEvent = reverseEffectEvent.SubEvents[i];
                         if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
                         if (subEvent.Timestamp.Time < globalMin) continue;
                         if (subEvent.Timestamp.Time > globalMax) continue;
@@ -488,44 +508,50 @@ public static class SelectionSystem
 
         if (EditorSystem.Mode == EditorMode.ObjectMode)
         {
-            foreach (Event @event in ChartSystem.Chart.Events)
+            for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
             {
+                Event @event = ChartSystem.Chart.Events[i];
                 if (SelectedObjects.Contains(@event)) continue;
                 if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
-                
+
                 operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
             }
 
-            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
             {
+                Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
                 if (SelectedObjects.Contains(bookmark)) continue;
                 if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                 operations.Add(new SelectionAddOperation(bookmark, LastSelectedObject));
             }
 
-            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
             {
+                Note laneToggle = ChartSystem.Chart.LaneToggles[i];
                 if (SelectedObjects.Contains(laneToggle)) continue;
                 if (!RenderUtils.IsVisible(laneToggle, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                 operations.Add(new SelectionAddOperation(laneToggle, LastSelectedObject));
             }
 
-            foreach (Layer layer in ChartSystem.Chart.Layers)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
+                Layer layer = ChartSystem.Chart.Layers[i];
                 if (!layer.Visible) continue;
-                
-                foreach (Event @event in layer.Events)
+
+                for (int j = 0; j < layer.Events.Count; j++)
                 {
+                    Event @event = layer.Events[j];
                     if (SelectedObjects.Contains(@event)) continue;
                     if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                     operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
                 }
 
-                foreach (Note note in layer.Notes)
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
+                    Note note = layer.Notes[j];
                     if (SelectedObjects.Contains(note)) continue;
                     if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
@@ -541,9 +567,10 @@ public static class SelectionSystem
 
                 if (layer == null) return;
                 if (!layer.Visible) return;
-                
-                foreach (HoldPointNote point in holdNote.Points)
+
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     if (SelectedObjects.Contains(point)) continue;
 
                     operations.Add(new SelectionAddOperation(point, LastSelectedObject));
@@ -555,9 +582,10 @@ public static class SelectionSystem
 
                 if (layer == null) return;
                 if (!layer.Visible) return;
-                
-                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+
+                for (int i = 0; i < stopEffectEvent.SubEvents.Length; i++)
                 {
+                    EffectSubEvent subEvent = stopEffectEvent.SubEvents[i];
                     if (SelectedObjects.Contains(subEvent)) continue;
                     operations.Add(new SelectionAddOperation(stopEffectEvent.SubEvents[0], LastSelectedObject));
                 }
@@ -568,9 +596,10 @@ public static class SelectionSystem
 
                 if (layer == null) return;
                 if (!layer.Visible) return;
-                
-                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+
+                for (int i = 0; i < reverseEffectEvent.SubEvents.Length; i++)
                 {
+                    EffectSubEvent subEvent = reverseEffectEvent.SubEvents[i];
                     if (SelectedObjects.Contains(subEvent)) continue;
                     operations.Add(new SelectionAddOperation(reverseEffectEvent.SubEvents[0], LastSelectedObject));
                 }
@@ -585,7 +614,7 @@ public static class SelectionSystem
         if (SelectedObjects.Count == 0) return;
         List<IOperation> operations = [];
 
-        foreach (ITimeable obj in SelectedObjects)
+        foreach (ITimeable obj in SelectedObjects.ToArray())
         {
             operations.Add(new SelectionRemoveOperation(obj, LastSelectedObject));
         }
@@ -638,8 +667,9 @@ public static class SelectionSystem
 
             if (EditorSystem.Mode == EditorMode.ObjectMode)
             {
-                foreach (Event @event in ChartSystem.Chart.Events)
+                for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
                 {
+                    Event @event = ChartSystem.Chart.Events[i];
                     if (SelectedObjects.Contains(@event)) continue;
                     if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
@@ -652,8 +682,9 @@ public static class SelectionSystem
 
                 if (SelectByCriteriaArgs.IncludeBookmarks)
                 {
-                    foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+                    for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
                     {
+                        Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
                         if (SelectedObjects.Contains(bookmark)) continue;
                         if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
@@ -661,8 +692,9 @@ public static class SelectionSystem
                     }
                 }
 
-                foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+                for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
                 {
+                    Note laneToggle = ChartSystem.Chart.LaneToggles[i];
                     if (SelectedObjects.Contains(laneToggle)) continue;
 
                     if (laneToggle is LaneShowNote && !SelectByCriteriaArgs.IncludeLaneShowNotes) continue;
@@ -682,12 +714,14 @@ public static class SelectionSystem
                     operations.Add(new SelectionAddOperation(laneToggle, LastSelectedObject));
                 }
 
-                foreach (Layer layer in ChartSystem.Chart.Layers)
+                for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
                 {
+                    Layer layer = ChartSystem.Chart.Layers[i];
                     if (!layer.Visible) continue;
-                    
-                    foreach (Event @event in layer.Events)
+
+                    for (int j = 0; j < layer.Events.Count; j++)
                     {
+                        Event @event = layer.Events[j];
                         if (SelectedObjects.Contains(@event)) continue;
 
                         if (@event is SpeedChangeEvent && !SelectByCriteriaArgs.IncludeSpeedChangeEvents) continue;
@@ -698,8 +732,9 @@ public static class SelectionSystem
                         operations.Add(new SelectionAddOperation(@event, LastSelectedObject));
                     }
 
-                    foreach (Note note in layer.Notes)
+                    for (int j = 0; j < layer.Notes.Count; j++)
                     {
+                        Note note = layer.Notes[j];
                         if (SelectedObjects.Contains(note)) continue;
 
                         if (note is TouchNote && !SelectByCriteriaArgs.IncludeTouchNotes) continue;
@@ -733,11 +768,12 @@ public static class SelectionSystem
 
                 if (layer == null) return;
                 if (!layer.Visible) return;
-                
-                foreach (HoldPointNote point in holdNote.Points)
+
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     if (SelectedObjects.Contains(point)) continue;
-                    
+
                     int positionDifference = Math.Abs(point.Position - SelectByCriteriaArgs.Position);
                     positionDifference = positionDifference > 30 ? 60 - positionDifference : positionDifference;
 
@@ -745,7 +781,7 @@ public static class SelectionSystem
 
                     if (positionDifference > SelectByCriteriaArgs.PositionVariance) continue;
                     if (sizeDifference > SelectByCriteriaArgs.SizeVariance) continue;
-                    
+
                     operations.Add(new SelectionAddOperation(point, LastSelectedObject));
                 }
             }
@@ -760,7 +796,7 @@ public static class SelectionSystem
 
             List<IOperation> operations = [];
 
-            foreach (ITimeable obj in SelectedObjects)
+            foreach (ITimeable obj in SelectedObjects.ToArray())
             {
                 if (EditorSystem.Mode == EditorMode.ObjectMode)
                 {

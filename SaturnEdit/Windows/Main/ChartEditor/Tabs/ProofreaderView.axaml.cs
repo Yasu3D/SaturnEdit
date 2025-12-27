@@ -42,117 +42,133 @@ public partial class ProofreaderView : UserControl
 
         if (criteria.StrictNoteSizeMer)
         {
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            foreach (Note note in layer.Notes)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                if (note is not IPositionable positionable) continue;
-                if (note is not IPlayable playable) continue;
-
-                int minSize = (note, playable.BonusType) switch
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
-                    (TouchNote, BonusType.Normal) => 4,
-                    (TouchNote, BonusType.Bonus) => 5,
-                    (TouchNote, BonusType.R) => 6,
-                    (SlideClockwiseNote, BonusType.Normal) => 5,
-                    (SlideClockwiseNote, BonusType.Bonus) => 7,
-                    (SlideClockwiseNote, BonusType.R) => 10,
-                    (SlideCounterclockwiseNote, BonusType.Normal) => 5,
-                    (SlideCounterclockwiseNote, BonusType.Bonus) => 7,
-                    (SlideCounterclockwiseNote, BonusType.R) => 10,
-                    (SnapForwardNote, BonusType.Normal) => 6,
-                    (SnapForwardNote, BonusType.Bonus) => 6,
-                    (SnapForwardNote, BonusType.R) => 8,
-                    (SnapBackwardNote, BonusType.Normal) => 6,
-                    (SnapBackwardNote, BonusType.Bonus) => 6,
-                    (SnapBackwardNote, BonusType.R) => 8,
-                    (ChainNote, BonusType.Normal) => 4,
-                    (ChainNote, BonusType.Bonus) => 4,
-                    (ChainNote, BonusType.R) => 10,
-                    (HoldNote, BonusType.Normal) => 2,
-                    (HoldNote, BonusType.Bonus) => 2,
-                    (HoldNote, BonusType.R) => 8,
-                    (_, _) => 1,
-                };
+                    Note note = layer.Notes[j];
+                    if (note is not IPositionable positionable) continue;
+                    if (note is not IPlayable playable) continue;
 
-                if (positionable.Size >= minSize) continue;
-                
-                Problems.Add(new()
-                {
-                    Measure = note.Timestamp.Measure,
-                    Tick = note.Timestamp.Tick,
-                    Position = positionable.Position,
-                    Size = positionable.Size,
-                    ProblemKey = "ChartEditor.Proofreader.Problem.StrictNoteSizeMer",
-                    TypeKey = typeKey(note),
-                });
+                    int minSize = (note, playable.BonusType) switch
+                    {
+                        (TouchNote, BonusType.Normal) => 4,
+                        (TouchNote, BonusType.Bonus) => 5,
+                        (TouchNote, BonusType.R) => 6,
+                        (SlideClockwiseNote, BonusType.Normal) => 5,
+                        (SlideClockwiseNote, BonusType.Bonus) => 7,
+                        (SlideClockwiseNote, BonusType.R) => 10,
+                        (SlideCounterclockwiseNote, BonusType.Normal) => 5,
+                        (SlideCounterclockwiseNote, BonusType.Bonus) => 7,
+                        (SlideCounterclockwiseNote, BonusType.R) => 10,
+                        (SnapForwardNote, BonusType.Normal) => 6,
+                        (SnapForwardNote, BonusType.Bonus) => 6,
+                        (SnapForwardNote, BonusType.R) => 8,
+                        (SnapBackwardNote, BonusType.Normal) => 6,
+                        (SnapBackwardNote, BonusType.Bonus) => 6,
+                        (SnapBackwardNote, BonusType.R) => 8,
+                        (ChainNote, BonusType.Normal) => 4,
+                        (ChainNote, BonusType.Bonus) => 4,
+                        (ChainNote, BonusType.R) => 10,
+                        (HoldNote, BonusType.Normal) => 2,
+                        (HoldNote, BonusType.Bonus) => 2,
+                        (HoldNote, BonusType.R) => 8,
+                        (_, _) => 1,
+                    };
+
+                    if (positionable.Size >= minSize) continue;
+
+                    Problems.Add(new()
+                    {
+                        Measure = note.Timestamp.Measure,
+                        Tick = note.Timestamp.Tick,
+                        Position = positionable.Position,
+                        Size = positionable.Size,
+                        ProblemKey = "ChartEditor.Proofreader.Problem.StrictNoteSizeMer",
+                        TypeKey = typeKey(note),
+                    });
+                }
             }
         }
         else if (criteria.StrictNoteSizeSat)
         {
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            foreach (Note note in layer.Notes)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                if (note is not IPositionable positionable) continue;
-                if (note is not IPlayable) continue;
-                
-                if (positionable.Size > 2) continue;
-                if (note is HoldNote && positionable.Size >= 2) continue;
-                if (note is SyncNote && positionable.Size >= 1) continue;
-                
-                Problems.Add(new()
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
-                    Measure = note.Timestamp.Measure,
-                    Tick = note.Timestamp.Tick,
-                    Position = positionable.Position,
-                    Size = positionable.Size,
-                    ProblemKey = "ChartEditor.Proofreader.Problem.StrictNoteSizeSat",
-                    TypeKey = typeKey(note),
-                });
+                    Note note = layer.Notes[j];
+                    if (note is not IPositionable positionable) continue;
+                    if (note is not IPlayable) continue;
+
+                    if (positionable.Size > 2) continue;
+                    if (note is HoldNote && positionable.Size >= 2) continue;
+                    if (note is SyncNote && positionable.Size >= 1) continue;
+
+                    Problems.Add(new()
+                    {
+                        Measure = note.Timestamp.Measure,
+                        Tick = note.Timestamp.Tick,
+                        Position = positionable.Position,
+                        Size = positionable.Size,
+                        ProblemKey = "ChartEditor.Proofreader.Problem.StrictNoteSizeSat",
+                        TypeKey = typeKey(note),
+                    });
+                }
             }
         }
 
         if (criteria.StrictBonusTypeMer)
         {
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            foreach (Note note in layer.Notes)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                if (note is not IPositionable positionable) continue;
-                if (note is not IPlayable playable) continue;
-                if (playable.BonusType != BonusType.Bonus) continue;
-                if (note is TouchNote or SlideClockwiseNote or SlideCounterclockwiseNote) continue;
-                
-                Problems.Add(new()
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
-                    Measure = note.Timestamp.Measure,
-                    Tick = note.Timestamp.Tick,
-                    Position = positionable.Position,
-                    Size = positionable.Size,
-                    ProblemKey = "ChartEditor.Proofreader.Problem.StrictBonusTypeMer",
-                    TypeKey = typeKey(note),
-                });
+                    Note note = layer.Notes[j];
+                    if (note is not IPositionable positionable) continue;
+                    if (note is not IPlayable playable) continue;
+                    if (playable.BonusType != BonusType.Bonus) continue;
+                    if (note is TouchNote or SlideClockwiseNote or SlideCounterclockwiseNote) continue;
+
+                    Problems.Add(new()
+                    {
+                        Measure = note.Timestamp.Measure,
+                        Tick = note.Timestamp.Tick,
+                        Position = positionable.Position,
+                        Size = positionable.Size,
+                        ProblemKey = "ChartEditor.Proofreader.Problem.StrictBonusTypeMer",
+                        TypeKey = typeKey(note),
+                    });
+                }
             }
         }
 
         if (criteria.OverlappingNotesLenient || criteria.OverlappingNotesStrict)
         {
             Dictionary<int, List<Note>> notesOnTick = [];
-            
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            foreach (Note note in layer.Notes)
-            {
-                if (note is not IPositionable) continue;
-                if (note is not IPlayable) continue;
 
-                if (note is HoldNote) continue;
-                if (!criteria.OverlappingNotesStrict && note is ChainNote) continue;
-                
-                if (notesOnTick.TryGetValue(note.Timestamp.FullTick, out List<Note>? notes))
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
+            {
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
-                    notes.Add(note);
-                    continue;
+                    Note note = layer.Notes[j];
+                    if (note is not IPositionable) continue;
+                    if (note is not IPlayable) continue;
+
+                    if (note is HoldNote) continue;
+                    if (!criteria.OverlappingNotesStrict && note is ChainNote) continue;
+
+                    if (notesOnTick.TryGetValue(note.Timestamp.FullTick, out List<Note>? notes))
+                    {
+                        notes.Add(note);
+                        continue;
+                    }
+
+                    notesOnTick[note.Timestamp.FullTick] = [note];
                 }
-                
-                notesOnTick[note.Timestamp.FullTick] = [ note ];
             }
 
             foreach (KeyValuePair<int, List<Note>> notes in notesOnTick)
@@ -182,62 +198,71 @@ public partial class ProofreaderView : UserControl
 
         if (criteria.AmbiguousHoldNoteDefinition)
         {
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            foreach (Note note in layer.Notes)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                if (note is not HoldNote holdNote) continue;
-                if (holdNote.Points.Count < 2) continue;
-
-                for (int i = 1; i < holdNote.Points.Count; i++)
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
-                    HoldPointNote previousPoint = holdNote.Points[i - 1];
-                    HoldPointNote currentPoint = holdNote.Points[i];
+                    Note note = layer.Notes[j];
+                    if (note is not HoldNote holdNote) continue;
+                    if (holdNote.Points.Count < 2) continue;
 
-                    int previousCenter = previousPoint.Position * 2 + previousPoint.Size;
-                    int currentCenter = currentPoint.Position * 2 + currentPoint.Size;
-
-                    if (Math.Abs(previousCenter - currentCenter) != 60) continue;
-                    
-                    Problems.Add(new()
+                    for (int k = 1; k < holdNote.Points.Count; k++)
                     {
-                        Measure = previousPoint.Timestamp.Measure,
-                        Tick = previousPoint.Timestamp.Tick,
-                        Position = previousPoint.Position,
-                        Size = previousPoint.Size,
-                        ProblemKey = "ChartEditor.Proofreader.Problem.AmbiguousHoldNoteDefinition",
-                        TypeKey = typeKey(previousPoint),
-                    });
+                        HoldPointNote previousPoint = holdNote.Points[k - 1];
+                        HoldPointNote currentPoint = holdNote.Points[k];
+
+                        int previousCenter = previousPoint.Position * 2 + previousPoint.Size;
+                        int currentCenter = currentPoint.Position * 2 + currentPoint.Size;
+
+                        if (Math.Abs(previousCenter - currentCenter) != 60) continue;
+
+                        Problems.Add(new()
+                        {
+                            Measure = previousPoint.Timestamp.Measure,
+                            Tick = previousPoint.Timestamp.Tick,
+                            Position = previousPoint.Position,
+                            Size = previousPoint.Size,
+                            ProblemKey = "ChartEditor.Proofreader.Problem.AmbiguousHoldNoteDefinition",
+                            TypeKey = typeKey(previousPoint),
+                        });
+                    }
                 }
             }
         }
         
         if (criteria.EffectsOnLowers && ChartSystem.Entry.Difficulty is Difficulty.Normal or Difficulty.Hard)
         {
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            foreach (Event @event in layer.Events)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                Problems.Add(new()
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Events.Count; j++)
                 {
-                    Measure = @event.Timestamp.Measure,
-                    Tick = @event.Timestamp.Tick,
-                    Position = -1,
-                    Size = -1,
-                    ProblemKey = "ChartEditor.Proofreader.Problem.OverlappingNotes",
-                    TypeKey = typeKey(@event),
-                });
+                    Event @event = layer.Events[j];
+                    Problems.Add(new()
+                    {
+                        Measure = @event.Timestamp.Measure,
+                        Tick = @event.Timestamp.Tick,
+                        Position = -1,
+                        Size = -1,
+                        ProblemKey = "ChartEditor.Proofreader.Problem.OverlappingNotes",
+                        TypeKey = typeKey(@event),
+                    });
+                }
             }
         }
 
         if (criteria.InvalidEffectsMer)
         {
             // Speed Changes before Stops
-            foreach (Layer layer in ChartSystem.Chart.Layers)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
+                Layer layer = ChartSystem.Chart.Layers[i];
                 StopEffectEvent? lastStop = null;
-                
-                for (int i = layer.Events.Count - 1; i >= 0; i--)
+
+                for (int j = layer.Events.Count - 1; j >= 0; j--)
                 {
-                    Event @event = layer.Events[i];
+                    Event @event = layer.Events[j];
 
                     if (@event is StopEffectEvent stop)
                     {
@@ -260,34 +285,39 @@ public partial class ProofreaderView : UserControl
                 }
             }
 
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            foreach (Event @event in layer.Events)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                Problems.Add(new()
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Events.Count; j++)
                 {
-                    Measure = @event.Timestamp.Measure,
-                    Tick = @event.Timestamp.Tick,
-                    Position = -1,
-                    Size = -1,
-                    ProblemKey = "ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect",
-                    TypeKey = typeKey(@event),
-                });
+                    Event @event = layer.Events[j];
+                    Problems.Add(new()
+                    {
+                        Measure = @event.Timestamp.Measure,
+                        Tick = @event.Timestamp.Tick,
+                        Position = -1,
+                        Size = -1,
+                        ProblemKey = "ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect",
+                        TypeKey = typeKey(@event),
+                    });
+                }
             }
 
             // Speed Changes too close together.
-            foreach (Layer layer in ChartSystem.Chart.Layers)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
+                Layer layer = ChartSystem.Chart.Layers[i];
                 List<SpeedChangeEvent> speedChanges = layer.Events.OfType<SpeedChangeEvent>().ToList();
 
-                for (int i = 1; i < speedChanges.Count; i++)
+                for (int j = 1; j < speedChanges.Count; j++)
                 {
-                    SpeedChangeEvent current = speedChanges[i];
-                    SpeedChangeEvent previous = speedChanges[i - 1];
+                    SpeedChangeEvent current = speedChanges[j];
+                    SpeedChangeEvent previous = speedChanges[j - 1];
 
                     int delta = Math.Abs(current.Timestamp.FullTick - previous.Timestamp.FullTick);
                     if (delta == 0) continue;
                     if (delta >= 120) continue;
-                    
+
                     Problems.Add(new()
                     {
                         Measure = previous.Timestamp.Measure,
@@ -299,67 +329,79 @@ public partial class ProofreaderView : UserControl
                     });
                 }
             }
-            
-            // Speed Change before FullTick = 240
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            foreach (Event @event in layer.Events)
-            {
-                if (@event is not SpeedChangeEvent) continue;
-                if (@event.Timestamp.FullTick >= 240) continue;
-                
-                Problems.Add(new()
-                {
-                    Measure = @event.Timestamp.Measure,
-                    Tick = @event.Timestamp.Tick,
-                    Position = -1,
-                    Size = -1,
-                    ProblemKey = "ChartEditor.Proofreader.Problem.SpeedChangeTooEarly",
-                    TypeKey = typeKey(@event),
-                });
-            }
-            
-            // Speed with near-zero value.
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            foreach (Event @event in layer.Events)
-            {
-                if (@event is not SpeedChangeEvent speedChangeEvent) continue;
-                if (speedChangeEvent.Speed == 0) continue;
-                if (Math.Abs(speedChangeEvent.Speed) >= 0.1) continue;
-                
-                Problems.Add(new()
-                {
-                    Measure = @event.Timestamp.Measure,
-                    Tick = @event.Timestamp.Tick,
-                    Position = -1,
-                    Size = -1,
-                    ProblemKey = "ChartEditor.Proofreader.Problem.SpeedChangeNearZero",
-                    TypeKey = typeKey(@event),
-                });
-            }
-            
-            // Multiple Reverses
-            bool hasReverse = false;
-            foreach (Layer layer in ChartSystem.Chart.Layers)
-            foreach (Event @event in layer.Events)
-            {
-                if (@event is not ReverseEffectEvent) continue;
 
-                if (hasReverse)
+            // Speed Change before FullTick = 240
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
+            {
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Events.Count; j++)
                 {
+                    Event @event = layer.Events[j];
+                    if (@event is not SpeedChangeEvent) continue;
+                    if (@event.Timestamp.FullTick >= 240) continue;
+
                     Problems.Add(new()
                     {
                         Measure = @event.Timestamp.Measure,
                         Tick = @event.Timestamp.Tick,
                         Position = -1,
                         Size = -1,
-                        ProblemKey = "ChartEditor.Proofreader.Problem.MultipleReverses",
+                        ProblemKey = "ChartEditor.Proofreader.Problem.SpeedChangeTooEarly",
                         TypeKey = typeKey(@event),
                     });
-                        
-                    continue;
                 }
+            }
 
-                hasReverse = true;
+            // Speed with near-zero value.
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
+            {
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Events.Count; j++)
+                {
+                    Event @event = layer.Events[j];
+                    if (@event is not SpeedChangeEvent speedChangeEvent) continue;
+                    if (speedChangeEvent.Speed == 0) continue;
+                    if (Math.Abs(speedChangeEvent.Speed) >= 0.1) continue;
+
+                    Problems.Add(new()
+                    {
+                        Measure = @event.Timestamp.Measure,
+                        Tick = @event.Timestamp.Tick,
+                        Position = -1,
+                        Size = -1,
+                        ProblemKey = "ChartEditor.Proofreader.Problem.SpeedChangeNearZero",
+                        TypeKey = typeKey(@event),
+                    });
+                }
+            }
+
+            // Multiple Reverses
+            bool hasReverse = false;
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
+            {
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Events.Count; j++)
+                {
+                    Event @event = layer.Events[j];
+                    if (@event is not ReverseEffectEvent) continue;
+
+                    if (hasReverse)
+                    {
+                        Problems.Add(new()
+                        {
+                            Measure = @event.Timestamp.Measure,
+                            Tick = @event.Timestamp.Tick,
+                            Position = -1,
+                            Size = -1,
+                            ProblemKey = "ChartEditor.Proofreader.Problem.MultipleReverses",
+                            TypeKey = typeKey(@event),
+                        });
+
+                        continue;
+                    }
+
+                    hasReverse = true;
+                }
             }
         }
 
@@ -397,12 +439,14 @@ public partial class ProofreaderView : UserControl
 
         if (criteria.NotesDuringReverse)
         {
-            foreach (Layer layer in ChartSystem.Chart.Layers)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
+                Layer layer = ChartSystem.Chart.Layers[i];
                 List<ReverseEffectEvent> reverses = layer.Events.OfType<ReverseEffectEvent>().ToList();
 
-                foreach (Note note in layer.Notes)
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
+                    Note note = layer.Notes[j];
                     int position = -1;
                     int size = -1;
 
@@ -411,12 +455,13 @@ public partial class ProofreaderView : UserControl
                         position = positionable.Position;
                         size = positionable.Size;
                     }
-                    
-                    foreach (ReverseEffectEvent reverse in reverses)
+
+                    for (int k = 0; k < reverses.Count; k++)
                     {
+                        ReverseEffectEvent reverse = reverses[k];
                         if (note.Timestamp.FullTick < reverse.SubEvents[0].Timestamp.FullTick) continue;
                         if (note.Timestamp.FullTick > reverse.SubEvents[1].Timestamp.FullTick) continue;
-                        
+
                         Problems.Add(new()
                         {
                             Measure = note.Timestamp.Measure,
@@ -434,10 +479,11 @@ public partial class ProofreaderView : UserControl
         
         if (criteria.ObjectsAfterChartEnd)
         {
-            foreach (Event @event in ChartSystem.Chart.Events)
+            for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
             {
+                Event @event = ChartSystem.Chart.Events[i];
                 if (@event.Timestamp.FullTick < ChartSystem.Entry.ChartEnd.FullTick) continue;
-                
+
                 Problems.Add(new()
                 {
                     Measure = @event.Timestamp.Measure,
@@ -449,10 +495,11 @@ public partial class ProofreaderView : UserControl
                 });
             }
 
-            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
             {
+                Note laneToggle = ChartSystem.Chart.LaneToggles[i];
                 if (laneToggle.Timestamp.FullTick < ChartSystem.Entry.ChartEnd.FullTick) continue;
-                
+
                 Problems.Add(new()
                 {
                     Measure = laneToggle.Timestamp.Measure,
@@ -464,12 +511,14 @@ public partial class ProofreaderView : UserControl
                 });
             }
 
-            foreach (Layer layer in ChartSystem.Chart.Layers)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                foreach (Event @event in layer.Events)
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Events.Count; j++)
                 {
+                    Event @event = layer.Events[j];
                     if (@event.Timestamp.FullTick < ChartSystem.Entry.ChartEnd.FullTick) continue;
-                
+
                     Problems.Add(new()
                     {
                         Measure = @event.Timestamp.Measure,
@@ -481,11 +530,12 @@ public partial class ProofreaderView : UserControl
                     });
                 }
 
-                foreach (Note note in layer.Notes)
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
+                    Note note = layer.Notes[j];
                     if (note.Timestamp.FullTick < ChartSystem.Entry.ChartEnd.FullTick) continue;
                     if (note is IPlayable playable && playable.JudgementType == JudgementType.Fake) continue;
-                    
+
                     int position = -1;
                     int size = -1;
 
@@ -494,7 +544,7 @@ public partial class ProofreaderView : UserControl
                         position = positionable.Position;
                         size = positionable.Size;
                     }
-                    
+
                     Problems.Add(new()
                     {
                         Measure = note.Timestamp.Measure,

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
@@ -284,42 +285,48 @@ public static class TimeSystem
 
         if (EditorSystem.Mode == EditorMode.ObjectMode)
         {
-            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
             {
+                Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
                 if (bookmark.Timestamp.FullTick <= startTick) continue;
                 if (bookmark.Timestamp.FullTick >= nextTick) continue;
 
                 nextTick = bookmark.Timestamp.FullTick;
             }
 
-            foreach (Event globalEvent in ChartSystem.Chart.Events)
+            for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
             {
+                Event globalEvent = ChartSystem.Chart.Events[i];
                 if (globalEvent.Timestamp.FullTick <= startTick) continue;
                 if (globalEvent.Timestamp.FullTick >= nextTick) continue;
 
                 nextTick = globalEvent.Timestamp.FullTick;
             }
 
-            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
             {
+                Note laneToggle = ChartSystem.Chart.LaneToggles[i];
                 if (laneToggle.Timestamp.FullTick <= startTick) continue;
                 if (laneToggle.Timestamp.FullTick >= nextTick) continue;
 
                 nextTick = laneToggle.Timestamp.FullTick;
             }
 
-            foreach (Layer layer in ChartSystem.Chart.Layers)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                foreach (Event layerEvent in layer.Events)
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Events.Count; j++)
                 {
+                    Event layerEvent = layer.Events[j];
                     if (layerEvent.Timestamp.FullTick <= startTick) continue;
                     if (layerEvent.Timestamp.FullTick >= nextTick) continue;
 
                     nextTick = layerEvent.Timestamp.FullTick;
                 }
 
-                foreach (Note note in layer.Notes)
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
+                    Note note = layer.Notes[j];
                     if (note.Timestamp.FullTick <= startTick) continue;
                     if (note.Timestamp.FullTick >= nextTick) continue;
 
@@ -331,8 +338,9 @@ public static class TimeSystem
         {
             if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     if (point.Timestamp.FullTick <= startTick) continue;
                     if (point.Timestamp.FullTick >= nextTick) continue;
 
@@ -341,8 +349,9 @@ public static class TimeSystem
             }
             else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
             {
-                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                for (int i = 0; i < stopEffectEvent.SubEvents.Length; i++)
                 {
+                    EffectSubEvent subEvent = stopEffectEvent.SubEvents[i];
                     if (subEvent.Timestamp.FullTick <= startTick) continue;
                     if (subEvent.Timestamp.FullTick >= nextTick) continue;
 
@@ -351,8 +360,9 @@ public static class TimeSystem
             }
             else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
             {
-                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                for (int i = 0; i < reverseEffectEvent.SubEvents.Length; i++)
                 {
+                    EffectSubEvent subEvent = reverseEffectEvent.SubEvents[i];
                     if (subEvent.Timestamp.FullTick <= startTick) continue;
                     if (subEvent.Timestamp.FullTick >= nextTick) continue;
 
@@ -373,42 +383,48 @@ public static class TimeSystem
 
         if (EditorSystem.Mode == EditorMode.ObjectMode)
         {
-            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
             {
+                Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
                 if (bookmark.Timestamp.FullTick >= startTick) continue;
                 if (bookmark.Timestamp.FullTick <= previousTick) continue;
 
                 previousTick = bookmark.Timestamp.FullTick;
             }
 
-            foreach (Event globalEvent in ChartSystem.Chart.Events)
+            for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
             {
+                Event globalEvent = ChartSystem.Chart.Events[i];
                 if (globalEvent.Timestamp.FullTick >= startTick) continue;
                 if (globalEvent.Timestamp.FullTick <= previousTick) continue;
 
                 previousTick = globalEvent.Timestamp.FullTick;
             }
 
-            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
             {
+                Note laneToggle = ChartSystem.Chart.LaneToggles[i];
                 if (laneToggle.Timestamp.FullTick >= startTick) continue;
                 if (laneToggle.Timestamp.FullTick <= previousTick) continue;
 
                 previousTick = laneToggle.Timestamp.FullTick;
             }
 
-            foreach (Layer layer in ChartSystem.Chart.Layers)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                foreach (Event layerEvent in layer.Events)
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Events.Count; j++)
                 {
+                    Event layerEvent = layer.Events[j];
                     if (layerEvent.Timestamp.FullTick >= startTick) continue;
                     if (layerEvent.Timestamp.FullTick <= previousTick) continue;
 
                     previousTick = layerEvent.Timestamp.FullTick;
                 }
 
-                foreach (Note note in layer.Notes)
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
+                    Note note = layer.Notes[j];
                     if (note.Timestamp.FullTick >= startTick) continue;
                     if (note.Timestamp.FullTick <= previousTick) continue;
 
@@ -420,8 +436,9 @@ public static class TimeSystem
         {
             if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
             {
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     if (point.Timestamp.FullTick >= startTick) continue;
                     if (point.Timestamp.FullTick <= previousTick) continue;
 
@@ -430,8 +447,9 @@ public static class TimeSystem
             }
             else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
             {
-                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                for (int i = 0; i < stopEffectEvent.SubEvents.Length; i++)
                 {
+                    EffectSubEvent subEvent = stopEffectEvent.SubEvents[i];
                     if (subEvent.Timestamp.FullTick >= startTick) continue;
                     if (subEvent.Timestamp.FullTick <= previousTick) continue;
 
@@ -440,8 +458,9 @@ public static class TimeSystem
             }
             else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
             {
-                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                for (int i = 0; i < reverseEffectEvent.SubEvents.Length; i++)
                 {
+                    EffectSubEvent subEvent = reverseEffectEvent.SubEvents[i];
                     if (subEvent.Timestamp.FullTick >= startTick) continue;
                     if (subEvent.Timestamp.FullTick <= previousTick) continue;
 
@@ -462,7 +481,9 @@ public static class TimeSystem
         int startTick = Timestamp.FullTick;
         int nextTick = int.MaxValue;
 
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj.Timestamp.FullTick <= startTick) continue;
             if (obj.Timestamp.FullTick >= nextTick) continue;
@@ -482,7 +503,9 @@ public static class TimeSystem
         int startTick = Timestamp.FullTick;
         int previousTick = int.MinValue;
 
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
         {
             if (obj.Timestamp.FullTick >= startTick) continue;
             if (obj.Timestamp.FullTick <= previousTick) continue;

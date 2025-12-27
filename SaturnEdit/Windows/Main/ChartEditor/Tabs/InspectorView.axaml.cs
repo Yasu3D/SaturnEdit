@@ -150,7 +150,7 @@ public partial class InspectorView : UserControl
         bool sameMessage = true;
         string? sharedMessage = null;
         
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects.ToArray())
         {
             // Check if all objects are the same type.
             sharedType ??= obj.GetType();
@@ -469,8 +469,9 @@ public partial class InspectorView : UserControl
 
                 if (obj is HoldNote sourceHoldNote)
                 {
-                    foreach (HoldPointNote point in sourceHoldNote.Points)
+                    for (int i = 0; i < sourceHoldNote.Points.Count; i++)
                     {
+                        HoldPointNote point = sourceHoldNote.Points[i];
                         HoldPointNote newHoldPoint = new(new(point.Timestamp.FullTick), point.Position, point.Size, holdNote, point.RenderType);
                         holdNote.Points.Add(newHoldPoint);
                     }
@@ -578,21 +579,22 @@ public partial class InspectorView : UserControl
                 if (obj is HoldNote holdNote)
                 {
                     // Convert all hold note points to new objects.
-                    foreach (HoldPointNote point in holdNote.Points)
+                    for (int i = 0; i < holdNote.Points.Count; i++)
                     {
+                        HoldPointNote point = holdNote.Points[i];
                         Timestamp timestamp = new(point.Timestamp.FullTick);
                         ITimeable? newObject = ComboBoxType.SelectedIndex switch
                         {
-                            0  => new TouchNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
-                            1  => new ChainNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            0 => new TouchNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            1 => new ChainNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
                             // 2 is skipped. (Hold Note)
-                            3  => new SlideClockwiseNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
-                            4  => new SlideCounterclockwiseNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
-                            5  => new SnapForwardNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
-                            6  => new SnapBackwardNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
-                            7  => new LaneShowNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
-                            8  => new LaneHideNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
-                            9  => new SyncNote(timestamp, point.Position, point.Size),
+                            3 => new SlideClockwiseNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            4 => new SlideCounterclockwiseNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            5 => new SnapForwardNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            6 => new SnapBackwardNote(timestamp, point.Position, point.Size, BonusType.Normal, JudgementType.Normal),
+                            7 => new LaneShowNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
+                            8 => new LaneHideNote(timestamp, point.Position, point.Size, LaneSweepDirection.Instant),
+                            9 => new SyncNote(timestamp, point.Position, point.Size),
                             10 => new MeasureLineNote(timestamp, false),
                             11 => new TempoChangeEvent(timestamp, 120),
                             12 => new MetreChangeEvent(timestamp, 4, 4),
@@ -602,13 +604,13 @@ public partial class InspectorView : UserControl
                             // 16 is skipped. (Reverse Effect Event)
                             17 => new TutorialMarkerEvent(timestamp, ""),
                             18 => new Bookmark(timestamp, 0xFFDDDDDD, ""),
-                            _  => null,
+                            _ => null,
                         };
 
                         if (newObject == null) continue;
 
                         operations.Add(new SelectionAddOperation(newObject, SelectionSystem.LastSelectedObject));
-                        
+
                         if (newObject is (TempoChangeEvent or MetreChangeEvent or TutorialMarkerEvent) and Event newGlobalEvent)
                         {
                             operations.Add(new ListAddOperation<Event>(() => ChartSystem.Chart.Events, newGlobalEvent));
@@ -901,12 +903,13 @@ public partial class InspectorView : UserControl
                 
                 int oldStartFullTick = holdNote.Points[0].Timestamp.FullTick;
                 int newStartFullTick = newValue + holdNote.Points[0].Timestamp.Tick;
-                
-                foreach (HoldPointNote point in holdNote.Points)
+
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     int oldFullTick = point.Timestamp.FullTick;
                     int newFullTick = oldFullTick + (newStartFullTick - oldStartFullTick);
-                    
+
                     operations.Add(new GenericEditOperation<int>(value => { point.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
                 }
             }
@@ -986,12 +989,13 @@ public partial class InspectorView : UserControl
                 
                 int oldStartTick = holdNote.Points[0].Timestamp.FullTick;
                 int newStartTick = holdNote.Points[0].Timestamp.Measure * 1920 + newValue;
-                
-                foreach (HoldPointNote point in holdNote.Points)
+
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     int oldFullTick = point.Timestamp.FullTick;
                     int newFullTick = oldFullTick + (newStartTick - oldStartTick);
-                    
+
                     operations.Add(new GenericEditOperation<int>(value => { point.Timestamp.FullTick = value; }, oldFullTick, newFullTick));
                 }
             }
@@ -1070,12 +1074,13 @@ public partial class InspectorView : UserControl
                 if (holdNote.Points.Count == 0) continue;
                 
                 int oldStartTick = holdNote.Points[0].Timestamp.FullTick;
-                
-                foreach (HoldPointNote point in holdNote.Points)
+
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     int oldPointFullTick = point.Timestamp.FullTick;
                     int newPointFullTick = oldPointFullTick + (newValue - oldStartTick);
-                    
+
                     operations.Add(new GenericEditOperation<int>(value => { point.Timestamp.FullTick = value; }, oldPointFullTick, newPointFullTick));
                 }
             }
@@ -1185,8 +1190,9 @@ public partial class InspectorView : UserControl
 
                 int diff = newValue - holdNote.Points[0].Position;
 
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     int newPosition = (point.Position + diff + 60) % 60;
                     operations.Add(new GenericEditOperation<int>(value => { point.Position = value; }, point.Position, newPosition));
                 }
@@ -1240,8 +1246,9 @@ public partial class InspectorView : UserControl
 
                 int diff = newValue - holdNote.Points[0].Size;
 
-                foreach (HoldPointNote point in holdNote.Points)
+                for (int i = 0; i < holdNote.Points.Count; i++)
                 {
+                    HoldPointNote point = holdNote.Points[i];
                     int newSize = Math.Clamp(point.Size + diff, 1, 60);
                     operations.Add(new GenericEditOperation<int>(value => { point.Size = value; }, point.Size, newSize));
                 }
@@ -1398,7 +1405,7 @@ public partial class InspectorView : UserControl
         float delta = (float)e.Delta.Y;
 
         List<IOperation> operations = [];
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects.ToArray())
         {
             if (obj is not TempoChangeEvent tempoChangeEvent) continue;
 
@@ -1614,7 +1621,7 @@ public partial class InspectorView : UserControl
         
         recoloredBookmarks.Clear();
 
-        foreach (ITimeable obj in SelectionSystem.SelectedObjects)
+        foreach (ITimeable obj in SelectionSystem.SelectedObjects.ToArray())
         {
             if (obj is not Bookmark bookmark) continue;
             recoloredBookmarks.Add(bookmark, bookmark.Color);

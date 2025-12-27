@@ -35,49 +35,53 @@ public partial class ChartStatisticsView : UserControl
         int snapForwardCount = 0;
         int snapBackwardCount = 0;
 
-        foreach (Layer layer in ChartSystem.Chart.Layers)
-        foreach (Note note in layer.Notes)
+        for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
         {
-            totalCount++;
-            if (note is TouchNote)
+            Layer layer = ChartSystem.Chart.Layers[i];
+            for (int j = 0; j < layer.Notes.Count; j++)
             {
-                touchCount++;
-                continue;
-            }
+                Note note = layer.Notes[j];
+                totalCount++;
+                if (note is TouchNote)
+                {
+                    touchCount++;
+                    continue;
+                }
 
-            if (note is ChainNote)
-            {
-                chainCount++;
-                continue;
-            }
+                if (note is ChainNote)
+                {
+                    chainCount++;
+                    continue;
+                }
 
-            if (note is HoldNote)
-            {
-                holdCount++;
-                continue;
-            }
+                if (note is HoldNote)
+                {
+                    holdCount++;
+                    continue;
+                }
 
-            if (note is SlideClockwiseNote)
-            {
-                slideClockwiseCount++;
-                continue;
-            }
+                if (note is SlideClockwiseNote)
+                {
+                    slideClockwiseCount++;
+                    continue;
+                }
 
-            if (note is SlideCounterclockwiseNote)
-            {
-                slideCounterclockwiseCount++;
-                continue;
-            }
+                if (note is SlideCounterclockwiseNote)
+                {
+                    slideCounterclockwiseCount++;
+                    continue;
+                }
 
-            if (note is SnapForwardNote)
-            {
-                snapForwardCount++;
-                continue;
-            }
+                if (note is SnapForwardNote)
+                {
+                    snapForwardCount++;
+                    continue;
+                }
 
-            if (note is SnapBackwardNote)
-            {
-                snapBackwardCount++;
+                if (note is SnapBackwardNote)
+                {
+                    snapBackwardCount++;
+                }
             }
         }
 
@@ -117,22 +121,58 @@ public partial class ChartStatisticsView : UserControl
         int reverseEffectCount = 0;
         int stopEffectCount = 0;
 
-        foreach (Event @event in ChartSystem.Chart.Events)
+        for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
         {
+            Event @event = ChartSystem.Chart.Events[i];
             eventCount++;
-            if (@event is TempoChangeEvent) { tempoChangeCount++; continue; }
-            if (@event is MetreChangeEvent) { metreChangeCount++; continue; }
-            if (@event is TutorialMarkerEvent) { tutorialMarkerCount++; }
+            if (@event is TempoChangeEvent)
+            {
+                tempoChangeCount++;
+                continue;
+            }
+
+            if (@event is MetreChangeEvent)
+            {
+                metreChangeCount++;
+                continue;
+            }
+
+            if (@event is TutorialMarkerEvent)
+            {
+                tutorialMarkerCount++;
+            }
         }
-        
-        foreach (Layer layer in ChartSystem.Chart.Layers)
-        foreach (Event @event in layer.Events)
+
+        for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
         {
-            eventCount++;
-            if (@event is SpeedChangeEvent) { speedChangeCount++; continue; }
-            if (@event is VisibilityChangeEvent) { visibilityChangeCount++; continue; }
-            if (@event is ReverseEffectEvent) { reverseEffectCount++; continue; }
-            if (@event is StopEffectEvent) { stopEffectCount++; }
+            Layer layer = ChartSystem.Chart.Layers[i];
+            for (int j = 0; j < layer.Events.Count; j++)
+            {
+                Event @event = layer.Events[j];
+                eventCount++;
+                if (@event is SpeedChangeEvent)
+                {
+                    speedChangeCount++;
+                    continue;
+                }
+
+                if (@event is VisibilityChangeEvent)
+                {
+                    visibilityChangeCount++;
+                    continue;
+                }
+
+                if (@event is ReverseEffectEvent)
+                {
+                    reverseEffectCount++;
+                    continue;
+                }
+
+                if (@event is StopEffectEvent)
+                {
+                    stopEffectCount++;
+                }
+            }
         }
 
         int normalNoteCount = 0;
@@ -151,32 +191,82 @@ public partial class ChartStatisticsView : UserControl
         int laneToggleNoteCount = 0;
         int laneShowNoteCount = 0;
         int laneHideNoteCount = 0;
-        
-        foreach (Layer layer in ChartSystem.Chart.Layers)
-        foreach (Note note in layer.Notes)
-        {
-            if (note is IPlayable playable)
-            {
-                if (playable.BonusType == BonusType.Normal) normalNoteCount++;
-                if (playable.BonusType == BonusType.Bonus) bonusNoteCount++;
-                if (playable.BonusType == BonusType.R) rNoteCount++;
-            }
-            
-            if (note is TouchNote) { touchNoteCount++; continue; }
-            if (note is ChainNote) { chainNoteCount++; continue; }
-            if (note is HoldNote)  { holdNoteCount++; continue; }
-            
-            if (note is SlideClockwiseNote)        { slideNoteCount++; slideClockwiseNoteCount++; continue; }
-            if (note is SlideCounterclockwiseNote) { slideNoteCount++; slideCounterclockwiseNoteCount++; continue; }
 
-            if (note is SnapForwardNote) { snapNoteCount++; snapForwardNoteCount++; continue; }
-            if (note is SnapBackwardNote) { snapNoteCount++; snapBackwardNoteCount++; }
+        for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
+        {
+            Layer layer = ChartSystem.Chart.Layers[i];
+            for (int j = 0; j < layer.Notes.Count; j++)
+            {
+                Note note = layer.Notes[j];
+                if (note is IPlayable playable)
+                {
+                    if (playable.BonusType == BonusType.Normal) normalNoteCount++;
+                    if (playable.BonusType == BonusType.Bonus) bonusNoteCount++;
+                    if (playable.BonusType == BonusType.R) rNoteCount++;
+                }
+
+                if (note is TouchNote)
+                {
+                    touchNoteCount++;
+                    continue;
+                }
+
+                if (note is ChainNote)
+                {
+                    chainNoteCount++;
+                    continue;
+                }
+
+                if (note is HoldNote)
+                {
+                    holdNoteCount++;
+                    continue;
+                }
+
+                if (note is SlideClockwiseNote)
+                {
+                    slideNoteCount++;
+                    slideClockwiseNoteCount++;
+                    continue;
+                }
+
+                if (note is SlideCounterclockwiseNote)
+                {
+                    slideNoteCount++;
+                    slideCounterclockwiseNoteCount++;
+                    continue;
+                }
+
+                if (note is SnapForwardNote)
+                {
+                    snapNoteCount++;
+                    snapForwardNoteCount++;
+                    continue;
+                }
+
+                if (note is SnapBackwardNote)
+                {
+                    snapNoteCount++;
+                    snapBackwardNoteCount++;
+                }
+            }
         }
 
-        foreach (Note note in ChartSystem.Chart.LaneToggles)
+        for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
         {
-            if (note is LaneShowNote) { laneToggleNoteCount++; laneShowNoteCount++; continue; }
-            if (note is LaneHideNote) { laneToggleNoteCount++; laneHideNoteCount++; }
+            Note note = ChartSystem.Chart.LaneToggles[i];
+            if (note is LaneShowNote)
+            {
+                laneToggleNoteCount++;
+                laneShowNoteCount++;
+                continue;
+            }
+
+            if (note is LaneHideNote)
+            {
+                laneToggleNoteCount++;
+                laneHideNoteCount++;
+            }
         }
 
         int maxCombo = normalNoteCount + bonusNoteCount + rNoteCount;

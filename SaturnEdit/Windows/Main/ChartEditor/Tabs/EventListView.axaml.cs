@@ -149,11 +149,12 @@ public partial class EventListView : UserControl
         if (e.KeyModifiers.HasFlag(KeyModifiers.Control)) return;
         if (e.KeyModifiers.HasFlag(KeyModifiers.Shift)) return;
         if (SelectionSystem.SelectedLayer == null) return;
-        
-        foreach (Event @event in ChartSystem.Chart.Events)
+
+        for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
         {
+            Event @event = ChartSystem.Chart.Events[i];
             if (!SelectionSystem.SelectedObjects.Contains(@event)) continue;
-            
+
             TimeSystem.SeekTime(@event.Timestamp.Time, TimeSystem.Division);
             return;
         }

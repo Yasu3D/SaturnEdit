@@ -57,8 +57,9 @@ public partial class ChartView2D : UserControl
 
         if (EditorSystem.Mode == EditorMode.ObjectMode)
         {
-            foreach (Event @event in ChartSystem.Chart.Events)
+            for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
             {
+                Event @event = ChartSystem.Chart.Events[i];
                 if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                 IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(@event, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -67,8 +68,9 @@ public partial class ChartView2D : UserControl
                 hits.Add((hitTestResult, @event));
             }
 
-            foreach (Bookmark bookmark in ChartSystem.Chart.Bookmarks)
+            for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
             {
+                Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
                 if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                 IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(bookmark, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -77,8 +79,9 @@ public partial class ChartView2D : UserControl
                 hits.Add((hitTestResult, bookmark));
             }
 
-            foreach (Note laneToggle in ChartSystem.Chart.LaneToggles)
+            for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
             {
+                Note laneToggle = ChartSystem.Chart.LaneToggles[i];
                 if (!RenderUtils.IsVisible(laneToggle, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                 IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(laneToggle, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -87,10 +90,12 @@ public partial class ChartView2D : UserControl
                 hits.Add((hitTestResult, laneToggle));
             }
 
-            foreach (Layer layer in ChartSystem.Chart.Layers)
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
-                foreach (Event @event in layer.Events)
+                Layer layer = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < layer.Events.Count; j++)
                 {
+                    Event @event = layer.Events[j];
                     if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                     IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(@event, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -99,8 +104,9 @@ public partial class ChartView2D : UserControl
                     hits.Add((hitTestResult, @event));
                 }
 
-                foreach (Note note in layer.Notes)
+                for (int j = 0; j < layer.Notes.Count; j++)
                 {
+                    Note note = layer.Notes[j];
                     if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                     IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(note, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -118,8 +124,9 @@ public partial class ChartView2D : UserControl
 
                 if (layer != null)
                 {
-                    foreach (HoldPointNote holdPointNote in holdNote.Points)
+                    for (int i = 0; i < holdNote.Points.Count; i++)
                     {
+                        HoldPointNote holdPointNote = holdNote.Points[i];
                         if (!RenderUtils.IsVisible(holdPointNote, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                         IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(holdPointNote, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -131,8 +138,9 @@ public partial class ChartView2D : UserControl
             }
             else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
             {
-                foreach (EffectSubEvent subEvent in stopEffectEvent.SubEvents)
+                for (int i = 0; i < stopEffectEvent.SubEvents.Length; i++)
                 {
+                    EffectSubEvent subEvent = stopEffectEvent.SubEvents[i];
                     if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                     IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(subEvent, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
@@ -143,8 +151,9 @@ public partial class ChartView2D : UserControl
             }
             else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
             {
-                foreach (EffectSubEvent subEvent in reverseEffectEvent.SubEvents)
+                for (int i = 0; i < reverseEffectEvent.SubEvents.Length; i++)
                 {
+                    EffectSubEvent subEvent = reverseEffectEvent.SubEvents[i];
                     if (!RenderUtils.IsVisible(subEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
 
                     IPositionable.OverlapResult hitTestResult = Renderer2D.HitTest(subEvent, depth, lane, TimeSystem.Timestamp.Time, viewDistance, threshold, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup);
