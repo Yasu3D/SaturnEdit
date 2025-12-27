@@ -238,8 +238,8 @@ public static class TimeSystem
             beat = 0;
         }
 
-        int tick = (1920 * beat) / division;
-        
+        int tick = Timestamp.TickFromBeat(beat, division);
+
         SeekMeasureTick(measure, tick);
     }
     
@@ -262,7 +262,7 @@ public static class TimeSystem
             }
         }
         
-        int tick = (1920 * beat) / division;
+        int tick = Timestamp.TickFromBeat(beat, division);
         
         SeekMeasureTick(measure, tick);
     }
