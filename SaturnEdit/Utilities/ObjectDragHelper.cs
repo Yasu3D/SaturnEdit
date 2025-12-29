@@ -86,10 +86,7 @@ public class ObjectDragHelper(ClickDragHelper clickDragHelper)
     {
         if (!active || DraggedObjects == null) return;
         
-        int fullTick = Timestamp.TimestampFromTime(ChartSystem.Chart, time).FullTick;
-
-        float m = 1920.0f / TimeSystem.Division;
-        fullTick = (int)(Math.Round(fullTick / m) * m);
+        int fullTick = Timestamp.TimestampFromTime(ChartSystem.Chart, time, TimestampRounding.Round, TimeSystem.Division).FullTick;
         
         if (clickDragHelper.EndLane != EndLane || EndTick != fullTick)
         {

@@ -939,9 +939,7 @@ public partial class ChartView2D : UserControl
                 boxSelect();
                 normalSelect();
                 
-                int fullTick = Timestamp.TimestampFromTime(ChartSystem.Chart, TimeSystem.Timestamp.Time + viewTime).FullTick;
-                float m = 1920.0f / TimeSystem.Division;
-                fullTick = (int)(Math.Round(fullTick / m) * m);
+                int fullTick = Timestamp.TimestampFromTime(ChartSystem.Chart, TimeSystem.Timestamp.Time + viewTime, TimestampRounding.Round, TimeSystem.Division).FullTick;
                 
                 objectDrag.Start(fullTick);
 

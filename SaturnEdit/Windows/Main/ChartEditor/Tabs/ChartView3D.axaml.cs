@@ -986,24 +986,32 @@ public partial class ChartView3D : UserControl
     {
         bool playing = TimeSystem.PlaybackState is PlaybackState.Playing or PlaybackState.Preview;
 
-        Renderer3D.Render
-        (
-            canvas: canvas,
-            canvasInfo: canvasInfo,
-            settings: SettingsSystem.RenderSettings,
-            chart: ChartSystem.Chart,
-            entry: ChartSystem.Entry,
-            time: TimeSystem.Timestamp.Time,
-            playing: playing,
-            selectedObjects: SelectionSystem.SelectedObjects,
-            pointerOverObject: objectDrag.IsActive ? null : SelectionSystem.PointerOverObject,
-            activeObjectGroup: EditorSystem.ActiveObjectGroup,
-            boxSelect: new(SelectionSystem.BoxSelectArgs.GlobalStartTime, SelectionSystem.BoxSelectArgs.GlobalEndTime, SelectionSystem.BoxSelectArgs.Position, SelectionSystem.BoxSelectArgs.Size),
-            cursorNote: playing ? null : CursorSystem.CurrentType,
-            jacketBackgroundPaint: jacketBackgroundPaint,
-            jacketBackgroundWidth: jacketBackgroundWidth,
-            jacketBackgroundHeight: jacketBackgroundHeight
-        );
+        try
+        {
+            Renderer3D.Render
+            (
+                canvas: canvas,
+                canvasInfo: canvasInfo,
+                settings: SettingsSystem.RenderSettings,
+                chart: ChartSystem.Chart,
+                entry: ChartSystem.Entry,
+                time: TimeSystem.Timestamp.Time,
+                playing: playing,
+                selectedObjects: SelectionSystem.SelectedObjects,
+                pointerOverObject: objectDrag.IsActive ? null : SelectionSystem.PointerOverObject,
+                activeObjectGroup: EditorSystem.ActiveObjectGroup,
+                boxSelect: new(SelectionSystem.BoxSelectArgs.GlobalStartTime, SelectionSystem.BoxSelectArgs.GlobalEndTime, SelectionSystem.BoxSelectArgs.Position, SelectionSystem.BoxSelectArgs.Size),
+                cursorNote: playing ? null : CursorSystem.CurrentType,
+                jacketBackgroundPaint: jacketBackgroundPaint,
+                jacketBackgroundWidth: jacketBackgroundWidth,
+                jacketBackgroundHeight: jacketBackgroundHeight
+            );
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            Console.WriteLine(ex);
+        }
         
         // Hook into render function to update box selection during playback,
         // even when the pointer is not being moved.
@@ -1108,10 +1116,8 @@ public partial class ChartView3D : UserControl
                 boxSelect();
                 normalSelect();
                 
-                int fullTick = Timestamp.TimestampFromTime(ChartSystem.Chart, TimeSystem.Timestamp.Time + viewTime).FullTick;
-                float m = 1920.0f / TimeSystem.Division;
-                fullTick = (int)(Math.Round(fullTick / m) * m);
-                
+                int fullTick = Timestamp.TimestampFromTime(ChartSystem.Chart, TimeSystem.Timestamp.Time + viewTime, TimestampRounding.Round, TimeSystem.Division).FullTick;
+
                 objectDrag.Start(fullTick);
 
                 return;

@@ -171,7 +171,7 @@ public static class TimeSystem
 
     public static void SeekTime(float time, int div)
     {
-        Timestamp t = Timestamp.TimestampFromTime(ChartSystem.Chart, time, div);
+        Timestamp t = Timestamp.TimestampFromTime(ChartSystem.Chart, time, TimestampRounding.Floor, div);
 
         Timestamp = t;
         TimestampSeeked?.Invoke(null, EventArgs.Empty);
@@ -616,7 +616,7 @@ public static class TimeSystem
         {
             // AudioSystem isn't playing audio, or there's no loaded audio.
             // Keep counting up with UpdateTimer, and synchronise the AudioTimer to it.
-            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, Timestamp.Time + UpdateInterval * PlaybackSpeed * 0.01f, Division);
+            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, Timestamp.Time + UpdateInterval * PlaybackSpeed * 0.01f, TimestampRounding.Floor, Division);
             if (AudioSystem.AudioChannelAudio != null) AudioSystem.AudioChannelAudio.Position = AudioTime;
         }
         else
@@ -631,7 +631,7 @@ public static class TimeSystem
             float audioTime = (float)AudioSystem.AudioChannelAudio.Position + ChartSystem.Entry.AudioOffset;
             if (Timestamp.Time > audioTime) return;
             
-            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, audioTime, Division);
+            Timestamp = Timestamp.TimestampFromTime(ChartSystem.Chart, audioTime, TimestampRounding.Floor, Division);
         }
     }
 #endregion Internal Event Handlers
