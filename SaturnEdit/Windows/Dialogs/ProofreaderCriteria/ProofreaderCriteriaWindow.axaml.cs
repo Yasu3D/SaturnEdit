@@ -41,6 +41,7 @@ public partial class ProofreaderCriteriaWindow : Window
             CheckBoxInvalidLaneToggles.IsChecked = criteria.InvalidLaneToggles;
             CheckBoxNotesDuringReverse.IsChecked = criteria.NotesDuringReverse;
             CheckBoxObjectsAfterChartEnd.IsChecked = criteria.ObjectsAfterChartEnd;
+            CheckBoxInvalidPreviewTimestamps.IsChecked = criteria.InvalidPreviewTimestamps;
 
             blockEvents = false;
         });
@@ -102,6 +103,7 @@ public partial class ProofreaderCriteriaWindow : Window
         else if (checkBox == CheckBoxInvalidLaneToggles)          { Criteria.InvalidLaneToggles          = checkBox.IsChecked ?? false; }
         else if (checkBox == CheckBoxNotesDuringReverse)          { Criteria.NotesDuringReverse          = checkBox.IsChecked ?? false; }
         else if (checkBox == CheckBoxObjectsAfterChartEnd)        { Criteria.ObjectsAfterChartEnd        = checkBox.IsChecked ?? false; }
+        else if (checkBox == CheckBoxInvalidPreviewTimestamps)    { Criteria.InvalidPreviewTimestamps    = checkBox.IsChecked ?? false; }
     }
     
     private void ButtonSave_OnClick(object? sender, RoutedEventArgs e)

@@ -5,10 +5,10 @@
         xmlns:controls="clr-namespace:SaturnEdit.Controls"
         mc:Ignorable="d"
         d:DesignWidth="450"
-        d:DesignHeight="530"
+        d:DesignHeight="560"
         x:Class="SaturnEdit.Windows.Dialogs.ProofreaderCriteria.ProofreaderCriteriaWindow"
         Width="450"
-        Height="530"
+        Height="560"
         CanResize="False"
         Focusable="True"
         Title="{DynamicResource ChartEditor.Proofreader.Criteria.Title}"
@@ -120,6 +120,14 @@
                 <CheckBox Name="CheckBoxObjectsAfterChartEnd"
                           IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
                 <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd}"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0" />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="CheckBoxInvalidPreviewTimestamps"
+                          IsCheckedChanged="CheckBox_OnIsCheckedChanged" />
+                <TextBlock Text="{DynamicResource ChartEditor.Proofreader.Criteria.InvalidPreviewTimestamps}"
                            VerticalAlignment="Center"
                            Margin="10,0,0,0" />
             </StackPanel>

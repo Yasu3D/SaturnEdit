@@ -12,6 +12,7 @@ using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;
 using SaturnEdit.Utilities;
+using SaturnEdit.Windows.Dialogs.ModalDialog;
 
 namespace SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
@@ -415,7 +416,29 @@ public partial class ChartPropertiesView : UserControl
     private void ButtonPlayPreview_OnClick(object? sender, RoutedEventArgs e)
     {
         if (sender == null) return;
+        
+        if (ChartSystem.Entry.PreviewBegin.FullTick < ChartSystem.Entry.PreviewEnd.FullTick 
+            || ChartSystem.Entry.PreviewBegin.FullTick < ChartSystem.Entry.ChartEnd.FullTick
+            || ChartSystem.Entry.PreviewEnd.FullTick < ChartSystem.Entry.ChartEnd.FullTick)
+        {
+            if (MainWindow.Instance == null) return;
+        
+            ModalDialogWindow dialog = new()
+            {
+                DialogIcon = FluentIcons.Common.Icon.Warning,
+                WindowTitleKey = "ModalDialog.PreviewTimestampsInvalid.Title",
+                HeaderKey = "ModalDialog.PreviewTimestampsInvalid.Header",
+                ParagraphKey = "ModalDialog.PreviewTimestampsInvalid.Paragraph",
+                ButtonPrimaryKey = "Generic.Ok",
+            };
+            
+            dialog.Position = MainWindow.DialogPopupPosition(dialog.Width, dialog.Height);
 
+            dialog.InitializeDialog();
+            dialog.ShowDialog(MainWindow.Instance);
+            return;
+        }
+        
         TimeSystem.PlaybackState = PlaybackState.Preview;
         TimeSystem.SeekTime(ChartSystem.Entry.PreviewBegin.Time, TimeSystem.Division);
     }

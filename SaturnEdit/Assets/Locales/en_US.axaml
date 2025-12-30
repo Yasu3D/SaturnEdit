@@ -169,6 +169,9 @@
     <system:String x:Key="ChartEditor.Proofreader.Problem.InvalidLaneToggles">MER standard does not support Lane Toggles with overlapping sweeps.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.NotesDuringReverse">Note during a reverse effect.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.ObjectsAfterChartEnd">Object after chart end.</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Problem.PreviewBeginAfterPreviewEnd">The Preview Begin Timestamp should be before the Preview End Timestamp.</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Problem.PreviewBeginAfterChartEnd">The Preview Begin Timestamp should be before the Chart End Timestamp.</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Problem.PreviewEndAfterChartEnd">The Preview End Timestamp should be before the Chart End Timestamp.</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.Title">Proofreader Criteria</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.StrictNoteSizeMer">Strict Note Size (MER)</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.StrictNoteSizeSat">Strict Note Size (SAT)</system:String>
@@ -181,6 +184,7 @@
     <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidLaneToggles">Invalid Lane Toggles (MER)</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.NotesDuringReverse">Notes during Reverse</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd">Objects after Chart End</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidPreviewTimestamps">Invalid Preview Timestamps</system:String>
     <system:String x:Key="ChartEditor.NotePalette">Note Palette</system:String>
     <system:String x:Key="ChartEditor.NotePalette.Note.Touch">Touch Note</system:String>
     <system:String x:Key="ChartEditor.NotePalette.Note.Touch.Description">Hit by tapping within its area at the right time.</system:String>
@@ -796,6 +800,9 @@
     <system:String x:Key="ModalDialog.Update.Error.AssetNotFound">The asset for your operating system could not be found. Please try again, or update manually.</system:String>
     <system:String x:Key="ModalDialog.Update.Error.ProcessNotFound">The process to update could not be found. Please update manually.</system:String>
     <system:String x:Key="ModalDialog.Update.Error.Unknown">An unknown error occurred. Please try again, or update manually.</system:String>
+    <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Title">Invalid Preview Timestamps</system:String>
+    <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Header">The Preview cannot play because the defined Timestamps are invalid.</system:String>
+    <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Paragraph">The Preview Timestamp must be in order, and before the Chart End Timestamp.</system:String>
     <system:String x:Key="Splash.Website">SATURN Website</system:String>
     <system:String x:Key="Splash.Documentation">Documentation</system:String>
     <system:String x:Key="Splash.Github">GitHub Repository</system:String>

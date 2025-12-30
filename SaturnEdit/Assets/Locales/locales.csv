@@ -166,6 +166,9 @@ ChartEditor.Proofreader.Problem.MultipleReverses,MER standard does not support m
 ChartEditor.Proofreader.Problem.InvalidLaneToggles,MER standard does not support Lane Toggles with overlapping sweeps.,-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Problem.NotesDuringReverse,Note during a reverse effect.,-,-,-
 ChartEditor.Proofreader.Problem.ObjectsAfterChartEnd,Object after chart end.,-,-,-
+ChartEditor.Proofreader.Problem.PreviewBeginAfterPreviewEnd,The Preview Begin Timestamp should be before the Preview End Timestamp.,-,-,-
+ChartEditor.Proofreader.Problem.PreviewBeginAfterChartEnd,The Preview Begin Timestamp should be before the Chart End Timestamp.,-,-,-
+ChartEditor.Proofreader.Problem.PreviewEndAfterChartEnd,The Preview End Timestamp should be before the Chart End Timestamp.,-,-,-
 ChartEditor.Proofreader.Criteria.Title,Proofreader Criteria,-,-,-
 ChartEditor.Proofreader.Criteria.StrictNoteSizeMer,Strict Note Size (MER),-,-,MER must stay as 'MER'.
 ChartEditor.Proofreader.Criteria.StrictNoteSizeSat,Strict Note Size (SAT),-,-,SAT must stay as 'SAT'.
@@ -178,6 +181,7 @@ ChartEditor.Proofreader.Criteria.InvalidEffectsMer,Invalid Effects (MER),-,-,Eff
 ChartEditor.Proofreader.Criteria.InvalidLaneToggles,Invalid Lane Toggles (MER),-,-,-
 ChartEditor.Proofreader.Criteria.NotesDuringReverse,Notes during Reverse,-,-,-
 ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd,Objects after Chart End,-,-,-
+ChartEditor.Proofreader.Criteria.InvalidPreviewTimestamps,Invalid Preview Timestamps,-,-,-
 ChartEditor.NotePalette,Note Palette,-,-,List of Note Types on the left side of the program. Use the same word as the list of tools in photoshop/etc.Photoshop/etc.
 ChartEditor.NotePalette.Note.Touch,Touch Note,-,-,-
 ChartEditor.NotePalette.Note.Touch.Description,Hit by tapping within its area at the right time.,-,-,-
@@ -794,6 +798,9 @@ ModalDialog.Update.Error.ReleaseNotFound,"The latest release could not be found.
 ModalDialog.Update.Error.AssetNotFound,"The asset for your operating system could not be found. Please try again, or update manually.",-,-,-
 ModalDialog.Update.Error.ProcessNotFound,The process to update could not be found. Please update manually.,-,-,-
 ModalDialog.Update.Error.Unknown,"An unknown error occurred. Please try again, or update manually.",-,-,-
+ModalDialog.PreviewTimestampsInvalid.Title,Invalid Preview Timestamps
+ModalDialog.PreviewTimestampsInvalid.Header,The Preview cannot play because the defined Timestamps are invalid.
+ModalDialog.PreviewTimestampsInvalid.Paragraph,"The Preview Timestamps must be in order, and before the Chart End Timestamp."
 Splash.Website,SATURN Website,-,-,-
 Splash.Documentation,Documentation,-,-,-
 Splash.Github,GitHub Repository,-,-,-

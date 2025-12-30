@@ -169,6 +169,9 @@
     <system:String x:Key="ChartEditor.Proofreader.Problem.InvalidLaneToggles">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.NotesDuringReverse">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Problem.ObjectsAfterChartEnd">-</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Problem.PreviewBeginAfterPreviewEnd">-</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Problem.PreviewBeginAfterChartEnd">-</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Problem.PreviewEndAfterChartEnd">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.Title">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.StrictNoteSizeMer">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.StrictNoteSizeSat">-</system:String>
@@ -181,6 +184,7 @@
     <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidLaneToggles">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.NotesDuringReverse">-</system:String>
     <system:String x:Key="ChartEditor.Proofreader.Criteria.ObjectsAfterChartEnd">-</system:String>
+    <system:String x:Key="ChartEditor.Proofreader.Criteria.InvalidPreviewTimestamps">-</system:String>
     <system:String x:Key="ChartEditor.NotePalette">-</system:String>
     <system:String x:Key="ChartEditor.NotePalette.Note.Touch">-</system:String>
     <system:String x:Key="ChartEditor.NotePalette.Note.Touch.Description">-</system:String>

@@ -557,6 +557,48 @@ public partial class ProofreaderView : UserControl
                 }
             }
         }
+
+        if (criteria.InvalidPreviewTimestamps)
+        {
+            if (ChartSystem.Entry.PreviewBegin.FullTick >= ChartSystem.Entry.PreviewEnd.FullTick)
+            {
+                Problems.Add(new()
+                {
+                    Measure = ChartSystem.Entry.PreviewBegin.Measure,
+                    Tick = ChartSystem.Entry.PreviewBegin.Tick,
+                    Position = -1,
+                    Size = -1,
+                    ProblemKey = "ChartEditor.Proofreader.Problem.PreviewBeginAfterPreviewEnd",
+                    TypeKey = "ChartEditor.General.Timestamp",
+                });
+            }
+            
+            if (ChartSystem.Entry.PreviewBegin.FullTick >= ChartSystem.Entry.ChartEnd.FullTick)
+            {
+                Problems.Add(new()
+                {
+                    Measure = ChartSystem.Entry.PreviewBegin.Measure,
+                    Tick = ChartSystem.Entry.PreviewBegin.Tick,
+                    Position = -1,
+                    Size = -1,
+                    ProblemKey = "ChartEditor.Proofreader.Problem.PreviewBeginAfterChartEnd",
+                    TypeKey = "ChartEditor.General.Timestamp",
+                });
+            }
+            
+            if (ChartSystem.Entry.PreviewEnd.FullTick > ChartSystem.Entry.ChartEnd.FullTick)
+            {
+                Problems.Add(new()
+                {
+                    Measure = ChartSystem.Entry.PreviewEnd.Measure,
+                    Tick = ChartSystem.Entry.PreviewEnd.Tick,
+                    Position = -1,
+                    Size = -1,
+                    ProblemKey = "ChartEditor.Proofreader.Problem.PreviewEndAfterChartEnd",
+                    TypeKey = "ChartEditor.General.Timestamp",
+                });
+            }
+        }
         
         ProofreadChanged?.Invoke(null, EventArgs.Empty);
         return;
@@ -748,6 +790,7 @@ public struct ProofreaderCriteria()
     public bool InvalidLaneToggles = true;
     public bool NotesDuringReverse = true;
     public bool ObjectsAfterChartEnd = true;
+    public bool InvalidPreviewTimestamps = true;
 }
 
 public struct ProofreaderProblem()
