@@ -802,7 +802,7 @@
     <system:String x:Key="ModalDialog.Update.Error.Unknown">An unknown error occurred. Please try again, or update manually.</system:String>
     <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Title">Invalid Preview Timestamps</system:String>
     <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Header">The Preview cannot play because the defined Timestamps are invalid.</system:String>
-    <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Paragraph">The Preview Timestamp must be in order, and before the Chart End Timestamp.</system:String>
+    <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Paragraph">The Preview Timestamps must be in order, and before the Chart End Timestamp.</system:String>
     <system:String x:Key="Splash.Website">SATURN Website</system:String>
     <system:String x:Key="Splash.Documentation">Documentation</system:String>
     <system:String x:Key="Splash.Github">GitHub Repository</system:String>

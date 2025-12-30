@@ -470,7 +470,20 @@ public partial class ChartView3D : UserControl
     {
         // End object drag if anything else changes.
         objectDrag.End();
-        
+
+        // Update pointer over object.
+        if (pointerPosition != null)
+        {
+            _ = Task.Run(() =>
+            {
+                float radius = Renderer3D.GetHitTestPointerRadius(canvasInfo, (float)pointerPosition.Value.X, (float)pointerPosition.Value.Y);
+                int lane = Renderer3D.GetHitTestPointerLane(canvasInfo, (float)pointerPosition.Value.X, (float)pointerPosition.Value.Y);
+                float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
+
+                FindPointerOverObject(radius, lane, viewDistance);
+            });
+        }
+
         bool holdEditModeAvailable = EditorSystem.Mode == EditorMode.EditMode || EditorSystem.EditModeAvailable;
         
         Dispatcher.UIThread.Post(() =>
