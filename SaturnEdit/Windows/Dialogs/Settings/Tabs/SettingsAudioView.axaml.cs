@@ -37,14 +37,14 @@ public partial class SettingsAudioView : UserControl
             TextBoxStartClick.Text = SettingsSystem.AudioSettings.HitsoundStartClickPath;
             TextBoxMetronome.Text  = SettingsSystem.AudioSettings.HitsoundMetronomePath;
             
-            IconSoundGuideNotFound.IsVisible      = SettingsSystem.AudioSettings.HitsoundGuidePath      == "" || !File.Exists(SettingsSystem.AudioSettings.HitsoundGuidePath);
-            IconSoundTouchNotFound.IsVisible      = SettingsSystem.AudioSettings.HitsoundTouchPath      == "" || !File.Exists(SettingsSystem.AudioSettings.HitsoundTouchPath);
-            IconSoundHoldNotFound.IsVisible       = SettingsSystem.AudioSettings.HitsoundHoldPath       == "" || !File.Exists(SettingsSystem.AudioSettings.HitsoundHoldPath);
-            IconSoundSlideNotFound.IsVisible      = SettingsSystem.AudioSettings.HitsoundSlidePath      == "" || !File.Exists(SettingsSystem.AudioSettings.HitsoundSlidePath);
-            IconSoundBonusNotFound.IsVisible      = SettingsSystem.AudioSettings.HitsoundBonusPath      == "" || !File.Exists(SettingsSystem.AudioSettings.HitsoundBonusPath);
-            IconSoundRNotFound.IsVisible          = SettingsSystem.AudioSettings.HitsoundRPath          == "" || !File.Exists(SettingsSystem.AudioSettings.HitsoundRPath);
-            IconSoundStartClickNotFound.IsVisible = SettingsSystem.AudioSettings.HitsoundStartClickPath == "" || !File.Exists(SettingsSystem.AudioSettings.HitsoundStartClickPath);
-            IconSoundMetronomeNotFound.IsVisible  = SettingsSystem.AudioSettings.HitsoundMetronomePath  == "" || !File.Exists(SettingsSystem.AudioSettings.HitsoundMetronomePath);
+            IconSoundGuideNotFound.IsVisible      = SettingsSystem.AudioSettings.HitsoundGuidePath      != "" && !File.Exists(SettingsSystem.AudioSettings.HitsoundGuidePath);
+            IconSoundTouchNotFound.IsVisible      = SettingsSystem.AudioSettings.HitsoundTouchPath      != "" && !File.Exists(SettingsSystem.AudioSettings.HitsoundTouchPath);
+            IconSoundHoldNotFound.IsVisible       = SettingsSystem.AudioSettings.HitsoundHoldPath       != "" && !File.Exists(SettingsSystem.AudioSettings.HitsoundHoldPath);
+            IconSoundSlideNotFound.IsVisible      = SettingsSystem.AudioSettings.HitsoundSlidePath      != "" && !File.Exists(SettingsSystem.AudioSettings.HitsoundSlidePath);
+            IconSoundBonusNotFound.IsVisible      = SettingsSystem.AudioSettings.HitsoundBonusPath      != "" && !File.Exists(SettingsSystem.AudioSettings.HitsoundBonusPath);
+            IconSoundRNotFound.IsVisible          = SettingsSystem.AudioSettings.HitsoundRPath          != "" && !File.Exists(SettingsSystem.AudioSettings.HitsoundRPath);
+            IconSoundStartClickNotFound.IsVisible = SettingsSystem.AudioSettings.HitsoundStartClickPath != "" && !File.Exists(SettingsSystem.AudioSettings.HitsoundStartClickPath);
+            IconSoundMetronomeNotFound.IsVisible  = SettingsSystem.AudioSettings.HitsoundMetronomePath  != "" && !File.Exists(SettingsSystem.AudioSettings.HitsoundMetronomePath);
             
             blockEvents = false;
         });
