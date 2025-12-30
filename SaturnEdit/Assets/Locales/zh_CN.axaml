@@ -768,6 +768,7 @@
     <system:String x:Key="VolumeMixer.Channel.R">-</system:String>
     <system:String x:Key="VolumeMixer.Channel.StartClick">-</system:String>
     <system:String x:Key="VolumeMixer.Channel.Metronome">-</system:String>
+    <system:String x:Key="VolumeMixer.Mute">-</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Title.Chart">-</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Title.Stage">-</system:String>
     <system:String x:Key="ModalDialog.SavePrompt.Title.Cosmetic">-</system:String>

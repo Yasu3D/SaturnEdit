@@ -5,9 +5,9 @@
         xmlns:controls="clr-namespace:SaturnEdit.Controls"
         xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
         mc:Ignorable="d"
-        d:DesignWidth="400"
+        d:DesignWidth="436"
         d:DesignHeight="560"
-        Width="400"
+        Width="436"
         Height="560"
         Focusable="True"
         x:Class="SaturnEdit.Windows.Dialogs.VolumeMixer.VolumeMixerWindow"
@@ -29,7 +29,7 @@
                    Height="1" />
 
         <Grid Grid.Row="2"
-              ColumnDefinitions="120,20,*,36"
+              ColumnDefinitions="120,20,*,36,36"
               RowDefinitions="40,40,40,20,40,40,40,40,20,40,40,20,40,40"
               VerticalAlignment="Top"
               Margin="15,10">
@@ -75,6 +75,18 @@
                        FontSize="15"
                        FontFamily="Consolas,Cascadia Code,Monospace"
                        Foreground="{DynamicResource ForegroundSecondary}" />
+            <ToggleButton Grid.Row="0"
+                    Grid.Column="3"
+                    Name="ToggleButtonMuteMaster"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Name="IconMuteMaster"
+                                 Icon="Speaker2" />
+            </ToggleButton>
 
             <!-- Audio -->
             <TextBlock Grid.Row="1"
@@ -108,6 +120,18 @@
                        FontSize="15"
                        FontFamily="Consolas,Cascadia Code,Monospace"
                        Foreground="{DynamicResource ForegroundSecondary}" />
+            <ToggleButton Grid.Row="1"
+                    Grid.Column="3"
+                    Name="ToggleButtonMuteAudio"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Name="IconMuteAudio"
+                                 Icon="Speaker2" />
+            </ToggleButton>
 
             <!-- Hitsounds -->
             <TextBlock Grid.Row="2"
@@ -141,10 +165,22 @@
                        FontSize="15"
                        FontFamily="Consolas,Cascadia Code,Monospace"
                        Foreground="{DynamicResource ForegroundSecondary}" />
+            <ToggleButton Grid.Row="2"
+                    Grid.Column="3"
+                    Name="ToggleButtonMuteHitsound"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Name="IconMuteHitsound"
+                                 Icon="Speaker2" />
+            </ToggleButton>
 
             <Rectangle Grid.Row="3"
                        Grid.Column="0"
-                       Grid.ColumnSpan="4"
+                       Grid.ColumnSpan="5"
                        Fill="{DynamicResource SeparatorPrimary}"
                        Height="1" />
 
@@ -188,8 +224,20 @@
                        FontSize="15"
                        FontFamily="Consolas,Cascadia Code,Monospace"
                        Foreground="{DynamicResource ForegroundSecondary}" />
-            <Button Grid.Row="4"
+            <ToggleButton Grid.Row="4"
                     Grid.Column="3"
+                    Name="ToggleButtonMuteGuide"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Name="IconMuteGuide"
+                                 Icon="Speaker2" />
+            </ToggleButton>
+            <Button Grid.Row="4"
+                    Grid.Column="4"
                     Name="ButtonPickSoundGuide"
                     Classes="Themed Square Outlined"
                     HorizontalAlignment="Right"
@@ -232,8 +280,20 @@
                        FontSize="15"
                        FontFamily="Consolas,Cascadia Code,Monospace"
                        Foreground="{DynamicResource ForegroundSecondary}" />
-            <Button Grid.Row="5"
+            <ToggleButton Grid.Row="5"
                     Grid.Column="3"
+                    Name="ToggleButtonMuteTouch"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Name="IconMuteTouch"
+                                 Icon="Speaker2" />
+            </ToggleButton>
+            <Button Grid.Row="5"
+                    Grid.Column="4"
                     Name="ButtonPickSoundTouch"
                     Classes="Themed Square Outlined"
                     HorizontalAlignment="Right"
@@ -276,8 +336,20 @@
                        FontSize="15"
                        FontFamily="Consolas,Cascadia Code,Monospace"
                        Foreground="{DynamicResource ForegroundSecondary}" />
-            <Button Grid.Row="6"
+            <ToggleButton Grid.Row="6"
                     Grid.Column="3"
+                    Name="ToggleButtonMuteHold"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Name="IconMuteHold"
+                                 Icon="Speaker2" />
+            </ToggleButton>
+            <Button Grid.Row="6"
+                    Grid.Column="4"
                     Name="ButtonPickSoundHold"
                     Classes="Themed Square Outlined"
                     HorizontalAlignment="Right"
@@ -320,8 +392,20 @@
                        FontSize="15"
                        FontFamily="Consolas,Cascadia Code,Monospace"
                        Foreground="{DynamicResource ForegroundSecondary}" />
-            <Button Grid.Row="7"
+            <ToggleButton Grid.Row="7"
                     Grid.Column="3"
+                    Name="ToggleButtonMuteSlide"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Name="IconMuteSlide"
+                                 Icon="Speaker2" />
+            </ToggleButton>
+            <Button Grid.Row="7"
+                    Grid.Column="4"
                     Name="ButtonPickSoundSlide"
                     Classes="Themed Square Outlined"
                     HorizontalAlignment="Right"
@@ -335,7 +419,7 @@
             <!-- Bonus -->
             <Rectangle Grid.Row="8"
                        Grid.Column="0"
-                       Grid.ColumnSpan="4"
+                       Grid.ColumnSpan="5"
                        Fill="{DynamicResource SeparatorPrimary}"
                        Height="1" />
 
@@ -377,8 +461,20 @@
                        FontSize="15"
                        FontFamily="Consolas,Cascadia Code,Monospace"
                        Foreground="{DynamicResource ForegroundSecondary}" />
-            <Button Grid.Row="9"
+            <ToggleButton Grid.Row="9"
                     Grid.Column="3"
+                    Name="ToggleButtonMuteBonus"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Name="IconMuteBonus"
+                                 Icon="Speaker2" />
+            </ToggleButton>
+            <Button Grid.Row="9"
+                    Grid.Column="4"
                     Name="ButtonPickSoundBonus"
                     Classes="Themed Square Outlined"
                     HorizontalAlignment="Right"
@@ -421,8 +517,20 @@
                        FontSize="15"
                        FontFamily="Consolas,Cascadia Code,Monospace"
                        Foreground="{DynamicResource ForegroundSecondary}" />
-            <Button Grid.Row="10"
+            <ToggleButton Grid.Row="10"
                     Grid.Column="3"
+                    Name="ToggleButtonMuteR"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Name="IconMuteR"
+                                 Icon="Speaker2" />
+            </ToggleButton>
+            <Button Grid.Row="10"
+                    Grid.Column="4"
                     Name="ButtonPickSoundR"
                     Classes="Themed Square Outlined"
                     HorizontalAlignment="Right"
@@ -436,7 +544,7 @@
             <!-- StartClick -->
             <Rectangle Grid.Row="11"
                        Grid.Column="0"
-                       Grid.ColumnSpan="4"
+                       Grid.ColumnSpan="5"
                        Fill="{DynamicResource SeparatorPrimary}"
                        Height="1" />
 
@@ -478,8 +586,20 @@
                        FontSize="15"
                        FontFamily="Consolas,Cascadia Code,Monospace"
                        Foreground="{DynamicResource ForegroundSecondary}" />
-            <Button Grid.Row="12"
+            <ToggleButton Grid.Row="12"
                     Grid.Column="3"
+                    Name="ToggleButtonMuteStartClick"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Name="IconMuteStartClick"
+                                 Icon="Speaker2" />
+            </ToggleButton>
+            <Button Grid.Row="12"
+                    Grid.Column="4"
                     Name="ButtonPickSoundStartClick"
                     Classes="Themed Square Outlined"
                     HorizontalAlignment="Right"
@@ -522,8 +642,20 @@
                        FontSize="15"
                        FontFamily="Consolas,Cascadia Code,Monospace"
                        Foreground="{DynamicResource ForegroundSecondary}" />
-            <Button Grid.Row="13"
+            <ToggleButton Grid.Row="13"
                     Grid.Column="3"
+                    Name="ToggleButtonMuteMetronome"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Name="IconMuteMetronome"
+                                 Icon="Speaker2" />
+            </ToggleButton>
+            <Button Grid.Row="13"
+                    Grid.Column="4"
                     Name="ButtonPickSoundMetronome"
                     Classes="Themed Square Outlined"
                     HorizontalAlignment="Right"

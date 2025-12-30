@@ -241,7 +241,15 @@ public static class ChartSystem
     /// </remarks>
     public static void Rebuild()
     {
-        Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
+        try
+        {
+            Chart.Build(Entry, (float?)AudioSystem.AudioChannelAudio?.Length ?? 0, SettingsSystem.RenderSettings.SaturnJudgeAreas);
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            LoggingSystem.WriteSessionLog(ex.ToString());
+        }
     }
 #endregion Methods
     

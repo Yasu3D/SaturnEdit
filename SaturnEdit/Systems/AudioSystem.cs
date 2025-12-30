@@ -410,18 +410,18 @@ public static class AudioSystem
     
     private static void OnVolumeChanged(object? sender, EventArgs e)
     {
-        double masterVolume = DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume);
-        double hitsoundVolume = masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.HitsoundVolume);
+        double masterVolume = SettingsSystem.AudioSettings.MuteMaster ? 0 : DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume);
+        double hitsoundVolume = SettingsSystem.AudioSettings.MuteHitsound ? 0 : masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.HitsoundVolume);
         
-        if (AudioChannelAudio     != null) AudioChannelAudio.Volume     = masterVolume   * DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        if (AudioSampleGuide      != null) AudioSampleGuide.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.GuideVolume);
-        if (AudioSampleTouch      != null) AudioSampleTouch.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.TouchVolume);
-        if (AudioChannelHold      != null) AudioChannelHold.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.HoldVolume) * holdLoopVolumeMultiplier;
-        if (AudioSampleSlide      != null) AudioSampleSlide.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.SlideVolume);
-        if (AudioSampleBonus      != null) AudioSampleBonus.Volume      = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.BonusVolume);
-        if (AudioSampleR          != null) AudioSampleR.Volume          = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.RVolume);
-        if (AudioSampleStartClick != null) AudioSampleStartClick.Volume = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.StartClickVolume);
-        if (AudioSampleMetronome  != null) AudioSampleMetronome.Volume  = hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.MetronomeVolume);
+        if (AudioChannelAudio     != null) AudioChannelAudio.Volume     = SettingsSystem.AudioSettings.MuteAudio      ? 0 : masterVolume   * DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+        if (AudioSampleGuide      != null) AudioSampleGuide.Volume      = SettingsSystem.AudioSettings.MuteGuide      ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.GuideVolume);
+        if (AudioSampleTouch      != null) AudioSampleTouch.Volume      = SettingsSystem.AudioSettings.MuteTouch      ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.TouchVolume);
+        if (AudioChannelHold      != null) AudioChannelHold.Volume      = SettingsSystem.AudioSettings.MuteHold       ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.HoldVolume) * holdLoopVolumeMultiplier;
+        if (AudioSampleSlide      != null) AudioSampleSlide.Volume      = SettingsSystem.AudioSettings.MuteSlide      ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.SlideVolume);
+        if (AudioSampleBonus      != null) AudioSampleBonus.Volume      = SettingsSystem.AudioSettings.MuteBonus      ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.BonusVolume);
+        if (AudioSampleR          != null) AudioSampleR.Volume          = SettingsSystem.AudioSettings.MuteR          ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.RVolume);
+        if (AudioSampleStartClick != null) AudioSampleStartClick.Volume = SettingsSystem.AudioSettings.MuteStartClick ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.StartClickVolume);
+        if (AudioSampleMetronome  != null) AudioSampleMetronome.Volume  = SettingsSystem.AudioSettings.MuteMetronome  ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.MetronomeVolume);
     }
 
     private static void OnEntryChanged(object? sender, EventArgs e)

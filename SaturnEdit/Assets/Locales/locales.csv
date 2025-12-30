@@ -767,6 +767,7 @@ VolumeMixer.Channel.Bonus,Bonus,-,-,-
 VolumeMixer.Channel.R,R,-,-,-
 VolumeMixer.Channel.StartClick,Start Click,-,-,-
 VolumeMixer.Channel.Metronome,Metronome,-,-,-
+VolumeMixer.Mute,Mute,-,-,-
 ModalDialog.SavePrompt.Title.Chart,Save Chart,-,-,-
 ModalDialog.SavePrompt.Title.Stage,Save Stage,-,-,-
 ModalDialog.SavePrompt.Title.Cosmetic,Save Cosmetic,-,-,-

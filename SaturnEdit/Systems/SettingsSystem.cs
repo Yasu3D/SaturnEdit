@@ -156,14 +156,25 @@ public static class SettingsSystem
         SettingsChanged?.Invoke(null, EventArgs.Empty);
     }
 
-    public static void SaveSettings()
+    public static async void SaveSettings()
     {
-        Directory.CreateDirectory(SettingsDirectory);
+        try
+        {
+            Directory.CreateDirectory(SettingsDirectory);
 
-        File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "render_settings.toml"), Toml.FromModel(RenderSettings));
-        File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "editor_settings.toml"), Toml.FromModel(EditorSettings));
-        File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "audio_settings.toml"), Toml.FromModel(AudioSettings));
-        File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
+            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "render_settings.toml"), Toml.FromModel(RenderSettings));
+            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "editor_settings.toml"), Toml.FromModel(EditorSettings));
+            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "audio_settings.toml"), Toml.FromModel(AudioSettings));
+            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            if (ex is not IOException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
+        }
     }
 #endregion Methods
     
@@ -177,13 +188,11 @@ public static class SettingsSystem
     private static void OnVolumeChanged(object? sender, EventArgs e)
     {
         VolumeChanged?.Invoke(null, EventArgs.Empty);
-        SaveSettings();
     }
     
     private static void OnHitsoundsChanged(object? sender, EventArgs e)
     {
         HitsoundsChanged?.Invoke(null, EventArgs.Empty);
-        SaveSettings();
     }
 #endregion Internal Event Handlers
 }
@@ -619,6 +628,160 @@ public class AudioSettings
         }
     }
     private int metronomeVolume = 0;
+    
+    public bool MuteMaster
+    {
+        get => muteMaster;
+        set
+        {
+            if (muteMaster == value) return;
+            
+            muteMaster = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool muteMaster = false;
+    
+    public bool MuteAudio
+    {
+        get => muteAudio;
+        set
+        {
+            if (muteAudio == value) return;
+            
+            muteAudio = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool muteAudio = false;
+    
+    public bool MuteHitsound
+    {
+        get => muteHitsound;
+        set
+        {
+            if (muteHitsound == value) return;
+            
+            muteHitsound = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool muteHitsound = false;
+    
+    public bool MuteGuide
+    {
+        get => muteGuide;
+        set
+        {
+            if (muteGuide == value) return;
+            
+            muteGuide = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool muteGuide = false;
+    
+    public bool MuteTouch
+    {
+        get => muteTouch;
+        set
+        {
+            if (muteTouch == value) return;
+            
+            muteTouch = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool muteTouch = false;
+    
+    public bool MuteHold
+    {
+        get => muteHold;
+        set
+        {
+            if (muteHold == value) return;
+            
+            muteHold = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool muteHold = false;
+    
+    public bool MuteSlide
+    {
+        get => muteSlide;
+        set
+        {
+            if (muteSlide == value) return;
+            
+            muteSlide = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool muteSlide = false;
+    
+    public bool MuteBonus
+    {
+        get => muteBonus;
+        set
+        {
+            if (muteBonus == value) return;
+            
+            muteBonus = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool muteBonus = false;
+    
+    public bool MuteR
+    {
+        get => muteR;
+        set
+        {
+            if (muteR == value) return;
+            
+            muteR = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool muteR = false;
+    
+    public bool MuteStartClick
+    {
+        get => muteStartClick;
+        set
+        {
+            if (muteStartClick == value) return;
+            
+            muteStartClick = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool muteStartClick = false;
+    
+    public bool MuteMetronome
+    {
+        get => muteMetronome;
+        set
+        {
+            if (muteMetronome == value) return;
+            
+            muteMetronome = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            VolumeChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private bool muteMetronome = false;
 
     public string HitsoundGuidePath
     {
