@@ -231,6 +231,35 @@
                     </MenuItem>
 
                     <Separator />
+                    
+                    <MenuItem Name="MenuItemSelectNearestObject"
+                              Click="MenuItemSelectNearestObject_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.SelectNearestObject}" />
+                        </MenuItem.Header>
+                    </MenuItem>
+                    
+                    <MenuItem Name="MenuItemSelectNextObject"
+                              Click="MenuItemSelectNextObject_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.SelectNextObject}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowNext" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem Name="MenuItemSelectPreviousObject"
+                              Click="MenuItemSelectPreviousObject_OnClick">
+                        <MenuItem.Header>
+                            <TextBlock Text="{DynamicResource Menu.Edit.SelectPreviousObject}" />
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <icon:FluentIcon Icon="ArrowPrevious" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <Separator />
 
                     <MenuItem Name="MenuItemCheckerDeselect"
                               Click="MenuItemCheckerDeselect_OnClick">
@@ -519,7 +548,7 @@
                             <TextBlock Text="{DynamicResource Menu.Navigate.JumpToNextSelection}" />
                         </MenuItem.Header>
                         <MenuItem.Icon>
-                            <icon:FluentIcon Icon="ArrowPrevious" />
+                            <icon:FluentIcon Icon="ArrowNext" />
                         </MenuItem.Icon>
                     </MenuItem>
                     

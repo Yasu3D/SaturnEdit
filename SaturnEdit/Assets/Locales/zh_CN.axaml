@@ -565,6 +565,9 @@
     <system:String x:Key="Menu.Edit.DeselectAll">-</system:String>
     <system:String x:Key="Menu.Edit.CheckerDeselect">-</system:String>
     <system:String x:Key="Menu.Edit.SelectByCriteria">-</system:String>
+    <system:String x:Key="Menu.Edit.SelectNearestObject">-</system:String>
+    <system:String x:Key="Menu.Edit.SelectNextObject">-</system:String>
+    <system:String x:Key="Menu.Edit.SelectPreviousObject">-</system:String>
     <system:String x:Key="Menu.View">-</system:String>
     <system:String x:Key="Menu.View.ToolWindows">-</system:String>
     <system:String x:Key="Menu.View.LayoutPresets">-</system:String>

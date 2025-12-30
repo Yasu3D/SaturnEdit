@@ -563,6 +563,9 @@ Menu.Edit.SelectAll,Select All,-,-,-
 Menu.Edit.DeselectAll,Deselect All,-,-,-
 Menu.Edit.CheckerDeselect,Checker Deselect...,-,-,-
 Menu.Edit.SelectByCriteria,Select by Criteria...,-,-,-
+Menu.Edit.SelectNearestObject,Select Nearest Object,-,-,-
+Menu.Edit.SelectNextObject,Select Next Object,-,-,-
+Menu.Edit.SelectPreviousObject,Select Previous Object,-,-,-
 Menu.View,View,-,-,-
 Menu.View.ToolWindows,Tool Windows,-,-,-
 Menu.View.LayoutPresets,Layout Presets,-,-,-

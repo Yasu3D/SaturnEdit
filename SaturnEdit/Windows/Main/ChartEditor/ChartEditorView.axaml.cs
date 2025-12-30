@@ -1274,6 +1274,21 @@ public partial class ChartEditorView : UserControl
             SelectionSystem.DeselectAll();
             e.Handled = true;
         }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectNearestObject"]))
+        {
+            SelectionSystem.SelectNearestObject();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectNextObject"]))
+        {
+            SelectionSystem.SelectNextObject();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.SelectPreviousObject"]))
+        {
+            SelectionSystem.SelectPreviousObject();
+            e.Handled = true;
+        }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Edit.CheckerDeselect"]))
         {
             SelectionSystem.CheckerDeselect();
@@ -1714,6 +1729,12 @@ public partial class ChartEditorView : UserControl
 
     private void MenuItemDeselectAll_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.DeselectAll();
 
+    private void MenuItemSelectNearestObject_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.SelectNearestObject();
+    
+    private void MenuItemSelectNextObject_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.SelectNextObject();
+    
+    private void MenuItemSelectPreviousObject_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.SelectPreviousObject();
+    
     private void MenuItemCheckerDeselect_OnClick(object? sender, RoutedEventArgs e) => SelectionSystem.CheckerDeselect();
 
     private void MenuItemSelectByCriteria_OnClick(object? sender, RoutedEventArgs e) => Edit_SelectByCriteria();

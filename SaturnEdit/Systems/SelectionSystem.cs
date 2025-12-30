@@ -839,6 +839,355 @@ public static class SelectionSystem
             UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
         }
     }
+
+    public static void SelectNearestObject()
+    {
+        try
+        {
+            List<IOperation> operations = [];
+
+            // Clear selection.
+            foreach (ITimeable obj in SelectedObjects.ToArray())
+            {
+                operations.Add(new SelectionRemoveOperation(obj, LastSelectedObject));
+            }
+
+            ITimeable? nearestObject = null;
+
+            if (EditorSystem.Mode == EditorMode.ObjectMode)
+            {
+                ITimeable? nearestEvent = ChartSystem.Chart.Events.OrderBy(x => Math.Abs(TimeSystem.Timestamp.FullTick - x.Timestamp.FullTick)).FirstOrDefault(x => RenderUtils.IsVisible(x, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup));
+                ITimeable? nearestLaneToggle = ChartSystem.Chart.LaneToggles.OrderBy(x => Math.Abs(TimeSystem.Timestamp.FullTick - x.Timestamp.FullTick)).FirstOrDefault(x => RenderUtils.IsVisible(x, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup));
+                ITimeable? nearestBookmark = ChartSystem.Chart.Bookmarks.OrderBy(x => Math.Abs(TimeSystem.Timestamp.FullTick - x.Timestamp.FullTick)).FirstOrDefault(x => RenderUtils.IsVisible(x, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup));
+                ITimeable? nearestLayerEvent = null;
+                ITimeable? nearestLayerNote = null;
+
+                for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
+                {
+                    Layer layer = ChartSystem.Chart.Layers[i];
+
+                    ITimeable? potentialLayerEvent = layer.Events.OrderBy(x => Math.Abs(TimeSystem.Timestamp.FullTick - x.Timestamp.FullTick)).FirstOrDefault(x => RenderUtils.IsVisible(x, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup));
+                    ITimeable? potentialLayerNote = layer.Notes.OrderBy(x => Math.Abs(TimeSystem.Timestamp.FullTick - x.Timestamp.FullTick)).FirstOrDefault(x => RenderUtils.IsVisible(x, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup));
+
+                    compareToNearest(ref nearestLayerEvent, potentialLayerEvent);
+                    compareToNearest(ref nearestLayerNote, potentialLayerNote);
+                }
+
+                compareToNearest(ref nearestObject, nearestEvent);
+                compareToNearest(ref nearestObject, nearestLaneToggle);
+                compareToNearest(ref nearestObject, nearestBookmark);
+                compareToNearest(ref nearestObject, nearestLayerEvent);
+                compareToNearest(ref nearestObject, nearestLayerNote);
+            }
+            else if (EditorSystem.Mode == EditorMode.EditMode)
+            {
+                if (EditorSystem.ActiveObjectGroup is HoldNote holdNote)
+                {
+                    for (int i = 0; i < holdNote.Points.Count; i++)
+                    {
+                        ITimeable point = holdNote.Points[i];
+                        compareToNearest(ref nearestObject, point);
+                    }
+                }
+                else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent)
+                {
+                    for (int i = 0; i < stopEffectEvent.SubEvents.Length; i++)
+                    {
+                        ITimeable subEvent = stopEffectEvent.SubEvents[i];
+                        compareToNearest(ref nearestObject, subEvent);
+                    }
+                }
+                else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent)
+                {
+                    for (int i = 0; i < reverseEffectEvent.SubEvents.Length; i++)
+                    {
+                        ITimeable subEvent = reverseEffectEvent.SubEvents[i];
+                        compareToNearest(ref nearestObject, subEvent);
+                    }
+                }
+            }
+
+            if (nearestObject != null)
+            {
+                operations.Add(new SelectionAddOperation(nearestObject, LastSelectedObject));
+            }
+
+            UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            LoggingSystem.WriteSessionLog(ex.ToString());
+        }
+
+        return;
+
+        void compareToNearest(ref ITimeable? nearest, ITimeable? potential)
+        {
+            if (potential != null)
+            {
+                if (nearest == null)
+                {
+                    nearest = potential;
+                }
+                else
+                {
+                    int nearestDelta = Math.Abs(TimeSystem.Timestamp.FullTick - nearest.Timestamp.FullTick);
+                    int potentialDelta = Math.Abs(TimeSystem.Timestamp.FullTick - potential.Timestamp.FullTick);
+
+                    nearest = potentialDelta < nearestDelta ? potential : nearest;
+                }
+            }
+        }
+    }
+
+    public static void SelectNextObject()
+    {
+        try
+        {
+            if (SelectedObjects.Count == 0) return;
+        
+            List<IOperation> operations = [];
+            
+            // Determine start object.
+            ITimeable? startObject = OrderedSelectedObjects.LastOrDefault();
+            if (startObject == null) return;
+
+            if (EditorSystem.Mode == EditorMode.ObjectMode)
+            {
+                List<ITimeable> objects = [];
+                for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
+                {
+                    Event @event = ChartSystem.Chart.Events[i];
+                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    objects.Add(@event);
+                }
+                
+                for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
+                {
+                    Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
+                    if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    objects.Add(bookmark);
+                }
+                
+                for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
+                {
+                    Note laneToggle = ChartSystem.Chart.LaneToggles[i];
+                    if (!RenderUtils.IsVisible(laneToggle, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    objects.Add(laneToggle);
+                }
+
+                for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
+                {
+                    Layer layer = ChartSystem.Chart.Layers[i];
+
+                    for (int j = 0; j < layer.Events.Count; j++)
+                    {
+                        Event @event = layer.Events[j];
+                        if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                        objects.Add(@event);
+                    }
+                    
+                    for (int j = 0; j < layer.Notes.Count; j++)
+                    {
+                        Note note = layer.Notes[j];
+                        if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                        objects.Add(note);
+                    }
+                }
+
+                objects = objects.OrderBy(x => x.Timestamp.FullTick).ToList();
+                
+                int index = objects.IndexOf(startObject);
+
+                if (index == -1) return;
+                if (index == objects.Count - 1) return;
+                
+                operations.Add(new SelectionAddOperation(objects[index + 1], LastSelectedObject));
+            }
+            else if (EditorSystem.Mode == EditorMode.EditMode)
+            {
+                if (EditorSystem.ActiveObjectGroup is HoldNote holdNote && startObject is HoldPointNote point)
+                {
+                    if (RenderUtils.IsVisible(point, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup))
+                    {
+                        int index = holdNote.Points.IndexOf(point);
+                        
+                        if (index == -1) return;
+                        if (index == holdNote.Points.Count - 1) return;
+                        
+                        operations.Add(new SelectionAddOperation(holdNote.Points[index + 1], LastSelectedObject));
+                    }
+                }
+                else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent && startObject is EffectSubEvent stopEffectSubEvent)
+                {
+                    if (RenderUtils.IsVisible(stopEffectSubEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup))
+                    {
+                        int index = Array.IndexOf(stopEffectEvent.SubEvents, stopEffectSubEvent);
+
+                        if (index == -1) return;
+                        if (index == stopEffectEvent.SubEvents.Length - 1) return;
+
+                        operations.Add(new SelectionAddOperation(stopEffectEvent.SubEvents[index + 1], LastSelectedObject));
+                    }
+                }
+                else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent && startObject is EffectSubEvent reverseEffectSubEvent)
+                {
+                    if (RenderUtils.IsVisible(reverseEffectSubEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup))
+                    {
+                        int index = Array.IndexOf(reverseEffectEvent.SubEvents, reverseEffectSubEvent);
+
+                        if (index == -1) return;
+                        if (index == reverseEffectEvent.SubEvents.Length - 1) return;
+
+                        operations.Add(new SelectionAddOperation(reverseEffectEvent.SubEvents[index + 1], LastSelectedObject));
+                    }
+                }
+            }
+            
+            // Clear selection.
+            foreach (ITimeable obj in SelectedObjects.ToArray())
+            {
+                operations.Add(new SelectionRemoveOperation(obj, LastSelectedObject));
+            }
+            
+            UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            LoggingSystem.WriteSessionLog(ex.ToString());
+        }
+    }
+
+    public static void SelectPreviousObject()
+    {
+        try
+        {
+            if (SelectedObjects.Count == 0) return;
+        
+            List<IOperation> operations = [];
+            
+            // Determine start object.
+            ITimeable? startObject = OrderedSelectedObjects.FirstOrDefault();
+            if (startObject == null) return;
+
+            if (EditorSystem.Mode == EditorMode.ObjectMode)
+            {
+                List<ITimeable> objects = [];
+                for (int i = 0; i < ChartSystem.Chart.Events.Count; i++)
+                {
+                    Event @event = ChartSystem.Chart.Events[i];
+                    if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    objects.Add(@event);
+                }
+                
+                for (int i = 0; i < ChartSystem.Chart.Bookmarks.Count; i++)
+                {
+                    Bookmark bookmark = ChartSystem.Chart.Bookmarks[i];
+                    if (!RenderUtils.IsVisible(bookmark, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    objects.Add(bookmark);
+                }
+                
+                for (int i = 0; i < ChartSystem.Chart.LaneToggles.Count; i++)
+                {
+                    Note laneToggle = ChartSystem.Chart.LaneToggles[i];
+                    if (!RenderUtils.IsVisible(laneToggle, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                    objects.Add(laneToggle);
+                }
+
+                for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
+                {
+                    Layer layer = ChartSystem.Chart.Layers[i];
+
+                    for (int j = 0; j < layer.Events.Count; j++)
+                    {
+                        Event @event = layer.Events[j];
+                        if (!RenderUtils.IsVisible(@event, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                        objects.Add(@event);
+                    }
+                    
+                    for (int j = 0; j < layer.Notes.Count; j++)
+                    {
+                        Note note = layer.Notes[j];
+                        if (!RenderUtils.IsVisible(note, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup)) continue;
+
+                        objects.Add(note);
+                    }
+                }
+
+                objects = objects.OrderBy(x => x.Timestamp.FullTick).ToList();
+                
+                int index = objects.IndexOf(startObject);
+
+                if (index == -1) return;
+                if (index == 0) return;
+                
+                operations.Add(new SelectionAddOperation(objects[index - 1], LastSelectedObject));
+            }
+            else if (EditorSystem.Mode == EditorMode.EditMode)
+            {
+                if (EditorSystem.ActiveObjectGroup is HoldNote holdNote && startObject is HoldPointNote point)
+                {
+                    if (RenderUtils.IsVisible(point, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup))
+                    {
+                        int index = holdNote.Points.IndexOf(point);
+                        
+                        if (index == -1) return;
+                        if (index == 0) return;
+                        
+                        operations.Add(new SelectionAddOperation(holdNote.Points[index - 1], LastSelectedObject));
+                    }
+                }
+                else if (EditorSystem.ActiveObjectGroup is StopEffectEvent stopEffectEvent && startObject is EffectSubEvent stopEffectSubEvent)
+                {
+                    if (RenderUtils.IsVisible(stopEffectSubEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup))
+                    {
+                        int index = Array.IndexOf(stopEffectEvent.SubEvents, stopEffectSubEvent);
+
+                        if (index == -1) return;
+                        if (index == 0) return;
+
+                        operations.Add(new SelectionAddOperation(stopEffectEvent.SubEvents[index - 1], LastSelectedObject));
+                    }
+                }
+                else if (EditorSystem.ActiveObjectGroup is ReverseEffectEvent reverseEffectEvent && startObject is EffectSubEvent reverseEffectSubEvent)
+                {
+                    if (RenderUtils.IsVisible(reverseEffectSubEvent, SettingsSystem.RenderSettings, EditorSystem.ActiveObjectGroup))
+                    {
+                        int index = Array.IndexOf(reverseEffectEvent.SubEvents, reverseEffectSubEvent);
+
+                        if (index == -1) return;
+                        if (index == 0) return;
+
+                        operations.Add(new SelectionAddOperation(reverseEffectEvent.SubEvents[index - 1], LastSelectedObject));
+                    }
+                }
+            }
+            
+            // Clear selection.
+            foreach (ITimeable obj in SelectedObjects.ToArray())
+            {
+                operations.Add(new SelectionRemoveOperation(obj, LastSelectedObject));
+            }
+            
+            UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            LoggingSystem.WriteSessionLog(ex.ToString());
+        }
+    }
 #endregion Methods
     
 #region System Event Handlers
