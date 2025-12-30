@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
@@ -45,6 +46,332 @@
                           Minimum="0"
                           Increment="1"/>
             </Grid>
+            
+            <Grid ColumnDefinitions="Auto,*"
+                  Margin="0,40,0,20">
+                <TextBlock Grid.Column="0"
+                           Text="{DynamicResource VolumeMixer.Channel.Hitsounds}"
+                           Margin="0,0,20,0" />
+                <Rectangle Grid.Column="1"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Center"
+                           Height="1"
+                           Fill="{DynamicResource SeparatorPrimary}" />
+            </Grid>
+            
+            <Grid ColumnDefinitions="100,30,*,36"
+                  RowDefinitions="40,40,40,40,20,40,40,20,40,40"
+                  VerticalAlignment="Top"
+                  Margin="15,10">
+
+            <!-- Guide -->
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Guide}" />
+            <icon:FluentIcon Grid.Row="0"
+                             Grid.Column="1"
+                             Margin="0,0,10,0"
+                             Name="IconSoundGuideNotFound"
+                             IsVisible="True"
+                             Icon="Warning"
+                             Foreground="{DynamicResource ForegroundWarning}">
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </icon:FluentIcon>
+            <TextBox Grid.Row="0"
+                     Grid.Column="2"
+                     Name="TextBoxGuide"
+                     Height="30"
+                     LostFocus="TextBoxSound_LostFocus"/>
+            <Button Grid.Row="0"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundGuide"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- Touch -->
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Touch}" />
+            <icon:FluentIcon Grid.Row="1"
+                             Grid.Column="1"
+                             Margin="0,0,10,0"
+                             Name="IconSoundTouchNotFound"
+                             IsVisible="True"
+                             Icon="Warning"
+                             Foreground="{DynamicResource ForegroundWarning}">
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </icon:FluentIcon>
+            <TextBox Grid.Row="1"
+                     Grid.Column="2"
+                     Name="TextBoxTouch"
+                     Height="30"
+                     LostFocus="TextBoxSound_LostFocus"/>
+            <Button Grid.Row="1"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundTouch"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- Hold -->
+            <TextBlock Grid.Row="2"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Hold}" />
+            <icon:FluentIcon Grid.Row="2"
+                             Grid.Column="1"
+                             Margin="0,0,10,0"
+                             Name="IconSoundHoldNotFound"
+                             IsVisible="True"
+                             Icon="Warning"
+                             Foreground="{DynamicResource ForegroundWarning}">
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </icon:FluentIcon>
+            <TextBox Grid.Row="2"
+                     Grid.Column="2"
+                     Name="TextBoxHold"
+                     Height="30"
+                     LostFocus="TextBoxSound_LostFocus"/>
+            <Button Grid.Row="2"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundHold"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- Slide -->
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Slide}" />
+            <icon:FluentIcon Grid.Row="3"
+                             Grid.Column="1"
+                             Margin="0,0,10,0"
+                             Name="IconSoundSlideNotFound"
+                             IsVisible="True"
+                             Icon="Warning"
+                             Foreground="{DynamicResource ForegroundWarning}">
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </icon:FluentIcon>
+            <TextBox Grid.Row="3"
+                     Grid.Column="2"
+                     Name="TextBoxSlide"
+                     Height="30"
+                     LostFocus="TextBoxSound_LostFocus"/>
+            <Button Grid.Row="3"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundSlide"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- Bonus -->
+            <Rectangle Grid.Row="4"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       Fill="{DynamicResource SeparatorPrimary}"
+                       Height="1" />
+
+            <TextBlock Grid.Row="5"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Bonus}" />
+            <icon:FluentIcon Grid.Row="5"
+                             Grid.Column="1"
+                             Margin="0,0,10,0"
+                             Name="IconSoundBonusNotFound"
+                             IsVisible="True"
+                             Icon="Warning"
+                             Foreground="{DynamicResource ForegroundWarning}">
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </icon:FluentIcon>
+            <TextBox Grid.Row="5"
+                     Grid.Column="2"
+                     Name="TextBoxBonus"
+                     Height="30"
+                     LostFocus="TextBoxSound_LostFocus"/>
+            <Button Grid.Row="5"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundBonus"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- R -->
+            <TextBlock Grid.Row="6"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.R}" />
+            <icon:FluentIcon Grid.Row="6"
+                             Grid.Column="1"
+                             Margin="0,0,10,0"
+                             Name="IconSoundRNotFound"
+                             IsVisible="True"
+                             Icon="Warning"
+                             Foreground="{DynamicResource ForegroundWarning}">
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </icon:FluentIcon>
+            <TextBox Grid.Row="6"
+                     Grid.Column="2"
+                     Name="TextBoxR"
+                     Height="30"
+                     LostFocus="TextBoxSound_LostFocus"/>
+            <Button Grid.Row="6"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundR"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- StartClick -->
+            <Rectangle Grid.Row="7"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       Fill="{DynamicResource SeparatorPrimary}"
+                       Height="1" />
+
+            <TextBlock Grid.Row="8"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.StartClick}" />
+            <icon:FluentIcon Grid.Row="8"
+                             Grid.Column="1"
+                             Margin="0,0,10,0"
+                             Name="IconSoundStartClickNotFound"
+                             IsVisible="True"
+                             Icon="Warning"
+                             Foreground="{DynamicResource ForegroundWarning}">
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </icon:FluentIcon>
+            <TextBox Grid.Row="8"
+                     Grid.Column="2"
+                     Name="TextBoxStartClick"
+                     Height="30"
+                     LostFocus="TextBoxSound_LostFocus"/>
+            <Button Grid.Row="8"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundStartClick"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+
+            <!-- Metronome -->
+            <TextBlock Grid.Row="9"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource VolumeMixer.Channel.Metronome}" />
+            <icon:FluentIcon Grid.Row="9"
+                             Grid.Column="1"
+                             Margin="0,0,10,0"
+                             Name="IconSoundMetronomeNotFound"
+                             IsVisible="True"
+                             Icon="Warning"
+                             Foreground="{DynamicResource ForegroundWarning}">
+                <ToolTip.Tip>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                        <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                   Foreground="{DynamicResource ForegroundSecondary}" />
+                    </StackPanel>
+                </ToolTip.Tip>
+            </icon:FluentIcon>
+            <TextBox Grid.Row="9"
+                     Grid.Column="2"
+                     Name="TextBoxMetronome"
+                     Height="30"
+                     LostFocus="TextBoxSound_LostFocus"/>
+            <Button Grid.Row="9"
+                    Grid.Column="3"
+                    Name="ButtonPickSoundMetronome"
+                    Classes="Themed Square Outlined"
+                    HorizontalAlignment="Right"
+                    Click="ButtonPickSound_OnClick">
+                <ToolTip.Tip>
+                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                </ToolTip.Tip>
+                <icon:FluentIcon Icon="Folder" />
+            </Button>
+        </Grid>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
