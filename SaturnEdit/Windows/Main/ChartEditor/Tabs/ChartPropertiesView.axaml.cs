@@ -417,9 +417,9 @@ public partial class ChartPropertiesView : UserControl
     {
         if (sender == null) return;
         
-        if (ChartSystem.Entry.PreviewBegin.FullTick < ChartSystem.Entry.PreviewEnd.FullTick 
-            || ChartSystem.Entry.PreviewBegin.FullTick < ChartSystem.Entry.ChartEnd.FullTick
-            || ChartSystem.Entry.PreviewEnd.FullTick < ChartSystem.Entry.ChartEnd.FullTick)
+        if (ChartSystem.Entry.PreviewBegin.FullTick >= ChartSystem.Entry.PreviewEnd.FullTick 
+            || ChartSystem.Entry.PreviewBegin.FullTick > ChartSystem.Entry.ChartEnd.FullTick
+            || ChartSystem.Entry.PreviewEnd.FullTick > ChartSystem.Entry.ChartEnd.FullTick)
         {
             if (MainWindow.Instance == null) return;
         
