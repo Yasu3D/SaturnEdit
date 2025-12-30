@@ -1902,6 +1902,46 @@ public static class EditorSystem
                 operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
                 operations.Add(new SelectionAddOperation(newNote, SelectionSystem.LastSelectedObject));
             }
+            else if (obj is SnapForwardNote sourceForward)
+            {
+                Layer? layer = ChartSystem.Chart.ParentLayer(sourceForward);
+                if (layer == null) continue;
+                
+                SnapBackwardNote newNote = new
+                (
+                    timestamp:     new(sourceForward.Timestamp.FullTick),
+                    position:      sourceForward.Position,
+                    size:          sourceForward.Size,
+                    bonusType:     sourceForward.BonusType,
+                    judgementType: sourceForward.JudgementType
+                );
+                
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, sourceForward));
+                operations.Add(new SelectionRemoveOperation(sourceForward, SelectionSystem.LastSelectedObject));
+                
+                operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
+                operations.Add(new SelectionAddOperation(newNote, SelectionSystem.LastSelectedObject));
+            }
+            else if (obj is SnapBackwardNote sourceBackward)
+            {
+                Layer? layer = ChartSystem.Chart.ParentLayer(sourceBackward);
+                if (layer == null) continue;
+                
+                SnapForwardNote newNote = new
+                (
+                    timestamp:     new(sourceBackward.Timestamp.FullTick),
+                    position:      sourceBackward.Position,
+                    size:          sourceBackward.Size,
+                    bonusType:     sourceBackward.BonusType,
+                    judgementType: sourceBackward.JudgementType
+                );
+                
+                operations.Add(new ListRemoveOperation<Note>(() => layer.Notes, sourceBackward));
+                operations.Add(new SelectionRemoveOperation(sourceBackward, SelectionSystem.LastSelectedObject));
+                
+                operations.Add(new ListAddOperation<Note>(() => layer.Notes, newNote));
+                operations.Add(new SelectionAddOperation(newNote, SelectionSystem.LastSelectedObject));
+            }
             else if (obj is ILaneToggle laneToggle)
             {
                 if (laneToggle.Direction == LaneSweepDirection.Clockwise)
