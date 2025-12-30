@@ -206,7 +206,7 @@ public partial class ChartView3D : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
     
@@ -324,7 +324,7 @@ public partial class ChartView3D : UserControl
             // Don't throw.
             if (ex is not FileNotFoundException)
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
 
             jacketBackgroundPaint = null;
@@ -1010,7 +1010,7 @@ public partial class ChartView3D : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
         // Hook into render function to update box selection during playback,
@@ -1299,7 +1299,7 @@ public partial class ChartView3D : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
         

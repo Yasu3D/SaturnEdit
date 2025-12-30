@@ -131,7 +131,7 @@ public partial class SelectMirrorAxisWindow : Window
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             
             backgroundColor = new(0xFFFF00FF);
             linePaint.Color = new(0xFFFF00FF);

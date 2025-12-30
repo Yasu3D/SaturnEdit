@@ -3,6 +3,7 @@ using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 
@@ -76,7 +77,7 @@ public partial class SelectScaleWindow : Window
                 
             if (ex is not (FormatException or OverflowException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         }
     }

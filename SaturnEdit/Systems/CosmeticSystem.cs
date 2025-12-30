@@ -123,7 +123,7 @@ public static class CosmeticSystem
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
     
@@ -143,7 +143,7 @@ public static class CosmeticSystem
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
         

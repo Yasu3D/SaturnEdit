@@ -8,6 +8,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 using SkiaSharp;
@@ -233,7 +234,7 @@ public partial class ZigZagHoldArgsWindow : Window
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             
             backgroundColor = new(0xFFFF00FF);
             gridPaint.Color = new(0xFFFF00FF);

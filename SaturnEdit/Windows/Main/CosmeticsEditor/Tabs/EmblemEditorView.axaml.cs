@@ -143,7 +143,7 @@ public partial class EmblemEditorView : UserControl
         catch (Exception ex)
         {
             // don't throw
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 #endregion UI Event Handlers

@@ -127,7 +127,7 @@ public partial class CosmeticsEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
     }
@@ -153,7 +153,7 @@ public partial class CosmeticsEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             MainWindow.ShowFileWriteError();
             return false;
         }
@@ -221,7 +221,7 @@ public partial class CosmeticsEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             MainWindow.ShowFileWriteError();
             return false;
         }
@@ -273,7 +273,7 @@ public partial class CosmeticsEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
     }
@@ -311,7 +311,7 @@ public partial class CosmeticsEditorView : UserControl
             catch (Exception ex)
             {
                 // Don't throw.
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         }
         
@@ -399,7 +399,7 @@ public partial class CosmeticsEditorView : UserControl
                     // Don't throw.
                     if (ex is not (FileNotFoundException or ArgumentException))
                     {
-                        Console.WriteLine(ex);
+                        LoggingSystem.WriteSessionLog(ex.ToString());
                     }
                     
                     ImagePlaceholderPlate.IsVisible = false;
@@ -437,7 +437,7 @@ public partial class CosmeticsEditorView : UserControl
                     // Don't throw.
                     if (ex is not (FileNotFoundException or ArgumentException))
                     {
-                        Console.WriteLine(ex);
+                        LoggingSystem.WriteSessionLog(ex.ToString());
                     }
                     
                     ImagePlaceholderIcon.IsVisible = false;
@@ -475,7 +475,7 @@ public partial class CosmeticsEditorView : UserControl
                     // Don't throw.
                     if (ex is not (FileNotFoundException or ArgumentException))
                     {
-                        Console.WriteLine(ex);
+                        LoggingSystem.WriteSessionLog(ex.ToString());
                     }
                     
                     ImagePlaceholderEmblem.IsVisible = false;

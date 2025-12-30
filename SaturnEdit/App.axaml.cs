@@ -15,7 +15,7 @@ public partial class App : Application
     {
         AvaloniaXamlLoader.Load(this);
 
-        CrashLogSystem.Initialize();
+        LoggingSystem.Initialize();
         SoftwareUpdateSystem.Initialize();
         AutosaveSystem.Initialize();
         SettingsSystem.Initialize();
@@ -79,7 +79,7 @@ public partial class App : Application
             SettingsSystem.EditorSettings.Locale = EditorSettings.LocaleOption.en_US;
             
             // Still complain about it though.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 }

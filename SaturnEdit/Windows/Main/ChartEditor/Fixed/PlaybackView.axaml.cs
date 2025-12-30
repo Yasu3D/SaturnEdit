@@ -159,7 +159,7 @@ public partial class PlaybackView : UserControl
             catch (Exception ex)
             {
                 // Don't throw.
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         });
     }
@@ -304,7 +304,7 @@ public partial class PlaybackView : UserControl
             // classic error pink
             canvasInfo.BackgroundColor = new(0xFF, 0x00, 0xFF, 0xFF);
             
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
     

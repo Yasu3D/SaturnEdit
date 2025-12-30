@@ -18,7 +18,7 @@ class Program
         }
         catch (Exception ex)
         {
-            CrashLogSystem.WriteCrashLog(ex.ToString());
+            LoggingSystem.WriteCrashLog(ex.ToString());
         }
     }
 

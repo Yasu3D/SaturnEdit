@@ -4,6 +4,7 @@ using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using FluentIcons.Common;
+using SaturnEdit.Systems;
 using SaturnEdit.Windows.Main.ChartEditor.Tabs;
 
 namespace SaturnEdit.Docking;
@@ -112,7 +113,7 @@ public static class DockSerializer
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return "";
         }
     }
@@ -360,7 +361,7 @@ public static class DockSerializer
             catch (Exception ex)
             {
                 // Don't throw.
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
                 DockArea.Instance.Root = null;
             }
         });

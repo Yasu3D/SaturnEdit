@@ -299,7 +299,7 @@ public partial class NoteSoundEditorView : UserControl
         catch (Exception ex)
         {
             // don't throw
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
     
@@ -324,7 +324,7 @@ public partial class NoteSoundEditorView : UserControl
 
             if (ex is not (FormatException or OverflowException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         }
     }
@@ -350,7 +350,7 @@ public partial class NoteSoundEditorView : UserControl
 
             if (ex is not (FormatException or OverflowException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         }
     }
@@ -376,7 +376,7 @@ public partial class NoteSoundEditorView : UserControl
 
             if (ex is not (FormatException or OverflowException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         }
     }
@@ -402,7 +402,7 @@ public partial class NoteSoundEditorView : UserControl
 
             if (ex is not (FormatException or OverflowException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         }
     }

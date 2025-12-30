@@ -1136,7 +1136,7 @@ public partial class ChartView2D : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 

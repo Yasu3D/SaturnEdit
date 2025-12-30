@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using SaturnEdit.Systems;
 
 namespace SaturnEdit.Controls;
 
@@ -80,7 +81,7 @@ public partial class WindowChrome : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 #endregion UI Event Handlers

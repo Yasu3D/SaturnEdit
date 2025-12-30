@@ -37,7 +37,7 @@ public static class ChartSystem
             catch (Exception ex)
             {
                 // Don't throw.
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
                 NewChart(120, 4, 4);
             }
         }
@@ -190,7 +190,7 @@ public static class ChartSystem
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
         

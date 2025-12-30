@@ -496,7 +496,7 @@ public static class SelectionSystem
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
         BoxSelectArgs = new();

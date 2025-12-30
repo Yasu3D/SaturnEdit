@@ -129,7 +129,7 @@ public partial class CosmeticItemEditorView : UserControl
 
             if (ex is not (FormatException or OverflowException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         }
     }

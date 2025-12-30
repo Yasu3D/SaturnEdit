@@ -78,7 +78,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 
@@ -93,7 +93,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 
@@ -108,7 +108,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
     
@@ -625,7 +625,7 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 
@@ -813,7 +813,7 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 #endregion UI Event Handlers

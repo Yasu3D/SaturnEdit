@@ -176,7 +176,7 @@ public partial class ChartEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
     }
@@ -238,7 +238,7 @@ public partial class ChartEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
     }
@@ -314,7 +314,7 @@ public partial class ChartEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
     }
@@ -341,7 +341,7 @@ public partial class ChartEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             MainWindow.ShowFileWriteError();
             return false;
         }
@@ -390,7 +390,7 @@ public partial class ChartEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             MainWindow.ShowFileWriteError();
             return false;
         }
@@ -434,7 +434,7 @@ public partial class ChartEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
     }
@@ -470,7 +470,7 @@ public partial class ChartEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
     }
@@ -508,7 +508,7 @@ public partial class ChartEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
         
@@ -952,7 +952,7 @@ public partial class ChartEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             MainWindow.ShowFileWriteError();
         }
     }
@@ -988,7 +988,7 @@ public partial class ChartEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             Dock_LoadPreset(PresetLayoutType.Classic);
         }
     }
@@ -1022,7 +1022,7 @@ public partial class ChartEditorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
     
@@ -1043,7 +1043,7 @@ public partial class ChartEditorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             
             Dock_LoadPreset(PresetLayoutType.Classic);
         }
@@ -1119,7 +1119,7 @@ public partial class ChartEditorView : UserControl
                     catch (Exception ex)
                     {
                         // Don't throw.
-                        Console.WriteLine(ex);
+                        LoggingSystem.WriteSessionLog(ex.ToString());
                     }
                 }
                 
@@ -1605,7 +1605,7 @@ public partial class ChartEditorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
     
@@ -1675,7 +1675,7 @@ public partial class ChartEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
     

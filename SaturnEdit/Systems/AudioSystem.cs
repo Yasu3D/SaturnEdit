@@ -363,7 +363,7 @@ public static class AudioSystem
         catch (Exception ex)
         {
             AudioChannelAudio = null;
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
         AudioLoaded?.Invoke(null, EventArgs.Empty);
@@ -402,7 +402,7 @@ public static class AudioSystem
         catch (Exception ex)
         {
             AudioChannelAudio = null;
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
         AudioLoaded?.Invoke(null, EventArgs.Empty);

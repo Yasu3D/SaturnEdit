@@ -891,7 +891,7 @@ public partial class InspectorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
         List<IOperation> operations = [];
@@ -977,7 +977,7 @@ public partial class InspectorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
         List<IOperation> operations = [];
@@ -1063,7 +1063,7 @@ public partial class InspectorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
         List<IOperation> operations = [];
@@ -1176,7 +1176,7 @@ public partial class InspectorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
 
         List<IOperation> operations = [];
@@ -1232,7 +1232,7 @@ public partial class InspectorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
         List<IOperation> operations = [];
@@ -1374,7 +1374,7 @@ public partial class InspectorView : UserControl
             // Don't throw.
             if (ex is not FormatException or OverflowException)
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         }
         
@@ -1441,7 +1441,7 @@ public partial class InspectorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
         List<IOperation> operations = [];
@@ -1481,7 +1481,7 @@ public partial class InspectorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
         List<IOperation> operations = [];
@@ -1520,7 +1520,7 @@ public partial class InspectorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
         List<IOperation> operations = [];

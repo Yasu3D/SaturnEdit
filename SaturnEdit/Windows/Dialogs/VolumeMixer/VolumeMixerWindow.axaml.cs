@@ -146,7 +146,7 @@ public partial class VolumeMixerWindow : Window
             catch (Exception ex)
             {
                 // don't throw
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
 
             if (!File.Exists(path)) return;
@@ -187,7 +187,7 @@ public partial class VolumeMixerWindow : Window
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 #endregion UI Event Handlers

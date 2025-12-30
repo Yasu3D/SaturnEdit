@@ -85,7 +85,7 @@ public partial class EventListItem : UserControl
                 catch (Exception ex)
                 {
                     // Don't throw.
-                    Console.WriteLine(ex);
+                    LoggingSystem.WriteSessionLog(ex.ToString());
                     
                     TextBlockEventType.Text = "UNKNOWN TYPE";
                 }
@@ -152,7 +152,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = Event.Timestamp.FullTick;
@@ -185,7 +188,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = Event.Timestamp.FullTick;
@@ -219,7 +225,10 @@ public partial class EventListItem : UserControl
             catch (Exception ex)
             {
                 // Don't throw.
-                Console.WriteLine(ex);
+                if (ex is not FormatException or OverflowException)
+                {
+                    LoggingSystem.WriteSessionLog(ex.ToString());
+                }
             }
 
             UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { tempoChangeEvent.Tempo = value; }, tempoChangeEvent.Tempo, newValue));
@@ -235,7 +244,10 @@ public partial class EventListItem : UserControl
             catch (Exception ex)
             {
                 // Don't throw.
-                Console.WriteLine(ex);
+                if (ex is not FormatException or OverflowException)
+                {
+                    LoggingSystem.WriteSessionLog(ex.ToString());
+                }
             }
             
             UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { speedChangeEvent.Speed = value; }, speedChangeEvent.Speed, newValue));
@@ -271,7 +283,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
         
         UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { metreChangeEvent.Upper = value; }, metreChangeEvent.Upper, newValue));
@@ -301,7 +316,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
         
         UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<int>(value => { metreChangeEvent.Lower = value; }, metreChangeEvent.Lower, newValue));
@@ -342,7 +360,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = stopEffectEvent.SubEvents[0].Timestamp.FullTick;
@@ -375,7 +396,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = stopEffectEvent.SubEvents[0].Timestamp.FullTick;
@@ -409,7 +433,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = stopEffectEvent.SubEvents[1].Timestamp.FullTick;
@@ -442,7 +469,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = stopEffectEvent.SubEvents[1].Timestamp.FullTick;
@@ -476,7 +506,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
@@ -509,7 +542,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = reverseEffectEvent.SubEvents[0].Timestamp.FullTick;
@@ -543,7 +579,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = reverseEffectEvent.SubEvents[1].Timestamp.FullTick;
@@ -576,7 +615,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = reverseEffectEvent.SubEvents[1].Timestamp.FullTick;
@@ -610,7 +652,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = reverseEffectEvent.SubEvents[2].Timestamp.FullTick;
@@ -643,7 +688,10 @@ public partial class EventListItem : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            if (ex is not FormatException or OverflowException)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
 
         int oldFullTick = reverseEffectEvent.SubEvents[2].Timestamp.FullTick;

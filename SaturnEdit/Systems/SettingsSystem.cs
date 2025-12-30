@@ -103,7 +103,7 @@ public static class SettingsSystem
         {
             if (ex is not (FileNotFoundException or DirectoryNotFoundException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
             EditorSettings = new();
         }
@@ -118,7 +118,7 @@ public static class SettingsSystem
         {
             if (ex is not (FileNotFoundException or DirectoryNotFoundException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
             RenderSettings = new();
         }
@@ -133,7 +133,7 @@ public static class SettingsSystem
         {
             if (ex is not (FileNotFoundException or DirectoryNotFoundException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
             AudioSettings = new();
         }
@@ -148,7 +148,7 @@ public static class SettingsSystem
         {
             if (ex is not (FileNotFoundException or DirectoryNotFoundException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
             ShortcutSettings = new();
         }

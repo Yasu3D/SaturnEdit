@@ -64,7 +64,7 @@ public static class SoftwareUpdateSystem
             // Don't throw.
             if (ex is not NotFoundException)
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         }
         
@@ -154,7 +154,7 @@ public static class SoftwareUpdateSystem
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
 
         return (false, "ModalDialog.Update.Error.Unknown");

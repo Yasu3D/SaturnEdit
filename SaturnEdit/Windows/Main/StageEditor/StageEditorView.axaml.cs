@@ -107,7 +107,7 @@ public partial class StageEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
     }
@@ -131,7 +131,7 @@ public partial class StageEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 
@@ -156,7 +156,7 @@ public partial class StageEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             MainWindow.ShowFileWriteError();
             return false;
         }
@@ -196,7 +196,7 @@ public partial class StageEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             MainWindow.ShowFileWriteError();
             return false;
         }
@@ -234,7 +234,7 @@ public partial class StageEditorView : UserControl
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
             return false;
         }
     }
@@ -376,7 +376,7 @@ public partial class StageEditorView : UserControl
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
             
             blockEvents = false;
@@ -537,7 +537,7 @@ public partial class StageEditorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
     
@@ -672,7 +672,7 @@ public partial class StageEditorView : UserControl
         catch (Exception ex)
         {
             // don't throw
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 
@@ -768,7 +768,7 @@ public partial class StageEditorView : UserControl
         catch (Exception ex)
         {
             // Don't throw.
-            Console.WriteLine(ex);
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 
@@ -823,7 +823,7 @@ public partial class StageEditorView : UserControl
 
             if (ex is not (FormatException or OverflowException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         }
     }
@@ -848,7 +848,7 @@ public partial class StageEditorView : UserControl
 
             if (ex is not (FormatException or OverflowException))
             {
-                Console.WriteLine(ex);
+                LoggingSystem.WriteSessionLog(ex.ToString());
             }
         }
     }
