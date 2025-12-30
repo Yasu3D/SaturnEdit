@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
@@ -22,6 +23,9 @@ public partial class PlaybackView : UserControl
     public PlaybackView()
     {
         InitializeComponent();
+
+        SliderPlaybackSpeed.Minimum = TimeSystem.MinPlaybackSpeed;
+        SliderPlaybackSpeed.Maximum = TimeSystem.MaxPlaybackSpeed;
     }
 
     private readonly CanvasInfo canvasInfo = new();
@@ -360,12 +364,60 @@ public partial class PlaybackView : UserControl
         TimeSystem.PlaybackSpeed = (int)SliderPlaybackSpeed.Value;
     }
     
+    private void SliderPlaybackSpeed_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        if (blockEvents) return;
+        
+        onScrollUp();
+        onScrollDown();
+
+        return;
+
+        void onScrollUp()
+        {
+            if (e.Delta.Y <= 0) return;
+
+            TimeSystem.PlaybackSpeed = Math.Clamp(TimeSystem.PlaybackSpeed + 5, TimeSystem.MinPlaybackSpeed, TimeSystem.MaxPlaybackSpeed);
+        }
+
+        void onScrollDown()
+        {
+            if (e.Delta.Y >= 0) return;
+
+            TimeSystem.PlaybackSpeed = Math.Clamp(TimeSystem.PlaybackSpeed - 5, TimeSystem.MinPlaybackSpeed, TimeSystem.MaxPlaybackSpeed);
+        }
+    }
+    
     private void SliderSeek_OnValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
     {
         if (blockEvents) return;
         if (sender is not Slider) return;
         
         TimeSystem.SeekTime((float)SliderSeek.Value, TimeSystem.Division);
+    }
+    
+    private void SliderSeek_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        if (blockEvents) return;
+        
+        onScrollUp();
+        onScrollDown();
+
+        return;
+        
+        void onScrollUp()
+        {
+            if (e.Delta.Y <= 0) return;
+            
+            TimeSystem.Navigate_MoveBeatForward();
+        }
+
+        void onScrollDown()
+        {
+            if (e.Delta.Y >= 0) return;
+            
+            TimeSystem.Navigate_MoveBeatBack();
+        }
     }
     
     private void SliderSeek_OnPointerReleased(object? sender, RoutedEventArgs e)

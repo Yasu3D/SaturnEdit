@@ -281,7 +281,8 @@
                                     TickFrequency="1"
                                     IsSnapToTickEnabled="True"
                                     IsDirectionReversed="True"
-                                    ValueChanged="SliderLeftEdgeOffsetA_OnValueChanged" />
+                                    ValueChanged="SliderLeftEdgeOffsetA_OnValueChanged" 
+                                    PointerWheelChanged="SliderLeftEdgeOffsetA_OnPointerWheelChanged"/>
                             <Slider Grid.Row="1"
                                     Name="SliderLeftEdgeOffsetB"
                                     Classes="Wide"
@@ -291,7 +292,8 @@
                                     TickFrequency="1"
                                     IsSnapToTickEnabled="True"
                                     IsDirectionReversed="True"
-                                    ValueChanged="SliderLeftEdgeOffsetB_OnValueChanged" />
+                                    ValueChanged="SliderLeftEdgeOffsetB_OnValueChanged"
+                                    PointerWheelChanged="SliderLeftEdgeOffsetB_OnPointerWheelChanged"/>
                         </Grid>
 
                         <!-- Vertical Separator -->
@@ -490,7 +492,8 @@
                                     Maximum="30"
                                     TickFrequency="1"
                                     IsSnapToTickEnabled="True"
-                                    ValueChanged="SliderRightEdgeOffsetA_OnValueChanged" />
+                                    ValueChanged="SliderRightEdgeOffsetA_OnValueChanged"
+                                    PointerWheelChanged="SliderRightEdgeOffsetA_OnPointerWheelChanged"/>
                             <Slider Grid.Row="1"
                                     Name="SliderRightEdgeOffsetB"
                                     Classes="Wide"
@@ -499,7 +502,8 @@
                                     Maximum="30"
                                     TickFrequency="1"
                                     IsSnapToTickEnabled="True"
-                                    ValueChanged="SliderRightEdgeOffsetB_OnValueChanged" />
+                                    ValueChanged="SliderRightEdgeOffsetB_OnValueChanged"
+                                    PointerWheelChanged="SliderRightEdgeOffsetB_OnPointerWheelChanged"/>
                         </Grid>
                     </Grid>
                 </Grid>

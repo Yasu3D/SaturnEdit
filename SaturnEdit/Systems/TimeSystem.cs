@@ -65,6 +65,9 @@ public static class TimeSystem
         }
     }
     private static int playbackSpeed = 100;
+
+    public const int MinPlaybackSpeed = 5;
+    public const int MaxPlaybackSpeed = 300;
     
     /// <summary>
     /// The current timestamp of the "playhead" in measures and ticks.

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
@@ -191,4 +192,45 @@ public partial class VolumeMixerWindow : Window
         }
     }
 #endregion UI Event Handlers
+
+    private void SliderVolume_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        if (blockEvents) return;
+        if (sender is not Slider slider) return;
+
+        int value = (int)slider.Value;
+        
+        onScrollUp();
+        onScrollDown();
+        
+        value = SliderValueToDecibels(value);
+        
+        if      (ReferenceEquals(sender, SliderVolumeMaster))     { SettingsSystem.AudioSettings.MasterVolume     = value; }
+        else if (ReferenceEquals(sender, SliderVolumeAudio))      { SettingsSystem.AudioSettings.AudioVolume      = value; }
+        else if (ReferenceEquals(sender, SliderVolumeHitsound))   { SettingsSystem.AudioSettings.HitsoundVolume   = value; }
+        else if (ReferenceEquals(sender, SliderVolumeGuide))      { SettingsSystem.AudioSettings.GuideVolume      = value; }
+        else if (ReferenceEquals(sender, SliderVolumeTouch))      { SettingsSystem.AudioSettings.TouchVolume      = value; }
+        else if (ReferenceEquals(sender, SliderVolumeHold))       { SettingsSystem.AudioSettings.HoldVolume       = value; }
+        else if (ReferenceEquals(sender, SliderVolumeSlide))      { SettingsSystem.AudioSettings.SlideVolume      = value; }
+        else if (ReferenceEquals(sender, SliderVolumeBonus))      { SettingsSystem.AudioSettings.BonusVolume      = value; }
+        else if (ReferenceEquals(sender, SliderVolumeR))          { SettingsSystem.AudioSettings.RVolume          = value; }
+        else if (ReferenceEquals(sender, SliderVolumeStartClick)) { SettingsSystem.AudioSettings.StartClickVolume = value; }
+        else if (ReferenceEquals(sender, SliderVolumeMetronome))  { SettingsSystem.AudioSettings.MetronomeVolume  = value; }
+        
+        return;
+
+        void onScrollUp()
+        {
+            if (e.Delta.Y <= 0) return;
+
+            value = (int)Math.Clamp(slider.Value + 1, slider.Minimum, slider.Maximum);
+        }
+
+        void onScrollDown()
+        {
+            if (e.Delta.Y >= 0) return;
+            
+            value = (int)Math.Clamp(slider.Value - 1, slider.Minimum, slider.Maximum);
+        }
+    }
 }

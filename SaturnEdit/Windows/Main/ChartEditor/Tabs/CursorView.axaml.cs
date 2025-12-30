@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
@@ -147,6 +148,54 @@ public partial class CursorView : UserControl
         if (sender == null) return;
 
         TimeSystem.Division = (int?)NumericUpDownDivision.Value ?? TimeSystem.DefaultDivision;
+    }
+    
+    private void SliderPosition_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        if (blockEvents) return;
+        
+        onScrollUp();
+        onScrollDown();
+
+        return;
+
+        void onScrollUp()
+        {
+            if (e.Delta.Y <= 0) return;
+
+            CursorSystem.Position += 1;
+        }
+
+        void onScrollDown()
+        {
+            if (e.Delta.Y >= 0) return;
+
+            CursorSystem.Position -= 1;
+        }
+    }
+
+    private void SliderSize_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        if (blockEvents) return;
+        
+        onScrollUp();
+        onScrollDown();
+
+        return;
+
+        void onScrollUp()
+        {
+            if (e.Delta.Y <= 0) return;
+
+            CursorSystem.Size += 1;
+        }
+
+        void onScrollDown()
+        {
+            if (e.Delta.Y >= 0) return;
+
+            CursorSystem.Size -= 1;
+        }
     }
 #endregion UI Event Handlers
 }

@@ -100,7 +100,8 @@
                                 Minimum="5"
                                 Maximum="300"
                                 Value="100"
-                                ValueChanged="SliderPlaybackSpeed_OnValueChanged">
+                                ValueChanged="SliderPlaybackSpeed_OnValueChanged"
+                                PointerWheelChanged="SliderPlaybackSpeed_OnPointerWheelChanged">
                             <ToolTip.Tip>
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
@@ -376,7 +377,8 @@
                     Name="SliderSeek"
                     Classes="Wide"
                     Minimum="0"
-                    ValueChanged="SliderSeek_OnValueChanged"/>
+                    ValueChanged="SliderSeek_OnValueChanged"
+                    PointerWheelChanged="SliderSeek_OnPointerWheelChanged"/>
             
             <!-- Bookmarks -->
             <Panel Grid.Column="1"

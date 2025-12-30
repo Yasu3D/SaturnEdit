@@ -112,7 +112,8 @@
                 Value="30"
                 TickFrequency="1"
                 IsSnapToTickEnabled="True"
-                ValueChanged="SliderPosition_OnValueChanged" />
+                ValueChanged="SliderPosition_OnValueChanged"
+                PointerWheelChanged="SliderPosition_OnPointerWheelChanged"/>
 
         <TextBlock Grid.Row="3"
                    Grid.Column="0"
@@ -136,6 +137,7 @@
                 Value="15"
                 TickFrequency="1"
                 IsSnapToTickEnabled="True"
-                ValueChanged="SliderSize_OnValueChanged" />
+                ValueChanged="SliderSize_OnValueChanged"
+                PointerWheelChanged="SliderSize_OnPointerWheelChanged"/>
     </Grid>
 </UserControl>

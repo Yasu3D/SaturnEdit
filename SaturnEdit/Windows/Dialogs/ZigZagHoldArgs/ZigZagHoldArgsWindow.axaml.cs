@@ -298,5 +298,109 @@ public partial class ZigZagHoldArgsWindow : Window
         Result = ModalDialogResult.Cancel;
         Close();
     }
+
+    private void SliderLeftEdgeOffsetA_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        if (blockEvents) return;
+        
+        onScrollUp();
+        onScrollDown();
+        
+        InitializeDialog();
+
+        return;
+
+        void onScrollUp()
+        {
+            if (e.Delta.Y <= 0) return;
+
+            LeftEdgeOffsetA = Math.Clamp(LeftEdgeOffsetA + 1, -30, 30);
+        }
+
+        void onScrollDown()
+        {
+            if (e.Delta.Y >= 0) return;
+            
+            LeftEdgeOffsetA = Math.Clamp(LeftEdgeOffsetA - 1, -30, 30);
+        }
+    }
+
+    private void SliderLeftEdgeOffsetB_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        if (blockEvents) return;
+        
+        onScrollUp();
+        onScrollDown();
+        
+        InitializeDialog();
+
+        return;
+
+        void onScrollUp()
+        {
+            if (e.Delta.Y <= 0) return;
+
+            LeftEdgeOffsetB = Math.Clamp(LeftEdgeOffsetB + 1, -30, 30);
+        }
+
+        void onScrollDown()
+        {
+            if (e.Delta.Y >= 0) return;
+            
+            LeftEdgeOffsetB = Math.Clamp(LeftEdgeOffsetB - 1, -30, 30);
+        }
+    }
+
+    private void SliderRightEdgeOffsetA_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        if (blockEvents) return;
+        
+        onScrollUp();
+        onScrollDown();
+        
+        InitializeDialog();
+
+        return;
+
+        void onScrollUp()
+        {
+            if (e.Delta.Y <= 0) return;
+
+            RightEdgeOffsetA = Math.Clamp(RightEdgeOffsetA + 1, -30, 30);
+        }
+
+        void onScrollDown()
+        {
+            if (e.Delta.Y >= 0) return;
+            
+            RightEdgeOffsetA = Math.Clamp(RightEdgeOffsetA - 1, -30, 30);
+        }
+    }
+
+    private void SliderRightEdgeOffsetB_OnPointerWheelChanged(object? sender, PointerWheelEventArgs e)
+    {
+        if (blockEvents) return;
+        
+        onScrollUp();
+        onScrollDown();
+        
+        InitializeDialog();
+
+        return;
+
+        void onScrollUp()
+        {
+            if (e.Delta.Y <= 0) return;
+
+            RightEdgeOffsetB = Math.Clamp(RightEdgeOffsetB + 1, -30, 30);
+        }
+
+        void onScrollDown()
+        {
+            if (e.Delta.Y >= 0) return;
+            
+            RightEdgeOffsetB = Math.Clamp(RightEdgeOffsetB - 1, -30, 30);
+        }
+    }
 #endregion UI Event Handlers
 }

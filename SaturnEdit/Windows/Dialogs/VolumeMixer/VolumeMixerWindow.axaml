@@ -64,7 +64,8 @@
                     Maximum="48"
                     IsSnapToTickEnabled="True"
                     Height="30"
-                    ValueChanged="SliderVolume_OnValueChanged"/>
+                    ValueChanged="SliderVolume_OnValueChanged"
+                    PointerWheelChanged="SliderVolume_OnPointerWheelChanged"/>
             <TextBlock Grid.Row="0"
                        Grid.Column="2"
                        Name="TextBlockVolumeMaster"
@@ -96,7 +97,8 @@
                     Maximum="48"
                     IsSnapToTickEnabled="True"
                     Height="30"
-                    ValueChanged="SliderVolume_OnValueChanged"/>
+                    ValueChanged="SliderVolume_OnValueChanged"
+                    PointerWheelChanged="SliderVolume_OnPointerWheelChanged"/>
             <TextBlock Grid.Row="1"
                        Grid.Column="2"
                        Name="TextBlockVolumeAudio"
@@ -128,7 +130,8 @@
                     Maximum="48"
                     IsSnapToTickEnabled="True"
                     Height="30"
-                    ValueChanged="SliderVolume_OnValueChanged"/>
+                    ValueChanged="SliderVolume_OnValueChanged"
+                    PointerWheelChanged="SliderVolume_OnPointerWheelChanged"/>
             <TextBlock Grid.Row="2"
                        Grid.Column="2"
                        Name="TextBlockVolumeHitsound"
@@ -174,7 +177,8 @@
                     Maximum="48"
                     IsSnapToTickEnabled="True"
                     Height="30"
-                    ValueChanged="SliderVolume_OnValueChanged"/>
+                    ValueChanged="SliderVolume_OnValueChanged"
+                    PointerWheelChanged="SliderVolume_OnPointerWheelChanged"/>
             <TextBlock Grid.Row="4"
                        Grid.Column="2"
                        Name="TextBlockVolumeGuide"
@@ -217,7 +221,8 @@
                     Maximum="48"
                     IsSnapToTickEnabled="True"
                     Height="30"
-                    ValueChanged="SliderVolume_OnValueChanged"/>
+                    ValueChanged="SliderVolume_OnValueChanged"
+                    PointerWheelChanged="SliderVolume_OnPointerWheelChanged"/>
             <TextBlock Grid.Row="5"
                        Grid.Column="2"
                        Name="TextBlockVolumeTouch"
@@ -260,7 +265,8 @@
                     Maximum="48"
                     IsSnapToTickEnabled="True"
                     Height="30"
-                    ValueChanged="SliderVolume_OnValueChanged"/>
+                    ValueChanged="SliderVolume_OnValueChanged"
+                    PointerWheelChanged="SliderVolume_OnPointerWheelChanged"/>
             <TextBlock Grid.Row="6"
                        Grid.Column="2"
                        Name="TextBlockVolumeHold"
@@ -303,7 +309,8 @@
                     Maximum="48"
                     IsSnapToTickEnabled="True"
                     Height="30"
-                    ValueChanged="SliderVolume_OnValueChanged"/>
+                    ValueChanged="SliderVolume_OnValueChanged"
+                    PointerWheelChanged="SliderVolume_OnPointerWheelChanged"/>
             <TextBlock Grid.Row="7"
                        Grid.Column="2"
                        Name="TextBlockVolumeSlide"
@@ -359,7 +366,8 @@
                     Maximum="48"
                     IsSnapToTickEnabled="True"
                     Height="30"
-                    ValueChanged="SliderVolume_OnValueChanged"/>
+                    ValueChanged="SliderVolume_OnValueChanged"
+                    PointerWheelChanged="SliderVolume_OnPointerWheelChanged"/>
             <TextBlock Grid.Row="9"
                        Grid.Column="2"
                        Name="TextBlockVolumeBonus"
@@ -402,7 +410,8 @@
                     Maximum="48"
                     IsSnapToTickEnabled="True"
                     Height="30"
-                    ValueChanged="SliderVolume_OnValueChanged"/>
+                    ValueChanged="SliderVolume_OnValueChanged"
+                    PointerWheelChanged="SliderVolume_OnPointerWheelChanged"/>
             <TextBlock Grid.Row="10"
                        Grid.Column="2"
                        Name="TextBlockVolumeR"
@@ -458,7 +467,8 @@
                     Maximum="48"
                     IsSnapToTickEnabled="True"
                     Height="30"
-                    ValueChanged="SliderVolume_OnValueChanged"/>
+                    ValueChanged="SliderVolume_OnValueChanged"
+                    PointerWheelChanged="SliderVolume_OnPointerWheelChanged"/>
             <TextBlock Grid.Row="12"
                        Grid.Column="2"
                        Name="TextBlockVolumeStartClick"
@@ -501,7 +511,8 @@
                     Maximum="48"
                     IsSnapToTickEnabled="True"
                     Height="30"
-                    ValueChanged="SliderVolume_OnValueChanged"/>
+                    ValueChanged="SliderVolume_OnValueChanged"
+                    PointerWheelChanged="SliderVolume_OnPointerWheelChanged"/>
             <TextBlock Grid.Row="13"
                        Grid.Column="2"
                        Name="TextBlockVolumeMetronome"
