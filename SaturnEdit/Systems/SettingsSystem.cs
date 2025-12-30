@@ -181,8 +181,8 @@ public static class SettingsSystem
 #region Internal Event Handlers
     private static void OnPropertyChanged(object? sender, EventArgs e)
     {
-        SettingsChanged?.Invoke(null, EventArgs.Empty);
         SaveSettings();
+        SettingsChanged?.Invoke(null, EventArgs.Empty);
     }
     
     private static void OnVolumeChanged(object? sender, EventArgs e)
