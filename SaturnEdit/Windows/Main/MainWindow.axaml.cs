@@ -800,7 +800,7 @@ public partial class MainWindow : Window
                 }
                 else if (result is ModalDialogResult.Secondary)
                 {
-                    bypassStageSave = true;
+                    bypassCosmeticsSave = true;
                     Close();
                     return;
                 }
