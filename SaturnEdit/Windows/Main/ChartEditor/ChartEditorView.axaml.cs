@@ -871,8 +871,22 @@ public partial class ChartEditorView : UserControl
     public async void ChartView_ZigZagHold()
     {
         if (VisualRoot is not Window window) return;
+
+        // Manually do LINQ.Any() check, because LINQ explodes if collection is modified while it's running???
+        bool anyHoldNotes = false;
+        ITimeable[] selected = SelectionSystem.SelectedObjects.ToArray();
         
-        if (!SelectionSystem.SelectedObjects.Any(x => x is HoldNote or HoldPointNote))
+        for (int i = 0; i < selected.Length; i++)
+        {
+            ITimeable x = selected[i];
+            if (x is HoldNote or HoldPointNote)
+            {
+                anyHoldNotes = true;
+                break;
+            }
+        }
+        
+        if (!anyHoldNotes)
         {
             ModalDialogWindow modalDialog = new()
             {
