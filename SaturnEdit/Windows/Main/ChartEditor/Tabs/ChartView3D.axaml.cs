@@ -1030,16 +1030,23 @@ public partial class ChartView3D : UserControl
         // even when the pointer is not being moved.
         if (playing && clickDragLeft.IsActive && !objectDrag.IsActive)
         {
-            _ = Task.Run(() =>
+            try
             {
-                float radius = Renderer3D.GetHitTestPointerRadius(canvasInfo, (float)clickDragLeft.EndPoint!.Value.Position.X, (float)clickDragLeft.EndPoint!.Value.Position.Y);
-                float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
-            
-                float t = RenderUtils.InversePerspective(radius);
-                float viewTime = SaturnMath.Lerp(viewDistance, 0, t);
+                _ = Task.Run(() =>
+                {
+                    float radius = Renderer3D.GetHitTestPointerRadius(canvasInfo, (float)clickDragLeft.EndPoint!.Value.Position.X, (float)clickDragLeft.EndPoint!.Value.Position.Y);
+                    float viewDistance = Renderer3D.GetViewDistance(SettingsSystem.RenderSettings.NoteSpeed);
                 
-                SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
-            });
+                    float t = RenderUtils.InversePerspective(radius);
+                    float viewTime = SaturnMath.Lerp(viewDistance, 0, t);
+                    
+                    SelectionSystem.SetBoxSelectionEnd(clickDragLeft.Position, clickDragLeft.Size, viewTime);
+                });
+            }
+            catch (Exception ex)
+            {
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
         }
     }
 
