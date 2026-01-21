@@ -82,7 +82,7 @@
                     HorizontalAlignment="Right"
                     IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                    <TextBlock Text="{DynamicResource VolumeMixer.Mute}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Name="IconMuteMaster"
                                  Icon="Speaker2" />
@@ -127,7 +127,7 @@
                     HorizontalAlignment="Right"
                     IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                    <TextBlock Text="{DynamicResource VolumeMixer.Mute}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Name="IconMuteAudio"
                                  Icon="Speaker2" />
@@ -172,7 +172,7 @@
                     HorizontalAlignment="Right"
                     IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                    <TextBlock Text="{DynamicResource VolumeMixer.Mute}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Name="IconMuteHitsound"
                                  Icon="Speaker2" />
@@ -231,7 +231,7 @@
                     HorizontalAlignment="Right"
                     IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                    <TextBlock Text="{DynamicResource VolumeMixer.Mute}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Name="IconMuteGuide"
                                  Icon="Speaker2" />
@@ -287,7 +287,7 @@
                     HorizontalAlignment="Right"
                     IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                    <TextBlock Text="{DynamicResource VolumeMixer.Mute}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Name="IconMuteTouch"
                                  Icon="Speaker2" />
@@ -343,7 +343,7 @@
                     HorizontalAlignment="Right"
                     IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                    <TextBlock Text="{DynamicResource VolumeMixer.Mute}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Name="IconMuteHold"
                                  Icon="Speaker2" />
@@ -399,7 +399,7 @@
                     HorizontalAlignment="Right"
                     IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                    <TextBlock Text="{DynamicResource VolumeMixer.Mute}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Name="IconMuteSlide"
                                  Icon="Speaker2" />
@@ -468,7 +468,7 @@
                     HorizontalAlignment="Right"
                     IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                    <TextBlock Text="{DynamicResource VolumeMixer.Mute}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Name="IconMuteBonus"
                                  Icon="Speaker2" />
@@ -524,7 +524,7 @@
                     HorizontalAlignment="Right"
                     IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                    <TextBlock Text="{DynamicResource VolumeMixer.Mute}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Name="IconMuteR"
                                  Icon="Speaker2" />
@@ -593,7 +593,7 @@
                     HorizontalAlignment="Right"
                     IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                    <TextBlock Text="{DynamicResource VolumeMixer.Mute}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Name="IconMuteStartClick"
                                  Icon="Speaker2" />
@@ -649,7 +649,7 @@
                     HorizontalAlignment="Right"
                     IsCheckedChanged="ToggleButtonMute_OnIsCheckedChanged">
                 <ToolTip.Tip>
-                    <TextBlock Text="{DynamicResource Generic.PickFile}"/>
+                    <TextBlock Text="{DynamicResource VolumeMixer.Mute}"/>
                 </ToolTip.Tip>
                 <icon:FluentIcon Name="IconMuteMetronome"
                                  Icon="Speaker2" />
