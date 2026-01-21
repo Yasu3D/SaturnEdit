@@ -20,7 +20,7 @@ public static class AutosaveSystem
     }
     
     public static string AutosaveDirectory => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "Autosave");
-    private static string AutosavePath => Path.Combine(AutosaveDirectory, $"autosave_{DateTime.Now:yyyy-MM-dd-hh-mm-ss-fff}.sat");
+    private static string AutosavePath => Path.Combine(AutosaveDirectory, $"autosave_{DateTime.Now:yyyy-MM-dd-HH-mm-ss-fff}.sat");
     public static string LastSessionPath => Path.Combine(AutosaveDirectory, "last_session.sat");
 
     private static readonly Timer AutosaveTimer = new(AutosaveTimer_Tick, null, Timeout.Infinite, Timeout.Infinite);

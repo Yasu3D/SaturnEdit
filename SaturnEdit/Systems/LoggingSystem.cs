@@ -15,11 +15,11 @@ public class LoggingSystem
         
         TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
 
-        sessionLogFile = $"session-log_{DateTime.Now:yyyy-MM-dd-hh-mm-ss-fff}.txt";
+        sessionLogFile = $"session-log_{DateTime.Now:yyyy-MM-dd-HH-mm-ss-fff}.txt";
     }
 
     private static string CrashLogDirectory => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "CrashLogs");
-    private static string CrashLogPath => Path.Combine(CrashLogDirectory, $"crash-log_{DateTime.Now:yyyy-MM-dd-hh-mm-ss-fff}.txt");
+    private static string CrashLogPath => Path.Combine(CrashLogDirectory, $"crash-log_{DateTime.Now:yyyy-MM-dd-HH-mm-ss-fff}.txt");
 
     private static string SessionLogDirectory => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "SessionLogs");
     private static string SessionLogPath => Path.Combine(SessionLogDirectory, sessionLogFile);
@@ -30,7 +30,7 @@ public class LoggingSystem
 #region Methods
     public static void WriteSessionLog(string message)
     {
-        SessionLog.Append($"{DateTime.Now:yyyy-MM-dd-hh-mm-ss-fff}:\n");
+        SessionLog.Append($"{DateTime.Now:yyyy-MM-dd-HH-mm-ss-fff}:\n");
         SessionLog.Append(message);
         SessionLog.Append("\n\n");
 
