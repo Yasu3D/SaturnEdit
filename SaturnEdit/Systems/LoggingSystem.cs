@@ -7,7 +7,7 @@ using SaturnEdit.Utilities;
 
 namespace SaturnEdit.Systems;
 
-public class LoggingSystem
+public static class LoggingSystem
 {
     public static void Initialize()
     {
