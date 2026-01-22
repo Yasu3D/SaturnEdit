@@ -61,11 +61,23 @@ public static class AudioSystem
     private static readonly HashSet<Note> ActiveHoldNotes = [];
     
     private static float holdLoopVolumeMultiplier = 1;
+    
+    private static double VolumeMaster     => SettingsSystem.AudioSettings.MuteMaster     ? 0 : DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume);
+    private static double VolumeHitsound   => SettingsSystem.AudioSettings.MuteHitsound   ? 0 : VolumeMaster   * DecibelToVolume(SettingsSystem.AudioSettings.HitsoundVolume);
+    private static double VolumeAudio      => SettingsSystem.AudioSettings.MuteAudio      ? 0 : VolumeMaster   * DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
+    private static double VolumeGuide      => SettingsSystem.AudioSettings.MuteGuide      ? 0 : VolumeHitsound * DecibelToVolume(SettingsSystem.AudioSettings.GuideVolume);
+    private static double VolumeTouch      => SettingsSystem.AudioSettings.MuteTouch      ? 0 : VolumeHitsound * DecibelToVolume(SettingsSystem.AudioSettings.TouchVolume);
+    private static double VolumeHold       => SettingsSystem.AudioSettings.MuteHold       ? 0 : VolumeHitsound * DecibelToVolume(SettingsSystem.AudioSettings.HoldVolume) * holdLoopVolumeMultiplier;
+    private static double VolumeSlide      => SettingsSystem.AudioSettings.MuteSlide      ? 0 : VolumeHitsound * DecibelToVolume(SettingsSystem.AudioSettings.SlideVolume);
+    private static double VolumeBonus      => SettingsSystem.AudioSettings.MuteBonus      ? 0 : VolumeHitsound * DecibelToVolume(SettingsSystem.AudioSettings.BonusVolume);
+    private static double VolumeR          => SettingsSystem.AudioSettings.MuteR          ? 0 : VolumeHitsound * DecibelToVolume(SettingsSystem.AudioSettings.RVolume);
+    private static double VolumeStartClick => SettingsSystem.AudioSettings.MuteStartClick ? 0 : VolumeHitsound * DecibelToVolume(SettingsSystem.AudioSettings.StartClickVolume);
+    private static double VolumeMetronome  => SettingsSystem.AudioSettings.MuteMetronome  ? 0 : VolumeHitsound * DecibelToVolume(SettingsSystem.AudioSettings.MetronomeVolume);
 
 #region Methods
     private static void TriggerHitsounds()
     {
-        lock (PassedNotes) lock (PassedBonusSlides) lock (ActiveHoldNotes) lock (ChartSystem.Chart) lock (ChartSystem.Entry)
+        try
         {
             if (TimeSystem.PlaybackState == PlaybackState.Stopped)
             {
@@ -82,144 +94,141 @@ public static class AudioSystem
                     AudioChannelHold.Playing = false;
                     AudioChannelHold.Position = 0;
                 }
-                
+
                 return;
             }
-            
+
             // Notes
             ActiveHoldNotes.Clear();
-            
-                for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
+
+            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
+            {
+                Layer l = ChartSystem.Chart.Layers[i];
+                for (int j = 0; j < l.GeneratedNotes.Count; j++)
                 {
-                    Layer l = ChartSystem.Chart.Layers[i];
-                    lock (l.GeneratedNotes)
+                    Note note = l.GeneratedNotes[j];
+                    if (note is not MeasureLineNote) continue;
+
+                    if (PassedNotes.Contains(note)) continue;
+
+                    if (note.Timestamp.Time < TimeSystem.HitsoundTime)
                     {
-                        for (int j = 0; j < l.GeneratedNotes.Count; j++)
+                        PassedNotes.Add(note);
+
+                        if (note.Timestamp.FullTick < 1920 && TimeSystem.Timestamp.Measure < 1)
                         {
-                            Note note = l.GeneratedNotes[j];
-                            if (note is not MeasureLineNote) continue;
-
-                            if (PassedNotes.Contains(note)) continue;
-
-                            if (note.Timestamp.Time < TimeSystem.HitsoundTime)
-                            {
-                                PassedNotes.Add(note);
-
-                                if (note.Timestamp.FullTick < 1920 && TimeSystem.Timestamp.Measure < 1)
-                                {
-                                    AudioSampleStartClick?.Play();
-                                }
-                                else
-                                {
-                                    if (SettingsSystem.AudioSettings.Metronome)
-                                    {
-                                        AudioSampleMetronome?.Play();
-                                    }
-                                }
-                            }
+                            AudioSampleStartClick?.Play();
                         }
-                    }
-
-                    for (int j = 0; j < l.Notes.Count; j++)
-                    {
-                        Note n = l.Notes[j];
-                        Note note = n;
-
-                        if (note is HoldNote holdNote && holdNote.Points.Count > 1 && holdNote.JudgementType != JudgementType.Fake)
+                        else
                         {
-                            if (holdNote.Points[0].Timestamp.Time < TimeSystem.HitsoundTime && holdNote.Points[^1].Timestamp.Time > TimeSystem.HitsoundTime)
+                            if (SettingsSystem.AudioSettings.Metronome)
                             {
-                                ActiveHoldNotes.Add(holdNote);
-                            }
-
-                            // Hold notes need to play hitsounds for both the hold start and hold end notes.
-                            // Always check if the end of the hold note is passed before discarding the note entirely.
-                            if (PassedNotes.Contains(holdNote))
-                            {
-                                // Hold Start has already passed
-                                HoldPointNote holdEnd = holdNote.Points[^1];
-
-                                // Hold End has not passed yet.
-                                if (!PassedNotes.Contains(holdEnd))
-                                {
-                                    // Make Hold End the subject now.
-                                    note = holdEnd;
-                                }
-                            }
-                        }
-
-                        if (note is MeasureLineNote or SyncNote) continue;
-                        if (note is IPlayable playable && playable.JudgementType == JudgementType.Fake) continue;
-
-                        // Bonus effects on slide notes play hitsounds after a fancy animation. Account for the delay here before discarding passed notes.
-                        if (note is SlideClockwiseNote or SlideCounterclockwiseNote && note is IPlayable playableSlide && playableSlide.BonusType == BonusType.Bonus && !PassedBonusSlides.Contains(note))
-                        {
-                            float bpm = ChartSystem.Chart.LastTempoChange(note.Timestamp.Time)?.Tempo ?? 120;
-                            int effectOffset = bpm > 200 ? 3840 : 1920;
-
-                            float bonusEffectTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, note.Timestamp + effectOffset);
-
-                            if (bonusEffectTime < TimeSystem.HitsoundTime)
-                            {
-                                PassedBonusSlides.Add(note);
-
-                                AudioSampleBonus?.Play();
-                            }
-                        }
-
-                        if (PassedNotes.Contains(note)) continue;
-
-                        if (note.Timestamp.Time < TimeSystem.HitsoundTime)
-                        {
-                            PassedNotes.Add(note);
-
-                            // Always play guide sounds.
-                            AudioSampleGuide?.Play();
-
-                            // Touch note sounds
-                            if (note is TouchNote)
-                            {
-                                AudioSampleTouch?.Play();
-                            }
-
-                            // Chain note sounds
-                            if (note is ChainNote)
-                            {
-                                AudioSampleTouch?.Play();
-                            }
-
-                            // Hold start/end note sounds
-                            if (note is HoldNote or HoldPointNote)
-                            {
-                                AudioSampleTouch?.Play();
-                            }
-
-                            // Slide note sounds
-                            if (note is SlideClockwiseNote or SlideCounterclockwiseNote)
-                            {
-                                AudioSampleSlide?.Play();
-                            }
-
-                            // Snap note sounds
-                            if (note is SnapForwardNote or SnapBackwardNote)
-                            {
-                                AudioSampleSlide?.Play();
-                            }
-
-                            // Bonus sounds
-                            if (note is IPlayable bonus && bonus.BonusType == BonusType.Bonus && note is not (SlideClockwiseNote or SlideCounterclockwiseNote))
-                            {
-                                AudioSampleBonus?.Play();
-                            }
-
-                            // R sounds
-                            if (note is IPlayable r && r.BonusType == BonusType.R)
-                            {
-                                AudioSampleR?.Play();
+                                AudioSampleMetronome?.Play();
                             }
                         }
                     }
                 }
+
+                for (int j = 0; j < l.Notes.Count; j++)
+                {
+                    Note n = l.Notes[j];
+                    Note note = n;
+
+                    if (note is HoldNote holdNote && holdNote.Points.Count > 1 && holdNote.JudgementType != JudgementType.Fake)
+                    {
+                        if (holdNote.Points[0].Timestamp.Time < TimeSystem.HitsoundTime && holdNote.Points[^1].Timestamp.Time > TimeSystem.HitsoundTime)
+                        {
+                            ActiveHoldNotes.Add(holdNote);
+                        }
+
+                        // Hold notes need to play hitsounds for both the hold start and hold end notes.
+                        // Always check if the end of the hold note is passed before discarding the note entirely.
+                        if (PassedNotes.Contains(holdNote))
+                        {
+                            // Hold Start has already passed
+                            HoldPointNote holdEnd = holdNote.Points[^1];
+
+                            // Hold End has not passed yet.
+                            if (!PassedNotes.Contains(holdEnd))
+                            {
+                                // Make Hold End the subject now.
+                                note = holdEnd;
+                            }
+                        }
+                    }
+
+                    if (note is MeasureLineNote or SyncNote) continue;
+                    if (note is IPlayable playable && playable.JudgementType == JudgementType.Fake) continue;
+
+                    // Bonus effects on slide notes play hitsounds after a fancy animation. Account for the delay here before discarding passed notes.
+                    if (note is SlideClockwiseNote or SlideCounterclockwiseNote && note is IPlayable playableSlide && playableSlide.BonusType == BonusType.Bonus && !PassedBonusSlides.Contains(note))
+                    {
+                        float bpm = ChartSystem.Chart.LastTempoChange(note.Timestamp.Time)?.Tempo ?? 120;
+                        int effectOffset = bpm > 200 ? 3840 : 1920;
+
+                        float bonusEffectTime = Timestamp.TimeFromTimestamp(ChartSystem.Chart, note.Timestamp + effectOffset);
+
+                        if (bonusEffectTime < TimeSystem.HitsoundTime)
+                        {
+                            PassedBonusSlides.Add(note);
+
+                            AudioSampleBonus?.Play();
+                        }
+                    }
+
+                    if (PassedNotes.Contains(note)) continue;
+
+                    if (note.Timestamp.Time < TimeSystem.HitsoundTime)
+                    {
+                        PassedNotes.Add(note);
+
+                        // Always play guide sounds.
+                        AudioSampleGuide?.Play();
+
+                        // Touch note sounds
+                        if (note is TouchNote)
+                        {
+                            AudioSampleTouch?.Play();
+                        }
+
+                        // Chain note sounds
+                        if (note is ChainNote)
+                        {
+                            AudioSampleTouch?.Play();
+                        }
+
+                        // Hold start/end note sounds
+                        if (note is HoldNote or HoldPointNote)
+                        {
+                            AudioSampleTouch?.Play();
+                        }
+
+                        // Slide note sounds
+                        if (note is SlideClockwiseNote or SlideCounterclockwiseNote)
+                        {
+                            AudioSampleSlide?.Play();
+                        }
+
+                        // Snap note sounds
+                        if (note is SnapForwardNote or SnapBackwardNote)
+                        {
+                            AudioSampleSlide?.Play();
+                        }
+
+                        // Bonus sounds
+                        if (note is IPlayable bonus && bonus.BonusType == BonusType.Bonus && note is not (SlideClockwiseNote or SlideCounterclockwiseNote))
+                        {
+                            AudioSampleBonus?.Play();
+                        }
+
+                        // R sounds
+                        if (note is IPlayable r && r.BonusType == BonusType.R)
+                        {
+                            AudioSampleR?.Play();
+                        }
+                    }
+                }
+            }
 
             // Update Hold Loop Audio
             if (AudioChannelHold != null)
@@ -251,18 +260,23 @@ public static class AudioSystem
                         AudioChannelHold.Position = 0;
                         AudioChannelHold.Playing = true;
                     }
-                    
+
                     holdLoopVolumeMultiplier = 1;
                 }
-                
-                AudioChannelHold.Volume = DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume) * DecibelToVolume(SettingsSystem.AudioSettings.HoldVolume) * holdLoopVolumeMultiplier;
+
+                AudioChannelHold.Volume = VolumeHold;
             }
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 
     private static void RefreshHitsounds()
     {
-        lock (PassedNotes) lock (PassedBonusSlides) lock (ActiveHoldNotes)
+        try
         {
             PassedNotes.Clear();
             PassedBonusSlides.Clear();
@@ -319,6 +333,11 @@ public static class AudioSystem
                     }
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
     
@@ -410,18 +429,15 @@ public static class AudioSystem
     
     private static void OnVolumeChanged(object? sender, EventArgs e)
     {
-        double masterVolume = SettingsSystem.AudioSettings.MuteMaster ? 0 : DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume);
-        double hitsoundVolume = SettingsSystem.AudioSettings.MuteHitsound ? 0 : masterVolume * DecibelToVolume(SettingsSystem.AudioSettings.HitsoundVolume);
-        
-        if (AudioChannelAudio     != null) AudioChannelAudio.Volume     = SettingsSystem.AudioSettings.MuteAudio      ? 0 : masterVolume   * DecibelToVolume(SettingsSystem.AudioSettings.AudioVolume);
-        if (AudioSampleGuide      != null) AudioSampleGuide.Volume      = SettingsSystem.AudioSettings.MuteGuide      ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.GuideVolume);
-        if (AudioSampleTouch      != null) AudioSampleTouch.Volume      = SettingsSystem.AudioSettings.MuteTouch      ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.TouchVolume);
-        if (AudioChannelHold      != null) AudioChannelHold.Volume      = SettingsSystem.AudioSettings.MuteHold       ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.HoldVolume) * holdLoopVolumeMultiplier;
-        if (AudioSampleSlide      != null) AudioSampleSlide.Volume      = SettingsSystem.AudioSettings.MuteSlide      ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.SlideVolume);
-        if (AudioSampleBonus      != null) AudioSampleBonus.Volume      = SettingsSystem.AudioSettings.MuteBonus      ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.BonusVolume);
-        if (AudioSampleR          != null) AudioSampleR.Volume          = SettingsSystem.AudioSettings.MuteR          ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.RVolume);
-        if (AudioSampleStartClick != null) AudioSampleStartClick.Volume = SettingsSystem.AudioSettings.MuteStartClick ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.StartClickVolume);
-        if (AudioSampleMetronome  != null) AudioSampleMetronome.Volume  = SettingsSystem.AudioSettings.MuteMetronome  ? 0 : hitsoundVolume * DecibelToVolume(SettingsSystem.AudioSettings.MetronomeVolume);
+        if (AudioChannelAudio     != null) AudioChannelAudio.Volume     = VolumeAudio;
+        if (AudioSampleGuide      != null) AudioSampleGuide.Volume      = VolumeGuide;
+        if (AudioSampleTouch      != null) AudioSampleTouch.Volume      = VolumeTouch;
+        if (AudioChannelHold      != null) AudioChannelHold.Volume      = VolumeHold;
+        if (AudioSampleSlide      != null) AudioSampleSlide.Volume      = VolumeSlide;
+        if (AudioSampleBonus      != null) AudioSampleBonus.Volume      = VolumeBonus;
+        if (AudioSampleR          != null) AudioSampleR.Volume          = VolumeR;
+        if (AudioSampleStartClick != null) AudioSampleStartClick.Volume = VolumeStartClick;
+        if (AudioSampleMetronome  != null) AudioSampleMetronome.Volume  = VolumeMetronome;
     }
 
     private static void OnEntryChanged(object? sender, EventArgs e)
