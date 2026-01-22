@@ -30,13 +30,20 @@ public class LoggingSystem
 #region Methods
     public static void WriteSessionLog(string message)
     {
-        SessionLog.Append($"{DateTime.Now:yyyy-MM-dd-HH-mm-ss-fff}:\n");
-        SessionLog.Append(message);
-        SessionLog.Append("\n\n");
+        try
+        {
+            SessionLog.Append($"{DateTime.Now:yyyy-MM-dd-HH-mm-ss-fff}:\n");
+            SessionLog.Append(message);
+            SessionLog.Append("\n\n");
 
-        Directory.CreateDirectory(SessionLogDirectory);
-        File.WriteAllText(SessionLogPath, SessionLog.ToString());
-        Console.WriteLine(message);
+            Directory.CreateDirectory(SessionLogDirectory);
+            File.WriteAllText(SessionLogPath, SessionLog.ToString());
+            Console.WriteLine(message);
+        }
+        catch
+        {
+            // ignored.
+        }
     }
     
     public static void WriteCrashLog(string? log)
