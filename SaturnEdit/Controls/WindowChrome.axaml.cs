@@ -14,13 +14,20 @@ public partial class WindowChrome : UserControl
         InitializeComponent();
     }
 
+    private Window? window;
+    
 #region UI Event Handlers
     protected override void OnLoaded(RoutedEventArgs e)
     {
         ButtonMinimize.Click += ButtonMinimize_OnClick;
         ButtonMaximize.Click += ButtonMaximize_OnClick;
         ButtonClose.Click += ButtonClose_OnClick;
-        AttachedToVisualTree += Control_OnAttachedToVisualTree;
+        
+        if (VisualRoot is Window w)
+        {
+            window = w;
+            window.Resized += Window_OnSizeChanged;
+        }
         
         base.OnLoaded(e);
     }
@@ -30,16 +37,13 @@ public partial class WindowChrome : UserControl
         ButtonMinimize.Click -= ButtonMinimize_OnClick;
         ButtonMaximize.Click -= ButtonMaximize_OnClick;
         ButtonClose.Click -= ButtonClose_OnClick;
-        AttachedToVisualTree -= Control_OnAttachedToVisualTree;
+
+        if (window != null)
+        {
+            window.Resized -= Window_OnSizeChanged;
+        }
         
         base.OnUnloaded(e);
-    }
-    
-    private void Control_OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
-    {
-        if (VisualRoot is not Window window) return;
-        
-        window.Resized += Window_OnSizeChanged;
     }
 
     public void ButtonMinimize_OnClick(object? sender, RoutedEventArgs e)
