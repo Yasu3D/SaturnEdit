@@ -77,6 +77,23 @@
           <TargetPath>bassflac.dll</TargetPath>
         </ContentWithTargetPath>
     </ItemGroup>
+
+    <ItemGroup Condition="'$(RuntimeIdentifier)' == 'osx-x64' Or '$(RuntimeIdentifier)' == 'osx-arm64'">
+        <ContentWithTargetPath Include="Audio\Mac\libbass.dylib" >
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>libbass.dylib</TargetPath>
+        </ContentWithTargetPath>
+        
+        <ContentWithTargetPath Include="Audio\Mac\libbass_fx.dylib">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>libbass_fx.dylib</TargetPath>
+        </ContentWithTargetPath>
+        
+        <ContentWithTargetPath Include="Audio\Mac\libbassflac.dylib">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>libbassflac.dylib</TargetPath>
+        </ContentWithTargetPath>
+    </ItemGroup>
     
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
         <ContentWithTargetPath Include="Audio\Win_x64\bass.dll" >
@@ -107,6 +124,21 @@
         <ContentWithTargetPath Include="Audio\Linux_x64\libbassflac.so">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
           <TargetPath>libbassflac.so</TargetPath>
+        </ContentWithTargetPath>
+
+        <ContentWithTargetPath Include="Audio\Mac\libbass.dylib">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>libbass.dylib</TargetPath>
+        </ContentWithTargetPath>
+        
+        <ContentWithTargetPath Include="Audio\Mac\libbass_fx.dylib">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>libbass_fx.dylib</TargetPath>
+        </ContentWithTargetPath>
+        
+        <ContentWithTargetPath Include="Audio\Mac\libbassflac.dylib">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>libbassflac.dylib</TargetPath>
         </ContentWithTargetPath>
     </ItemGroup>
     
