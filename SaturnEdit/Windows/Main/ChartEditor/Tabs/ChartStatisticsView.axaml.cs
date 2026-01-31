@@ -278,8 +278,8 @@ public partial class ChartStatisticsView : UserControl
             TextBlockFileName.Text = Path.GetFileName(ChartSystem.Entry.ChartFile);
 
             TextBlockMaxCombo.Text = maxCombo.ToString();
-            TextBlockScorePerNote.Text = scorePerNote == 0 ? "/" : scorePerNote.ToString("F2", CultureInfo.InvariantCulture);
-            TextBlockScorePerRNote.Text = rNoteCount == 0 ? "/" : (scorePerNote * 2).ToString("F2", CultureInfo.InvariantCulture);
+            TextBlockScorePerNote.Text = scorePerNote == 0 ? "/" : scorePerNote.ToString("0.00", CultureInfo.InvariantCulture);
+            TextBlockScorePerRNote.Text = rNoteCount == 0 ? "/" : (scorePerNote * 2).ToString("0.00", CultureInfo.InvariantCulture);
             
             TextBlockLayerCount.Text = ChartSystem.Chart.Layers.Count.ToString();
             

@@ -40,8 +40,8 @@ public partial class ChartPropertiesView : UserControl
             TextBoxRevision.Text = ChartSystem.Entry.Revision;
             TextBoxNotesDesigner.Text = ChartSystem.Entry.NotesDesigner;
             ComboBoxDifficulty.SelectedIndex = (int)ChartSystem.Entry.Difficulty;
-            TextBoxLevel.Text = ChartSystem.Entry.Level.ToString("F1", CultureInfo.InvariantCulture);
-            TextBoxClearThreshold.Text = ChartSystem.Entry.ClearThreshold.ToString("F2", CultureInfo.InvariantCulture);
+            TextBoxLevel.Text = ChartSystem.Entry.Level.ToString("0.0", CultureInfo.InvariantCulture);
+            TextBoxClearThreshold.Text = ChartSystem.Entry.ClearThreshold.ToString("0.00", CultureInfo.InvariantCulture);
             NumericUpDownChartEndMeasure.Value = ChartSystem.Entry.ChartEnd.Measure;
             NumericUpDownChartEndTick.Value = ChartSystem.Entry.ChartEnd.Tick;
             
@@ -56,8 +56,8 @@ public partial class ChartPropertiesView : UserControl
             TextBoxJacket.Text = ChartSystem.Entry.JacketFile;
             TextBoxAudio.Text = ChartSystem.Entry.AudioFile;
             TextBoxVideo.Text = ChartSystem.Entry.VideoFile;
-            TextBoxAudioOffset.Text = (ChartSystem.Entry.AudioOffset / 1000).ToString("F3", CultureInfo.InvariantCulture);
-            TextBoxVideoOffset.Text = (ChartSystem.Entry.VideoOffset / 1000).ToString("F3", CultureInfo.InvariantCulture);
+            TextBoxAudioOffset.Text = (ChartSystem.Entry.AudioOffset / 1000).ToString("0.000", CultureInfo.InvariantCulture);
+            TextBoxVideoOffset.Text = (ChartSystem.Entry.VideoOffset / 1000).ToString("0.000", CultureInfo.InvariantCulture);
             
             ToggleButtonAutoReading.IsChecked = ChartSystem.Entry.AutoReading;
             ToggleButtonAutoBpmMessage.IsChecked = ChartSystem.Entry.AutoBpmMessage;
