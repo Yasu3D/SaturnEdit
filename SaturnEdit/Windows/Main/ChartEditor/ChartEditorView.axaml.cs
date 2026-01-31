@@ -147,7 +147,7 @@ public partial class ChartEditorView : UserControl
                 [
                     new("Chart Files")
                     {
-                        Patterns = ["*.sat", "*.mer*", "*.map"],
+                        Patterns = ["*.sat", "*.mer", "*.map"],
                     },
                 ],
             });
@@ -281,7 +281,7 @@ public partial class ChartEditorView : UserControl
                 [
                     new("Chart Files")
                     {
-                        Patterns = ["*.sat", "*.mer*", "*.map"],
+                        Patterns = ["*.sat", "*.mer", "*.map"],
                     },
                 ],
             });
