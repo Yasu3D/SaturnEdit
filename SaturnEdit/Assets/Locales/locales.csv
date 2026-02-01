@@ -607,7 +607,10 @@ Settings.General.Themes,Themes,-,-,UI Themes (Light Mode/Dark Mode)
 Settings.General.Other,Other,-,-,-
 Settings.General.ClickDragThreshold,Click 'n' Drag Threshold (Pixels),-,-,-
 Settings.Audio,Audio,-,-,-
-Settings.Audio.HoldLoop,Hold Loop
+Settings.Audio.AddNewSoundpack,Add New Soundpack,-,-,-
+Settings.Audio.DeleteSoundpack,Delete Soundpack,-,-,-
+Settings.Audio.SoundpackName,Soundpack Name,-,-,-
+Settings.Audio.HoldLoop,Hold Loop,-,-,-
 Settings.Audio.HoldLoopStart,Hold Loop Start (ms),-,-,-
 Settings.Audio.HoldLoopEnd,Hold Loop End (ms),-,-,-
 Settings.Rendering,Rendering,-,-,-
@@ -802,9 +805,12 @@ ModalDialog.Update.Error.ReleaseNotFound,"The latest release could not be found.
 ModalDialog.Update.Error.AssetNotFound,"The asset for your operating system could not be found. Please try again, or update manually.",-,-,-
 ModalDialog.Update.Error.ProcessNotFound,The process to update could not be found. Please update manually.,-,-,-
 ModalDialog.Update.Error.Unknown,"An unknown error occurred. Please try again, or update manually.",-,-,-
-ModalDialog.PreviewTimestampsInvalid.Title,Invalid Preview Timestamps
-ModalDialog.PreviewTimestampsInvalid.Header,The Preview cannot play because the defined Timestamps are invalid.
-ModalDialog.PreviewTimestampsInvalid.Paragraph,"The Preview Timestamps must be in order, and before the Chart End Timestamp."
+ModalDialog.PreviewTimestampsInvalid.Title,Invalid Preview Timestamps,-,-,-
+ModalDialog.PreviewTimestampsInvalid.Header,The Preview cannot play because the defined Timestamps are invalid.,-,-,-
+ModalDialog.PreviewTimestampsInvalid.Paragraph,"The Preview Timestamps must be in order, and before the Chart End Timestamp.",-,-,-
+ModalDialog.DeleteSoundpack.Title,Delete Soundpack,-,-,-
+ModalDialog.DeleteSoundpack.Header,Are you sure you want to delete this Soundpack?,-,-,-
+ModalDialog.DeleteSoundpack.Paragraph,This action cannot be undone.,-,-,-
 Splash.Website,SATURN Website,-,-,-
 Splash.Documentation,Documentation,-,-,-
 Splash.Github,GitHub Repository,-,-,-
@@ -818,3 +824,4 @@ Generic.PickFile,Pick File...,-,-,-
 Generic.Ok,Ok,-,-,-
 Generic.Yes,Yes,-,-,-
 Generic.No,No,-,-,-
+Generic.Delete,Delete,-,-,-

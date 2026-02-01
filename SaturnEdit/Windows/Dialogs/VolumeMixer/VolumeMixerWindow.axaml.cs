@@ -201,6 +201,8 @@ public partial class VolumeMixerWindow : Window
             if (blockEvents) return;
             if (sender is not Button button) return;
 
+            if (SoundpackSystem.SelectedSoundpack == SoundpackSystem.DefaultSoundpack) return;
+            
             string path = "";
 
             try
@@ -231,35 +233,35 @@ public partial class VolumeMixerWindow : Window
 
             if      (button == ButtonPickSoundGuide)
             {
-                SettingsSystem.AudioSettings.HitsoundGuidePath = path;
+                SoundpackSystem.SelectedSoundpack.HitsoundGuidePath = path;
             }
             else if (button == ButtonPickSoundTouch)
             {
-                SettingsSystem.AudioSettings.HitsoundTouchPath = path;
+                SoundpackSystem.SelectedSoundpack.HitsoundTouchPath = path;
             }
             else if (button == ButtonPickSoundHold)
             {
-                SettingsSystem.AudioSettings.HitsoundHoldPath = path;
+                SoundpackSystem.SelectedSoundpack.HitsoundHoldPath = path;
             }
             else if (button == ButtonPickSoundSlide)
             {
-                SettingsSystem.AudioSettings.HitsoundSlidePath = path;
+                SoundpackSystem.SelectedSoundpack.HitsoundSlidePath = path;
             }
             else if (button == ButtonPickSoundBonus)
             {
-                SettingsSystem.AudioSettings.HitsoundBonusPath = path;
+                SoundpackSystem.SelectedSoundpack.HitsoundBonusPath = path;
             }
             else if (button == ButtonPickSoundR)
             {
-                SettingsSystem.AudioSettings.HitsoundRPath = path;
+                SoundpackSystem.SelectedSoundpack.HitsoundRPath = path;
             }
             else if (button == ButtonPickSoundStartClick)
             {
-                SettingsSystem.AudioSettings.HitsoundStartClickPath = path;
+                SoundpackSystem.SelectedSoundpack.HitsoundStartClickPath = path;
             }
             else if (button == ButtonPickSoundMetronome)
             {
-                SettingsSystem.AudioSettings.HitsoundMetronomePath = path;
+                SoundpackSystem.SelectedSoundpack.HitsoundMetronomePath = path;
             }
         }
         catch (Exception ex)

@@ -8,7 +8,7 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
         <Company>Yasu3D</Company>
-        <AssemblyVersion>1.0.0.1</AssemblyVersion>
+        <AssemblyVersion>1.0.1.0</AssemblyVersion>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
@@ -41,6 +41,10 @@
     <ItemGroup>
         <Content Include="Assets\sat.tmLanguage.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\Sounds\metronome.wav" />
+        <Content Include="Assets\Sounds\metronome.wav">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
         
@@ -286,10 +290,42 @@
         <AvaloniaResource Include="Assets\StageUp\top_normal.png" />
         <AvaloniaResource Include="Assets\StageUp\top_worlds_end.png" />
         <AvaloniaResource Include="Assets\Splash\SplashBackground.png" />
+        <None Remove="Assets\NoteSounds\bonus.wav" />
+        <Content Include="Assets\Sounds\bonus.wav">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\NoteSounds\click.wav" />
+        <Content Include="Assets\Sounds\click.wav">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\NoteSounds\guide.wav" />
+        <Content Include="Assets\Sounds\guide.wav">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\NoteSounds\hold.wav" />
+        <Content Include="Assets\Sounds\hold.wav">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\NoteSounds\r.wav" />
+        <Content Include="Assets\Sounds\r.wav">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\NoteSounds\slide_marvelous.wav" />
+        <Content Include="Assets\Sounds\slide.wav">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\NoteSounds\touch_marvelous.wav" />
+        <Content Include="Assets\Sounds\touch.wav">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
     
     <ItemGroup>
       <ProjectReference Include="..\SaturnData\SaturnData\SaturnData.csproj" />
       <ProjectReference Include="..\SaturnView\SaturnView\SaturnView.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Assets\Sounds\" />
     </ItemGroup>
 </Project>

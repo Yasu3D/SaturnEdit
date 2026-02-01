@@ -31,6 +31,7 @@ public static class AudioSystem
         OnVolumeChanged(null, EventArgs.Empty);
 
         SettingsSystem.HitsoundsChanged += OnHitsoundsChanged;
+        SoundpackSystem.SoundpackPropertyChanged += OnHitsoundsChanged;
         OnHitsoundsChanged(null, EventArgs.Empty);
 
         TimeSystem.TimestampSeeked += OnTimestampSeeked;
@@ -249,10 +250,10 @@ public static class AudioSystem
                 }
                 else
                 {
-                    if (AudioChannelHold.Position > SettingsSystem.AudioSettings.HoldLoopEnd)
+                    if (AudioChannelHold.Position > SoundpackSystem.SelectedSoundpack.HoldLoopEnd)
                     {
                         AudioChannelHold.Playing = true;
-                        AudioChannelHold.Position -= SettingsSystem.AudioSettings.HoldLoopEnd - SettingsSystem.AudioSettings.HoldLoopStart;
+                        AudioChannelHold.Position -= SoundpackSystem.SelectedSoundpack.HoldLoopEnd - SoundpackSystem.SelectedSoundpack.HoldLoopStart;
                     }
 
                     if (!AudioChannelHold.Playing || holdLoopVolumeMultiplier < 1)
@@ -403,18 +404,18 @@ public static class AudioSystem
             AudioChannelHold.Playing = false;
             AudioChannelHold.Position = 0;
         }
-            
+        
         try
         {
-            AudioSampleGuide      = File.Exists(SettingsSystem.AudioSettings.HitsoundGuidePath)      ? new(SettingsSystem.AudioSettings.HitsoundGuidePath)      : null;
-            AudioSampleTouch      = File.Exists(SettingsSystem.AudioSettings.HitsoundTouchPath)      ? new(SettingsSystem.AudioSettings.HitsoundTouchPath)      : null;
-            AudioSampleSlide      = File.Exists(SettingsSystem.AudioSettings.HitsoundSlidePath)      ? new(SettingsSystem.AudioSettings.HitsoundSlidePath)      : null;
-            AudioSampleBonus      = File.Exists(SettingsSystem.AudioSettings.HitsoundBonusPath)      ? new(SettingsSystem.AudioSettings.HitsoundBonusPath)      : null;
-            AudioSampleR          = File.Exists(SettingsSystem.AudioSettings.HitsoundRPath)          ? new(SettingsSystem.AudioSettings.HitsoundRPath)          : null;
-            AudioSampleStartClick = File.Exists(SettingsSystem.AudioSettings.HitsoundStartClickPath) ? new(SettingsSystem.AudioSettings.HitsoundStartClickPath) : null;
-            AudioSampleMetronome  = File.Exists(SettingsSystem.AudioSettings.HitsoundMetronomePath)  ? new(SettingsSystem.AudioSettings.HitsoundMetronomePath)  : null;
+            AudioSampleGuide      = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundGuidePath)      ? new(SoundpackSystem.SelectedSoundpack.HitsoundGuidePath)      : null;
+            AudioSampleTouch      = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundTouchPath)      ? new(SoundpackSystem.SelectedSoundpack.HitsoundTouchPath)      : null;
+            AudioSampleSlide      = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundSlidePath)      ? new(SoundpackSystem.SelectedSoundpack.HitsoundSlidePath)      : null;
+            AudioSampleBonus      = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundBonusPath)      ? new(SoundpackSystem.SelectedSoundpack.HitsoundBonusPath)      : null;
+            AudioSampleR          = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundRPath)          ? new(SoundpackSystem.SelectedSoundpack.HitsoundRPath)          : null;
+            AudioSampleStartClick = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundStartClickPath) ? new(SoundpackSystem.SelectedSoundpack.HitsoundStartClickPath) : null;
+            AudioSampleMetronome  = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundMetronomePath)  ? new(SoundpackSystem.SelectedSoundpack.HitsoundMetronomePath)  : null;
             
-            AudioChannelHold  = File.Exists(SettingsSystem.AudioSettings.HitsoundHoldPath)   ? new(SettingsSystem.AudioSettings.HitsoundHoldPath)   : null;
+            AudioChannelHold = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundHoldPath) ? new(SoundpackSystem.SelectedSoundpack.HitsoundHoldPath) : null;
             
             OnVolumeChanged(null, EventArgs.Empty);
         }

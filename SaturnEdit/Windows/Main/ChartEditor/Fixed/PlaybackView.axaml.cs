@@ -10,6 +10,7 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using FluentIcons.Common;
 using SaturnData.Notation.Core;
+using SaturnData.Notation.Events;
 using SaturnEdit.Audio;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
@@ -114,6 +115,35 @@ public partial class PlaybackView : UserControl
             }
         });
     }
+
+    private void UpdateCurrentInfo()
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            blockEvents = true;
+            
+            SliderSeek.Value = TimeSystem.Timestamp.Time;
+            
+            blockEvents = false;
+            
+            try
+            {
+                TextBlockTimestampMeasureTicks.Text = $"{TimeSystem.Timestamp.Measure}' {TimeSystem.Timestamp.Tick,4}";
+                TextBlockTimestampTime.Text = TimeSpan.FromMilliseconds(TimeSystem.Timestamp.Time).ToString(@"mm\:ss\.fff");
+
+                TempoChangeEvent? tempoChangeEvent = ChartSystem.Chart.LastTempoChange(TimeSystem.Timestamp);
+                MetreChangeEvent? metreChangeEvent = ChartSystem.Chart.LastMetreChange(TimeSystem.Timestamp);
+
+                TextBlockTempo.Text = tempoChangeEvent == null ? "??? BPM" : $"{tempoChangeEvent.Tempo:0.000} BPM";
+                TextBlockMetre.Text = metreChangeEvent == null ? "? / ?" : $"{metreChangeEvent.Upper}/{metreChangeEvent.Lower}";
+            }
+            catch (Exception ex)
+            {
+                // Don't throw.
+                LoggingSystem.WriteSessionLog(ex.ToString());
+            }
+        });
+    }
 #endregion Methods
 
 #region System Event Handlers
@@ -129,6 +159,7 @@ public partial class PlaybackView : UserControl
         UpdateSeekSlider();
         UpdateLoopMarkers();
         UpdateBookmarks();
+        UpdateCurrentInfo();
     }
 
     private void OnAudioLoaded(object? sender, EventArgs e)
@@ -146,26 +177,7 @@ public partial class PlaybackView : UserControl
     
     private void OnTimestampChanged(object? sender, EventArgs e)
     {
-        Dispatcher.UIThread.Post(() =>
-        {
-            blockEvents = true;
-            
-            SliderSeek.Value = TimeSystem.Timestamp.Time;
-            
-            blockEvents = false;
-
-            TextBlockTimestampMeasureTicks.Text = $"{TimeSystem.Timestamp.Measure}' {TimeSystem.Timestamp.Tick,4}";
-
-            try
-            {
-                TextBlockTimestampTime.Text = TimeSpan.FromMilliseconds(TimeSystem.Timestamp.Time).ToString(@"mm\:ss\.fff");
-            }
-            catch (Exception ex)
-            {
-                // Don't throw.
-                LoggingSystem.WriteSessionLog(ex.ToString());
-            }
-        });
+        UpdateCurrentInfo();
     }
     
     private void OnPlaybackStateChanged(object? sender, EventArgs e)

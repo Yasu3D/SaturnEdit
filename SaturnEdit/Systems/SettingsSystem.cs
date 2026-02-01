@@ -782,144 +782,20 @@ public class AudioSettings
         }
     }
     private bool muteMetronome = false;
-
-    public string HitsoundGuidePath
-    {
-        get => hitsoundGuidePath;
-        set
-        {
-            if (hitsoundGuidePath == value) return;
-            
-            hitsoundGuidePath = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private string hitsoundGuidePath = "";
     
-    public string HitsoundTouchPath
+    public int SelectedSoundpackIndex
     {
-        get => hitsoundTouchPath;
+        get => selectedSoundpackIndex;
         set
         {
-            if (hitsoundTouchPath == value) return;
+            if (selectedSoundpackIndex == value) return;
             
-            hitsoundTouchPath = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+            selectedSoundpackIndex = value;
+            PropertyChanged?.Invoke(null, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(null, EventArgs.Empty);
         }
     }
-    private string hitsoundTouchPath = "";
-    
-    public string HitsoundHoldPath
-    {
-        get => hitsoundHoldPath;
-        set
-        {
-            if (hitsoundHoldPath == value) return;
-            
-            hitsoundHoldPath = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private string hitsoundHoldPath = "";
-    
-    public string HitsoundSlidePath
-    {
-        get => hitsoundSlidePath;
-        set
-        {
-            if (hitsoundSlidePath == value) return;
-            
-            hitsoundSlidePath = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private string hitsoundSlidePath = "";
-    
-    public string HitsoundBonusPath
-    {
-        get => hitsoundBonusPath;
-        set
-        {
-            if (hitsoundBonusPath == value) return;
-            
-            hitsoundBonusPath = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private string hitsoundBonusPath = "";
-    
-    public string HitsoundRPath
-    {
-        get => hitsoundRPath;
-        set
-        {
-            if (hitsoundRPath == value) return;
-            
-            hitsoundRPath = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private string hitsoundRPath = "";
-    
-    public string HitsoundStartClickPath
-    {
-        get => hitsoundStartClickPath;
-        set
-        {
-            if (hitsoundStartClickPath == value) return;
-            
-            hitsoundStartClickPath = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private string hitsoundStartClickPath = "";
-    
-    public string HitsoundMetronomePath
-    {
-        get => hitsoundMetronomePath;
-        set
-        {
-            if (hitsoundMetronomePath == value) return;
-            
-            hitsoundMetronomePath = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private string hitsoundMetronomePath = "";
-    
-    public float HoldLoopStart
-    {
-        get => holdLoopStart;
-        set
-        {
-            if (holdLoopStart == value) return;
-            
-            holdLoopStart = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private float holdLoopStart = 1655.0f;
-    
-    public float HoldLoopEnd
-    {
-        get => holdLoopEnd;
-        set
-        {
-            if (holdLoopEnd == value) return;
-            
-            holdLoopEnd = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private float holdLoopEnd = 3482.0f;
+    private int selectedSoundpackIndex = -1;
 }
 
 public class ShortcutSettings

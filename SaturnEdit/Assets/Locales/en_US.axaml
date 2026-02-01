@@ -609,6 +609,9 @@
     <system:String x:Key="Settings.General.Other">Other</system:String>
     <system:String x:Key="Settings.General.ClickDragThreshold">Click 'n' Drag Threshold (Pixels)</system:String>
     <system:String x:Key="Settings.Audio">Audio</system:String>
+    <system:String x:Key="Settings.Audio.AddNewSoundpack">Add New Soundpack</system:String>
+    <system:String x:Key="Settings.Audio.DeleteSoundpack">Delete Soundpack</system:String>
+    <system:String x:Key="Settings.Audio.SoundpackName">Soundpack Name</system:String>
     <system:String x:Key="Settings.Audio.HoldLoop">Hold Loop</system:String>
     <system:String x:Key="Settings.Audio.HoldLoopStart">Hold Loop Start (ms)</system:String>
     <system:String x:Key="Settings.Audio.HoldLoopEnd">Hold Loop End (ms)</system:String>
@@ -807,6 +810,9 @@
     <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Title">Invalid Preview Timestamps</system:String>
     <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Header">The Preview cannot play because the defined Timestamps are invalid.</system:String>
     <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Paragraph">The Preview Timestamps must be in order, and before the Chart End Timestamp.</system:String>
+    <system:String x:Key="ModalDialog.DeleteSoundpack.Title">Delete Soundpack</system:String>
+    <system:String x:Key="ModalDialog.DeleteSoundpack.Header">Are you sure you want to delete this Soundpack?</system:String>
+    <system:String x:Key="ModalDialog.DeleteSoundpack.Paragraph">This action cannot be undone.</system:String>
     <system:String x:Key="Splash.Website">SATURN Website</system:String>
     <system:String x:Key="Splash.Documentation">Documentation</system:String>
     <system:String x:Key="Splash.Github">GitHub Repository</system:String>
@@ -820,4 +826,5 @@
     <system:String x:Key="Generic.Ok">Ok</system:String>
     <system:String x:Key="Generic.Yes">Yes</system:String>
     <system:String x:Key="Generic.No">No</system:String>
+    <system:String x:Key="Generic.Delete">Delete</system:String>
 </ResourceDictionary>

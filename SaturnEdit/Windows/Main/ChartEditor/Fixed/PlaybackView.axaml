@@ -384,6 +384,27 @@
             <Panel Grid.Column="1"
                    Name="PanelBookmarks"/>
             
+            <!-- Tempo/Metre Text -->
+            <TextBlock Grid.Column="1"
+                       Name="TextBlockTempo"
+                       Foreground="{DynamicResource ForegroundTertiary}"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       TextAlignment="Left"
+                       Margin="5,3,5,5"
+                       Text="??? BPM"/>
+            
+            <TextBlock Grid.Column="1"
+                       Name="TextBlockMetre"
+                       Foreground="{DynamicResource ForegroundTertiary}"
+                       FontFamily="Consolas,Cascadia Code,Monospace"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       TextAlignment="Left"
+                       Margin="5,5,5,3"
+                       Text="?/?"/>
+            
             <!-- Timestamp Text -->
             <TextBlock Grid.Column="1"
                        Name="TextBlockTimestampMeasureTicks"
