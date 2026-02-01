@@ -135,7 +135,7 @@ public partial class PlaybackView : UserControl
                 MetreChangeEvent? metreChangeEvent = ChartSystem.Chart.LastMetreChange(TimeSystem.Timestamp);
 
                 TextBlockTempo.Text = tempoChangeEvent == null ? "??? BPM" : $"{tempoChangeEvent.Tempo:0.000} BPM";
-                TextBlockMetre.Text = metreChangeEvent == null ? "? / ?" : $"{metreChangeEvent.Upper}/{metreChangeEvent.Lower}";
+                TextBlockMetre.Text = metreChangeEvent == null ? "?/?" : $"{metreChangeEvent.Upper}/{metreChangeEvent.Lower}";
             }
             catch (Exception ex)
             {
