@@ -10,6 +10,7 @@ using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
+using SaturnData.Content.StageUp;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
@@ -359,11 +360,9 @@ public partial class StageEditorView : UserControl
             TextBoxHealthRecovery.Text = StageSystem.StageUpStage.HealthRecovery.ToString(CultureInfo.InvariantCulture);
             ComboBoxErrorThreshold.SelectedIndex = StageSystem.StageUpStage.ErrorThreshold switch
             {
-                JudgementGrade.Unjudged => 2,
-                JudgementGrade.Miss => 2,
-                JudgementGrade.Good => 1,
-                JudgementGrade.Great => 0,
-                JudgementGrade.Marvelous => 0,
+                ErrorThreshold.Miss => 2,
+                ErrorThreshold.GoodOrBelow => 1,
+                ErrorThreshold.GreatOrBelow => 0,
                 _ => 0,
             };
             
@@ -858,18 +857,18 @@ public partial class StageEditorView : UserControl
         if (blockEvents) return;
         if (ComboBoxErrorThreshold == null) return;
 
-        JudgementGrade oldErrorThreshold = StageSystem.StageUpStage.ErrorThreshold;
-        JudgementGrade newErrorThreshold = ComboBoxErrorThreshold.SelectedIndex switch
+        ErrorThreshold oldErrorThreshold = StageSystem.StageUpStage.ErrorThreshold;
+        ErrorThreshold newErrorThreshold = ComboBoxErrorThreshold.SelectedIndex switch
         {
-            0 => JudgementGrade.Great,
-            1 => JudgementGrade.Good,
-            2 => JudgementGrade.Miss,
-            _ => JudgementGrade.Miss,
+            0 => ErrorThreshold.GreatOrBelow,
+            1 => ErrorThreshold.GoodOrBelow,
+            2 => ErrorThreshold.Miss,
+            _ => ErrorThreshold.Miss,
         };
         
         if (oldErrorThreshold == newErrorThreshold) return;
         
-        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<JudgementGrade>(value => { StageSystem.StageUpStage.ErrorThreshold = value; }, oldErrorThreshold, newErrorThreshold));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<ErrorThreshold>(value => { StageSystem.StageUpStage.ErrorThreshold = value; }, oldErrorThreshold, newErrorThreshold));
     }
 #endregion UI Event Handlers
 }
