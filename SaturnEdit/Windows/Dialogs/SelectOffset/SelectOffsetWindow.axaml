@@ -61,7 +61,8 @@
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Stretch"
                                    Minimum="0"
-                                   FormatString="0"/>
+                                   FormatString="0"
+                                   ValueChanged="NumericUpDownMeasure_OnValueChanged"/>
                     
                     <Grid Row="1"
                           Column="0"

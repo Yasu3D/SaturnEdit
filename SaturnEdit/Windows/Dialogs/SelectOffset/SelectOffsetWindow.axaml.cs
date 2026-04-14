@@ -91,6 +91,17 @@ public partial class SelectOffsetWindow : Window
     
     private void Control_OnKeyUp(object? sender, KeyEventArgs e) => e.Handled = true;
     
+    private void NumericUpDownMeasure_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (NumericUpDownMeasure == null) return;
+
+        measure = (int?)NumericUpDownMeasure.Value ?? 0;
+        measure = Math.Max(0, measure);
+        
+        UpdateValues();
+    }
+    
     private void NumericUpDownBeat_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
     {
         if (blockEvents) return;
