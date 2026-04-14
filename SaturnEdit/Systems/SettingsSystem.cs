@@ -7,6 +7,7 @@ using Avalonia.Input;
 using SaturnEdit.Utilities;
 using SaturnView;
 using Tomlyn;
+using Tomlyn.Serialization;
 
 namespace SaturnEdit.Systems;
 
@@ -97,7 +98,7 @@ public static class SettingsSystem
         {
             string editorSettingsPath = Path.Combine(SettingsDirectory, "editor_settings.toml");
             string editorSettingsData = File.ReadAllText(editorSettingsPath);
-            EditorSettings = Toml.ToModel<EditorSettings>(editorSettingsData);
+            EditorSettings = TomlSerializer.Deserialize<EditorSettings>(editorSettingsData) ?? new();
         }
         catch (Exception ex)
         {
@@ -112,7 +113,7 @@ public static class SettingsSystem
         {
             string renderSettingsPath = Path.Combine(SettingsDirectory, "render_settings.toml");
             string renderSettingsData = File.ReadAllText(renderSettingsPath);
-            RenderSettings = Toml.ToModel<RenderSettings>(renderSettingsData);
+            RenderSettings = TomlSerializer.Deserialize<RenderSettings>(renderSettingsData) ?? new();
         }
         catch (Exception ex)
         {
@@ -127,7 +128,7 @@ public static class SettingsSystem
         {
             string audioSettingsPath = Path.Combine(SettingsDirectory, "audio_settings.toml");
             string audioSettingsData = File.ReadAllText(audioSettingsPath);
-            AudioSettings = Toml.ToModel<AudioSettings>(audioSettingsData);
+            AudioSettings = TomlSerializer.Deserialize<AudioSettings>(audioSettingsData) ?? new();
         }
         catch (Exception ex)
         {
@@ -142,7 +143,7 @@ public static class SettingsSystem
         {
             string shortcutSettingsPath = Path.Combine(SettingsDirectory, "shortcut_settings.toml");
             string shortcutSettingsData = File.ReadAllText(shortcutSettingsPath);
-            ShortcutSettings = Toml.ToModel<ShortcutSettings>(shortcutSettingsData);
+            ShortcutSettings = TomlSerializer.Deserialize<ShortcutSettings>(shortcutSettingsData) ?? new();
         }
         catch (Exception ex)
         {
@@ -162,10 +163,10 @@ public static class SettingsSystem
         {
             Directory.CreateDirectory(SettingsDirectory);
 
-            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "render_settings.toml"), Toml.FromModel(RenderSettings));
-            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "editor_settings.toml"), Toml.FromModel(EditorSettings));
-            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "audio_settings.toml"), Toml.FromModel(AudioSettings));
-            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "shortcut_settings.toml"), Toml.FromModel(ShortcutSettings));
+            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "render_settings.toml"), TomlSerializer.Serialize(RenderSettings));
+            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "editor_settings.toml"), TomlSerializer.Serialize(EditorSettings));
+            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "audio_settings.toml"), TomlSerializer.Serialize(AudioSettings));
+            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "shortcut_settings.toml"), TomlSerializer.Serialize(ShortcutSettings));
         }
         catch (Exception ex)
         {
@@ -1063,6 +1064,7 @@ public class Shortcut
     /// </summary>
     public string ActionMessage;
 
+    [TomlConstructor]
     public Shortcut(Key key, bool control, bool alt, bool shift)
     {
         Key = key;

@@ -8,6 +8,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
+using SaturnData.Utilities;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
@@ -727,7 +728,7 @@ public partial class NavigatorEditorView : UserControl
             if (navigator.AbsoluteSourcePath == "")
             {
                 // Define new source path.
-                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "navigator.toml");
+                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", $"navigator{SaturnFileExtensionList.SaturnContentFile}");
                 
                 GenericEditOperation<string> op0 = new(value => { navigator.AbsoluteSourcePath = value; }, navigator.AbsoluteSourcePath, newSourcePath);
                 GenericEditOperation<string> op1 = new(action, oldLocalPath, Path.GetFileName(files[0].Path.LocalPath));
@@ -788,8 +789,9 @@ public partial class NavigatorEditorView : UserControl
 
         DictionaryAddOperation<string, NavigatorDialogueLanguage> op0 = new(() => navigator.DialogueLanguages, key, language);
         GenericEditOperation<NavigatorDialogueLanguage?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogueLanguage = value; }, CosmeticSystem.SelectedNavigatorDialogueLanguage, language);
+        GenericEditOperation<NavigatorDialogueVariantCollection?> op2 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, null);
         
-        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
+        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1, op2]));
     }
     
     private void ListBoxLanguages_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)

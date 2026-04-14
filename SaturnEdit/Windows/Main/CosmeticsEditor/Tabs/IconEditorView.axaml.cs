@@ -6,6 +6,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
+using SaturnData.Utilities;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;
@@ -120,7 +121,7 @@ public partial class IconEditorView : UserControl
             if (icon.AbsoluteSourcePath == "")
             {
                 // Define new source path.
-                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "icon.toml");
+                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", $"icon{SaturnFileExtensionList.SaturnContentFile}");
 
                 GenericEditOperation<string> op0 = new(value => { icon.AbsoluteSourcePath = value; }, icon.AbsoluteSourcePath, newSourcePath);
                 GenericEditOperation<string> op1 = new(value => { icon.ImagePath = value; }, icon.ImagePath, Path.GetFileName(files[0].Path.LocalPath));

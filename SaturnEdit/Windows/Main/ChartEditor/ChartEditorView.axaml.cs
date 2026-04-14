@@ -155,9 +155,9 @@ public partial class ChartEditorView : UserControl
 
             // Get Read Args
             NotationReadArgs args = new();
-            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(files[0].Path.LocalPath);
-            if (formatVersion == FormatVersion.Unknown) return false;
-            if (formatVersion != FormatVersion.SatV3)
+            ChartFormatVersion chartFormatVersion = NotationSerializer.DetectFormatVersion(files[0].Path.LocalPath);
+            if (chartFormatVersion == ChartFormatVersion.Unknown) return false;
+            if (chartFormatVersion != ChartFormatVersion.SatV3)
             {
                 if (VisualRoot is not Window rootWindow) return false;
                 ImportArgsWindow importArgsWindow = new();
@@ -213,9 +213,9 @@ public partial class ChartEditorView : UserControl
 
             // Get Read Args
             NotationReadArgs args = new();
-            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(AutosaveSystem.LastSessionPath);
-            if (formatVersion == FormatVersion.Unknown) return false;
-            if (formatVersion != FormatVersion.SatV3)
+            ChartFormatVersion chartFormatVersion = NotationSerializer.DetectFormatVersion(AutosaveSystem.LastSessionPath);
+            if (chartFormatVersion == ChartFormatVersion.Unknown) return false;
+            if (chartFormatVersion != ChartFormatVersion.SatV3)
             {
                 if (VisualRoot is not Window rootWindow) return false;
                 ImportArgsWindow importArgsWindow = new();
@@ -289,9 +289,9 @@ public partial class ChartEditorView : UserControl
 
             // Get Read Args
             NotationReadArgs args = new();
-            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(files[0].Path.LocalPath);
-            if (formatVersion == FormatVersion.Unknown) return false;
-            if (formatVersion != FormatVersion.SatV3)
+            ChartFormatVersion chartFormatVersion = NotationSerializer.DetectFormatVersion(files[0].Path.LocalPath);
+            if (chartFormatVersion == ChartFormatVersion.Unknown) return false;
+            if (chartFormatVersion != ChartFormatVersion.SatV3)
             {
                 if (VisualRoot is not Window rootWindow) return false;
                 ImportArgsWindow importArgsWindow = new();
@@ -324,7 +324,7 @@ public partial class ChartEditorView : UserControl
         try
         {
             // Redirect to 'Save As' if chart file doesn't have a path yet, or if the format needs to be updated.
-            if (!File.Exists(ChartSystem.Entry.ChartPath) || ChartSystem.Entry.FormatVersion != FormatVersion.SatV3)
+            if (!File.Exists(ChartSystem.Entry.ChartPath) || ChartSystem.Entry.ChartFormatVersion != ChartFormatVersion.SatV3)
             {
                 return await File_SaveAs();
             }
@@ -488,7 +488,7 @@ public partial class ChartEditorView : UserControl
 
             // Return if export was cancelled.
             if (exportArgsWindow.Result != ModalDialogResult.Primary) return false;
-            if (exportArgsWindow.NotationWriteArgs.FormatVersion == FormatVersion.Unknown) return false;
+            if (exportArgsWindow.NotationWriteArgs.ChartFormatVersion == ChartFormatVersion.Unknown) return false;
 
             // Open the file picker.
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
@@ -514,12 +514,12 @@ public partial class ChartEditorView : UserControl
         
         FilePickerSaveOptions getOptions(NotationWriteArgs args)
         {
-            string defaultExtension = args.FormatVersion switch
+            string defaultExtension = args.ChartFormatVersion switch
             {
-                FormatVersion.Mer => ".mer",
-                FormatVersion.SatV1 => ".sat",
-                FormatVersion.SatV2 => ".sat",
-                FormatVersion.SatV3 => ".sat",
+                ChartFormatVersion.Mer => ".mer",
+                ChartFormatVersion.SatV1 => ".sat",
+                ChartFormatVersion.SatV2 => ".sat",
+                ChartFormatVersion.SatV3 => ".sat",
                 _ => "",
             };
 
@@ -1598,14 +1598,14 @@ public partial class ChartEditorView : UserControl
 
             // Get Read Args
             NotationReadArgs args = new();
-            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(file.Path.LocalPath);
-            if (formatVersion == FormatVersion.Unknown)
+            ChartFormatVersion chartFormatVersion = NotationSerializer.DetectFormatVersion(file.Path.LocalPath);
+            if (chartFormatVersion == ChartFormatVersion.Unknown)
             {
                 e.Handled = true;
                 return;
             }
 
-            if (formatVersion != FormatVersion.SatV3)
+            if (chartFormatVersion != ChartFormatVersion.SatV3)
             {
                 if (VisualRoot is not Window rootWindow)
                 {
@@ -1684,9 +1684,9 @@ public partial class ChartEditorView : UserControl
 
             // Get Read Args
             NotationReadArgs args = new();
-            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(path);
-            if (formatVersion == FormatVersion.Unknown) return;
-            if (formatVersion != FormatVersion.SatV3)
+            ChartFormatVersion chartFormatVersion = NotationSerializer.DetectFormatVersion(path);
+            if (chartFormatVersion == ChartFormatVersion.Unknown) return;
+            if (chartFormatVersion != ChartFormatVersion.SatV3)
             {
                 if (VisualRoot is not Window rootWindow) return;
                 ImportArgsWindow importArgsWindow = new();

@@ -6,6 +6,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
+using SaturnData.Utilities;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;
@@ -120,7 +121,7 @@ public partial class PlateEditorView : UserControl
             if (plate.AbsoluteSourcePath == "")
             {
                 // Define new source path.
-                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "plate.toml");
+                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", $"plate{SaturnFileExtensionList.SaturnContentFile}");
 
                 GenericEditOperation<string> op0 = new(value => { plate.AbsoluteSourcePath = value; }, plate.AbsoluteSourcePath, newSourcePath);
                 GenericEditOperation<string> op1 = new(value => { plate.ImagePath = value; }, plate.ImagePath, Path.GetFileName(files[0].Path.LocalPath));

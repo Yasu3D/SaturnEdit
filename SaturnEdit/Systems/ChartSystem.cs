@@ -198,7 +198,7 @@ public static class ChartSystem
         {
             Entry.RootDirectory = Path.GetDirectoryName(path) ?? "";
             Entry.ChartFile = Path.GetFileName(path);
-            Entry.FormatVersion = args.FormatVersion;
+            Entry.ChartFormatVersion = args.ChartFormatVersion;
             
             SettingsSystem.EditorSettings.RecentChartFiles.Remove(path);
             SettingsSystem.EditorSettings.AddRecentChartFile(path);
@@ -219,7 +219,7 @@ public static class ChartSystem
         Entry.Level = 0;
         Entry.Difficulty = Difficulty.Normal;
         Entry.Id = Entry.NewId;
-        Entry.FormatVersion = FormatVersion.SatV3;
+        Entry.ChartFormatVersion = ChartFormatVersion.SatV3;
 
         IEnumerable<Event> events = Chart.Events.Where(x => x is TempoChangeEvent or MetreChangeEvent);
         

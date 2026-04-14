@@ -11,6 +11,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
+using SaturnData.Utilities;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
@@ -65,7 +66,7 @@ public partial class CosmeticsEditorView : UserControl
         CosmeticSystem.NewCosmetic(cosmeticType);
     }
     
-    private async Task<bool> File_Open(CosmeticType cosmeticType)
+    private async Task<bool> File_Open()
     {
         try
         {
@@ -94,35 +95,21 @@ public partial class CosmeticsEditorView : UserControl
             }
 
             // Open file picker.
-            string fileTypeFilterName = cosmeticType switch
-            {
-                CosmeticType.ConsoleColor => "Console Color Files",
-                CosmeticType.Emblem => "Emblem Files",
-                CosmeticType.Icon => "Icon Files",
-                CosmeticType.Navigator => "Navigator Files",
-                CosmeticType.NoteSound => "Note Sound Files",
-                CosmeticType.Plate => "Plate Files",
-                CosmeticType.SystemMusic => "System Music Files",
-                CosmeticType.SystemSound => "System Sound Files",
-                CosmeticType.Title => "Title Files",
-                _ => throw new ArgumentOutOfRangeException(nameof(cosmeticType), cosmeticType, null),
-            };
-            
             IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
             {
                 AllowMultiple = false,
                 FileTypeFilter =
                 [
-                    new(fileTypeFilterName)
+                    new("Cosmetic Files")
                     {
-                        Patterns = ["*.toml"],
+                        Patterns = [$"*{SaturnFileExtensionList.SaturnContentFile}"],
                     },
                 ],
             });
             if (files.Count != 1) return false;
             
             // Read cosmetic from file.
-            CosmeticSystem.ReadCosmetic(files[0].Path.LocalPath, cosmeticType);
+            CosmeticSystem.ReadCosmetic(files[0].Path.LocalPath);
             return true;
         }
         catch (Exception ex)
@@ -169,17 +156,19 @@ public partial class CosmeticsEditorView : UserControl
             // Open file picker.
             string suggestedFileName = CosmeticSystem.CosmeticItem switch
             {
-                ConsoleColor => "console_color.toml",
-                Emblem => "emblem.toml",
-                Icon => "icon.toml",
-                Navigator => "navigator.toml",
-                NoteSound => "note_sound.toml",
-                Plate => "plate.toml",
-                SystemMusic => "system_music.toml",
-                SystemSound => "system_sound.toml",
-                Title => "title.toml",
-                _ => "cosmetic.toml",
+                ConsoleColor => "console_color",
+                Emblem => "emblem",
+                Icon => "icon",
+                Navigator => "navigator",
+                NoteSound => "note_sound",
+                Plate => "plate",
+                SystemMusic => "system_music",
+                SystemSound => "system_sound",
+                Title => "title",
+                _ => "cosmetic",
             };
+            
+            suggestedFileName += SaturnFileExtensionList.SaturnContentFile;
             
             string fileTypeChoiceName = CosmeticSystem.CosmeticItem switch
             {
@@ -197,13 +186,13 @@ public partial class CosmeticsEditorView : UserControl
 
             IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(new()
             {
-                DefaultExtension = ".toml",
+                DefaultExtension = SaturnFileExtensionList.SaturnContentFile,
                 SuggestedFileName = suggestedFileName,
                 FileTypeChoices =
                 [
                     new(fileTypeChoiceName)
                     {
-                        Patterns = ["*.toml"],
+                        Patterns = [$"*{SaturnFileExtensionList.SaturnContentFile}"],
                     },
                 ],
             });
@@ -253,22 +242,8 @@ public partial class CosmeticsEditorView : UserControl
                 // Don't Save
                 // Continue as normal.
             }
-
-            CosmeticType cosmeticType = CosmeticSystem.CosmeticItem switch
-            {
-                ConsoleColor => CosmeticType.ConsoleColor,
-                Emblem => CosmeticType.Emblem,
-                Icon => CosmeticType.Icon,
-                Navigator => CosmeticType.Navigator,
-                NoteSound => CosmeticType.NoteSound,
-                Plate => CosmeticType.Plate,
-                SystemMusic => CosmeticType.SystemMusic,
-                SystemSound => CosmeticType.SystemSound,
-                Title => CosmeticType.Title,
-                _ => throw new ArgumentOutOfRangeException(),
-            };
             
-            CosmeticSystem.ReadCosmetic(CosmeticSystem.CosmeticItem.AbsoluteSourcePath, cosmeticType);
+            CosmeticSystem.ReadCosmetic(CosmeticSystem.CosmeticItem.AbsoluteSourcePath);
             return true;
         }
         catch (Exception ex)
@@ -543,6 +518,7 @@ public partial class CosmeticsEditorView : UserControl
     {
         Dispatcher.UIThread.Post(() =>
         {
+            MenuItemOpen.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Open"].ToKeyGesture();
             MenuItemSave.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.Save"].ToKeyGesture();
             MenuItemSaveAs.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.SaveAs"].ToKeyGesture();
             MenuItemReloadFromDisk.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["File.ReloadFromDisk"].ToKeyGesture();
@@ -633,7 +609,12 @@ public partial class CosmeticsEditorView : UserControl
         
         Shortcut shortcut = new(e.Key, e.KeyModifiers.HasFlag(KeyModifiers.Control), e.KeyModifiers.HasFlag(KeyModifiers.Alt), e.KeyModifiers.HasFlag(KeyModifiers.Shift));
 
-        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Save"]))
+        if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Open"]))
+        {
+            _ = File_Open();
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["File.Save"]))
         {
             _ = File_Save();
             e.Handled = true;
@@ -684,15 +665,7 @@ public partial class CosmeticsEditorView : UserControl
     private void MenuItemNewSystemSound_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.SystemSound);
     private void MenuItemNewTitle_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.Title);
     
-    private void MenuItemOpenConsoleColor_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.ConsoleColor);
-    private void MenuItemOpenEmblem_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.Emblem);
-    private void MenuItemOpenIcon_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.Icon);
-    private void MenuItemOpenNavigator_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.Navigator);
-    private void MenuItemOpenNoteSound_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.NoteSound);
-    private void MenuItemOpenPlate_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.Plate);
-    private void MenuItemOpenSystemMusic_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.SystemMusic);
-    private void MenuItemOpenSystemSound_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.SystemSound);
-    private void MenuItemOpenTitle_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open(CosmeticType.Title);
+    private void MenuItemOpen_OnClick(object? sender, RoutedEventArgs e) => _ = File_Open();
 
     private void MenuItemSave_OnClick(object? sender, RoutedEventArgs e) => _ = File_Save();
 

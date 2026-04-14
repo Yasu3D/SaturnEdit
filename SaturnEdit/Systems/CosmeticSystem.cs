@@ -2,7 +2,8 @@ using System;
 using System.IO;
 using SaturnData.Content.Cosmetics;
 using SaturnData.Content.Cosmetics.Items;
-using Tomlyn;
+using SaturnData.Content.Items;
+using SaturnData.Content.Serialization;
 using ConsoleColor = SaturnData.Content.Cosmetics.ConsoleColor;
 
 namespace SaturnEdit.Systems;
@@ -91,25 +92,14 @@ public static class CosmeticSystem
     /// </summary>
     /// <param name="path">Path to the file to read from.</param>
     /// <param name="cosmeticType">The type of cosmetic to read.</param>
-    public static void ReadCosmetic(string path, CosmeticType type)
+    public static void ReadCosmetic(string path)
     {
         try
         {
-            string data = File.ReadAllText(path);
-
-            CosmeticItem = type switch
-            {
-                CosmeticType.ConsoleColor => Toml.ToModel<ConsoleColor>(data),
-                CosmeticType.Emblem       => Toml.ToModel<Emblem>(data),
-                CosmeticType.Icon         => Toml.ToModel<Icon>(data),
-                CosmeticType.Navigator    => Toml.ToModel<Navigator>(data),
-                CosmeticType.NoteSound    => Toml.ToModel<NoteSound>(data),
-                CosmeticType.Plate        => Toml.ToModel<Plate>(data),
-                CosmeticType.SystemMusic  => Toml.ToModel<SystemMusic>(data),
-                CosmeticType.SystemSound  => Toml.ToModel<SystemSound>(data),
-                CosmeticType.Title        => Toml.ToModel<Title>(data),
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
-            };
+            ContentItem? tempContentItem = ContentSerializer.ToContentItem(path);
+            if (tempContentItem is not CosmeticItem c) return;
+            
+            CosmeticItem = c;
             CosmeticItem.AbsoluteSourcePath = path;
             
             SelectedNavigatorDialogueLanguage = null;
@@ -137,7 +127,7 @@ public static class CosmeticSystem
     {
         try
         {
-            string data = Toml.FromModel(CosmeticItem);
+            string data = ContentSerializer.ToString(CosmeticItem);
             File.WriteAllText(path, data);
         }
         catch (Exception ex)

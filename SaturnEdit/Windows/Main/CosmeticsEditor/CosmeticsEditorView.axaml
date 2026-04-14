@@ -95,78 +95,16 @@
 
                     </MenuItem>
 
-                    <MenuItem Name="MenuItemOpen">
+                    <MenuItem Name="MenuItemOpen"
+                              Click="MenuItemOpen_OnClick">
                         <MenuItem.Header>
                             <TextBlock Text="{DynamicResource Menu.File.Open}" />
                         </MenuItem.Header>
                         <MenuItem.Icon>
                             <icon:FluentIcon Icon="Folder" />
                         </MenuItem.Icon>
-
-                        <MenuItem Name="MenuItemOpenConsoleColor"
-                                  Click="MenuItemOpenConsoleColor_OnClick">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.ConsoleColor}" />
-                            </MenuItem.Header>
-                        </MenuItem>
-
-                        <MenuItem Name="MenuItemOpenEmblem"
-                                  Click="MenuItemOpenEmblem_OnClick">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.Emblem}" />
-                            </MenuItem.Header>
-                        </MenuItem>
-
-                        <MenuItem Name="MenuItemOpenIcon"
-                                  Click="MenuItemOpenIcon_OnClick">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.Icon}" />
-                            </MenuItem.Header>
-                        </MenuItem>
-
-                        <MenuItem Name="MenuItemOpenNavigator"
-                                  Click="MenuItemOpenNavigator_OnClick">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.Navigator}" />
-                            </MenuItem.Header>
-                        </MenuItem>
-
-                        <MenuItem Name="MenuItemOpenNoteSound"
-                                  Click="MenuItemOpenNoteSound_OnClick">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.NoteSound}" />
-                            </MenuItem.Header>
-                        </MenuItem>
-
-                        <MenuItem Name="MenuItemOpenPlate"
-                                  Click="MenuItemOpenPlate_OnClick">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.Plate}" />
-                            </MenuItem.Header>
-                        </MenuItem>
-
-                        <MenuItem Name="MenuItemOpenSystemMusic"
-                                  Click="MenuItemOpenSystemMusic_OnClick">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.SystemMusic}" />
-                            </MenuItem.Header>
-                        </MenuItem>
-
-                        <MenuItem Name="MenuItemOpenSystemSound"
-                                  Click="MenuItemOpenSystemSound_OnClick">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.SystemSound}" />
-                            </MenuItem.Header>
-                        </MenuItem>
-
-                        <MenuItem Name="MenuItemOpenTitle"
-                                  Click="MenuItemOpenTitle_OnClick">
-                            <MenuItem.Header>
-                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.Title}" />
-                            </MenuItem.Header>
-                        </MenuItem>
                     </MenuItem>
-
+                    
                     <Separator />
 
                     <MenuItem Name="MenuItemSave"

@@ -6,6 +6,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
+using SaturnData.Utilities;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;
@@ -201,7 +202,7 @@ public partial class SystemMusicEditorView : UserControl
             if (systemMusic.AbsoluteSourcePath == "")
             {
                 // Define new source path.
-                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "system_music.toml");
+                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", $"system_music{SaturnFileExtensionList.SaturnContentFile}");
                 
                 GenericEditOperation<string> op0 = new(value => { systemMusic.AbsoluteSourcePath = value; }, systemMusic.AbsoluteSourcePath, newSourcePath);
                 GenericEditOperation<string> op1 = new(action, oldLocalPath, Path.GetFileName(files[0].Path.LocalPath));

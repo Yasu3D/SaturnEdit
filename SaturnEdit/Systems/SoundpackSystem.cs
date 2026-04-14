@@ -21,7 +21,9 @@ public static class SoundpackSystem
             {
                 string data = File.ReadAllText(file);
                 
-                Soundpack pack = Toml.ToModel<Soundpack>(data);
+                Soundpack? pack = TomlSerializer.Deserialize<Soundpack>(data);
+                if (pack == null) return;
+                
                 pack.PropertyChanged += Soundpack_OnPropertyChanged;
 
                 Soundpacks.Add(pack);
@@ -118,7 +120,7 @@ public static class SoundpackSystem
                     : $"{i}_{filteredName}.toml";
 
                 string path = Path.Combine(SoundpacksDirectory, filename);
-                string data = Toml.FromModel(pack);
+                string data = TomlSerializer.Serialize(pack);
 
                 File.WriteAllText(path, data);
             }

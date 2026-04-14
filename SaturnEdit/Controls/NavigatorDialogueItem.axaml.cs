@@ -7,6 +7,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
+using SaturnData.Utilities;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;
@@ -122,7 +123,7 @@ public partial class NavigatorDialogueItem : UserControl
             if (navigator.AbsoluteSourcePath == "")
             {
                 // Define new source path.
-                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "navigator.toml");
+                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", $"navigator{SaturnFileExtensionList.SaturnContentFile}");
 
                 GenericEditOperation<string> op0 = new(value => { navigator.AbsoluteSourcePath = value; }, navigator.AbsoluteSourcePath, newSourcePath);
                 GenericEditOperation<string> op1 = new(value => { NavigatorDialogue.AudioPath = value; }, NavigatorDialogue.AudioPath, Path.GetFileName(files[0].Path.LocalPath));

@@ -1,8 +1,9 @@
 using System;
 using System.IO;
+using SaturnData.Content.Items;
 using SaturnData.Content.Lists;
+using SaturnData.Content.Serialization;
 using SaturnData.Content.StageUp;
-using Tomlyn;
 
 namespace SaturnEdit.Systems;
 
@@ -51,9 +52,10 @@ public static class StageSystem
     {
         try
         {
-            string data = File.ReadAllText(path);
+            ContentItem? tempContentItem = ContentSerializer.ToContentItem(path);
+            if (tempContentItem is not StageUpStage s) return;
             
-            StageUpStage = Toml.ToModel<StageUpStage>(data);
+            StageUpStage = s;
             StageUpStage.AbsoluteSourcePath = path;
             
             StageLoaded?.Invoke(null, EventArgs.Empty);
@@ -77,7 +79,7 @@ public static class StageSystem
     {
         try
         {
-            string data = Toml.FromModel(StageUpStage);
+            string data = ContentSerializer.ToString(StageUpStage);
             File.WriteAllText(path, data);
         }
         catch (Exception ex)

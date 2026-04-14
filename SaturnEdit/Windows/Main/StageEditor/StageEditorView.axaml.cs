@@ -13,6 +13,7 @@ using Avalonia.Threading;
 using SaturnData.Content.StageUp;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
+using SaturnData.Utilities;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;
@@ -96,7 +97,7 @@ public partial class StageEditorView : UserControl
                 [
                     new("Stage Up Stage Files")
                     {
-                        Patterns = ["*.toml"],
+                        Patterns = [$"*{SaturnFileExtensionList.SaturnContentFile}"],
                     },
                 ],
             });
@@ -173,13 +174,13 @@ public partial class StageEditorView : UserControl
             // Open file picker.
             IStorageFile? file = await topLevel.StorageProvider.SaveFilePickerAsync(new()
             {
-                DefaultExtension = ".toml",
-                SuggestedFileName = "stage.toml",
+                DefaultExtension = SaturnFileExtensionList.SaturnContentFile,
+                SuggestedFileName = $"stage{SaturnFileExtensionList.SaturnContentFile}",
                 FileTypeChoices =
                 [
                     new("Stage Up Stage File")
                     {
-                        Patterns = ["*.toml"],
+                        Patterns = [$"*{SaturnFileExtensionList.SaturnContentFile}"],
                     },
                 ],
             });
@@ -345,7 +346,7 @@ public partial class StageEditorView : UserControl
             
             TextBoxStageId.Text = StageSystem.StageUpStage.Id;
             TextBoxStageName.Text = StageSystem.StageUpStage.Name;
-            TextBoxStageIconPath.Text = StageSystem.StageUpStage.IconPath;
+            TextBoxStageIconPath.Text = StageSystem.StageUpStage.ImagePath;
 
             TextBoxSongId1.Text = StageSystem.StageUpStage.Song1.EntryId;
             ToggleButtonSecret1.IsChecked = StageSystem.StageUpStage.Song1.Secret;
@@ -603,7 +604,7 @@ public partial class StageEditorView : UserControl
         if (blockEvents) return;
         if (TextBoxStageIconPath == null) return;
 
-        string oldIconPath = StageSystem.StageUpStage.IconPath;
+        string oldIconPath = StageSystem.StageUpStage.ImagePath;
         string newIconPath = TextBoxStageIconPath.Text ?? "";
         if (oldIconPath == newIconPath)
         {
@@ -612,7 +613,7 @@ public partial class StageEditorView : UserControl
             return;
         }
 
-        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.IconPath = value; }, oldIconPath, newIconPath));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.ImagePath = value; }, oldIconPath, newIconPath));
     }
     
     private async void ButtonPickStageIconFile_OnClick(object? sender, RoutedEventArgs e)
@@ -648,10 +649,10 @@ public partial class StageEditorView : UserControl
             if (StageSystem.StageUpStage.AbsoluteSourcePath == "")
             {
                 // Define new source path.
-                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", "stage.toml");
+                string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", $"stage{SaturnFileExtensionList.SaturnContentFile}");
 
                 GenericEditOperation<string> op0 = new(value => { StageSystem.StageUpStage.AbsoluteSourcePath = value; }, StageSystem.StageUpStage.AbsoluteSourcePath, newSourcePath);
-                GenericEditOperation<string> op1 = new(value => { StageSystem.StageUpStage.IconPath = value; }, StageSystem.StageUpStage.IconPath, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op1 = new(value => { StageSystem.StageUpStage.ImagePath = value; }, StageSystem.StageUpStage.ImagePath, Path.GetFileName(files[0].Path.LocalPath));
                  
                 UndoRedoSystem.StageBranch.Push(new CompositeOperation([op0, op1]));
             }
@@ -665,7 +666,7 @@ public partial class StageEditorView : UserControl
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
                 if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
 
-                UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.IconPath = value; }, StageSystem.StageUpStage.IconPath, localPath));
+                UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.ImagePath = value; }, StageSystem.StageUpStage.ImagePath, localPath));
             }
         }
         catch (Exception ex)
@@ -753,8 +754,8 @@ public partial class StageEditorView : UserControl
 
             // Get Read Args
             NotationReadArgs args = new();
-            FormatVersion formatVersion = NotationSerializer.DetectFormatVersion(files[0].Path.LocalPath);
-            if (formatVersion is FormatVersion.Unknown or FormatVersion.Mer) return;
+            ChartFormatVersion chartFormatVersion = NotationSerializer.DetectFormatVersion(files[0].Path.LocalPath);
+            if (chartFormatVersion is ChartFormatVersion.Unknown or ChartFormatVersion.Mer) return;
             
             // Get Entry
             Entry entry = NotationSerializer.ToEntry(files[0].Path.LocalPath, args, out _);

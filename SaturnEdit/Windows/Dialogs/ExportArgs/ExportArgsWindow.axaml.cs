@@ -37,7 +37,7 @@ public partial class ExportArgsWindow : Window
         {
             blockEvents = true;
 
-            ComboBoxFileType.SelectedIndex = (int)NotationWriteArgs.FormatVersion;
+            ComboBoxFileType.SelectedIndex = (int)NotationWriteArgs.ChartFormatVersion;
             
             // Only set Watermark Text if it's different to the default watermark text.
             TextBoxWatermark.Text = NotationWriteArgs.ExportWatermark == ChartSystem.ExportWatermarkTemplate ? null : NotationWriteArgs.ExportWatermark;
@@ -47,9 +47,9 @@ public partial class ExportArgsWindow : Window
             ComboBoxExtendedBonusTypes.SelectedIndex = (int)NotationWriteArgs.ConvertExtendedBonusTypes;
             ComboBoxWriteMusicPath.SelectedIndex = (int)NotationWriteArgs.WriteMusicFilePath;
 
-            switch (NotationWriteArgs.FormatVersion)
+            switch (NotationWriteArgs.ChartFormatVersion)
             {
-                case FormatVersion.Mer:
+                case ChartFormatVersion.Mer:
                 {
                     GroupSatArgs.IsVisible = false;
                     OptionWatermark.IsVisible = false;
@@ -65,7 +65,7 @@ public partial class ExportArgsWindow : Window
                     break;
                 }
                 
-                case FormatVersion.SatV1:
+                case ChartFormatVersion.SatV1:
                 {
                     GroupSatArgs.IsVisible = true;
                     OptionWatermark.IsVisible = true;
@@ -81,7 +81,7 @@ public partial class ExportArgsWindow : Window
                     break;
                 }
                 
-                case FormatVersion.SatV2:
+                case ChartFormatVersion.SatV2:
                 {
                     GroupSatArgs.IsVisible = true;
                     OptionWatermark.IsVisible = true;
@@ -97,7 +97,7 @@ public partial class ExportArgsWindow : Window
                     break;
                 }
                 
-                case FormatVersion.SatV3:
+                case ChartFormatVersion.SatV3:
                 {
                     GroupSatArgs.IsVisible = true;
                     OptionWatermark.IsVisible = true;
@@ -164,13 +164,13 @@ public partial class ExportArgsWindow : Window
         if (blockEvents) return;
         if (sender == null) return;
         
-        NotationWriteArgs.FormatVersion = ComboBoxFileType.SelectedIndex switch
+        NotationWriteArgs.ChartFormatVersion = ComboBoxFileType.SelectedIndex switch
         {
-            0 => FormatVersion.Mer,
-            1 => FormatVersion.SatV1,
-            2 => FormatVersion.SatV2,
-            3 => FormatVersion.SatV3,
-            _ => FormatVersion.Unknown,
+            0 => ChartFormatVersion.Mer,
+            1 => ChartFormatVersion.SatV1,
+            2 => ChartFormatVersion.SatV2,
+            3 => ChartFormatVersion.SatV3,
+            _ => ChartFormatVersion.Unknown,
         };
         OnArgsChanged();
     }
@@ -243,8 +243,8 @@ public partial class ExportArgsWindow : Window
 
     private void ButtonResetSettings_OnClick(object? sender, RoutedEventArgs e)
     {
-        FormatVersion version = NotationWriteArgs.FormatVersion;
-        NotationWriteArgs = new() { FormatVersion = version };
+        ChartFormatVersion version = NotationWriteArgs.ChartFormatVersion;
+        NotationWriteArgs = new() { ChartFormatVersion = version };
         
         OnArgsChanged();
     }

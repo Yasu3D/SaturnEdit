@@ -15,10 +15,10 @@ public partial class SettingsWindow : Window
 
         // Lazily deep-copy settings when window opens to keep a backup.
         // This backup is used when the user clicks "cancel" to restore all settings back to before they were changed.
-        renderSettingsBackup   = Toml.FromModel(SettingsSystem.RenderSettings);
-        editorSettingsBackup   = Toml.FromModel(SettingsSystem.EditorSettings);
-        audioSettingsBackup    = Toml.FromModel(SettingsSystem.AudioSettings);
-        shortcutSettingsBackup = Toml.FromModel(SettingsSystem.ShortcutSettings);
+        renderSettingsBackup   = TomlSerializer.Serialize(SettingsSystem.RenderSettings);
+        editorSettingsBackup   = TomlSerializer.Serialize(SettingsSystem.EditorSettings);
+        audioSettingsBackup    = TomlSerializer.Serialize(SettingsSystem.AudioSettings);
+        shortcutSettingsBackup = TomlSerializer.Serialize(SettingsSystem.ShortcutSettings);
         
         SettingsTabContainer.Content = settingsGeneralView;
     }
@@ -87,10 +87,10 @@ public partial class SettingsWindow : Window
         if (!saveSettings)
         {
             // Restore settings from backups.
-            SettingsSystem.RenderSettings   = Toml.ToModel<RenderSettings>(renderSettingsBackup);
-            SettingsSystem.EditorSettings   = Toml.ToModel<EditorSettings>(editorSettingsBackup);
-            SettingsSystem.AudioSettings    = Toml.ToModel<AudioSettings>(audioSettingsBackup);
-            SettingsSystem.ShortcutSettings = Toml.ToModel<ShortcutSettings>(shortcutSettingsBackup);
+            SettingsSystem.RenderSettings   = TomlSerializer.Deserialize<RenderSettings>(renderSettingsBackup) ?? SettingsSystem.RenderSettings;
+            SettingsSystem.EditorSettings   = TomlSerializer.Deserialize<EditorSettings>(editorSettingsBackup) ?? SettingsSystem.EditorSettings;
+            SettingsSystem.AudioSettings    = TomlSerializer.Deserialize<AudioSettings>(audioSettingsBackup) ?? SettingsSystem.AudioSettings;
+            SettingsSystem.ShortcutSettings = TomlSerializer.Deserialize<ShortcutSettings>(shortcutSettingsBackup) ?? SettingsSystem.ShortcutSettings;
         }
     }
 #endregion UI Event Handlers
