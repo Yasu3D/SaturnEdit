@@ -336,9 +336,15 @@ public partial class SearchWindow : Window
             e.Handled = true;
             close = false;
         }
-        else if (item.Key == "NotePalette.SweepDirection.Center") 
+        else if (item.Key == "NotePalette.SweepDirection.CenterOutward") 
         {
-            CursorSystem.Direction = LaneSweepDirection.Center;
+            CursorSystem.Direction = LaneSweepDirection.CenterOutward;
+            e.Handled = true;
+            close = false;
+        }
+        else if (item.Key == "NotePalette.SweepDirection.CenterInward") 
+        {
+            CursorSystem.Direction = LaneSweepDirection.CenterInward;
             e.Handled = true;
             close = false;
         }

@@ -512,7 +512,7 @@
                         IsVisible="False">
                 <RadioButton Classes="Themed FillStandard"
                              GroupName="SweepDirection"
-                             Name="RadioButtonSweepDirectionCenter"
+                             Name="RadioButtonSweepDirectionCenterOutward"
                              Width="60"
                              Height="40"
                              IsChecked="True"
@@ -521,13 +521,36 @@
                     <ToolTip.Tip>
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Center}" />
-                                <TextBlock Name="TextBlockShortcutSweepDirectionCenter"
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.CenterOutward}" />
+                                <TextBlock Name="TextBlockShortcutSweepDirectionCenterOutward"
                                            Text="SHORTCUT"
                                            Margin="15,0,0,0"
                                            Foreground="{DynamicResource ForegroundSecondary}" />
                             </StackPanel>
-                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.Center.Description}"
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.CenterOutward.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </RadioButton>
+                
+                <RadioButton Classes="Themed FillStandard"
+                             GroupName="SweepDirection"
+                             Name="RadioButtonSweepDirectionCenterInward"
+                             Width="60"
+                             Height="40"
+                             IsChecked="True"
+                             IsCheckedChanged="RadioButtonSweepDirection_OnIsCheckedChanged">
+                    <icon:FluentIcon Icon="ArrowFitIn" />
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.CenterInward}" />
+                                <TextBlock Name="TextBlockShortcutSweepDirectionCenterInward"
+                                           Text="SHORTCUT"
+                                           Margin="15,0,0,0"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                            <TextBlock Text="{DynamicResource ChartEditor.NotePalette.SweepDirection.CenterInward.Description}"
                                        Foreground="{DynamicResource ForegroundSecondary}" />
                         </StackPanel>
                     </ToolTip.Tip>

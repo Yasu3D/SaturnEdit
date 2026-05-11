@@ -48,7 +48,8 @@
     <system:String x:Key="ChartEditor.General.SweepDirection.Value.Instant">-</system:String>
     <system:String x:Key="ChartEditor.General.SweepDirection.Value.Clockwise">-</system:String>
     <system:String x:Key="ChartEditor.General.SweepDirection.Value.Counterclockwise">-</system:String>
-    <system:String x:Key="ChartEditor.General.SweepDirection.Value.Center">-</system:String>
+    <system:String x:Key="ChartEditor.General.SweepDirection.Value.CenterOutward">-</system:String>
+    <system:String x:Key="ChartEditor.General.SweepDirection.Value.CenterInward">-</system:String>
     <system:String x:Key="ChartEditor.General.Visibility">-</system:String>
     <system:String x:Key="ChartEditor.General.Visibility.Value.Visible">-</system:String>
     <system:String x:Key="ChartEditor.General.Visibility.Value.Hidden">-</system:String>
@@ -221,8 +222,10 @@
     <system:String x:Key="ChartEditor.NotePalette.JudgementType.Fake.Description">-</system:String>
     <system:String x:Key="ChartEditor.NotePalette.JudgementType.Autoplay">-</system:String>
     <system:String x:Key="ChartEditor.NotePalette.JudgementType.Autoplay.Description">-</system:String>
-    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Center">-</system:String>
-    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Center.Description">-</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.CenterOutward">-</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.CenterOutward.Description">-</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.CenterInward">-</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.CenterInward.Description">-</system:String>
     <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Clockwise">-</system:String>
     <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Clockwise.Description">-</system:String>
     <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Counterclockwise">-</system:String>

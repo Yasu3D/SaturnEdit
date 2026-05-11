@@ -45,7 +45,8 @@ ChartEditor.General.SweepDirection,Sweep Direction,-,-,-
 ChartEditor.General.SweepDirection.Value.Instant,Instant,-,-,Lanes appear instantly
 ChartEditor.General.SweepDirection.Value.Clockwise,Clockwise,-,-,Lanes appear in clockwise order
 ChartEditor.General.SweepDirection.Value.Counterclockwise,Counterclockwise,-,-,Lanes appear in counterclockwise order
-ChartEditor.General.SweepDirection.Value.Center,Center,-,-,Lanes appear from center outward
+ChartEditor.General.SweepDirection.Value.CenterOutward,Center Outward,-,-,Lanes appear from center outward
+ChartEditor.General.SweepDirection.Value.CenterInward,Center Inward,-,-,Lanes appear from the edges inward.
 ChartEditor.General.Visibility,Visibility,-,-,-
 ChartEditor.General.Visibility.Value.Visible,Visible,-,-,-
 ChartEditor.General.Visibility.Value.Hidden,Hidden,-,-,-
@@ -218,8 +219,10 @@ ChartEditor.NotePalette.JudgementType.Fake,Judgement Type - Fake,-,-,-
 ChartEditor.NotePalette.JudgementType.Fake.Description,A fake note that does not have to be hit by the player. Does not play any hit VFX and does not contribute to the total score.,-,-,-
 ChartEditor.NotePalette.JudgementType.Autoplay,Judgement Type - Autoplay,-,-,-
 ChartEditor.NotePalette.JudgementType.Autoplay.Description,A note that has an automatic MARVELOUS judgement. Still plays all hit VFX and contributes to the total score.,-,-,-
-ChartEditor.NotePalette.SweepDirection.Center,Sweep - Center,-,-,-
-ChartEditor.NotePalette.SweepDirection.Center.Description,Toggles lanes in a sweep from the center of the note to the outer edges.,-,-,-
+ChartEditor.NotePalette.SweepDirection.CenterOutward,Sweep - Center Outward,-,-,-
+ChartEditor.NotePalette.SweepDirection.CenterOutward.Description,Toggles lanes in a sweep from the center of the note to the outer edges.,-,-,-
+ChartEditor.NotePalette.SweepDirection.CenterInward,Sweep - Center Inward,-,-,-
+ChartEditor.NotePalette.SweepDirection.CenterInward.Description,Toggles lanes in a sweep from the the outer edges to the center of the note.,-,-,-
 ChartEditor.NotePalette.SweepDirection.Clockwise,Sweep - Clockwise,-,-,-
 ChartEditor.NotePalette.SweepDirection.Clockwise.Description,Toggles lanes in a clockwise sweep.,-,-,-
 ChartEditor.NotePalette.SweepDirection.Counterclockwise,Sweep - Counterclockwise,-,-,-

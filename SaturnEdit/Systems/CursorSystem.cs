@@ -178,7 +178,7 @@ public static class CursorSystem
             CursorChanged?.Invoke(null, EventArgs.Empty);
         }
     }
-    private static LaneSweepDirection backupDirection = LaneSweepDirection.Center;
+    private static LaneSweepDirection backupDirection = LaneSweepDirection.CenterOutward;
 
     public static TouchNote TouchNote { get; private set; } = null!;
     public static ChainNote ChainNote { get; private set; } = null!;

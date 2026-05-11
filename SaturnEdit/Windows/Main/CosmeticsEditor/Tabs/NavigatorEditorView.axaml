@@ -173,7 +173,7 @@
                   Margin="15">
                 <Rectangle Grid.Row="0"
                            Grid.Column="1"
-                           Grid.RowSpan="17"
+                           Grid.RowSpan="32"
                            Fill="{DynamicResource SeparatorPrimary}"
                            Width="1"
                            HorizontalAlignment="Left" />

@@ -24,6 +24,8 @@ public partial class CosmeticsEditorView : UserControl
     public CosmeticsEditorView()
     {
         InitializeComponent();
+        
+        AddHandler(DragDrop.DropEvent, Control_Drop);
     }
 
     private static event EventHandler? NavigatorExpressionRefresh;
@@ -652,6 +654,64 @@ public partial class CosmeticsEditorView : UserControl
         if (!IsEnabled) return;
         
         e.Handled = true;
+    }
+    
+    private async void Control_Drop(object? sender, DragEventArgs e)
+    {
+        try
+        {
+            TopLevel? topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null)
+            {
+                e.Handled = true;
+                return;
+            }
+            
+            IStorageItem? file = e.DataTransfer.TryGetFile();
+
+            // Prompt to save an unsaved cosmetic first.
+            if (!CosmeticSystem.IsSaved)
+            {
+                ModalDialogResult result = await MainWindow.ShowSavePrompt(SavePromptType.Cosmetic);
+
+                // Cancel
+                if (result is ModalDialogResult.Cancel or ModalDialogResult.Tertiary) return;
+
+                // Save
+                if (result is ModalDialogResult.Primary)
+                {
+                    bool success = await File_Save();
+
+                    // Abort opening new file if save was unsuccessful.
+                    if (!success) return;
+                }
+
+                // Don't Save
+                // Continue as normal.
+            }
+
+            if (file == null)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            if (!File.Exists(file.Path.LocalPath))
+            {
+                e.Handled = true;
+                return;
+            }
+            
+            // Read cosmetic from file.
+            CosmeticSystem.ReadCosmetic(file.Path.LocalPath);
+
+            e.Handled = true;
+        }
+        catch (Exception ex)
+        {
+            // Don't throw.
+            LoggingSystem.WriteSessionLog(ex.ToString());
+        }
     }
     
     

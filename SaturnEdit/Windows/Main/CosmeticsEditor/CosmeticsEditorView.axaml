@@ -7,7 +7,8 @@
              mc:Ignorable="d"
              d:DesignWidth="2000"
              d:DesignHeight="600"
-             x:Class="SaturnEdit.Windows.CosmeticsEditor.CosmeticsEditorView">
+             x:Class="SaturnEdit.Windows.CosmeticsEditor.CosmeticsEditorView"
+             DragDrop.AllowDrop="True">
     <Grid RowDefinitions="40,1,*">
 
         <!-- Menu Bar -->

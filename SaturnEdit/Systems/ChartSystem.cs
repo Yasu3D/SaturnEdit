@@ -66,7 +66,7 @@ public static class ChartSystem
     private static Chart ChartTemplate => new()
     {
         Events = [new TempoChangeEvent(Timestamp.Zero, 120), new MetreChangeEvent(Timestamp.Zero, 4, 4)],
-        LaneToggles = [new LaneShowNote(Timestamp.Zero, 15, 60, LaneSweepDirection.Center)],
+        LaneToggles = [new LaneShowNote(Timestamp.Zero, 15, 60, LaneSweepDirection.CenterOutward)],
         Layers = [new("Main Layer")],
     };
 

@@ -97,7 +97,8 @@ public partial class NotePaletteView : UserControl
             TextBlockShortcutJudgementTypeAutoplay.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.JudgementType.Autoplay"].ToString();
             TextBlockShortcutHoldPointRenderTypeVisible.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.HoldPointRenderType.Hidden"].ToString();
             TextBlockShortcutHoldPointRenderTypeHidden.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.HoldPointRenderType.Visible"].ToString();
-            TextBlockShortcutSweepDirectionCenter.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Center"].ToString();
+            TextBlockShortcutSweepDirectionCenterOutward.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.CenterOutward"].ToString();
+            TextBlockShortcutSweepDirectionCenterInward.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.CenterInward"].ToString();
             TextBlockShortcutSweepDirectionClockwise.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Clockwise"].ToString();
             TextBlockShortcutSweepDirectionCounterclockwise.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Counterclockwise"].ToString();
             TextBlockShortcutSweepDirectionInstant.Text = SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Instant"].ToString();
@@ -133,7 +134,8 @@ public partial class NotePaletteView : UserControl
             if (CursorSystem.RenderType == HoldPointRenderType.Visible) RadioButtonHoldPointRenderTypeVisible.IsChecked = true;
             if (CursorSystem.RenderType == HoldPointRenderType.Hidden) RadioButtonHoldPointRenderTypeHidden.IsChecked = true;
 
-            if (CursorSystem.Direction == LaneSweepDirection.Center) RadioButtonSweepDirectionCenter.IsChecked = true;
+            if (CursorSystem.Direction == LaneSweepDirection.CenterOutward) RadioButtonSweepDirectionCenterOutward.IsChecked = true;
+            if (CursorSystem.Direction == LaneSweepDirection.CenterInward) RadioButtonSweepDirectionCenterInward.IsChecked = true;
             if (CursorSystem.Direction == LaneSweepDirection.Clockwise) RadioButtonSweepDirectionClockwise.IsChecked = true;
             if (CursorSystem.Direction == LaneSweepDirection.Counterclockwise) RadioButtonSweepDirectionCounterclockwise.IsChecked = true;
             if (CursorSystem.Direction == LaneSweepDirection.Instant) RadioButtonSweepDirectionInstant.IsChecked = true;
@@ -315,11 +317,12 @@ public partial class NotePaletteView : UserControl
 
         CursorSystem.Direction = button.Name switch
         {
-            "RadioButtonSweepDirectionCenter" => LaneSweepDirection.Center,
+            "RadioButtonSweepDirectionCenterOutward" => LaneSweepDirection.CenterOutward,
+            "RadioButtonSweepDirectionCenterInward" => LaneSweepDirection.CenterInward,
             "RadioButtonSweepDirectionClockwise" => LaneSweepDirection.Clockwise,
             "RadioButtonSweepDirectionCounterclockwise" => LaneSweepDirection.Counterclockwise,
             "RadioButtonSweepDirectionInstant" => LaneSweepDirection.Instant,
-            _ => LaneSweepDirection.Center,
+            _ => LaneSweepDirection.CenterOutward,
         };
     }
 #endregion UI Event Handlers

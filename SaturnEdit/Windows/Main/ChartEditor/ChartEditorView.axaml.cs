@@ -1420,62 +1420,67 @@ public partial class ChartEditorView : UserControl
             CursorSystem.SetType(CursorSystem.MeasureLineNote);
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.Normal"]))
+        else if (CursorSystem.CurrentType is IPlayable && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.Normal"]))
         {
             CursorSystem.BonusType = BonusType.Normal;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.Bonus"]))
+        else if (CursorSystem.CurrentType is IPlayable && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.Bonus"]))
         {
             CursorSystem.BonusType = BonusType.Bonus;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.R"]))
+        else if (CursorSystem.CurrentType is IPlayable && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.BonusType.R"]))
         {
             CursorSystem.BonusType = BonusType.R;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.JudgementType.Normal"]))
+        else if (CursorSystem.CurrentType is IPlayable && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.JudgementType.Normal"]))
         {
             CursorSystem.JudgementType = JudgementType.Normal;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.JudgementType.Fake"]))
+        else if (CursorSystem.CurrentType is IPlayable && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.JudgementType.Fake"]))
         {
             CursorSystem.JudgementType = JudgementType.Fake;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.JudgementType.Autoplay"]))
+        else if (CursorSystem.CurrentType is IPlayable && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.JudgementType.Autoplay"]))
         {
             CursorSystem.JudgementType = JudgementType.Autoplay;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Center"]))
+        else if (CursorSystem.CurrentType is ILaneToggle && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.CenterOutward"]))
         {
-            CursorSystem.Direction = LaneSweepDirection.Center;
+            CursorSystem.Direction = LaneSweepDirection.CenterOutward;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Clockwise"]))
+        else if (CursorSystem.CurrentType is ILaneToggle && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.CenterInward"]))
+        {
+            CursorSystem.Direction = LaneSweepDirection.CenterInward;
+            e.Handled = true;
+        }
+        else if (CursorSystem.CurrentType is ILaneToggle && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Clockwise"]))
         {
             CursorSystem.Direction = LaneSweepDirection.Clockwise;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Counterclockwise"]))
+        else if (CursorSystem.CurrentType is ILaneToggle && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Counterclockwise"]))
         {
             CursorSystem.Direction = LaneSweepDirection.Counterclockwise;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Instant"]))
+        else if (CursorSystem.CurrentType is ILaneToggle && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.SweepDirection.Instant"]))
         {
             CursorSystem.Direction = LaneSweepDirection.Instant;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.HoldPointRenderType.Hidden"]))
+        else if (CursorSystem.CurrentType is HoldPointNote && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.HoldPointRenderType.Hidden"]))
         {
             CursorSystem.RenderType = HoldPointRenderType.Visible;
             e.Handled = true;
         }
-        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.HoldPointRenderType.Visible"]))
+        else if (CursorSystem.CurrentType is HoldPointNote && shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["NotePalette.HoldPointRenderType.Visible"]))
         {
             CursorSystem.RenderType = HoldPointRenderType.Hidden;
             e.Handled = true;

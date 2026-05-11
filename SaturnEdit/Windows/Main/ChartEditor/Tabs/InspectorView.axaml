@@ -306,7 +306,8 @@
                                       SelectionChanged="ComboBoxSweepDirection_OnSelectionChanged">
                                 <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Counterclockwise}" />
                                 <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Clockwise}" />
-                                <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Center}" />
+                                <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.CenterOutward}" />
+                                <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.CenterInward}" />
                                 <ComboBoxItem Content="{DynamicResource ChartEditor.General.SweepDirection.Value.Instant}" />
                             </ComboBox>
                         </Grid>

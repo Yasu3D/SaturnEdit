@@ -48,7 +48,8 @@
     <system:String x:Key="ChartEditor.General.SweepDirection.Value.Instant">Instant</system:String>
     <system:String x:Key="ChartEditor.General.SweepDirection.Value.Clockwise">Clockwise</system:String>
     <system:String x:Key="ChartEditor.General.SweepDirection.Value.Counterclockwise">Counterclockwise</system:String>
-    <system:String x:Key="ChartEditor.General.SweepDirection.Value.Center">Center</system:String>
+    <system:String x:Key="ChartEditor.General.SweepDirection.Value.CenterOutward">CenterOutward</system:String>
+    <system:String x:Key="ChartEditor.General.SweepDirection.Value.CenterInward">CenterInward</system:String>
     <system:String x:Key="ChartEditor.General.Visibility">Visibility</system:String>
     <system:String x:Key="ChartEditor.General.Visibility.Value.Visible">Visible</system:String>
     <system:String x:Key="ChartEditor.General.Visibility.Value.Hidden">Hidden</system:String>
@@ -221,8 +222,10 @@
     <system:String x:Key="ChartEditor.NotePalette.JudgementType.Fake.Description">A fake note that does not have to be hit by the player. Does not play any hit VFX and does not contribute to the total score.</system:String>
     <system:String x:Key="ChartEditor.NotePalette.JudgementType.Autoplay">Judgement Type - Autoplay</system:String>
     <system:String x:Key="ChartEditor.NotePalette.JudgementType.Autoplay.Description">A note that has an automatic MARVELOUS judgement. Still plays all hit VFX and contributes to the total score.</system:String>
-    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Center">Sweep - Center</system:String>
-    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Center.Description">Toggles lanes in a sweep from the center of the note to the outer edges.</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.CenterOutward">Sweep - Center Outward</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.CenterOutward.Description">Toggles lanes in a sweep from the center of the note to the outer edges.</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.CenterInward">Sweep - Center Inward</system:String>
+    <system:String x:Key="ChartEditor.NotePalette.SweepDirection.CenterInward.Description">Toggles lanes in a sweep from the the outer edges to the center of the note.</system:String>
     <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Clockwise">Sweep - Clockwise</system:String>
     <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Clockwise.Description">Toggles lanes in a clockwise sweep.</system:String>
     <system:String x:Key="ChartEditor.NotePalette.SweepDirection.Counterclockwise">Sweep - Counterclockwise</system:String>
