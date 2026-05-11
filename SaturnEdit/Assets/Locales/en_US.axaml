@@ -48,8 +48,8 @@
     <system:String x:Key="ChartEditor.General.SweepDirection.Value.Instant">Instant</system:String>
     <system:String x:Key="ChartEditor.General.SweepDirection.Value.Clockwise">Clockwise</system:String>
     <system:String x:Key="ChartEditor.General.SweepDirection.Value.Counterclockwise">Counterclockwise</system:String>
-    <system:String x:Key="ChartEditor.General.SweepDirection.Value.CenterOutward">CenterOutward</system:String>
-    <system:String x:Key="ChartEditor.General.SweepDirection.Value.CenterInward">CenterInward</system:String>
+    <system:String x:Key="ChartEditor.General.SweepDirection.Value.CenterOutward">Center Outward</system:String>
+    <system:String x:Key="ChartEditor.General.SweepDirection.Value.CenterInward">Center Inward</system:String>
     <system:String x:Key="ChartEditor.General.Visibility">Visibility</system:String>
     <system:String x:Key="ChartEditor.General.Visibility.Value.Visible">Visible</system:String>
     <system:String x:Key="ChartEditor.General.Visibility.Value.Hidden">Hidden</system:String>
