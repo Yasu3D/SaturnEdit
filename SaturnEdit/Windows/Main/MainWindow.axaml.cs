@@ -1,20 +1,22 @@
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
+using SaturnData.Notation.Serialization;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
 using SaturnEdit.Windows.Dialogs.Search;
 using SaturnEdit.Windows.Dialogs.VolumeMixer;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace SaturnEdit;
 
@@ -450,7 +452,23 @@ public partial class MainWindow : Window
         UpdateTabs();
         UpdateSplash();
         UpdateUpdateButton();
-        
+
+        var pathArgument = LaunchSystem.LaunchArguments[0];
+        if (pathArgument != null)
+        {
+            var path = Path.GetFullPath(pathArgument);
+            if (File.Exists(path))
+            {
+
+                ChartFormatVersion chartFormatVersion = NotationSerializer.DetectFormatVersion(path);
+                if (chartFormatVersion != ChartFormatVersion.Unknown)
+                {
+                    ChartSystem.ReadChart(path, new());
+                    Splash.IsVisible = false;
+                }
+            }
+        }
+
         base.OnLoaded(e);
     }
     
