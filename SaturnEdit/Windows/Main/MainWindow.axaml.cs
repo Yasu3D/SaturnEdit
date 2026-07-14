@@ -453,18 +453,21 @@ public partial class MainWindow : Window
         UpdateSplash();
         UpdateUpdateButton();
 
-        var pathArgument = LaunchSystem.LaunchArguments[0];
-        if (pathArgument != null)
+        if (LaunchSystem.LaunchArguments.Count > 0)
         {
-            var path = Path.GetFullPath(pathArgument);
-            if (File.Exists(path))
+            var pathArgument = LaunchSystem.LaunchArguments[0];
+            if (pathArgument != null)
             {
-
-                ChartFormatVersion chartFormatVersion = NotationSerializer.DetectFormatVersion(path);
-                if (chartFormatVersion != ChartFormatVersion.Unknown)
+                var path = Path.GetFullPath(pathArgument);
+                if (File.Exists(path))
                 {
-                    ChartSystem.ReadChart(path, new());
-                    Splash.IsVisible = false;
+
+                    ChartFormatVersion chartFormatVersion = NotationSerializer.DetectFormatVersion(path);
+                    if (chartFormatVersion != ChartFormatVersion.Unknown)
+                    {
+                        ChartSystem.ReadChart(path, new());
+                        Splash.IsVisible = false;
+                    }
                 }
             }
         }
