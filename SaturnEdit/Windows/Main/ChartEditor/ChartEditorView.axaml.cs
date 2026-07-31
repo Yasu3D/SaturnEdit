@@ -597,6 +597,28 @@ public partial class ChartEditorView : UserControl
         SelectionSystem.SelectByCriteria();
     }
 
+    public void View_CreateToolWindow(string name)
+    {
+        (UserControl?, Icon, string, double, double) tabData = name switch
+        {
+            "MenuItemChartView3D"     => (new ChartView3D(),         Icon.CircleShadow,           "ChartEditor.ChartView3D"    , 750, 773),
+            "MenuItemChartView2D"     => (new ChartView2D(),         Icon.GanttChart,             "ChartEditor.ChartView2D"    , 750, 773),
+            "MenuItemChartViewTxt"    => (new ChartViewTxt(),        Icon.TextT,                  "ChartEditor.ChartViewTxt"   , 750, 773),
+            "MenuItemChartProperties" => (new ChartPropertiesView(), Icon.TextBulletList,         "ChartEditor.ChartProperties", 500, 535),
+            "MenuItemChartStatistics" => (new ChartStatisticsView(), Icon.DataHistogram,          "ChartEditor.ChartStatistics", 500, 535),
+            "MenuItemProofreader"     => (new ProofreaderView(),     Icon.ApprovalsApp,           "ChartEditor.Proofreader"    , 800, 485),
+            "MenuItemEventList"       => (new EventListView(),       Icon.TextBulletList,         "ChartEditor.EventList"      , 500, 735),
+            "MenuItemLayerList"       => (new LayerListView(),       Icon.TextBulletList,         "ChartEditor.LayerList"      , 500, 735),
+            "MenuItemInspector"       => (new InspectorView(),       Icon.WrenchScrewdriver,      "ChartEditor.Inspector"      , 500, 735),
+            "MenuItemCursor"          => (new CursorView(),          Icon.CircleHintHalfVertical, "ChartEditor.Cursor"         , 350, 225),
+            "MenuItemWaveform"        => (new WaveformView(),        Icon.Pulse,                  "ChartEditor.Waveform"       , 250, 773),
+            _ => (null, Icon.Warning, "", 200, 200),
+        };
+
+        if (tabData.Item1 == null) return;
+        Dock_CreateNewFloatingTool(tabData.Item1, tabData.Item2, tabData.Item3, tabData.Item4, tabData.Item5);
+    }
+    
     public async void ChartView_AddTempoChangeEvent()
     {
         TempoChangeEvent? previousTempoChangeEvent = ChartSystem.Chart.Events.LastOrDefault(x => x is TempoChangeEvent && x.Timestamp.FullTick <= TimeSystem.Timestamp.FullTick) as TempoChangeEvent;
@@ -1100,6 +1122,17 @@ public partial class ChartEditorView : UserControl
             MenuItemDoubleBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.DoubleBeatDivision"].ToKeyGesture();
             MenuItemHalveBeatDivision.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Navigate.HalveBeatDivision"].ToKeyGesture();
 
+            MenuItemChartView3D.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.ChartView3D"].ToKeyGesture();
+            MenuItemChartViewTxt.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.ChartViewTxt"].ToKeyGesture();
+            MenuItemChartProperties.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.ChartProperties"].ToKeyGesture();
+            MenuItemChartStatistics.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.ChartStatistics"].ToKeyGesture();
+            MenuItemProofreader.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.Proofreader"].ToKeyGesture();
+            MenuItemEventList.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.EventList"].ToKeyGesture();
+            MenuItemLayerList.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.LayerList"].ToKeyGesture();
+            MenuItemInspector.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.Inspector"].ToKeyGesture();
+            MenuItemCursor.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.Cursor"].ToKeyGesture();
+            MenuItemWaveform.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.Waveform"].ToKeyGesture();
+            
             // Update recent file list.
             foreach (object? obj in MenuItemRecent.Items)
             {
@@ -1362,6 +1395,62 @@ public partial class ChartEditorView : UserControl
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Navigate.HalveBeatDivision"]))
         {
             TimeSystem.Navigate_HalveBeatDivision();
+            e.Handled = true;
+        }
+        
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.ChartView3D"]))
+        {
+            View_CreateToolWindow("MenuItemChartView3D");
+            e.Handled = true;
+        }
+        //else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.ChartView2D"]))
+        //{
+        //    View_CreateToolWindow("MenuItemChartView2D");
+        //    e.Handled = true;
+        //}
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.ChartViewTxt"]))
+        {
+            View_CreateToolWindow("MenuItemChartViewTxt");
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.ChartProperties"]))
+        {
+            View_CreateToolWindow("MenuItemChartProperties");
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.ChartStatistics"]))
+        {
+            View_CreateToolWindow("MenuItemChartStatistics");
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.Proofreader"]))
+        {
+            View_CreateToolWindow("MenuItemProofreader");
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.EventList"]))
+        {
+            View_CreateToolWindow("MenuItemEventList");
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.LayerList"]))
+        {
+            View_CreateToolWindow("MenuItemLayerList");
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.Inspector"]))
+        {
+            View_CreateToolWindow("MenuItemInspector");
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.Cursor"]))
+        {
+            View_CreateToolWindow("MenuItemCursor");
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["View.ToolWindows.Waveform"]))
+        {
+            View_CreateToolWindow("MenuItemWaveform");
             e.Handled = true;
         }
         
@@ -1762,24 +1851,7 @@ public partial class ChartEditorView : UserControl
     private void MenuItemToolWindows_OnClick(object? sender, RoutedEventArgs e)
     {
         if (sender is not MenuItem menuItem) return;
-        (UserControl?, Icon, string, double, double) tabData = menuItem.Name switch
-        {
-            "MenuItemChartView3D"     => (new ChartView3D(),         Icon.CircleShadow,           "ChartEditor.ChartView3D"    , 750, 773),
-            "MenuItemChartView2D"     => (new ChartView2D(),         Icon.GanttChart,             "ChartEditor.ChartView2D"    , 750, 773),
-            "MenuItemChartViewTxt"    => (new ChartViewTxt(),        Icon.TextT,                  "ChartEditor.ChartViewTxt"   , 750, 773),
-            "MenuItemChartProperties" => (new ChartPropertiesView(), Icon.TextBulletList,         "ChartEditor.ChartProperties", 500, 535),
-            "MenuItemChartStatistics" => (new ChartStatisticsView(), Icon.DataHistogram,          "ChartEditor.ChartStatistics", 500, 535),
-            "MenuItemProofreader"     => (new ProofreaderView(),     Icon.ApprovalsApp,           "ChartEditor.Proofreader"    , 800, 485),
-            "MenuItemEventList"       => (new EventListView(),       Icon.TextBulletList,         "ChartEditor.EventList"      , 500, 735),
-            "MenuItemLayerList"       => (new LayerListView(),       Icon.TextBulletList,         "ChartEditor.LayerList"      , 500, 735),
-            "MenuItemInspector"       => (new InspectorView(),       Icon.WrenchScrewdriver,      "ChartEditor.Inspector"      , 500, 735),
-            "MenuItemCursor"          => (new CursorView(),          Icon.CircleHintHalfVertical, "ChartEditor.Cursor"         , 350, 225),
-            "MenuItemWaveform"        => (new WaveformView(),        Icon.Pulse,                  "ChartEditor.Waveform"       , 250, 773),
-            _ => (null, Icon.Warning, "", 200, 200),
-        };
-
-        if (tabData.Item1 == null) return;
-        Dock_CreateNewFloatingTool(tabData.Item1, tabData.Item2, tabData.Item3, tabData.Item4, tabData.Item5);
+        View_CreateToolWindow(menuItem.Name ?? "");
     }
     
     private void MenuItemLayoutPresetClassic_OnClick(object? sender, RoutedEventArgs e) => Dock_LoadPreset(PresetLayoutType.Classic);

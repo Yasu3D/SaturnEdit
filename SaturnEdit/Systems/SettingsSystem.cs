@@ -835,6 +835,17 @@ public class ShortcutSettings
         ["Edit.CheckerDeselect"]      = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.CheckerDeselect"),
         ["Edit.SelectByCriteria"]     = new(Key.None, false, false, false, "Menu.Edit", "Menu.Edit.SelectByCriteria"),
 
+        ["View.ToolWindows.ChartView3D"]     = new(Key.None, false, false, false, "Menu.View.ToolWindows", "ChartEditor.ChartView3D"),
+        ["View.ToolWindows.ChartViewTxt"]    = new(Key.None, false, false, false, "Menu.View.ToolWindows", "ChartEditor.ChartViewTxt"),
+        ["View.ToolWindows.ChartProperties"] = new(Key.None, false, false, false, "Menu.View.ToolWindows", "ChartEditor.ChartProperties"),
+        ["View.ToolWindows.ChartStatistics"] = new(Key.None, false, false, false, "Menu.View.ToolWindows", "ChartEditor.ChartStatistics"),
+        ["View.ToolWindows.Proofreader"]     = new(Key.None, false, false, false, "Menu.View.ToolWindows", "ChartEditor.Proofreader"),
+        ["View.ToolWindows.EventList"]       = new(Key.None, false, false, false, "Menu.View.ToolWindows", "ChartEditor.EventList"),
+        ["View.ToolWindows.LayerList"]       = new(Key.None, false, false, false, "Menu.View.ToolWindows", "ChartEditor.LayerList"),
+        ["View.ToolWindows.Inspector"]       = new(Key.None, false, false, false, "Menu.View.ToolWindows", "ChartEditor.Inspector"),
+        ["View.ToolWindows.Cursor"]          = new(Key.None, false, false, false, "Menu.View.ToolWindows", "ChartEditor.Cursor"),
+        ["View.ToolWindows.Waveform"]        = new(Key.None, false, false, false, "Menu.View.ToolWindows", "ChartEditor.Waveform"),
+        
         ["Navigate.MoveBeatForward"]      = new(Key.Up,       false, false, false, "Menu.Navigate", "Menu.Navigate.MoveBeatForward"),
         ["Navigate.MoveBeatBack"]         = new(Key.Down,     false, false, false, "Menu.Navigate", "Menu.Navigate.MoveBeatBack"),
         ["Navigate.MoveMeasureForward"]   = new(Key.Right,    false, false, false, "Menu.Navigate", "Menu.Navigate.MoveMeasureForward"),
