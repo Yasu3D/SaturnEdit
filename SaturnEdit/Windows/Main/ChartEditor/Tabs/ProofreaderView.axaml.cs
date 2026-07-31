@@ -245,7 +245,7 @@ public partial class ProofreaderView : UserControl
                         Tick = @event.Timestamp.Tick,
                         Position = -1,
                         Size = -1,
-                        ProblemKey = "ChartEditor.Proofreader.Problem.OverlappingNotes",
+                        ProblemKey = "ChartEditor.Proofreader.Problem.EffectsOnLowers",
                         TypeKey = typeKey(@event),
                     });
                 }
@@ -260,28 +260,30 @@ public partial class ProofreaderView : UserControl
                 Layer layer = ChartSystem.Chart.Layers[i];
                 StopEffectEvent? lastStop = null;
 
-                for (int j = layer.Events.Count - 1; j >= 0; j--)
+                foreach (Event @event in layer.Events)
                 {
-                    Event @event = layer.Events[j];
+                    if (@event is not StopEffectEvent stop) continue;
+                    
+                    lastStop = stop;
+                    break;
+                }
 
-                    if (@event is StopEffectEvent stop)
+                if (lastStop == null) continue;
+                
+                foreach (Event @event in layer.Events)
+                {
+                    if (@event is not SpeedChangeEvent speedChangeEvent) continue;
+                    if (speedChangeEvent.Timestamp.FullTick > lastStop?.SubEvents[0].Timestamp.FullTick) continue;
+                    
+                    Problems.Add(new()
                     {
-                        lastStop = stop;
-                        continue;
-                    }
-
-                    if (@event is SpeedChangeEvent && lastStop != null)
-                    {
-                        Problems.Add(new()
-                        {
-                            Measure = @event.Timestamp.Measure,
-                            Tick = @event.Timestamp.Tick,
-                            Position = -1,
-                            Size = -1,
-                            ProblemKey = "ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect",
-                            TypeKey = typeKey(@event),
-                        });
-                    }
+                        Measure = @event.Timestamp.Measure,
+                        Tick = @event.Timestamp.Tick,
+                        Position = -1,
+                        Size = -1,
+                        ProblemKey = "ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect",
+                        TypeKey = typeKey(@event),
+                    });
                 }
             }
 
