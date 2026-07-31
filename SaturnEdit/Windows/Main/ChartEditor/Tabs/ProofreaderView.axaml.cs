@@ -285,24 +285,6 @@ public partial class ProofreaderView : UserControl
                 }
             }
 
-            for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
-            {
-                Layer layer = ChartSystem.Chart.Layers[i];
-                for (int j = 0; j < layer.Events.Count; j++)
-                {
-                    Event @event = layer.Events[j];
-                    Problems.Add(new()
-                    {
-                        Measure = @event.Timestamp.Measure,
-                        Tick = @event.Timestamp.Tick,
-                        Position = -1,
-                        Size = -1,
-                        ProblemKey = "ChartEditor.Proofreader.Problem.SpeedChangeBeforeStopEffect",
-                        TypeKey = typeKey(@event),
-                    });
-                }
-            }
-
             // Speed Changes too close together.
             for (int i = 0; i < ChartSystem.Chart.Layers.Count; i++)
             {
