@@ -198,15 +198,15 @@
                                Text="{DynamicResource StageEditor.Property.Icon}" />
                     <TextBox Grid.Row="2"
                              Grid.Column="2"
-                             Name="TextBoxStageIconPath"
+                             Name="TextBoxStageImagePath"
                              Height="30"
-                             LostFocus="TextBoxStageIcon_OnLostFocus" />
+                             LostFocus="TextBoxStageImage_OnLostFocus" />
                     <Button Grid.Row="2"
                             Grid.Column="3"
                             Classes="Themed Square Outlined"
                             HorizontalAlignment="Left"
                             Margin="5,0,0,0"
-                            Click="ButtonPickStageIconFile_OnClick">
+                            Click="ButtonPickStageImageFile_OnClick">
                         <ToolTip.Tip>
                             <TextBlock Text="{DynamicResource Generic.PickFile}" />
                         </ToolTip.Tip>

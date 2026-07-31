@@ -928,6 +928,7 @@ public class ShortcutSettings
         ["Editor.Transform.MirrorCustom"]                  = new(Key.M,     false, true,  false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.MirrorCustom"),
         ["Editor.Transform.AdjustAxis"]                    = new(Key.M,     false, true,  true,  "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.AdjustAxis"),
         ["Editor.Transform.FlipDirection"]                 = new(Key.F,     false, false, true,  "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.FlipDirection"),
+        ["Editor.Transform.InvertLaneToggle"]              = new(Key.F,     false, true,  true,  "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.InvertLaneToggle"),
         ["Editor.Transform.ReverseSelection"]              = new(Key.R,     true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.ReverseSelection"),
         ["Editor.Transform.ScaleSelection"]                = new(Key.T,     true,  false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.ScaleSelection"),
         ["Editor.Transform.OffsetChart"]                   = new(Key.None,  false, false, false, "ChartEditor.ChartView3D.Menu.Transform", "ChartEditor.ChartView3D.Menu.Transform.OffsetChart"),

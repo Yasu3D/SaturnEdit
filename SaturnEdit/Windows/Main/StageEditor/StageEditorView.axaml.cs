@@ -346,7 +346,7 @@ public partial class StageEditorView : UserControl
             
             TextBoxStageId.Text = StageSystem.StageUpStage.Id;
             TextBoxStageName.Text = StageSystem.StageUpStage.Name;
-            TextBoxStageIconPath.Text = StageSystem.StageUpStage.ImagePath;
+            TextBoxStageImagePath.Text = StageSystem.StageUpStage.ImagePath;
 
             TextBoxSongId1.Text = StageSystem.StageUpStage.Song1.EntryId;
             ToggleButtonSecret1.IsChecked = StageSystem.StageUpStage.Song1.Secret;
@@ -367,12 +367,12 @@ public partial class StageEditorView : UserControl
                 _ => 0,
             };
             
-            bool iconExists = File.Exists(StageSystem.StageUpStage.AbsoluteIconPath);
-            IconFileNotFoundWarning.IsVisible = StageSystem.StageUpStage.AbsoluteIconPath != "" && !iconExists;
+            bool iconExists = File.Exists(StageSystem.StageUpStage.AbsoluteImagePath);
+            IconFileNotFoundWarning.IsVisible = StageSystem.StageUpStage.AbsoluteImagePath != "" && !iconExists;
             
             try
             {
-                ImageIcon.Source = iconExists ? new Bitmap(StageSystem.StageUpStage.AbsoluteIconPath) : null;
+                ImageIcon.Source = iconExists ? new Bitmap(StageSystem.StageUpStage.AbsoluteImagePath) : null;
             }
             catch (Exception ex)
             {
@@ -599,13 +599,13 @@ public partial class StageEditorView : UserControl
         UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.Name = value; }, oldName, newName));
     }
     
-    private void TextBoxStageIcon_OnLostFocus(object? sender, RoutedEventArgs e)
+    private void TextBoxStageImage_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        if (TextBoxStageIconPath == null) return;
+        if (TextBoxStageImagePath == null) return;
 
         string oldIconPath = StageSystem.StageUpStage.ImagePath;
-        string newIconPath = TextBoxStageIconPath.Text ?? "";
+        string newIconPath = TextBoxStageImagePath.Text ?? "";
         if (oldIconPath == newIconPath)
         {
             // Refresh UI in case the file changed, but don't push unnecessary operation.
@@ -616,7 +616,7 @@ public partial class StageEditorView : UserControl
         UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.ImagePath = value; }, oldIconPath, newIconPath));
     }
     
-    private async void ButtonPickStageIconFile_OnClick(object? sender, RoutedEventArgs e)
+    private async void ButtonPickStageImageFile_OnClick(object? sender, RoutedEventArgs e)
     {
         try
         {
@@ -639,7 +639,7 @@ public partial class StageEditorView : UserControl
             });
             if (files.Count != 1) return;
             
-            if (StageSystem.StageUpStage.AbsoluteIconPath == files[0].Path.LocalPath)
+            if (StageSystem.StageUpStage.AbsoluteImagePath == files[0].Path.LocalPath)
             {
                 // Refresh UI in case the file changed, but don't push unnecessary operation.
                 StageBranch_OnOperationHistoryChanged(null, EventArgs.Empty);

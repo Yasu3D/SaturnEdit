@@ -605,6 +605,11 @@ public partial class SearchWindow : Window
             EditorSystem.Transform_FlipDirection();
             e.Handled = true;
         }
+        else if (item.Key == "Editor.Transform.InvertLaneToggle") 
+        {
+            EditorSystem.Transform_InvertLaneToggle();
+            e.Handled = true;
+        }
         else if (item.Key == "Editor.Transform.ReverseSelection") 
         {
             EditorSystem.Transform_ReverseSelection();

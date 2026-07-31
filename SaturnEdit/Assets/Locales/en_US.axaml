@@ -308,6 +308,7 @@
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform.MirrorCustom">Mirror Custom</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform.AdjustAxis">Adjust Axis...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform.FlipDirection">Flip Direction</system:String>
+    <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform.InvertLaneToggle">Invert Lane Toggle</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform.ReverseSelection">Reverse Selection</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform.ScaleSelection">Scale Selection...</system:String>
     <system:String x:Key="ChartEditor.ChartView3D.Menu.Transform.OffsetChart">Offset Chart...</system:String>

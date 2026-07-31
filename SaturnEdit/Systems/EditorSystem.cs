@@ -1959,6 +1959,53 @@ public static class EditorSystem
         UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
     }
 
+    public static void Transform_InvertLaneToggle()
+    {
+        if (SelectionSystem.SelectedObjects.Count == 0) return;
+
+        List<IOperation> operations = [];
+        ITimeable[] selectedObjects = SelectionSystem.SelectedObjects.ToArray();
+        
+        foreach (ITimeable obj in selectedObjects)
+        {
+            if (obj is LaneShowNote laneShowNote)
+            {
+                LaneHideNote newLaneHideNote = new
+                (
+                    timestamp:     new(laneShowNote.Timestamp.FullTick),
+                    position:      laneShowNote.Position,
+                    size:          laneShowNote.Size,
+                    direction:     laneShowNote.Direction
+                );
+                
+                operations.Add(new ListRemoveOperation<Note>(() => ChartSystem.Chart.LaneToggles, laneShowNote));
+                operations.Add(new SelectionRemoveOperation(laneShowNote, SelectionSystem.LastSelectedObject));
+                
+                operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneHideNote));
+                operations.Add(new SelectionAddOperation(newLaneHideNote, SelectionSystem.LastSelectedObject));
+            }
+            else if (obj is LaneHideNote laneHideNote)
+            {
+                LaneShowNote newLaneShowNote = new
+                (
+                    timestamp:     new(laneHideNote.Timestamp.FullTick),
+                    position:      laneHideNote.Position,
+                    size:          laneHideNote.Size,
+                    direction:     laneHideNote.Direction
+                );
+                
+                operations.Add(new ListRemoveOperation<Note>(() => ChartSystem.Chart.LaneToggles, laneHideNote));
+                operations.Add(new SelectionRemoveOperation(laneHideNote, SelectionSystem.LastSelectedObject));
+                
+                operations.Add(new ListAddOperation<Note>(() => ChartSystem.Chart.LaneToggles, newLaneShowNote));
+                operations.Add(new SelectionAddOperation(newLaneShowNote, SelectionSystem.LastSelectedObject));
+            }
+        }
+        
+        if (operations.Count == 0) return;
+        UndoRedoSystem.ChartBranch.Push(new CompositeOperation(operations));
+    }
+    
     public static void Transform_ReverseSelection()
     {
         if (SelectionSystem.SelectedObjects.Count == 0) return;

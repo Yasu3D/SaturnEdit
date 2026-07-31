@@ -416,6 +416,7 @@ public partial class ChartView3D : UserControl
             MenuItemMirrorCustom.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.MirrorCustom"].ToKeyGesture();
             MenuItemAdjustAxis.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.AdjustAxis"].ToKeyGesture();
             MenuItemFlipDirection.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.FlipDirection"].ToKeyGesture();
+            MenuItemInvertLaneToggle.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.InvertLaneToggle"].ToKeyGesture();
             MenuItemReverseSelection.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ReverseSelection"].ToKeyGesture();
             MenuItemScaleSelection.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ScaleSelection"].ToKeyGesture();
             MenuItemOffsetChart.InputGesture = SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.OffsetChart"].ToKeyGesture();
@@ -732,6 +733,11 @@ public partial class ChartView3D : UserControl
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.FlipDirection"])) 
         {
             Task.Run(EditorSystem.Transform_FlipDirection);
+            e.Handled = true;
+        }
+        else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.InvertLaneToggle"])) 
+        {
+            Task.Run(EditorSystem.Transform_InvertLaneToggle);
             e.Handled = true;
         }
         else if (shortcut.Equals(SettingsSystem.ShortcutSettings.Shortcuts["Editor.Transform.ReverseSelection"])) 
@@ -1600,6 +1606,8 @@ public partial class ChartView3D : UserControl
 
     private void MenuItemFlipDirection_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_FlipDirection);
 
+    private void MenuItemInvertLaneToggle_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_InvertLaneToggle);
+    
     private void MenuItemReverseSelection_OnClick(object? sender, RoutedEventArgs e) => Task.Run(EditorSystem.Transform_ReverseSelection);
 
     private void MenuItemScaleSelection_OnClick(object? sender, RoutedEventArgs e) => MainWindow.Instance?.ChartEditor.ChartView_ScaleSelection();

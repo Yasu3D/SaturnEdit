@@ -305,6 +305,7 @@ ChartEditor.ChartView3D.Menu.Transform.MirrorVertical,Mirror Vertical,-,-,Mirror
 ChartEditor.ChartView3D.Menu.Transform.MirrorCustom,Mirror Custom,-,-,-
 ChartEditor.ChartView3D.Menu.Transform.AdjustAxis,Adjust Axis...,-,-,-
 ChartEditor.ChartView3D.Menu.Transform.FlipDirection,Flip Direction,-,-,"Clockwise Slide -> Counterclockwise Slide, etc."
+ChartEditor.ChartView3D.Menu.Transform.InvertLaneToggle,Invert Lane Toggle,-,-,"Lane Show -> Lane Hide, vice versa."
 ChartEditor.ChartView3D.Menu.Transform.ReverseSelection,Reverse Selection,-,-,"Reverse in time, so that start and end switch places."
 ChartEditor.ChartView3D.Menu.Transform.ScaleSelection,Scale Selection...,-,-,-
 ChartEditor.ChartView3D.Menu.Transform.OffsetChart,Offset Chart...,-,-,-

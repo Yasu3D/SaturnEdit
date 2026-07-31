@@ -306,6 +306,16 @@
                                 <icon:FluentIcon Icon="ArrowReply" />
                             </MenuItem.Icon>
                         </MenuItem>
+                        
+                        <MenuItem Name="MenuItemInvertLaneToggle"
+                                      Click="MenuItemInvertLaneToggle_OnClick">
+                                <MenuItem.Header>
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartView3D.Menu.Transform.InvertLaneToggle}" />
+                                </MenuItem.Header>
+                                <MenuItem.Icon>
+                                    <icon:FluentIcon Icon="CircleHalfFill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
 
                         <MenuItem Name="MenuItemReverseSelection"
                                   Click="MenuItemReverseSelection_OnClick">
