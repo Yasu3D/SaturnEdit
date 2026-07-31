@@ -13,12 +13,13 @@ public enum CosmeticType
     ConsoleColor = 0,
     Emblem = 1,
     Icon = 2,
-    Navigator = 3,
-    NoteSound = 4,
-    Plate = 5,
-    SystemMusic = 6,
-    SystemSound = 7,
-    Title = 8,
+    JudgementLineColor = 3,
+    Navigator = 4,
+    NoteSound = 5,
+    Plate = 6,
+    SystemMusic = 7,
+    SystemSound = 8,
+    Title = 9,
 }
 
 public static class CosmeticSystem
@@ -64,15 +65,16 @@ public static class CosmeticSystem
     {
         CosmeticItem = cosmeticType switch
         {
-            CosmeticType.ConsoleColor => new ConsoleColor(),
-            CosmeticType.Emblem       => new Emblem(),
-            CosmeticType.Icon         => new Icon(),
-            CosmeticType.Navigator    => new Navigator(),
-            CosmeticType.NoteSound    => new NoteSound(),
-            CosmeticType.Plate        => new Plate(),
-            CosmeticType.SystemMusic  => new SystemMusic(),
-            CosmeticType.SystemSound  => new SystemSound(),
-            CosmeticType.Title        => new Title(),
+            CosmeticType.ConsoleColor  => new ConsoleColor(),
+            CosmeticType.Emblem        => new Emblem(),
+            CosmeticType.Icon          => new Icon(),
+            CosmeticType.JudgementLineColor => new JudgementLineColor(),
+            CosmeticType.Navigator     => new Navigator(),
+            CosmeticType.NoteSound     => new NoteSound(),
+            CosmeticType.Plate         => new Plate(),
+            CosmeticType.SystemMusic   => new SystemMusic(),
+            CosmeticType.SystemSound   => new SystemSound(),
+            CosmeticType.Title         => new Title(),
             _ => throw new ArgumentOutOfRangeException(nameof(cosmeticType), cosmeticType, null),
         };
         

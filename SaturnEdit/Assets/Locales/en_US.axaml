@@ -387,6 +387,7 @@
     <system:String x:Key="CosmeticEditor.Type.ConsoleColor">Console Color</system:String>
     <system:String x:Key="CosmeticEditor.Type.Emblem">Emblem</system:String>
     <system:String x:Key="CosmeticEditor.Type.Icon">Icon</system:String>
+    <system:String x:Key="CosmeticEditor.Type.JudgementLineColor">Judgement Line Color</system:String>
     <system:String x:Key="CosmeticEditor.Type.Navigator">Navigator</system:String>
     <system:String x:Key="CosmeticEditor.Type.NoteSound">Note Sound</system:String>
     <system:String x:Key="CosmeticEditor.Type.Plate">Plate</system:String>
@@ -410,6 +411,7 @@
     <system:String x:Key="CosmeticEditor.ConsoleColor.Property.LedColorsC">LED Color C</system:String>
     <system:String x:Key="CosmeticEditor.Emblem.Property.EmblemImage">Emblem Image</system:String>
     <system:String x:Key="CosmeticEditor.Icon.Property.IconImage">Icon Image</system:String>
+    <system:String x:Key="CosmeticEditor.JudgementLineColor.Property.JudgementLineColorImage">Judgement Line Color Image</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Header.Metadata">Metadata</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Header.Textures">Textures</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Header.Dialogues">Dialogues</system:String>

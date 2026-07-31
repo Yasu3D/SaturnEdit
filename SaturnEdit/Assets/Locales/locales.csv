@@ -384,6 +384,7 @@ StageEditor.Preview.Song3,3rd,-,-,-
 CosmeticEditor.Type.ConsoleColor,Console Color,-,-,-
 CosmeticEditor.Type.Emblem,Emblem,-,-,-
 CosmeticEditor.Type.Icon,Icon,-,-,-
+CosmeticEditor.Type.JudgementLineColor,Judgement Line Color,-,-,-
 CosmeticEditor.Type.Navigator,Navigator,-,-,-
 CosmeticEditor.Type.NoteSound,Note Sound,-,-,-
 CosmeticEditor.Type.Plate,Plate,-,-,-
@@ -407,6 +408,7 @@ CosmeticEditor.ConsoleColor.Property.LedColorsB,LED Color B,-,-,-
 CosmeticEditor.ConsoleColor.Property.LedColorsC,LED Color C,-,-,-
 CosmeticEditor.Emblem.Property.EmblemImage,Emblem Image,-,-,-
 CosmeticEditor.Icon.Property.IconImage,Icon Image,-,-,-
+CosmeticEditor.JudgementLineColor.Property.JudgementLineColorImage,Judgement Line Color Image,-,-,-
 CosmeticEditor.Navigator.Header.Metadata,Metadata,-,-,-
 CosmeticEditor.Navigator.Header.Textures,Textures,-,-,-
 CosmeticEditor.Navigator.Header.Dialogues,Dialogues,-,-,-

@@ -161,6 +161,7 @@ public partial class CosmeticsEditorView : UserControl
                 ConsoleColor => "console_color",
                 Emblem => "emblem",
                 Icon => "icon",
+                JudgementLineColor => "judgement_line_color",
                 Navigator => "navigator",
                 NoteSound => "note_sound",
                 Plate => "plate",
@@ -177,6 +178,7 @@ public partial class CosmeticsEditorView : UserControl
                 ConsoleColor => "Console Color File",
                 Emblem => "Emblem File",
                 Icon => "Icon File",
+                JudgementLineColor => "Judgement Line Color File",
                 Navigator => "Navigator File",
                 NoteSound => "Note Sound File",
                 Plate => "Plate File",
@@ -546,6 +548,9 @@ public partial class CosmeticsEditorView : UserControl
             
             IconEditor.IsVisible = CosmeticSystem.CosmeticItem is Icon;
             IconEditor.IsEnabled = IconEditor.IsVisible;
+
+            JudgementLineColorEditor.IsVisible = CosmeticSystem.CosmeticItem is JudgementLineColor;
+            JudgementLineColorEditor.IsEnabled = JudgementLineColorEditor.IsVisible;
             
             NavigatorEditor.IsVisible = CosmeticSystem.CosmeticItem is Navigator;
             NavigatorEditor.IsEnabled = NavigatorEditor.IsVisible;
@@ -718,6 +723,7 @@ public partial class CosmeticsEditorView : UserControl
     private void MenuItemNewConsoleColor_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.ConsoleColor);
     private void MenuItemNewEmblem_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.Emblem);
     private void MenuItemNewIcon_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.Icon);
+    private void MenuItemNewJudgementLineColor_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.JudgementLineColor);
     private void MenuItemNewNavigator_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.Navigator);
     private void MenuItemNewNoteSound_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.NoteSound);
     private void MenuItemNewPlate_OnClick(object? sender, RoutedEventArgs e) => File_New(CosmeticType.Plate);

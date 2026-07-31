@@ -51,6 +51,13 @@
                                 <TextBlock Text="{DynamicResource CosmeticEditor.Type.Icon}" />
                             </MenuItem.Header>
                         </MenuItem>
+                        
+                        <MenuItem Name="MenuItemNewJudgementLineColor"
+                                  Click="MenuItemNewJudgementLineColor_OnClick">
+                            <MenuItem.Header>
+                                <TextBlock Text="{DynamicResource CosmeticEditor.Type.JudgementLineColor}" />
+                            </MenuItem.Header>
+                        </MenuItem>
 
                         <MenuItem Name="MenuItemNewNavigator"
                                   Click="MenuItemNewNavigator_OnClick">
@@ -220,6 +227,10 @@
                                              IsVisible="False"
                                              IsEnabled="False" />
 
+                        <tabs:JudgementLineColorEditorView Name="JudgementLineColorEditor"
+                                             IsVisible="False"
+                                             IsEnabled="False" />
+                        
                         <tabs:NavigatorEditorView Name="NavigatorEditor"
                                                   IsVisible="False"
                                                   IsEnabled="False" />
