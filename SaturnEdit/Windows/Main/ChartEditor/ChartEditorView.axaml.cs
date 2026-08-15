@@ -498,7 +498,7 @@ public partial class ChartEditorView : UserControl
             if (file == null) return false;
 
             // Write the chart to the defined path, with the defined notation arguments.
-            if (!ChartSystem.WriteChart(file.Path.LocalPath, exportArgsWindow.NotationWriteArgs, true, true))
+            if (!ChartSystem.WriteChart(file.Path.LocalPath, exportArgsWindow.NotationWriteArgs, true, false))
             {
                 MainWindow.ShowFileWriteError();
                 return false;
