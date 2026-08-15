@@ -323,6 +323,11 @@ public partial class ChartStatisticsView : UserControl
         UpdateStatistics();
     }
     
+    private void ChartSystem_OnChartPathChanged(object? sender, EventArgs e)
+    {
+        UpdateStatistics();
+    }
+    
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
@@ -380,16 +385,19 @@ public partial class ChartStatisticsView : UserControl
 
         UndoRedoSystem.ChartBranch.OperationHistoryChanged += ChartBranch_OnOperationHistoryChanged;
         ChartBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
-        
+
+        ChartSystem.ChartPathChanged += ChartSystem_OnChartPathChanged;
+
         SizeChanged += Control_OnSizeChanged;
-        
+
         base.OnLoaded(e);
     }
-    
+
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SettingsSystem.SettingsChanged -= OnSettingsChanged;
         UndoRedoSystem.ChartBranch.OperationHistoryChanged -= ChartBranch_OnOperationHistoryChanged;
+        ChartSystem.ChartPathChanged -= ChartSystem_OnChartPathChanged;
         SizeChanged -= Control_OnSizeChanged;
         
         base.OnUnloaded(e);

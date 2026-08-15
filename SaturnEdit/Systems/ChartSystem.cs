@@ -47,6 +47,7 @@ public static class ChartSystem
     public static event EventHandler? EntryChanged;
     public static event EventHandler? JacketChanged;
     public static event EventHandler? AudioChanged;
+    public static event EventHandler? ChartPathChanged;
 
     /// <summary>
     /// The chart being edited/displayed.
@@ -202,6 +203,8 @@ public static class ChartSystem
             
             SettingsSystem.EditorSettings.RecentChartFiles.Remove(path);
             SettingsSystem.EditorSettings.AddRecentChartFile(path);
+            
+            ChartPathChanged?.Invoke(null, EventArgs.Empty);
         }
         
         IsSaved = markAsSaved || IsSaved;
