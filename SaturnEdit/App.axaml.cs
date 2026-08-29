@@ -18,6 +18,7 @@ public partial class App : Application
         LoggingSystem.Initialize();
         SoftwareUpdateSystem.Initialize();
         AutosaveSystem.Initialize();
+        LaunchSystem.Initialize();
         SettingsSystem.Initialize();
         SoundpackSystem.Initialize();
         TimeSystem.Initialize();
