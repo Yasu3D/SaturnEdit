@@ -486,7 +486,8 @@ CosmeticEditor.NoteSound.Property.SnapGood,Snap (GOOD),-,-,-
 CosmeticEditor.NoteSound.Property.Hold,Hold,-,-,-
 CosmeticEditor.NoteSound.Property.ReHold,Re-Hold,-,-,-
 CosmeticEditor.NoteSound.Property.Chain,Chain,-,-,-
-CosmeticEditor.NoteSound.Property.Bonus,Bonus Effect,-,-,-
+CosmeticEditor.NoteSound.Property.BonusMarvelous,Bonus Effect (MARVELOUS),-,-,-
+CosmeticEditor.NoteSound.Property.BonusGreat,Bonus Effect (GREAT/GOOD),-,-,-
 CosmeticEditor.NoteSound.Property.R,R-Note Effect,-,-,-
 CosmeticEditor.NoteSound.Property.HoldLoopStartTime,Hold Loop Start,-,-,-
 CosmeticEditor.NoteSound.Property.HoldLoopEndTime,Hold Loop End,-,-,-
@@ -500,6 +501,8 @@ CosmeticEditor.SystemMusic.Property.AudioStageUpSelectPath,Stage-Up Select Audio
 CosmeticEditor.SystemMusic.Property.AudioStageUpSecretPath,Stage-Up Secret Audio Path,-,-,-
 CosmeticEditor.SystemMusic.Property.AudioSeeYouPath,See-You Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioLoginPath,Login Audio Path,-,-,-
+CosmeticEditor.SystemSound.Property.AudioLoginCardSuccessPath,Login Card Success Audio Path,-,-,-
+CosmeticEditor.SystemSound.Property.AudioLoginCardErrorPath,Login Card Error Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioCycleModePath,Cycle Mode Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioCycleFolderPath,Cycle Folder Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioCycleSongPath,Cycle Song Audio Path,-,-,-
@@ -513,6 +516,8 @@ CosmeticEditor.SystemSound.Property.AudioSelectStartSongPath,Select Start Song A
 CosmeticEditor.SystemSound.Property.AudioSelectStartSongAltPath,Select Start Song Alt Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioFavoriteAddPath,Favorite Add Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioFavoriteRemovePath,Favorite Remove Audio Path,-,-,-
+CosmeticEditor.SystemSound.Property.AudioLevelUpCountPath,Level Up Count Audio Path,-,-,-
+CosmeticEditor.SystemSound.Property.AudioLevelUpFinishedPath,Level Up Finished Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioResultScoreCountPath,Result Score Count Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioResultScoreFinishedPath,Result Score Finished Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioResultRateBadPath,Result Rate Bad Audio Path,-,-,-
@@ -523,6 +528,7 @@ CosmeticEditor.SystemSound.Property.AudioRhythmGameClearPath,Rhythm Game Clear A
 CosmeticEditor.SystemSound.Property.AudioRhythmGameSpecialClearPath,Rhythm Game Special Clear Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioTimerWarningPath,Timer Warning Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioTextboxAppearPath,Textbox Appear Audio Path,-,-,-
+CosmeticEditor.SystemSound.Property.AudioMessageAlertPath,Message Alert Audio Path,-,-,-
 CosmeticEditor.Title.Property.Message,Title Message,-,-,-
 Main.Window.Title,SATURN EDIT — Main Window,-,-,-
 Main.ToolTip.Update,Update Available!,-,-,-

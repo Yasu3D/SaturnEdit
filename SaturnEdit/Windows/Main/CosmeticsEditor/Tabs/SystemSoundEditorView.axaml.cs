@@ -33,6 +33,8 @@ public partial class SystemSoundEditorView : UserControl
             TextBoxArtist.Text = systemSound.Artist;
 
             TextBoxAudioLoginPath.Text                  = systemSound.AudioLoginPath;
+            TextBoxAudioLoginCardSuccessPath.Text       = systemSound.AudioLoginCardSuccessPath;
+            TextBoxAudioLoginCardErrorPath.Text         = systemSound.AudioLoginCardErrorPath;
             TextBoxAudioCycleModePath.Text              = systemSound.AudioCycleModePath;
             TextBoxAudioCycleFolderPath.Text            = systemSound.AudioCycleFolderPath;
             TextBoxAudioCycleSongPath.Text              = systemSound.AudioCycleSongPath;
@@ -46,6 +48,8 @@ public partial class SystemSoundEditorView : UserControl
             TextBoxAudioSelectStartSongAltPath.Text     = systemSound.AudioSelectStartSongAltPath;
             TextBoxAudioFavoriteAddPath.Text            = systemSound.AudioFavoriteAddPath;
             TextBoxAudioFavoriteRemovePath.Text         = systemSound.AudioFavoriteRemovePath;
+            TextBoxAudioLevelUpCountPath.Text           = systemSound.AudioLevelUpCountPath;
+            TextBoxAudioLevelUpFinishedPath.Text        = systemSound.AudioLevelUpFinishedPath;
             TextBoxAudioResultScoreCountPath.Text       = systemSound.AudioResultScoreCountPath;
             TextBoxAudioResultScoreFinishedPath.Text    = systemSound.AudioResultScoreFinishedPath;
             TextBoxAudioResultRateBadPath.Text          = systemSound.AudioResultRateBadPath;
@@ -56,31 +60,37 @@ public partial class SystemSoundEditorView : UserControl
             TextBoxAudioRhythmGameSpecialClearPath.Text = systemSound.AudioRhythmGameSpecialClearPath;
             TextBoxAudioTimerWarningPath.Text           = systemSound.AudioTimerWarningPath;
             TextBoxAudioTextboxAppearPath.Text          = systemSound.AudioTextboxAppearPath;
+            TextBoxAudioMessageAlertPath.Text           = systemSound.AudioMessageAlertPath;
 
-            IconFileNotFoundWarningAudioLogin.IsVisible                  = systemSound.AudioLoginPath                  != "" && !File.Exists(systemSound.AudioLoginPath);
-            IconFileNotFoundWarningAudioCycleMode.IsVisible              = systemSound.AudioCycleModePath              != "" && !File.Exists(systemSound.AudioCycleModePath);
-            IconFileNotFoundWarningAudioCycleFolder.IsVisible            = systemSound.AudioCycleFolderPath            != "" && !File.Exists(systemSound.AudioCycleFolderPath);
-            IconFileNotFoundWarningAudioCycleSong.IsVisible              = systemSound.AudioCycleSongPath              != "" && !File.Exists(systemSound.AudioCycleSongPath);
-            IconFileNotFoundWarningAudioCycleOption.IsVisible            = systemSound.AudioCycleOptionPath            != "" && !File.Exists(systemSound.AudioCycleOptionPath);
-            IconFileNotFoundWarningAudioSelectOk.IsVisible               = systemSound.AudioSelectOkPath               != "" && !File.Exists(systemSound.AudioSelectOkPath);
-            IconFileNotFoundWarningAudioSelectBack.IsVisible             = systemSound.AudioSelectBackPath             != "" && !File.Exists(systemSound.AudioSelectBackPath);
-            IconFileNotFoundWarningAudioSelectDenied.IsVisible           = systemSound.AudioSelectDeniedPath           != "" && !File.Exists(systemSound.AudioSelectDeniedPath);
-            IconFileNotFoundWarningAudioSelectDecide.IsVisible           = systemSound.AudioSelectDecidePath           != "" && !File.Exists(systemSound.AudioSelectDecidePath);
-            IconFileNotFoundWarningAudioSelectPreviewSong.IsVisible      = systemSound.AudioSelectPreviewSongPath      != "" && !File.Exists(systemSound.AudioSelectPreviewSongPath);
-            IconFileNotFoundWarningAudioSelectStartSong.IsVisible        = systemSound.AudioSelectStartSongPath        != "" && !File.Exists(systemSound.AudioSelectStartSongPath);
-            IconFileNotFoundWarningAudioSelectStartSongAlt.IsVisible     = systemSound.AudioSelectStartSongAltPath     != "" && !File.Exists(systemSound.AudioSelectStartSongAltPath);
-            IconFileNotFoundWarningAudioFavoriteAdd.IsVisible            = systemSound.AudioFavoriteAddPath            != "" && !File.Exists(systemSound.AudioFavoriteAddPath);
-            IconFileNotFoundWarningAudioFavoriteRemove.IsVisible         = systemSound.AudioFavoriteRemovePath         != "" && !File.Exists(systemSound.AudioFavoriteRemovePath);
-            IconFileNotFoundWarningAudioResultScoreCount.IsVisible       = systemSound.AudioResultScoreCountPath       != "" && !File.Exists(systemSound.AudioResultScoreCountPath);
-            IconFileNotFoundWarningAudioResultScoreFinished.IsVisible    = systemSound.AudioResultScoreFinishedPath    != "" && !File.Exists(systemSound.AudioResultScoreFinishedPath);
-            IconFileNotFoundWarningAudioResultRateBad.IsVisible          = systemSound.AudioResultRateBadPath          != "" && !File.Exists(systemSound.AudioResultRateBadPath);
-            IconFileNotFoundWarningAudioResultRateGood.IsVisible         = systemSound.AudioResultRateGoodPath         != "" && !File.Exists(systemSound.AudioResultRateGoodPath);
-            IconFileNotFoundWarningAudioRhythmGameReady.IsVisible        = systemSound.AudioRhythmGameReadyPath        != "" && !File.Exists(systemSound.AudioRhythmGameReadyPath);
-            IconFileNotFoundWarningAudioRhythmGameFail.IsVisible         = systemSound.AudioRhythmGameFailPath         != "" && !File.Exists(systemSound.AudioRhythmGameFailPath);
-            IconFileNotFoundWarningAudioRhythmGameClear.IsVisible        = systemSound.AudioRhythmGameClearPath        != "" && !File.Exists(systemSound.AudioRhythmGameClearPath);
-            IconFileNotFoundWarningAudioRhythmGameSpecialClear.IsVisible = systemSound.AudioRhythmGameSpecialClearPath != "" && !File.Exists(systemSound.AudioRhythmGameSpecialClearPath);
-            IconFileNotFoundWarningAudioTimerWarning.IsVisible           = systemSound.AudioTimerWarningPath           != "" && !File.Exists(systemSound.AudioTimerWarningPath);
-            IconFileNotFoundWarningAudioTextboxAppear.IsVisible          = systemSound.AudioTextboxAppearPath          != "" && !File.Exists(systemSound.AudioTextboxAppearPath);
+            IconFileNotFoundWarningAudioLogin.IsVisible                  = systemSound.AudioLoginPath                  != "" && !File.Exists(systemSound.AbsoluteAudioLoginPath);
+            IconFileNotFoundWarningAudioLoginCardSuccess.IsVisible       = systemSound.AudioLoginCardSuccessPath       != "" && !File.Exists(systemSound.AbsoluteAudioLoginCardSuccessPath);
+            IconFileNotFoundWarningAudioLoginCardError.IsVisible         = systemSound.AudioLoginCardErrorPath         != "" && !File.Exists(systemSound.AbsoluteAudioLoginCardErrorPath);
+            IconFileNotFoundWarningAudioCycleMode.IsVisible              = systemSound.AudioCycleModePath              != "" && !File.Exists(systemSound.AbsoluteAudioCycleModePath);
+            IconFileNotFoundWarningAudioCycleFolder.IsVisible            = systemSound.AudioCycleFolderPath            != "" && !File.Exists(systemSound.AbsoluteAudioCycleFolderPath);
+            IconFileNotFoundWarningAudioCycleSong.IsVisible              = systemSound.AudioCycleSongPath              != "" && !File.Exists(systemSound.AbsoluteAudioCycleSongPath);
+            IconFileNotFoundWarningAudioCycleOption.IsVisible            = systemSound.AudioCycleOptionPath            != "" && !File.Exists(systemSound.AbsoluteAudioCycleOptionPath);
+            IconFileNotFoundWarningAudioSelectOk.IsVisible               = systemSound.AudioSelectOkPath               != "" && !File.Exists(systemSound.AbsoluteAudioSelectOkPath);
+            IconFileNotFoundWarningAudioSelectBack.IsVisible             = systemSound.AudioSelectBackPath             != "" && !File.Exists(systemSound.AbsoluteAudioSelectBackPath);
+            IconFileNotFoundWarningAudioSelectDenied.IsVisible           = systemSound.AudioSelectDeniedPath           != "" && !File.Exists(systemSound.AbsoluteAudioSelectDeniedPath);
+            IconFileNotFoundWarningAudioSelectDecide.IsVisible           = systemSound.AudioSelectDecidePath           != "" && !File.Exists(systemSound.AbsoluteAudioSelectDecidePath);
+            IconFileNotFoundWarningAudioSelectPreviewSong.IsVisible      = systemSound.AudioSelectPreviewSongPath      != "" && !File.Exists(systemSound.AbsoluteAudioSelectPreviewSongPath);
+            IconFileNotFoundWarningAudioSelectStartSong.IsVisible        = systemSound.AudioSelectStartSongPath        != "" && !File.Exists(systemSound.AbsoluteAudioSelectStartSongPath);
+            IconFileNotFoundWarningAudioSelectStartSongAlt.IsVisible     = systemSound.AudioSelectStartSongAltPath     != "" && !File.Exists(systemSound.AbsoluteAudioSelectStartSongAltPath);
+            IconFileNotFoundWarningAudioFavoriteAdd.IsVisible            = systemSound.AudioFavoriteAddPath            != "" && !File.Exists(systemSound.AbsoluteAudioFavoriteAddPath);
+            IconFileNotFoundWarningAudioFavoriteRemove.IsVisible         = systemSound.AudioFavoriteRemovePath         != "" && !File.Exists(systemSound.AbsoluteAudioFavoriteRemovePath);
+            IconFileNotFoundWarningAudioLevelUpCount.IsVisible           = systemSound.AudioLevelUpCountPath           != "" && !File.Exists(systemSound.AbsoluteAudioLevelUpCountPath);
+            IconFileNotFoundWarningAudioLevelUpFinished.IsVisible        = systemSound.AudioLevelUpFinishedPath        != "" && !File.Exists(systemSound.AbsoluteAudioLevelUpFinishedPath);
+            IconFileNotFoundWarningAudioResultScoreCount.IsVisible       = systemSound.AudioResultScoreCountPath       != "" && !File.Exists(systemSound.AbsoluteAudioResultScoreCountPath);
+            IconFileNotFoundWarningAudioResultScoreFinished.IsVisible    = systemSound.AudioResultScoreFinishedPath    != "" && !File.Exists(systemSound.AbsoluteAudioResultScoreFinishedPath);
+            IconFileNotFoundWarningAudioResultRateBad.IsVisible          = systemSound.AudioResultRateBadPath          != "" && !File.Exists(systemSound.AbsoluteAudioResultRateBadPath);
+            IconFileNotFoundWarningAudioResultRateGood.IsVisible         = systemSound.AudioResultRateGoodPath         != "" && !File.Exists(systemSound.AbsoluteAudioResultRateGoodPath);
+            IconFileNotFoundWarningAudioRhythmGameReady.IsVisible        = systemSound.AudioRhythmGameReadyPath        != "" && !File.Exists(systemSound.AbsoluteAudioRhythmGameReadyPath);
+            IconFileNotFoundWarningAudioRhythmGameFail.IsVisible         = systemSound.AudioRhythmGameFailPath         != "" && !File.Exists(systemSound.AbsoluteAudioRhythmGameFailPath);
+            IconFileNotFoundWarningAudioRhythmGameClear.IsVisible        = systemSound.AudioRhythmGameClearPath        != "" && !File.Exists(systemSound.AbsoluteAudioRhythmGameClearPath);
+            IconFileNotFoundWarningAudioRhythmGameSpecialClear.IsVisible = systemSound.AudioRhythmGameSpecialClearPath != "" && !File.Exists(systemSound.AbsoluteAudioRhythmGameSpecialClearPath);
+            IconFileNotFoundWarningAudioTimerWarning.IsVisible           = systemSound.AudioTimerWarningPath           != "" && !File.Exists(systemSound.AbsoluteAudioTimerWarningPath);
+            IconFileNotFoundWarningAudioTextboxAppear.IsVisible          = systemSound.AudioTextboxAppearPath          != "" && !File.Exists(systemSound.AbsoluteAudioTextboxAppearPath);
+            IconFileNotFoundWarningAudioMessageAlert.IsVisible           = systemSound.AudioMessageAlertPath           != "" && !File.Exists(systemSound.AbsoluteAudioMessageAlertPath);
 
             blockEvents = false;
         });
@@ -129,6 +139,8 @@ public partial class SystemSoundEditorView : UserControl
         
         string oldValue = "";
         if      (textBox == TextBoxAudioLoginPath)                  { oldValue = systemSound.AudioLoginPath; }
+        else if (textBox == TextBoxAudioLoginCardSuccessPath)       { oldValue = systemSound.AudioLoginCardSuccessPath; }
+        else if (textBox == TextBoxAudioLoginCardErrorPath)         { oldValue = systemSound.AudioLoginCardErrorPath; }
         else if (textBox == TextBoxAudioCycleModePath)              { oldValue = systemSound.AudioCycleModePath; }
         else if (textBox == TextBoxAudioCycleFolderPath)            { oldValue = systemSound.AudioCycleFolderPath; }
         else if (textBox == TextBoxAudioCycleSongPath)              { oldValue = systemSound.AudioCycleSongPath; }
@@ -142,6 +154,8 @@ public partial class SystemSoundEditorView : UserControl
         else if (textBox == TextBoxAudioSelectStartSongAltPath)     { oldValue = systemSound.AudioSelectStartSongAltPath; }
         else if (textBox == TextBoxAudioFavoriteAddPath)            { oldValue = systemSound.AudioFavoriteAddPath; }
         else if (textBox == TextBoxAudioFavoriteRemovePath)         { oldValue = systemSound.AudioFavoriteRemovePath; }
+        else if (textBox == TextBoxAudioLevelUpCountPath)           { oldValue = systemSound.AudioLevelUpCountPath; }
+        else if (textBox == TextBoxAudioLevelUpFinishedPath)        { oldValue = systemSound.AudioLevelUpFinishedPath; }
         else if (textBox == TextBoxAudioResultScoreCountPath)       { oldValue = systemSound.AudioResultScoreCountPath; }
         else if (textBox == TextBoxAudioResultScoreFinishedPath)    { oldValue = systemSound.AudioResultScoreFinishedPath; }
         else if (textBox == TextBoxAudioResultRateBadPath)          { oldValue = systemSound.AudioResultRateBadPath; }
@@ -152,7 +166,8 @@ public partial class SystemSoundEditorView : UserControl
         else if (textBox == TextBoxAudioRhythmGameSpecialClearPath) { oldValue = systemSound.AudioRhythmGameSpecialClearPath; }
         else if (textBox == TextBoxAudioTimerWarningPath)           { oldValue = systemSound.AudioTimerWarningPath; }
         else if (textBox == TextBoxAudioTextboxAppearPath)          { oldValue = systemSound.AudioTextboxAppearPath; }
-
+        else if (textBox == TextBoxAudioMessageAlertPath)           { oldValue = systemSound.AudioMessageAlertPath; }
+        
         string newValue = textBox.Text ?? "";
         if (oldValue == newValue)
         {
@@ -163,6 +178,8 @@ public partial class SystemSoundEditorView : UserControl
 
         Action<string>? action = null;
         if      (textBox == TextBoxAudioLoginPath)                  { action = value => { systemSound.AudioLoginPath = value; }; }
+        else if (textBox == TextBoxAudioLoginCardSuccessPath)       { action = value => { systemSound.AudioLoginCardSuccessPath = value; }; }
+        else if (textBox == TextBoxAudioLoginCardErrorPath)         { action = value => { systemSound.AudioLoginCardErrorPath = value; }; }
         else if (textBox == TextBoxAudioCycleModePath)              { action = value => { systemSound.AudioCycleModePath = value; }; }
         else if (textBox == TextBoxAudioCycleFolderPath)            { action = value => { systemSound.AudioCycleFolderPath = value; }; }
         else if (textBox == TextBoxAudioCycleSongPath)              { action = value => { systemSound.AudioCycleSongPath = value; }; }
@@ -176,6 +193,8 @@ public partial class SystemSoundEditorView : UserControl
         else if (textBox == TextBoxAudioSelectStartSongAltPath)     { action = value => { systemSound.AudioSelectStartSongAltPath = value; }; }
         else if (textBox == TextBoxAudioFavoriteAddPath)            { action = value => { systemSound.AudioFavoriteAddPath = value; }; }
         else if (textBox == TextBoxAudioFavoriteRemovePath)         { action = value => { systemSound.AudioFavoriteRemovePath = value; }; }
+        else if (textBox == TextBoxAudioLevelUpCountPath)           { action = value => { systemSound.AudioLevelUpCountPath = value; }; }
+        else if (textBox == TextBoxAudioLevelUpFinishedPath)        { action = value => { systemSound.AudioLevelUpFinishedPath = value; }; }
         else if (textBox == TextBoxAudioResultScoreCountPath)       { action = value => { systemSound.AudioResultScoreCountPath = value; }; }
         else if (textBox == TextBoxAudioResultScoreFinishedPath)    { action = value => { systemSound.AudioResultScoreFinishedPath = value; }; }
         else if (textBox == TextBoxAudioResultRateBadPath)          { action = value => { systemSound.AudioResultRateBadPath = value; }; }
@@ -186,7 +205,7 @@ public partial class SystemSoundEditorView : UserControl
         else if (textBox == TextBoxAudioRhythmGameSpecialClearPath) { action = value => { systemSound.AudioRhythmGameSpecialClearPath = value; }; }
         else if (textBox == TextBoxAudioTimerWarningPath)           { action = value => { systemSound.AudioTimerWarningPath = value; }; }
         else if (textBox == TextBoxAudioTextboxAppearPath)          { action = value => { systemSound.AudioTextboxAppearPath = value; }; }
-
+        else if (textBox == TextBoxAudioMessageAlertPath)           { action = value => { systemSound.AudioMessageAlertPath = value; }; }
         if (action == null) return;
 
         UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(action, oldValue, newValue));
@@ -207,123 +226,148 @@ public partial class SystemSoundEditorView : UserControl
             string? oldLocalPath = null;
             if (button == ButtonAudioLoginPath)
             {
-                oldAbsolutePath = systemSound.AudioLoginPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioLoginPath;
                 oldLocalPath = systemSound.AudioLoginPath;
+            }
+            else if (button == ButtonAudioLoginCardSuccessPath)
+            {
+                oldAbsolutePath = systemSound.AbsoluteAudioLoginCardSuccessPath;
+                oldLocalPath = systemSound.AudioLoginCardSuccessPath;
+            }
+            else if (button == ButtonAudioLoginCardErrorPath)
+            {
+                oldAbsolutePath = systemSound.AbsoluteAudioLoginCardErrorPath;
+                oldLocalPath = systemSound.AudioLoginCardErrorPath;
             }
             else if (button == ButtonAudioCycleModePath)
             {
-                oldAbsolutePath = systemSound.AudioCycleModePath;
+                oldAbsolutePath = systemSound.AbsoluteAudioCycleModePath;
                 oldLocalPath = systemSound.AudioCycleModePath;
             }
             else if (button == ButtonAudioCycleFolderPath)
             {
-                oldAbsolutePath = systemSound.AudioCycleFolderPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioCycleFolderPath;
                 oldLocalPath = systemSound.AudioCycleFolderPath;
             }
             else if (button == ButtonAudioCycleSongPath)
             {
-                oldAbsolutePath = systemSound.AudioCycleSongPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioCycleSongPath;
                 oldLocalPath = systemSound.AudioCycleSongPath;
             }
             else if (button == ButtonAudioCycleOptionPath)
             {
-                oldAbsolutePath = systemSound.AudioCycleOptionPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioCycleOptionPath;
                 oldLocalPath = systemSound.AudioCycleOptionPath;
             }
             else if (button == ButtonAudioSelectOkPath)
             {
-                oldAbsolutePath = systemSound.AudioSelectOkPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioSelectOkPath;
                 oldLocalPath = systemSound.AudioSelectOkPath;
             }
             else if (button == ButtonAudioSelectBackPath)
             {
-                oldAbsolutePath = systemSound.AudioSelectBackPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioSelectBackPath;
                 oldLocalPath = systemSound.AudioSelectBackPath;
             }
             else if (button == ButtonAudioSelectDeniedPath)
             {
-                oldAbsolutePath = systemSound.AudioSelectDeniedPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioSelectDeniedPath;
                 oldLocalPath = systemSound.AudioSelectDeniedPath;
             }
             else if (button == ButtonAudioSelectDecidePath)
             {
-                oldAbsolutePath = systemSound.AudioSelectDecidePath;
+                oldAbsolutePath = systemSound.AbsoluteAudioSelectDecidePath;
                 oldLocalPath = systemSound.AudioSelectDecidePath;
             }
             else if (button == ButtonAudioSelectPreviewSongPath)
             {
-                oldAbsolutePath = systemSound.AudioSelectPreviewSongPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioSelectPreviewSongPath;
                 oldLocalPath = systemSound.AudioSelectPreviewSongPath;
             }
             else if (button == ButtonAudioSelectStartSongPath)
             {
-                oldAbsolutePath = systemSound.AudioSelectStartSongPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioSelectStartSongPath;
                 oldLocalPath = systemSound.AudioSelectStartSongPath;
             }
             else if (button == ButtonAudioSelectStartSongAltPath)
             {
-                oldAbsolutePath = systemSound.AudioSelectStartSongAltPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioSelectStartSongAltPath;
                 oldLocalPath = systemSound.AudioSelectStartSongAltPath;
             }
             else if (button == ButtonAudioFavoriteAddPath)
             {
-                oldAbsolutePath = systemSound.AudioFavoriteAddPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioFavoriteAddPath;
                 oldLocalPath = systemSound.AudioFavoriteAddPath;
             }
             else if (button == ButtonAudioFavoriteRemovePath)
             {
-                oldAbsolutePath = systemSound.AudioFavoriteRemovePath;
+                oldAbsolutePath = systemSound.AbsoluteAudioFavoriteRemovePath;
                 oldLocalPath = systemSound.AudioFavoriteRemovePath;
+            }
+            else if (button == ButtonAudioLevelUpCountPath)
+            {
+                oldAbsolutePath = systemSound.AbsoluteAudioLevelUpCountPath;
+                oldLocalPath = systemSound.AudioLevelUpCountPath;
+            }
+            else if (button == ButtonAudioLevelUpFinishedPath)
+            {
+                oldAbsolutePath = systemSound.AbsoluteAudioLevelUpFinishedPath;
+                oldLocalPath = systemSound.AudioLevelUpFinishedPath;
             }
             else if (button == ButtonAudioResultScoreCountPath)
             {
-                oldAbsolutePath = systemSound.AudioResultScoreCountPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioResultScoreCountPath;
                 oldLocalPath = systemSound.AudioResultScoreCountPath;
             }
             else if (button == ButtonAudioResultScoreFinishedPath)
             {
-                oldAbsolutePath = systemSound.AudioResultScoreFinishedPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioResultScoreFinishedPath;
                 oldLocalPath = systemSound.AudioResultScoreFinishedPath;
             }
             else if (button == ButtonAudioResultRateBadPath)
             {
-                oldAbsolutePath = systemSound.AudioResultRateBadPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioResultRateBadPath;
                 oldLocalPath = systemSound.AudioResultRateBadPath;
             }
             else if (button == ButtonAudioResultRateGoodPath)
             {
-                oldAbsolutePath = systemSound.AudioResultRateGoodPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioResultRateGoodPath;
                 oldLocalPath = systemSound.AudioResultRateGoodPath;
             }
             else if (button == ButtonAudioRhythmGameReadyPath)
             {
-                oldAbsolutePath = systemSound.AudioRhythmGameReadyPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioRhythmGameReadyPath;
                 oldLocalPath = systemSound.AudioRhythmGameReadyPath;
             }
             else if (button == ButtonAudioRhythmGameFailPath)
             {
-                oldAbsolutePath = systemSound.AudioRhythmGameFailPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioRhythmGameFailPath;
                 oldLocalPath = systemSound.AudioRhythmGameFailPath;
             }
             else if (button == ButtonAudioRhythmGameClearPath)
             {
-                oldAbsolutePath = systemSound.AudioRhythmGameClearPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioRhythmGameClearPath;
                 oldLocalPath = systemSound.AudioRhythmGameClearPath;
             }
             else if (button == ButtonAudioRhythmGameSpecialClearPath)
             {
-                oldAbsolutePath = systemSound.AudioRhythmGameSpecialClearPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioRhythmGameSpecialClearPath;
                 oldLocalPath = systemSound.AudioRhythmGameSpecialClearPath;
             }
             else if (button == ButtonAudioTimerWarningPath)
             {
-                oldAbsolutePath = systemSound.AudioTimerWarningPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioTimerWarningPath;
                 oldLocalPath = systemSound.AudioTimerWarningPath;
             }
             else if (button == ButtonAudioTextboxAppearPath)
             {
-                oldAbsolutePath = systemSound.AudioTextboxAppearPath;
+                oldAbsolutePath = systemSound.AbsoluteAudioTextboxAppearPath;
                 oldLocalPath = systemSound.AudioTextboxAppearPath;
+            }
+            else if (button == ButtonAudioTextboxAppearPath)
+            {
+                oldAbsolutePath = systemSound.AbsoluteAudioMessageAlertPath;
+                oldLocalPath = systemSound.AudioMessageAlertPath;
             }
 
             if (oldAbsolutePath == null) return;
@@ -352,6 +396,8 @@ public partial class SystemSoundEditorView : UserControl
 
             Action<string>? action = null;
             if (button == ButtonAudioLoginPath)                       { action = value => { systemSound.AudioLoginPath = value; }; }
+            else if (button == ButtonAudioLoginCardSuccessPath)       { action = value => { systemSound.AudioLoginCardSuccessPath = value; }; }
+            else if (button == ButtonAudioLoginCardErrorPath)         { action = value => { systemSound.AudioLoginCardErrorPath = value; }; }
             else if (button == ButtonAudioCycleModePath)              { action = value => { systemSound.AudioCycleModePath = value; }; }
             else if (button == ButtonAudioCycleFolderPath)            { action = value => { systemSound.AudioCycleFolderPath = value; }; }
             else if (button == ButtonAudioCycleSongPath)              { action = value => { systemSound.AudioCycleSongPath = value; }; }
@@ -365,6 +411,8 @@ public partial class SystemSoundEditorView : UserControl
             else if (button == ButtonAudioSelectStartSongAltPath)     { action = value => { systemSound.AudioSelectStartSongAltPath = value; }; }
             else if (button == ButtonAudioFavoriteAddPath)            { action = value => { systemSound.AudioFavoriteAddPath = value; }; }
             else if (button == ButtonAudioFavoriteRemovePath)         { action = value => { systemSound.AudioFavoriteRemovePath = value; }; }
+            else if (button == ButtonAudioLevelUpCountPath)           { action = value => { systemSound.AudioLevelUpCountPath = value; }; }
+            else if (button == ButtonAudioLevelUpFinishedPath)        { action = value => { systemSound.AudioLevelUpFinishedPath = value; }; }
             else if (button == ButtonAudioResultScoreCountPath)       { action = value => { systemSound.AudioResultScoreCountPath = value; }; }
             else if (button == ButtonAudioResultScoreFinishedPath)    { action = value => { systemSound.AudioResultScoreFinishedPath = value; }; }
             else if (button == ButtonAudioResultRateBadPath)          { action = value => { systemSound.AudioResultRateBadPath = value; }; }
@@ -375,7 +423,8 @@ public partial class SystemSoundEditorView : UserControl
             else if (button == ButtonAudioRhythmGameSpecialClearPath) { action = value => { systemSound.AudioRhythmGameSpecialClearPath = value; }; }
             else if (button == ButtonAudioTimerWarningPath)           { action = value => { systemSound.AudioTimerWarningPath = value; }; }
             else if (button == ButtonAudioTextboxAppearPath)          { action = value => { systemSound.AudioTextboxAppearPath = value; }; }
-
+            else if (button == ButtonAudioMessageAlertPath)           { action = value => { systemSound.AudioMessageAlertPath = value; }; }
+            
             if (action == null) return;
             
             if (systemSound.AbsoluteSourcePath == "")

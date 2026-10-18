@@ -488,7 +488,8 @@
     <system:String x:Key="CosmeticEditor.NoteSound.Property.Hold">Hold</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.ReHold">Re-Hold</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.Chain">Chain</system:String>
-    <system:String x:Key="CosmeticEditor.NoteSound.Property.Bonus">Bonus Effect</system:String>
+    <system:String x:Key="CosmeticEditor.NoteSound.Property.BonusMarvelous">Bonus Effect (MARVELOUS)</system:String>
+    <system:String x:Key="CosmeticEditor.NoteSound.Property.BonusGreat">Bonus Effect (GREAT/GOOD)</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.R">R-Note Effect</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.HoldLoopStartTime">Hold Loop Start</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.HoldLoopEndTime">Hold Loop End</system:String>
@@ -502,6 +503,8 @@
     <system:String x:Key="CosmeticEditor.SystemMusic.Property.AudioStageUpSecretPath">Stage-Up Secret Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemMusic.Property.AudioSeeYouPath">See-You Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioLoginPath">Login Audio Path</system:String>
+    <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioLoginCardSuccessPath">Login Card Success Audio Path</system:String>
+    <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioLoginCardErrorPath">Login Card Error Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioCycleModePath">Cycle Mode Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioCycleFolderPath">Cycle Folder Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioCycleSongPath">Cycle Song Audio Path</system:String>
@@ -515,6 +518,8 @@
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioSelectStartSongAltPath">Select Start Song Alt Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioFavoriteAddPath">Favorite Add Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioFavoriteRemovePath">Favorite Remove Audio Path</system:String>
+    <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioLevelUpCountPath">Level Up Count Audio Path</system:String>
+    <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioLevelUpFinishedPath">Level Up Finished Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioResultScoreCountPath">Result Score Count Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioResultScoreFinishedPath">Result Score Finished Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioResultRateBadPath">Result Rate Bad Audio Path</system:String>
@@ -525,6 +530,7 @@
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioRhythmGameSpecialClearPath">Rhythm Game Special Clear Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioTimerWarningPath">Timer Warning Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioTextboxAppearPath">Textbox Appear Audio Path</system:String>
+    <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioMessageAlertPath">Message Alert Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.Title.Property.Message">Title Message</system:String>
     <system:String x:Key="Main.Window.Title">SATURN EDIT — Main Window</system:String>
     <system:String x:Key="Main.ToolTip.Update">Update Available!</system:String>
