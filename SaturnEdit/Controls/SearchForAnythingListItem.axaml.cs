@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml.MarkupExtensions;
-using SaturnEdit.Systems;
+using SaturnEdit.Settings;
 
 namespace SaturnEdit.Controls;
 

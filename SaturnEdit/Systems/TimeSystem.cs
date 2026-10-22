@@ -5,6 +5,7 @@ using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
+using SaturnEdit.Settings;
 
 namespace SaturnEdit.Systems;
 

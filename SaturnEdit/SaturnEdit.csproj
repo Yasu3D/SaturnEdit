@@ -35,6 +35,7 @@
         <PackageReference Include="SkiaSharp" Version="4.151.1" />
         <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="4.151.1" />
         <PackageReference Include="Svg.Controls.Avalonia" Version="11.3.6.2" />
+        <PackageReference Include="Tmds.DBus.Protocol" Version="0.95.1" />
         <PackageReference Include="Tomlyn" Version="2.3.0" />
     </ItemGroup>
 

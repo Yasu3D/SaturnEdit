@@ -1520,7 +1520,7 @@
             <Grid Grid.Column="4"
                   RowDefinitions="40,*,31">
                 <TextBlock Grid.Row="0"
-                           Text="{DynamicResource CosmeticEditor.Navigator.List.Variants}"
+                           Text="{DynamicResource CosmeticEditor.Navigator.List.Lines}"
                            FontWeight="Regular"
                            Margin="10" />
 
@@ -1533,7 +1533,7 @@
                             CornerRadius="3"
                             Width="22"
                             Height="22"
-                            Click="ButtonDeleteVariant_OnClick">
+                            Click="ButtonDeleteLine_OnClick">
                         <icon:FluentIcon Icon="Delete"
                                          FontSize="16" />
                         <ToolTip.Tip>
@@ -1545,7 +1545,7 @@
                             CornerRadius="3"
                             Width="22"
                             Height="22"
-                            Click="ButtonAddVariant_OnClick">
+                            Click="ButtonAddLine_OnClick">
                         <icon:FluentIcon Icon="Add"
                                          FontSize="16" />
                         <ToolTip.Tip>
@@ -1555,10 +1555,10 @@
                 </StackPanel>
 
                 <ScrollViewer Grid.Row="1">
-                    <ListBox Name="ListBoxVariants"
+                    <ListBox Name="ListBoxLines"
                              Background="{DynamicResource BackgroundSecondary}"
                              SelectionMode="Single"
-                             SelectionChanged="ListBoxVariants_OnSelectionChanged"/>
+                             SelectionChanged="ListBoxLines_OnSelectionChanged"/>
                 </ScrollViewer>
 
                 <Border Grid.Row="2"

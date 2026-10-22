@@ -12,6 +12,7 @@ using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
 using SaturnData.Utilities;
+using SaturnEdit.Settings;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 using SaturnEdit.Windows.Dialogs.ModalDialog;
@@ -300,10 +301,10 @@ public partial class CosmeticsEditorView : UserControl
          
             GroupNavigator.IsVisible = true;
             
-            PanelNavigatorContainer.Width = navigator.Width * scale;
-            PanelNavigatorContainer.Height = navigator.Height * scale;
+            PanelNavigatorContainer.Width = navigator.Size.Width * scale;
+            PanelNavigatorContainer.Height = navigator.Size.Height * scale;
 
-            ImageNavigatorFace.Margin = new(navigator.FaceMarginLeft * scale, navigator.FaceMarginTop * scale, navigator.FaceMarginRight * scale, navigator.FaceMarginBottom * scale);
+            ImageNavigatorFace.Margin = new(navigator.FaceMargin.Left * scale, navigator.FaceMargin.Top * scale, navigator.FaceMargin.Right * scale, navigator.FaceMargin.Bottom * scale);
             ImageNavigatorBody.Source = NavigatorTextures.GetValueOrDefault(navigator.AbsoluteTexturePath("body"));
         });
     }

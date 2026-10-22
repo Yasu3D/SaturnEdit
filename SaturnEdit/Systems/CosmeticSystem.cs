@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using SaturnData.Content.Cosmetics;
-using SaturnData.Content.Cosmetics.Items;
+using SaturnData.Content.Cosmetics.NavigatorData;
 using SaturnData.Content.Items;
 using SaturnData.Content.Serialization;
 using ConsoleColor = SaturnData.Content.Cosmetics.ConsoleColor;
@@ -39,17 +39,17 @@ public static class CosmeticSystem
     /// <summary>
     /// The selected <see cref="NavigatorDialogueLanguage"/> if <see cref="CosmeticItem"/> is of type <see cref="Navigator"/>, otherwise <c>null</c>.
     /// </summary>
-    public static NavigatorDialogueLanguage? SelectedNavigatorDialogueLanguage { get; set; } = null;
+    public static NavigatorLanguage? SelectedNavigatorLanguage { get; set; } = null;
 
     /// <summary>
     /// The selected <see cref="NavigatorDialogueVariantCollection"/> if <see cref="CosmeticItem"/> is of type <see cref="Navigator"/>, otherwise <c>null</c>.
     /// </summary>
-    public static NavigatorDialogueVariantCollection? SelectedNavigatorDialogueVariantCollection { get; set; } = null;
+    public static NavigatorDialogue? SelectedNavigatorDialogue { get; set; } = null;
 
     /// <summary>
     /// The selected <see cref="NavigatorDialogue"/> if <see cref="CosmeticItem"/> is of type <see cref="Navigator"/>, otherwise <c>null</c>.
     /// </summary>
-    public static NavigatorDialogue? SelectedNavigatorDialogue { get; set; } = null;
+    public static NavigatorLine? SelectedNavigatorLine { get; set; } = null;
 
     /// <summary>
     /// Determines if the editor will prompt the user to save when a cosmetic is closed.
@@ -80,9 +80,9 @@ public static class CosmeticSystem
         
         CosmeticItem.Id = Guid.NewGuid().ToString();
         
-        SelectedNavigatorDialogueLanguage = null;
-        SelectedNavigatorDialogueVariantCollection = null;
+        SelectedNavigatorLanguage = null;
         SelectedNavigatorDialogue = null;
+        SelectedNavigatorLine = null;
         
         CosmeticLoaded?.Invoke(null, EventArgs.Empty);
         
@@ -98,15 +98,32 @@ public static class CosmeticSystem
     {
         try
         {
-            ContentItem? tempContentItem = ContentSerializer.ToContentItem(path);
+            string[] data = File.ReadAllLines(path);
+            string type = ContentSerializer.DetectType(data);
+
+            ContentItem? tempContentItem = type switch
+            {
+                "ConsoleColor" => ContentSerializer.ToContentItem<ConsoleColor>(data),
+                "Emblem" => ContentSerializer.ToContentItem<Emblem>(data),
+                "Icon" => ContentSerializer.ToContentItem<Icon>(data),
+                "JudgementLineColor" => ContentSerializer.ToContentItem<JudgementLineColor>(data),
+                "Navigator" => ContentSerializer.ToContentItem<Navigator>(data),
+                "NoteSound" => ContentSerializer.ToContentItem<NoteSound>(data),
+                "Plate" => ContentSerializer.ToContentItem<Plate>(data),
+                "SystemMusic" => ContentSerializer.ToContentItem<SystemMusic>(data),
+                "SystemSound" => ContentSerializer.ToContentItem<SystemSound>(data),
+                "Title" => ContentSerializer.ToContentItem<Title>(data),
+                _ => null,
+            }; 
+            
             if (tempContentItem is not CosmeticItem c) return;
             
             CosmeticItem = c;
             CosmeticItem.AbsoluteSourcePath = path;
             
-            SelectedNavigatorDialogueLanguage = null;
-            SelectedNavigatorDialogueVariantCollection = null;
+            SelectedNavigatorLanguage = null;
             SelectedNavigatorDialogue = null;
+            SelectedNavigatorLine = null;
             
             CosmeticLoaded?.Invoke(null, EventArgs.Empty);
             
@@ -129,8 +146,7 @@ public static class CosmeticSystem
     {
         try
         {
-            string data = ContentSerializer.ToString(CosmeticItem);
-            File.WriteAllText(path, data);
+            ContentSerializer.ToFile(path, CosmeticItem);
         }
         catch (Exception ex)
         {

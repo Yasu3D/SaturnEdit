@@ -7,6 +7,7 @@ using Avalonia.Interactivity;
 using Avalonia.Threading;
 using SaturnData.Notation.Core;
 using SaturnEdit.Controls;
+using SaturnEdit.Settings;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;

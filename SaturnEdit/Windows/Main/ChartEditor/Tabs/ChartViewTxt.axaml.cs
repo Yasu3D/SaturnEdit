@@ -6,8 +6,8 @@ using TextMateSharp.Grammars;
 using AvaloniaEdit.TextMate;
 using System.IO;
 using Avalonia.Threading;
-using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
+using SaturnEdit.Settings;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 

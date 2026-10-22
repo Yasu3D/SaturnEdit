@@ -16,6 +16,7 @@ using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnData.Notation.Serialization;
 using SaturnEdit.Docking;
+using SaturnEdit.Settings;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;

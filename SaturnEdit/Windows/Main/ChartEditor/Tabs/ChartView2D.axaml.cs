@@ -13,6 +13,7 @@ using SaturnData.Notation.Events;
 using SaturnData.Notation.Interfaces;
 using SaturnData.Notation.Notes;
 using SaturnData.Utilities;
+using SaturnEdit.Settings;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;

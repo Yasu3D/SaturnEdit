@@ -13,6 +13,7 @@ using SaturnData.Notation.Core;
 using SaturnData.Notation.Events;
 using SaturnEdit.Audio;
 using SaturnEdit.Controls;
+using SaturnEdit.Settings;
 using SaturnEdit.Systems;
 using SaturnView;
 using SkiaSharp;

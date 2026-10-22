@@ -5,6 +5,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
+using SaturnEdit.Settings;
 using SaturnEdit.Systems;
 
 namespace SaturnEdit;

@@ -1,9 +1,11 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using SaturnData.Content.Serialization;
+using SaturnEdit.Settings;
 using SaturnEdit.Systems;
 using SaturnEdit.Windows.Dialogs.Settings.Tabs;
 using SaturnView;
-using Tomlyn;
 
 namespace SaturnEdit.Windows.Dialogs;
 
@@ -15,10 +17,10 @@ public partial class SettingsWindow : Window
 
         // Lazily deep-copy settings when window opens to keep a backup.
         // This backup is used when the user clicks "cancel" to restore all settings back to before they were changed.
-        renderSettingsBackup   = TomlSerializer.Serialize(SettingsSystem.RenderSettings);
-        editorSettingsBackup   = TomlSerializer.Serialize(SettingsSystem.EditorSettings);
-        audioSettingsBackup    = TomlSerializer.Serialize(SettingsSystem.AudioSettings);
-        shortcutSettingsBackup = TomlSerializer.Serialize(SettingsSystem.ShortcutSettings);
+        renderSettingsBackup   = ContentSerializer.ToString(SettingsSystem.RenderSettings);
+        editorSettingsBackup   = ContentSerializer.ToString(SettingsSystem.EditorSettings);
+        audioSettingsBackup    = ContentSerializer.ToString(SettingsSystem.AudioSettings);
+        shortcutSettingsBackup = ContentSerializer.ToString(SettingsSystem.ShortcutSettings);
         
         SettingsTabContainer.Content = settingsGeneralView;
     }
@@ -87,10 +89,18 @@ public partial class SettingsWindow : Window
         if (!saveSettings)
         {
             // Restore settings from backups.
-            SettingsSystem.RenderSettings   = TomlSerializer.Deserialize<RenderSettings>(renderSettingsBackup) ?? SettingsSystem.RenderSettings;
-            SettingsSystem.EditorSettings   = TomlSerializer.Deserialize<EditorSettings>(editorSettingsBackup) ?? SettingsSystem.EditorSettings;
-            SettingsSystem.AudioSettings    = TomlSerializer.Deserialize<AudioSettings>(audioSettingsBackup) ?? SettingsSystem.AudioSettings;
-            SettingsSystem.ShortcutSettings = TomlSerializer.Deserialize<ShortcutSettings>(shortcutSettingsBackup) ?? SettingsSystem.ShortcutSettings;
+            string[] split = new[] { "\r\n", "\r", "\n" };
+            string[] data = renderSettingsBackup.Split(split, StringSplitOptions.None);
+            SettingsSystem.RenderSettings = ContentSerializer.ToContentItem<RenderSettings>(data) ?? SettingsSystem.RenderSettings;
+            
+            data = editorSettingsBackup.Split(split, StringSplitOptions.None);
+            SettingsSystem.EditorSettings = ContentSerializer.ToContentItem<EditorSettings>(data) ?? SettingsSystem.EditorSettings;
+            
+            data = audioSettingsBackup.Split(split, StringSplitOptions.None);
+            SettingsSystem.AudioSettings = ContentSerializer.ToContentItem<AudioSettings>(data) ?? SettingsSystem.AudioSettings;
+            
+            data = shortcutSettingsBackup.Split(split, StringSplitOptions.None);
+            SettingsSystem.ShortcutSettings = ContentSerializer.ToContentItem<ShortcutSettings>(data) ?? SettingsSystem.ShortcutSettings;
         }
     }
 #endregion UI Event Handlers

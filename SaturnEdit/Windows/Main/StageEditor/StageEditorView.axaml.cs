@@ -14,6 +14,7 @@ using SaturnData.Content.StageUp;
 using SaturnData.Notation.Core;
 using SaturnData.Notation.Serialization;
 using SaturnData.Utilities;
+using SaturnEdit.Settings;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;

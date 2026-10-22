@@ -7,6 +7,7 @@ using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Media;
 using Avalonia.Threading;
 using SaturnEdit.Controls;
+using SaturnEdit.Settings;
 using SaturnEdit.Systems;
 using SaturnEdit.Utilities;
 

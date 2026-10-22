@@ -1,28 +1,29 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using SaturnData.Content.Cosmetics;
+using SaturnData.Content.Cosmetics.NavigatorData;
 using SaturnEdit.Systems;
 using SaturnEdit.UndoRedo;
 using SaturnEdit.UndoRedo.GenericOperations;
 
 namespace SaturnEdit.Controls;
 
-public partial class NavigatorDialogueLanguageItem : UserControl
+public partial class NavigatorLanguageItem : UserControl
 {
-    public NavigatorDialogueLanguageItem()
+    public NavigatorLanguageItem()
     {
         InitializeComponent();
     }
 
-    public NavigatorDialogueLanguage? NavigatorDialogueLanguage { get; private set; } = null;
+    public NavigatorLanguage? NavigatorLanguage { get; private set; } = null;
     public string? Key { get; set; } = null;
 
     private bool blockEvents = false;
 
 #region Methods
-    public void SetItem(NavigatorDialogueLanguage item, string key)
+    public void SetItem(NavigatorLanguage item, string key)
     {
-        NavigatorDialogueLanguage = item;
+        NavigatorLanguage = item;
         Key = key;
         
         blockEvents = true;
@@ -38,7 +39,7 @@ public partial class NavigatorDialogueLanguageItem : UserControl
     {
         if (blockEvents) return;
         if (TextBoxLocaleKey == null) return;
-        if (NavigatorDialogueLanguage == null) return;
+        if (NavigatorLanguage == null) return;
         if (Key == null) return;
         if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
 
@@ -47,8 +48,8 @@ public partial class NavigatorDialogueLanguageItem : UserControl
         
         if (oldValue == newValue) return;
 
-        DictionaryRemoveOperation<string, NavigatorDialogueLanguage> op0 = new(() => navigator.DialogueLanguages, oldValue, NavigatorDialogueLanguage);
-        DictionaryAddOperation<string, NavigatorDialogueLanguage> op1 = new(() => navigator.DialogueLanguages, newValue, NavigatorDialogueLanguage);
+        DictionaryRemoveOperation<string, NavigatorLanguage> op0 = new(() => navigator.Writing.Languages, oldValue, NavigatorLanguage);
+        DictionaryAddOperation<string, NavigatorLanguage> op1 = new(() => navigator.Writing.Languages, newValue, NavigatorLanguage);
         
         UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
     }

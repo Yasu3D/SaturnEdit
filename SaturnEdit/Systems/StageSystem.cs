@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using SaturnData.Content.Items;
 using SaturnData.Content.Lists;
 using SaturnData.Content.Serialization;
 using SaturnData.Content.StageUp;
@@ -52,10 +51,10 @@ public static class StageSystem
     {
         try
         {
-            ContentItem? tempContentItem = ContentSerializer.ToContentItem(path);
-            if (tempContentItem is not StageUpStage s) return;
+            StageUpStage? stageUpStage = ContentSerializer.ToContentItem<StageUpStage>(path);
+            if (stageUpStage == null) return;
             
-            StageUpStage = s;
+            StageUpStage = stageUpStage;
             StageUpStage.AbsoluteSourcePath = path;
             
             StageLoaded?.Invoke(null, EventArgs.Empty);

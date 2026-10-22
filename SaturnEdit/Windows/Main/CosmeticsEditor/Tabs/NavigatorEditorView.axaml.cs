@@ -8,6 +8,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SaturnData.Content.Cosmetics;
+using SaturnData.Content.Cosmetics.NavigatorData;
 using SaturnData.Utilities;
 using SaturnEdit.Controls;
 using SaturnEdit.Systems;
@@ -37,14 +38,14 @@ public partial class NavigatorEditorView : UserControl
             TextBoxImageArtist.Text = navigator.Artist;
             TextBoxAudioArtist.Text = navigator.Voice;
             
-            TextBoxWidth.Text = navigator.Width.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxHeight.Text = navigator.Height.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxOffsetX.Text = navigator.OffsetX.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxOffsetY.Text = navigator.OffsetY.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxFaceMarginTop.Text = navigator.FaceMarginTop.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxFaceMarginBottom.Text = navigator.FaceMarginBottom.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxFaceMarginLeft.Text = navigator.FaceMarginLeft.ToString("0.000000", CultureInfo.InvariantCulture);
-            TextBoxFaceMarginRight.Text = navigator.FaceMarginRight.ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxWidth.Text = navigator.Size.Width.ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxHeight.Text = navigator.Size.Height.ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxOffsetX.Text = navigator.Offset.Horizontal.ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxOffsetY.Text = navigator.Offset.Vertical.ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxFaceMarginTop.Text = navigator.FaceMargin.Top.ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxFaceMarginBottom.Text = navigator.FaceMargin.Bottom.ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxFaceMarginLeft.Text = navigator.FaceMargin.Left.ToString("0.000000", CultureInfo.InvariantCulture);
+            TextBoxFaceMarginRight.Text = navigator.FaceMargin.Right.ToString("0.000000", CultureInfo.InvariantCulture);
             TextBoxBlinkInterval.Text = (0.001f * navigator.BlinkAnimationInterval).ToString("0.000000", CultureInfo.InvariantCulture);
             TextBoxBlinkDuration.Text = (0.001f * navigator.BlinkAnimationDuration).ToString("0.000000", CultureInfo.InvariantCulture);
             
@@ -114,24 +115,24 @@ public partial class NavigatorEditorView : UserControl
             IconFileNotFoundWarningSeeYouBPath.IsVisible        = TextBoxTextureSeeYouBPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("see_you_b"));
             IconFileNotFoundWarningSeeYouCPath.IsVisible        = TextBoxTextureSeeYouCPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("see_you_c"));
             
-            List<KeyValuePair<string, NavigatorDialogueLanguage>> languages = navigator.DialogueLanguages.ToList();
+            List<KeyValuePair<string, NavigatorLanguage>> languages = navigator.Writing.Languages.ToList();
             
             // Update existing language items
             for (int i = 0; i < languages.Count; i++)
             {
-                KeyValuePair<string, NavigatorDialogueLanguage> language = languages[i];
+                KeyValuePair<string, NavigatorLanguage> language = languages[i];
                 
                 if (i < ListBoxLanguages.Items.Count)
                 {
                     // Modify existing item.
-                    if (ListBoxLanguages.Items[i] is not NavigatorDialogueLanguageItem item) continue;
+                    if (ListBoxLanguages.Items[i] is not NavigatorLanguageItem item) continue;
 
                     item.SetItem(language.Value, language.Key);
                 }
                 else
                 {
                     // Create new item.
-                    NavigatorDialogueLanguageItem item = new();
+                    NavigatorLanguageItem item = new();
                     item.SetItem(language.Value, language.Key);
                     
                     ListBoxLanguages.Items.Add(item);
@@ -141,7 +142,7 @@ public partial class NavigatorEditorView : UserControl
             // Delete redundant language items.
             for (int i = ListBoxLanguages.Items.Count - 1; i >= languages.Count; i--)
             {
-                if (ListBoxLanguages.Items[i] is not NavigatorDialogueLanguageItem item) continue;
+                if (ListBoxLanguages.Items[i] is not NavigatorLanguageItem item) continue;
 
                 ListBoxLanguages.Items.Remove(item);
             }
@@ -149,100 +150,50 @@ public partial class NavigatorEditorView : UserControl
             // Set language selection.
             ListBoxLanguages.SelectedItem = ListBoxLanguages.Items.FirstOrDefault(x =>
             {
-                if (x is not NavigatorDialogueLanguageItem item) return false;
-                if (item.NavigatorDialogueLanguage == null) return false;
-                if (item.NavigatorDialogueLanguage != CosmeticSystem.SelectedNavigatorDialogueLanguage) return false;
+                if (x is not NavigatorLanguageItem item) return false;
+                if (item.NavigatorLanguage == null) return false;
+                if (item.NavigatorLanguage != CosmeticSystem.SelectedNavigatorLanguage) return false;
 
                 return true;
             });
 
 
-            if (CosmeticSystem.SelectedNavigatorDialogueLanguage != null)
+            if (CosmeticSystem.SelectedNavigatorLanguage != null)
             {
-                List<KeyValuePair<string, NavigatorDialogueVariantCollection>> variantCollections = CosmeticSystem.SelectedNavigatorDialogueLanguage.Dialogues.ToList();
+                List<KeyValuePair<string, NavigatorDialogue>> lineCollections = CosmeticSystem.SelectedNavigatorLanguage.Dialogues.ToList();
 
                 // Update existing dialogue items
-                for (int i = 0; i < variantCollections.Count; i++)
+                for (int i = 0; i < lineCollections.Count; i++)
                 {
-                    KeyValuePair<string, NavigatorDialogueVariantCollection> variantCollection = variantCollections[i];
+                    KeyValuePair<string, NavigatorDialogue> lineCollection = lineCollections[i];
 
                     if (i < ListBoxDialogues.Items.Count)
                     {
                         // Modify existing item.
-                        if (ListBoxDialogues.Items[i] is not NavigatorDialogueVariantCollectionItem item) continue;
+                        if (ListBoxDialogues.Items[i] is not NavigatorDialogueItem item) continue;
 
-                        item.SetItem(variantCollection.Value, variantCollection.Key);
+                        item.SetItem(lineCollection.Value, lineCollection.Key);
                     }
                     else
                     {
                         // Create new item.
-                        NavigatorDialogueVariantCollectionItem item = new();
-                        item.SetItem(variantCollection.Value, variantCollection.Key);
+                        NavigatorDialogueItem item = new();
+                        item.SetItem(lineCollection.Value, lineCollection.Key);
 
                         ListBoxDialogues.Items.Add(item);
                     }
                 }
 
                 // Delete redundant dialogue items.
-                for (int i = ListBoxDialogues.Items.Count - 1; i >= variantCollections.Count; i--)
+                for (int i = ListBoxDialogues.Items.Count - 1; i >= lineCollections.Count; i--)
                 {
-                    if (ListBoxDialogues.Items[i] is not NavigatorDialogueVariantCollectionItem item) continue;
+                    if (ListBoxDialogues.Items[i] is not NavigatorDialogueItem item) continue;
 
                     ListBoxDialogues.Items.Remove(item);
                 }
 
                 // Set dialogue selection.
                 ListBoxDialogues.SelectedItem = ListBoxDialogues.Items.FirstOrDefault(x =>
-                {
-                    if (x is not NavigatorDialogueVariantCollectionItem item) return false;
-                    if (item.NavigatorDialogueVariantCollection == null) return false;
-                    if (item.NavigatorDialogueVariantCollection != CosmeticSystem.SelectedNavigatorDialogueVariantCollection) return false;
-
-                    return true;
-                });
-            }
-            else
-            {
-                ListBoxDialogues.Items.Clear();
-            }
-
-
-            if (CosmeticSystem.SelectedNavigatorDialogueVariantCollection != null)
-            {
-                List<NavigatorDialogue> variants = CosmeticSystem.SelectedNavigatorDialogueVariantCollection.Variants;
-
-                // Update existing dialogue items
-                for (int i = 0; i < variants.Count; i++)
-                {
-                    NavigatorDialogue variant = variants[i];
-
-                    if (i < ListBoxVariants.Items.Count)
-                    {
-                        // Modify existing item.
-                        if (ListBoxVariants.Items[i] is not NavigatorDialogueItem item) continue;
-
-                        item.SetItem(variant);
-                    }
-                    else
-                    {
-                        // Create new item.
-                        NavigatorDialogueItem item = new();
-                        item.SetItem(variant);
-
-                        ListBoxVariants.Items.Add(item);
-                    }
-                }
-
-                // Delete redundant dialogue items.
-                for (int i = ListBoxVariants.Items.Count - 1; i >= variants.Count; i--)
-                {
-                    if (ListBoxVariants.Items[i] is not NavigatorDialogueItem item) continue;
-
-                    ListBoxVariants.Items.Remove(item);
-                }
-
-                // Set dialogue selection.
-                ListBoxVariants.SelectedItem = ListBoxVariants.Items.FirstOrDefault(x =>
                 {
                     if (x is not NavigatorDialogueItem item) return false;
                     if (item.NavigatorDialogue == null) return false;
@@ -253,7 +204,57 @@ public partial class NavigatorEditorView : UserControl
             }
             else
             {
-                ListBoxVariants.Items.Clear();
+                ListBoxDialogues.Items.Clear();
+            }
+
+
+            if (CosmeticSystem.SelectedNavigatorDialogue != null)
+            {
+                List<NavigatorLine> lines = CosmeticSystem.SelectedNavigatorDialogue.Lines;
+
+                // Update existing dialogue items
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    NavigatorLine line = lines[i];
+
+                    if (i < ListBoxLines.Items.Count)
+                    {
+                        // Modify existing item.
+                        if (ListBoxLines.Items[i] is not NavigatorLineItem item) continue;
+
+                        item.SetItem(line);
+                    }
+                    else
+                    {
+                        // Create new item.
+                        NavigatorLineItem item = new();
+                        item.SetItem(line);
+
+                        ListBoxLines.Items.Add(item);
+                    }
+                }
+
+                // Delete redundant dialogue items.
+                for (int i = ListBoxLines.Items.Count - 1; i >= lines.Count; i--)
+                {
+                    if (ListBoxLines.Items[i] is not NavigatorLineItem item) continue;
+
+                    ListBoxLines.Items.Remove(item);
+                }
+
+                // Set dialogue selection.
+                ListBoxLines.SelectedItem = ListBoxLines.Items.FirstOrDefault(x =>
+                {
+                    if (x is not NavigatorLineItem item) return false;
+                    if (item.NavigatorLine == null) return false;
+                    if (item.NavigatorLine != CosmeticSystem.SelectedNavigatorLine) return false;
+
+                    return true;
+                });
+            }
+            else
+            {
+                ListBoxLines.Items.Clear();
             }
 
             blockEvents = false;
@@ -320,16 +321,16 @@ public partial class NavigatorEditorView : UserControl
 
         try
         {
-            float oldValue = navigator.Width;
+            float oldValue = navigator.Size.Width;
             float newValue = Convert.ToSingle(TextBoxWidth.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Width = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Size.Width = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Width = value; }, navigator.Width, 1024));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Size.Width = value; }, navigator.Size.Width, 1024));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -345,16 +346,16 @@ public partial class NavigatorEditorView : UserControl
 
         try
         {
-            float oldValue = navigator.Height;
+            float oldValue = navigator.Size.Height;
             float newValue = Convert.ToSingle(TextBoxHeight.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Height = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Size.Height = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Height = value; }, navigator.Height, 1024));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Size.Height = value; }, navigator.Size.Height, 1024));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -370,16 +371,16 @@ public partial class NavigatorEditorView : UserControl
 
         try
         {
-            float oldValue = navigator.OffsetX;
+            float oldValue = navigator.Offset.Horizontal;
             float newValue = Convert.ToSingle(TextBoxOffsetX.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.OffsetX = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Offset.Horizontal = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.OffsetX = value; }, navigator.OffsetX, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Offset.Horizontal = value; }, navigator.Offset.Horizontal, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -395,16 +396,16 @@ public partial class NavigatorEditorView : UserControl
 
         try
         {
-            float oldValue = navigator.OffsetY;
+            float oldValue = navigator.Offset.Vertical;
             float newValue = Convert.ToSingle(TextBoxOffsetY.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.OffsetY = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Offset.Vertical = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.OffsetY = value; }, navigator.OffsetY, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.Offset.Vertical = value; }, navigator.Offset.Vertical, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -420,16 +421,16 @@ public partial class NavigatorEditorView : UserControl
 
         try
         {
-            float oldValue = navigator.FaceMarginTop;
+            float oldValue = navigator.FaceMargin.Top;
             float newValue = Convert.ToSingle(TextBoxFaceMarginTop.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginTop = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMargin.Top = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginTop = value; }, navigator.FaceMarginTop, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMargin.Top = value; }, navigator.FaceMargin.Top, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -445,16 +446,16 @@ public partial class NavigatorEditorView : UserControl
 
         try
         {
-            float oldValue = navigator.FaceMarginBottom;
+            float oldValue = navigator.FaceMargin.Bottom;
             float newValue = Convert.ToSingle(TextBoxFaceMarginBottom.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginBottom = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMargin.Bottom = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginBottom = value; }, navigator.FaceMarginBottom, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMargin.Bottom = value; }, navigator.FaceMargin.Bottom, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -470,16 +471,16 @@ public partial class NavigatorEditorView : UserControl
 
         try
         {
-            float oldValue = navigator.FaceMarginLeft;
+            float oldValue = navigator.FaceMargin.Left;
             float newValue = Convert.ToSingle(TextBoxFaceMarginLeft.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginLeft = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMargin.Left = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginLeft = value; }, navigator.FaceMarginLeft, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMargin.Left = value; }, navigator.FaceMargin.Left, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -495,16 +496,16 @@ public partial class NavigatorEditorView : UserControl
 
         try
         {
-            float oldValue = navigator.FaceMarginRight;
+            float oldValue = navigator.FaceMargin.Right;
             float newValue = Convert.ToSingle(TextBoxFaceMarginRight.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
 
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginRight = value; }, oldValue, newValue));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMargin.Right = value; }, oldValue, newValue));
         }
         catch (Exception ex)
         {
             // Reset Value
-            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMarginRight = value; }, navigator.FaceMarginRight, 0));
+            UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<float>(value => { navigator.FaceMargin.Right = value; }, navigator.FaceMargin.Right, 0));
 
             if (ex is not (FormatException or OverflowException))
             {
@@ -759,16 +760,16 @@ public partial class NavigatorEditorView : UserControl
     private void ButtonDeleteLanguage_OnClick(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        if (ListBoxLanguages?.SelectedItem is not NavigatorDialogueLanguageItem item) return;
+        if (ListBoxLanguages?.SelectedItem is not NavigatorLanguageItem item) return;
         if (item.Key == null) return;
-        if (item.NavigatorDialogueLanguage == null) return;
+        if (item.NavigatorLanguage == null) return;
         
         if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
 
-        DictionaryRemoveOperation<string, NavigatorDialogueLanguage> op0 = new(() => navigator.DialogueLanguages, item.Key, item.NavigatorDialogueLanguage);
-        GenericEditOperation<NavigatorDialogueLanguage?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogueLanguage = value; }, CosmeticSystem.SelectedNavigatorDialogueLanguage, null);
-        GenericEditOperation<NavigatorDialogueVariantCollection?> op2 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, null);
-        GenericEditOperation<NavigatorDialogue?> op3 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, null);
+        DictionaryRemoveOperation<string, NavigatorLanguage> op0 = new(() => navigator.Writing.Languages, item.Key, item.NavigatorLanguage);
+        GenericEditOperation<NavigatorLanguage?> op1 = new(value => { CosmeticSystem.SelectedNavigatorLanguage = value; }, CosmeticSystem.SelectedNavigatorLanguage, null);
+        GenericEditOperation<NavigatorDialogue?> op2 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, null);
+        GenericEditOperation<NavigatorLine?> op3 = new(value => { CosmeticSystem.SelectedNavigatorLine = value; }, CosmeticSystem.SelectedNavigatorLine, null);
 
         UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1, op2, op3]));
     }
@@ -779,17 +780,17 @@ public partial class NavigatorEditorView : UserControl
         if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
 
         int c = 1;
-        while (navigator.DialogueLanguages.ContainsKey($"xx-XX {c.ToString(CultureInfo.InvariantCulture)}"))
+        while (navigator.Writing.Languages.ContainsKey($"xx-XX {c.ToString(CultureInfo.InvariantCulture)}"))
         {
             c++;
         }
         
         string key = $"xx-XX {c}";
-        NavigatorDialogueLanguage language = new();
+        NavigatorLanguage language = new();
 
-        DictionaryAddOperation<string, NavigatorDialogueLanguage> op0 = new(() => navigator.DialogueLanguages, key, language);
-        GenericEditOperation<NavigatorDialogueLanguage?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogueLanguage = value; }, CosmeticSystem.SelectedNavigatorDialogueLanguage, language);
-        GenericEditOperation<NavigatorDialogueVariantCollection?> op2 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, null);
+        DictionaryAddOperation<string, NavigatorLanguage> op0 = new(() => navigator.Writing.Languages, key, language);
+        GenericEditOperation<NavigatorLanguage?> op1 = new(value => { CosmeticSystem.SelectedNavigatorLanguage = value; }, CosmeticSystem.SelectedNavigatorLanguage, language);
+        GenericEditOperation<NavigatorDialogue?> op2 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, null);
         
         UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1, op2]));
     }
@@ -797,18 +798,18 @@ public partial class NavigatorEditorView : UserControl
     private void ListBoxLanguages_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
-        if (ListBoxLanguages?.SelectedItem is not NavigatorDialogueLanguageItem item) return;
+        if (ListBoxLanguages?.SelectedItem is not NavigatorLanguageItem item) return;
         if (item.Key == null) return;
-        if (item.NavigatorDialogueLanguage == null) return;
+        if (item.NavigatorLanguage == null) return;
 
-        if (CosmeticSystem.SelectedNavigatorDialogueLanguage == item.NavigatorDialogueLanguage) return;
+        if (CosmeticSystem.SelectedNavigatorLanguage == item.NavigatorLanguage) return;
         
-        NavigatorDialogueVariantCollection? newSelectedVariantCollection = item.NavigatorDialogueLanguage.Dialogues.FirstOrDefault().Value;
-        NavigatorDialogue? newSelectedDialogue = newSelectedVariantCollection?.Variants.FirstOrDefault();
+        NavigatorDialogue? newSelectedDialogue = item.NavigatorLanguage.Dialogues.FirstOrDefault().Value;
+        NavigatorLine? newSelectedLine = newSelectedDialogue?.Lines.FirstOrDefault();
         
-        GenericEditOperation<NavigatorDialogueLanguage?> op0 = new(value => { CosmeticSystem.SelectedNavigatorDialogueLanguage = value; }, CosmeticSystem.SelectedNavigatorDialogueLanguage, item.NavigatorDialogueLanguage);
-        GenericEditOperation<NavigatorDialogueVariantCollection?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, newSelectedVariantCollection);
-        GenericEditOperation<NavigatorDialogue?> op2 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, newSelectedDialogue);
+        GenericEditOperation<NavigatorLanguage?> op0 = new(value => { CosmeticSystem.SelectedNavigatorLanguage = value; }, CosmeticSystem.SelectedNavigatorLanguage, item.NavigatorLanguage);
+        GenericEditOperation<NavigatorDialogue?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, newSelectedDialogue);
+        GenericEditOperation<NavigatorLine?> op2 = new(value => { CosmeticSystem.SelectedNavigatorLine = value; }, CosmeticSystem.SelectedNavigatorLine, newSelectedLine);
         
         UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1, op2]));
     }
@@ -817,15 +818,15 @@ public partial class NavigatorEditorView : UserControl
     private void ButtonDeleteDialogue_OnClick(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        if (ListBoxDialogues?.SelectedItem is not NavigatorDialogueVariantCollectionItem item) return;
+        if (ListBoxDialogues?.SelectedItem is not NavigatorDialogueItem item) return;
         if (item.Key == null) return;
-        if (item.NavigatorDialogueVariantCollection == null) return;
+        if (item.NavigatorDialogue == null) return;
         
-        if (CosmeticSystem.SelectedNavigatorDialogueLanguage == null) return;
+        if (CosmeticSystem.SelectedNavigatorLanguage == null) return;
 
-        DictionaryRemoveOperation<string, NavigatorDialogueVariantCollection> op0 = new(() => CosmeticSystem.SelectedNavigatorDialogueLanguage.Dialogues, item.Key, item.NavigatorDialogueVariantCollection);
-        GenericEditOperation<NavigatorDialogueVariantCollection?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, null);
-        GenericEditOperation<NavigatorDialogue?> op2 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, null);
+        DictionaryRemoveOperation<string, NavigatorDialogue> op0 = new(() => CosmeticSystem.SelectedNavigatorLanguage.Dialogues, item.Key, item.NavigatorDialogue);
+        GenericEditOperation<NavigatorDialogue?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, null);
+        GenericEditOperation<NavigatorLine?> op2 = new(value => { CosmeticSystem.SelectedNavigatorLine = value; }, CosmeticSystem.SelectedNavigatorLine, null);
         
         UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1, op2]));
     }
@@ -833,19 +834,19 @@ public partial class NavigatorEditorView : UserControl
     private void ButtonAddDialogue_OnClick(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        if (CosmeticSystem.SelectedNavigatorDialogueLanguage == null) return;
+        if (CosmeticSystem.SelectedNavigatorLanguage == null) return;
         
         int c = 1;
-        while (CosmeticSystem.SelectedNavigatorDialogueLanguage.Dialogues.ContainsKey($"new_dialogue {c.ToString(CultureInfo.InvariantCulture)}"))
+        while (CosmeticSystem.SelectedNavigatorLanguage.Dialogues.ContainsKey($"new_dialogue {c.ToString(CultureInfo.InvariantCulture)}"))
         {
             c++;
         }
         
         string key = $"new_dialogue {c}";
-        NavigatorDialogueVariantCollection dialogue = new();
+        NavigatorDialogue dialogue = new();
 
-        DictionaryAddOperation<string, NavigatorDialogueVariantCollection> op0 = new(() => CosmeticSystem.SelectedNavigatorDialogueLanguage.Dialogues, key, dialogue);
-        GenericEditOperation<NavigatorDialogueVariantCollection?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, dialogue);
+        DictionaryAddOperation<string, NavigatorDialogue> op0 = new(() => CosmeticSystem.SelectedNavigatorLanguage.Dialogues, key, dialogue);
+        GenericEditOperation<NavigatorDialogue?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, dialogue);
         
         UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
     }
@@ -853,59 +854,59 @@ public partial class NavigatorEditorView : UserControl
     private void ListBoxDialogues_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
-        if (ListBoxDialogues?.SelectedItem is not NavigatorDialogueVariantCollectionItem item) return;
+        if (ListBoxDialogues?.SelectedItem is not NavigatorDialogueItem item) return;
         if (item.Key == null) return;
-        if (item.NavigatorDialogueVariantCollection == null) return;
-        
-        if (CosmeticSystem.SelectedNavigatorDialogueLanguage == null) return;
-        if (CosmeticSystem.SelectedNavigatorDialogueVariantCollection== item.NavigatorDialogueVariantCollection) return;
-        
-        NavigatorDialogue? newSelectedDialogue = item.NavigatorDialogueVariantCollection.Variants.FirstOrDefault();
-        
-        GenericEditOperation<NavigatorDialogueVariantCollection?> op0 = new(value => { CosmeticSystem.SelectedNavigatorDialogueVariantCollection = value; }, CosmeticSystem.SelectedNavigatorDialogueVariantCollection, item.NavigatorDialogueVariantCollection);
-        GenericEditOperation<NavigatorDialogue?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, newSelectedDialogue);
-        
-        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
-    }
-    
-    
-    private void ButtonDeleteVariant_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (blockEvents) return;
-        if (ListBoxVariants?.SelectedItem is not NavigatorDialogueItem item) return;
         if (item.NavigatorDialogue == null) return;
-
-        if (CosmeticSystem.SelectedNavigatorDialogueVariantCollection == null) return;
-
-        ListRemoveOperation<NavigatorDialogue> op0 = new(() => CosmeticSystem.SelectedNavigatorDialogueVariantCollection.Variants, item.NavigatorDialogue);
-        GenericEditOperation<NavigatorDialogue?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, null);
         
-        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
-    }
-
-    private void ButtonAddVariant_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (blockEvents) return;
-        if (CosmeticSystem.SelectedNavigatorDialogueVariantCollection == null) return;
-
-        NavigatorDialogue variant = new();
-
-        ListAddOperation<NavigatorDialogue> op0 = new(() => CosmeticSystem.SelectedNavigatorDialogueVariantCollection.Variants, variant);
-        GenericEditOperation<NavigatorDialogue?> op1 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, variant);
+        if (CosmeticSystem.SelectedNavigatorLanguage == null) return;
+        if (CosmeticSystem.SelectedNavigatorDialogue== item.NavigatorDialogue) return;
+        
+        NavigatorLine? newSelectedLine = item.NavigatorDialogue.Lines.FirstOrDefault();
+        
+        GenericEditOperation<NavigatorDialogue?> op0 = new(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, item.NavigatorDialogue);
+        GenericEditOperation<NavigatorLine?> op1 = new(value => { CosmeticSystem.SelectedNavigatorLine = value; }, CosmeticSystem.SelectedNavigatorLine, newSelectedLine);
         
         UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
     }
     
-    private void ListBoxVariants_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    
+    private void ButtonDeleteLine_OnClick(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
-        if (ListBoxVariants?.SelectedItem is not NavigatorDialogueItem item) return;
-        if (CosmeticSystem.SelectedNavigatorDialogueVariantCollection == null) return;
-        if (item.NavigatorDialogue == null) return;
+        if (ListBoxLines?.SelectedItem is not NavigatorLineItem item) return;
+        if (item.NavigatorLine == null) return;
 
-        if (CosmeticSystem.SelectedNavigatorDialogue == item.NavigatorDialogue) return;
+        if (CosmeticSystem.SelectedNavigatorDialogue == null) return;
+
+        ListRemoveOperation<NavigatorLine> op0 = new(() => CosmeticSystem.SelectedNavigatorDialogue.Lines, item.NavigatorLine);
+        GenericEditOperation<NavigatorLine?> op1 = new(value => { CosmeticSystem.SelectedNavigatorLine = value; }, CosmeticSystem.SelectedNavigatorLine, null);
         
-        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<NavigatorDialogue?>(value => { CosmeticSystem.SelectedNavigatorDialogue = value; }, CosmeticSystem.SelectedNavigatorDialogue, item.NavigatorDialogue));
+        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
+    }
+
+    private void ButtonAddLine_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (CosmeticSystem.SelectedNavigatorDialogue == null) return;
+
+        NavigatorLine line = new();
+
+        ListAddOperation<NavigatorLine> op0 = new(() => CosmeticSystem.SelectedNavigatorDialogue.Lines, line);
+        GenericEditOperation<NavigatorLine?> op1 = new(value => { CosmeticSystem.SelectedNavigatorLine = value; }, CosmeticSystem.SelectedNavigatorLine, line);
+        
+        UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
+    }
+    
+    private void ListBoxLines_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (ListBoxLines?.SelectedItem is not NavigatorLineItem item) return;
+        if (CosmeticSystem.SelectedNavigatorDialogue == null) return;
+        if (item.NavigatorLine == null) return;
+
+        if (CosmeticSystem.SelectedNavigatorLine == item.NavigatorLine) return;
+        
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<NavigatorLine?>(value => { CosmeticSystem.SelectedNavigatorLine = value; }, CosmeticSystem.SelectedNavigatorLine, item.NavigatorLine));
     }
 #endregion UI Event Handlers
 }

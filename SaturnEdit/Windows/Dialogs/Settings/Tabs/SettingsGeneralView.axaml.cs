@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
+using SaturnEdit.Settings;
 using SaturnEdit.Systems;
 
 namespace SaturnEdit.Windows.Dialogs.Settings.Tabs;
