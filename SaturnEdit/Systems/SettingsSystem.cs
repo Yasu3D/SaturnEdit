@@ -203,8 +203,8 @@ public static class SettingsSystem
         {
             Directory.CreateDirectory(SettingsDirectory);
 
-            await File.WriteAllTextAsync(EditorSettingsPath, ContentSerializer.ToString(RenderSettings));
-            await File.WriteAllTextAsync(RenderSettingsPath, ContentSerializer.ToString(EditorSettings));
+            await File.WriteAllTextAsync(EditorSettingsPath, ContentSerializer.ToString(EditorSettings));
+            await File.WriteAllTextAsync(RenderSettingsPath, ContentSerializer.ToString(RenderSettings));
             await File.WriteAllTextAsync(AudioSettingsPath, ContentSerializer.ToString(AudioSettings));
             await File.WriteAllTextAsync(ShortcutSettingsPath, ContentSerializer.ToString(ShortcutSettings));
         }
