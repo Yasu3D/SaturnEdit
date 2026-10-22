@@ -605,7 +605,7 @@ public static class TimeSystem
             {
                 PlaybackState = PlaybackState.Stopped;
 
-                if (SettingsSystem.AudioSettings.LoopToStart)
+                if (SettingsSystem.AudioSettings.ResetAtEnd)
                 {
                     SeekTime(0.0f, Division);
                 }

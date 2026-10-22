@@ -4,6 +4,7 @@ using SaturnData.Content.Serialization;
 using SaturnEdit.Settings;
 using SaturnEdit.Utilities;
 using SaturnView;
+using Tomlyn;
 
 namespace SaturnEdit.Systems;
 
@@ -85,14 +86,36 @@ public static class SettingsSystem
     private static ShortcutSettings shortcutSettings = new();
     
     private static string SettingsDirectory => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "Settings");
-
+    private static string SettingsBackupDirectory => Path.Combine(SettingsDirectory, "Backup");
+    
+    private static string EditorSettingsPath => Path.Combine(SettingsDirectory, "editor.sct");
+    private static string RenderSettingsPath => Path.Combine(SettingsDirectory, "rendering.sct");
+    private static string AudioSettingsPath => Path.Combine(SettingsDirectory, "audio.sct");
+    private static string ShortcutSettingsPath => Path.Combine(SettingsDirectory, "shortcuts.sct");
+    
+    private static string EditorSettingsBackupPath => Path.Combine(SettingsBackupDirectory, "editor.sct");
+    private static string RenderSettingsBackupPath => Path.Combine(SettingsBackupDirectory, "rendering.sct");
+    private static string AudioSettingsBackupPath => Path.Combine(SettingsBackupDirectory, "audio.sct");
+    private static string ShortcutSettingsBackupPath => Path.Combine(SettingsBackupDirectory, "shortcuts.sct");
+    
 #region Methods
     public static void LoadSettings()
     {
+        BackupSettings();
+        
         try
         {
-            string editorSettingsPath = Path.Combine(SettingsDirectory, "editor_settings.sct");
-            EditorSettings = ContentSerializer.ToContentItem<EditorSettings>(editorSettingsPath) ?? new(); //TomlSerializer.Deserialize<EditorSettings>(editorSettingsData) ?? new();
+            if (File.Exists(EditorSettingsPath))
+            {
+                EditorSettings = ContentSerializer.ToContentItem<EditorSettings>(EditorSettingsPath) ?? new();
+            }
+            else
+            {
+                string tomlPath = Path.Combine(SettingsDirectory, "editor_settings.toml");
+                string data = File.ReadAllText(tomlPath);
+                
+                EditorSettings = TomlSerializer.Deserialize<EditorSettings>(data) ?? new();
+            }
         }
         catch (Exception ex)
         {
@@ -105,8 +128,17 @@ public static class SettingsSystem
         
         try
         {
-            string renderSettingsPath = Path.Combine(SettingsDirectory, "render_settings.sct");
-            RenderSettings = ContentSerializer.ToContentItem<RenderSettings>(renderSettingsPath) ?? new(); //TomlSerializer.Deserialize<RenderSettings>(renderSettingsData) ?? new();
+            if (File.Exists(RenderSettingsPath))
+            {
+                RenderSettings = ContentSerializer.ToContentItem<RenderSettings>(RenderSettingsPath) ?? new();
+            }
+            else
+            {
+                string tomlPath = Path.Combine(SettingsDirectory, "render_settings.toml");
+                string data = File.ReadAllText(tomlPath);
+                
+                RenderSettings = TomlSerializer.Deserialize<RenderSettings>(data) ?? new();
+            }
         }
         catch (Exception ex)
         {
@@ -119,8 +151,17 @@ public static class SettingsSystem
         
         try
         {
-            string audioSettingsPath = Path.Combine(SettingsDirectory, "audio_settings.sct");
-            AudioSettings = ContentSerializer.ToContentItem<AudioSettings>(audioSettingsPath) ?? new(); //TomlSerializer.Deserialize<AudioSettings>(audioSettingsData) ?? new();
+            if (File.Exists(AudioSettingsPath))
+            {
+                AudioSettings = ContentSerializer.ToContentItem<AudioSettings>(AudioSettingsPath) ?? new();
+            }
+            else
+            {
+                string tomlPath = Path.Combine(SettingsDirectory, "audio_settings.toml");
+                string data = File.ReadAllText(tomlPath);
+                
+                AudioSettings = TomlSerializer.Deserialize<AudioSettings>(data) ?? new();
+            }
         }
         catch (Exception ex)
         {
@@ -133,8 +174,17 @@ public static class SettingsSystem
         
         try
         {
-            string shortcutSettingsPath = Path.Combine(SettingsDirectory, "shortcut_settings.sct");
-            ShortcutSettings = ContentSerializer.ToContentItem<ShortcutSettings>(shortcutSettingsPath) ?? new();//TomlSerializer.Deserialize<ShortcutSettings>(shortcutSettingsData) ?? new();
+            if (File.Exists(ShortcutSettingsPath))
+            {
+                ShortcutSettings = ContentSerializer.ToContentItem<ShortcutSettings>(ShortcutSettingsPath) ?? new();
+            }
+            else
+            {
+                string tomlPath = Path.Combine(SettingsDirectory, "shortcut_settings.toml");
+                string data = File.ReadAllText(tomlPath);
+                
+                ShortcutSettings = TomlSerializer.Deserialize<ShortcutSettings>(data) ?? new();
+            }
         }
         catch (Exception ex)
         {
@@ -166,6 +216,47 @@ public static class SettingsSystem
             {
                 LoggingSystem.WriteSessionLog(ex.ToString());
             }
+        }
+    }
+
+    public static void BackupSettings()
+    {
+        Directory.CreateDirectory(SettingsBackupDirectory);
+        
+        try
+        {
+            if (File.Exists(EditorSettingsPath)) File.Copy(EditorSettingsPath, EditorSettingsBackupPath);
+        }
+        catch
+        {
+            // Do nothing.
+        }
+        
+        try
+        {
+            if (File.Exists(RenderSettingsPath)) File.Copy(RenderSettingsPath, RenderSettingsBackupPath);
+        }
+        catch
+        {
+            // Do nothing.
+        }
+        
+        try
+        {
+            if (File.Exists(AudioSettingsPath)) File.Copy(AudioSettingsPath, AudioSettingsBackupPath);
+        }
+        catch
+        {
+            // Do nothing.
+        }
+        
+        try
+        {
+            if (File.Exists(ShortcutSettingsPath)) File.Copy(ShortcutSettingsPath, ShortcutSettingsBackupPath);
+        }
+        catch
+        {
+            // Do nothing.
         }
     }
 #endregion Methods

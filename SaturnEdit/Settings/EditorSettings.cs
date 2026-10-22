@@ -38,7 +38,7 @@ public class EditorSettings : ContentItem
 #endregion Enum Definitions
 
     [SctLineBreak]
-    [SctKey("LOCALE", 10)]
+    [SctKey("LOCALE", 16)]
     public LocaleOption Locale
     {
         get => locale;
@@ -52,7 +52,7 @@ public class EditorSettings : ContentItem
     }
     private LocaleOption locale = LocaleOption.en_US;
 
-    [SctKey("THEME", 10)]
+    [SctKey("THEME", 16)]
     public EditorThemeOption Theme
     {
         get => theme;
@@ -66,7 +66,7 @@ public class EditorSettings : ContentItem
     }
     private EditorThemeOption theme = EditorThemeOption.Dark;
 
-    [SctKey("SHOW_SPLASH", 10)]
+    [SctKey("SHOW_SPLASH", 16)]
     public bool ShowSplashScreen
     {
         get => showSplashScreen;
@@ -80,7 +80,7 @@ public class EditorSettings : ContentItem
     }
     private bool showSplashScreen = true;
 
-    [SctKey("CONTINUE_SESSION", 10)]
+    [SctKey("CONTINUE_SESSION", 16)]
     public bool ContinueLastSession
     {
         get => continueLastSession;
@@ -94,7 +94,7 @@ public class EditorSettings : ContentItem
     }
     private bool continueLastSession = false;
 
-    [SctKey("CHECK_UPDATES", 10)]
+    [SctKey("CHECK_UPDATES", 16)]
     public bool CheckForUpdates
     {
         get => checkForUpdates;
@@ -108,7 +108,7 @@ public class EditorSettings : ContentItem
     }
     private bool checkForUpdates = true;
 
-    [SctKey("LAST_SESSION", 10)]
+    [SctKey("LAST_SESSION", 16)]
     public string LastSessionPath
     {
         get => lastSessionPath;
@@ -122,7 +122,7 @@ public class EditorSettings : ContentItem
     }
     private string lastSessionPath = "";
 
-    [SctKey("TXT_SHOW_SPACES", 10)]
+    [SctKey("TXT_SHOW_SPACES", 16)]
     public bool ChartViewTxtShowSpaces
     {
         get => chartViewTxtShowSpaces;
@@ -136,7 +136,7 @@ public class EditorSettings : ContentItem
     }
     private bool chartViewTxtShowSpaces = true;
 
-    [SctKey("TXT_SHOW_SYNTAX", 10)]
+    [SctKey("TXT_SHOW_SYNTAX", 16)]
     public bool ChartViewTxtSyntaxHighlighting
     {
         get => chartViewTxtSyntaxHighlighting;
@@ -150,7 +150,7 @@ public class EditorSettings : ContentItem
     }
     private bool chartViewTxtSyntaxHighlighting = true;
 
-    [SctKey("AUTO_SAVE", 10)]
+    [SctKey("AUTO_SAVE", 16)]
     public AutoSaveFrequencyOption AutoSaveFrequency
     {
         get => autoSaveFrequency;
@@ -164,7 +164,7 @@ public class EditorSettings : ContentItem
     }
     private AutoSaveFrequencyOption autoSaveFrequency = AutoSaveFrequencyOption.Minutes5;
 
-    [SctKey("CLICK_DRAG", 10)]
+    [SctKey("CLICK_DRAG", 16)]
     public int ClickDragThreshold
     {
         get => clickDragThreshold;
@@ -179,7 +179,7 @@ public class EditorSettings : ContentItem
     private int clickDragThreshold = 5;
 
     [SctLineBreak]
-    [SctKey("RECENT_FILES", 10)]
+    [SctKey("RECENT_FILES", 16)]
     public List<string> RecentChartFiles { get; set; } = [];
 
     public void AddRecentChartFile(string path)

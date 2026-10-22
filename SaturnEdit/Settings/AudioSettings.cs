@@ -22,7 +22,7 @@ public class AudioSettings : ContentItem
 #endregion
 
     [SctLineBreak]
-    [SctKey("LOOP_PLAYBACK", 10)]
+    [SctKey("LOOP_PLAYBACK", 16)]
     public bool LoopPlayback
     {
         get => loopPlayback;
@@ -36,7 +36,7 @@ public class AudioSettings : ContentItem
     }
     private bool loopPlayback = false;
 
-    [SctKey("METRONOME", 10)]
+    [SctKey("METRONOME", 16)]
     public bool Metronome
     {
         get => metronome;
@@ -50,7 +50,7 @@ public class AudioSettings : ContentItem
     }
     private bool metronome = false;
 
-    [SctKey("QUANTIZED_PAUSE", 10)]
+    [SctKey("QUANTIZED_PAUSE", 16)]
     public QuantizationOption QuantizedPause
     {
         get => quantizedPause;
@@ -64,7 +64,7 @@ public class AudioSettings : ContentItem
     }
     private QuantizationOption quantizedPause = QuantizationOption.Off;
 
-    [SctKey("QUANTIZED_SEEK", 10)]
+    [SctKey("QUANTIZED_SEEK", 16)]
     public QuantizationOption QuantizedSeek
     {
         get => quantizedSeek;
@@ -78,21 +78,22 @@ public class AudioSettings : ContentItem
     }
     private QuantizationOption quantizedSeek = QuantizationOption.Off;
 
-    [SctKey("LOOP_TO_START", 10)]
-    public bool LoopToStart
+    [SctKey("RESET_AT_END", 16)]
+    public bool ResetAtEnd
     {
-        get => loopToStart;
+        get => resetAtEnd;
         set
         {
-            if (loopToStart == value) return;
+            if (resetAtEnd == value) return;
 
-            loopToStart = value;
+            resetAtEnd = value;
             PropertyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
-    private bool loopToStart = false;
+    private bool resetAtEnd = false;
 
-    [SctKey("VOLUME_MASTER", 10)]
+    [SctLineBreak]
+    [SctKey("VOLUME_MASTER", 16)]
     public int MasterVolume
     {
         get => masterVolume;
@@ -107,7 +108,7 @@ public class AudioSettings : ContentItem
     }
     private int masterVolume = -30;
 
-    [SctKey("VOLUME_AUDIO", 10)]
+    [SctKey("VOLUME_AUDIO", 16)]
     public int AudioVolume
     {
         get => audioVolume;
@@ -122,7 +123,7 @@ public class AudioSettings : ContentItem
     }
     private int audioVolume = 0;
 
-    [SctKey("VOLUME_HITSOUND", 10)]
+    [SctKey("VOLUME_HITSOUND", 16)]
     public int HitsoundVolume
     {
         get => hitsoundVolume;
@@ -137,7 +138,7 @@ public class AudioSettings : ContentItem
     }
     private int hitsoundVolume = 0;
 
-    [SctKey("VOLUME_GUIDE", 10)]
+    [SctKey("VOLUME_GUIDE", 16)]
     public int GuideVolume
     {
         get => guideVolume;
@@ -152,7 +153,7 @@ public class AudioSettings : ContentItem
     }
     private int guideVolume = -20;
 
-    [SctKey("VOLUME_TOUCH", 10)]
+    [SctKey("VOLUME_TOUCH", 16)]
     public int TouchVolume
     {
         get => touchVolume;
@@ -167,7 +168,7 @@ public class AudioSettings : ContentItem
     }
     private int touchVolume = 0;
 
-    [SctKey("VOLUME_HOLD", 10)]
+    [SctKey("VOLUME_HOLD", 16)]
     public int HoldVolume
     {
         get => holdVolume;
@@ -182,7 +183,7 @@ public class AudioSettings : ContentItem
     }
     private int holdVolume = 0;
 
-    [SctKey("VOLUME_SLIDE", 10)]
+    [SctKey("VOLUME_SLIDE", 16)]
     public int SlideVolume
     {
         get => slideVolume;
@@ -197,7 +198,7 @@ public class AudioSettings : ContentItem
     }
     private int slideVolume = 0;
 
-    [SctKey("VOLUME_BONUS", 10)]
+    [SctKey("VOLUME_BONUS", 16)]
     public int BonusVolume
     {
         get => bonusVolume;
@@ -212,7 +213,7 @@ public class AudioSettings : ContentItem
     }
     private int bonusVolume = 0;
 
-    [SctKey("VOLUME_R", 10)]
+    [SctKey("VOLUME_R", 16)]
     public int RVolume
     {
         get => rVolume;
@@ -227,7 +228,7 @@ public class AudioSettings : ContentItem
     }
     private int rVolume = 0;
 
-    [SctKey("VOLUME_CLICK", 10)]
+    [SctKey("VOLUME_CLICK", 16)]
     public int StartClickVolume
     {
         get => startClickVolume;
@@ -242,7 +243,7 @@ public class AudioSettings : ContentItem
     }
     private int startClickVolume = 0;
 
-    [SctKey("VOLUME_METRONOME", 10)]
+    [SctKey("VOLUME_METRONOME", 16)]
     public int MetronomeVolume
     {
         get => metronomeVolume;
@@ -257,7 +258,8 @@ public class AudioSettings : ContentItem
     }
     private int metronomeVolume = 0;
 
-    [SctKey("MUTE_MASTER", 10)]
+    [SctLineBreak]
+    [SctKey("MUTE_MASTER", 16)]
     public bool MuteMaster
     {
         get => muteMaster;
@@ -272,7 +274,7 @@ public class AudioSettings : ContentItem
     }
     private bool muteMaster = false;
 
-    [SctKey("MUTE_AUDIO", 10)]
+    [SctKey("MUTE_AUDIO", 16)]
     public bool MuteAudio
     {
         get => muteAudio;
@@ -287,7 +289,7 @@ public class AudioSettings : ContentItem
     }
     private bool muteAudio = false;
 
-    [SctKey("MUTE_HITSOUND", 10)]
+    [SctKey("MUTE_HITSOUND", 16)]
     public bool MuteHitsound
     {
         get => muteHitsound;
@@ -302,7 +304,7 @@ public class AudioSettings : ContentItem
     }
     private bool muteHitsound = false;
 
-    [SctKey("MUTE_GUIDE", 10)]
+    [SctKey("MUTE_GUIDE", 16)]
     public bool MuteGuide
     {
         get => muteGuide;
@@ -317,7 +319,7 @@ public class AudioSettings : ContentItem
     }
     private bool muteGuide = false;
 
-    [SctKey("MUTE_TOUCH", 10)]
+    [SctKey("MUTE_TOUCH", 16)]
     public bool MuteTouch
     {
         get => muteTouch;
@@ -332,7 +334,7 @@ public class AudioSettings : ContentItem
     }
     private bool muteTouch = false;
 
-    [SctKey("MUTE_HOLD", 10)]
+    [SctKey("MUTE_HOLD", 16)]
     public bool MuteHold
     {
         get => muteHold;
@@ -347,7 +349,7 @@ public class AudioSettings : ContentItem
     }
     private bool muteHold = false;
 
-    [SctKey("MUTE_SLIDE", 10)]
+    [SctKey("MUTE_SLIDE", 16)]
     public bool MuteSlide
     {
         get => muteSlide;
@@ -362,7 +364,7 @@ public class AudioSettings : ContentItem
     }
     private bool muteSlide = false;
 
-    [SctKey("MUTE_BONUS", 10)]
+    [SctKey("MUTE_BONUS", 16)]
     public bool MuteBonus
     {
         get => muteBonus;
@@ -377,7 +379,7 @@ public class AudioSettings : ContentItem
     }
     private bool muteBonus = false;
 
-    [SctKey("MUTE_R", 10)]
+    [SctKey("MUTE_R", 16)]
     public bool MuteR
     {
         get => muteR;
@@ -392,7 +394,7 @@ public class AudioSettings : ContentItem
     }
     private bool muteR = false;
 
-    [SctKey("MUTE_CLICK", 10)]
+    [SctKey("MUTE_CLICK", 16)]
     public bool MuteStartClick
     {
         get => muteStartClick;
@@ -407,7 +409,7 @@ public class AudioSettings : ContentItem
     }
     private bool muteStartClick = false;
 
-    [SctKey("MUTE_METRONOME", 10)]
+    [SctKey("MUTE_METRONOME", 16)]
     public bool MuteMetronome
     {
         get => muteMetronome;
@@ -422,7 +424,7 @@ public class AudioSettings : ContentItem
     }
     private bool muteMetronome = false;
 
-    [SctKey("SOUNDPACK", 10)]
+    [SctKey("SOUNDPACK", 16)]
     public int SelectedSoundpackIndex { get; set; }
 
     //public string NoteSoundId

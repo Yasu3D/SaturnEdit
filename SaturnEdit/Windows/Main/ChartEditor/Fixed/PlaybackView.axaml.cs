@@ -240,7 +240,7 @@ public partial class PlaybackView : UserControl
             MenuItemQuantizedSeekPrevious.IsChecked = SettingsSystem.AudioSettings.QuantizedSeek == AudioSettings.QuantizationOption.Previous;
             MenuItemQuantizedSeekNext.IsChecked = SettingsSystem.AudioSettings.QuantizedSeek == AudioSettings.QuantizationOption.Next;
             
-            MenuItemLoopToStart.IsChecked = SettingsSystem.AudioSettings.LoopToStart;
+            MenuItemResetAtEnd.IsChecked = SettingsSystem.AudioSettings.ResetAtEnd;
             
             blockEvents = false;
         });
@@ -498,12 +498,12 @@ public partial class PlaybackView : UserControl
         };
     }
 
-    private void MenuItemLoopToStart_OnClick(object? sender, RoutedEventArgs e)
+    private void MenuItemResetAtEnd_OnClick(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;
         if (sender is not MenuItem item) return;
 
-        SettingsSystem.AudioSettings.LoopToStart = item.IsChecked;
+        SettingsSystem.AudioSettings.ResetAtEnd = item.IsChecked;
     }
 
     private void BookmarkMarker_OnClick(object? sender, EventArgs e)

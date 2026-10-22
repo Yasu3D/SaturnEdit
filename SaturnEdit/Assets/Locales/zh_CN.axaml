@@ -687,7 +687,7 @@
     <system:String x:Key="Settings.Playback.QuantizationOption.Nearest">-</system:String>
     <system:String x:Key="Settings.Playback.QuantizationOption.Previous">-</system:String>
     <system:String x:Key="Settings.Playback.QuantizationOption.Next">-</system:String>
-    <system:String x:Key="Settings.Playback.LoopToStart">-</system:String>
+    <system:String x:Key="Settings.Playback.ResetAtEnd">-</system:String>
     <system:String x:Key="Settings.Shortcuts">-</system:String>
     <system:String x:Key="Settings.Shortcuts.Define">-</system:String>
     <system:String x:Key="Settings.Shortcuts.Clear">-</system:String>

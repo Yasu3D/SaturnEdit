@@ -128,7 +128,7 @@ public static class SettingsWriter
         sb.Append($"{"@METRONOME", -28}{(audioSettings.Metronome ? "TRUE" : "FALSE")}\n");
         sb.Append($"{"@QUANTIZED_PAUSE", -28}{audioSettings.QuantizedPause}\n");
         sb.Append($"{"@QUANTIZED_SEEK", -28}{audioSettings.QuantizedSeek}\n");
-        sb.Append($"{"@LOOP_TO_START", -28}{(audioSettings.LoopToStart ? "TRUE" : "FALSE")}\n");
+        sb.Append($"{"@LOOP_TO_START", -28}{(audioSettings.ResetAtEnd ? "TRUE" : "FALSE")}\n");
         sb.Append('\n');
         sb.Append($"{"@VOLUME_MASTER", -28}{audioSettings.MasterVolume}\n");
         sb.Append($"{"@VOLUME_AUDIO", -28}{audioSettings.AudioVolume}\n");

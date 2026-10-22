@@ -22,7 +22,7 @@ public class ShortcutSettings : ContentItem
     /// Changes made directly to the dictionary will not invoke <see cref="PropertyChanged"/>.
     /// </remarks>
     [SctLineBreak]
-    [SctKey("SHORTCUTS", 10)]
+    [SctKey("SHORTCUTS", 9)]
     public Dictionary<string, Shortcut> Shortcuts { get; } = new()
     {
         ["File.New"]                    = new(Key.N,    true,  false, false, "Menu.File", "Menu.File.New"),

@@ -321,12 +321,12 @@
                                         </MenuItem>
                                     </MenuItem>
 
-                                    <MenuItem Name="MenuItemLoopToStart" 
+                                    <MenuItem Name="MenuItemResetAtEnd" 
                                               ToggleType="CheckBox"
                                               IsChecked="True"
-                                              Click="MenuItemLoopToStart_OnClick">
+                                              Click="MenuItemResetAtEnd_OnClick">
                                         <MenuItem.Header>
-                                            <TextBlock Text="{DynamicResource Settings.Playback.LoopToStart}" />
+                                            <TextBlock Text="{DynamicResource Settings.Playback.ResetAtEnd}" />
                                         </MenuItem.Header>
                                     </MenuItem>
                                 </MenuFlyout>
