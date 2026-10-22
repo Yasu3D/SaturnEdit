@@ -101,8 +101,6 @@ public static class SettingsSystem
 #region Methods
     public static void LoadSettings()
     {
-        BackupSettings();
-        
         try
         {
             if (File.Exists(EditorSettingsPath))
@@ -195,6 +193,7 @@ public static class SettingsSystem
             ShortcutSettings = new();
         }
         
+        BackupSettings();
         SettingsChanged?.Invoke(null, EventArgs.Empty);
     }
 
@@ -204,10 +203,10 @@ public static class SettingsSystem
         {
             Directory.CreateDirectory(SettingsDirectory);
 
-            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "render_settings.sct"), ContentSerializer.ToString(RenderSettings));
-            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "editor_settings.sct"), ContentSerializer.ToString(EditorSettings));
-            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "audio_settings.sct"), ContentSerializer.ToString(AudioSettings));
-            await File.WriteAllTextAsync(Path.Combine(SettingsDirectory, "shortcut_settings.sct"), ContentSerializer.ToString(ShortcutSettings));
+            await File.WriteAllTextAsync(EditorSettingsPath, ContentSerializer.ToString(RenderSettings));
+            await File.WriteAllTextAsync(RenderSettingsPath, ContentSerializer.ToString(EditorSettings));
+            await File.WriteAllTextAsync(AudioSettingsPath, ContentSerializer.ToString(AudioSettings));
+            await File.WriteAllTextAsync(ShortcutSettingsPath, ContentSerializer.ToString(ShortcutSettings));
         }
         catch (Exception ex)
         {
@@ -222,41 +221,40 @@ public static class SettingsSystem
     public static void BackupSettings()
     {
         Directory.CreateDirectory(SettingsBackupDirectory);
+
+        backup(EditorSettingsPath,   EditorSettingsBackupPath,   true);
+        backup(RenderSettingsPath,   RenderSettingsBackupPath,   true);
+        backup(AudioSettingsPath,    AudioSettingsBackupPath,    true);
+        backup(ShortcutSettingsPath, ShortcutSettingsBackupPath, true);
         
-        try
+        backup(Path.Combine(SettingsDirectory, "editor_settings.toml"),   Path.Combine(SettingsBackupDirectory, "editor_settings.toml"),   false);
+        backup(Path.Combine(SettingsDirectory, "render_settings.toml"),   Path.Combine(SettingsBackupDirectory, "render_settings.toml"),   false);
+        backup(Path.Combine(SettingsDirectory, "audio_settings.toml"),    Path.Combine(SettingsBackupDirectory, "audio_settings.toml"),    false);
+        backup(Path.Combine(SettingsDirectory, "shortcut_settings.toml"), Path.Combine(SettingsBackupDirectory, "shortcut_settings.toml"), false);
+
+        return;
+
+        void backup(string source, string destination, bool copy)
         {
-            if (File.Exists(EditorSettingsPath)) File.Copy(EditorSettingsPath, EditorSettingsBackupPath);
-        }
-        catch
-        {
-            // Do nothing.
-        }
-        
-        try
-        {
-            if (File.Exists(RenderSettingsPath)) File.Copy(RenderSettingsPath, RenderSettingsBackupPath);
-        }
-        catch
-        {
-            // Do nothing.
-        }
-        
-        try
-        {
-            if (File.Exists(AudioSettingsPath)) File.Copy(AudioSettingsPath, AudioSettingsBackupPath);
-        }
-        catch
-        {
-            // Do nothing.
-        }
-        
-        try
-        {
-            if (File.Exists(ShortcutSettingsPath)) File.Copy(ShortcutSettingsPath, ShortcutSettingsBackupPath);
-        }
-        catch
-        {
-            // Do nothing.
+            if (!File.Exists(source)) return;
+            
+            try
+            {
+                if (copy)
+                {
+                    File.Copy(source, destination, true);
+                }
+                else
+                {
+                    File.Move(source, destination, true);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                // Don't throw.
+                Console.WriteLine(ex);
+            }
         }
     }
 #endregion Methods
