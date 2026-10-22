@@ -7,6 +7,7 @@ using Avalonia.Input;
 using SaturnData.Content.Items;
 using SaturnData.Content.Items.Attributes;
 using SaturnData.Content.Serialization;
+using SaturnEdit.Systems;
 
 namespace SaturnEdit.Settings;
 
@@ -372,7 +373,8 @@ public class Shortcut : ISctSerializable
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            // Don't throw.
+            LoggingSystem.WriteSessionLog(ex.ToString());
         }
     }
 }

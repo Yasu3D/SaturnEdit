@@ -201,7 +201,9 @@ public partial class VolumeMixerWindow : Window
             if (blockEvents) return;
             if (sender is not Button button) return;
 
-            if (SoundpackSystem.SelectedSoundpack == SoundpackSystem.DefaultSoundpack) return;
+            EditorNoteSound selectedNoteSound = NoteSoundSystem.SelectedNoteSound;
+            
+            if (selectedNoteSound == NoteSoundSystem.DefaultNoteSound) return;
             
             string path = "";
 
@@ -233,35 +235,35 @@ public partial class VolumeMixerWindow : Window
 
             if      (button == ButtonPickSoundGuide)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundGuidePath = path;
+                selectedNoteSound.HitsoundGuidePath = path;
             }
             else if (button == ButtonPickSoundTouch)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundTouchPath = path;
+                selectedNoteSound.HitsoundTouchPath = path;
             }
             else if (button == ButtonPickSoundHold)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundHoldPath = path;
+                selectedNoteSound.HitsoundHoldPath = path;
             }
             else if (button == ButtonPickSoundSlide)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundSlidePath = path;
+                selectedNoteSound.HitsoundSlidePath = path;
             }
             else if (button == ButtonPickSoundBonus)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundBonusPath = path;
+                selectedNoteSound.HitsoundBonusPath = path;
             }
             else if (button == ButtonPickSoundR)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundRPath = path;
+                selectedNoteSound.HitsoundRPath = path;
             }
             else if (button == ButtonPickSoundStartClick)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundStartClickPath = path;
+                selectedNoteSound.HitsoundStartClickPath = path;
             }
             else if (button == ButtonPickSoundMetronome)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundMetronomePath = path;
+                selectedNoteSound.HitsoundMetronomePath = path;
             }
         }
         catch (Exception ex)

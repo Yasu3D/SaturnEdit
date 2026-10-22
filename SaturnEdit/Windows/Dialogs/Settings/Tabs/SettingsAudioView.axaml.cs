@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
@@ -23,19 +24,22 @@ public partial class SettingsAudioView : UserControl
 #region System Event Handlers
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
+        EditorNoteSound selectedNoteSound = NoteSoundSystem.SelectedNoteSound;
+        
         Dispatcher.UIThread.Post(() =>
         {
             blockEvents = true;
-
-            TextBoxName.Text = SoundpackSystem.SelectedSoundpack.Name;
             
-            NumericUpDownHoldLoopStart.Value = (decimal)SoundpackSystem.SelectedSoundpack.HoldLoopStart;
-            NumericUpDownHoldLoopEnd.Value = (decimal)SoundpackSystem.SelectedSoundpack.HoldLoopEnd;
+            TextBoxName.Text = selectedNoteSound.Name;
+            
+            NumericUpDownHoldLoopStart.Value = (decimal)selectedNoteSound.HoldLoopStart;
+            NumericUpDownHoldLoopEnd.Value = (decimal)selectedNoteSound.HoldLoopEnd;
 
-            if (SoundpackSystem.SelectedSoundpack == SoundpackSystem.DefaultSoundpack)
+            if (selectedNoteSound == NoteSoundSystem.DefaultNoteSound)
             {
-                ButtonDeleteSoundpack.IsEnabled = false;
+                ButtonDeleteNoteSound.IsEnabled = false;
                 
+                TextBoxName.IsEnabled = false;
                 TextBoxGuide.IsEnabled = false;
                 TextBoxTouch.IsEnabled = false;
                 TextBoxHold.IsEnabled = false;
@@ -53,6 +57,9 @@ public partial class SettingsAudioView : UserControl
                 ButtonPickSoundR.IsEnabled = false;
                 ButtonPickSoundStartClick.IsEnabled = false;
                 ButtonPickSoundMetronome.IsEnabled = false;
+
+                NumericUpDownHoldLoopStart.IsEnabled = false;
+                NumericUpDownHoldLoopEnd.IsEnabled = false;
                 
                 TextBoxGuide.Text      = "-";
                 TextBoxTouch.Text      = "-";
@@ -73,8 +80,9 @@ public partial class SettingsAudioView : UserControl
                 IconSoundMetronomeNotFound.IsVisible  = false;
             }
             else
-            { 
-                ButtonDeleteSoundpack.IsEnabled = true;
+            {
+                TextBoxName.IsEnabled = true;
+                ButtonDeleteNoteSound.IsEnabled = true;
                 
                 TextBoxGuide.IsEnabled = true;
                 TextBoxTouch.IsEnabled = true;
@@ -94,39 +102,42 @@ public partial class SettingsAudioView : UserControl
                 ButtonPickSoundStartClick.IsEnabled = true;
                 ButtonPickSoundMetronome.IsEnabled = true;
                 
-                TextBoxGuide.Text      = SoundpackSystem.SelectedSoundpack.HitsoundGuidePath;
-                TextBoxTouch.Text      = SoundpackSystem.SelectedSoundpack.HitsoundTouchPath;
-                TextBoxHold.Text       = SoundpackSystem.SelectedSoundpack.HitsoundHoldPath;
-                TextBoxSlide.Text      = SoundpackSystem.SelectedSoundpack.HitsoundSlidePath;
-                TextBoxBonus.Text      = SoundpackSystem.SelectedSoundpack.HitsoundBonusPath;
-                TextBoxR.Text          = SoundpackSystem.SelectedSoundpack.HitsoundRPath;
-                TextBoxStartClick.Text = SoundpackSystem.SelectedSoundpack.HitsoundStartClickPath;
-                TextBoxMetronome.Text  = SoundpackSystem.SelectedSoundpack.HitsoundMetronomePath;
+                NumericUpDownHoldLoopStart.IsEnabled = true;
+                NumericUpDownHoldLoopEnd.IsEnabled = true;
                 
-                IconSoundGuideNotFound.IsVisible      = SoundpackSystem.SelectedSoundpack.HitsoundGuidePath      != "" && !File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundGuidePath);
-                IconSoundTouchNotFound.IsVisible      = SoundpackSystem.SelectedSoundpack.HitsoundTouchPath      != "" && !File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundTouchPath);
-                IconSoundHoldNotFound.IsVisible       = SoundpackSystem.SelectedSoundpack.HitsoundHoldPath       != "" && !File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundHoldPath);
-                IconSoundSlideNotFound.IsVisible      = SoundpackSystem.SelectedSoundpack.HitsoundSlidePath      != "" && !File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundSlidePath);
-                IconSoundBonusNotFound.IsVisible      = SoundpackSystem.SelectedSoundpack.HitsoundBonusPath      != "" && !File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundBonusPath);
-                IconSoundRNotFound.IsVisible          = SoundpackSystem.SelectedSoundpack.HitsoundRPath          != "" && !File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundRPath);
-                IconSoundStartClickNotFound.IsVisible = SoundpackSystem.SelectedSoundpack.HitsoundStartClickPath != "" && !File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundStartClickPath);
-                IconSoundMetronomeNotFound.IsVisible  = SoundpackSystem.SelectedSoundpack.HitsoundMetronomePath  != "" && !File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundMetronomePath);
+                TextBoxGuide.Text      = selectedNoteSound.HitsoundGuidePath;
+                TextBoxTouch.Text      = selectedNoteSound.HitsoundTouchPath;
+                TextBoxHold.Text       = selectedNoteSound.HitsoundHoldPath;
+                TextBoxSlide.Text      = selectedNoteSound.HitsoundSlidePath;
+                TextBoxBonus.Text      = selectedNoteSound.HitsoundBonusPath;
+                TextBoxR.Text          = selectedNoteSound.HitsoundRPath;
+                TextBoxStartClick.Text = selectedNoteSound.HitsoundStartClickPath;
+                TextBoxMetronome.Text  = selectedNoteSound.HitsoundMetronomePath;
+                
+                IconSoundGuideNotFound.IsVisible      = selectedNoteSound.HitsoundGuidePath      != "" && !File.Exists(selectedNoteSound.HitsoundGuidePath);
+                IconSoundTouchNotFound.IsVisible      = selectedNoteSound.HitsoundTouchPath      != "" && !File.Exists(selectedNoteSound.HitsoundTouchPath);
+                IconSoundHoldNotFound.IsVisible       = selectedNoteSound.HitsoundHoldPath       != "" && !File.Exists(selectedNoteSound.HitsoundHoldPath);
+                IconSoundSlideNotFound.IsVisible      = selectedNoteSound.HitsoundSlidePath      != "" && !File.Exists(selectedNoteSound.HitsoundSlidePath);
+                IconSoundBonusNotFound.IsVisible      = selectedNoteSound.HitsoundBonusPath      != "" && !File.Exists(selectedNoteSound.HitsoundBonusPath);
+                IconSoundRNotFound.IsVisible          = selectedNoteSound.HitsoundRPath          != "" && !File.Exists(selectedNoteSound.HitsoundRPath);
+                IconSoundStartClickNotFound.IsVisible = selectedNoteSound.HitsoundStartClickPath != "" && !File.Exists(selectedNoteSound.HitsoundStartClickPath);
+                IconSoundMetronomeNotFound.IsVisible  = selectedNoteSound.HitsoundMetronomePath  != "" && !File.Exists(selectedNoteSound.HitsoundMetronomePath);
             }
 
-            ComboBoxSoundpackList.Items.Clear();
+            ComboBoxNoteSoundList.Items.Clear();
             
-            for (int i = -1; i < SoundpackSystem.Soundpacks.Count; i++)
+            for (int i = -1; i < NoteSoundSystem.NoteSounds.Items.Count; i++)
             {
-                Soundpack pack = i == -1 
-                    ? SoundpackSystem.DefaultSoundpack 
-                    : SoundpackSystem.Soundpacks[i];
+                EditorNoteSound pack = i == -1 
+                    ? NoteSoundSystem.DefaultNoteSound 
+                    : NoteSoundSystem.NoteSounds.Items[i];
 
-                ComboBoxItem item = new() { Content = pack.Name, };
-                ComboBoxSoundpackList.Items.Add(item);
+                ComboBoxItem item = new() { Content = pack.Name, Tag = pack };
+                ComboBoxNoteSoundList.Items.Add(item);
             }
 
             // Set selection.
-            ComboBoxSoundpackList.SelectedIndex = SettingsSystem.AudioSettings.SelectedSoundpackIndex + 1;
+            ComboBoxNoteSoundList.SelectedItem = ComboBoxNoteSoundList.Items.FirstOrDefault(x => x is ComboBoxItem item && item.Tag == selectedNoteSound);
             
             blockEvents = false;
         });
@@ -137,7 +148,7 @@ public partial class SettingsAudioView : UserControl
     protected override void OnLoaded(RoutedEventArgs e)
     {
         SettingsSystem.SettingsChanged += OnSettingsChanged;
-        SoundpackSystem.SoundpackPropertyChanged += OnSettingsChanged;
+        NoteSoundSystem.NoteSoundPropertyChanged += OnSettingsChanged;
         
         OnSettingsChanged(null, EventArgs.Empty);
         
@@ -147,25 +158,27 @@ public partial class SettingsAudioView : UserControl
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         SettingsSystem.SettingsChanged -= OnSettingsChanged;
-        SoundpackSystem.SoundpackPropertyChanged -= OnSettingsChanged;
+        NoteSoundSystem.NoteSoundPropertyChanged -= OnSettingsChanged;
         
         base.OnUnloaded(e);
     }
 
-    private void ComboBoxSoundpackList_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    private void ComboBoxNoteSoundList_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (blockEvents) return;
-        
-        SettingsSystem.AudioSettings.SelectedSoundpackIndex = ComboBoxSoundpackList.SelectedIndex - 1;
+        if (ComboBoxNoteSoundList.SelectedItem is not ComboBoxItem comboBoxItem) return;
+        if (comboBoxItem.Tag is not EditorNoteSound editorNoteSound) return;
+
+        SettingsSystem.AudioSettings.NoteSoundId = editorNoteSound.Id;
     }
     
-    private void ButtonAddSoundpack_OnClick(object? sender, RoutedEventArgs e)
+    private void ButtonAddNoteSound_OnClick(object? sender, RoutedEventArgs e)
     {
         try
         {
-            Soundpack pack = new() { Name = "New Sound Pack" };
-            SoundpackSystem.AddSoundpack(pack);
-            SettingsSystem.AudioSettings.SelectedSoundpackIndex = SoundpackSystem.Soundpacks.Count - 1;
+            EditorNoteSound noteSound = new() { Name = "New Note Sound", Id = Guid.NewGuid().ToString() };
+            NoteSoundSystem.AddNoteSound(noteSound);
+            SettingsSystem.AudioSettings.NoteSoundId = noteSound.Id;
         }
         catch (Exception ex)
         {
@@ -174,19 +187,19 @@ public partial class SettingsAudioView : UserControl
         }
     }
 
-    private async void ButtonRemoveSoundpack_OnClick(object? sender, RoutedEventArgs e)
+    private async void ButtonRemoveNoteSound_OnClick(object? sender, RoutedEventArgs e)
     {
         try
         {
             if (VisualRoot is not Window window) return;
-            if (SoundpackSystem.SelectedSoundpack == SoundpackSystem.DefaultSoundpack) return;
+            if (NoteSoundSystem.SelectedNoteSound == NoteSoundSystem.DefaultNoteSound) return;
 
             ModalDialogWindow modalDialog = new()
             {
                 DialogIcon = Icon.Delete,
-                WindowTitleKey = "ModalDialog.DeleteSoundpack.Title",
-                HeaderKey = "ModalDialog.DeleteSoundpack.Header",
-                ParagraphKey = "ModalDialog.DeleteSoundpack.Paragraph",
+                WindowTitleKey = "ModalDialog.DeleteNoteSound.Title",
+                HeaderKey = "ModalDialog.DeleteNoteSound.Header",
+                ParagraphKey = "ModalDialog.DeleteNoteSound.Paragraph",
                 ButtonPrimaryKey = "Generic.Delete",
                 ButtonSecondaryKey = "Generic.Cancel",
             };
@@ -198,10 +211,13 @@ public partial class SettingsAudioView : UserControl
 
             if (modalDialog.Result != ModalDialogResult.Primary) return;
             
-            Soundpack pack = SoundpackSystem.SelectedSoundpack;
-            SoundpackSystem.RemoveSoundpack(pack);
+            EditorNoteSound selectedNoteSound = NoteSoundSystem.SelectedNoteSound;
+            int index = NoteSoundSystem.NoteSounds.Items.IndexOf(selectedNoteSound);
+            
+            NoteSoundSystem.RemoveNoteSound(selectedNoteSound);
+            index = Math.Clamp(index, -1, NoteSoundSystem.NoteSounds.Items.Count - 1);
 
-            SettingsSystem.AudioSettings.SelectedSoundpackIndex = Math.Clamp(SettingsSystem.AudioSettings.SelectedSoundpackIndex, -1, SoundpackSystem.Soundpacks.Count - 1);
+            SettingsSystem.AudioSettings.NoteSoundId = index == -1 ? "" : NoteSoundSystem.NoteSounds.Items[index].Id;
         }
         catch (Exception ex)
         {
@@ -218,7 +234,9 @@ public partial class SettingsAudioView : UserControl
             if (sender is not Button button) return;
             if (VisualRoot is not Window window) return;
 
-            if (SoundpackSystem.SelectedSoundpack == SoundpackSystem.DefaultSoundpack) return;
+            EditorNoteSound selectedNoteSound = NoteSoundSystem.SelectedNoteSound;
+            
+            if (selectedNoteSound == NoteSoundSystem.DefaultNoteSound) return;
             
             string path = "";
 
@@ -250,35 +268,35 @@ public partial class SettingsAudioView : UserControl
 
             if      (button == ButtonPickSoundGuide)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundGuidePath = path;
+                selectedNoteSound.HitsoundGuidePath = path;
             }
             else if (button == ButtonPickSoundTouch)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundTouchPath = path;
+                selectedNoteSound.HitsoundTouchPath = path;
             }
             else if (button == ButtonPickSoundHold)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundHoldPath = path;
+                selectedNoteSound.HitsoundHoldPath = path;
             }
             else if (button == ButtonPickSoundSlide)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundSlidePath = path;
+                selectedNoteSound.HitsoundSlidePath = path;
             }
             else if (button == ButtonPickSoundBonus)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundBonusPath = path;
+                selectedNoteSound.HitsoundBonusPath = path;
             }
             else if (button == ButtonPickSoundR)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundRPath = path;
+                selectedNoteSound.HitsoundRPath = path;
             }
             else if (button == ButtonPickSoundStartClick)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundStartClickPath = path;
+                selectedNoteSound.HitsoundStartClickPath = path;
             }
             else if (button == ButtonPickSoundMetronome)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundMetronomePath = path;
+                selectedNoteSound.HitsoundMetronomePath = path;
             }
         }
         catch (Exception ex)
@@ -295,8 +313,10 @@ public partial class SettingsAudioView : UserControl
             if (blockEvents) return;
             if (sender is not TextBox textBox) return;
             
-            if (SoundpackSystem.SelectedSoundpack == SoundpackSystem.DefaultSoundpack) return;
-            SoundpackSystem.SelectedSoundpack.Name = textBox.Text ?? "";
+            EditorNoteSound selectedNoteSound = NoteSoundSystem.SelectedNoteSound;
+            
+            if (selectedNoteSound == NoteSoundSystem.DefaultNoteSound) return;
+            selectedNoteSound.Name = textBox.Text ?? "";
         }
         catch (Exception ex)
         {
@@ -312,41 +332,43 @@ public partial class SettingsAudioView : UserControl
             if (blockEvents) return;
             if (sender is not TextBox textBox) return;
             
-            if (SoundpackSystem.SelectedSoundpack == SoundpackSystem.DefaultSoundpack) return;
+            EditorNoteSound selectedNoteSound = NoteSoundSystem.SelectedNoteSound;
+            
+            if (selectedNoteSound == NoteSoundSystem.DefaultNoteSound) return;
             
             string path = textBox.Text ?? "";
             
             if      (textBox == TextBoxGuide)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundGuidePath = path;
+                selectedNoteSound.HitsoundGuidePath = path;
             }
             else if (textBox == TextBoxTouch)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundTouchPath = path;
+                selectedNoteSound.HitsoundTouchPath = path;
             }
             else if (textBox == TextBoxHold)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundHoldPath = path;
+                selectedNoteSound.HitsoundHoldPath = path;
             }
             else if (textBox == TextBoxSlide)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundSlidePath = path;
+                selectedNoteSound.HitsoundSlidePath = path;
             }
             else if (textBox == TextBoxBonus)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundBonusPath = path;
+                selectedNoteSound.HitsoundBonusPath = path;
             }
             else if (textBox == TextBoxR)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundRPath = path;
+                selectedNoteSound.HitsoundRPath = path;
             }
             else if (textBox == TextBoxStartClick)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundStartClickPath = path;
+                selectedNoteSound.HitsoundStartClickPath = path;
             }
             else if (textBox == TextBoxMetronome)
             {
-                SoundpackSystem.SelectedSoundpack.HitsoundMetronomePath = path;
+                selectedNoteSound.HitsoundMetronomePath = path;
             }
         }
         catch (Exception ex)
@@ -361,9 +383,10 @@ public partial class SettingsAudioView : UserControl
         if (blockEvents) return;
         if (NumericUpDownHoldLoopStart == null) return;
         
-        if (SoundpackSystem.SelectedSoundpack == SoundpackSystem.DefaultSoundpack) return;
-
-        SoundpackSystem.SelectedSoundpack.HoldLoopStart = (float?)NumericUpDownHoldLoopStart.Value ?? 0;
+        EditorNoteSound selectedNoteSound = NoteSoundSystem.SelectedNoteSound;
+        
+        if (selectedNoteSound == NoteSoundSystem.DefaultNoteSound) return;
+        selectedNoteSound.HoldLoopStart = (float?)NumericUpDownHoldLoopStart.Value ?? 0;
     }
 
     private void NumericUpDownHoldLoopEnd_OnValueChanged(object? sender, NumericUpDownValueChangedEventArgs e)
@@ -371,9 +394,10 @@ public partial class SettingsAudioView : UserControl
         if (blockEvents) return;
         if (NumericUpDownHoldLoopEnd == null) return;
         
-        if (SoundpackSystem.SelectedSoundpack == SoundpackSystem.DefaultSoundpack) return;
+        EditorNoteSound selectedNoteSound = NoteSoundSystem.SelectedNoteSound;
         
-        SoundpackSystem.SelectedSoundpack.HoldLoopEnd = (float?)NumericUpDownHoldLoopEnd.Value ?? 0;
+        if (selectedNoteSound == NoteSoundSystem.DefaultNoteSound) return;
+        selectedNoteSound.HoldLoopEnd = (float?)NumericUpDownHoldLoopEnd.Value ?? 0;
     }
 #endregion UI Event Handlers
 }

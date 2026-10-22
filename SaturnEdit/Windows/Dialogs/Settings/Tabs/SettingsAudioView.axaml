@@ -25,27 +25,27 @@
             <!-- Sound Pack Selector -->
             <Grid ColumnDefinitions="250,35,35">
                 <ComboBox Grid.Column="0"
-                          Name="ComboBoxSoundpackList"
-                          SelectionChanged="ComboBoxSoundpackList_OnSelectionChanged"/>
+                          Name="ComboBoxNoteSoundList"
+                          SelectionChanged="ComboBoxNoteSoundList_OnSelectionChanged"/>
                 
                 <Button Grid.Column="1"
-                        Name="ButtonAddSoundpack"
+                        Name="ButtonAddNoteSound"
                         Classes="Themed Square Outlined"
                         HorizontalAlignment="Right"
-                        Click="ButtonAddSoundpack_OnClick">
+                        Click="ButtonAddNoteSound_OnClick">
                     <ToolTip.Tip>
-                        <TextBlock Text="{DynamicResource Settings.Audio.AddNewSoundpack}" />
+                        <TextBlock Text="{DynamicResource Settings.Audio.AddNewNoteSound}" />
                     </ToolTip.Tip>
                     <icon:FluentIcon Icon="Add" />
                 </Button>
                 
                 <Button Grid.Column="2"
-                        Name="ButtonDeleteSoundpack"
+                        Name="ButtonDeleteNoteSound"
                         Classes="Themed Square Outlined"
                         HorizontalAlignment="Right"
-                        Click="ButtonRemoveSoundpack_OnClick">
+                        Click="ButtonRemoveNoteSound_OnClick">
                     <ToolTip.Tip>
-                        <TextBlock Text="{DynamicResource Settings.Audio.DeleteSoundpack}" />
+                        <TextBlock Text="{DynamicResource Settings.Audio.DeleteNoteSound}" />
                     </ToolTip.Tip>
                     <icon:FluentIcon Icon="Delete" />
                 </Button>
@@ -61,7 +61,7 @@
                 <TextBlock Grid.Row="0"
                            Grid.Column="0"
                            VerticalAlignment="Center"
-                           Text="{DynamicResource Settings.Audio.SoundpackName}" />
+                           Text="{DynamicResource Settings.Audio.NoteSoundName}" />
                 <TextBox Grid.Row="0"
                          Grid.Column="2"
                          Name="TextBoxName"

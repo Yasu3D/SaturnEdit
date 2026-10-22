@@ -621,9 +621,9 @@
     <system:String x:Key="Settings.General.Other">-</system:String>
     <system:String x:Key="Settings.General.ClickDragThreshold">-</system:String>
     <system:String x:Key="Settings.Audio">-</system:String>
-    <system:String x:Key="Settings.Audio.AddNewSoundpack">-</system:String>
-    <system:String x:Key="Settings.Audio.DeleteSoundpack">-</system:String>
-    <system:String x:Key="Settings.Audio.SoundpackName">-</system:String>
+    <system:String x:Key="Settings.Audio.AddNewNoteSound">-</system:String>
+    <system:String x:Key="Settings.Audio.DeleteNoteSound">-</system:String>
+    <system:String x:Key="Settings.Audio.NoteSoundName">-</system:String>
     <system:String x:Key="Settings.Audio.HoldLoop">-</system:String>
     <system:String x:Key="Settings.Audio.HoldLoopStart">-</system:String>
     <system:String x:Key="Settings.Audio.HoldLoopEnd">-</system:String>
@@ -822,9 +822,9 @@
     <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Title">-</system:String>
     <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Header">-</system:String>
     <system:String x:Key="ModalDialog.PreviewTimestampsInvalid.Paragraph">-</system:String>
-    <system:String x:Key="ModalDialog.DeleteSoundpack.Title">-</system:String>
-    <system:String x:Key="ModalDialog.DeleteSoundpack.Header">-</system:String>
-    <system:String x:Key="ModalDialog.DeleteSoundpack.Paragraph">-</system:String>
+    <system:String x:Key="ModalDialog.DeleteNoteSound.Title">-</system:String>
+    <system:String x:Key="ModalDialog.DeleteNoteSound.Header">-</system:String>
+    <system:String x:Key="ModalDialog.DeleteNoteSound.Paragraph">-</system:String>
     <system:String x:Key="Splash.Website">-</system:String>
     <system:String x:Key="Splash.Documentation">-</system:String>
     <system:String x:Key="Splash.Github">-</system:String>

@@ -93,6 +93,22 @@ public class AudioSettings : ContentItem
     private bool resetAtEnd = false;
 
     [SctLineBreak]
+    [SctKey("HITSOUNDS", 16)]
+    public string NoteSoundId
+    {
+        get => noteSoundId;
+        set
+        {
+            if (noteSoundId == value) return;
+
+            noteSoundId = value;
+            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            HitsoundsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    private string noteSoundId = "";
+
+    [SctLineBreak]
     [SctKey("VOLUME_MASTER", 16)]
     public int MasterVolume
     {
@@ -423,26 +439,4 @@ public class AudioSettings : ContentItem
         }
     }
     private bool muteMetronome = false;
-
-    [SctKey("SOUNDPACK", 16)]
-    public int SelectedSoundpackIndex { get; set; }
-
-    //public string NoteSoundId
-    //{
-    //    get => noteSoundId;
-    //    set
-    //    {
-    //        if (noteSoundId == value) return;
-//
-    //        noteSoundId = value;
-    //        PropertyChanged?.Invoke(null, EventArgs.Empty);
-    //        HitsoundsChanged?.Invoke(null, EventArgs.Empty);
-    //    }
-    //}
-    //private string noteSoundId = "";
-
-    //public NoteSound SelectedNoteSound
-    //{
-    //    //get => throw new NotImplementedException();
-    //}
 }

@@ -1,61 +1,48 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using SaturnData.Content.Cosmetics;
+using SaturnData.Content.Items;
+using SaturnData.Content.Items.Attributes;
+using SaturnData.Content.Lists;
+using SaturnData.Content.Serialization;
 using SaturnEdit.Utilities;
-using Tomlyn;
 
 namespace SaturnEdit.Systems;
 
-public static class SoundpackSystem
+public static class NoteSoundSystem
 {
     public static void Initialize()
     {
-        Directory.CreateDirectory(SoundpacksDirectory);
+        NoteSounds.Load(NoteSoundsDirectory);
         
-        string[] files = Directory.EnumerateFiles(SoundpacksDirectory, "*", SearchOption.TopDirectoryOnly).ToArray();
-        
-        foreach (string file in files)
+        foreach (EditorNoteSound noteSound in NoteSounds.Items)
         {
-            try
-            {
-                string data = File.ReadAllText(file);
-                
-                Soundpack? pack = TomlSerializer.Deserialize<Soundpack>(data);
-                if (pack == null) return;
-                
-                pack.PropertyChanged += Soundpack_OnPropertyChanged;
-
-                Soundpacks.Add(pack);
-            }
-            catch (Exception ex)
-            {
-                // Don't throw.
-                LoggingSystem.WriteSessionLog(ex.ToString());
-            }
+            noteSound.PropertyChanged += NoteSound_OnPropertyChanged;
         }
     }
-    
-    public static event EventHandler? SoundpackPropertyChanged;
-    
-    private static string SoundpacksDirectory => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "Soundpacks");
-    
-    public static List<Soundpack> Soundpacks { get; set; } = [];
-    
-    public static Soundpack SelectedSoundpack
-    {
-        get
-        {
-            if (SettingsSystem.AudioSettings.SelectedSoundpackIndex < 0) return DefaultSoundpack;
-            if (SettingsSystem.AudioSettings.SelectedSoundpackIndex >= Soundpacks.Count) return DefaultSoundpack;
 
-            return Soundpacks[SettingsSystem.AudioSettings.SelectedSoundpackIndex];
-        }
-    }
+    /// <summary>
+    /// Invoked whenever a property of any loaded <see cref="NoteSound"/> changes.
+    /// </summary>
+    public static event EventHandler? NoteSoundPropertyChanged;
+
+    /// <summary>
+    /// The collection of loaded <see cref="EditorNoteSound">EditorNoteSounds</see>.
+    /// </summary>
+    public static ContentList<EditorNoteSound> NoteSounds { get; set; } = new();
     
-    public static readonly Soundpack DefaultSoundpack = new()
+    /// <summary>
+    /// The currently selected <see cref="EditorNoteSound">EditorNoteSounds</see>.
+    /// </summary>
+    public static EditorNoteSound SelectedNoteSound => NoteSounds.TryGetItem(SettingsSystem.AudioSettings.NoteSoundId) ?? DefaultNoteSound;
+    
+    /// <summary>
+    /// The default <see cref="EditorNoteSound"/>, using the built-in sounds.
+    /// </summary>
+    public static readonly EditorNoteSound DefaultNoteSound = new()
     {
         Name = "Default",
+        Id = "default",
         HitsoundGuidePath      = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath) ?? "", "Assets/Sounds/guide.wav"),
         HitsoundTouchPath      = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath) ?? "", "Assets/Sounds/touch.wav"),
         HitsoundHoldPath       = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath) ?? "", "Assets/Sounds/hold.wav"),
@@ -68,38 +55,37 @@ public static class SoundpackSystem
         HoldLoopEnd = 5893,
     };
     
+    private static string NoteSoundsDirectory => Path.Combine(PersistentDataPathHelper.PersistentDataPath, "NoteSounds");
+
 #region Methods
-    public static void AddSoundpack(Soundpack pack)
+    public static void AddNoteSound(EditorNoteSound pack)
     {
-        Soundpacks.Add(pack);
-        pack.PropertyChanged += Soundpack_OnPropertyChanged;
+        NoteSounds.Items.Add(pack);
+        pack.PropertyChanged += NoteSound_OnPropertyChanged;
         
-        WriteSoundpacks();
+        WriteNoteSounds();
     }
 
-    public static void RemoveSoundpack(Soundpack pack)
+    public static void RemoveNoteSound(EditorNoteSound pack)
     {
-        Soundpacks.Remove(pack);
-        pack.PropertyChanged -= Soundpack_OnPropertyChanged;
+        NoteSounds.Items.Remove(pack);
+        pack.PropertyChanged -= NoteSound_OnPropertyChanged;
         
-        WriteSoundpacks();
+        WriteNoteSounds();
     }
 
-    private static void WriteSoundpacks()
+    private static void WriteNoteSounds()
     {
         try
         {
-            Directory.CreateDirectory(SoundpacksDirectory);
-            DirectoryInfo directoryInfo = new(SoundpacksDirectory);
+            Directory.CreateDirectory(NoteSoundsDirectory);
+            DirectoryInfo directoryInfo = new(NoteSoundsDirectory);
 
             foreach (FileInfo file in directoryInfo.GetFiles())
             {
+                if (file.Extension != ".sct") continue;
+                
                 file.Delete();
-            }
-
-            foreach (DirectoryInfo dir in directoryInfo.GetDirectories())
-            {
-                dir.Delete(true);
             }
         }
         catch (Exception ex)
@@ -108,19 +94,19 @@ public static class SoundpackSystem
             LoggingSystem.WriteSessionLog(ex.ToString());
         }
         
-        for (int i = 0; i < Soundpacks.Count; i++)
+        for (int i = 0; i < NoteSounds.Items.Count; i++)
         {
-            Soundpack pack = Soundpacks[i];
+            EditorNoteSound noteSound = NoteSounds.Items[i];
 
             try
             {
-                string filteredName = string.Join("_", pack.Name.Split(Path.GetInvalidFileNameChars()));
+                string filteredName = string.Join("_", noteSound.Name.Split(Path.GetInvalidFileNameChars()));
                 string filename = filteredName == ""
-                    ? $"{i}.toml"
-                    : $"{i}_{filteredName}.toml";
+                    ? $"{i}.sct"
+                    : $"{i}_{filteredName}.sct";
 
-                string path = Path.Combine(SoundpacksDirectory, filename);
-                string data = TomlSerializer.Serialize(pack);
+                string path = Path.Combine(NoteSoundsDirectory, filename);
+                string data = ContentSerializer.ToString(noteSound);
 
                 File.WriteAllText(path, data);
             }
@@ -134,32 +120,20 @@ public static class SoundpackSystem
 #endregion Methods
     
 #region Internal Event Handlers
-    private static void Soundpack_OnPropertyChanged(object? sender, EventArgs e)
+    private static void NoteSound_OnPropertyChanged(object? sender, EventArgs e)
     {
-        SoundpackPropertyChanged?.Invoke(null, EventArgs.Empty);
-        WriteSoundpacks();
+        NoteSoundPropertyChanged?.Invoke(null, EventArgs.Empty);
+        WriteNoteSounds();
     }
 #endregion Internal Event Handlers
 }
 
-[Serializable]
-public class Soundpack
+public class EditorNoteSound : ContentItem
 {
-    public event EventHandler? PropertyChanged;
+    public new event EventHandler? PropertyChanged;
     
-    public string Name
-    {
-        get => name;
-        set
-        {
-            if (name == value) return;
-
-            name = value;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-    private string name = "Note Sounds";
-    
+    [SctLineBreak]
+    [SctKey("GUIDE", 9)]
     public string HitsoundGuidePath
     {
         get => hitsoundGuidePath;
@@ -173,6 +147,7 @@ public class Soundpack
     }
     private string hitsoundGuidePath = "";
     
+    [SctKey("TOUCH", 9)]
     public string HitsoundTouchPath
     {
         get => hitsoundTouchPath;
@@ -186,6 +161,7 @@ public class Soundpack
     }
     private string hitsoundTouchPath = "";
     
+    [SctKey("HOLD", 9)]
     public string HitsoundHoldPath
     {
         get => hitsoundHoldPath;
@@ -199,6 +175,7 @@ public class Soundpack
     }
     private string hitsoundHoldPath = "";
     
+    [SctKey("SLIDE", 9)]
     public string HitsoundSlidePath
     {
         get => hitsoundSlidePath;
@@ -212,6 +189,8 @@ public class Soundpack
     }
     private string hitsoundSlidePath = "";
     
+    [SctLineBreak]
+    [SctKey("BONUS", 9)]
     public string HitsoundBonusPath
     {
         get => hitsoundBonusPath;
@@ -225,6 +204,7 @@ public class Soundpack
     }
     private string hitsoundBonusPath = "";
     
+    [SctKey("R", 9)]
     public string HitsoundRPath
     {
         get => hitsoundRPath;
@@ -238,6 +218,8 @@ public class Soundpack
     }
     private string hitsoundRPath = "";
     
+    [SctLineBreak]
+    [SctKey("CLICK", 9)]
     public string HitsoundStartClickPath
     {
         get => hitsoundStartClickPath;
@@ -251,6 +233,7 @@ public class Soundpack
     }
     private string hitsoundStartClickPath = "";
     
+    [SctKey("METRONOME", 9)]
     public string HitsoundMetronomePath
     {
         get => hitsoundMetronomePath;
@@ -264,6 +247,8 @@ public class Soundpack
     }
     private string hitsoundMetronomePath = "";
     
+    [SctLineBreak]
+    [SctKey("HOLD_LOOP_START", 15)]
     public float HoldLoopStart
     {
         get => holdLoopStart;
@@ -277,6 +262,7 @@ public class Soundpack
     }
     private float holdLoopStart = 1000.0f;
     
+    [SctKey("HOLD_LOOP_END", 15)]
     public float HoldLoopEnd
     {
         get => holdLoopEnd;

@@ -20,7 +20,7 @@ public partial class App : Application
         SoftwareUpdateSystem.Initialize();
         AutosaveSystem.Initialize();
         SettingsSystem.Initialize();
-        SoundpackSystem.Initialize();
+        NoteSoundSystem.Initialize();
         TimeSystem.Initialize();
         CursorSystem.Initialize();
         ChartSystem.Initialize();

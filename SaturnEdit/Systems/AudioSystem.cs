@@ -31,7 +31,7 @@ public static class AudioSystem
         OnVolumeChanged(null, EventArgs.Empty);
 
         SettingsSystem.HitsoundsChanged += OnHitsoundsChanged;
-        SoundpackSystem.SoundpackPropertyChanged += OnHitsoundsChanged;
+        NoteSoundSystem.NoteSoundPropertyChanged += OnHitsoundsChanged;
         OnHitsoundsChanged(null, EventArgs.Empty);
 
         TimeSystem.TimestampSeeked += OnTimestampSeeked;
@@ -62,6 +62,8 @@ public static class AudioSystem
     private static readonly HashSet<Note> ActiveHoldNotes = [];
     
     private static float holdLoopVolumeMultiplier = 1;
+    private static float holdLoopStart = -1;
+    private static float holdLoopEnd = -1;
     
     private static double VolumeMaster     => SettingsSystem.AudioSettings.MuteMaster     ? 0 : DecibelToVolume(SettingsSystem.AudioSettings.MasterVolume);
     private static double VolumeHitsound   => SettingsSystem.AudioSettings.MuteHitsound   ? 0 : VolumeMaster   * DecibelToVolume(SettingsSystem.AudioSettings.HitsoundVolume);
@@ -250,10 +252,10 @@ public static class AudioSystem
                 }
                 else
                 {
-                    if (AudioChannelHold.Position > SoundpackSystem.SelectedSoundpack.HoldLoopEnd)
+                    if (AudioChannelHold.Position > holdLoopEnd)
                     {
                         AudioChannelHold.Playing = true;
-                        AudioChannelHold.Position -= SoundpackSystem.SelectedSoundpack.HoldLoopEnd - SoundpackSystem.SelectedSoundpack.HoldLoopStart;
+                        AudioChannelHold.Position -= holdLoopEnd - holdLoopStart;
                     }
 
                     if (!AudioChannelHold.Playing || holdLoopVolumeMultiplier < 1)
@@ -407,15 +409,20 @@ public static class AudioSystem
         
         try
         {
-            AudioSampleGuide      = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundGuidePath)      ? new(SoundpackSystem.SelectedSoundpack.HitsoundGuidePath)      : null;
-            AudioSampleTouch      = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundTouchPath)      ? new(SoundpackSystem.SelectedSoundpack.HitsoundTouchPath)      : null;
-            AudioSampleSlide      = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundSlidePath)      ? new(SoundpackSystem.SelectedSoundpack.HitsoundSlidePath)      : null;
-            AudioSampleBonus      = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundBonusPath)      ? new(SoundpackSystem.SelectedSoundpack.HitsoundBonusPath)      : null;
-            AudioSampleR          = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundRPath)          ? new(SoundpackSystem.SelectedSoundpack.HitsoundRPath)          : null;
-            AudioSampleStartClick = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundStartClickPath) ? new(SoundpackSystem.SelectedSoundpack.HitsoundStartClickPath) : null;
-            AudioSampleMetronome  = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundMetronomePath)  ? new(SoundpackSystem.SelectedSoundpack.HitsoundMetronomePath)  : null;
+            EditorNoteSound selectedNoteSound = NoteSoundSystem.SelectedNoteSound;
+
+            holdLoopStart = selectedNoteSound.HoldLoopStart;
+            holdLoopEnd = selectedNoteSound.HoldLoopEnd;
             
-            AudioChannelHold = File.Exists(SoundpackSystem.SelectedSoundpack.HitsoundHoldPath) ? new(SoundpackSystem.SelectedSoundpack.HitsoundHoldPath) : null;
+            AudioSampleGuide      = File.Exists(selectedNoteSound.HitsoundGuidePath)      ? new(selectedNoteSound.HitsoundGuidePath)      : null;
+            AudioSampleTouch      = File.Exists(selectedNoteSound.HitsoundTouchPath)      ? new(selectedNoteSound.HitsoundTouchPath)      : null;
+            AudioSampleSlide      = File.Exists(selectedNoteSound.HitsoundSlidePath)      ? new(selectedNoteSound.HitsoundSlidePath)      : null;
+            AudioSampleBonus      = File.Exists(selectedNoteSound.HitsoundBonusPath)      ? new(selectedNoteSound.HitsoundBonusPath)      : null;
+            AudioSampleR          = File.Exists(selectedNoteSound.HitsoundRPath)          ? new(selectedNoteSound.HitsoundRPath)          : null;
+            AudioSampleStartClick = File.Exists(selectedNoteSound.HitsoundStartClickPath) ? new(selectedNoteSound.HitsoundStartClickPath) : null;
+            AudioSampleMetronome  = File.Exists(selectedNoteSound.HitsoundMetronomePath)  ? new(selectedNoteSound.HitsoundMetronomePath)  : null;
+            
+            AudioChannelHold = File.Exists(selectedNoteSound.HitsoundHoldPath) ? new(selectedNoteSound.HitsoundHoldPath) : null;
             
             OnVolumeChanged(null, EventArgs.Empty);
         }
