@@ -333,34 +333,44 @@ public partial class MainWindow : Window
         dialog.InitializeDialog();
         dialog.ShowDialog(Instance);
     }
-    
-    public static async Task<bool> PromptFileMoveAndOverwrite(string sourceFilePath, string projectFilePath)
+
+    public static async Task<(bool, string)> PromptFileMoveAndOverwrite(string rootDirectoryPath, string sourceFilePath)
     {
-        if (sourceFilePath != projectFilePath)
+        string fullRootDirectoryPath = Path.GetFullPath(rootDirectoryPath);
+        string fullSourceFilePath = Path.GetFullPath(sourceFilePath);
+        string finalPath = sourceFilePath;
+        
+        // File is not a child of the root project folder. Prompt file move/copy.
+        if (!fullSourceFilePath.StartsWith(fullRootDirectoryPath))
         {
             ModalDialogResult moveResult = await promptFileMove();
-            if (moveResult is ModalDialogResult.Tertiary or ModalDialogResult.Cancel) return false;
+            if (moveResult is ModalDialogResult.Tertiary or ModalDialogResult.Cancel) return (false, "");
 
+            // Place file at project root.
+            finalPath = Path.Combine(rootDirectoryPath, Path.GetFileName(sourceFilePath));
+            
             // File already exists in root directory. Prompt to overwrite files.
-            if (File.Exists(projectFilePath))
+            if (File.Exists(finalPath))
             {
                 ModalDialogResult overwriteResult = await promptFileOverwrite();
-                if (overwriteResult is ModalDialogResult.Secondary or ModalDialogResult.Cancel) return false;
+                if (overwriteResult is ModalDialogResult.Secondary or ModalDialogResult.Cancel) return (false, "");
             }
             
+            // Copy
             if (moveResult is ModalDialogResult.Primary)
             {
-                // Copy
-                File.Copy(sourceFilePath, projectFilePath, true);
+                File.Copy(sourceFilePath, finalPath, true);
             }
+            // Move
             else if (moveResult is ModalDialogResult.Secondary)
             {
-                // Move
-                File.Move(sourceFilePath, projectFilePath, true);
+                File.Move(sourceFilePath, finalPath, true);
             }
         }
 
-        return true;
+        finalPath = Path.GetRelativePath(fullRootDirectoryPath, finalPath);
+
+        return (true, finalPath);
         
         async Task<ModalDialogResult> promptFileMove()
         {

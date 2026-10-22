@@ -131,14 +131,14 @@ public partial class PlateEditorView : UserControl
             else
             {
                 // Use existing root directory.
-                string directoryPath = Path.GetDirectoryName(plate.AbsoluteSourcePath) ?? "";
-                string localPath = Path.GetRelativePath(directoryPath, files[0].Path.LocalPath);
-                string pathFromRootDirectory = Path.Combine(directoryPath, localPath);
-
+                string rootDirectoryPath = Path.GetDirectoryName(plate.AbsoluteSourcePath) ?? "";
+                string filePath = files[0].Path.LocalPath;
+    
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
-                if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
+                (bool, string) result = await MainWindow.PromptFileMoveAndOverwrite(rootDirectoryPath, filePath);
+                if (!result.Item1) return;
 
-                UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { plate.ImagePath = value; }, plate.ImagePath, localPath));
+                UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(value => { plate.ImagePath = value; }, plate.ImagePath, result.Item2));
             }
         }
         catch (Exception ex)

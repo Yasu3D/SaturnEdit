@@ -646,14 +646,14 @@ public partial class ChartPropertiesView : UserControl
             else
             {
                 // Use existing root directory.
-                string directoryPath = ChartSystem.Entry.RootDirectory;
-                string localPath = Path.GetRelativePath(directoryPath, files[0].Path.LocalPath);
-                string pathFromRootDirectory = Path.Combine(directoryPath, localPath);
-                
+                string rootDirectoryPath = ChartSystem.Entry.RootDirectory;
+                string filePath = files[0].Path.LocalPath;
+    
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
-                if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
+                (bool, string) result = await MainWindow.PromptFileMoveAndOverwrite(rootDirectoryPath, filePath);
+                if (!result.Item1) return;
 
-                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.JacketFile = value; }, ChartSystem.Entry.JacketFile, localPath));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.JacketFile = value; }, ChartSystem.Entry.JacketFile, result.Item2));
             }
         }
         catch (Exception ex)
@@ -694,14 +694,14 @@ public partial class ChartPropertiesView : UserControl
             else
             {
                 // Use existing root directory.
-                string directoryPath = ChartSystem.Entry.RootDirectory;
-                string localPath = Path.GetRelativePath(directoryPath, files[0].Path.LocalPath);
-                string pathFromRootDirectory = Path.Combine(directoryPath, localPath);
-
+                string rootDirectoryPath = ChartSystem.Entry.RootDirectory;
+                string filePath = files[0].Path.LocalPath;
+    
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
-                if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
+                (bool, string) result = await MainWindow.PromptFileMoveAndOverwrite(rootDirectoryPath, filePath);
+                if (!result.Item1) return;
 
-                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.AudioFile = value; }, ChartSystem.Entry.AudioFile, localPath));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.AudioFile = value; }, ChartSystem.Entry.AudioFile, result.Item2));
             }
         }
         catch (Exception ex)
@@ -742,14 +742,14 @@ public partial class ChartPropertiesView : UserControl
             else
             {
                 // Use existing root directory.
-                string directoryPath = ChartSystem.Entry.RootDirectory;
-                string localPath = Path.GetRelativePath(directoryPath, files[0].Path.LocalPath);
-                string pathFromRootDirectory = Path.Combine(directoryPath, localPath);
-
+                string rootDirectoryPath = ChartSystem.Entry.RootDirectory;
+                string filePath = files[0].Path.LocalPath;
+    
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.
-                if (!await MainWindow.PromptFileMoveAndOverwrite(files[0].Path.LocalPath, pathFromRootDirectory)) return;
-                
-                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.VideoFile = value; }, ChartSystem.Entry.VideoFile, localPath));
+                (bool, string) result = await MainWindow.PromptFileMoveAndOverwrite(rootDirectoryPath, filePath);
+                if (!result.Item1) return;
+
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.VideoFile = value; }, ChartSystem.Entry.VideoFile, result.Item2));
             }
         }
         catch (Exception ex)
