@@ -1151,7 +1151,10 @@ public partial class ChartEditorView : UserControl
                     try
                     {
                         string file = SettingsSystem.EditorSettings.RecentChartFiles[i];
-                        string trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
+                        string directory1 = Path.GetDirectoryName(file) ?? "";
+                        string directory2 = Path.GetDirectoryName(directory1) ?? "";
+
+                        string trimmed = Path.Combine(Path.GetFileName(directory2), Path.GetFileName(directory1), Path.GetFileName(file));
 
                         MenuItem item = new()
                         {
