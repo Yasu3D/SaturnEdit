@@ -164,86 +164,38 @@ public partial class MainWindow : Window
         Assembly assembly = Assembly.GetExecutingAssembly();
         FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
         TextBlockVersion.Text = versionInfo.FileVersion;
-        
-        string file;
-        string trimmed;
 
-        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 1)
+        (Button, TextBlock)[] recentFileControls = new[]
         {
-            file = SettingsSystem.EditorSettings.RecentChartFiles[^1];
-            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
-            TextBlockRecentFile1.Text = trimmed;
+            (ButtonRecentFile1, TextBlockRecentFile1),
+            (ButtonRecentFile2, TextBlockRecentFile2),
+            (ButtonRecentFile3, TextBlockRecentFile3),
+            (ButtonRecentFile4, TextBlockRecentFile4),
+            (ButtonRecentFile5, TextBlockRecentFile5),
+            (ButtonRecentFile6, TextBlockRecentFile6),
+        };
+
+        for (int i = 0; i < 6; i++)
+        {
+            int fileIndex = i + 1;
+            (Button, TextBlock) recentFileControl = recentFileControls[i];
             
-            ButtonRecentFile1.IsVisible = true;
-        }
-        else
-        {
-            ButtonRecentFile1.IsVisible = false;
-        }
-        
-        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 2)
-        {
-            file = SettingsSystem.EditorSettings.RecentChartFiles[^2];
-            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
-            TextBlockRecentFile2.Text = trimmed;
+            if (SettingsSystem.EditorSettings.RecentChartFiles.Count < fileIndex)
+            {
+                recentFileControl.Item1.IsVisible = false;
+                recentFileControl.Item2.Text = "";
+                continue;
+            }
             
-            ButtonRecentFile2.IsVisible = true;
-        }
-        else
-        {
-            ButtonRecentFile2.IsVisible = false;
-        }
-        
-        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 3)
-        {
-            file = SettingsSystem.EditorSettings.RecentChartFiles[^3];
-            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
-            TextBlockRecentFile3.Text = trimmed;
-            
-            ButtonRecentFile3.IsVisible = true;
-        }
-        else
-        {
-            ButtonRecentFile3.IsVisible = false;
-        }
-        
-        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 4)
-        {
-            file = SettingsSystem.EditorSettings.RecentChartFiles[^4];
-            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
-            TextBlockRecentFile4.Text = trimmed;
-            
-            ButtonRecentFile4.IsVisible = true;
-        }
-        else
-        {
-            ButtonRecentFile4.IsVisible = false;
-        }
-        
-        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 5)
-        {
-            file = SettingsSystem.EditorSettings.RecentChartFiles[^5];
-            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
-            TextBlockRecentFile5.Text = trimmed;
-            
-            ButtonRecentFile5.IsVisible = true;
-        }
-        else
-        {
-            ButtonRecentFile5.IsVisible = false;
-        }
-        
-        if (SettingsSystem.EditorSettings.RecentChartFiles.Count >= 6)
-        {
-            file = SettingsSystem.EditorSettings.RecentChartFiles[^6];
-            trimmed = $"{Path.GetFileName(Path.GetDirectoryName(file))}/{Path.GetFileName(file)}";
-            TextBlockRecentFile6.Text = trimmed;
-            
-            ButtonRecentFile6.IsVisible = true;
-        }
-        else
-        {
-            ButtonRecentFile6.IsVisible = false;
+            string file = SettingsSystem.EditorSettings.RecentChartFiles[^fileIndex];
+            string directory1 = Path.GetDirectoryName(file) ?? "";
+            string directory2 = Path.GetDirectoryName(directory1) ?? "";
+
+            string trimmed = Path.Combine(Path.GetFileName(directory2), Path.GetFileName(directory1), Path.GetFileName(file));
+
+            recentFileControl.Item1.IsVisible = true;
+            recentFileControl.Item2.Text = trimmed;
+
         }
         
         Splash.IsVisible = SettingsSystem.EditorSettings.ShowSplashScreen;

@@ -404,6 +404,8 @@ public partial class CosmeticsEditorView : UserControl
                 BorderIcon.IsVisible = true;
                 
                 TextBlockTitle.Text = "TITLE";
+
+                ImageIconShading.IsVisible = icon.EnableShading;
                 
                 try
                 {

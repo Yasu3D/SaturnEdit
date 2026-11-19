@@ -375,6 +375,10 @@ StageEditor.Property.ErrorThreshold,Error Threshold,-,-,-
 StageEditor.Property.ErrorThreshold.Great,GREAT or worse,-,-,Don't translate 'GREAT'
 StageEditor.Property.ErrorThreshold.Good,GOOD or worse,-,-,Don't translate 'GOOD'
 StageEditor.Property.ErrorThreshold.Miss,MISS,-,-,Don't translate 'MISS'
+StageEditor.Property.EmblemBlue,Emblem (BLUE Clear),-,-,-
+StageEditor.Property.EmblemSilver,Emblem (SILVER Clear),-,-,-
+StageEditor.Property.EmblemGold,Emblem (GOLD Clear),-,-,-
+StageEditor.Property.EmblemRainbow,Emblem (RAINBOW Clear),-,-,-
 StageEditor.ToolTip.GenerateNewId,Generate New Id,-,-,-
 StageEditor.ToolTip.GenerateNewId.Description,Generates a new UUID to use as the Stage Id.,-,-,-
 StageEditor.ToolTip.Secret,Secret Song,-,-,-
@@ -409,6 +413,7 @@ CosmeticEditor.ConsoleColor.Property.LedColorsB,LED Color B,-,-,-
 CosmeticEditor.ConsoleColor.Property.LedColorsC,LED Color C,-,-,-
 CosmeticEditor.Emblem.Property.EmblemImage,Emblem Image,-,-,-
 CosmeticEditor.Icon.Property.IconImage,Icon Image,-,-,-
+CosmeticEditor.Icon.Property.EnableShading,Enable Shading,-,-,-
 CosmeticEditor.JudgementLineColor.Property.JudgementLineColorImage,Judgement Line Color Image,-,-,-
 CosmeticEditor.Navigator.Header.Metadata,Metadata,-,-,-
 CosmeticEditor.Navigator.Header.Textures,Textures,-,-,-

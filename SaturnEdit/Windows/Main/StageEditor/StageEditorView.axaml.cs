@@ -347,7 +347,7 @@ public partial class StageEditorView : UserControl
             
             TextBoxStageId.Text = StageSystem.StageUpStage.Id;
             TextBoxStageName.Text = StageSystem.StageUpStage.Name;
-            TextBoxStageImagePath.Text = StageSystem.StageUpStage.ImagePath;
+            TextBoxStageImagePath.Text = StageSystem.StageUpStage.IconImagePath;
 
             TextBoxSongId1.Text = StageSystem.StageUpStage.Song1.EntryId;
             ToggleButtonSecret1.IsChecked = StageSystem.StageUpStage.Song1.Secret;
@@ -368,12 +368,16 @@ public partial class StageEditorView : UserControl
                 _ => 0,
             };
             
-            bool iconExists = File.Exists(StageSystem.StageUpStage.AbsoluteImagePath);
-            IconFileNotFoundWarning.IsVisible = StageSystem.StageUpStage.AbsoluteImagePath != "" && !iconExists;
+            bool iconExists = !File.Exists(StageSystem.StageUpStage.AbsoluteIconImagePath);
+            IconIconFileNotFoundWarning.IsVisible = StageSystem.StageUpStage.AbsoluteIconImagePath != "" && iconExists;
+            IconEmblemBlueFileNotFoundWarning.IsVisible = StageSystem.StageUpStage.AbsoluteEmblemBlueImagePath != "" && !File.Exists(StageSystem.StageUpStage.AbsoluteEmblemBlueImagePath);
+            IconEmblemSilverFileNotFoundWarning.IsVisible = StageSystem.StageUpStage.AbsoluteEmblemSilverImagePath != "" && !File.Exists(StageSystem.StageUpStage.AbsoluteEmblemSilverImagePath);
+            IconEmblemGoldFileNotFoundWarning.IsVisible = StageSystem.StageUpStage.AbsoluteEmblemGoldImagePath != "" && !File.Exists(StageSystem.StageUpStage.AbsoluteEmblemGoldImagePath);
+            IconEmblemRainbowFileNotFoundWarning.IsVisible = StageSystem.StageUpStage.AbsoluteEmblemRainbowImagePath != "" && !File.Exists(StageSystem.StageUpStage.AbsoluteEmblemRainbowImagePath);
             
             try
             {
-                ImageIcon.Source = iconExists ? new Bitmap(StageSystem.StageUpStage.AbsoluteImagePath) : null;
+                ImageIcon.Source = iconExists ? new Bitmap(StageSystem.StageUpStage.AbsoluteIconImagePath) : null;
             }
             catch (Exception ex)
             {
@@ -605,7 +609,7 @@ public partial class StageEditorView : UserControl
         if (blockEvents) return;
         if (TextBoxStageImagePath == null) return;
 
-        string oldIconPath = StageSystem.StageUpStage.ImagePath;
+        string oldIconPath = StageSystem.StageUpStage.IconImagePath;
         string newIconPath = TextBoxStageImagePath.Text ?? "";
         if (oldIconPath == newIconPath)
         {
@@ -614,17 +618,50 @@ public partial class StageEditorView : UserControl
             return;
         }
 
-        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.ImagePath = value; }, oldIconPath, newIconPath));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.IconImagePath = value; }, oldIconPath, newIconPath));
     }
     
-    private async void ButtonPickStageImageFile_OnClick(object? sender, RoutedEventArgs e)
+    private async void ButtonPickImageFile_OnClick(object? sender, RoutedEventArgs e)
     {
         try
         {
             if (blockEvents) return;
-            
+            if (sender is not Button button) return;
+
             TopLevel? topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return;
+
+            string? oldAbsolutePath = null;
+            string? oldLocalPath = null;
+            
+            if (button == ButtonPickStageImageFile)
+            {
+                oldAbsolutePath = StageSystem.StageUpStage.AbsoluteIconImagePath;
+                oldLocalPath = StageSystem.StageUpStage.IconImagePath;
+            }
+            else if (button == ButtonPickStageEmblemBlueImageFile)
+            {
+                oldAbsolutePath = StageSystem.StageUpStage.AbsoluteEmblemBlueImagePath;
+                oldLocalPath = StageSystem.StageUpStage.EmblemBlueImagePath;
+            }
+            else if (button == ButtonPickStageEmblemSilverImageFile)
+            {
+                oldAbsolutePath = StageSystem.StageUpStage.AbsoluteEmblemSilverImagePath;
+                oldLocalPath = StageSystem.StageUpStage.EmblemSilverImagePath;
+            }
+            else if (button == ButtonPickStageEmblemGoldImageFile)
+            {
+                oldAbsolutePath = StageSystem.StageUpStage.AbsoluteEmblemGoldImagePath;
+                oldLocalPath = StageSystem.StageUpStage.EmblemGoldImagePath;
+            }
+            else if (button == ButtonPickStageEmblemRainbowImageFile)
+            {
+                oldAbsolutePath = StageSystem.StageUpStage.AbsoluteEmblemRainbowImagePath;
+                oldLocalPath = StageSystem.StageUpStage.EmblemRainbowImagePath;
+            }
+            
+            if (oldAbsolutePath == null) return;
+            if (oldLocalPath == null) return;
             
             // Open file picker.
             IReadOnlyList<IStorageFile> files = await topLevel.StorageProvider.OpenFilePickerAsync(new()
@@ -640,12 +677,21 @@ public partial class StageEditorView : UserControl
             });
             if (files.Count != 1) return;
             
-            if (StageSystem.StageUpStage.AbsoluteImagePath == files[0].Path.LocalPath)
+            if (oldAbsolutePath == files[0].Path.LocalPath)
             {
                 // Refresh UI in case the file changed, but don't push unnecessary operation.
                 StageBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
                 return;
             }
+            
+            Action<string>? action = null;
+            if      (button == ButtonPickStageImageFile)              { action = value => { StageSystem.StageUpStage.IconImagePath = value; }; }
+            else if (button == ButtonPickStageEmblemBlueImageFile)    { action = value => { StageSystem.StageUpStage.EmblemBlueImagePath = value; }; }
+            else if (button == ButtonPickStageEmblemSilverImageFile)  { action = value => { StageSystem.StageUpStage.EmblemSilverImagePath = value; }; }
+            else if (button == ButtonPickStageEmblemGoldImageFile)    { action = value => { StageSystem.StageUpStage.EmblemGoldImagePath = value; }; }
+            else if (button == ButtonPickStageEmblemRainbowImageFile) { action = value => { StageSystem.StageUpStage.EmblemRainbowImagePath = value; }; }
+            
+            if (action == null) return;
             
             if (StageSystem.StageUpStage.AbsoluteSourcePath == "")
             {
@@ -653,9 +699,9 @@ public partial class StageEditorView : UserControl
                 string newSourcePath = Path.Combine(Path.GetDirectoryName(files[0].Path.LocalPath) ?? "", $"stage{SaturnFileExtensionList.SaturnContentFile}");
 
                 GenericEditOperation<string> op0 = new(value => { StageSystem.StageUpStage.AbsoluteSourcePath = value; }, StageSystem.StageUpStage.AbsoluteSourcePath, newSourcePath);
-                GenericEditOperation<string> op1 = new(value => { StageSystem.StageUpStage.ImagePath = value; }, StageSystem.StageUpStage.ImagePath, Path.GetFileName(files[0].Path.LocalPath));
-                 
-                UndoRedoSystem.StageBranch.Push(new CompositeOperation([op0, op1]));
+                GenericEditOperation<string> op1 = new(action, oldLocalPath, Path.GetFileName(files[0].Path.LocalPath));
+
+                UndoRedoSystem.CosmeticBranch.Push(new CompositeOperation([op0, op1]));
             }
             else
             {
@@ -667,7 +713,7 @@ public partial class StageEditorView : UserControl
                 (bool, string) result = await MainWindow.PromptFileMoveAndOverwrite(rootDirectoryPath, filePath);
                 if (!result.Item1) return;
 
-                UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.ImagePath = value; }, StageSystem.StageUpStage.ImagePath, result.Item2));
+                UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(action, oldLocalPath, result.Item2));
             }
         }
         catch (Exception ex)
@@ -705,7 +751,7 @@ public partial class StageEditorView : UserControl
         if (index == -1) return;
         if (oldEntryId == newEntryId) return;
 
-        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.SongById(index).EntryId = value; }, oldEntryId, newEntryId));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.SongByIndex(index).EntryId = value; }, oldEntryId, newEntryId));
     }
     
     private async void ButtonPickChartFile_OnClick(object? sender, RoutedEventArgs e)
@@ -764,7 +810,7 @@ public partial class StageEditorView : UserControl
             string newEntryId = entry.Id;
             if (oldEntryId == newEntryId) return;
 
-            UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.SongById(index).EntryId = value; }, oldEntryId, newEntryId));
+            UndoRedoSystem.StageBranch.Push(new GenericEditOperation<string>(value => { StageSystem.StageUpStage.SongByIndex(index).EntryId = value; }, oldEntryId, newEntryId));
         }
         catch (Exception ex)
         {
@@ -801,7 +847,7 @@ public partial class StageEditorView : UserControl
         if (index == -1) return;
         if (oldSecret == newSecret) return;
 
-        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<bool>(value => { StageSystem.StageUpStage.SongById(index).Secret = value; }, oldSecret, newSecret));
+        UndoRedoSystem.StageBranch.Push(new GenericEditOperation<bool>(value => { StageSystem.StageUpStage.SongByIndex(index).Secret = value; }, oldSecret, newSecret));
     }
 
     private void TextBoxHealth_OnLostFocus(object? sender, RoutedEventArgs e)

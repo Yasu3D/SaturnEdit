@@ -32,6 +32,7 @@ public partial class IconEditorView : UserControl
             
             TextBoxIconArtist.Text = icon.Artist;
             TextBoxIconImagePath.Text = icon.ImagePath;
+            CheckBoxEnableShading.IsChecked = icon.EnableShading;
             
             bool iconExists = File.Exists(icon.AbsoluteImagePath);
             IconFileNotFoundWarning.IsVisible = icon.AbsoluteImagePath != "" && !iconExists;
@@ -146,6 +147,23 @@ public partial class IconEditorView : UserControl
             // don't throw
             LoggingSystem.WriteSessionLog(ex.ToString());
         }
+    }
+    
+    private void CheckBoxEnableShading_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (CosmeticSystem.CosmeticItem is not Icon icon) return;
+        
+        bool oldValue = icon.EnableShading;
+        bool newValue = CheckBoxEnableShading.IsChecked ?? false;
+        if (oldValue == newValue)
+        {
+            // Refresh UI in case the file changed, but don't push unnecessary operation.
+            CosmeticBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+            return;
+        }
+        
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<bool>(value => { icon.EnableShading = value; }, oldValue, newValue));
     }
 #endregion UI Event Handlers
 }

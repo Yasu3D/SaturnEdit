@@ -378,6 +378,10 @@
     <system:String x:Key="StageEditor.Property.ErrorThreshold.Great">-</system:String>
     <system:String x:Key="StageEditor.Property.ErrorThreshold.Good">-</system:String>
     <system:String x:Key="StageEditor.Property.ErrorThreshold.Miss">-</system:String>
+    <system:String x:Key="StageEditor.Property.EmblemBlue">-</system:String>
+    <system:String x:Key="StageEditor.Property.EmblemSilver">-</system:String>
+    <system:String x:Key="StageEditor.Property.EmblemGold">-</system:String>
+    <system:String x:Key="StageEditor.Property.EmblemRainbow">-</system:String>
     <system:String x:Key="StageEditor.ToolTip.GenerateNewId">-</system:String>
     <system:String x:Key="StageEditor.ToolTip.GenerateNewId.Description">-</system:String>
     <system:String x:Key="StageEditor.ToolTip.Secret">-</system:String>
@@ -412,6 +416,7 @@
     <system:String x:Key="CosmeticEditor.ConsoleColor.Property.LedColorsC">-</system:String>
     <system:String x:Key="CosmeticEditor.Emblem.Property.EmblemImage">-</system:String>
     <system:String x:Key="CosmeticEditor.Icon.Property.IconImage">-</system:String>
+    <system:String x:Key="CosmeticEditor.Icon.Property.EnableShading">-</system:String>
     <system:String x:Key="CosmeticEditor.JudgementLineColor.Property.JudgementLineColorImage">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Header.Metadata">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Header.Textures">-</system:String>

@@ -48,7 +48,6 @@ public partial class NavigatorLineItem : UserControl
             TextBoxAudioFilePath.Text = NavigatorLine.AudioPath;
             TextBoxMessageDuration.Text = (0.001f * NavigatorLine.Duration).ToString("0.000000", CultureInfo.InvariantCulture);
             ComboBoxExpression.SelectedIndex = (int)NavigatorLine.Expression;
-            CheckBoxShowSkipButton.IsChecked = NavigatorLine.ShowSkipButton;
 
             IconFileNotFoundWarning.IsVisible = NavigatorLine.AudioPath != "" && !File.Exists(navigator.AbsoluteAudioPath(NavigatorLine));
             
@@ -187,19 +186,6 @@ public partial class NavigatorLineItem : UserControl
         if (oldValue == newValue) return;
         
         UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<NavigatorExpression>(value => { NavigatorLine.Expression = value; }, oldValue, newValue));
-    }
-
-    private void CheckBoxShowSkipButton_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
-    {
-        if (blockEvents) return;
-        if (NavigatorLine == null) return;
-
-        bool oldValue = NavigatorLine.ShowSkipButton;
-        bool newValue = CheckBoxShowSkipButton.IsChecked ?? false;
-
-        if (oldValue == newValue) return;
-        
-        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<bool>(value => { NavigatorLine.ShowSkipButton = value; }, oldValue, newValue));
     }
 #endregion UI Event Handlers
 }

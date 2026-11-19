@@ -203,10 +203,11 @@
                              LostFocus="TextBoxStageImage_OnLostFocus" />
                     <Button Grid.Row="2"
                             Grid.Column="3"
+                            Name="ButtonPickStageImageFile"
                             Classes="Themed Square Outlined"
                             HorizontalAlignment="Left"
                             Margin="5,0,0,0"
-                            Click="ButtonPickStageImageFile_OnClick">
+                            Click="ButtonPickImageFile_OnClick">
                         <ToolTip.Tip>
                             <TextBlock Text="{DynamicResource Generic.PickFile}" />
                         </ToolTip.Tip>
@@ -214,7 +215,7 @@
                     </Button>
                     <icon:FluentIcon Grid.Row="2"
                                      Grid.Column="0"
-                                     Name="IconFileNotFoundWarning"
+                                     Name="IconIconFileNotFoundWarning"
                                      HorizontalAlignment="Right"
                                      Margin="0,0,10,0"
                                      Icon="Warning"
@@ -408,6 +409,171 @@
                         <ComboBoxItem Content="{DynamicResource StageEditor.Property.ErrorThreshold.Good}" />
                         <ComboBoxItem Content="{DynamicResource StageEditor.Property.ErrorThreshold.Miss}" />
                     </ComboBox>
+                </Grid>
+                
+                <Rectangle Height="1"
+                           HorizontalAlignment="Stretch"
+                           Fill="{DynamicResource SeparatorPrimary}"
+                           Margin="10,0,10,5" />
+                
+                <Grid RowDefinitions="40,40,40,40"
+                      ColumnDefinitions="165,20,*,50"
+                      Margin="15">
+
+                    <Rectangle Grid.Row="0"
+                               Grid.Column="1"
+                               Grid.RowSpan="4"
+                               Fill="{DynamicResource SeparatorPrimary}"
+                               Width="1"
+                               HorizontalAlignment="Left" />
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource StageEditor.Property.EmblemBlue}" />
+                    <TextBox Grid.Row="0"
+                             Grid.Column="2"
+                             Name="TextBoxStageEmblemBlueImagePath"
+                             Height="30"
+                             LostFocus="TextBoxStageImage_OnLostFocus" />
+                    <Button Grid.Row="0"
+                            Grid.Column="3"
+                            Name="ButtonPickStageEmblemBlueImageFile"
+                            Classes="Themed Square Outlined"
+                            HorizontalAlignment="Left"
+                            Margin="5,0,0,0"
+                            Click="ButtonPickImageFile_OnClick">
+                        <ToolTip.Tip>
+                            <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="FolderOpen" />
+                    </Button>
+                    <icon:FluentIcon Grid.Row="0"
+                                     Grid.Column="0"
+                                     Name="IconEmblemBlueFileNotFoundWarning"
+                                     HorizontalAlignment="Right"
+                                     Margin="0,0,10,0"
+                                     Icon="Warning"
+                                     Foreground="{DynamicResource ForegroundWarning}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                                <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </icon:FluentIcon>
+                    
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource StageEditor.Property.EmblemSilver}" />
+                    <TextBox Grid.Row="1"
+                             Grid.Column="2"
+                             Name="TextBoxStageEmblemSilverImagePath"
+                             Height="30"
+                             LostFocus="TextBoxStageImage_OnLostFocus" />
+                    <Button Grid.Row="1"
+                            Grid.Column="3"
+                            Name="ButtonPickStageEmblemSilverImageFile"
+                            Classes="Themed Square Outlined"
+                            HorizontalAlignment="Left"
+                            Margin="5,0,0,0"
+                            Click="ButtonPickImageFile_OnClick">
+                        <ToolTip.Tip>
+                            <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="FolderOpen" />
+                    </Button>
+                    <icon:FluentIcon Grid.Row="1"
+                                     Grid.Column="0"
+                                     Name="IconEmblemSilverFileNotFoundWarning"
+                                     HorizontalAlignment="Right"
+                                     Margin="0,0,10,0"
+                                     Icon="Warning"
+                                     Foreground="{DynamicResource ForegroundWarning}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                                <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </icon:FluentIcon>
+                    
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource StageEditor.Property.EmblemGold}" />
+                    <TextBox Grid.Row="2"
+                             Grid.Column="2"
+                             Name="TextBoxStageEmblemGoldImagePath"
+                             Height="30"
+                             LostFocus="TextBoxStageImage_OnLostFocus" />
+                    <Button Grid.Row="2"
+                            Grid.Column="3"
+                            Name="ButtonPickStageEmblemGoldImageFile"
+                            Classes="Themed Square Outlined"
+                            HorizontalAlignment="Left"
+                            Margin="5,0,0,0"
+                            Click="ButtonPickImageFile_OnClick">
+                        <ToolTip.Tip>
+                            <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="FolderOpen" />
+                    </Button>
+                    <icon:FluentIcon Grid.Row="2"
+                                     Grid.Column="0"
+                                     Name="IconEmblemGoldFileNotFoundWarning"
+                                     HorizontalAlignment="Right"
+                                     Margin="0,0,10,0"
+                                     Icon="Warning"
+                                     Foreground="{DynamicResource ForegroundWarning}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                                <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </icon:FluentIcon>
+                    
+                    <TextBlock Grid.Row="3"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{DynamicResource StageEditor.Property.EmblemRainbow}" />
+                    <TextBox Grid.Row="3"
+                             Grid.Column="2"
+                             Name="TextBoxStageEmblemRainbowImagePath"
+                             Height="30"
+                             LostFocus="TextBoxStageImage_OnLostFocus" />
+                    <Button Grid.Row="3"
+                            Grid.Column="3"
+                            Name="ButtonPickStageEmblemRainbowImageFile"
+                            Classes="Themed Square Outlined"
+                            HorizontalAlignment="Left"
+                            Margin="5,0,0,0"
+                            Click="ButtonPickImageFile_OnClick">
+                        <ToolTip.Tip>
+                            <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                        </ToolTip.Tip>
+                        <icon:FluentIcon Icon="FolderOpen" />
+                    </Button>
+                    <icon:FluentIcon Grid.Row="3"
+                                     Grid.Column="0"
+                                     Name="IconEmblemRainbowFileNotFoundWarning"
+                                     HorizontalAlignment="Right"
+                                     Margin="0,0,10,0"
+                                     Icon="Warning"
+                                     Foreground="{DynamicResource ForegroundWarning}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                                <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </icon:FluentIcon>
                 </Grid>
             </StackPanel>
 

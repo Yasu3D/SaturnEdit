@@ -378,6 +378,10 @@
     <system:String x:Key="StageEditor.Property.ErrorThreshold.Great">GREAT or worse</system:String>
     <system:String x:Key="StageEditor.Property.ErrorThreshold.Good">GOOD or worse</system:String>
     <system:String x:Key="StageEditor.Property.ErrorThreshold.Miss">MISS</system:String>
+    <system:String x:Key="StageEditor.Property.EmblemBlue">Emblem (BLUE Clear)</system:String>
+    <system:String x:Key="StageEditor.Property.EmblemSilver">Emblem (SILVER Clear)</system:String>
+    <system:String x:Key="StageEditor.Property.EmblemGold">Emblem (GOLD Clear)</system:String>
+    <system:String x:Key="StageEditor.Property.EmblemRainbow">Emblem (RAINBOW Clear)</system:String>
     <system:String x:Key="StageEditor.ToolTip.GenerateNewId">Generate New Id</system:String>
     <system:String x:Key="StageEditor.ToolTip.GenerateNewId.Description">Generates a new UUID to use as the Stage Id.</system:String>
     <system:String x:Key="StageEditor.ToolTip.Secret">Secret Song</system:String>
@@ -412,6 +416,7 @@
     <system:String x:Key="CosmeticEditor.ConsoleColor.Property.LedColorsC">LED Color C</system:String>
     <system:String x:Key="CosmeticEditor.Emblem.Property.EmblemImage">Emblem Image</system:String>
     <system:String x:Key="CosmeticEditor.Icon.Property.IconImage">Icon Image</system:String>
+    <system:String x:Key="CosmeticEditor.Icon.Property.EnableShading">Enable Shading</system:String>
     <system:String x:Key="CosmeticEditor.JudgementLineColor.Property.JudgementLineColorImage">Judgement Line Color Image</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Header.Metadata">Metadata</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Header.Textures">Textures</system:String>

@@ -8,11 +8,11 @@
              d:DesignHeight="220"
              x:Class="SaturnEdit.Controls.NavigatorLineItem">
     <Grid ColumnDefinitions="155,20,*,50"
-          RowDefinitions="40,40,40,40,40"
+          RowDefinitions="40,40,40,40"
           Margin="10">
         <Rectangle Grid.Row="0"
                    Grid.Column="1"
-                   Grid.RowSpan="5"
+                   Grid.RowSpan="4"
                    Fill="{DynamicResource SeparatorPrimary}"
                    Width="1"
                    HorizontalAlignment="Left" />
@@ -92,14 +92,5 @@
             <ComboBoxItem Content="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Smiling}"/>
             <ComboBoxItem Content="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.Expression.Grinning}"/>
         </ComboBox>
-        
-        <TextBlock Grid.Column="0"
-                   Grid.Row="4"
-                   Text="{DynamicResource CosmeticEditor.Navigator.Dialogue.Property.ShowSkipButton}"
-                   VerticalAlignment="Center" />
-        <CheckBox Grid.Column="2"
-                  Grid.Row="4"
-                  Name="CheckBoxShowSkipButton"
-                  IsCheckedChanged="CheckBoxShowSkipButton_OnIsCheckedChanged"/>
     </Grid>
 </UserControl>

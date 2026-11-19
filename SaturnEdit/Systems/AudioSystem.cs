@@ -166,10 +166,7 @@ public static class AudioSystem
                     // Bonus effects on slide notes play hitsounds after a fancy animation. Account for the delay here before discarding passed notes.
                     if (note is SlideClockwiseNote or SlideCounterclockwiseNote && note is IPlayable playableSlide && playableSlide.BonusType == BonusType.Bonus && !PassedBonusSlides.Contains(note))
                     {
-                        float tempo = ChartSystem.Chart.LastTempoChange(note.Timestamp.Time)?.Tempo ?? 120;
-                        float duration = SlideClockwiseNote.BonusEffectDuration(tempo);
-
-                        float bonusEffectTime = note.Timestamp.Time + duration;
+                        float bonusEffectTime = note.Timestamp.Time + playableSlide.GaugeBoostDelay;
 
                         if (bonusEffectTime < TimeSystem.HitsoundTime)
                         {

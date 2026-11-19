@@ -415,6 +415,14 @@
                                Height="128"
                                Stretch="Fill"
                                Margin="-510,115,0,0"/>
+                    <Image Name="ImageIconShading"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="128"
+                               Height="128"
+                               Stretch="Fill"
+                               Margin="-510,115,0,0"
+                               Source="avares://SaturnEdit/Assets/Cosmetics/IconShading.png"/>
                     <Border Name="BorderIcon"
                             Width="128"
                             Height="128"
