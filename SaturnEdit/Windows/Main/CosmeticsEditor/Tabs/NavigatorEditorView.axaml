@@ -168,12 +168,12 @@
                 <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Header.Textures}" />
             </Expander.Header>
 
-            <Grid RowDefinitions="40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,40"
+            <Grid RowDefinitions="40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,50,40,40,40,40,40,40,40,40,40,40"
                   ColumnDefinitions="200,20,*,50"
                   Margin="15">
                 <Rectangle Grid.Row="0"
                            Grid.Column="1"
-                           Grid.RowSpan="32"
+                           Grid.RowSpan="39"
                            Fill="{DynamicResource SeparatorPrimary}"
                            Width="1"
                            HorizontalAlignment="Left" />
@@ -1274,15 +1274,15 @@
                 <TextBlock Grid.Row="29"
                            Grid.Column="0"
                            VerticalAlignment="Center"
-                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.SeeYouA}" />
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.SeeYouStandardGood}" />
                 <TextBox Grid.Row="29"
                          Grid.Column="2"
-                         Name="TextBoxTextureSeeYouAPath"
+                         Name="TextBoxTextureSeeYouStandardGoodPath"
                          Height="18"
                          LostFocus="TextBoxTexturePath_OnLostFocus" />
                 <Button Grid.Row="29"
                         Grid.Column="3"
-                        Name="ButtonTextureSeeYouAPath"
+                        Name="ButtonTextureSeeYouStandardGoodPath"
                         Classes="Themed Square Outlined"
                         HorizontalAlignment="Left"
                         Margin="5,0,0,0"
@@ -1294,7 +1294,7 @@
                 </Button>
                 <icon:FluentIcon Grid.Row="29"
                                  Grid.Column="0"
-                                 Name="IconFileNotFoundWarningSeeYouAPath"
+                                 Name="IconFileNotFoundWarningSeeYouStandardGoodPath"
                                  HorizontalAlignment="Right"
                                  Margin="0,0,10,0"
                                  Icon="Warning"
@@ -1311,15 +1311,15 @@
                 <TextBlock Grid.Row="30"
                            Grid.Column="0"
                            VerticalAlignment="Center"
-                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.SeeYouB}" />
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.SeeYouStandardNeutral}" />
                 <TextBox Grid.Row="30"
                          Grid.Column="2"
-                         Name="TextBoxTextureSeeYouBPath"
+                         Name="TextBoxTextureSeeYouStandardNeutralPath"
                          Height="18"
                          LostFocus="TextBoxTexturePath_OnLostFocus" />
                 <Button Grid.Row="30"
                         Grid.Column="3"
-                        Name="ButtonTextureSeeYouBPath"
+                        Name="ButtonTextureSeeYouStandardNeutralPath"
                         Classes="Themed Square Outlined"
                         HorizontalAlignment="Left"
                         Margin="5,0,0,0"
@@ -1331,7 +1331,7 @@
                 </Button>
                 <icon:FluentIcon Grid.Row="30"
                                  Grid.Column="0"
-                                 Name="IconFileNotFoundWarningSeeYouBPath"
+                                 Name="IconFileNotFoundWarningSeeYouStandardNeutralPath"
                                  HorizontalAlignment="Right"
                                  Margin="0,0,10,0"
                                  Icon="Warning"
@@ -1348,17 +1348,17 @@
                 <TextBlock Grid.Row="31"
                            Grid.Column="0"
                            VerticalAlignment="Center"
-                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.SeeYouC}"
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.SeeYouStandardBad}"
                            Margin="0,0,0,10" />
                 <TextBox Grid.Row="31"
                          Grid.Column="2"
-                         Name="TextBoxTextureSeeYouCPath"
+                         Name="TextBoxTextureSeeYouStandardBadPath"
                          Height="18"
                          Margin="0,0,0,10"
                          LostFocus="TextBoxTexturePath_OnLostFocus" />
                 <Button Grid.Row="31"
                         Grid.Column="3"
-                        Name="ButtonTextureSeeYouCPath"
+                        Name="ButtonTextureSeeYouStandardBadPath"
                         Classes="Themed Square Outlined"
                         HorizontalAlignment="Left"
                         Margin="5,0,0,10"
@@ -1370,7 +1370,276 @@
                 </Button>
                 <icon:FluentIcon Grid.Row="31"
                                  Grid.Column="0"
-                                 Name="IconFileNotFoundWarningSeeYouCPath"
+                                 Name="IconFileNotFoundWarningSeeYouStandardBadPath"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,10,10"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
+                
+                <TextBlock Grid.Row="32"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpClear}"
+                           Margin="0,0,0,10" />
+                <TextBox Grid.Row="31"
+                         Grid.Column="2"
+                         Name="TextBoxTextureSeeYouStageUpClearPath"
+                         Height="18"
+                         Margin="0,0,0,10"
+                         LostFocus="TextBoxTexturePath_OnLostFocus" />
+                <Button Grid.Row="31"
+                        Grid.Column="3"
+                        Name="ButtonTextureSeeYouStageUpClearPath"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,10"
+                        Click="ButtonPickTextureFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <icon:FluentIcon Grid.Row="31"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarningSeeYouStageUpClearPath"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,10,10"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
+                
+                <TextBlock Grid.Row="33"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpFailed}"
+                           Margin="0,0,0,10" />
+                <TextBox Grid.Row="31"
+                         Grid.Column="2"
+                         Name="TextBoxTextureSeeYouStageUpFailedPath"
+                         Height="18"
+                         Margin="0,0,0,10"
+                         LostFocus="TextBoxTexturePath_OnLostFocus" />
+                <Button Grid.Row="31"
+                        Grid.Column="3"
+                        Name="ButtonTextureSeeYouStageUpFailedPath"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,10"
+                        Click="ButtonPickTextureFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <icon:FluentIcon Grid.Row="31"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarningSeeYouStageUpFailedPath"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,10,10"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
+                
+                <TextBlock Grid.Row="34"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.LedSeeYouStandardGood}" />
+                <TextBox Grid.Row="29"
+                         Grid.Column="2"
+                         Name="TextBoxTextureLedSeeYouStandardGoodPath"
+                         Height="18"
+                         LostFocus="TextBoxTexturePath_OnLostFocus" />
+                <Button Grid.Row="29"
+                        Grid.Column="3"
+                        Name="ButtonTextureLedSeeYouStandardGoodPath"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,0"
+                        Click="ButtonPickTextureFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <icon:FluentIcon Grid.Row="29"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarningLedSeeYouStandardGoodPath"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,10,0"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
+
+                <TextBlock Grid.Row="35"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.LedSeeYouStandardNeutral}" />
+                <TextBox Grid.Row="30"
+                         Grid.Column="2"
+                         Name="TextBoxTextureLedSeeYouStandardNeutralPath"
+                         Height="18"
+                         LostFocus="TextBoxTexturePath_OnLostFocus" />
+                <Button Grid.Row="30"
+                        Grid.Column="3"
+                        Name="ButtonTextureLedSeeYouStandardNeutralPath"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,0"
+                        Click="ButtonPickTextureFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <icon:FluentIcon Grid.Row="30"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarningLedSeeYouStandardNeutralPath"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,10,0"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
+
+                <TextBlock Grid.Row="36"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.LedSeeYouStandardBad}"
+                           Margin="0,0,0,10" />
+                <TextBox Grid.Row="31"
+                         Grid.Column="2"
+                         Name="TextBoxTextureLedSeeYouStandardBadPath"
+                         Height="18"
+                         Margin="0,0,0,10"
+                         LostFocus="TextBoxTexturePath_OnLostFocus" />
+                <Button Grid.Row="31"
+                        Grid.Column="3"
+                        Name="ButtonTextureLedSeeYouStandardBadPath"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,10"
+                        Click="ButtonPickTextureFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <icon:FluentIcon Grid.Row="31"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarningLedSeeYouStandardBadPath"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,10,10"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
+                
+                <TextBlock Grid.Row="37"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.LedSeeYouStageUpClear}"
+                           Margin="0,0,0,10" />
+                <TextBox Grid.Row="31"
+                         Grid.Column="2"
+                         Name="TextBoxTextureLedSeeYouStageUpClearPath"
+                         Height="18"
+                         Margin="0,0,0,10"
+                         LostFocus="TextBoxTexturePath_OnLostFocus" />
+                <Button Grid.Row="31"
+                        Grid.Column="3"
+                        Name="ButtonTextureLedSeeYouStageUpClearPath"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,10"
+                        Click="ButtonPickTextureFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <icon:FluentIcon Grid.Row="31"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarningLedSeeYouStageUpClearPath"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,10,10"
+                                 Icon="Warning"
+                                 Foreground="{DynamicResource ForegroundWarning}">
+                    <ToolTip.Tip>
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning}" />
+                            <TextBlock Text="{DynamicResource Generic.FileNotFoundWarning.Description}"
+                                       Foreground="{DynamicResource ForegroundSecondary}" />
+                        </StackPanel>
+                    </ToolTip.Tip>
+                </icon:FluentIcon>
+                
+                <TextBlock Grid.Row="38"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{DynamicResource CosmeticEditor.Navigator.Property.Texture.LedSeeYouStageUpFailed}"
+                           Margin="0,0,0,10" />
+                <TextBox Grid.Row="31"
+                         Grid.Column="2"
+                         Name="TextBoxTextureLedSeeYouStageUpFailedPath"
+                         Height="18"
+                         Margin="0,0,0,10"
+                         LostFocus="TextBoxTexturePath_OnLostFocus" />
+                <Button Grid.Row="31"
+                        Grid.Column="3"
+                        Name="ButtonTextureLedSeeYouStageUpFailedPath"
+                        Classes="Themed Square Outlined"
+                        HorizontalAlignment="Left"
+                        Margin="5,0,0,10"
+                        Click="ButtonPickTextureFile_OnClick">
+                    <ToolTip.Tip>
+                        <TextBlock Text="{DynamicResource Generic.PickFile}" />
+                    </ToolTip.Tip>
+                    <icon:FluentIcon Icon="FolderOpen" />
+                </Button>
+                <icon:FluentIcon Grid.Row="31"
+                                 Grid.Column="0"
+                                 Name="IconFileNotFoundWarningLedSeeYouStageUpFailedPath"
                                  HorizontalAlignment="Right"
                                  Margin="0,0,10,10"
                                  Icon="Warning"

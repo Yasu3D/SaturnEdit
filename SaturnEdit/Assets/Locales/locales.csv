@@ -134,7 +134,7 @@ ChartEditor.ChartProperties.BackgroundOption.Version3,Version 3,バージョン3
 ChartEditor.ChartProperties.BackgroundOption.Version2,Version 2,バージョン2,-,-
 ChartEditor.ChartProperties.BackgroundOption.Version1,Version 1,バージョン1,-,-
 ChartEditor.ChartProperties.BackgroundOption.Boss,Boss,ボス,-,"Boss as in 'Final Boss', 'Opponent'"
-ChartEditor.ChartProperties.BackgroundOption.StageUp,Stage Up,ステージアップ,-,Transliteration preferred.
+ChartEditor.ChartProperties.BackgroundOption.StageUp,Stage-Up,ステージアップ,-,Transliteration preferred.
 ChartEditor.ChartProperties.BackgroundOption.WorldsEnd,World's End,World's End,World's End,Don't translate.
 ChartEditor.ChartProperties.BackgroundOption.Jacket,Jacket,-,-,-
 ChartEditor.ChartProperties.ToolTip.PlayPreview,Play Preview,-,-,-
@@ -434,9 +434,16 @@ CosmeticEditor.Navigator.Property.BlinkInterval,Blink Interval,-,-,-
 CosmeticEditor.Navigator.Property.BlinkDuration,Blink Duration,-,-,-
 CosmeticEditor.Navigator.Property.Texture.Icon,Navigator Icon,-,-,-
 CosmeticEditor.Navigator.Property.Texture.Base,Navigator Base,-,-,-
-CosmeticEditor.Navigator.Property.Texture.SeeYouA,See You (A),-,-,-
-CosmeticEditor.Navigator.Property.Texture.SeeYouB,See You (B),-,-,-
-CosmeticEditor.Navigator.Property.Texture.SeeYouC,See You (C),-,-,-
+CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpClear,See You (Stage-Up Clear),-,-,-
+CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpFailed,See You (Stage-Up Failed),-,-,-
+CosmeticEditor.Navigator.Property.Texture.SeeYouStandardGood,See You (Good),-,-,-
+CosmeticEditor.Navigator.Property.Texture.SeeYouStandardNeutral,See You (Neutral),-,-,-
+CosmeticEditor.Navigator.Property.Texture.SeeYouStandardBad,See You (Bad),-,-,-
+CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpClear,LEDs See You (Stage-Up Clear),-,-,-
+CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpFailed,LEDs See You (Stage-Up Failed),-,-,-
+CosmeticEditor.Navigator.Property.Texture.SeeYouStandardGood,LEDs See You (Good),-,-,-
+CosmeticEditor.Navigator.Property.Texture.SeeYouStandardNeutral,LEDs See You (Neutral),-,-,-
+CosmeticEditor.Navigator.Property.Texture.SeeYouStandardBad,LEDs See You (Bad),-,-,-
 CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.A,Neutral (Eyes Open),-,-,-
 CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.B,Neutral (Eyes Half-Open),-,-,-
 CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.C,Neutral (Eyes Closed),-,-,-
@@ -534,6 +541,8 @@ CosmeticEditor.SystemSound.Property.AudioRhythmGameSpecialClearPath,Rhythm Game 
 CosmeticEditor.SystemSound.Property.AudioTimerWarningPath,Timer Warning Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioTextboxAppearPath,Textbox Appear Audio Path,-,-,-
 CosmeticEditor.SystemSound.Property.AudioMessageAlertPath,Message Alert Audio Path,-,-,-
+CosmeticEditor.SystemSound.Property.AudioWindmillSwitchPath,Windmill Switch Audio Path,-,-,-
+CosmeticEditor.SystemSound.Property.AudioStageUpClearPath,Stage-Up Clear Audio Path,-,-,-
 CosmeticEditor.Title.Property.Message,Title Message,-,-,-
 Main.Window.Title,SATURN EDIT — Main Window,-,-,-
 Main.ToolTip.Update,Update Available!,-,-,-

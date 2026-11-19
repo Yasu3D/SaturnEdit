@@ -436,9 +436,11 @@
     <system:String x:Key="CosmeticEditor.Navigator.Property.BlinkDuration">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Icon">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Base">-</system:String>
-    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouA">-</system:String>
-    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouB">-</system:String>
-    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouC">-</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpClear">-</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpFailed">-</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStandardGood">-</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStandardNeutral">-</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStandardBad">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.A">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.B">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.C">-</system:String>
@@ -536,6 +538,8 @@
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioTimerWarningPath">-</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioTextboxAppearPath">-</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioMessageAlertPath">-</system:String>
+    <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioWindmillSwitchPath">-</system:String>
+    <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioStageUpClearPath">-</system:String>
     <system:String x:Key="CosmeticEditor.Title.Property.Message">-</system:String>
     <system:String x:Key="Main.Window.Title">-</system:String>
     <system:String x:Key="Main.ToolTip.Update">-</system:String>

@@ -61,6 +61,8 @@ public partial class SystemSoundEditorView : UserControl
             TextBoxAudioTimerWarningPath.Text           = systemSound.AudioTimerWarningPath;
             TextBoxAudioTextboxAppearPath.Text          = systemSound.AudioTextboxAppearPath;
             TextBoxAudioMessageAlertPath.Text           = systemSound.AudioMessageAlertPath;
+            TextBoxAudioWindmillSwitchPath.Text         = systemSound.AudioWindmillSwitchPath;
+            TextBoxAudioStageUpClearPath.Text           = systemSound.AudioStageUpClearPath;
 
             IconFileNotFoundWarningAudioLogin.IsVisible                  = systemSound.AudioLoginPath                  != "" && !File.Exists(systemSound.AbsoluteAudioLoginPath);
             IconFileNotFoundWarningAudioLoginCardSuccess.IsVisible       = systemSound.AudioLoginCardSuccessPath       != "" && !File.Exists(systemSound.AbsoluteAudioLoginCardSuccessPath);
@@ -91,7 +93,9 @@ public partial class SystemSoundEditorView : UserControl
             IconFileNotFoundWarningAudioTimerWarning.IsVisible           = systemSound.AudioTimerWarningPath           != "" && !File.Exists(systemSound.AbsoluteAudioTimerWarningPath);
             IconFileNotFoundWarningAudioTextboxAppear.IsVisible          = systemSound.AudioTextboxAppearPath          != "" && !File.Exists(systemSound.AbsoluteAudioTextboxAppearPath);
             IconFileNotFoundWarningAudioMessageAlert.IsVisible           = systemSound.AudioMessageAlertPath           != "" && !File.Exists(systemSound.AbsoluteAudioMessageAlertPath);
-
+            IconFileNotFoundWarningAudioWindmillSwitch.IsVisible         = systemSound.AudioWindmillSwitchPath         != "" && !File.Exists(systemSound.AbsoluteAudioWindmillSwitchPath);
+            IconFileNotFoundWarningAudioStageUpClear.IsVisible           = systemSound.AudioStageUpClearPath           != "" && !File.Exists(systemSound.AbsoluteAudioStageUpClearPath);
+            
             blockEvents = false;
         });
     }
@@ -167,6 +171,8 @@ public partial class SystemSoundEditorView : UserControl
         else if (textBox == TextBoxAudioTimerWarningPath)           { oldValue = systemSound.AudioTimerWarningPath; }
         else if (textBox == TextBoxAudioTextboxAppearPath)          { oldValue = systemSound.AudioTextboxAppearPath; }
         else if (textBox == TextBoxAudioMessageAlertPath)           { oldValue = systemSound.AudioMessageAlertPath; }
+        else if (textBox == TextBoxAudioWindmillSwitchPath)         { oldValue = systemSound.AudioWindmillSwitchPath; }
+        else if (textBox == TextBoxAudioStageUpClearPath)           { oldValue = systemSound.AudioStageUpClearPath; }
         
         string newValue = textBox.Text ?? "";
         if (oldValue == newValue)
@@ -206,6 +212,8 @@ public partial class SystemSoundEditorView : UserControl
         else if (textBox == TextBoxAudioTimerWarningPath)           { action = value => { systemSound.AudioTimerWarningPath = value; }; }
         else if (textBox == TextBoxAudioTextboxAppearPath)          { action = value => { systemSound.AudioTextboxAppearPath = value; }; }
         else if (textBox == TextBoxAudioMessageAlertPath)           { action = value => { systemSound.AudioMessageAlertPath = value; }; }
+        else if (textBox == TextBoxAudioWindmillSwitchPath)         { action = value => { systemSound.AudioWindmillSwitchPath = value; }; }
+        else if (textBox == TextBoxAudioStageUpClearPath)           { action = value => { systemSound.AudioStageUpClearPath = value; }; }
         if (action == null) return;
 
         UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(action, oldValue, newValue));
@@ -364,10 +372,20 @@ public partial class SystemSoundEditorView : UserControl
                 oldAbsolutePath = systemSound.AbsoluteAudioTextboxAppearPath;
                 oldLocalPath = systemSound.AudioTextboxAppearPath;
             }
-            else if (button == ButtonAudioTextboxAppearPath)
+            else if (button == ButtonAudioMessageAlertPath)
             {
                 oldAbsolutePath = systemSound.AbsoluteAudioMessageAlertPath;
                 oldLocalPath = systemSound.AudioMessageAlertPath;
+            }
+            else if (button == ButtonAudioWindmillSwitchPath)
+            {
+                oldAbsolutePath = systemSound.AbsoluteAudioWindmillSwitchPath;
+                oldLocalPath = systemSound.AudioWindmillSwitchPath;
+            }
+            else if (button == ButtonAudioStageUpClearPath)
+            {
+                oldAbsolutePath = systemSound.AbsoluteAudioStageUpClearPath;
+                oldLocalPath = systemSound.AudioStageUpClearPath;
             }
 
             if (oldAbsolutePath == null) return;
@@ -424,6 +442,8 @@ public partial class SystemSoundEditorView : UserControl
             else if (button == ButtonAudioTimerWarningPath)           { action = value => { systemSound.AudioTimerWarningPath = value; }; }
             else if (button == ButtonAudioTextboxAppearPath)          { action = value => { systemSound.AudioTextboxAppearPath = value; }; }
             else if (button == ButtonAudioMessageAlertPath)           { action = value => { systemSound.AudioMessageAlertPath = value; }; }
+            else if (button == ButtonAudioWindmillSwitchPath)         { action = value => { systemSound.AudioWindmillSwitchPath = value; }; }
+            else if (button == ButtonAudioStageUpClearPath)           { action = value => { systemSound.AudioStageUpClearPath = value; }; }
             
             if (action == null) return;
             

@@ -137,7 +137,7 @@
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.Version2">Version 2</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.Version1">Version 1</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.Boss">Boss</system:String>
-    <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.StageUp">Stage Up</system:String>
+    <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.StageUp">Stage-Up</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.WorldsEnd">World's End</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.BackgroundOption.Jacket">Jacket</system:String>
     <system:String x:Key="ChartEditor.ChartProperties.ToolTip.PlayPreview">Play Preview</system:String>
@@ -436,9 +436,11 @@
     <system:String x:Key="CosmeticEditor.Navigator.Property.BlinkDuration">Blink Duration</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Icon">Navigator Icon</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Base">Navigator Base</system:String>
-    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouA">See You (A)</system:String>
-    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouB">See You (B)</system:String>
-    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouC">See You (C)</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpClear">LEDs See You (Stage-Up Clear)</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpFailed">LEDs See You (Stage-Up Failed)</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStandardGood">LEDs See You (Good)</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStandardNeutral">LEDs See You (Neutral)</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStandardBad">LEDs See You (Bad)</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.A">Neutral (Eyes Open)</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.B">Neutral (Eyes Half-Open)</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Expression.Neutral.C">Neutral (Eyes Closed)</system:String>
@@ -536,6 +538,8 @@
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioTimerWarningPath">Timer Warning Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioTextboxAppearPath">Textbox Appear Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioMessageAlertPath">Message Alert Audio Path</system:String>
+    <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioWindmillSwitchPath">Windmill Switch Audio Path</system:String>
+    <system:String x:Key="CosmeticEditor.SystemSound.Property.AudioStageUpClearPath">Stage-Up Clear Audio Path</system:String>
     <system:String x:Key="CosmeticEditor.Title.Property.Message">Title Message</system:String>
     <system:String x:Key="Main.Window.Title">SATURN EDIT — Main Window</system:String>
     <system:String x:Key="Main.ToolTip.Update">Update Available!</system:String>

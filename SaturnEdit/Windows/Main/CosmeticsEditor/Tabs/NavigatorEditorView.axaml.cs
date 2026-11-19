@@ -49,38 +49,45 @@ public partial class NavigatorEditorView : UserControl
             TextBoxBlinkInterval.Text = (0.001f * navigator.BlinkAnimationInterval).ToString("0.000000", CultureInfo.InvariantCulture);
             TextBoxBlinkDuration.Text = (0.001f * navigator.BlinkAnimationDuration).ToString("0.000000", CultureInfo.InvariantCulture);
             
-            TextBoxTextureIconPath.Text           = navigator.TexturePaths.GetValueOrDefault("icon",             "");
-            TextBoxTextureBodyPath.Text           = navigator.TexturePaths.GetValueOrDefault("body",             "");
-            TextBoxTextureFaceNeutralAPath.Text   = navigator.TexturePaths.GetValueOrDefault("face_neutral_a",   "");
-            TextBoxTextureFaceNeutralBPath.Text   = navigator.TexturePaths.GetValueOrDefault("face_neutral_b",   "");
-            TextBoxTextureFaceNeutralCPath.Text   = navigator.TexturePaths.GetValueOrDefault("face_neutral_c",   "");
-            TextBoxTextureFaceAmazedAPath.Text    = navigator.TexturePaths.GetValueOrDefault("face_amazed_a",    "");
-            TextBoxTextureFaceAmazedBPath.Text    = navigator.TexturePaths.GetValueOrDefault("face_amazed_b",    "");
-            TextBoxTextureFaceAmazedCPath.Text    = navigator.TexturePaths.GetValueOrDefault("face_amazed_c",    "");
-            TextBoxTextureFaceTroubledAPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_troubled_a",  "");
-            TextBoxTextureFaceTroubledBPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_troubled_b",  "");
-            TextBoxTextureFaceTroubledCPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_troubled_c",  "");
+            TextBoxTextureIconPath.Text = navigator.TexturePaths.GetValueOrDefault("icon", "");
+            TextBoxTextureBodyPath.Text = navigator.TexturePaths.GetValueOrDefault("body", "");
+            TextBoxTextureFaceNeutralAPath.Text = navigator.TexturePaths.GetValueOrDefault("face_neutral_a", "");
+            TextBoxTextureFaceNeutralBPath.Text = navigator.TexturePaths.GetValueOrDefault("face_neutral_b", "");
+            TextBoxTextureFaceNeutralCPath.Text = navigator.TexturePaths.GetValueOrDefault("face_neutral_c", "");
+            TextBoxTextureFaceAmazedAPath.Text = navigator.TexturePaths.GetValueOrDefault("face_amazed_a", "");
+            TextBoxTextureFaceAmazedBPath.Text = navigator.TexturePaths.GetValueOrDefault("face_amazed_b", "");
+            TextBoxTextureFaceAmazedCPath.Text = navigator.TexturePaths.GetValueOrDefault("face_amazed_c", "");
+            TextBoxTextureFaceTroubledAPath.Text = navigator.TexturePaths.GetValueOrDefault("face_troubled_a", "");
+            TextBoxTextureFaceTroubledBPath.Text = navigator.TexturePaths.GetValueOrDefault("face_troubled_b", "");
+            TextBoxTextureFaceTroubledCPath.Text = navigator.TexturePaths.GetValueOrDefault("face_troubled_c", "");
             TextBoxTextureFaceSurprisedAPath.Text = navigator.TexturePaths.GetValueOrDefault("face_surprised_a", "");
             TextBoxTextureFaceSurprisedBPath.Text = navigator.TexturePaths.GetValueOrDefault("face_surprised_b", "");
             TextBoxTextureFaceSurprisedCPath.Text = navigator.TexturePaths.GetValueOrDefault("face_surprised_c", "");
-            TextBoxTextureFaceStartledAPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_startled_a",  "");
-            TextBoxTextureFaceStartledBPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_startled_b",  "");
-            TextBoxTextureFaceStartledCPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_startled_c",  "");
-            TextBoxTextureFaceAngryAPath.Text     = navigator.TexturePaths.GetValueOrDefault("face_angry_a",     "");
-            TextBoxTextureFaceAngryBPath.Text     = navigator.TexturePaths.GetValueOrDefault("face_angry_b",     "");
-            TextBoxTextureFaceAngryCPath.Text     = navigator.TexturePaths.GetValueOrDefault("face_angry_c",     "");
-            TextBoxTextureFaceLaughingAPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_laughing_a",  "");
-            TextBoxTextureFaceLaughingBPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_laughing_b",  "");
-            TextBoxTextureFaceLaughingCPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_laughing_c",  "");
-            TextBoxTextureFaceSmilingAPath.Text   = navigator.TexturePaths.GetValueOrDefault("face_smiling_a",   "");
-            TextBoxTextureFaceSmilingBPath.Text   = navigator.TexturePaths.GetValueOrDefault("face_smiling_b",   "");
-            TextBoxTextureFaceSmilingCPath.Text   = navigator.TexturePaths.GetValueOrDefault("face_smiling_c",   "");
-            TextBoxTextureFaceGrinningAPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_grinning_a",  "");
-            TextBoxTextureFaceGrinningBPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_grinning_b",  "");
-            TextBoxTextureFaceGrinningCPath.Text  = navigator.TexturePaths.GetValueOrDefault("face_grinning_c",  "");
-            TextBoxTextureSeeYouAPath.Text        = navigator.TexturePaths.GetValueOrDefault("see_you_a",        "");
-            TextBoxTextureSeeYouBPath.Text        = navigator.TexturePaths.GetValueOrDefault("see_you_b",        "");
-            TextBoxTextureSeeYouCPath.Text        = navigator.TexturePaths.GetValueOrDefault("see_you_c",        "");
+            TextBoxTextureFaceStartledAPath.Text = navigator.TexturePaths.GetValueOrDefault("face_startled_a", "");
+            TextBoxTextureFaceStartledBPath.Text = navigator.TexturePaths.GetValueOrDefault("face_startled_b", "");
+            TextBoxTextureFaceStartledCPath.Text = navigator.TexturePaths.GetValueOrDefault("face_startled_c", "");
+            TextBoxTextureFaceAngryAPath.Text = navigator.TexturePaths.GetValueOrDefault("face_angry_a", "");
+            TextBoxTextureFaceAngryBPath.Text = navigator.TexturePaths.GetValueOrDefault("face_angry_b", "");
+            TextBoxTextureFaceAngryCPath.Text = navigator.TexturePaths.GetValueOrDefault("face_angry_c", "");
+            TextBoxTextureFaceLaughingAPath.Text = navigator.TexturePaths.GetValueOrDefault("face_laughing_a", "");
+            TextBoxTextureFaceLaughingBPath.Text = navigator.TexturePaths.GetValueOrDefault("face_laughing_b", "");
+            TextBoxTextureFaceLaughingCPath.Text = navigator.TexturePaths.GetValueOrDefault("face_laughing_c", "");
+            TextBoxTextureFaceSmilingAPath.Text = navigator.TexturePaths.GetValueOrDefault("face_smiling_a", "");
+            TextBoxTextureFaceSmilingBPath.Text = navigator.TexturePaths.GetValueOrDefault("face_smiling_b", "");
+            TextBoxTextureFaceSmilingCPath.Text = navigator.TexturePaths.GetValueOrDefault("face_smiling_c", "");
+            TextBoxTextureFaceGrinningAPath.Text = navigator.TexturePaths.GetValueOrDefault("face_grinning_a", "");
+            TextBoxTextureFaceGrinningBPath.Text = navigator.TexturePaths.GetValueOrDefault("face_grinning_b", "");
+            TextBoxTextureFaceGrinningCPath.Text = navigator.TexturePaths.GetValueOrDefault("face_grinning_c", "");
+            TextBoxTextureSeeYouStandardGoodPath.Text    = navigator.TexturePaths.GetValueOrDefault("seeyou_standard_good", "");
+            TextBoxTextureSeeYouStandardNeutralPath.Text = navigator.TexturePaths.GetValueOrDefault("seeyou_standard_neutral", "");
+            TextBoxTextureSeeYouStandardBadPath.Text     = navigator.TexturePaths.GetValueOrDefault("seeyou_standard_bad", "");
+            TextBoxTextureSeeYouStageUpClearPath.Text    = navigator.TexturePaths.GetValueOrDefault("seeyou_stageup_clear", "");
+            TextBoxTextureSeeYouStageUpFailedPath.Text   = navigator.TexturePaths.GetValueOrDefault("seeyou_stageup_failed", "");
+            TextBoxTextureLedSeeYouStandardGoodPath.Text    = navigator.TexturePaths.GetValueOrDefault("led_seeyou_standard_good", "");
+            TextBoxTextureLedSeeYouStandardNeutralPath.Text = navigator.TexturePaths.GetValueOrDefault("led_seeyou_standard_neutral", "");
+            TextBoxTextureLedSeeYouStandardBadPath.Text     = navigator.TexturePaths.GetValueOrDefault("led_seeyou_standard_bad", "");
+            TextBoxTextureLedSeeYouStageUpClearPath.Text    = navigator.TexturePaths.GetValueOrDefault("led_seeyou_stageup_clear", "");
+            TextBoxTextureLedSeeYouStageUpFailedPath.Text   = navigator.TexturePaths.GetValueOrDefault("led_seeyou_stageup_failed", "");
             
             IconFileNotFoundWarningIconPath.IsVisible           = TextBoxTextureIconPath.Text           != "" && !File.Exists(navigator.AbsoluteTexturePath("icon"));
             IconFileNotFoundWarningBodyPath.IsVisible           = TextBoxTextureBodyPath.Text           != "" && !File.Exists(navigator.AbsoluteTexturePath("body"));
@@ -111,9 +118,16 @@ public partial class NavigatorEditorView : UserControl
             IconFileNotFoundWarningFaceGrinningAPath.IsVisible  = TextBoxTextureFaceGrinningAPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("face_grinning_a"));
             IconFileNotFoundWarningFaceGrinningBPath.IsVisible  = TextBoxTextureFaceGrinningBPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("face_grinning_b"));
             IconFileNotFoundWarningFaceGrinningCPath.IsVisible  = TextBoxTextureFaceGrinningCPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("face_grinning_c"));
-            IconFileNotFoundWarningSeeYouAPath.IsVisible        = TextBoxTextureSeeYouAPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("see_you_a"));
-            IconFileNotFoundWarningSeeYouBPath.IsVisible        = TextBoxTextureSeeYouBPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("see_you_b"));
-            IconFileNotFoundWarningSeeYouCPath.IsVisible        = TextBoxTextureSeeYouCPath.Text  != "" && !File.Exists(navigator.AbsoluteTexturePath("see_you_c"));
+            IconFileNotFoundWarningSeeYouStandardGoodPath.IsVisible    = TextBoxTextureSeeYouStandardGoodPath.Text    != "" && !File.Exists(navigator.AbsoluteTexturePath("seeyou_standard_good"));
+            IconFileNotFoundWarningSeeYouStandardNeutralPath.IsVisible = TextBoxTextureSeeYouStandardNeutralPath.Text != "" && !File.Exists(navigator.AbsoluteTexturePath("seeyou_standard_neutral"));
+            IconFileNotFoundWarningSeeYouStandardBadPath.IsVisible     = TextBoxTextureSeeYouStandardBadPath.Text     != "" && !File.Exists(navigator.AbsoluteTexturePath("seeyou_standard_bad"));
+            IconFileNotFoundWarningSeeYouStageUpClearPath.IsVisible    = TextBoxTextureSeeYouStageUpClearPath.Text    != "" && !File.Exists(navigator.AbsoluteTexturePath("seeyou_stageup_clear"));
+            IconFileNotFoundWarningSeeYouStageUpFailedPath.IsVisible   = TextBoxTextureSeeYouStageUpFailedPath.Text   != "" && !File.Exists(navigator.AbsoluteTexturePath("seeyou_stageup_failed"));
+            IconFileNotFoundWarningLedSeeYouStandardGoodPath.IsVisible    = TextBoxTextureLedSeeYouStandardGoodPath.Text    != "" && !File.Exists(navigator.AbsoluteTexturePath("led_seeyou_standard_good"));
+            IconFileNotFoundWarningLedSeeYouStandardNeutralPath.IsVisible = TextBoxTextureLedSeeYouStandardNeutralPath.Text != "" && !File.Exists(navigator.AbsoluteTexturePath("led_seeyou_standard_neutral"));
+            IconFileNotFoundWarningLedSeeYouStandardBadPath.IsVisible     = TextBoxTextureLedSeeYouStandardBadPath.Text     != "" && !File.Exists(navigator.AbsoluteTexturePath("led_seeyou_standard_bad"));
+            IconFileNotFoundWarningLedSeeYouStageUpClearPath.IsVisible    = TextBoxTextureLedSeeYouStageUpClearPath.Text    != "" && !File.Exists(navigator.AbsoluteTexturePath("led_seeyou_stageup_clear"));
+            IconFileNotFoundWarningLedSeeYouStageUpFailedPath.IsVisible   = TextBoxTextureLedSeeYouStageUpFailedPath.Text   != "" && !File.Exists(navigator.AbsoluteTexturePath("led_seeyou_stageup_failed"));
             
             List<KeyValuePair<string, NavigatorLanguage>> languages = navigator.Writing.Languages.ToList();
             
@@ -573,38 +587,45 @@ public partial class NavigatorEditorView : UserControl
         if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
         
         string oldValue = "";
-        if      (textBox == TextBoxTextureIconPath)           { oldValue = navigator.TexturePaths.GetValueOrDefault("icon",             ""); }
-        else if (textBox == TextBoxTextureBodyPath)           { oldValue = navigator.TexturePaths.GetValueOrDefault("body",             ""); }
-        else if (textBox == TextBoxTextureFaceNeutralAPath)   { oldValue = navigator.TexturePaths.GetValueOrDefault("face_neutral_a",   ""); }
-        else if (textBox == TextBoxTextureFaceNeutralBPath)   { oldValue = navigator.TexturePaths.GetValueOrDefault("face_neutral_b",   ""); }
-        else if (textBox == TextBoxTextureFaceNeutralCPath)   { oldValue = navigator.TexturePaths.GetValueOrDefault("face_neutral_c",   ""); }
-        else if (textBox == TextBoxTextureFaceAmazedAPath)    { oldValue = navigator.TexturePaths.GetValueOrDefault("face_amazed_a",    ""); }
-        else if (textBox == TextBoxTextureFaceAmazedBPath)    { oldValue = navigator.TexturePaths.GetValueOrDefault("face_amazed_b",    ""); }
-        else if (textBox == TextBoxTextureFaceAmazedCPath)    { oldValue = navigator.TexturePaths.GetValueOrDefault("face_amazed_c",    ""); }
-        else if (textBox == TextBoxTextureFaceTroubledAPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_troubled_a",  ""); }
-        else if (textBox == TextBoxTextureFaceTroubledBPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_troubled_b",  ""); }
-        else if (textBox == TextBoxTextureFaceTroubledCPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_troubled_c",  ""); }
+        if      (textBox == TextBoxTextureIconPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("icon", ""); }
+        else if (textBox == TextBoxTextureBodyPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("body", ""); }
+        else if (textBox == TextBoxTextureFaceNeutralAPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_neutral_a", ""); }
+        else if (textBox == TextBoxTextureFaceNeutralBPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_neutral_b", ""); }
+        else if (textBox == TextBoxTextureFaceNeutralCPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_neutral_c", ""); }
+        else if (textBox == TextBoxTextureFaceAmazedAPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_amazed_a", ""); }
+        else if (textBox == TextBoxTextureFaceAmazedBPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_amazed_b", ""); }
+        else if (textBox == TextBoxTextureFaceAmazedCPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_amazed_c", ""); }
+        else if (textBox == TextBoxTextureFaceTroubledAPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_troubled_a", ""); }
+        else if (textBox == TextBoxTextureFaceTroubledBPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_troubled_b", ""); }
+        else if (textBox == TextBoxTextureFaceTroubledCPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_troubled_c", ""); }
         else if (textBox == TextBoxTextureFaceSurprisedAPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_surprised_a", ""); }
         else if (textBox == TextBoxTextureFaceSurprisedBPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_surprised_b", ""); }
         else if (textBox == TextBoxTextureFaceSurprisedCPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_surprised_c", ""); }
-        else if (textBox == TextBoxTextureFaceStartledAPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_startled_a",  ""); }
-        else if (textBox == TextBoxTextureFaceStartledBPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_startled_b",  ""); }
-        else if (textBox == TextBoxTextureFaceStartledCPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_startled_c",  ""); }
-        else if (textBox == TextBoxTextureFaceAngryAPath)     { oldValue = navigator.TexturePaths.GetValueOrDefault("face_angry_a",     ""); }
-        else if (textBox == TextBoxTextureFaceAngryBPath)     { oldValue = navigator.TexturePaths.GetValueOrDefault("face_angry_b",     ""); }
-        else if (textBox == TextBoxTextureFaceAngryCPath)     { oldValue = navigator.TexturePaths.GetValueOrDefault("face_angry_c",     ""); }
-        else if (textBox == TextBoxTextureFaceLaughingAPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_laughing_a",  ""); }
-        else if (textBox == TextBoxTextureFaceLaughingBPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_laughing_b",  ""); }
-        else if (textBox == TextBoxTextureFaceLaughingCPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_laughing_c",  ""); }
-        else if (textBox == TextBoxTextureFaceSmilingAPath)   { oldValue = navigator.TexturePaths.GetValueOrDefault("face_smiling_a",   ""); }
-        else if (textBox == TextBoxTextureFaceSmilingBPath)   { oldValue = navigator.TexturePaths.GetValueOrDefault("face_smiling_b",   ""); }
-        else if (textBox == TextBoxTextureFaceSmilingCPath)   { oldValue = navigator.TexturePaths.GetValueOrDefault("face_smiling_c",   ""); }
-        else if (textBox == TextBoxTextureFaceGrinningAPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_grinning_a",  ""); }
-        else if (textBox == TextBoxTextureFaceGrinningBPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_grinning_b",  ""); }
-        else if (textBox == TextBoxTextureFaceGrinningCPath)  { oldValue = navigator.TexturePaths.GetValueOrDefault("face_grinning_c",  ""); }
-        else if (textBox == TextBoxTextureSeeYouAPath)        { oldValue = navigator.TexturePaths.GetValueOrDefault("see_you_a",        ""); }
-        else if (textBox == TextBoxTextureSeeYouBPath)        { oldValue = navigator.TexturePaths.GetValueOrDefault("see_you_b",        ""); }
-        else if (textBox == TextBoxTextureSeeYouCPath)        { oldValue = navigator.TexturePaths.GetValueOrDefault("see_you_c",        ""); }
+        else if (textBox == TextBoxTextureFaceStartledAPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_startled_a", ""); }
+        else if (textBox == TextBoxTextureFaceStartledBPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_startled_b", ""); }
+        else if (textBox == TextBoxTextureFaceStartledCPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_startled_c", ""); }
+        else if (textBox == TextBoxTextureFaceAngryAPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_angry_a", ""); }
+        else if (textBox == TextBoxTextureFaceAngryBPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_angry_b", ""); }
+        else if (textBox == TextBoxTextureFaceAngryCPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_angry_c", ""); }
+        else if (textBox == TextBoxTextureFaceLaughingAPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_laughing_a", ""); }
+        else if (textBox == TextBoxTextureFaceLaughingBPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_laughing_b", ""); }
+        else if (textBox == TextBoxTextureFaceLaughingCPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_laughing_c", ""); }
+        else if (textBox == TextBoxTextureFaceSmilingAPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_smiling_a", ""); }
+        else if (textBox == TextBoxTextureFaceSmilingBPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_smiling_b", ""); }
+        else if (textBox == TextBoxTextureFaceSmilingCPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_smiling_c", ""); }
+        else if (textBox == TextBoxTextureFaceGrinningAPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_grinning_a", ""); }
+        else if (textBox == TextBoxTextureFaceGrinningBPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_grinning_b", ""); }
+        else if (textBox == TextBoxTextureFaceGrinningCPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("face_grinning_c", ""); }
+        else if (textBox == TextBoxTextureSeeYouStandardGoodPath)    { oldValue = navigator.TexturePaths.GetValueOrDefault("seeyou_standard_good",    ""); }
+        else if (textBox == TextBoxTextureSeeYouStandardNeutralPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("seeyou_standard_neutral", ""); }
+        else if (textBox == TextBoxTextureSeeYouStandardBadPath)     { oldValue = navigator.TexturePaths.GetValueOrDefault("seeyou_standard_bad",     ""); }
+        else if (textBox == TextBoxTextureSeeYouStageUpClearPath)    { oldValue = navigator.TexturePaths.GetValueOrDefault("seeyou_stageup_clear",    ""); }
+        else if (textBox == TextBoxTextureSeeYouStageUpFailedPath)   { oldValue = navigator.TexturePaths.GetValueOrDefault("seeyou_stageup_failed",   ""); }
+        else if (textBox == TextBoxTextureLedSeeYouStandardGoodPath)    { oldValue = navigator.TexturePaths.GetValueOrDefault("led_seeyou_standard_good",    ""); }
+        else if (textBox == TextBoxTextureLedSeeYouStandardNeutralPath) { oldValue = navigator.TexturePaths.GetValueOrDefault("led_seeyou_standard_neutral", ""); }
+        else if (textBox == TextBoxTextureLedSeeYouStandardBadPath)     { oldValue = navigator.TexturePaths.GetValueOrDefault("led_seeyou_standard_bad",     ""); }
+        else if (textBox == TextBoxTextureLedSeeYouStageUpClearPath)    { oldValue = navigator.TexturePaths.GetValueOrDefault("led_seeyou_stageup_clear",    ""); }
+        else if (textBox == TextBoxTextureLedSeeYouStageUpFailedPath)   { oldValue = navigator.TexturePaths.GetValueOrDefault("led_seeyou_stageup_failed",   ""); }
         
         string newValue = textBox.Text ?? "";
         if (oldValue == newValue)
@@ -615,38 +636,45 @@ public partial class NavigatorEditorView : UserControl
         }
 
         Action<string>? action = null;
-        if      (textBox == TextBoxTextureIconPath)           { action = value => { navigator.TexturePaths["icon"] = value; }; }
-        else if (textBox == TextBoxTextureBodyPath)           { action = value => { navigator.TexturePaths["body"] = value; }; }
-        else if (textBox == TextBoxTextureFaceNeutralAPath)   { action = value => { navigator.TexturePaths["face_neutral_a"] = value; }; }
-        else if (textBox == TextBoxTextureFaceNeutralBPath)   { action = value => { navigator.TexturePaths["face_neutral_b"] = value; }; }
-        else if (textBox == TextBoxTextureFaceNeutralCPath)   { action = value => { navigator.TexturePaths["face_neutral_c"] = value; }; }
-        else if (textBox == TextBoxTextureFaceAmazedAPath)    { action = value => { navigator.TexturePaths["face_amazed_a"] = value; }; }
-        else if (textBox == TextBoxTextureFaceAmazedBPath)    { action = value => { navigator.TexturePaths["face_amazed_b"] = value; }; }
-        else if (textBox == TextBoxTextureFaceAmazedCPath)    { action = value => { navigator.TexturePaths["face_amazed_c"] = value; }; }
-        else if (textBox == TextBoxTextureFaceTroubledAPath)  { action = value => { navigator.TexturePaths["face_troubled_a"] = value; }; }
-        else if (textBox == TextBoxTextureFaceTroubledBPath)  { action = value => { navigator.TexturePaths["face_troubled_b"] = value; }; }
-        else if (textBox == TextBoxTextureFaceTroubledCPath)  { action = value => { navigator.TexturePaths["face_troubled_c"] = value; }; }
+        if      (textBox == TextBoxTextureIconPath) { action = value => { navigator.TexturePaths["icon"] = value; }; }
+        else if (textBox == TextBoxTextureBodyPath) { action = value => { navigator.TexturePaths["body"] = value; }; }
+        else if (textBox == TextBoxTextureFaceNeutralAPath) { action = value => { navigator.TexturePaths["face_neutral_a"] = value; }; }
+        else if (textBox == TextBoxTextureFaceNeutralBPath) { action = value => { navigator.TexturePaths["face_neutral_b"] = value; }; }
+        else if (textBox == TextBoxTextureFaceNeutralCPath) { action = value => { navigator.TexturePaths["face_neutral_c"] = value; }; }
+        else if (textBox == TextBoxTextureFaceAmazedAPath) { action = value => { navigator.TexturePaths["face_amazed_a"] = value; }; }
+        else if (textBox == TextBoxTextureFaceAmazedBPath) { action = value => { navigator.TexturePaths["face_amazed_b"] = value; }; }
+        else if (textBox == TextBoxTextureFaceAmazedCPath) { action = value => { navigator.TexturePaths["face_amazed_c"] = value; }; }
+        else if (textBox == TextBoxTextureFaceTroubledAPath) { action = value => { navigator.TexturePaths["face_troubled_a"] = value; }; }
+        else if (textBox == TextBoxTextureFaceTroubledBPath) { action = value => { navigator.TexturePaths["face_troubled_b"] = value; }; }
+        else if (textBox == TextBoxTextureFaceTroubledCPath) { action = value => { navigator.TexturePaths["face_troubled_c"] = value; }; }
         else if (textBox == TextBoxTextureFaceSurprisedAPath) { action = value => { navigator.TexturePaths["face_surprised_a"] = value; }; }
         else if (textBox == TextBoxTextureFaceSurprisedBPath) { action = value => { navigator.TexturePaths["face_surprised_b"] = value; }; }
         else if (textBox == TextBoxTextureFaceSurprisedCPath) { action = value => { navigator.TexturePaths["face_surprised_c"] = value; }; }
-        else if (textBox == TextBoxTextureFaceStartledAPath)  { action = value => { navigator.TexturePaths["face_startled_a"] = value; }; }
-        else if (textBox == TextBoxTextureFaceStartledBPath)  { action = value => { navigator.TexturePaths["face_startled_b"] = value; }; }
-        else if (textBox == TextBoxTextureFaceStartledCPath)  { action = value => { navigator.TexturePaths["face_startled_c"] = value; }; }
-        else if (textBox == TextBoxTextureFaceAngryAPath)     { action = value => { navigator.TexturePaths["face_angry_a"] = value; }; }
-        else if (textBox == TextBoxTextureFaceAngryBPath)     { action = value => { navigator.TexturePaths["face_angry_b"] = value; }; }
-        else if (textBox == TextBoxTextureFaceAngryCPath)     { action = value => { navigator.TexturePaths["face_angry_c"] = value; }; }
-        else if (textBox == TextBoxTextureFaceLaughingAPath)  { action = value => { navigator.TexturePaths["face_laughing_a"] = value; }; }
-        else if (textBox == TextBoxTextureFaceLaughingBPath)  { action = value => { navigator.TexturePaths["face_laughing_b"] = value; }; }
-        else if (textBox == TextBoxTextureFaceLaughingCPath)  { action = value => { navigator.TexturePaths["face_laughing_c"] = value; }; }
-        else if (textBox == TextBoxTextureFaceSmilingAPath)   { action = value => { navigator.TexturePaths["face_smiling_a"] = value; }; }
-        else if (textBox == TextBoxTextureFaceSmilingBPath)   { action = value => { navigator.TexturePaths["face_smiling_b"] = value; }; }
-        else if (textBox == TextBoxTextureFaceSmilingCPath)   { action = value => { navigator.TexturePaths["face_smiling_c"] = value; }; }
-        else if (textBox == TextBoxTextureFaceGrinningAPath)  { action = value => { navigator.TexturePaths["face_grinning_a"] = value; }; }
-        else if (textBox == TextBoxTextureFaceGrinningBPath)  { action = value => { navigator.TexturePaths["face_grinning_b"] = value; }; }
-        else if (textBox == TextBoxTextureFaceGrinningCPath)  { action = value => { navigator.TexturePaths["face_grinning_c"] = value; }; }
-        else if (textBox == TextBoxTextureSeeYouAPath)        { action = value => { navigator.TexturePaths["see_you_a"] = value; }; }
-        else if (textBox == TextBoxTextureSeeYouBPath)        { action = value => { navigator.TexturePaths["see_you_b"] = value; }; }
-        else if (textBox == TextBoxTextureSeeYouCPath)        { action = value => { navigator.TexturePaths["see_you_c"] = value; }; }
+        else if (textBox == TextBoxTextureFaceStartledAPath) { action = value => { navigator.TexturePaths["face_startled_a"] = value; }; }
+        else if (textBox == TextBoxTextureFaceStartledBPath) { action = value => { navigator.TexturePaths["face_startled_b"] = value; }; }
+        else if (textBox == TextBoxTextureFaceStartledCPath) { action = value => { navigator.TexturePaths["face_startled_c"] = value; }; }
+        else if (textBox == TextBoxTextureFaceAngryAPath) { action = value => { navigator.TexturePaths["face_angry_a"] = value; }; }
+        else if (textBox == TextBoxTextureFaceAngryBPath) { action = value => { navigator.TexturePaths["face_angry_b"] = value; }; }
+        else if (textBox == TextBoxTextureFaceAngryCPath) { action = value => { navigator.TexturePaths["face_angry_c"] = value; }; }
+        else if (textBox == TextBoxTextureFaceLaughingAPath) { action = value => { navigator.TexturePaths["face_laughing_a"] = value; }; }
+        else if (textBox == TextBoxTextureFaceLaughingBPath) { action = value => { navigator.TexturePaths["face_laughing_b"] = value; }; }
+        else if (textBox == TextBoxTextureFaceLaughingCPath) { action = value => { navigator.TexturePaths["face_laughing_c"] = value; }; }
+        else if (textBox == TextBoxTextureFaceSmilingAPath) { action = value => { navigator.TexturePaths["face_smiling_a"] = value; }; }
+        else if (textBox == TextBoxTextureFaceSmilingBPath) { action = value => { navigator.TexturePaths["face_smiling_b"] = value; }; }
+        else if (textBox == TextBoxTextureFaceSmilingCPath) { action = value => { navigator.TexturePaths["face_smiling_c"] = value; }; }
+        else if (textBox == TextBoxTextureFaceGrinningAPath) { action = value => { navigator.TexturePaths["face_grinning_a"] = value; }; }
+        else if (textBox == TextBoxTextureFaceGrinningBPath) { action = value => { navigator.TexturePaths["face_grinning_b"] = value; }; }
+        else if (textBox == TextBoxTextureFaceGrinningCPath) { action = value => { navigator.TexturePaths["face_grinning_c"] = value; }; }
+        else if (textBox == TextBoxTextureSeeYouStandardGoodPath)    { action = value => { navigator.TexturePaths["seeyou_standard_good"] = value; }; }
+        else if (textBox == TextBoxTextureSeeYouStandardNeutralPath) { action = value => { navigator.TexturePaths["seeyou_standard_neutral"] = value; }; }
+        else if (textBox == TextBoxTextureSeeYouStandardBadPath)     { action = value => { navigator.TexturePaths["seeyou_standard_bad"] = value; }; }
+        else if (textBox == TextBoxTextureSeeYouStageUpClearPath)    { action = value => { navigator.TexturePaths["seeyou_stageup_clear"] = value; }; }
+        else if (textBox == TextBoxTextureSeeYouStageUpFailedPath)   { action = value => { navigator.TexturePaths["seeyou_stageup_failed"] = value; }; }
+        else if (textBox == TextBoxTextureLedSeeYouStandardGoodPath)    { action = value => { navigator.TexturePaths["led_seeyou_standard_good"] = value; }; }
+        else if (textBox == TextBoxTextureLedSeeYouStandardNeutralPath) { action = value => { navigator.TexturePaths["led_seeyou_standard_neutral"] = value; }; }
+        else if (textBox == TextBoxTextureLedSeeYouStandardBadPath)     { action = value => { navigator.TexturePaths["led_seeyou_standard_bad"] = value; }; }
+        else if (textBox == TextBoxTextureLedSeeYouStageUpClearPath)    { action = value => { navigator.TexturePaths["led_seeyou_stageup_clear"] = value; }; }
+        else if (textBox == TextBoxTextureLedSeeYouStageUpFailedPath)   { action = value => { navigator.TexturePaths["led_seeyou_stageup_failed"] = value; }; }
 
         if (action == null) return;
         
@@ -665,38 +693,46 @@ public partial class NavigatorEditorView : UserControl
             if (topLevel == null) return;
 
             string? key = null;
-            if      (button == ButtonTextureIconPath)           { key = "icon"; }
-            else if (button == ButtonTextureBodyPath)           { key = "body"; }
-            else if (button == ButtonTextureFaceNeutralAPath)   { key = "face_neutral_a"; }
-            else if (button == ButtonTextureFaceNeutralBPath)   { key = "face_neutral_b"; }
-            else if (button == ButtonTextureFaceNeutralCPath)   { key = "face_neutral_c"; }
-            else if (button == ButtonTextureFaceAmazedAPath)    { key = "face_amazed_a"; }
-            else if (button == ButtonTextureFaceAmazedBPath)    { key = "face_amazed_b"; }
-            else if (button == ButtonTextureFaceAmazedCPath)    { key = "face_amazed_c"; }
-            else if (button == ButtonTextureFaceTroubledAPath)  { key = "face_troubled_a"; }
-            else if (button == ButtonTextureFaceTroubledBPath)  { key = "face_troubled_b"; }
-            else if (button == ButtonTextureFaceTroubledCPath)  { key = "face_troubled_c"; }
+            if      (button == ButtonTextureIconPath) { key = "icon"; }
+            else if (button == ButtonTextureBodyPath) { key = "body"; }
+            else if (button == ButtonTextureFaceNeutralAPath) { key = "face_neutral_a"; }
+            else if (button == ButtonTextureFaceNeutralBPath) { key = "face_neutral_b"; }
+            else if (button == ButtonTextureFaceNeutralCPath) { key = "face_neutral_c"; }
+            else if (button == ButtonTextureFaceAmazedAPath) { key = "face_amazed_a"; }
+            else if (button == ButtonTextureFaceAmazedBPath) { key = "face_amazed_b"; }
+            else if (button == ButtonTextureFaceAmazedCPath) { key = "face_amazed_c"; }
+            else if (button == ButtonTextureFaceTroubledAPath) { key = "face_troubled_a"; }
+            else if (button == ButtonTextureFaceTroubledBPath) { key = "face_troubled_b"; }
+            else if (button == ButtonTextureFaceTroubledCPath) { key = "face_troubled_c"; }
             else if (button == ButtonTextureFaceSurprisedAPath) { key = "face_surprised_a"; }
             else if (button == ButtonTextureFaceSurprisedBPath) { key = "face_surprised_b"; }
             else if (button == ButtonTextureFaceSurprisedCPath) { key = "face_surprised_c"; }
-            else if (button == ButtonTextureFaceStartledAPath)  { key = "face_startled_a"; }
-            else if (button == ButtonTextureFaceStartledBPath)  { key = "face_startled_b"; }
-            else if (button == ButtonTextureFaceStartledCPath)  { key = "face_startled_c"; }
-            else if (button == ButtonTextureFaceAngryAPath)     { key = "face_angry_a"; }
-            else if (button == ButtonTextureFaceAngryBPath)     { key = "face_angry_b"; }
-            else if (button == ButtonTextureFaceAngryCPath)     { key = "face_angry_c"; }
-            else if (button == ButtonTextureFaceLaughingAPath)  { key = "face_laughing_a"; }
-            else if (button == ButtonTextureFaceLaughingBPath)  { key = "face_laughing_b"; }
-            else if (button == ButtonTextureFaceLaughingCPath)  { key = "face_laughing_c"; }
-            else if (button == ButtonTextureFaceSmilingAPath)   { key = "face_smiling_a"; }
-            else if (button == ButtonTextureFaceSmilingBPath)   { key = "face_smiling_b"; }
-            else if (button == ButtonTextureFaceSmilingCPath)   { key = "face_smiling_c"; }
-            else if (button == ButtonTextureFaceGrinningAPath)  { key = "face_grinning_a"; }
-            else if (button == ButtonTextureFaceGrinningBPath)  { key = "face_grinning_b"; }
-            else if (button == ButtonTextureFaceGrinningCPath)  { key = "face_grinning_c"; }
-            else if (button == ButtonTextureSeeYouAPath)        { key = "see_you_a"; }
-            else if (button == ButtonTextureSeeYouBPath)        { key = "see_you_b"; }
-            else if (button == ButtonTextureSeeYouCPath)        { key = "see_you_c"; }
+            else if (button == ButtonTextureFaceStartledAPath) { key = "face_startled_a"; }
+            else if (button == ButtonTextureFaceStartledBPath) { key = "face_startled_b"; }
+            else if (button == ButtonTextureFaceStartledCPath) { key = "face_startled_c"; }
+            else if (button == ButtonTextureFaceAngryAPath) { key = "face_angry_a"; }
+            else if (button == ButtonTextureFaceAngryBPath) { key = "face_angry_b"; }
+            else if (button == ButtonTextureFaceAngryCPath) { key = "face_angry_c"; }
+            else if (button == ButtonTextureFaceLaughingAPath) { key = "face_laughing_a"; }
+            else if (button == ButtonTextureFaceLaughingBPath) { key = "face_laughing_b"; }
+            else if (button == ButtonTextureFaceLaughingCPath) { key = "face_laughing_c"; }
+            else if (button == ButtonTextureFaceSmilingAPath) { key = "face_smiling_a"; }
+            else if (button == ButtonTextureFaceSmilingBPath) { key = "face_smiling_b"; }
+            else if (button == ButtonTextureFaceSmilingCPath) { key = "face_smiling_c"; }
+            else if (button == ButtonTextureFaceGrinningAPath) { key = "face_grinning_a"; }
+            else if (button == ButtonTextureFaceGrinningBPath) { key = "face_grinning_b"; }
+            else if (button == ButtonTextureFaceGrinningCPath) { key = "face_grinning_c"; }
+            else if (button == ButtonTextureSeeYouStandardGoodPath)    { key = "seeyou_standard_good"; }
+            else if (button == ButtonTextureSeeYouStandardNeutralPath) { key = "seeyou_standard_neutral"; }
+            else if (button == ButtonTextureSeeYouStandardBadPath)     { key = "seeyou_standard_bad"; }
+            else if (button == ButtonTextureSeeYouStageUpClearPath)    { key = "seeyou_stageup_clear"; }
+            else if (button == ButtonTextureSeeYouStageUpFailedPath)   { key = "seeyou_stageup_failed"; }
+            else if (button == ButtonTextureLedSeeYouStandardGoodPath)    { key = "led_seeyou_standard_good"; }
+            else if (button == ButtonTextureLedSeeYouStandardNeutralPath) { key = "led_seeyou_standard_neutral"; }
+            else if (button == ButtonTextureLedSeeYouStandardBadPath)     { key = "led_seeyou_standard_bad"; }
+            else if (button == ButtonTextureLedSeeYouStageUpClearPath)    { key = "led_seeyou_stageup_clear"; }
+            else if (button == ButtonTextureLedSeeYouStageUpFailedPath)   { key = "led_seeyou_stageup_failed"; }
+            
             
             if (key == null) return;
             
