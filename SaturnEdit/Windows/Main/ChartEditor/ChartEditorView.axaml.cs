@@ -659,19 +659,10 @@ public partial class ChartEditorView : UserControl
     
     public async void ChartView_AddTutorialMarkerEvent()
     {
-        TutorialMarkerEvent? existingTutorialMarkerEvent = ChartSystem.Chart.Events.LastOrDefault(x => x is TutorialMarkerEvent && x.Timestamp.FullTick <= TimeSystem.Timestamp.FullTick) as TutorialMarkerEvent;
-        
-        string? key = await ShowTutorialMarkerDialog(existingTutorialMarkerEvent?.Key ?? "");
+        string? key = await ShowTutorialMarkerDialog();
         if (key == null) return;
         
-        if (existingTutorialMarkerEvent?.Timestamp.FullTick == TimeSystem.Timestamp.FullTick)
-        {
-            UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { existingTutorialMarkerEvent.Key = value; }, existingTutorialMarkerEvent.Key, key));
-        }
-        else
-        {
-            EditorSystem.Insert_AddTutorialMarker(key);
-        }
+        EditorSystem.Insert_AddTutorialMarker(key);
     }
     
     public async void ChartView_AddSpeedChangeEvent()

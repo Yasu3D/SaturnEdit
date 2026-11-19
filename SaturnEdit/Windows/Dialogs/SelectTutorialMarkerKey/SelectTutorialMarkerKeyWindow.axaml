@@ -30,7 +30,7 @@
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                Margin="10,0"
-                               Text="{DynamicResource SelectSpeed.Window.Title}" />
+                               Text="{DynamicResource SelectTutorialMarkerKey.Window.Title}" />
                 </Border>
             </Grid>
 
