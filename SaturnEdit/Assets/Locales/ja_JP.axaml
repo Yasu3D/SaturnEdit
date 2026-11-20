@@ -492,6 +492,8 @@
     <system:String x:Key="CosmeticEditor.NoteSound.Property.SlideGood">-</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.SnapMarvelous">-</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.SnapGood">-</system:String>
+    <system:String x:Key="CosmeticEditor.NoteSound.Property.HoldMarvelous">-</system:String>
+    <system:String x:Key="CosmeticEditor.NoteSound.Property.HoldGood">-</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.Hold">-</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.ReHold">-</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.Chain">-</system:String>

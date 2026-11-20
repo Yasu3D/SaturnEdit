@@ -41,6 +41,8 @@ public partial class NoteSoundEditorView : UserControl
             TextBoxAudioSlideGoodPath.Text = noteSound.AudioSlideGoodPath;
             TextBoxAudioSnapMarvelousPath.Text = noteSound.AudioSnapMarvelousPath;
             TextBoxAudioSnapGoodPath.Text = noteSound.AudioSnapGoodPath;
+            TextBoxAudioHoldMarvelousPath.Text = noteSound.AudioHoldMarvelousPath;
+            TextBoxAudioHoldGoodPath.Text = noteSound.AudioHoldGoodPath;
             TextBoxAudioHoldPath.Text = noteSound.AudioHoldPath;
             TextBoxAudioReHoldPath.Text = noteSound.AudioReHoldPath;
             TextBoxAudioChainPath.Text = noteSound.AudioChainPath;
@@ -56,6 +58,8 @@ public partial class NoteSoundEditorView : UserControl
             IconFileNotFoundWarningAudioSlideGood.IsVisible = noteSound.AudioSlideGoodPath != "" && !File.Exists(noteSound.AbsoluteAudioSlideGoodPath);
             IconFileNotFoundWarningAudioSnapMarvelous.IsVisible = noteSound.AudioSnapMarvelousPath != "" && !File.Exists(noteSound.AbsoluteAudioSnapMarvelousPath);
             IconFileNotFoundWarningAudioSnapGood.IsVisible = noteSound.AudioSnapGoodPath != "" && !File.Exists(noteSound.AbsoluteAudioSnapGoodPath);
+            IconFileNotFoundWarningAudioHoldMarvelous.IsVisible = noteSound.AudioHoldMarvelousPath != "" && !File.Exists(noteSound.AbsoluteAudioHoldMarvelousPath);
+            IconFileNotFoundWarningAudioHoldGood.IsVisible = noteSound.AudioHoldGoodPath != "" && !File.Exists(noteSound.AbsoluteAudioHoldGoodPath);
             IconFileNotFoundWarningAudioHold.IsVisible = noteSound.AudioHoldPath != "" && !File.Exists(noteSound.AbsoluteAudioHoldPath);
             IconFileNotFoundWarningAudioReHold.IsVisible = noteSound.AudioReHoldPath != "" && !File.Exists(noteSound.AbsoluteAudioReHoldPath);
             IconFileNotFoundWarningAudioChain.IsVisible = noteSound.AudioChainPath != "" && !File.Exists(noteSound.AbsoluteAudioChainPath);
@@ -122,6 +126,8 @@ public partial class NoteSoundEditorView : UserControl
         else if (textBox == TextBoxAudioSlideGoodPath)      { oldValue = noteSound.AudioSlideGoodPath; }
         else if (textBox == TextBoxAudioSnapMarvelousPath)  { oldValue = noteSound.AudioSnapMarvelousPath; }
         else if (textBox == TextBoxAudioSnapGoodPath)       { oldValue = noteSound.AudioSnapGoodPath; }
+        else if (textBox == TextBoxAudioHoldMarvelousPath)  { oldValue = noteSound.AudioHoldMarvelousPath; }
+        else if (textBox == TextBoxAudioHoldGoodPath)       { oldValue = noteSound.AudioHoldGoodPath; }
         else if (textBox == TextBoxAudioHoldPath)           { oldValue = noteSound.AudioHoldPath; }
         else if (textBox == TextBoxAudioReHoldPath)         { oldValue = noteSound.AudioReHoldPath; }
         else if (textBox == TextBoxAudioChainPath)          { oldValue = noteSound.AudioChainPath; }
@@ -146,6 +152,8 @@ public partial class NoteSoundEditorView : UserControl
         else if (textBox == TextBoxAudioSlideGoodPath)      { action = value => { noteSound.AudioSlideGoodPath = value; }; }
         else if (textBox == TextBoxAudioSnapMarvelousPath)  { action = value => { noteSound.AudioSnapMarvelousPath = value; }; }
         else if (textBox == TextBoxAudioSnapGoodPath)       { action = value => { noteSound.AudioSnapGoodPath = value; }; }
+        else if (textBox == TextBoxAudioHoldMarvelousPath)  { action = value => { noteSound.AudioHoldMarvelousPath = value; }; }
+        else if (textBox == TextBoxAudioHoldGoodPath)       { action = value => { noteSound.AudioHoldGoodPath = value; }; }
         else if (textBox == TextBoxAudioHoldPath)           { action = value => { noteSound.AudioHoldPath = value; }; }
         else if (textBox == TextBoxAudioReHoldPath)         { action = value => { noteSound.AudioReHoldPath = value; }; }
         else if (textBox == TextBoxAudioChainPath)          { action = value => { noteSound.AudioChainPath = value; }; }
@@ -211,6 +219,16 @@ public partial class NoteSoundEditorView : UserControl
                 oldAbsolutePath = noteSound.AbsoluteAudioSnapGoodPath;
                 oldLocalPath = noteSound.AudioSnapGoodPath;
             }
+            else if (button == ButtonAudioHoldMarvelousPath)
+            {
+                oldAbsolutePath = noteSound.AbsoluteAudioHoldMarvelousPath;
+                oldLocalPath = noteSound.AudioHoldMarvelousPath;
+            }
+            else if (button == ButtonAudioHoldGoodPath)
+            {
+                oldAbsolutePath = noteSound.AbsoluteAudioHoldGoodPath;
+                oldLocalPath = noteSound.AudioHoldGoodPath;
+            }
             else if (button == ButtonAudioHoldPath)
             {
                 oldAbsolutePath = noteSound.AbsoluteAudioHoldPath;
@@ -275,6 +293,8 @@ public partial class NoteSoundEditorView : UserControl
             else if (button == ButtonAudioSlideGoodPath)      { action = value => { noteSound.AudioSlideGoodPath = value; }; }
             else if (button == ButtonAudioSnapMarvelousPath)  { action = value => { noteSound.AudioSnapMarvelousPath = value; }; }
             else if (button == ButtonAudioSnapGoodPath)       { action = value => { noteSound.AudioSnapGoodPath = value; }; }
+            else if (button == ButtonAudioHoldMarvelousPath)  { action = value => { noteSound.AudioHoldMarvelousPath = value; }; }
+            else if (button == ButtonAudioHoldGoodPath)       { action = value => { noteSound.AudioHoldGoodPath = value; }; }
             else if (button == ButtonAudioHoldPath)           { action = value => { noteSound.AudioHoldPath = value; }; }
             else if (button == ButtonAudioReHoldPath)         { action = value => { noteSound.AudioReHoldPath = value; }; }
             else if (button == ButtonAudioChainPath)          { action = value => { noteSound.AudioChainPath = value; }; }

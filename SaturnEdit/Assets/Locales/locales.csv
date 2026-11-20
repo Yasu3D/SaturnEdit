@@ -495,6 +495,8 @@ CosmeticEditor.NoteSound.Property.SlideMarvelous,Slide (MARVELOUS),-,-,-
 CosmeticEditor.NoteSound.Property.SlideGood,Slide (GOOD),-,-,-
 CosmeticEditor.NoteSound.Property.SnapMarvelous,Snap (MARVELOUS),-,-,-
 CosmeticEditor.NoteSound.Property.SnapGood,Snap (GOOD),-,-,-
+CosmeticEditor.NoteSound.Property.HoldMarvelous,Hold (MARVELOUS),-,-,-
+CosmeticEditor.NoteSound.Property.HoldGood,Hold (GOOD),-,-,-
 CosmeticEditor.NoteSound.Property.Hold,Hold,-,-,-
 CosmeticEditor.NoteSound.Property.ReHold,Re-Hold,-,-,-
 CosmeticEditor.NoteSound.Property.Chain,Chain,-,-,-
