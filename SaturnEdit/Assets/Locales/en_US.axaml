@@ -468,6 +468,7 @@
     <system:String x:Key="CosmeticEditor.Navigator.Property.FaceMarginRight">Face Margin (Right)</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.BlinkInterval">Blink Interval</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.BlinkDuration">Blink Duration</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.IsNoisy">Noisy</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Icon">Navigator Icon</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Base">Navigator Base</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpClear">LEDs See You (Stage-Up Clear)</system:String>

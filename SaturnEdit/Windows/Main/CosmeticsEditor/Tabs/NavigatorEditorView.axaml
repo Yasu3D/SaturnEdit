@@ -15,12 +15,12 @@
                 <TextBlock Text="{DynamicResource CosmeticEditor.Navigator.Header.Metadata}" />
             </Expander.Header>
 
-            <Grid RowDefinitions="40,50,40,50,40,50,40,40,40,50,40,40"
+            <Grid RowDefinitions="40,50,40,50,40,50,40,40,40,50,40,40,10,40"
                   ColumnDefinitions="200,20,*,50"
                   Margin="15">
                 <Rectangle Grid.Row="0"
                            Grid.Column="1"
-                           Grid.RowSpan="12"
+                           Grid.RowSpan="14"
                            Fill="{DynamicResource SeparatorPrimary}"
                            Width="1"
                            HorizontalAlignment="Left" />
@@ -152,6 +152,16 @@
                          Name="TextBoxBlinkDuration"
                          Height="18"
                          LostFocus="TextBoxBlinkDuration_OnLostFocus" />
+                
+                <TextBlock Grid.Row="13"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Navigator.Property.IsNoisy}" />
+                <CheckBox Grid.Row="13"
+                          Grid.Column="2"
+                          Name="CheckBoxIsNoisy"
+                          HorizontalAlignment="Left"
+                          IsCheckedChanged="CheckBoxIsNoisy_OnIsCheckedChanged"/>
             </Grid>
         </Expander>
 

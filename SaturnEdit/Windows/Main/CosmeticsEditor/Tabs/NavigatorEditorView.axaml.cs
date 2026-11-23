@@ -580,6 +580,24 @@ public partial class NavigatorEditorView : UserControl
     }
     
     
+    private void CheckBoxIsNoisy_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        if (blockEvents) return;
+        if (CosmeticSystem.CosmeticItem is not Navigator navigator) return;
+        
+        bool oldValue = navigator.IsNoisy;
+        bool newValue = CheckBoxIsNoisy.IsChecked ?? false;
+        if (oldValue == newValue)
+        {
+            // Refresh UI in case the file changed, but don't push unnecessary operation.
+            CosmeticBranch_OnOperationHistoryChanged(null, EventArgs.Empty);
+            return;
+        }
+        
+        UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<bool>(value => { navigator.IsNoisy = value; }, oldValue, newValue));
+    }
+    
+    
     private void TextBoxTexturePath_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (blockEvents) return;

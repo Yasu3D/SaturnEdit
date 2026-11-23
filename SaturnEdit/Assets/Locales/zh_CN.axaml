@@ -467,6 +467,7 @@
     <system:String x:Key="CosmeticEditor.Navigator.Property.FaceMarginRight">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.BlinkInterval">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.BlinkDuration">-</system:String>
+    <system:String x:Key="CosmeticEditor.Navigator.Property.IsNoisy">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Icon">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.Base">-</system:String>
     <system:String x:Key="CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpClear">-</system:String>

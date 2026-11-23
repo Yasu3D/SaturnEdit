@@ -466,6 +466,7 @@ CosmeticEditor.Navigator.Property.FaceMarginRight,Face Margin (Right),-,-,-
 CosmeticEditor.Navigator.Property.FaceMarginRight,Face Margin (Right),-,-,-
 CosmeticEditor.Navigator.Property.BlinkInterval,Blink Interval,-,-,-
 CosmeticEditor.Navigator.Property.BlinkDuration,Blink Duration,-,-,-
+CosmeticEditor.Navigator.Property.IsNoisy,Noisy,-,-,-
 CosmeticEditor.Navigator.Property.Texture.Icon,Navigator Icon,-,-,-
 CosmeticEditor.Navigator.Property.Texture.Base,Navigator Base,-,-,-
 CosmeticEditor.Navigator.Property.Texture.SeeYouStageUpClear,See You (Stage-Up Clear),-,-,-
