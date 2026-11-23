@@ -3,16 +3,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:icon="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:controls="clr-namespace:SaturnEdit.Controls"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              x:Class="SaturnEdit.Windows.Main.CosmeticsEditor.Tabs.PlateEditorView">
-    <Grid RowDefinitions="40,40"
+    <Grid RowDefinitions="40,40,10,40,40,40,40,10,40,40,40,40"
           ColumnDefinitions="120,20,*,50"
           Margin="15">
         <Rectangle Grid.Row="0"
                    Grid.Column="1"
-                   Grid.RowSpan="2"
+                   Grid.RowSpan="12"
                    Fill="{DynamicResource SeparatorPrimary}"
                    Width="1"
                    HorizontalAlignment="Left" />
@@ -62,5 +63,133 @@
                 </StackPanel>
             </ToolTip.Tip>
         </icon:FluentIcon>
+        
+        <TextBlock Grid.Row="3"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Plate.Property.TitleLabelColor}" />
+        <TextBox Grid.Row="3"
+                 Grid.Column="2"
+                 Name="TextBoxTitleLabelColor"
+                 Height="32"
+                 LostFocus="TextBoxColor_OnLostFocus"/>
+        <controls:SaturnColorPicker Grid.Row="3"
+                                    Grid.Column="3"
+                                    Name="ColorPickerTitleLabelColor"
+                                    HorizontalAlignment="Right"
+                                    ColorPickFinished="ColorPicker_OnColorPickFinished"
+                                    ColorChanged="ColorPicker_OnColorChanged"/>
+        
+        <TextBlock Grid.Row="4"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Plate.Property.LevelLabelColor}" />
+        <TextBox Grid.Row="4"
+                 Grid.Column="2"
+                 Name="TextBoxLevelLabelColor"
+                 Height="32"
+                 LostFocus="TextBoxColor_OnLostFocus"/>
+        <controls:SaturnColorPicker Grid.Row="4"
+                                    Grid.Column="3"
+                                    Name="ColorPickerLevelLabelColor"
+                                    HorizontalAlignment="Right"
+                                    ColorPickFinished="ColorPicker_OnColorPickFinished"
+                                    ColorChanged="ColorPicker_OnColorChanged"/>
+        
+        <TextBlock Grid.Row="5"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Plate.Property.PointLabelColor}" />
+        <TextBox Grid.Row="5"
+                 Grid.Column="2"
+                 Name="TextBoxPointLabelColor"
+                 Height="32"
+                 LostFocus="TextBoxColor_OnLostFocus"/>
+        <controls:SaturnColorPicker Grid.Row="5"
+                                    Grid.Column="3"
+                                    Name="ColorPickerPointLabelColor"
+                                    HorizontalAlignment="Right"
+                                    ColorPickFinished="ColorPicker_OnColorPickFinished"
+                                    ColorChanged="ColorPicker_OnColorChanged"/>
+        
+        <TextBlock Grid.Row="6"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Plate.Property.RatingLabelColor}" />
+        <TextBox Grid.Row="6"
+                 Grid.Column="2"
+                 Name="TextBoxRatingLabelColor"
+                 Height="32"
+                 LostFocus="TextBoxColor_OnLostFocus"/>
+        <controls:SaturnColorPicker Grid.Row="6"
+                                    Grid.Column="3"
+                                    Name="ColorPickerRatingLabelColor"
+                                    HorizontalAlignment="Right"
+                                    ColorPickFinished="ColorPicker_OnColorPickFinished"
+                                    ColorChanged="ColorPicker_OnColorChanged"/>
+        
+        <TextBlock Grid.Row="8"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Plate.Property.TitleColor}" />
+        <TextBox Grid.Row="8"
+                 Grid.Column="2"
+                 Name="TextBoxTitleColor"
+                 Height="32"
+                 LostFocus="TextBoxColor_OnLostFocus"/>
+        <controls:SaturnColorPicker Grid.Row="8"
+                                    Grid.Column="3"
+                                    Name="ColorPickerTitleColor"
+                                    HorizontalAlignment="Right"
+                                    ColorPickFinished="ColorPicker_OnColorPickFinished"
+                                    ColorChanged="ColorPicker_OnColorChanged"/>
+        
+        <TextBlock Grid.Row="9"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Plate.Property.LevelColor}" />
+        <TextBox Grid.Row="9"
+                 Grid.Column="2"
+                 Name="TextBoxLevelColor"
+                 Height="32"
+                 LostFocus="TextBoxColor_OnLostFocus"/>
+        <controls:SaturnColorPicker Grid.Row="9"
+                                    Grid.Column="3"
+                                    Name="ColorPickerLevelColor"
+                                    HorizontalAlignment="Right"
+                                    ColorPickFinished="ColorPicker_OnColorPickFinished"
+                                    ColorChanged="ColorPicker_OnColorChanged"/>
+        
+        <TextBlock Grid.Row="10"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Plate.Property.PointColor}" />
+        <TextBox Grid.Row="10"
+                 Grid.Column="2"
+                 Name="TextBoxPointColor"
+                 Height="32"
+                 LostFocus="TextBoxColor_OnLostFocus"/>
+        <controls:SaturnColorPicker Grid.Row="10"
+                                    Grid.Column="3"
+                                    Name="ColorPickerPointColor"
+                                    HorizontalAlignment="Right"
+                                    ColorPickFinished="ColorPicker_OnColorPickFinished"
+                                    ColorChanged="ColorPicker_OnColorChanged"/>
+        
+        <TextBlock Grid.Row="11"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="{DynamicResource CosmeticEditor.Plate.Property.NameColor}" />
+        <TextBox Grid.Row="11"
+                 Grid.Column="2"
+                 Name="TextBoxNameColor"
+                 Height="32"
+                 LostFocus="TextBoxColor_OnLostFocus"/>
+        <controls:SaturnColorPicker Grid.Row="11"
+                                    Grid.Column="3"
+                                    Name="ColorPickerNameColor"
+                                    HorizontalAlignment="Right"
+                                    ColorPickFinished="ColorPicker_OnColorPickFinished"
+                                    ColorChanged="ColorPicker_OnColorChanged"/>
     </Grid>
 </UserControl>

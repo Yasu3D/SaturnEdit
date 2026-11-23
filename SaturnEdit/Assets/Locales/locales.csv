@@ -508,6 +508,14 @@ CosmeticEditor.NoteSound.Property.HoldLoopEndTime,Hold Loop End,-,-,-
 CosmeticEditor.NoteSound.Property.ReHoldLoopStartTime,Re-Hold Loop Start,-,-,-
 CosmeticEditor.NoteSound.Property.ReHoldLoopEndTime,Re-Hold Loop End,-,-,-
 CosmeticEditor.Plate.Property.PlateImage,Plate Image,-,-,-
+CosmeticEditor.Plate.Property.TitleLabelColor,Title Label Color,-,-,-
+CosmeticEditor.Plate.Property.LevelLabelColor,Level Label Color,-,-,-
+CosmeticEditor.Plate.Property.PointLabelColor,Point Label Color,-,-,-
+CosmeticEditor.Plate.Property.RatingLabelColor,Rating Label Color,-,-,-
+CosmeticEditor.Plate.Property.TitleColor,Title Color,-,-,-
+CosmeticEditor.Plate.Property.LevelColor,Level Color,-,-,-
+CosmeticEditor.Plate.Property.PointColor,Point Color,-,-,-
+CosmeticEditor.Plate.Property.NameColor,Name Color,-,-,-
 CosmeticEditor.SystemMusic.Property.AudioAttractPath,Attract Audio Path,-,-,-
 CosmeticEditor.SystemMusic.Property.AudioSelectPath,Select Audio Path,-,-,-
 CosmeticEditor.SystemMusic.Property.AudioResultPath,Result Audio Path,-,-,-

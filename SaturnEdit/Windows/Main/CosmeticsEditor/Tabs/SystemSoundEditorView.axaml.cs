@@ -63,6 +63,7 @@ public partial class SystemSoundEditorView : UserControl
             TextBoxAudioMessageAlertPath.Text           = systemSound.AudioMessageAlertPath;
             TextBoxAudioWindmillSwitchPath.Text         = systemSound.AudioWindmillSwitchPath;
             TextBoxAudioStageUpClearPath.Text           = systemSound.AudioStageUpClearPath;
+            TextBoxAudioItemGetPath.Text                = systemSound.AudioItemGetPath;
 
             IconFileNotFoundWarningAudioLogin.IsVisible                  = systemSound.AudioLoginPath                  != "" && !File.Exists(systemSound.AbsoluteAudioLoginPath);
             IconFileNotFoundWarningAudioLoginCardSuccess.IsVisible       = systemSound.AudioLoginCardSuccessPath       != "" && !File.Exists(systemSound.AbsoluteAudioLoginCardSuccessPath);
@@ -95,6 +96,7 @@ public partial class SystemSoundEditorView : UserControl
             IconFileNotFoundWarningAudioMessageAlert.IsVisible           = systemSound.AudioMessageAlertPath           != "" && !File.Exists(systemSound.AbsoluteAudioMessageAlertPath);
             IconFileNotFoundWarningAudioWindmillSwitch.IsVisible         = systemSound.AudioWindmillSwitchPath         != "" && !File.Exists(systemSound.AbsoluteAudioWindmillSwitchPath);
             IconFileNotFoundWarningAudioStageUpClear.IsVisible           = systemSound.AudioStageUpClearPath           != "" && !File.Exists(systemSound.AbsoluteAudioStageUpClearPath);
+            IconFileNotFoundWarningAudioItemGet.IsVisible                = systemSound.AudioItemGetPath                != "" && !File.Exists(systemSound.AbsoluteAudioItemGetPath);
             
             blockEvents = false;
         });
@@ -173,6 +175,7 @@ public partial class SystemSoundEditorView : UserControl
         else if (textBox == TextBoxAudioMessageAlertPath)           { oldValue = systemSound.AudioMessageAlertPath; }
         else if (textBox == TextBoxAudioWindmillSwitchPath)         { oldValue = systemSound.AudioWindmillSwitchPath; }
         else if (textBox == TextBoxAudioStageUpClearPath)           { oldValue = systemSound.AudioStageUpClearPath; }
+        else if (textBox == TextBoxAudioItemGetPath)                { oldValue = systemSound.AudioItemGetPath; }
         
         string newValue = textBox.Text ?? "";
         if (oldValue == newValue)
@@ -214,6 +217,7 @@ public partial class SystemSoundEditorView : UserControl
         else if (textBox == TextBoxAudioMessageAlertPath)           { action = value => { systemSound.AudioMessageAlertPath = value; }; }
         else if (textBox == TextBoxAudioWindmillSwitchPath)         { action = value => { systemSound.AudioWindmillSwitchPath = value; }; }
         else if (textBox == TextBoxAudioStageUpClearPath)           { action = value => { systemSound.AudioStageUpClearPath = value; }; }
+        else if (textBox == TextBoxAudioItemGetPath)                { action = value => { systemSound.AudioItemGetPath = value; }; }
         if (action == null) return;
 
         UndoRedoSystem.CosmeticBranch.Push(new GenericEditOperation<string>(action, oldValue, newValue));
@@ -387,6 +391,11 @@ public partial class SystemSoundEditorView : UserControl
                 oldAbsolutePath = systemSound.AbsoluteAudioStageUpClearPath;
                 oldLocalPath = systemSound.AudioStageUpClearPath;
             }
+            else if (button == ButtonAudioItemGetPath)
+            {
+                oldAbsolutePath = systemSound.AbsoluteAudioItemGetPath;
+                oldLocalPath = systemSound.AudioItemGetPath;
+            }
 
             if (oldAbsolutePath == null) return;
             if (oldLocalPath == null) return;
@@ -444,6 +453,7 @@ public partial class SystemSoundEditorView : UserControl
             else if (button == ButtonAudioMessageAlertPath)           { action = value => { systemSound.AudioMessageAlertPath = value; }; }
             else if (button == ButtonAudioWindmillSwitchPath)         { action = value => { systemSound.AudioWindmillSwitchPath = value; }; }
             else if (button == ButtonAudioStageUpClearPath)           { action = value => { systemSound.AudioStageUpClearPath = value; }; }
+            else if (button == ButtonAudioItemGetPath)                { action = value => { systemSound.AudioItemGetPath = value; }; }
             
             if (action == null) return;
             

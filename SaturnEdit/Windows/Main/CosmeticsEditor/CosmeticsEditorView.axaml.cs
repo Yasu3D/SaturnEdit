@@ -349,152 +349,80 @@ public partial class CosmeticsEditorView : UserControl
 
     private void UpdateProfile()
     {
-        if (CosmeticSystem.CosmeticItem is Plate plate)
+        Dispatcher.UIThread.Post(() =>
         {
-            Dispatcher.UIThread.Post(() =>
+            Plate? plate = CosmeticSystem.CosmeticItem as Plate;
+            ImagePlaceholderPlate.IsVisible = plate == null;
+            BorderPlate.IsVisible = plate != null;
+            try
             {
-                GroupProfile.IsVisible = true;
-                
-                ImagePlaceholderIcon.IsVisible = true;
-                ImageIcon.IsVisible = false;
-                BorderIcon.IsVisible = false;
-
-                ImagePlaceholderEmblem.IsVisible = true;
-                ImageEmblem.IsVisible = false;
-                BorderEmblem.IsVisible = false;
-
-                BorderPlate.IsVisible = true;
-                
-                TextBlockTitle.Text = "TITLE";
-                
-                try
-                {
-                    ImagePlate.Source = new Bitmap(plate.AbsoluteImagePath);
-                    
-                    ImagePlaceholderPlate.IsVisible = false;
-                    ImagePlate.IsVisible = true;
-                }
-                catch (Exception ex)
-                {
-                    // Don't throw.
-                    if (ex is not (FileNotFoundException or ArgumentException))
-                    {
-                        LoggingSystem.WriteSessionLog(ex.ToString());
-                    }
-                    
-                    ImagePlaceholderPlate.IsVisible = false;
-                    ImagePlate.IsVisible = false;
-                }
-            });
-        }
-        else if (CosmeticSystem.CosmeticItem is Icon icon)
-        {
-            Dispatcher.UIThread.Post(() =>
+                ImagePlate.Source = new Bitmap(plate?.AbsoluteImagePath ?? "");
+                ImagePlate.IsVisible = true;
+            }
+            catch (Exception ex)
             {
-                GroupProfile.IsVisible = true;
+                // Don't throw.
+                if (ex is not (FileNotFoundException or ArgumentException))
+                {
+                    LoggingSystem.WriteSessionLog(ex.ToString());
+                }
                 
-                ImagePlaceholderPlate.IsVisible = true;
                 ImagePlate.IsVisible = false;
-                BorderPlate.IsVisible = false;
+            }
+            
+            TextBlockTitleLabel.Foreground  = new SolidColorBrush(plate?.TitleLabelColor  ?? Plate.DefaultTitleLabelColor);
+            TextBlockLevelLabel.Foreground  = new SolidColorBrush(plate?.LevelLabelColor  ?? Plate.DefaultLevelLabelColor);
+            TextBlockPointLabel.Foreground  = new SolidColorBrush(plate?.PointLabelColor  ?? Plate.DefaultPointLabelColor);
+            TextBlockRatingLabel.Foreground = new SolidColorBrush(plate?.RatingLabelColor ?? Plate.DefaultRatingLabelColor);
+            TextBlockTitle.Foreground = new SolidColorBrush(plate?.TitleColor ?? Plate.DefaultTitleColor);
+            TextBlockLevel.Foreground = new SolidColorBrush(plate?.LevelColor ?? Plate.DefaultLevelColor);
+            TextBlockPoint.Foreground = new SolidColorBrush(plate?.PointColor ?? Plate.DefaultPointColor);
+            TextBlockName.Foreground  = new SolidColorBrush(plate?.NameColor  ?? Plate.DefaultNameColor);
 
-                ImagePlaceholderEmblem.IsVisible = true;
-                ImageEmblem.IsVisible = false;
-                BorderEmblem.IsVisible = false;
-                
-                BorderIcon.IsVisible = true;
-                
-                TextBlockTitle.Text = "TITLE";
-
-                ImageIconShading.IsVisible = icon.EnableShading;
-                
-                try
-                {
-                    ImageIcon.Source = new Bitmap(icon.AbsoluteImagePath);
-                    
-                    ImagePlaceholderIcon.IsVisible = false;
-                    ImageIcon.IsVisible = true;
-                }
-                catch (Exception ex)
-                {
-                    // Don't throw.
-                    if (ex is not (FileNotFoundException or ArgumentException))
-                    {
-                        LoggingSystem.WriteSessionLog(ex.ToString());
-                    }
-                    
-                    ImagePlaceholderIcon.IsVisible = false;
-                    ImageIcon.IsVisible = false;
-                }
-            });
-        }
-        else if (CosmeticSystem.CosmeticItem is Emblem emblem)
-        {
-            Dispatcher.UIThread.Post(() =>
+            Icon? icon = CosmeticSystem.CosmeticItem as Icon;
+            ImagePlaceholderIcon.IsVisible = icon == null;
+            BorderIcon.IsVisible = icon != null;
+            ImageIconShading.IsVisible = icon?.EnableShading ?? false;
+            try
             {
-                GroupProfile.IsVisible = true;
-                
-                ImagePlaceholderPlate.IsVisible = true;
-                ImagePlate.IsVisible = false;
-                BorderPlate.IsVisible = false;
-                
-                ImagePlaceholderIcon.IsVisible = true;
+                ImageIcon.Source = new Bitmap(icon?.AbsoluteImagePath ?? "");
+                ImageIcon.IsVisible = true;
+            }
+            catch (Exception ex)
+            {
+                // Don't throw.
+                if (ex is not (FileNotFoundException or ArgumentException))
+                {
+                    LoggingSystem.WriteSessionLog(ex.ToString());
+                }
+
                 ImageIcon.IsVisible = false;
-                BorderIcon.IsVisible = false;
-                
-                BorderEmblem.IsVisible = true;
-                
-                TextBlockTitle.Text = "TITLE";
-                
-                try
-                {
-                    ImageEmblem.Source = new Bitmap(emblem.AbsoluteImagePath);
-                    
-                    ImagePlaceholderEmblem.IsVisible = false;
-                    ImageEmblem.IsVisible = true;
-                }
-                catch (Exception ex)
-                {
-                    // Don't throw.
-                    if (ex is not (FileNotFoundException or ArgumentException))
-                    {
-                        LoggingSystem.WriteSessionLog(ex.ToString());
-                    }
-                    
-                    ImagePlaceholderEmblem.IsVisible = false;
-                    ImageEmblem.IsVisible = false;
-                }
-            });
-        }
-        else if (CosmeticSystem.CosmeticItem is Title title)
-        {
-            Dispatcher.UIThread.Post(() =>
-            {
-                GroupProfile.IsVisible = true;
-                
-                ImagePlaceholderPlate.IsVisible = true;
-                ImagePlate.IsVisible = false;
-                BorderPlate.IsVisible = false;
-                
-                ImagePlaceholderIcon.IsVisible = true;
-                ImageIcon.IsVisible = false;
-                BorderIcon.IsVisible = false;
+            }
 
-                ImagePlaceholderEmblem.IsVisible = true;
-                ImageEmblem.IsVisible = false;
-                BorderEmblem.IsVisible = false;
-                
-                TextBlockTitle.Text = title.Message;
-            });
-        }
-        else
-        {
-            Dispatcher.UIThread.Post(() =>
+            Emblem? emblem = CosmeticSystem.CosmeticItem as Emblem;
+            ImagePlaceholderEmblem.IsVisible = emblem == null;
+            BorderEmblem.IsVisible = emblem != null;
+            try
             {
-                GroupProfile.IsVisible = false;
-            });
-        }
-        
-        
+                ImageEmblem.Source = new Bitmap(emblem?.AbsoluteImagePath ?? "");
+                ImageEmblem.IsVisible = true;
+            }
+            catch (Exception ex)
+            {
+                // Don't throw.
+                if (ex is not (FileNotFoundException or ArgumentException))
+                {
+                    LoggingSystem.WriteSessionLog(ex.ToString());
+                }
+
+                ImageEmblem.IsVisible = false;
+            }
+            
+            Title? title = CosmeticSystem.CosmeticItem as Title;
+            TextBlockTitle.Text = title?.Message ?? "TITLE";
+            
+            GroupProfile.IsVisible = CosmeticSystem.CosmeticItem is Plate or Icon or Emblem or Title;
+        });
     }
 
     private void UpdateConsoleColor()

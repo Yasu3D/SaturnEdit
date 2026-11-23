@@ -67,7 +67,7 @@ public partial class SaturnColorPicker : UserControl
             Saturation = s;
             Value = v;
 
-            ColorChanged?.Invoke(null, EventArgs.Empty);
+            ColorChanged?.Invoke(this, EventArgs.Empty);
             BorderColorPreview.Background = new SolidColorBrush(Color);
         }
     }
@@ -141,7 +141,7 @@ public partial class SaturnColorPicker : UserControl
         Value = 100 - y / 134 * 100;
 
         BorderColorPreview.Background = new SolidColorBrush(Color);
-        ColorChanged?.Invoke(null, EventArgs.Empty);
+        ColorChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void SetHue(float x)
@@ -151,7 +151,7 @@ public partial class SaturnColorPicker : UserControl
         Hue = x / 224 * 360;
 
         BorderColorPreview.Background = new SolidColorBrush(Color);
-        ColorChanged?.Invoke(null, EventArgs.Empty);
+        ColorChanged?.Invoke(this, EventArgs.Empty);
     }
 #endregion 
     
@@ -271,7 +271,7 @@ public partial class SaturnColorPicker : UserControl
         SetHue((float)p.X);
     }
     
-    private void FlyoutBase_OnOpened(object? sender, EventArgs e) => ColorPickStarted?.Invoke(null, EventArgs.Empty);
-    private void FlyoutBase_OnClosed(object? sender, EventArgs e) => ColorPickFinished?.Invoke(null, EventArgs.Empty);
+    private void FlyoutBase_OnOpened(object? sender, EventArgs e) => ColorPickStarted?.Invoke(this, EventArgs.Empty);
+    private void FlyoutBase_OnClosed(object? sender, EventArgs e) => ColorPickFinished?.Invoke(this, EventArgs.Empty);
 #endregion UI Event Handlers
 }

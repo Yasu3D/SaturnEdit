@@ -505,6 +505,14 @@
     <system:String x:Key="CosmeticEditor.NoteSound.Property.ReHoldLoopStartTime">-</system:String>
     <system:String x:Key="CosmeticEditor.NoteSound.Property.ReHoldLoopEndTime">-</system:String>
     <system:String x:Key="CosmeticEditor.Plate.Property.PlateImage">-</system:String>
+    <system:String x:Key="CosmeticEditor.Plate.Property.TitleLabelColor">-</system:String>
+    <system:String x:Key="CosmeticEditor.Plate.Property.LevelLabelColor">-</system:String>
+    <system:String x:Key="CosmeticEditor.Plate.Property.PointLabelColor">-</system:String>
+    <system:String x:Key="CosmeticEditor.Plate.Property.RatingLabelColor">-</system:String>
+    <system:String x:Key="CosmeticEditor.Plate.Property.TitleColor">-</system:String>
+    <system:String x:Key="CosmeticEditor.Plate.Property.LevelColor">-</system:String>
+    <system:String x:Key="CosmeticEditor.Plate.Property.PointColor">-</system:String>
+    <system:String x:Key="CosmeticEditor.Plate.Property.NameColor">-</system:String>
     <system:String x:Key="CosmeticEditor.SystemMusic.Property.AudioAttractPath">-</system:String>
     <system:String x:Key="CosmeticEditor.SystemMusic.Property.AudioSelectPath">-</system:String>
     <system:String x:Key="CosmeticEditor.SystemMusic.Property.AudioResultPath">-</system:String>

@@ -452,22 +452,69 @@
                             BorderBrush="{DynamicResource SeparatorPrimary}"
                             Margin="491,130,0,0"/>
                     
-                    <TextBlock Text="PLAYER"
+                    <TextBlock Name="TextBlockTitleLabel"
+                               Text="TITLE"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               Foreground="#111111"
-                               FontWeight="Bold"
-                               FontSize="26"
-                               Margin="-170,130,0,0"/>
+                               FontWeight="SemiBold"
+                               FontSize="14"
+                               Margin="-250,-53,0,0"/>
+                    
+                    <TextBlock Name="TextBlockLevelLabel"
+                               Text="Lv."
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontWeight="SemiBold"
+                               FontSize="16"
+                               Margin="-197,0,0,0"/>
+                    
+                    <TextBlock Name="TextBlockPointLabel"
+                               Text="SP"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontWeight="SemiBold"
+                               FontSize="16"
+                               Margin="-90,0,0,0"/>
+                    
+                    <TextBlock Name="TextBlockRatingLabel"
+                               Text="Rate:"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontWeight="SemiBold"
+                               FontSize="15"
+                               Margin="635,150,0,0"/>
                     
                     <TextBlock Name="TextBlockTitle"
                                Text="TITLE"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               Foreground="#111111"
                                FontWeight="SemiBold"
-                               FontSize="14"
-                               Margin="-185,-53,0,0"/>
+                               FontSize="16"
+                               Margin="-195,-55,0,0"/>
+                    
+                    <TextBlock Name="TextBlockLevel"
+                               Text="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontWeight="SemiBold"
+                               FontSize="22"
+                               Margin="-120,0,0,0"/>
+                    
+                    <TextBlock Name="TextBlockPoint"
+                               Text="0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontWeight="SemiBold"
+                               FontSize="22"
+                               Margin="0,0,0,0"/>
+                    
+                    <TextBlock Name="TextBlockName"
+                               Text="NAME"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               FontSize="26"
+                               Margin="-170,130,0,0"/>
                 </Panel>
                 
                 <Panel Name="GroupConsoleColor">
