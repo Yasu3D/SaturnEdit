@@ -24,27 +24,97 @@
                                Width="1"
                                HorizontalAlignment="Left"
                                Fill="{DynamicResource SeparatorPrimary}" />
-
+                    
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Title}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Title}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Title}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Title.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <TextBox Grid.Row="0"
                              Grid.Column="2"
                              Name="TextBoxTitle"
                              VerticalAlignment="Center"
-                             LostFocus="TextBoxTitle_OnLostFocus" />
+                             LostFocus="TextBoxTitle_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Title}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Title.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
 
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Reading}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Reading}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Reading}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description1}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description2}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description3}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description4}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description5}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description6}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description7}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description8}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description9}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description10}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <TextBox Grid.Row="1"
                              Grid.Column="2"
                              Name="TextBoxReading"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Stretch"
-                             LostFocus="TextBoxReading_OnLostFocus"/>
+                             LostFocus="TextBoxReading_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Reading}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description1}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description2}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description3}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description4}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description5}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description6}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description7}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description8}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description9}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Reading.Description10}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
                     <ToggleButton Grid.Row="1"
                                   Grid.Column="3"
                                   Name="ToggleButtonAutoReading"
@@ -65,23 +135,55 @@
                     <TextBlock Grid.Row="2"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Artist}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Artist}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Artist}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Artist.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <TextBox Grid.Row="2"
                              Grid.Column="2"
                              Name="TextBoxArtist"
                              VerticalAlignment="Center"
-                             LostFocus="TextBoxArtist_OnLostFocus" />
+                             LostFocus="TextBoxArtist_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Artist}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Artist.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
 
                     <TextBlock Grid.Row="3"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.BpmMessage}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.BpmMessage}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.BpmMessage}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.BpmMessage.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <TextBox Grid.Row="3"
                              Grid.Column="2"
                              Name="TextBoxBpmMessage"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Stretch"
-                             LostFocus="TextBoxBpmMessage_OnLostFocus"/>
+                             LostFocus="TextBoxBpmMessage_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.BpmMessage}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.BpmMessage.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
                     <ToggleButton Grid.Row="3"
                                   Grid.Column="3"
                                   Name="ToggleButtonAutoBpmMessage"
@@ -124,27 +226,67 @@
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Revision}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Revision}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Revision}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Revision.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <TextBox Grid.Row="0"
                              Grid.Column="2"
                              Name="TextBoxRevision"
                              VerticalAlignment="Center"
-                             LostFocus="TextBoxRevision_OnLostFocus"/>
+                             LostFocus="TextBoxRevision_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Revision}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Revision.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
 
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.NotesDesigner}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.NotesDesigner}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.NotesDesigner}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.NotesDesigner.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <TextBox Grid.Row="1"
                              Grid.Column="2"
                              Name="TextBoxNotesDesigner"
                              VerticalAlignment="Center"
-                             LostFocus="TextBoxNotesDesigner_OnLostFocus"/>
+                             LostFocus="TextBoxNotesDesigner_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.NotesDesigner}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.NotesDesigner.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
 
                     <TextBlock Grid.Row="2"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Difficulty}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Difficulty}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Difficulty}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Difficulty.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <ComboBox Grid.Row="2"
                               Grid.Column="2"
                               Name="ComboBoxDifficulty"
@@ -154,28 +296,67 @@
                         <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Expert}" />
                         <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.Inferno}" />
                         <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.Difficulty.WorldsEnd}" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Difficulty}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Difficulty.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
                     </ComboBox>
 
                     <TextBlock Grid.Row="3"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Level}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Level}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Level}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Level.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <TextBox Grid.Row="3"
                              Grid.Column="2"
                              Name="TextBoxLevel"
                              VerticalAlignment="Center"
-                             LostFocus="TextBoxLevel_OnLostFocus"/>
+                             LostFocus="TextBoxLevel_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Level}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Level.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
 
                     <TextBlock Grid.Row="4"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Clear}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.ClearThreshold}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.ClearThreshold}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.ClearThreshold.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <TextBox Grid.Row="4"
                              Grid.Column="2"
                              Name="TextBoxClearThreshold"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Stretch"
-                             LostFocus="TextBoxClearThreshold_OnLostFocus"/>
+                             LostFocus="TextBoxClearThreshold_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.ClearThreshold}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.ClearThreshold.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
                     <ToggleButton Grid.Row="4"
                                   Grid.Column="3"
                                   Name="ToggleButtonAutoClearThreshold"
@@ -195,7 +376,15 @@
                     <TextBlock Grid.Column="0"
                                Grid.Row="5"
                                Text="{DynamicResource ChartEditor.ChartProperties.Key.ChartEnd}"
-                               VerticalAlignment="Center" />
+                               VerticalAlignment="Center">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.ChartEnd}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.ChartEnd.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <Grid Grid.Column="2"
                           Grid.Row="5"
                           ColumnDefinitions="*,15,*"
@@ -206,7 +395,15 @@
                                        HorizontalAlignment="Stretch"
                                        Minimum="0"
                                        FormatString="0" 
-                                       ValueChanged="NumericUpDownChartEndMeasure_OnValueChanged"/>
+                                       ValueChanged="NumericUpDownChartEndMeasure_OnValueChanged">
+                            <ToolTip.Tip>
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource ChartEditor.General.Measure}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.ChartEnd.Measure.Description}"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                            </ToolTip.Tip>
+                        </NumericUpDown>
 
                         <Rectangle Grid.Column="1"
                                    Fill="{DynamicResource SeparatorPrimary}"
@@ -221,7 +418,15 @@
                                        Minimum="-1"
                                        Maximum="1920"
                                        FormatString="0" 
-                                       ValueChanged="NumericUpDownChartEndTick_OnValueChanged"/>
+                                       ValueChanged="NumericUpDownChartEndTick_OnValueChanged">
+                            <ToolTip.Tip>
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource ChartEditor.General.Tick}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.ChartEnd.Tick.Description}"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                            </ToolTip.Tip>
+                        </NumericUpDown>
                     </Grid>
 
                     <ToggleButton Grid.Row="5"
@@ -266,7 +471,15 @@
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewBegin}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewBegin}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewBegin}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.PreviewBegin.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <Grid Grid.Column="2"
                           Grid.Row="0"
                           ColumnDefinitions="*,15,*"
@@ -277,7 +490,15 @@
                                        HorizontalAlignment="Stretch"
                                        Minimum="0"
                                        FormatString="0" 
-                                       ValueChanged="NumericUpDownPreviewBeginMeasure_OnValueChanged"/>
+                                       ValueChanged="NumericUpDownPreviewBeginMeasure_OnValueChanged">
+                            <ToolTip.Tip>
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource ChartEditor.General.Measure}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.PreviewBegin.Measure.Description}"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                            </ToolTip.Tip>
+                        </NumericUpDown>
 
                         <Rectangle Grid.Column="1"
                                    Fill="{DynamicResource SeparatorPrimary}"
@@ -292,7 +513,15 @@
                                        Minimum="-1"
                                        Maximum="1920"
                                        FormatString="0" 
-                                       ValueChanged="NumericUpDownPreviewBeginTick_OnValueChanged"/>
+                                       ValueChanged="NumericUpDownPreviewBeginTick_OnValueChanged">
+                            <ToolTip.Tip>
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource ChartEditor.General.Tick}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.PreviewBegin.Tick.Description}"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                            </ToolTip.Tip>
+                        </NumericUpDown>
                     </Grid>
                     <Button Grid.Row="0"
                             Grid.Column="3"
@@ -311,7 +540,15 @@
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewEnd}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewEnd}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.PreviewEnd}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.PreviewEnd.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <Grid Grid.Column="2"
                           Grid.Row="1"
                           ColumnDefinitions="*,15,*"
@@ -322,7 +559,15 @@
                                        HorizontalAlignment="Stretch"
                                        Minimum="0"
                                        FormatString="0" 
-                                       ValueChanged="NumericUpDownPreviewEndMeasure_OnValueChanged"/>
+                                       ValueChanged="NumericUpDownPreviewEndMeasure_OnValueChanged">
+                            <ToolTip.Tip>
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource ChartEditor.General.Measure}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.PreviewEnd.Measure.Description}"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                            </ToolTip.Tip>
+                        </NumericUpDown>
 
                         <Rectangle Grid.Column="1"
                                    Fill="{DynamicResource SeparatorPrimary}"
@@ -337,13 +582,29 @@
                                        Minimum="-1"
                                        Maximum="1920"
                                        FormatString="0" 
-                                       ValueChanged="NumericUpDownPreviewEndTick_OnValueChanged"/>
+                                       ValueChanged="NumericUpDownPreviewEndTick_OnValueChanged">
+                            <ToolTip.Tip>
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource ChartEditor.General.Tick}" />
+                                    <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.PreviewEnd.Tick.Description}"
+                                               Foreground="{DynamicResource ForegroundSecondary}" />
+                                </StackPanel>
+                            </ToolTip.Tip>
+                        </NumericUpDown>
                     </Grid>
 
                     <TextBlock Grid.Row="2"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Background}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Background}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Background}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Background.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <ComboBox Grid.Row="2"
                               Grid.Column="2"
                               Name="ComboBoxBackground"
@@ -357,18 +618,40 @@
                         <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.StageUp}" />
                         <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.WorldsEnd}" />
                         <ComboBoxItem Content="{DynamicResource ChartEditor.ChartProperties.BackgroundOption.Jacket}" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Background}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Background.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
                     </ComboBox>
 
                     <TextBlock Grid.Row="3"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Tutorial}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.TutorialMode}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.TutorialMode}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.TutorialMode.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <ComboBox Grid.Row="3"
                               Grid.Column="2"
                               Name="ComboBoxTutorialMode"
                               SelectionChanged="ComboBoxTutorialMode_OnSelectionChanged">
                         <ComboBoxItem Content="{DynamicResource Generic.Disabled}" />
                         <ComboBoxItem Content="{DynamicResource Generic.Enabled}" />
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.TutorialMode}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.TutorialMode.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
                     </ComboBox>
                 </Grid>
             </Expander>
@@ -397,7 +680,15 @@
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Jacket}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Jacket}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Jacket}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Jacket.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <icon:FluentIcon Grid.Row="0"
                                      Grid.Column="0"
                                      HorizontalAlignment="Right"
@@ -417,7 +708,15 @@
                              Grid.Column="2"
                              Name="TextBoxJacket"
                              VerticalAlignment="Center"
-                             LostFocus="TextBoxJacket_OnLostFocus"/>
+                             LostFocus="TextBoxJacket_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Jacket}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Jacket.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
                     <Button Grid.Row="0"
                             Grid.Column="3"
                             Name="ButtonPickFileJacket"
@@ -435,7 +734,15 @@
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Audio}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Audio}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Audio}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Audio.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <icon:FluentIcon Grid.Row="1"
                                      Grid.Column="0"
                                      HorizontalAlignment="Right"
@@ -455,7 +762,15 @@
                              Grid.Column="2"
                              Name="TextBoxAudio"
                              VerticalAlignment="Center"
-                             LostFocus="TextBoxAudio_OnLostFocus"/>
+                             LostFocus="TextBoxAudio_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Audio}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Audio.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
                     <Button Grid.Row="1"
                             Grid.Column="3"
                             Name="ButtonPickFileAudio"
@@ -473,7 +788,15 @@
                     <TextBlock Grid.Row="2"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Video}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.Video}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Video}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Video.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <icon:FluentIcon Grid.Row="2"
                                      Grid.Column="0"
                                      HorizontalAlignment="Right"
@@ -493,7 +816,15 @@
                              Grid.Column="2"
                              Name="TextBoxVideo"
                              VerticalAlignment="Center"
-                             LostFocus="TextBoxVideo_OnLostFocus"/>
+                             LostFocus="TextBoxVideo_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.Video}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.Video.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
                     <Button Grid.Row="2"
                             Grid.Column="3"
                             Name="ButtonPickFileVideo"
@@ -511,22 +842,54 @@
                     <TextBlock Grid.Row="3"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.AudioOffset}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.AudioOffset}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.AudioOffset}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AudioOffset.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <TextBox Grid.Row="3"
                              Grid.Column="2"
                              Name="TextBoxAudioOffset"
                              VerticalAlignment="Center"
-                             LostFocus="TextBoxAudioOffset_OnLostFocus"/>
+                             LostFocus="TextBoxAudioOffset_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.AudioOffset}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.AudioOffset.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
 
                     <TextBlock Grid.Row="4"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               Text="{DynamicResource ChartEditor.ChartProperties.Key.VideoOffset}" />
+                               Text="{DynamicResource ChartEditor.ChartProperties.Key.VideoOffset}">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.VideoOffset}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.VideoOffset.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBlock>
                     <TextBox Grid.Row="4"
                              Grid.Column="2"
                              Name="TextBoxVideoOffset"
                              VerticalAlignment="Center"
-                             LostFocus="TextBoxVideoOffset_OnLostFocus" />
+                             LostFocus="TextBoxVideoOffset_OnLostFocus">
+                        <ToolTip.Tip>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.Key.VideoOffset}" />
+                                <TextBlock Text="{DynamicResource ChartEditor.ChartProperties.ToolTip.VideoOffset.Description}"
+                                           Foreground="{DynamicResource ForegroundSecondary}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
+                    </TextBox>
 
                     <Border Grid.Row="5"
                             Grid.Column="2"

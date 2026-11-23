@@ -111,11 +111,11 @@ ChartEditor.ChartProperties.Key.NotesDesigner,Notes Designer,-,-,"Prefer 'Notes 
 ChartEditor.ChartProperties.Key.BpmMessage,Bpm Message,-,-,-
 ChartEditor.ChartProperties.Key.Difficulty,Difficulty,-,-,"Difficulty Category, Normal/Hard/Expert/etc."
 ChartEditor.ChartProperties.Key.Level,Level,-,-,"Chart Constant, numerical value"
-ChartEditor.ChartProperties.Key.Clear,Clear Threshold,-,-,-
+ChartEditor.ChartProperties.Key.ClearThreshold,Clear Threshold,-,-,-
 ChartEditor.ChartProperties.Key.PreviewBegin,Preview Begin,-,-,-
 ChartEditor.ChartProperties.Key.PreviewEnd,Preview End,-,-,-
 ChartEditor.ChartProperties.Key.Background,Background,-,-,-
-ChartEditor.ChartProperties.Key.Tutorial,Tutorial Mode,-,-,-
+ChartEditor.ChartProperties.Key.TutorialMode,Tutorial Mode,-,-,-
 ChartEditor.ChartProperties.Key.Jacket,Jacket,-,-,Jacket as in 'Album Artwork'. Avoid 'Cover'
 ChartEditor.ChartProperties.Key.Audio,Audio,-,-,-
 ChartEditor.ChartProperties.Key.Video,Video,-,-,-
@@ -137,6 +137,40 @@ ChartEditor.ChartProperties.BackgroundOption.Boss,Boss,ボス,-,"Boss as in 'Fin
 ChartEditor.ChartProperties.BackgroundOption.StageUp,Stage-Up,ステージアップ,-,Transliteration preferred.
 ChartEditor.ChartProperties.BackgroundOption.WorldsEnd,World's End,World's End,World's End,Don't translate.
 ChartEditor.ChartProperties.BackgroundOption.Jacket,Jacket,-,-,-
+ChartEditor.ChartProperties.ToolTip.Title.Description,The title of the charted song.,-,-,-
+ChartEditor.ChartProperties.ToolTip.Reading.Description1,"Internal string for sorting songs consistently. If you're unsure about how this works, use the Auto-Reading feature."
+ChartEditor.ChartProperties.ToolTip.Reading.Description2,Conversion rules:,-,-,-
+ChartEditor.ChartProperties.ToolTip.Reading.Description3,- Kanji shall be written as their kana readings.,-,-,-
+ChartEditor.ChartProperties.ToolTip.Reading.Description4,- Katakana shall be converted to Hiragana.,-,-,-
+ChartEditor.ChartProperties.ToolTip.Reading.Description5,"- Non-japanese scripts shall be converted to latin script or kana, whichever is more fitting.",-,-,-
+ChartEditor.ChartProperties.ToolTip.Reading.Description6,Valid characters:,-,-,-
+ChartEditor.ChartProperties.ToolTip.Reading.Description7,- Full width uppercase latin characters (ＡＢＣ),-,-,-
+ChartEditor.ChartProperties.ToolTip.Reading.Description8,- Full width numbers (１２３),-,-,-
+ChartEditor.ChartProperties.ToolTip.Reading.Description9,- Hiragana (あかさたな),-,-,-
+ChartEditor.ChartProperties.ToolTip.Reading.Description10,Any other characters (including spaces) are omitted. Full-width characters are not standard letters with spaces in between.,-,-,-
+ChartEditor.ChartProperties.ToolTip.Artist.Description,The artist of the charted song.,-,-,-
+ChartEditor.ChartProperties.ToolTip.BpmMessage.Description,The tempo of the song. Can be written as a range (120 - 140) if the tempo varies.,-,-,-
+ChartEditor.ChartProperties.ToolTip.Revision.Description,A text field to keep track of revisions during charting. Not used in-game.,-,-,-
+ChartEditor.ChartProperties.ToolTip.NotesDesigner.Description,The creator of the chart.,-,-,-
+ChartEditor.ChartProperties.ToolTip.Difficulty.Description,"The ""difficulty slot"" of a song this chart will appear in.",-,-,-
+ChartEditor.ChartProperties.ToolTip.Level.Description,"The difficulty level of the chart, also known as a ""chart constant"".",-,-,-
+ChartEditor.ChartProperties.ToolTip.ClearThreshold.Description,"The threshold on the clear gauge to surpass to achieve a clear.",-,-,-
+ChartEditor.ChartProperties.ToolTip.ChartEnd.Description,"The Timestamp when gameplay ends, and ""CLEAR"" or ""FAILED"" is called out.",-,-,-
+ChartEditor.ChartProperties.ToolTip.ChartEnd.Measure.Description,The Measure part of the Chart End Timestamp.,-,-,-
+ChartEditor.ChartProperties.ToolTip.ChartEnd.Tick.Description,The Tick part of the Chart End Timestamp.,-,-,-
+ChartEditor.ChartProperties.ToolTip.PreviewBegin.Description,The Timestamp where the preview in Song Select begins.,-,-,-
+ChartEditor.ChartProperties.ToolTip.PreviewBegin.Measure.Description,The Measure part of the Preview Begin Timestamp.,-,-,-
+ChartEditor.ChartProperties.ToolTip.PreviewBegin.Tick.Description,The Tick part of the Preview Begin Timestamp.,-,-,-
+ChartEditor.ChartProperties.ToolTip.PreviewEnd.Description,The Timestamp where the preview in Song Select ends/loops.,-,-,-
+ChartEditor.ChartProperties.ToolTip.PreviewEnd.Measure.Description,The Measure part of the Preview End Timestamp.,-,-,-
+ChartEditor.ChartProperties.ToolTip.PreviewEnd.Tick.Description,The Tick part of the Preview End Timestamp.,-,-,-
+ChartEditor.ChartProperties.ToolTip.Background.Description,The background to display during gameplay in SATURN.,-,-,-
+ChartEditor.ChartProperties.ToolTip.TutorialMode.Description,"If enabled, the chart will be played in Tutorial Mode in SATURN.",-,-,-
+ChartEditor.ChartProperties.ToolTip.Jacket.Description,The local filepath to the jacket/cover artwork image to display in Song Select.,-,-,-
+ChartEditor.ChartProperties.ToolTip.Audio.Description,The local filepath to the audio file to play alongside the chart.,-,-,-
+ChartEditor.ChartProperties.ToolTip.Video.Description,The local filepath to the video file to play alongside the chart. (Video playback not supported in SATURN yet),-,-,-
+ChartEditor.ChartProperties.ToolTip.AudioOffset.Description,"A fixed offset (in milliseconds) to apply to the chart audio. Positive values make the audio start later.",-,-,-
+ChartEditor.ChartProperties.ToolTip.VideoOffset.Description,"A fixed offset (in milliseconds) to apply to the chart video. Positive values make the video start later.",-,-,-
 ChartEditor.ChartProperties.ToolTip.PlayPreview,Play Preview,-,-,-
 ChartEditor.ChartProperties.ToolTip.AutoReading,Auto Reading,-,-,See [Editor.ChartProperties.Key.Reading]
 ChartEditor.ChartProperties.ToolTip.AutoReading.Description,Automatically determine the reading based on the chart's title.,-,-,-

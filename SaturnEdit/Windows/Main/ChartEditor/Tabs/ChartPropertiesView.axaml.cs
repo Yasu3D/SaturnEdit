@@ -56,8 +56,8 @@ public partial class ChartPropertiesView : UserControl
             TextBoxJacket.Text = ChartSystem.Entry.JacketFile;
             TextBoxAudio.Text = ChartSystem.Entry.AudioFile;
             TextBoxVideo.Text = ChartSystem.Entry.VideoFile;
-            TextBoxAudioOffset.Text = (ChartSystem.Entry.AudioOffset / 1000).ToString("0.000", CultureInfo.InvariantCulture);
-            TextBoxVideoOffset.Text = (ChartSystem.Entry.VideoOffset / 1000).ToString("0.000", CultureInfo.InvariantCulture);
+            TextBoxAudioOffset.Text = ChartSystem.Entry.AudioOffset.ToString("0.000", CultureInfo.InvariantCulture);
+            TextBoxVideoOffset.Text = ChartSystem.Entry.VideoOffset.ToString("0.000", CultureInfo.InvariantCulture);
             
             ToggleButtonAutoReading.IsChecked = ChartSystem.Entry.AutoReading;
             ToggleButtonAutoBpmMessage.IsChecked = ChartSystem.Entry.AutoBpmMessage;
@@ -573,7 +573,7 @@ public partial class ChartPropertiesView : UserControl
         try
         {
             float oldValue = ChartSystem.Entry.AudioOffset;
-            float newValue = 1000 * Convert.ToSingle(TextBoxAudioOffset.Text ?? "", CultureInfo.InvariantCulture);
+            float newValue = Convert.ToSingle(TextBoxAudioOffset.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
             UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { ChartSystem.Entry.AudioOffset = value; }, oldValue, newValue));
@@ -598,7 +598,7 @@ public partial class ChartPropertiesView : UserControl
         try
         {
             float oldValue = ChartSystem.Entry.VideoOffset;
-            float newValue = 1000 * Convert.ToSingle(TextBoxVideoOffset.Text ?? "", CultureInfo.InvariantCulture);
+            float newValue = Convert.ToSingle(TextBoxVideoOffset.Text ?? "", CultureInfo.InvariantCulture);
             if (oldValue == newValue) return;
         
             UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<float>(value => { ChartSystem.Entry.VideoOffset = value; }, oldValue, newValue));
