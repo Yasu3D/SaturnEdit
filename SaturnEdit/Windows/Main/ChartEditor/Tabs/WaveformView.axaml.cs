@@ -29,7 +29,7 @@ public partial class WaveformView : UserControl
 #region System Event Handlers
     private static void OnAudioLoaded(object? sender, EventArgs eventArgs)
     {
-        waveform = AudioChannel.GetWaveformData(ChartSystem.Entry.AudioPath, 4000);
+        waveform = AudioChannel.GetWaveformData(ChartSystem.Entry.AbsoluteAudioPath, 4000);
     }
 #endregion System Event Handlers
     

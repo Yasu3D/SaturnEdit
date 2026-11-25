@@ -301,7 +301,7 @@ public partial class ChartView3D : UserControl
 #region System Event Handlers
     private static void OnJacketChanged(object? sender, EventArgs e)
     {
-        if (!File.Exists(ChartSystem.Entry.JacketPath))
+        if (!File.Exists(ChartSystem.Entry.AbsoluteJacketPath))
         {
             jacketBackgroundPaint = null;
             return;
@@ -309,7 +309,7 @@ public partial class ChartView3D : UserControl
         
         try
         {
-            SKImage image = SKImage.FromEncodedData(ChartSystem.Entry.JacketPath);
+            SKImage image = SKImage.FromEncodedData(ChartSystem.Entry.AbsoluteJacketPath);
 
             jacketBackgroundWidth = image.Width;
             jacketBackgroundHeight = image.Height;

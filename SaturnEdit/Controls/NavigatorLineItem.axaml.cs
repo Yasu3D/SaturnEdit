@@ -133,7 +133,7 @@ public partial class NavigatorLineItem : UserControl
             else
             {
                 // Use existing root directory.
-                string rootDirectoryPath = ChartSystem.Entry.RootDirectory;
+                string rootDirectoryPath = Path.GetDirectoryName(navigator.AbsoluteSourcePath) ?? "";
                 string filePath = files[0].Path.LocalPath;
     
                 // Prompt user to move or copy the selected file if it's not in the root directory yet.

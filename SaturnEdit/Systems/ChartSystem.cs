@@ -198,7 +198,7 @@ public static class ChartSystem
         if (updatePath)
         {
             Entry.RootDirectory = Path.GetDirectoryName(path) ?? "";
-            Entry.ChartFile = Path.GetFileName(path);
+            Entry.ChartPath = Path.GetFileName(path);
             Entry.ChartFormatVersion = args.ChartFormatVersion;
             
             SettingsSystem.EditorSettings.RecentChartFiles.Remove(path);
@@ -216,7 +216,7 @@ public static class ChartSystem
     /// </summary>
     public static void NewDifficultyFromChart()
     {
-        Entry.ChartFile = "";
+        Entry.ChartPath = "";
         Entry.NotesDesigner = "";
         Entry.Revision = "";
         Entry.Level = 0;

@@ -233,7 +233,7 @@ public partial class ChartEditorView : UserControl
             ChartSystem.ReadChart(AutosaveSystem.LastSessionPath, args);
             
             ChartSystem.IsSaved = false;
-            ChartSystem.Entry.ChartFile = "";
+            ChartSystem.Entry.ChartPath = "";
             ChartSystem.Entry.RootDirectory = "";
             return true;
         }
@@ -309,7 +309,7 @@ public partial class ChartEditorView : UserControl
             ChartSystem.ReadChart(files[0].Path.LocalPath, args);
 
             ChartSystem.IsSaved = false;
-            ChartSystem.Entry.ChartFile = "";
+            ChartSystem.Entry.ChartPath = "";
             ChartSystem.Entry.RootDirectory = "";
             return true;
         }
@@ -325,14 +325,14 @@ public partial class ChartEditorView : UserControl
         try
         {
             // Redirect to 'Save As' if chart file doesn't have a path yet, or if the format needs to be updated.
-            if (!File.Exists(ChartSystem.Entry.ChartPath) || ChartSystem.Entry.ChartFormatVersion != ChartFormatVersion.SatV3)
+            if (!File.Exists(ChartSystem.Entry.AbsoluteChartPath) || ChartSystem.Entry.ChartFormatVersion != ChartFormatVersion.SatV3)
             {
                 return await File_SaveAs();
             }
 
             // Write chart to file.
-            bool updatePath = !File.Exists(ChartSystem.Entry.ChartPath);
-            if (!ChartSystem.WriteChart(ChartSystem.Entry.ChartPath, new() { ExportWatermark = ChartSystem.ExportWatermarkTemplate }, true, updatePath))
+            bool updatePath = !File.Exists(ChartSystem.Entry.AbsoluteChartPath);
+            if (!ChartSystem.WriteChart(ChartSystem.Entry.AbsoluteChartPath, new() { ExportWatermark = ChartSystem.ExportWatermarkTemplate }, true, updatePath))
             {
                 MainWindow.ShowFileWriteError();
                 return false;
@@ -401,7 +401,7 @@ public partial class ChartEditorView : UserControl
     {
         try
         {
-            if (!File.Exists(ChartSystem.Entry.ChartPath)) return false;
+            if (!File.Exists(ChartSystem.Entry.AbsoluteChartPath)) return false;
 
             // Prompt to save an unsaved chart first.
             if (!ChartSystem.IsSaved)
@@ -430,7 +430,7 @@ public partial class ChartEditorView : UserControl
                 OptimizeHoldNotes = false,
             };
 
-            ChartSystem.ReadChart(ChartSystem.Entry.ChartPath, args);
+            ChartSystem.ReadChart(ChartSystem.Entry.AbsoluteChartPath, args);
             return true;
         }
         catch (Exception ex)
@@ -1183,7 +1183,7 @@ public partial class ChartEditorView : UserControl
             MenuItemUndo.IsEnabled = UndoRedoSystem.ChartBranch.CanUndo;
             MenuItemRedo.IsEnabled = UndoRedoSystem.ChartBranch.CanRedo;
             
-            MenuItemReloadFromDisk.IsEnabled = File.Exists(ChartSystem.Entry.ChartPath);
+            MenuItemReloadFromDisk.IsEnabled = File.Exists(ChartSystem.Entry.AbsoluteChartPath);
         });
     }
     
@@ -1192,7 +1192,7 @@ public partial class ChartEditorView : UserControl
         Dock_SavePersistedLayout();
 
         SettingsSystem.EditorSettings.LastSessionPath = SettingsSystem.EditorSettings.ContinueLastSession
-            ? ChartSystem.Entry.ChartPath
+            ? ChartSystem.Entry.AbsoluteChartPath
             : "";
     }
 #endregion System Event Handlers

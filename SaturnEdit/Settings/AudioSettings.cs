@@ -439,4 +439,9 @@ public class AudioSettings : ContentItem
         }
     }
     private bool muteMetronome = false;
+    
+    public override string[] GetAllExternalFilePaths()
+    {
+        return [];
+    }
 }

@@ -53,9 +53,9 @@ public partial class ChartPropertiesView : UserControl
             ComboBoxBackground.SelectedIndex = (int)ChartSystem.Entry.Background;
             ComboBoxTutorialMode.SelectedIndex = ChartSystem.Entry.TutorialMode ? 1 : 0;
 
-            TextBoxJacket.Text = ChartSystem.Entry.JacketFile;
-            TextBoxAudio.Text = ChartSystem.Entry.AudioFile;
-            TextBoxVideo.Text = ChartSystem.Entry.VideoFile;
+            TextBoxJacket.Text = ChartSystem.Entry.JacketPath;
+            TextBoxAudio.Text = ChartSystem.Entry.AudioPath;
+            TextBoxVideo.Text = ChartSystem.Entry.VideoPath;
             TextBoxAudioOffset.Text = ChartSystem.Entry.AudioOffset.ToString("0.000", CultureInfo.InvariantCulture);
             TextBoxVideoOffset.Text = ChartSystem.Entry.VideoOffset.ToString("0.000", CultureInfo.InvariantCulture);
             
@@ -70,9 +70,9 @@ public partial class ChartPropertiesView : UserControl
             NumericUpDownChartEndMeasure.IsEnabled = !ChartSystem.Entry.AutoChartEnd;
             NumericUpDownChartEndTick.IsEnabled = !ChartSystem.Entry.AutoChartEnd;
 
-            IconJacketFileNotFoundWarning.IsVisible = ChartSystem.Entry.JacketFile != "" && !File.Exists(ChartSystem.Entry.JacketPath);
-            IconAudioFileNotFoundWarning.IsVisible =  ChartSystem.Entry.AudioFile  != "" && !File.Exists(ChartSystem.Entry.AudioPath);
-            IconVideoFileNotFoundWarning.IsVisible =  ChartSystem.Entry.VideoFile  != "" && !File.Exists(ChartSystem.Entry.VideoPath);
+            IconJacketFileNotFoundWarning.IsVisible = ChartSystem.Entry.JacketPath != "" && !File.Exists(ChartSystem.Entry.AbsoluteJacketPath);
+            IconAudioFileNotFoundWarning.IsVisible =  ChartSystem.Entry.AudioPath  != "" && !File.Exists(ChartSystem.Entry.AbsoluteAudioPath);
+            IconVideoFileNotFoundWarning.IsVisible =  ChartSystem.Entry.VideoPath  != "" && !File.Exists(ChartSystem.Entry.AbsoluteVideoPath);
             
             blockEvents = false;
         });
@@ -84,8 +84,8 @@ public partial class ChartPropertiesView : UserControl
         {
             try
             {
-                bool jacketExists = File.Exists(ChartSystem.Entry.JacketPath);
-                ImageJacket.Source = jacketExists ? new Bitmap(ChartSystem.Entry.JacketPath) : null;
+                bool jacketExists = File.Exists(ChartSystem.Entry.AbsoluteJacketPath);
+                ImageJacket.Source = jacketExists ? new Bitmap(ChartSystem.Entry.AbsoluteJacketPath) : null;
                 
                 ImageJacketPlaceholder.IsVisible = !jacketExists;
                 ImageJacket.IsVisible = jacketExists;
@@ -534,11 +534,11 @@ public partial class ChartPropertiesView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
         
-        string oldValue = ChartSystem.Entry.JacketFile;
+        string oldValue = ChartSystem.Entry.JacketPath;
         string newValue = TextBoxJacket.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.JacketFile = value; }, oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.JacketPath = value; }, oldValue, newValue));
     }
 
     private void TextBoxAudio_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -546,11 +546,11 @@ public partial class ChartPropertiesView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
         
-        string oldValue = ChartSystem.Entry.AudioFile;
+        string oldValue = ChartSystem.Entry.AudioPath;
         string newValue = TextBoxAudio.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.AudioFile = value; }, oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.AudioPath = value; }, oldValue, newValue));
     }
 
     private void TextBoxVideo_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -558,11 +558,11 @@ public partial class ChartPropertiesView : UserControl
         if (blockEvents) return;
         if (sender == null) return;
 
-        string oldValue = ChartSystem.Entry.VideoFile;
+        string oldValue = ChartSystem.Entry.VideoPath;
         string newValue = TextBoxVideo.Text ?? "";
         if (oldValue == newValue) return;
         
-        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.VideoFile = value; }, oldValue, newValue));
+        UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.VideoPath = value; }, oldValue, newValue));
     }
 
     private void TextBoxAudioOffset_OnLostFocus(object? sender, RoutedEventArgs e)
@@ -640,7 +640,7 @@ public partial class ChartPropertiesView : UserControl
             {
                 // Define new root directory.
                 GenericEditOperation<string> op0 = new(value => { ChartSystem.Entry.RootDirectory = value; }, ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
-                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.JacketFile = value; }, ChartSystem.Entry.JacketFile, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.JacketPath = value; }, ChartSystem.Entry.JacketPath, Path.GetFileName(files[0].Path.LocalPath));
                 UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
             }
             else
@@ -653,7 +653,7 @@ public partial class ChartPropertiesView : UserControl
                 (bool, string) result = await MainWindow.PromptFileMoveAndOverwrite(rootDirectoryPath, filePath);
                 if (!result.Item1) return;
 
-                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.JacketFile = value; }, ChartSystem.Entry.JacketFile, result.Item2));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.JacketPath = value; }, ChartSystem.Entry.JacketPath, result.Item2));
             }
         }
         catch (Exception ex)
@@ -688,7 +688,7 @@ public partial class ChartPropertiesView : UserControl
             {
                 // Define new root directory.
                 GenericEditOperation<string> op0 = new(value => { ChartSystem.Entry.RootDirectory = value; }, ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
-                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.AudioFile = value; }, ChartSystem.Entry.AudioFile, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.AudioPath = value; }, ChartSystem.Entry.AudioPath, Path.GetFileName(files[0].Path.LocalPath));
                 UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
             }
             else
@@ -701,7 +701,7 @@ public partial class ChartPropertiesView : UserControl
                 (bool, string) result = await MainWindow.PromptFileMoveAndOverwrite(rootDirectoryPath, filePath);
                 if (!result.Item1) return;
 
-                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.AudioFile = value; }, ChartSystem.Entry.AudioFile, result.Item2));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.AudioPath = value; }, ChartSystem.Entry.AudioPath, result.Item2));
             }
         }
         catch (Exception ex)
@@ -736,7 +736,7 @@ public partial class ChartPropertiesView : UserControl
             {
                 // Define new root directory.
                 GenericEditOperation<string> op0 = new(value => { ChartSystem.Entry.RootDirectory = value; }, ChartSystem.Entry.RootDirectory, Path.GetDirectoryName(files[0].Path.LocalPath) ?? "");
-                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.VideoFile = value; }, ChartSystem.Entry.VideoFile, Path.GetFileName(files[0].Path.LocalPath));
+                GenericEditOperation<string> op1 = new(value => { ChartSystem.Entry.VideoPath = value; }, ChartSystem.Entry.VideoPath, Path.GetFileName(files[0].Path.LocalPath));
                 UndoRedoSystem.ChartBranch.Push(new CompositeOperation([op0, op1]));
             }
             else
@@ -749,7 +749,7 @@ public partial class ChartPropertiesView : UserControl
                 (bool, string) result = await MainWindow.PromptFileMoveAndOverwrite(rootDirectoryPath, filePath);
                 if (!result.Item1) return;
 
-                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.VideoFile = value; }, ChartSystem.Entry.VideoFile, result.Item2));
+                UndoRedoSystem.ChartBranch.Push(new GenericEditOperation<string>(value => { ChartSystem.Entry.VideoPath = value; }, ChartSystem.Entry.VideoPath, result.Item2));
             }
         }
         catch (Exception ex)

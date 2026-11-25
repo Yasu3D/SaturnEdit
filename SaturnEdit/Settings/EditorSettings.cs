@@ -210,4 +210,9 @@ public class EditorSettings : ContentItem
         RecentChartFiles.Clear();
         PropertyChanged?.Invoke(null, EventArgs.Empty);
     }
+    
+    public override string[] GetAllExternalFilePaths()
+    {
+        return [];
+    }
 }

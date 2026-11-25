@@ -366,7 +366,7 @@ public static class AudioSystem
         
         try
         {
-            if (!File.Exists(ChartSystem.Entry.AudioPath))
+            if (!File.Exists(ChartSystem.Entry.AbsoluteAudioPath))
             {
                 AudioChannelAudio = null;
                 return;

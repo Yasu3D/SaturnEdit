@@ -131,7 +131,7 @@ public static class NoteSoundSystem
 public class EditorNoteSound : ContentItem
 {
     public new event EventHandler? PropertyChanged;
-    
+
     [SctLineBreak]
     [SctKey("GUIDE", 9)]
     public string HitsoundGuidePath
@@ -275,4 +275,19 @@ public class EditorNoteSound : ContentItem
         }
     }
     private float holdLoopEnd = 3000.0f;
+    
+    public override string[] GetAllExternalFilePaths()
+    {
+        return
+        [
+            HitsoundGuidePath,
+            HitsoundTouchPath,
+            HitsoundHoldPath,
+            HitsoundSlidePath,
+            HitsoundBonusPath,
+            HitsoundRPath,
+            HitsoundStartClickPath,
+            HitsoundMetronomePath,
+        ];
+    }
 }

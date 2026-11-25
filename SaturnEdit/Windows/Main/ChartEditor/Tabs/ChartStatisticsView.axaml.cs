@@ -275,7 +275,7 @@ public partial class ChartStatisticsView : UserControl
         
         Dispatcher.UIThread.Post(() =>
         {
-            TextBlockFileName.Text = Path.GetFileName(ChartSystem.Entry.ChartFile);
+            TextBlockFileName.Text = ChartSystem.Entry.ChartPath;
 
             TextBlockMaxCombo.Text = maxCombo.ToString();
             TextBlockScorePerNote.Text = scorePerNote == 0 ? "/" : scorePerNote.ToString("0.00", CultureInfo.InvariantCulture);
